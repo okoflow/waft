@@ -1,54 +1,61 @@
-# Security Policy
+# Security policy
 
 Waft records your voice, reads the focused text field through
-Accessibility, writes to the clipboard, and keeps API keys in the Keychain.
-Security reports are taken seriously and handled privately until a fix is
-available.
+Accessibility, writes to the clipboard, keeps API keys in the Keychain, and
+updates itself. The maintainers handle security reports privately until a fix
+is available.
 
 ## Supported versions
 
 | Version | Supported |
 | --- | --- |
-| `main` | Yes |
-| Older commits | No, update to `main` |
+| The latest release and `main` | Yes |
+| Older releases | No, update to the latest release |
 
 ## Reporting a vulnerability
 
 Report vulnerabilities through
 [GitHub private vulnerability reporting](https://github.com/okoflow/waft/security/advisories/new).
-Do not open a public issue, pull request, or discussion for a security problem.
+If you can't use GitHub, email
+[contact@svidware.com](mailto:contact@svidware.com) instead. Don't open a
+public issue, pull request, or discussion for a security problem.
 
 Include what helps reproduce and assess the issue:
 
-- the commit and the macOS version
+- the Waft version or commit, and the macOS version
 - steps to reproduce, or a proof of concept
 - the impact you expect
 
-You receive an acknowledgement within three business days and a triage
-decision within seven. Fixes ship with a security advisory that credits the
-reporter unless they prefer otherwise. Please keep the report private until
-the advisory is published.
+You receive an acknowledgment within three business days and a triage
+decision within seven business days. Fixes ship with a security advisory that
+credits the reporter unless they prefer otherwise. Please keep the report
+private until the advisory is published.
 
 ## Scope
 
 In scope: everything in this repository, including the app, the scripts, and
-the build configuration. Of particular interest:
+the build configuration, and the license service at `api.waft.okoflow.com`,
+which issues Waft Pro license keys. Of particular interest:
 
-- audio, or text outside the cloud modes, leaving the Mac
+- audio leaving the Mac, or text leaving it outside the AI modes
 - text pasted into a password field, or into another app than the one you
   dictated into
 - an API key leaving the Keychain for anything other than its provider's API
 - dictated text or clipboard contents reaching the logs, the disk, or other
   apps
 - the event tap or the Accessibility access used beyond what dictation needs
+- an update installed without the project's signature, or a license key
+  accepted without a valid signature
+- the license service issuing a key without a purchase, or revealing a buyer's
+  details
 
-Out of scope: vulnerabilities in WhisperKit, the speech model, or macOS unless
-Waft's use of them causes the problem; attacks that need an already
-compromised user account; the Waft Dev identity that `make signing`
+Out of scope: vulnerabilities in WhisperKit, Sparkle, the speech model, or
+macOS unless Waft's use of them causes the problem; attacks that need an
+already compromised user account; the Waft Dev identity that `make signing`
 creates for local builds.
 
 ## Dependencies
 
-Waft has one direct dependency, WhisperKit, pinned to an exact version in
-`Package.swift`, with every resolved package recorded in `Package.resolved`.
-Dependabot watches it and the GitHub Actions.
+The packages Waft depends on are pinned to exact versions in `Package.swift`,
+with every resolved package recorded in `Package.resolved`. Dependabot
+proposes updates for them and for the GitHub Actions.
