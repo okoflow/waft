@@ -5,7 +5,7 @@ TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
 TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
 TESTING_LIBS    = $(TOOLCHAIN_DIR)/Library/Developer
 
-.PHONY: help build test bundle run format check format-check lint periphery secrets shellcheck strings strings-update hooks signing clean
+.PHONY: help build test bundle run release format check format-check lint periphery secrets shellcheck strings strings-update hooks signing clean
 
 help: ## List targets
 	@awk 'BEGIN { FS = ":.*## " } /^[a-z0-9-]+:.*## / { printf "  %-14s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -22,6 +22,9 @@ bundle: ## Build and sign build/Waft.app
 
 run: bundle ## Build, sign, and open Waft
 	open build/Waft.app
+
+release: ## Build, notarize, and package a release with NOTES into build/release
+	scripts/release.sh "$(NOTES)"
 
 format: ## Format Swift, shell, and the property list
 	swiftformat .
