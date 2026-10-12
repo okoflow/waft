@@ -1,8 +1,8 @@
 # How it works
 
-What happens between pressing the dictation key and the text appearing in
-your app. Every dictation passes through the same stages: the key, the
-recording, recognition, cleanup, and the paste.
+This page explains what happens between pressing the dictation key and the
+text appearing in your app. [Usage](usage.md) describes the settings, and
+[Architecture](architecture.md) the code behind each stage.
 
 ```mermaid
 flowchart LR
@@ -10,34 +10,34 @@ flowchart LR
   recording --> recognition[Recognition<br/>Whisper on Core ML]
   recognition --> cleanup[Cleanup<br/>dictionary · mode · snippets]
   cleanup --> paste[Paste<br/>clipboard and ⌘V]
-  cleanup -. cloud modes .-> cloud[Claude or OpenAI]
+  cleanup -. AI modes .-> model[Claude, OpenAI, or a local server]
 ```
 
 ## The key
 
-A listen-only event tap watches the modifier keys. It never swallows a key
-press, so the dictation key keeps working everywhere else. Holding the key
-starts a recording; releasing it after at least 0.3 seconds finishes it.
-Shorter presses, another key pressed while holding, and recordings longer
-than 5 minutes are discarded.
+A listen-only event tap watches the keyboard. It never swallows a key press,
+so the dictation key keeps working everywhere else. Holding the key starts a
+recording; releasing it after at least 0.3 seconds finishes it. Shorter
+presses and another key pressed while holding are discarded; a recording that
+reaches 5 minutes finishes on its own and is transcribed.
 
-macOS can switch an event tap off when an app is busy, and a key-up can get
-lost. Waft checks the tap every 5 seconds and turns it back on, and while
-you record it polls the key four times a second, so a lost key-up still ends
-the recording.
+macOS can switch an event tap off when the system is busy, and a key-up can
+get lost. Waft turns the tap back on, checks it every 5 seconds, and while you
+record polls the key four times a second, so a lost key-up still ends the
+recording.
 
 ## Recording
 
 The microphone starts when the key goes down, from the device chosen in
-Settings or the system default. Audio is converted to 16 kHz mono and kept
-in memory; it is never written to disk. Recording continues for 0.15 seconds
-after you let go, to catch the end of the last word.
+Settings or the system default. Audio is converted to 16 kHz mono and kept in
+memory; it is never written to disk. Recording continues for up to 0.15
+seconds after you let go, to catch the end of the last word.
 
-The HUD appears after 0.3 seconds of holding, so a quick tap does not flash
-it. It never takes focus: the app you are typing in stays active.
+The HUD appears after 0.3 seconds of holding, so a quick tap doesn't flash it.
+It never takes focus: the app you are typing in stays active.
 
-Waft remembers the focused app and text field when you press the key. The
-text goes there later, and the app decides which mode applies.
+Waft notes the focused app and text field when you press the key. The text
+goes there later, and that app decides which mode applies.
 
 ## Recognition
 
@@ -49,12 +49,12 @@ floor. Everything else goes to Whisper large-v3 turbo, run on Core ML by
 - **Language.** With one language pinned, Whisper decodes in that language.
   Otherwise it detects the language first, choosing only among the languages
   you enabled.
-- **Prompt.** For most languages, Whisper first reads a short example
-  sentence that nudges it toward punctuation and capitalization, followed by
-  up to 200 characters of dictionary terms.
+- **Prompt.** Whisper first reads a short example sentence in the spoken
+  language, which nudges it toward punctuation and capitalization, followed
+  by up to 200 characters of your dictionary terms.
 - **Long recordings.** Audio over 30 seconds is split at pauses.
 - **Made-up text.** Whisper sometimes invents text in silence. Waft drops
-  results with low confidence or heavy repetition, results made only of tags
+  segments with low confidence or heavy repetition, results made only of tags
   such as `[music]`, an echo of the prompt, and stock phrases such as "Thanks
   for watching" when they are the whole result. The HUD then says "Didn't
   catch that".
@@ -64,11 +64,11 @@ floor. Everything else goes to Whisper large-v3 turbo, run on Core ML by
 The recognized text goes through four steps:
 
 1. Dictionary terms replace their misheard spellings.
-2. If the whole text is a snippet phrase, the snippet text is used as it is,
-   and the steps below are skipped.
-3. The mode runs: Raw keeps the text, Light applies its rules, and the cloud
-   modes ask the provider you chose.
-4. Dictionary terms are applied again, because a rewrite can undo them, and
+2. If the whole text is a snippet phrase, the snippet is used as it is and the
+   steps below are skipped.
+3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
+   modes ask the model you chose.
+4. Dictionary terms are applied again, since a rewrite can undo them, and
    snippet phrases inside the text are expanded.
 
 ### Light
@@ -79,61 +79,67 @@ forms, together with the commas around them, but keeps one that follows a
 number, as in "5 мм". It tidies the spaces around punctuation, following
 French spacing before `!`, `?`, `;`, and `:`, capitalizes the first letter in
 languages with letter case, with a dotted "İ" in Turkish and Azerbaijani, and
-ends text that ends in a letter or digit with a full stop: "。" in Chinese and
+ends text that ends in a letter or digit with a period: "。" in Chinese and
 Japanese, "।" in Hindi, "۔" in Urdu, and none in Thai. Filler words with
 meaning, such as "like", "ну", or "그러니까", stay: telling them apart needs
 Clean.
 
-### Cloud modes
+### The AI modes
 
-Clean, Formal, and Translate send the text, with a short
-instruction for the mode, to the provider you chose: the Anthropic Messages
-API with `claude-haiku-5-5` and thinking turned off, or the OpenAI Responses
-API with `gpt-6-luna`, reasoning turned off, and `store: false`, so OpenAI
-keeps no copy of the response. The transcript is marked as text to edit, never
-instructions to follow, so dictating a question gives you the question rather
-than an answer, and the model is told to reply with the text only. You can
-rewrite a mode's instruction with **Instructions…** in Settings › Writing;
-Waft adds these rules after it either way.
+Clean, Formal, and Translate send the text and a short instruction for the
+mode to the model you chose: the Anthropic Messages API with
+`claude-haiku-5-5` and thinking turned off, the OpenAI Responses API with
+`gpt-6-luna`, reasoning turned off, and `store: false`, or the
+`/chat/completions` endpoint of your local server. The transcript is marked as
+text to edit, never instructions to follow, so dictating a question gives you
+the question rather than an answer, and the model is told to reply with the
+text only.
 
-The answer is checked before it is used. An empty answer, one cut off or
-refused, one more than three times longer than what you said, or five times
-for a translation from Chinese, Japanese, or Korean, and one in another
-writing system than both the language you spoke and the transcript itself, or
-for Translate than the target language's, are rejected.
+The answer is checked before it is used. Waft rejects an answer that is
+empty, cut off, or refused, one more than three times longer than what you
+said (five times for a translation from Chinese, Japanese, or Korean), and one
+written in another script than both the language you spoke and the transcript
+itself, or, for Translate, than the target language.
 
-Waft waits up to 3 seconds. Without a key, offline, on an error, a rate
-limit, a timeout, or a rejected answer, it uses Light instead, and the HUD
-adds a line that says why. The text is never lost.
+A cloud model gets 3 seconds and a local server 15. Without a key, offline,
+on an error, a rate limit, a timeout, or a rejected answer, Waft uses Light
+instead and the HUD adds a line that says why. The text is never lost.
+[Troubleshooting](troubleshooting.md#the-ai-modes-use-light) lists each
+reason and what to do about it.
+
+### Editing by voice
+
+An edit sends the selected text and your spoken instruction to the same
+model. It gets 20 seconds in the cloud and 45 on a local server, since it can
+rewrite a long selection. When it fails, nothing is pasted and the selection
+stays as it was.
 
 ## Pasting
 
 Waft pastes through the clipboard rather than typing key by key:
 
 1. It waits for you to release the dictation key, for up to 10 seconds, since
-   ⌘V with Option held would be a different shortcut.
+   <kbd>⌘</kbd><kbd>V</kbd> with Option held would be a different shortcut.
 2. It checks the focused field. A password field gets nothing, not even the
-   clipboard; Copy Last Transcript in the menu gets the text back. If focus
-   moved to another app or field, or Accessibility is not allowed, the text
-   goes to the clipboard instead, and the HUD says "press ⌘V to paste".
-3. It saves the clipboard contents, puts the text on the clipboard, and
-   presses ⌘V on the key that types "v" in your keyboard layout, so Dvorak and
-   Colemak work too.
-4. Once the app has read the text, it puts your previous clipboard back. An
-   app that does not read it within 1.5 seconds leaves the text on the
+   clipboard. If focus moved to another app or field, or Accessibility isn't
+   allowed, the text goes to the clipboard instead and the HUD says "press ⌘V
+   to paste".
+3. It saves the clipboard, puts the text on it, and presses
+   <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard
+   layout, so Dvorak and Colemak work too.
+4. Once the app has read the text, it puts your previous clipboard back. If
+   the app doesn't read it within 1.5 seconds, the text stays on the
    clipboard.
 
-A space goes before the text when the character before the cursor is not a
+A space goes before the text when the character before the cursor isn't a
 space, an opening bracket, or a quote, except in Chinese and Japanese text.
 
 The clipboard is restored only when nothing else was copied in the meantime,
-when it held no more than 5 MB, and when it did not hold a password manager's
-concealed item; the managers clear those on a timer. Text, rich text, HTML,
-images, PDFs, files, and URLs survive the paste; other private formats do not.
-
-The pasted text is marked transient and concealed, so clipboard managers that
-follow the [nspasteboard.org](http://nspasteboard.org) conventions do not
-store it, and it stays off Universal Clipboard.
+when it held no more than 5 MB, and when it didn't hold a password manager's
+concealed item. Text, rich text, HTML, images, PDFs, files, and URLs survive
+the paste. The pasted text is marked transient and concealed, so clipboard
+managers that follow the [nspasteboard.org](http://nspasteboard.org)
+conventions don't store it, and it stays off Universal Clipboard.
 
 Texts are pasted one at a time, in the order you spoke them.
 
@@ -141,26 +147,22 @@ Texts are pasted one at a time, in the order you spoke them.
 
 The model, `openai_whisper-large-v3-v20240930_626MB` from
 [argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml),
-downloads once to `~/Library/Application Support/Waft/Models`, about
-630 MB. Core ML compiles it for your chip the first time it loads, which takes
-about a minute, and keeps the compiled copy in
-`~/Library/Caches/com.okoflow.waft`, about 135 MB. Later loads take about a
-second.
+downloads once to `~/Library/Application Support/Waft/Models`, about 630 MB.
+Core ML compiles it for your chip the first time it loads, which takes about a
+minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
+about 135 MB. Later loads take about a second.
 
-Changing the enabled languages reloads the model, which takes a moment. A
-press while the model is not ready records nothing; the HUD says what the
-model is doing instead.
-
-On an Apple M5 Pro, a sentence of about six seconds takes 1.3 to 2 seconds
-from release to text, language detection included.
+Changing the enabled languages reloads the model. A press while the model
+isn't ready records nothing; the HUD says what the model is doing instead.
 
 ## Limits
 
-- The first syllable can be lost if you speak the instant you press the key.
+- The microphone takes a moment to start, so the first syllable can be lost
+  if you speak the instant you press the key. Start speaking a beat after.
 - Apps that expose little to Accessibility, such as some Electron apps, games,
-  and remote desktops, still get the paste, but Waft cannot see the text
-  before the cursor there, so it adds no leading space.
-- When an app holds secure keyboard input and Waft cannot see the focused
+  and remote desktops, still get the paste, but Waft can't see the text before
+  the cursor there, so it adds no leading space.
+- When an app holds secure keyboard input and Waft can't see the focused
   field, it treats the field as a password field and pastes nothing.
-- ⌃⌥M belongs to Waft while it runs. If another app holds it already,
-  switch modes from the menu.
+- <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> belongs to Waft while it runs. If
+  another app holds it already, switch modes from the menu.
