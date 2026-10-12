@@ -7,6 +7,7 @@ readonly RESOURCES="${APP}/Contents/Resources"
 readonly FRAMEWORK="${APP}/Contents/Frameworks/Sparkle.framework"
 readonly ENTITLEMENTS="Packaging/${PRODUCT}.entitlements"
 readonly IDENTITY="${SIGNING_IDENTITY:-Waft Dev}"
+readonly RULE='================================================================================'
 readonly USAGE='usage: scripts/bundle.sh [debug|release]'
 
 usage() {
@@ -32,6 +33,33 @@ build_binary() {
   swift build --configuration "${configuration}" --show-bin-path
 }
 
+print_licenses() {
+  local path=$1
+  local files
+  files=$(find "${path}" -maxdepth 1 -type f \( -name 'LICENSE*' -o -name 'NOTICE*' \) | sort)
+  [[ -n ${files} ]] || die "${path} has no license file"
+
+  local file
+  while IFS= read -r file; do
+    echo
+    cat "${file}"
+  done <<<"${files}"
+}
+
+print_acknowledgments() {
+  local packages
+  packages=$(swift package show-dependencies --format json \
+    | jq -r '.dependencies[] | [.name, .version, (.url | sub("\\.git$"; "")), .path] | @tsv')
+
+  echo "${PRODUCT} includes the following third-party software."
+
+  local name version url path
+  while IFS=$'\t' read -r name version url path; do
+    printf '\n%s\n%s %s\n%s\n%s\n' "${RULE}" "${name}" "${version}" "${url}" "${RULE}"
+    print_licenses "${path}"
+  done <<<"${packages}"
+}
+
 assemble_app() {
   local configuration=$1 binary_dir=$2
 
@@ -42,6 +70,8 @@ assemble_app() {
   cp "Packaging/${PRODUCT}-Info.plist" "${APP}/Contents/Info.plist"
   cp "Packaging/${PRODUCT}.icns" "${RESOURCES}/${PRODUCT}.icns"
   cp -R Packaging/Localizations/*.lproj "${RESOURCES}/"
+  cp LICENSE NOTICE "${RESOURCES}/"
+  print_acknowledgments >"${RESOURCES}/ACKNOWLEDGMENTS"
   ditto "${binary_dir}/Sparkle.framework" "${FRAMEWORK}"
   rm -rf "${FRAMEWORK}/Versions/B/XPCServices" "${FRAMEWORK}/XPCServices"
   install_name_tool -add_rpath @executable_path/../Frameworks "${APP}/Contents/MacOS/${PRODUCT}"
