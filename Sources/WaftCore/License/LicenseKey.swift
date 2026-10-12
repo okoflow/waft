@@ -4,8 +4,9 @@ package struct LicenseKey: Sendable {
     private static let prefix = "WFT1"
 
     package let license: License
-    package let payload: Data
-    package let signature: Data
+
+    let payload: Data
+    let signature: Data
 
     package init?(_ text: String) {
         let compact = String(text.unicodeScalars.filter { !CharacterSet.whitespacesAndNewlines.contains($0) })
@@ -25,5 +26,9 @@ package struct LicenseKey: Sendable {
         base64 += String(repeating: "=", count: (4 - base64.count % 4) % 4)
 
         return Data(base64Encoded: base64)
+    }
+
+    package func isVerified(by checker: any LicenseSignatureChecking) -> Bool {
+        checker.isValid(signature, for: payload)
     }
 }

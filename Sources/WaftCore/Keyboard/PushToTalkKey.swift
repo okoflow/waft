@@ -8,10 +8,9 @@ package struct PushToTalkKey: Hashable, Sendable {
         let flag: UInt64
     }
 
-    package static let rightOption = PushToTalkKey(known: 61)
-    package static let rightCommand = PushToTalkKey(known: 54)
-    package static let rightShift = PushToTalkKey(known: 60)
     package static let function = PushToTalkKey(known: 63)
+
+    static let rightOption = PushToTalkKey(known: 61)
 
     private static let modifiers: [Int64: Modifier] = [
         54: Modifier(name: String(localized: "Right Command"), shortName: String(localized: "right ⌘"), symbol: "⌘", flag: 0x10),
@@ -27,7 +26,7 @@ package struct PushToTalkKey: Hashable, Sendable {
             symbol: "⌃",
             flag: 0x2000,
         ),
-        63: Modifier(name: String(localized: "Fn"), shortName: "fn", symbol: "🌐", flag: 0x800000),
+        63: Modifier(name: String(localized: "Fn"), shortName: "Fn", symbol: "🌐", flag: 0x800000),
     ]
 
     private static let functionKeys: [Int64: Int] = [
@@ -66,11 +65,13 @@ package struct PushToTalkKey: Hashable, Sendable {
     }
 
     package var shortTitle: String {
-        Self.modifiers[keyCode]?.shortName ?? functionKeyTitle
+        guard let modifier = Self.modifiers[keyCode] else { return functionKeyTitle }
+
+        return modifier.shortName
     }
 
     private var functionKeyTitle: String {
-        "F\(Self.functionKeys[keyCode] ?? 0)"
+        "F\(Self.functionKeys[keyCode, default: 0])"
     }
 
     package init?(keyCode: Int64) {
@@ -84,7 +85,9 @@ package struct PushToTalkKey: Hashable, Sendable {
     }
 
     package func event(for keyEvent: KeyEvent) -> PushToTalk.Event? {
-        switch keyEvent.kind {
+        guard !keyEvent.isRepeat else { return nil }
+
+        return switch keyEvent.kind {
         case .monitorDisabled:
             .monitorDisabled
         case .modifiersChanged:
@@ -97,7 +100,9 @@ package struct PushToTalkKey: Hashable, Sendable {
     }
 
     package func isHeld(in flags: UInt64) -> Bool {
-        modifierFlag.map { flags & $0 != 0 } ?? false
+        guard let modifierFlag else { return false }
+
+        return flags & modifierFlag != 0
     }
 
     package func isPressed(by keyEvent: KeyEvent) -> Bool {
@@ -118,20 +123,14 @@ package struct PushToTalkKey: Hashable, Sendable {
 }
 
 extension PushToTalkKey: Codable {
-    private static let legacyNames: [String: PushToTalkKey] = [
-        "rightOption": .rightOption,
-        "rightCommand": .rightCommand,
-        "rightShift": .rightShift,
-    ]
-
     package init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
-
-        if let name = try? container.decode(String.self) {
-            self = Self.legacyNames[name] ?? .rightOption
-        } else {
-            self = try PushToTalkKey(keyCode: container.decode(Int64.self)) ?? .rightOption
+        let keyCode = try container.decode(Int64.self)
+        guard let key = PushToTalkKey(keyCode: keyCode) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported key code \(keyCode)")
         }
+
+        self = key
     }
 
     package func encode(to encoder: any Encoder) throws {

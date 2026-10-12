@@ -12,7 +12,6 @@ extension AppDependencies {
             claude: KeychainStore.apiKey(for: .claude),
             openAI: KeychainStore.apiKey(for: .openAI),
         )
-        let localServer = LocalServerRewriter()
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
         let statsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
@@ -22,39 +21,31 @@ extension AppDependencies {
             audioInputs: CoreAudioInputs(),
             transcriber: WhisperTranscriber(),
             mediaDecoder: MediaAudioReader(),
-            rewriters: rewriters(keys: apiKeyStores, localServer: localServer),
-            localServers: localServer,
+            rewriters: .http(apiKeys: apiKeyStores),
+            localServers: LocalServerBrowser(),
             keyEventMonitor: KeyEventTap(),
             keyboardState: keyboardState,
             modeShortcut: CarbonHotKey.modeCycle(),
             focusTracker: focusTracker,
+            frontmostAppMonitor: WorkspaceAppMonitor(),
+            urlOpener: WorkspaceURLOpener(),
             inserter: PasteboardInserter(focusTracker: focusTracker, keyboardState: keyboardState),
             clipboard: SystemClipboard(),
             permissions: SystemPermissions(),
             loginItem: MainAppLoginItem(),
             sounds: SystemSoundPlayer(),
-            settingsStore: UserDefaultsStore<Settings>(key: "settings"),
-            vocabularyStore: JSONFileStore<Vocabulary>(url: vocabularyFile),
+            updater: SparkleUpdater(),
+            lifecycle: SystemAppLifecycle(),
+            settingsStore: UserDefaultsStore<Settings>(name: "settings", key: "settings"),
+            vocabularyStore: JSONFileStore<Vocabulary>(name: "dictionary", url: vocabularyFile),
             vocabularyFile: vocabularyFile,
-            historyStore: JSONFileStore<DictationHistory>(url: historyFile, isPrivate: true),
-            statsStore: JSONFileStore<DictationStats>(url: statsFile),
+            historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile, isPrivate: true),
+            statsStore: JSONFileStore<DictationStats>(name: "stats", url: statsFile),
             apiKeyStores: apiKeyStores,
             licenseStore: KeychainStore.license(),
-            trialStore: UserDefaultsStore<Date>(key: "trialStarted"),
+            trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),
+            interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),
-        )
-    }
-
-    private static func rewriters(
-        keys: PerProvider<any ValueStore<String>>,
-        localServer: LocalServerRewriter,
-    ) -> Rewriters {
-        Rewriters(
-            cloud: PerProvider(
-                claude: AnthropicRewriter(apiKeyStore: keys.claude),
-                openAI: OpenAIRewriter(apiKeyStore: keys.openAI),
-            ),
-            localServer: localServer,
         )
     }
 }

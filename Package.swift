@@ -1,14 +1,17 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 import PackageDescription
 
-let strictConcurrency: [SwiftSetting] = [
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+let strict: [SwiftSetting] = [
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("MemberImportVisibility"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .treatAllWarnings(as: .error),
 ]
 
-let mainActorByDefault = strictConcurrency + [.defaultIsolation(MainActor.self)]
+let mainActorByDefault = strict + [.defaultIsolation(MainActor.self)]
 
 let package = Package(
     name: "Waft",
@@ -18,11 +21,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/argmaxinc/argmax-oss-swift.git", exact: "1.1.1"),
+        .package(url: "https://github.com/sparkle-project/Sparkle.git", exact: "2.10.0"),
     ],
     targets: [
         .target(
             name: "WaftCore",
-            swiftSettings: strictConcurrency,
+            swiftSettings: strict + [.strictMemorySafety()],
         ),
         .target(
             name: "WaftSpeech",
@@ -30,12 +34,15 @@ let package = Package(
                 "WaftCore",
                 .product(name: "WhisperKit", package: "argmax-oss-swift"),
             ],
-            swiftSettings: strictConcurrency,
+            swiftSettings: strict,
         ),
         .target(
             name: "WaftPlatform",
-            dependencies: ["WaftCore"],
-            swiftSettings: strictConcurrency,
+            dependencies: [
+                "WaftCore",
+                .product(name: "Sparkle", package: "Sparkle"),
+            ],
+            swiftSettings: strict,
         ),
         .target(
             name: "WaftFeatures",
@@ -48,5 +55,4 @@ let package = Package(
             swiftSettings: mainActorByDefault,
         ),
     ],
-    swiftLanguageModes: [.v6],
 )

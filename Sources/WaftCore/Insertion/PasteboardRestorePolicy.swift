@@ -5,10 +5,11 @@ package enum PasteboardRestorePolicy {
     }
 
     package static let maximumSnapshotBytes = 5 * 1024 * 1024
-    package static let concealedType = "org.nspasteboard.ConcealedType"
-    package static let transientType = "org.nspasteboard.TransientType"
     package static let waftType = "com.okoflow.waft.transcript"
     package static let markerTypes = [transientType, concealedType, waftType]
+
+    static let concealedType = "org.nspasteboard.ConcealedType"
+    static let transientType = "org.nspasteboard.TransientType"
 
     private static let restorableTypes: Set<String> = [
         "public.utf8-plain-text",
@@ -30,9 +31,9 @@ package enum PasteboardRestorePolicy {
     ]
 
     package static func typesToSave(from types: [String]) -> [String] {
-        let hasPNG = types.contains("public.png")
+        let saved = types.contains("public.png") ? restorableTypes.subtracting(["public.tiff"]) : restorableTypes
 
-        return types.filter { restorableTypes.contains($0) && !(hasPNG && $0 == "public.tiff") }
+        return types.filter(saved.contains)
     }
 
     package static func plan(currentTypes: [String], snapshotBytes: Int) -> Plan {

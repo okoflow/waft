@@ -5,7 +5,7 @@ package enum RewriteError: Error, Equatable, Sendable {
     case timeout
     case rejectedKey
     case rateLimited
-    case serviceUnavailable(status: Int)
+    case serviceUnavailable
     case unreadableResponse
     case truncated
     case refused

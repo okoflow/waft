@@ -1,5 +1,5 @@
+package import WaftCore
 import CoreAudio
-import WaftCore
 
 package struct CoreAudioInputs: AudioInputProvider {
     package init() {}
@@ -12,14 +12,14 @@ package struct CoreAudioInputs: AudioInputProvider {
         string(kAudioObjectPropertyName, of: deviceID)
     }
 
-    static func defaultInputName() -> String? {
+    static func defaultInputName() -> String {
         var address = address(kAudioHardwarePropertyDefaultInputDevice, scope: kAudioObjectPropertyScopeGlobal)
         var deviceID = AudioDeviceID(kAudioObjectUnknown)
         var size = UInt32(MemoryLayout<AudioDeviceID>.size)
         let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &size, &deviceID)
-        guard status == noErr, deviceID != kAudioObjectUnknown else { return nil }
+        guard status == noErr, deviceID != kAudioObjectUnknown, let name = name(of: deviceID) else { return "the default input" }
 
-        return name(of: deviceID)
+        return name
     }
 
     private static func inputDeviceIDs() -> [AudioDeviceID] {
@@ -37,8 +37,9 @@ package struct CoreAudioInputs: AudioInputProvider {
     private static func hasInputStreams(_ deviceID: AudioDeviceID) -> Bool {
         var address = address(kAudioDevicePropertyStreams, scope: kAudioObjectPropertyScopeInput)
         var size: UInt32 = 0
+        guard AudioObjectGetPropertyDataSize(deviceID, &address, 0, nil, &size) == noErr else { return false }
 
-        return AudioObjectGetPropertyDataSize(deviceID, &address, 0, nil, &size) == noErr && size > 0
+        return size > 0
     }
 
     private static func string(_ selector: AudioObjectPropertySelector, of objectID: AudioObjectID) -> String? {

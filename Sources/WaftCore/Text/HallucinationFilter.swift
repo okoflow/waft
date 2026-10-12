@@ -1,6 +1,6 @@
 package enum HallucinationFilter {
-    package static let minimumAverageLogProbability = -1.5
-    package static let maximumCompressionRatio = 2.4
+    private static let minimumAverageLogProbability = -1.5
+    private static let maximumCompressionRatio = 2.4
 
     private static let enclosingPairs: [(open: Character, close: Character)] = [
         ("[", "]"),

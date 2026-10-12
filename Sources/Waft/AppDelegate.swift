@@ -2,14 +2,7 @@ import AppKit
 import WaftFeatures
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    let model: AppModel
-
-    override init() {
-        LegacyDataMigration.run()
-        model = AppModel(dependencies: .live())
-
-        super.init()
-    }
+    let model = AppModel(dependencies: .live())
 
     func applicationDidFinishLaunching(_: Notification) {
         model.start()
@@ -26,16 +19,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func application(_: NSApplication, open urls: [URL]) {
-        for url in urls where url.scheme == "waft" && url.host() == "activate" {
-            let key = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "key" }?.value
-
-            model.pro.draft = key ?? ""
-
-            if let key {
-                model.pro.activate(key)
-            }
-
-            model.windows.showSettings(.pro)
+        for url in urls {
+            model.open(url)
         }
     }
 

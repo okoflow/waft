@@ -57,17 +57,17 @@ package struct SpeechModelState: Equatable, Sendable {
 
     package var statusText: String {
         switch phase {
-        case .notInstalled: String(localized: "Speech model not installed")
+        case .notInstalled, .loading: String(localized: "Preparing speech model…")
         case let .downloading(progress): String(localized: "Downloading speech model… \(Self.percent(progress))")
-        case .loading: String(localized: "Preparing speech model…")
         case .ready: String(localized: "Ready")
         case let .failed(reason, _): String(localized: "Speech model failed: \(reason)")
         }
     }
 
-    package var notReadyMessage: String {
+    package var notReadyMessage: String? {
         switch phase {
-        case .notInstalled, .ready: String(localized: "The speech model isn't ready yet")
+        case .ready: nil
+        case .notInstalled: String(localized: "The speech model isn't ready yet")
         case let .downloading(progress): String(localized: "Downloading the speech model… \(Self.percent(progress))")
         case .loading: String(localized: "Preparing the speech model, about a minute the first time…")
         case .failed: String(localized: "The speech model failed to load. Retry from the menu.")
@@ -78,14 +78,6 @@ package struct SpeechModelState: Equatable, Sendable {
 
     private static func percent(_ progress: Double) -> String {
         progress.formatted(.percent.precision(.fractionLength(0)))
-    }
-
-    private static func reason(of event: Event) -> String {
-        if case let .failed(reason) = event {
-            reason
-        } else {
-            "unknown error"
-        }
     }
 
     package mutating func handle(_ event: Event) -> [Effect] {
@@ -108,8 +100,8 @@ package struct SpeechModelState: Equatable, Sendable {
         case (.loading, .loaded):
             return finishLoading()
 
-        case (.downloading, .failed), (.loading, .failed):
-            phase = .failed(reason: Self.reason(of: event), during: phase == .loading ? .load : .download)
+        case let (.downloading, .failed(reason)), let (.loading, .failed(reason)):
+            phase = .failed(reason: reason, during: phase == .loading ? .load : .download)
 
             return []
 

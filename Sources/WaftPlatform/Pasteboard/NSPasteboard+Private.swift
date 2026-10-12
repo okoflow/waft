@@ -14,11 +14,10 @@ extension NSPasteboard {
         return changeCount
     }
 
-    @discardableResult
-    func writePrivately(_ text: String) -> Int {
+    func writePrivately(_ text: String) {
         let item = NSPasteboardItem()
         item.setString(text, forType: .string)
 
-        return writePrivately(item)
+        writePrivately(item)
     }
 }

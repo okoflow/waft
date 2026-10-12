@@ -3,22 +3,19 @@ import Observation
 import WaftCore
 
 @Observable
-package final class PermissionMonitor {
+final class PermissionMonitor {
     private static let pollInterval: TimeInterval = 1
-
-    package private(set) var statuses: [Permission: PermissionStatus] = [:]
 
     @ObservationIgnored var onChange: (() -> Void)?
 
-    @ObservationIgnored private let provider: any PermissionProvider
+    private var statuses: [Permission: PermissionStatus] = [:]
+
     @ObservationIgnored private var timer: Timer?
 
-    package var missing: [Permission] {
-        Permission.allCases.filter { !status(of: $0).isGranted }
-    }
+    private let provider: any PermissionProvider
 
-    package var allGranted: Bool {
-        missing.isEmpty
+    var allGranted: Bool {
+        Permission.allCases.allSatisfy { status(of: $0).isGranted }
     }
 
     init(provider: any PermissionProvider) {
@@ -27,11 +24,11 @@ package final class PermissionMonitor {
         refresh()
     }
 
-    package func status(of permission: Permission) -> PermissionStatus {
-        statuses[permission] ?? .notDetermined
+    func status(of permission: Permission) -> PermissionStatus {
+        statuses[permission, default: .notDetermined]
     }
 
-    package func request(_ permission: Permission) async {
+    func request(_ permission: Permission) async {
         await provider.request(permission)
 
         refresh()
@@ -45,7 +42,7 @@ package final class PermissionMonitor {
         }
     }
 
-    func refresh() {
+    private func refresh() {
         let latest = Dictionary(uniqueKeysWithValues: Permission.allCases.map { ($0, provider.status(of: $0)) })
         guard latest != statuses else { return }
 

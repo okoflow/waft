@@ -7,12 +7,16 @@ struct PasteboardSnapshot: Sendable {
     private let items: [[String: Data]]
     private let isWaftItem: Bool
 
-    static func take(from pasteboard: NSPasteboard = .general) -> PasteboardSnapshot {
+    static func take() -> PasteboardSnapshot {
+        guard let pasteboardItems = NSPasteboard.general.pasteboardItems else {
+            return PasteboardSnapshot(plan: .restore, items: [], isWaftItem: false)
+        }
+
         var allTypes: [String] = []
         var byteCount = 0
         var items: [[String: Data]] = []
 
-        for item in pasteboard.pasteboardItems ?? [] {
+        for item in pasteboardItems {
             let types = item.types.map(\.rawValue)
             allTypes += types
 
@@ -36,7 +40,9 @@ struct PasteboardSnapshot: Sendable {
         )
     }
 
-    func restore(to pasteboard: NSPasteboard = .general) {
+    func restore() {
+        let pasteboard = NSPasteboard.general
+
         if isWaftItem {
             pasteboard.prepareForNewContents(with: .currentHostOnly)
         } else {

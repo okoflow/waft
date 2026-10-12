@@ -2,18 +2,18 @@ struct StockPhrase {
     let text: String
     let trailingWords: Int
 
-    init(_ text: String, trailingWords: Int = 0) {
+    private init(_ text: String, trailingWords: Int = 0) {
         self.text = text
         self.trailingWords = trailingWords
     }
 
     static func phrases(for language: Language) -> [StockPhrase] {
-        phrasesByLanguage[language] ?? []
+        phrasesByLanguage[language, default: []]
     }
 }
 
 extension StockPhrase {
-    fileprivate static let phrasesByLanguage: [Language: [StockPhrase]] = [
+    private static let phrasesByLanguage: [Language: [StockPhrase]] = [
         .arabic: [
             StockPhrase("ترجمة نانسي قنقر", trailingWords: 3),
             StockPhrase("شكرا للمشاهدة"),

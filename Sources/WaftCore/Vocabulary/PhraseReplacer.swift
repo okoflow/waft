@@ -7,39 +7,39 @@ struct PhraseReplacer {
     }
 
     private struct Rule {
-        let words: [String]
+        let segments: [TextSegment]
         let replacement: String
     }
 
     private struct Match {
         let replacement: String
         let lastSegment: Int
-        let particle: String
+        let rest: String
     }
 
     private let rules: [Rule]
+    private let language: Language
 
-    init(_ replacements: [Replacement]) {
+    init(_ replacements: [Replacement], language: Language) {
         rules = replacements
-            .compactMap(Self.rule(for:))
-            .sorted { $0.words.count > $1.words.count }
+            .compactMap { Self.rule(for: $0, in: language) }
+            .sorted { $0.segments.count > $1.segments.count }
+        self.language = language
     }
 
-    static func words(of text: String) -> [String] {
-        TextSegment.split(text).filter(\.isWord).map { normalized($0.text) }
+    static func words(of text: String, in language: Language) -> [String] {
+        TextSegment.split(text).filter(\.isWord).map { $0.text.normalizedWord(in: language) }
     }
 
-    private static func rule(for replacement: Replacement) -> Rule? {
+    private static func rule(for replacement: Replacement, in language: Language) -> Rule? {
         let segments = TextSegment.split(replacement.phrase.trimmingCharacters(in: .whitespacesAndNewlines))
-        let separatesWithSpaces = segments.allSatisfy { $0.isWord || $0.text.allSatisfy(\.isWhitespace) }
-        let words = segments.filter(\.isWord).map { normalized($0.text) }
-        guard !words.isEmpty, separatesWithSpaces, segments.first?.isWord == true else { return nil }
+        guard let first = segments.first, first.isWord else { return nil }
 
-        return Rule(words: words, replacement: replacement.replacement)
-    }
+        let normalized = segments.map { segment in
+            segment.isWord ? TextSegment(text: segment.text.normalizedWord(in: language), isWord: true) : segment
+        }
 
-    private static func normalized(_ word: String) -> String {
-        word.lowercased().replacingOccurrences(of: "ё", with: "е")
+        return Rule(segments: normalized, replacement: replacement.replacement)
     }
 
     private static func koreanParticle(after word: String, in spoken: String) -> String? {
@@ -64,7 +64,7 @@ struct PhraseReplacer {
 
         while index < segments.count {
             if segments[index].isWord, let match = match(at: index, in: segments) {
-                result += match.replacement + match.particle
+                result += match.replacement + match.rest
                 index = match.lastSegment + 1
             } else {
                 result += segments[index].text
@@ -80,23 +80,39 @@ struct PhraseReplacer {
     }
 
     private func match(_ rule: Rule, at start: Int, in segments: [TextSegment]) -> Match? {
-        var index = start
-        var particle = ""
+        let end = start + rule.segments.count - 1
+        guard end < segments.count, let last = rule.segments.last else { return nil }
 
-        for (offset, word) in rule.words.enumerated() {
-            if offset > 0 {
-                guard index + 2 < segments.count, segments[index + 1].text.allSatisfy(\.isWhitespace) else { return nil }
+        let leadingSegmentsMatch = zip(segments[start ..< end], rule.segments).allSatisfy(isMatch)
+        guard leadingSegmentsMatch, let rest = unmatchedRest(of: segments[end], after: last) else { return nil }
 
-                index += 2
-            }
+        return Match(replacement: rule.replacement, lastSegment: end, rest: rest)
+    }
 
-            let spoken = Self.normalized(segments[index].text)
-            guard spoken != word else { continue }
-            guard offset == rule.words.count - 1, let found = Self.koreanParticle(after: word, in: spoken) else { return nil }
+    private func isMatch(_ segment: TextSegment, _ expected: TextSegment) -> Bool {
+        guard !expected.isWord else { return segment.text.normalizedWord(in: language) == expected.text }
+        guard !expected.text.allSatisfy(\.isWhitespace) else { return segment.text.allSatisfy(\.isWhitespace) }
 
-            particle = String(segments[index].text.suffix(found.count))
-        }
+        return segment.text == expected.text
+    }
 
-        return Match(replacement: rule.replacement, lastSegment: index, particle: particle)
+    private func unmatchedRest(of segment: TextSegment, after expected: TextSegment) -> String? {
+        guard expected.isWord else { return unmatchedRest(ofSeparator: segment.text, after: expected.text) }
+
+        return unmatchedRest(ofWord: segment.text, after: expected.text)
+    }
+
+    private func unmatchedRest(ofWord word: String, after expected: String) -> String? {
+        let spoken = word.normalizedWord(in: language)
+        guard spoken != expected else { return "" }
+        guard let particle = Self.koreanParticle(after: expected, in: spoken) else { return nil }
+
+        return String(word.suffix(particle.count))
+    }
+
+    private func unmatchedRest(ofSeparator separator: String, after expected: String) -> String? {
+        guard separator.hasPrefix(expected) else { return nil }
+
+        return String(separator.dropFirst(expected.count))
     }
 }

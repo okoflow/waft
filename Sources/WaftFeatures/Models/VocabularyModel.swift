@@ -1,52 +1,42 @@
-import AppKit
 import Foundation
 import Observation
-import os
 import WaftCore
 
 @Observable
-package final class VocabularyModel {
-    package struct TermDraft: Identifiable {
-        package let id = UUID()
-        package var term: String
-        package var spokenForms: String
+final class VocabularyModel {
+    struct TermDraft: Identifiable {
+        let id = UUID()
+        var term: String
+        var spokenForms: String
     }
 
-    package struct SnippetDraft: Identifiable {
-        package let id = UUID()
-        package var trigger: String
-        package var text: String
+    struct SnippetDraft: Identifiable {
+        let id = UUID()
+        var trigger: String
+        var text: String
     }
 
-    package var terms: [TermDraft] = [] {
+    var terms: [TermDraft] = [] {
         didSet { draftsDidChange() }
     }
 
-    package var snippets: [SnippetDraft] = [] {
+    var snippets: [SnippetDraft] = [] {
         didSet { draftsDidChange() }
     }
 
-    @ObservationIgnored private(set) var current = Vocabulary.empty
-
-    @ObservationIgnored private let store: any ValueStore<Vocabulary>
-    @ObservationIgnored private let fileURL: URL
+    @ObservationIgnored private var current = Vocabulary.empty
     @ObservationIgnored private var isLoadingDrafts = false
 
-    init(store: any ValueStore<Vocabulary>, fileURL: URL) {
+    private let store: any ValueStore<Vocabulary>
+    private let fileURL: URL
+    private let urlOpener: any URLOpener
+
+    init(store: any ValueStore<Vocabulary>, fileURL: URL, urlOpener: any URLOpener) {
         self.store = store
         self.fileURL = fileURL
-        loadDrafts(from: Self.load(from: store) ?? .empty)
-    }
+        self.urlOpener = urlOpener
 
-    private static func load(from store: any ValueStore<Vocabulary>) -> Vocabulary? {
-        do {
-            return try store.load()
-        } catch {
-            Logger.settings
-                .error("Couldn't read the dictionary, keeping the last good one: \(error.localizedDescription, privacy: .public)")
-
-            return nil
-        }
+        loadDrafts(from: store.read(default: .empty))
     }
 
     private static func vocabulary(from terms: [TermDraft], _ snippets: [SnippetDraft]) -> Vocabulary {
@@ -54,47 +44,52 @@ package final class VocabularyModel {
             let term = draft.term.trimmingCharacters(in: .whitespaces)
             guard !term.isEmpty else { return nil }
 
-            let spoken = draft.spokenForms.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            let spoken = draft.spokenForms.split(separator: ",")
+                .map { $0.trimmingCharacters(in: .whitespaces) }
                 .filter { !$0.isEmpty }
 
             return Vocabulary.Term(term: term, spoken: spoken)
         }
-        let validSnippets = snippets.filter { !$0.trigger.trimmingCharacters(in: .whitespaces).isEmpty }
-            .map { Vocabulary.Snippet(trigger: $0.trigger.trimmingCharacters(in: .whitespaces), text: $0.text) }
+        let validSnippets = snippets.compactMap { draft -> Vocabulary.Snippet? in
+            let trigger = draft.trigger.trimmingCharacters(in: .whitespaces)
+            guard !trigger.isEmpty else { return nil }
+
+            return Vocabulary.Snippet(trigger: trigger, text: draft.text)
+        }
 
         return Vocabulary(terms: validTerms, snippets: validSnippets)
     }
 
-    package func addTerm() {
+    func addTerm() {
         terms.append(TermDraft(term: "", spokenForms: ""))
     }
 
-    package func removeTerm(_ id: TermDraft.ID) {
+    func removeTerm(_ id: TermDraft.ID) {
         terms.removeAll { $0.id == id }
     }
 
-    package func addSnippet() {
+    func addSnippet() {
         snippets.append(SnippetDraft(trigger: "", text: ""))
     }
 
-    package func removeSnippet(_ id: SnippetDraft.ID) {
+    func removeSnippet(_ id: SnippetDraft.ID) {
         snippets.removeAll { $0.id == id }
     }
 
-    package func openInEditor() {
-        if !FileManager.default.fileExists(atPath: fileURL.path) {
-            save(current)
+    func openInEditor() {
+        if !store.exists() {
+            store.write(current)
         }
 
-        NSWorkspace.shared.open(fileURL)
+        urlOpener.open(fileURL)
     }
 
-    package func revealInFinder() {
-        NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+    func revealInFinder() {
+        urlOpener.reveal(fileURL)
     }
 
     func reloadFromDisk() -> Vocabulary {
-        if let latest = Self.load(from: store), latest != current {
+        if let latest = store.read(), latest != current {
             loadDrafts(from: latest)
         }
 
@@ -117,14 +112,6 @@ package final class VocabularyModel {
         guard edited != current else { return }
 
         current = edited
-        save(edited)
-    }
-
-    private func save(_ vocabulary: Vocabulary) {
-        do {
-            try store.save(vocabulary)
-        } catch {
-            Logger.settings.error("Couldn't save the dictionary: \(error.localizedDescription, privacy: .public)")
-        }
+        store.write(edited)
     }
 }

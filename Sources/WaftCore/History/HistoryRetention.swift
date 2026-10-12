@@ -17,8 +17,10 @@ package enum HistoryRetention: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    package func cutoff(before date: Date, calendar: Calendar = .current) -> Date? {
-        switch self {
+    func cutoff(before date: Date) -> Date? {
+        let calendar = Calendar.current
+
+        return switch self {
         case .day: calendar.date(byAdding: .day, value: -1, to: date)
         case .week: calendar.date(byAdding: .day, value: -7, to: date)
         case .month: calendar.date(byAdding: .month, value: -1, to: date)

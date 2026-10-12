@@ -21,9 +21,12 @@ extension String {
         return String(String.UnicodeScalarView(lowered.unicodeScalars.compactMap(language.foldedScalar)))
     }
 
+    func normalizedWord(in language: Language) -> String {
+        folded(in: language).replacingOccurrences(of: "ё", with: "е")
+    }
+
     func normalizedForComparison(in language: Language) -> String {
-        let lowered = folded(in: language).replacingOccurrences(of: "ё", with: "е")
-        let kept = String(String.UnicodeScalarView(lowered.unicodeScalars.filter {
+        let kept = String(String.UnicodeScalarView(normalizedWord(in: language).unicodeScalars.filter {
             !Self.ignoredCategories.contains($0.properties.generalCategory)
         }))
         let words = kept.split(whereSeparator: \.isWhitespace)

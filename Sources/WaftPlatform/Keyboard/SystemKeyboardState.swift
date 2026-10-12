@@ -1,5 +1,5 @@
+package import WaftCore
 import CoreGraphics
-import WaftCore
 
 package struct SystemKeyboardState: KeyboardState {
     package init() {}

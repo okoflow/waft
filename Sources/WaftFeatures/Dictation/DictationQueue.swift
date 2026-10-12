@@ -9,17 +9,19 @@ final class DictationQueue {
         String(localized: "Transcribing…")
     }
 
-    @ObservationIgnored private let transcriber: any Transcriber
-    @ObservationIgnored private let processor: TranscriptProcessor
-    @ObservationIgnored private let inserter: any TextInserter
-    @ObservationIgnored private let clipboard: any Clipboard
-    @ObservationIgnored private let history: HistoryModel
-    @ObservationIgnored private let stats: StatsModel
-    @ObservationIgnored private let settings: SettingsModel
-    @ObservationIgnored private let hud: HUDController
-    @ObservationIgnored private let continuation: AsyncStream<DictationJob>.Continuation
     private var recentTranscripts = RecentTranscripts()
+
     @ObservationIgnored private var pendingCount = 0
+    @ObservationIgnored private var transcriptExpiry: Task<Void, Never>?
+
+    private let transcriber: any Transcriber
+    private let processor: TranscriptProcessor
+    private let inserter: any TextInserter
+    private let clipboard: any Clipboard
+    private let history: HistoryModel
+    private let stats: StatsModel
+    private let hud: HUDController
+    private let continuation: AsyncStream<DictationJob>.Continuation
 
     var latestTranscript: String? {
         recentTranscripts.latest(at: Date())
@@ -32,7 +34,6 @@ final class DictationQueue {
         clipboard: any Clipboard,
         history: HistoryModel,
         stats: StatsModel,
-        settings: SettingsModel,
         hud: HUDController,
     ) {
         self.transcriber = transcriber
@@ -41,7 +42,6 @@ final class DictationQueue {
         self.clipboard = clipboard
         self.history = history
         self.stats = stats
-        self.settings = settings
         self.hud = hud
 
         let (jobs, continuation) = AsyncStream.makeStream(of: DictationJob.self)
@@ -55,11 +55,9 @@ final class DictationQueue {
     }
 
     private static func editingLabel(for provider: ModelProvider) -> String {
-        if provider.isCloud {
-            return String(localized: "Editing with \(provider.title)…")
-        }
+        guard provider.isCloud else { return String(localized: "Editing on this Mac…") }
 
-        return String(localized: "Editing on this Mac…")
+        return String(localized: "Editing with \(provider.title)…")
     }
 
     private static func workingLabel(for job: DictationJob, spoken: Language) -> String {
@@ -67,11 +65,15 @@ final class DictationQueue {
             return String(localized: "Translating into \(job.setup.translation.target(forSpoken: spoken).inlineName)…")
         }
 
-        if job.setup.provider.isCloud {
-            return String(localized: "Polishing with \(job.setup.provider.title)…")
-        }
+        guard job.setup.provider.isCloud else { return String(localized: "Cleaning up on this Mac…") }
 
-        return String(localized: "Polishing on this Mac…")
+        return String(localized: "Cleaning up with \(job.setup.provider.title)…")
+    }
+
+    private static func describe(_ fallback: RewriteFallback?) -> String {
+        guard let fallback else { return "none" }
+
+        return fallback.rawValue
     }
 
     func submit(_ job: DictationJob) {
@@ -81,8 +83,10 @@ final class DictationQueue {
         continuation.yield(job)
     }
 
-    func waitUntilIdle() async {
-        await inserter.waitUntilIdle()
+    func copyLatestTranscript() {
+        guard let latestTranscript else { return }
+
+        clipboard.copy(latestTranscript)
     }
 
     private func run(_ job: DictationJob) async {
@@ -95,41 +99,42 @@ final class DictationQueue {
     }
 
     private func outcome(of job: DictationJob) async -> DictationOutcome {
+        let transcript: Transcript?
+
         do {
-            guard let transcript = try await transcriber.transcribe(
-                job.samples,
-                in: job.language,
-                vocabulary: job.vocabulary.promptTerms,
-            ) else {
-                Logger.dictation.info("No speech in the recording")
-
-                return .noSpeech
-            }
-
-            if let selection = job.selection {
-                return await edit(selection, following: transcript, for: job)
-            }
-
-            if job.mode.isCloud, job.allowsAI {
-                hud.setWorking(Self.workingLabel(for: job, spoken: transcript.language))
-            }
-
-            let processed = await processor.process(
-                transcript.text,
-                language: transcript.language,
-                mode: job.mode,
-                setup: job.setup,
-                vocabulary: job.vocabulary,
-                allowsAI: job.allowsAI,
-            )
-            log(transcript, processed)
-
-            return await deliver(processed, for: job)
+            transcript = try await transcriber.transcribe(job.samples, in: job.language, vocabulary: job.vocabulary.promptTerms)
         } catch {
-            Logger.dictation.error("Transcription failed: \(error.localizedDescription, privacy: .public)")
+            let cause = error as NSError
+            Logger.dictation.error("Transcription failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             return .failed(error.localizedDescription)
         }
+
+        guard let transcript else {
+            Logger.dictation.info("No speech in the recording")
+
+            return .noSpeech
+        }
+
+        if let selection = job.selection {
+            return await edit(selection, following: transcript, for: job)
+        }
+
+        if job.mode.usesAI, job.allowsAI {
+            hud.setWorking(Self.workingLabel(for: job, spoken: transcript.language))
+        }
+
+        let processed = await processor.process(
+            transcript,
+            mode: job.mode,
+            setup: job.setup,
+            vocabulary: job.vocabulary,
+            allowsAI: job.allowsAI,
+        )
+
+        log(transcript, processed, for: job)
+
+        return await deliver(processed, for: job)
     }
 
     private func edit(_ selection: String, following transcript: Transcript, for job: DictationJob) async -> DictationOutcome {
@@ -137,41 +142,25 @@ final class DictationQueue {
 
         hud.setWorking(Self.editingLabel(for: provider))
 
-        do {
-            let edited = try await processor.edit(
-                selection,
-                instruction: transcript.text,
-                language: transcript.language,
-                setup: job.setup,
-            )
-            let processed = ProcessedText(
-                text: edited,
-                requestedMode: job.mode,
-                appliedMode: job.mode,
-                contactedCloud: provider.isCloud,
-            )
+        do throws(RewriteError) {
+            let edited = try await processor.edit(selection, following: transcript, setup: job.setup)
 
-            return await deliver(processed, for: job)
+            return await deliver(ProcessedText(text: edited, mode: job.mode), for: job)
         } catch {
-            return .editFailed(RewriteFallback(error as? RewriteError ?? .offline).reason(for: provider).sentenceCased)
+            return .editFailed(RewriteFallback(error).reason(for: provider).sentenceCased())
         }
     }
 
     private func deliver(_ processed: ProcessedText, for job: DictationJob) async -> DictationOutcome {
         guard !processed.text.isEmpty else { return .noSpeech }
 
-        recentTranscripts.remember(processed.text, at: Date())
+        rememberLatest(processed.text)
 
-        guard job.pastes else {
-            clipboard.copy(processed.text)
-            remember(processed, for: job)
-
-            return .copied(processed)
-        }
+        guard job.pastes else { return copy(processed, for: job) }
 
         switch await inserter.insert(processed.text, into: job.target, releasing: job.key) {
         case .pasted:
-            remember(processed, for: job)
+            record(processed, for: job)
 
             return .pasted(processed)
 
@@ -179,40 +168,49 @@ final class DictationQueue {
             return .blockedInPasswordField
 
         case .skipped:
-            clipboard.copy(processed.text)
-            remember(processed, for: job)
-
-            return .copied(processed)
+            return copy(processed, for: job)
         }
     }
 
-    private func remember(_ processed: ProcessedText, for job: DictationJob) {
+    private func copy(_ processed: ProcessedText, for job: DictationJob) -> DictationOutcome {
+        clipboard.copy(processed.text)
+        record(processed, for: job)
+
+        return .copied(processed)
+    }
+
+    private func rememberLatest(_ text: String) {
+        recentTranscripts.remember(text, at: Date())
+
+        transcriptExpiry?.cancel()
+        transcriptExpiry = Task { [weak self] in
+            guard await Task.slept(for: .seconds(RecentTranscripts.lifetime)) else { return }
+
+            self?.recentTranscripts = RecentTranscripts()
+        }
+    }
+
+    private func record(_ processed: ProcessedText, for job: DictationJob) {
         guard job.selection == nil else { return }
-
-        stats.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
-
-        guard settings.settings.keepsHistory else { return }
 
         let entry = DictationHistory.Entry(
             date: Date(),
             text: processed.text,
-            mode: processed.appliedMode,
+            mode: processed.mode,
             app: job.target.bundleIdentifier,
         )
 
-        history.add(entry, keepingFor: settings.settings.historyRetention, limit: settings.settings.historyLimit)
+        stats.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
+        history.add(entry)
     }
 
-    private func log(_ transcript: Transcript, _ processed: ProcessedText) {
-        let fallback = processed.fallback?.rawValue ?? "none"
-
+    private func log(_ transcript: Transcript, _ processed: ProcessedText, for job: DictationJob) {
         Logger.dictation.info(
             """
-            Recognized \(transcript.text.count) characters of \(transcript.language.code, privacy: .public) \
+            Recognized \(transcript.text.count) characters of \(transcript.language.rawValue, privacy: .public) \
             in \(transcript.detectionDuration + transcript.decodingDuration, privacy: .public); \
-            mode \(processed.requestedMode.rawValue, privacy: .public) \
-            ran as \(processed.appliedMode.rawValue, privacy: .public), \
-            fallback \(fallback, privacy: .public), cloud \(processed.contactedCloud), snippet \(processed.isSnippet)
+            mode \(job.mode.rawValue, privacy: .public) ran as \(processed.mode.rawValue, privacy: .public), \
+            fallback \(Self.describe(processed.fallback), privacy: .public)
             """,
         )
     }

@@ -1,14 +1,26 @@
-import Foundation
+package import Foundation
 
 package struct DictationStats: Codable, Equatable, Sendable {
     package struct Day: Codable, Equatable, Sendable {
+        private static let typingWordsPerMinute = 40.0
+
         package var words = 0
         package var dictations = 0
         package var seconds = 0.0
 
+        package var savedOverTyping: Duration {
+            .seconds(max(0, Double(words) / Self.typingWordsPerMinute * 60 - seconds))
+        }
+
+        package var wordsPerMinute: Int? {
+            guard seconds > 0 else { return nil }
+
+            return Int((Double(words) / (seconds / 60)).rounded())
+        }
+
         package init() {}
 
-        package static func + (lhs: Day, rhs: Day) -> Day {
+        fileprivate static func + (lhs: Day, rhs: Day) -> Day {
             var sum = lhs
             sum.words += rhs.words
             sum.dictations += rhs.dictations
@@ -18,24 +30,26 @@ package struct DictationStats: Codable, Equatable, Sendable {
         }
     }
 
-    package static let typingWordsPerMinute = 40.0
-
     package private(set) var days: [String: Day] = [:]
+
+    package var allTime: Day {
+        days.values.reduce(Day(), +)
+    }
 
     package init() {}
 
-    package static func key(for date: Date, calendar: Calendar = .current) -> String {
-        let parts = calendar.dateComponents([.year, .month, .day], from: date)
-
-        return String(format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
+    private static func key(for date: Date, calendar: Calendar) -> String {
+        date.formatted(Date.ISO8601FormatStyle(timeZone: calendar.timeZone).year().month().day())
     }
 
     package mutating func record(words: Int, seconds: Double, on date: Date, calendar: Calendar = .current) {
-        var day = days[Self.key(for: date, calendar: calendar)] ?? Day()
+        let key = Self.key(for: date, calendar: calendar)
+        var day = days[key, default: Day()]
+
         day.words += words
         day.dictations += 1
         day.seconds += seconds
-        days[Self.key(for: date, calendar: calendar)] = day
+        days[key] = day
     }
 
     package func daily(last count: Int, endingOn date: Date, calendar: Calendar = .current) -> [(date: Date, day: Day)] {
@@ -43,11 +57,28 @@ package struct DictationStats: Codable, Equatable, Sendable {
 
         return (0 ..< count).reversed().compactMap { offset in
             calendar.date(byAdding: .day, value: -offset, to: end)
-                .map { ($0, days[Self.key(for: $0, calendar: calendar)] ?? Day()) }
+                .map { ($0, days[Self.key(for: $0, calendar: calendar), default: Day()]) }
         }
     }
 
     package func total(last count: Int, endingOn date: Date, calendar: Calendar = .current) -> Day {
         daily(last: count, endingOn: date, calendar: calendar).map(\.day).reduce(Day(), +)
+    }
+
+    package func streak(endingOn date: Date, calendar: Calendar = .current) -> Int {
+        let today = calendar.startOfDay(for: date)
+        var day = hasDictated(on: today, calendar: calendar) ? today : calendar.date(byAdding: .day, value: -1, to: today)
+        var count = 0
+
+        while let current = day, hasDictated(on: current, calendar: calendar) {
+            count += 1
+            day = calendar.date(byAdding: .day, value: -1, to: current)
+        }
+
+        return count
+    }
+
+    private func hasDictated(on date: Date, calendar: Calendar) -> Bool {
+        days[Self.key(for: date, calendar: calendar), default: Day()].dictations > 0
     }
 }

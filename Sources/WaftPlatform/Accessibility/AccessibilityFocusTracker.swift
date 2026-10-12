@@ -1,6 +1,6 @@
+package import WaftCore
 import AppKit
 import ApplicationServices
-import WaftCore
 
 @MainActor
 package final class AccessibilityFocusTracker: FocusTracker {
@@ -10,6 +10,6 @@ package final class AccessibilityFocusTracker: FocusTracker {
         let app = NSWorkspace.shared.frontmostApplication
         let element = AXIsProcessTrusted() ? AccessibilityElement.focusedElement() : nil
 
-        return FocusTarget(processID: app?.processIdentifier ?? 0, bundleIdentifier: app?.bundleIdentifier, element: element)
+        return FocusTarget(processID: app?.processIdentifier, bundleIdentifier: app?.bundleIdentifier, element: element)
     }
 }

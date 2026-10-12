@@ -8,16 +8,16 @@ struct ProSettingsPane: View {
         ProHero(pro: pro)
 
         SettingsSection("What Pro adds") {
-            ForEach(ProBenefit.all) { benefit in
-                if benefit.id != ProBenefit.all.first?.id {
-                    RowDivider()
+            DividedForEach(ProBenefit.all, id: \.symbolName) { benefit in
+                TileRow(symbolName: benefit.symbolName, tint: benefit.tint, title: benefit.title, detail: benefit.detail) {
+                    Image(systemName: pro.isUnlocked ? "checkmark.circle.fill" : "lock.fill")
+                        .foregroundStyle(pro.isUnlocked ? Palette.success : .secondary)
+                        .accessibilityLabel(pro.isUnlocked ? Text("Included") : Text("Locked"))
                 }
-
-                ProBenefitRow(benefit: benefit, isUnlocked: pro.access.isUnlocked)
             }
         }
 
-        if pro.license != nil || !ProAccess.isFreeDuringBeta {
+        if pro.showsLicenseSection {
             LicenseSection(pro: pro)
         }
     }
@@ -29,7 +29,7 @@ private struct ProHero: View {
     private var status: String {
         switch pro.access.status {
         case let .licensed(license):
-            String(localized: "Licensed to \(license.name ?? license.email). Thank you!")
+            String(localized: "Licensed to \(license.holder). Thank you!")
         case .beta:
             String(localized: "Free while Waft is in beta.")
         case .trial:
@@ -50,11 +50,7 @@ private struct ProHero: View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
 
         HStack(spacing: 16) {
-            Image(nsImage: NSApp.applicationIconImage)
-                .resizable()
-                .frame(width: 64, height: 64)
-                .shadow(color: .black.opacity(0.18), radius: 6, y: 3)
-                .accessibilityHidden(true)
+            AppIcon(size: 64)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("Waft Pro")
@@ -74,43 +70,23 @@ private struct ProHero: View {
         }
         .foregroundStyle(.white)
         .padding(20)
-        .background(LinearGradient.pro, in: shape)
+        .background(Palette.proGradient, in: shape)
     }
 }
 
-private struct ProBenefitRow: View {
-    let benefit: ProBenefit
-    let isUnlocked: Bool
-
-    var body: some View {
-        HStack(spacing: 12) {
-            IconTile(symbolName: benefit.symbolName, tint: benefit.tint, size: 28)
-
-            RowLabel(title: benefit.title, description: benefit.detail)
-
-            Spacer(minLength: 0)
-
-            Image(systemName: isUnlocked ? "checkmark.circle.fill" : "lock.fill")
-                .foregroundStyle(isUnlocked ? Palette.success : .secondary)
-                .accessibilityLabel(isUnlocked ? Text("Included") : Text("Locked"))
-        }
-        .settingsRowPadding()
-    }
-}
-
-struct ProBenefit: Identifiable {
+private struct ProBenefit {
     static let all = [
         ProBenefit(
-            symbolName: "sparkles",
+            symbolName: "text.badge.checkmark",
             tint: .purple,
             title: "Clean and Formal",
-            detail: "Fillers and false starts go; grammar, punctuation and tone get fixed.",
+            detail: "Fillers and false starts go; grammar, punctuation, and tone get fixed.",
         ),
         ProBenefit(
             symbolName: "globe",
             tint: .blue,
-            title: "Translation both ways",
-            detail: "Speak any of 45 languages and get another, in either direction.",
+            title: "Translate",
+            detail: "Speak any of 45 languages and get another, one way or both.",
         ),
         ProBenefit(
             symbolName: "cpu.fill",
@@ -134,7 +110,7 @@ struct ProBenefit: Identifiable {
             symbolName: "slider.horizontal.3",
             tint: .gray,
             title: "Your own instructions",
-            detail: "Tune each mode to the way you write.",
+            detail: "Tune Clean, Formal, and Translate to the way you write.",
         ),
     ]
 
@@ -142,8 +118,4 @@ struct ProBenefit: Identifiable {
     let tint: TileTint
     let title: LocalizedStringKey
     let detail: LocalizedStringKey
-
-    var id: String {
-        symbolName
-    }
 }

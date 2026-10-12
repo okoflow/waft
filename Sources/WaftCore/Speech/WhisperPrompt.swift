@@ -1,7 +1,7 @@
 import Foundation
 
 package enum WhisperPrompt {
-    package static let maximumGlossaryLength = 200
+    static let maximumGlossaryLength = 200
 
     package static func text(for language: Language, vocabulary: [String]) -> String? {
         let parts = [styleSentence(for: language), glossary(from: vocabulary)].compactMap(\.self)
@@ -9,7 +9,7 @@ package enum WhisperPrompt {
         return parts.isEmpty ? nil : parts.joined(separator: " ")
     }
 
-    package static func styleSentence(for language: Language) -> String? {
+    private static func styleSentence(for language: Language) -> String? {
         styleSentences[language]
     }
 
@@ -28,7 +28,7 @@ package enum WhisperPrompt {
 }
 
 extension WhisperPrompt {
-    fileprivate static let styleSentences: [Language: String] = [
+    private static let styleSentences: [Language: String] = [
         .arabic: "مرحبًا! كيف حالك؟ هذا مثال على نص مكتوب، فيه فواصل ونقاط.",
         .azerbaijani: "Salam! Bu, böyük hərflər, vergüllər və nöqtələr olan nümunə mətndir.",
         .bosnian: "Zdravo! Ovo je primjer teksta s velikim slovima, zarezima i tačkama.",

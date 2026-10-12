@@ -1,12 +1,13 @@
 import Foundation
 
-package enum VoiceCommands {
+enum VoiceCommands {
     private struct Command {
         let words: [String]
         let isParagraph: Bool
     }
 
     private static let lines: [Language: [String]] = [
+        .chinese: ["换行"],
         .czech: ["nový řádek"],
         .danish: ["ny linje"],
         .dutch: ["nieuwe regel"],
@@ -52,7 +53,7 @@ package enum VoiceCommands {
     private static let pauseMarks: Set<Character> = [".", ",", "!", "?", ";", ":", "…", "。", "，", "、", "！", "？", "：", "；"]
     private static let joiningMarks: Set<Character> = [",", "，", "、", ";", "；", ":", "：", "-", "–", "—"]
 
-    package static func apply(_ text: String, language: Language) -> String {
+    static func apply(_ text: String, language: Language) -> String {
         let commands = commands(for: language)
         guard !commands.isEmpty else { return text }
 
@@ -64,7 +65,7 @@ package enum VoiceCommands {
         while index < segments.count {
             let segment = segments[index]
 
-            if segment.isWord, let (command, end) = match(commands, at: index, in: segments) {
+            if segment.isWord, let (command, end) = match(commands, at: index, in: segments, language: language) {
                 result = endingLine(result, language: language, isParagraph: command.isParagraph)
                 result += command.isParagraph ? "\n\n" : "\n"
                 index = end + 1
@@ -84,25 +85,30 @@ package enum VoiceCommands {
     }
 
     private static func commands(for language: Language) -> [Command] {
-        let lineCommands = (lines[language] ?? []).map { Command(words: words(of: $0), isParagraph: false) }
-        let paragraphCommands = (paragraphs[language] ?? []).map { Command(words: words(of: $0), isParagraph: true) }
+        let lineCommands = commands(lines[language, default: []], isParagraph: false, in: language)
+        let paragraphCommands = commands(paragraphs[language, default: []], isParagraph: true, in: language)
 
         return (lineCommands + paragraphCommands).sorted { $0.words.count > $1.words.count }
     }
 
-    private static func words(of phrase: String) -> [String] {
-        TextSegment.split(phrase).filter(\.isWord).map { normalized($0.text) }
+    private static func commands(_ phrases: [String], isParagraph: Bool, in language: Language) -> [Command] {
+        phrases.map { Command(words: words(of: $0, in: language), isParagraph: isParagraph) }
     }
 
-    private static func normalized(_ word: String) -> String {
-        word.lowercased().replacingOccurrences(of: "ё", with: "е")
+    private static func words(of phrase: String, in language: Language) -> [String] {
+        TextSegment.split(phrase).filter(\.isWord).map { $0.text.normalizedWord(in: language) }
     }
 
-    private static func match(_ commands: [Command], at start: Int, in segments: [TextSegment]) -> (Command, Int)? {
+    private static func match(
+        _ commands: [Command],
+        at start: Int,
+        in segments: [TextSegment],
+        language: Language,
+    ) -> (Command, Int)? {
         guard isPause(before: start, in: segments) else { return nil }
 
         for command in commands {
-            if let end = end(of: command, at: start, in: segments), isPause(after: end, in: segments) {
+            if let end = end(of: command, at: start, in: segments, language: language), isPause(after: end, in: segments) {
                 return (command, end)
             }
         }
@@ -110,7 +116,7 @@ package enum VoiceCommands {
         return nil
     }
 
-    private static func end(of command: Command, at start: Int, in segments: [TextSegment]) -> Int? {
+    private static func end(of command: Command, at start: Int, in segments: [TextSegment], language: Language) -> Int? {
         var index = start
 
         for (position, word) in command.words.enumerated() {
@@ -120,7 +126,7 @@ package enum VoiceCommands {
                 index += 2
             }
 
-            guard segments[index].isWord, normalized(segments[index].text) == word else { return nil }
+            guard segments[index].isWord, segments[index].text.normalizedWord(in: language) == word else { return nil }
         }
 
         return index

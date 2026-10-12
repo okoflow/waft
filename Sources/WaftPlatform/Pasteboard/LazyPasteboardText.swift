@@ -1,7 +1,7 @@
 import AppKit
 import os
 
-final class LazyPasteboardText: NSObject, NSPasteboardItemDataProvider, @unchecked Sendable {
+final class LazyPasteboardText: NSObject, NSPasteboardItemDataProvider, Sendable {
     private struct State {
         var isArmed = false
         var wasRead = false
@@ -24,8 +24,11 @@ final class LazyPasteboardText: NSObject, NSPasteboardItemDataProvider, @uncheck
 
     func pasteboard(_: NSPasteboard?, item: NSPasteboardItem, provideDataForType type: NSPasteboard.PasteboardType) {
         item.setString(text, forType: type)
-        state.withLock { $0.wasRead = $0.wasRead || $0.isArmed }
-    }
 
-    func pasteboardFinishedWithDataProvider(_: NSPasteboard) {}
+        state.withLock { state in
+            guard state.isArmed else { return }
+
+            state.wasRead = true
+        }
+    }
 }

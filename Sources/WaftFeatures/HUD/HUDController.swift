@@ -1,13 +1,14 @@
 import AppKit
 import Observation
+import WaftCore
 
 @Observable
-package final class HUDController {
+final class HUDController {
     private static let barCount = 9
     private static let levelRefreshInterval: TimeInterval = 0.05
 
-    package private(set) var content = HUDContent.hidden
-    package private(set) var levels = [Float](repeating: 0, count: barCount)
+    private(set) var content: HUDContent?
+    private(set) var levels = [Float](repeating: 0, count: barCount)
 
     @ObservationIgnored private var panel: HUDPanel?
     @ObservationIgnored private var queuedMessages: [HUDMessage] = []
@@ -16,7 +17,7 @@ package final class HUDController {
     @ObservationIgnored private var messageTask: Task<Void, Never>?
     @ObservationIgnored private var orderOutTask: Task<Void, Never>?
 
-    package var isListening: Bool {
+    private var isListening: Bool {
         if case .listening = content {
             true
         } else {
@@ -32,9 +33,7 @@ package final class HUDController {
         }
     }
 
-    package init() {}
-
-    package func showListening(badge: String?, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
+    func showListening(badge: String?, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
         messageTask?.cancel()
         levels = [Float](repeating: 0, count: Self.barCount)
 
@@ -46,13 +45,13 @@ package final class HUDController {
         }
     }
 
-    package func lockHandsFree() {
+    func lockHandsFree() {
         guard case let .listening(badge, _) = content else { return }
 
         content = .listening(badge: badge, isHandsFree: true)
     }
 
-    package func hideListening(handingOverTo label: String? = nil) {
+    func hideListening(handingOverTo label: String? = nil) {
         guard isListening else { return }
 
         levelTimer?.invalidate()
@@ -66,18 +65,18 @@ package final class HUDController {
         }
     }
 
-    package func setWorking(_ label: String?) {
+    func setWorking(_ label: String?) {
         workingLabel = label
 
         showNext()
     }
 
-    package func show(_ message: HUDMessage) {
+    func show(_ message: HUDMessage) {
         queuedMessages.append(message)
         showNext()
     }
 
-    package func makePanel() {
+    func makePanel() {
         guard panel == nil else { return }
 
         panel = HUDPanel(rootView: HUDView(hud: self))
@@ -96,14 +95,13 @@ package final class HUDController {
     }
 
     private func hide() {
-        content = .hidden
+        content = nil
 
         orderOutTask?.cancel()
         orderOutTask = Task { [weak self] in
-            try? await Task.sleep(for: .milliseconds(400))
-            guard !Task.isCancelled, self?.content == .hidden else { return }
+            guard await Task.slept(for: .milliseconds(400)), let self, content == nil else { return }
 
-            self?.panel?.orderOut(nil)
+            panel?.orderOut(nil)
         }
     }
 
@@ -111,8 +109,7 @@ package final class HUDController {
         present(.message(message))
 
         messageTask = Task { [weak self] in
-            try? await Task.sleep(for: message.duration)
-            guard !Task.isCancelled else { return }
+            guard await Task.slept(for: message.duration) else { return }
 
             self?.messageDidExpire()
         }
@@ -129,7 +126,7 @@ package final class HUDController {
         makePanel()
         orderOutTask?.cancel()
 
-        if content == .hidden {
+        if content == nil {
             panel?.showOnActiveScreen()
         }
 
@@ -137,7 +134,8 @@ package final class HUDController {
     }
 
     private func pushLevel(_ level: Float) {
-        let previous = levels.last ?? 0
+        guard let previous = levels.last else { return }
+
         let rate: Float = level > previous ? 0.7 : 0.3
 
         levels.removeFirst()

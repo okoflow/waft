@@ -5,9 +5,3 @@ package protocol FocusedElement: Sendable {
 
     func compare(with other: any FocusedElement) -> FocusComparison
 }
-
-package enum FocusComparison: Sendable {
-    case same
-    case different
-    case unknown
-}

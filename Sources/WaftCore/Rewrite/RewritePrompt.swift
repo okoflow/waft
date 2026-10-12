@@ -78,28 +78,30 @@ package enum RewritePrompt {
     """
 
     package static func system(for request: RewriteRequest) -> String {
-        request.selection == nil ? request.instructions + "\n" + rules : editInstructions
+        switch request.kind {
+        case let .cleanup(instructions, _): instructions + "\n" + rules
+        case .edit: editInstructions
+        }
     }
 
     package static func userMessage(for request: RewriteRequest) -> String {
-        if let selection = request.selection {
-            return """
-            Spoken language: \(request.language.name).
-            <instruction>
-            \(request.text)
-            </instruction>
-            <text>
-            \(selection)
-            </text>
-            """
+        let spokenLanguage = "Spoken language: \(request.language.name)."
+
+        switch request.kind {
+        case let .cleanup(_, target):
+            let translation = target.map { "Translate into: \(targetName(for: $0))." }
+
+            return [spokenLanguage, translation, "<transcript>", request.text, "</transcript>"]
+                .compactMap(\.self)
+                .joined(separator: "\n")
+
+        case let .edit(selection):
+            return [spokenLanguage, "<instruction>", request.text, "</instruction>", "<text>", selection, "</text>"]
+                .joined(separator: "\n")
         }
-
-        let target = request.target.map { "Translate into: \(targetName(for: $0)).\n" } ?? ""
-
-        return "Spoken language: \(request.language.name).\n\(target)<transcript>\n\(request.text)\n</transcript>"
     }
 
-    package static func defaultInstructions(for mode: Mode) -> String {
+    static func defaultInstructions(for mode: Mode) -> String {
         switch mode {
         case .formal: formalInstructions
         case .translate: translateInstructions

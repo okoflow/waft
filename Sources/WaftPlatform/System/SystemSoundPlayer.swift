@@ -1,6 +1,6 @@
+package import WaftCore
 import AudioToolbox
 import Foundation
-import WaftCore
 
 @MainActor
 package final class SystemSoundPlayer: FeedbackSoundPlayer {
@@ -9,10 +9,11 @@ package final class SystemSoundPlayer: FeedbackSoundPlayer {
     package init() {}
 
     package func play(_ sound: FeedbackSound) {
-        let name = switch sound {
-        case .recordingStarted: "Tink"
-        case .recordingFinished: "Pop"
-        }
+        let name =
+            switch sound {
+            case .recordingStarted: "Tink"
+            case .recordingFinished: "Pop"
+            }
 
         if let soundID = soundID(named: name) {
             AudioServicesPlaySystemSound(soundID)

@@ -9,14 +9,14 @@ struct HesitationPattern: Sendable {
             patterns[entry.key] = entry.value.map { HesitationPattern(shortestSpelling: $0, in: entry.key) }
         }
 
-    let runs: [Run]
+    private let runs: [Run]
 
-    init(shortestSpelling: String, in language: Language) {
+    private init(shortestSpelling: String, in language: Language) {
         runs = Self.runs(of: shortestSpelling.folded(in: language))
     }
 
     static func patterns(for language: Language) -> [HesitationPattern] {
-        patternsByLanguage[language] ?? []
+        patternsByLanguage[language, default: []]
     }
 
     static func runs(of text: String) -> [Run] {
@@ -39,7 +39,7 @@ struct HesitationPattern: Sendable {
 }
 
 extension HesitationPattern {
-    fileprivate static let shortestSpellings: [Language: [String]] = [
+    private static let shortestSpellings: [Language: [String]] = [
         .arabic: ["إمم", "امم", "ممم"],
         .azerbaijani: ["əə", "hm", "mm"],
         .bosnian: ["eee", "ehm", "hm", "mm"],

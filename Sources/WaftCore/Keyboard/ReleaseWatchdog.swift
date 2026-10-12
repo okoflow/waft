@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package struct ReleaseWatchdog: Sendable {
     package enum Verdict: Equatable, Sendable {
@@ -6,9 +6,9 @@ package struct ReleaseWatchdog: Sendable {
         case released(since: TimeInterval)
     }
 
-    package static let requiredReleasedPolls = 4
+    static let requiredReleasedPolls = 4
 
-    private var releasedSince: TimeInterval?
+    private var releaseStart: TimeInterval?
     private var releasedPolls = 0
 
     package init() {}
@@ -20,20 +20,19 @@ package struct ReleaseWatchdog: Sendable {
             return .holding
         }
 
-        let since = releasedSince ?? time
+        if releaseStart == nil {
+            releaseStart = time
+        }
 
-        releasedSince = since
         releasedPolls += 1
 
-        return releasedPolls >= Self.requiredReleasedPolls ? .released(since: since) : .holding
-    }
+        guard releasedPolls >= Self.requiredReleasedPolls, let releaseStart else { return .holding }
 
-    package mutating func keyWasSeen() {
-        reset()
+        return .released(since: releaseStart)
     }
 
     package mutating func reset() {
-        releasedSince = nil
+        releaseStart = nil
         releasedPolls = 0
     }
 }

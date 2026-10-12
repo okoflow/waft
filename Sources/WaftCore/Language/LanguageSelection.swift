@@ -5,10 +5,20 @@ package struct LanguageSelection: Codable, Equatable, Sendable {
     package private(set) var pinned: Language?
 
     package var forcedLanguage: Language? {
-        pinned ?? (languages.count == 1 ? languages.first : nil)
+        if let pinned {
+            return pinned
+        }
+
+        return languages.count == 1 ? languages.first : nil
     }
 
-    package init(languages: [Language], pinned: Language? = nil) {
+    package init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.init(languages: container.decodeValidElements(.languages), pinned: container.decodeIfValid(.pinned))
+    }
+
+    init(languages: [Language], pinned: Language? = nil) {
         let ordered = Language.allCases.filter(languages.contains)
         let enabled = ordered.isEmpty ? [Language.english] : ordered
 
@@ -16,30 +26,31 @@ package struct LanguageSelection: Codable, Equatable, Sendable {
         self.pinned = pinned.flatMap { enabled.contains($0) ? $0 : nil }
     }
 
-    package init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let languages = try container.decodeIfPresent([Language].self, forKey: .languages) ?? []
-        let pinned = try container.decodeIfPresent(Language.self, forKey: .pinned)
-
-        self.init(languages: languages, pinned: pinned)
-    }
-
     package static func preferred(by localeIdentifiers: [String]) -> LanguageSelection {
-        var languages: [Language] = []
-
-        for language in localeIdentifiers.compactMap(Language.init(localeIdentifier:)) where !languages.contains(language) {
-            languages.append(language)
-        }
-
-        let preferred = Array(languages.prefix(Self.maximumPreferredCount))
+        let preferred = Array(distinctLanguages(in: localeIdentifiers, excluding: []).prefix(maximumPreferredCount))
 
         return LanguageSelection(languages: preferred.contains(.english) ? preferred : preferred + [.english])
     }
 
-    package func including(_ language: Language, _ isIncluded: Bool) -> LanguageSelection {
-        let languages = isIncluded ? languages + [language] : languages.filter { $0 != language }
+    private static func distinctLanguages(in localeIdentifiers: [String], excluding excluded: [Language]) -> [Language] {
+        var seen = Set(excluded)
 
-        return languages.isEmpty ? self : LanguageSelection(languages: languages, pinned: pinned)
+        return localeIdentifiers.compactMap(Language.init(localeIdentifier:)).filter { seen.insert($0).inserted }
+    }
+
+    package func suggestions(from localeIdentifiers: [String]) -> [Language] {
+        Self.distinctLanguages(in: localeIdentifiers, excluding: languages)
+    }
+
+    package func adding(_ language: Language) -> LanguageSelection {
+        LanguageSelection(languages: languages + [language], pinned: pinned)
+    }
+
+    package func removing(_ language: Language) -> LanguageSelection {
+        let remaining = languages.filter { $0 != language }
+        guard !remaining.isEmpty else { return self }
+
+        return LanguageSelection(languages: remaining, pinned: pinned)
     }
 
     package func pinning(_ language: Language?) -> LanguageSelection {

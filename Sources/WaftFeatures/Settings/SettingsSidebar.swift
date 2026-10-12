@@ -59,11 +59,17 @@ private struct SidebarRow: View {
         state.selection == pane
     }
 
+    private var showsHover: Bool {
+        state.hoveredPane == pane && !isSelected
+    }
+
     var body: some View {
+        let shape = RoundedRectangle(cornerRadius: Metrics.rowRadius, style: .continuous)
+
         Button {
             state.selection = pane
         } label: {
-            HStack(spacing: 10) {
+            HStack(spacing: Metrics.iconLabelSpacing) {
                 IconTile(symbolName: pane.symbolName, tint: pane.tint)
 
                 Text(pane.title)
@@ -75,19 +81,18 @@ private struct SidebarRow: View {
             .frame(height: Metrics.sidebarRowHeight)
             .background {
                 ZStack {
-                    RoundedRectangle(cornerRadius: Metrics.rowRadius, style: .continuous)
+                    shape
                         .fill(Palette.hover)
                         .animation(Motion.fade) { fill in
-                            fill.opacity(state.hoveredPane == pane && !isSelected ? 1 : 0)
+                            fill.opacity(showsHover ? 1 : 0)
                         }
 
                     if isSelected {
-                        RoundedRectangle(cornerRadius: Metrics.rowRadius, style: .continuous)
-                            .fill(Palette.selection)
+                        shape.fill(Palette.selection)
                     }
                 }
             }
-            .contentShape(RoundedRectangle(cornerRadius: Metrics.rowRadius, style: .continuous))
+            .contentShape(shape)
         }
         .buttonStyle(.plain)
         .onHover { state.hover(pane, $0) }

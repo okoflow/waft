@@ -1,20 +1,36 @@
-import Foundation
+package import Foundation
+import os
 import WaftCore
 
 package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
-    package let url: URL
+    package let name: String
+
+    private let url: URL
 
     private let isPrivate: Bool
 
-    package init(url: URL, isPrivate: Bool = false) {
+    private var unreadableCopy: URL {
+        url.deletingPathExtension().appendingPathExtension("unreadable.json")
+    }
+
+    package init(name: String, url: URL, isPrivate: Bool = false) {
+        self.name = name
         self.url = url
         self.isPrivate = isPrivate
     }
 
     package func load() throws -> Value? {
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        guard exists() else { return nil }
 
-        return try JSONDecoder().decode(Value.self, from: Data(contentsOf: url))
+        let data = try Data(contentsOf: url)
+
+        do {
+            return try JSONDecoder().decode(Value.self, from: data)
+        } catch {
+            keepUnreadableCopy(of: data)
+
+            throw error
+        }
     }
 
     package func save(_ value: Value) throws {
@@ -23,10 +39,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
 
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
         try encoder.encode(value).write(to: url, options: .atomic)
-
-        if isPrivate {
-            try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: url.path)
-        }
+        try restrictIfPrivate(url)
     }
 
     package func exists() -> Bool {
@@ -34,8 +47,26 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     package func delete() throws {
-        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        guard exists() else { return }
 
         try FileManager.default.removeItem(at: url)
+    }
+
+    private func keepUnreadableCopy(of data: Data) {
+        do {
+            try data.write(to: unreadableCopy, options: .atomic)
+            try restrictIfPrivate(unreadableCopy)
+        } catch {
+            let cause = error as NSError
+            Logger.storage.error(
+                "Couldn't keep a copy of an unreadable file: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
+            )
+        }
+    }
+
+    private func restrictIfPrivate(_ file: URL) throws {
+        guard isPrivate else { return }
+
+        try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: file.path)
     }
 }

@@ -1,17 +1,31 @@
 enum RewriteDeadline {
-    static func run(_ deadline: Duration, _ operation: @escaping @Sendable () async throws -> String) async throws -> String {
-        try await withThrowingTaskGroup(of: String.self) { group in
-            group.addTask { try await operation() }
+    static func run(
+        _ deadline: Duration,
+        _ operation: @escaping @Sendable () async throws(RewriteError) -> String,
+    ) async throws(RewriteError) -> String {
+        let first = await withTaskGroup(of: Result<String, RewriteError>.self) { group in
+            group.addTask { await Self.result(of: operation) }
             group.addTask {
-                try await Task.sleep(for: deadline)
+                await Task.slept(for: deadline)
 
-                throw RewriteError.timeout
+                return .failure(.timeout)
             }
 
             defer { group.cancelAll() }
-            guard let first = try await group.next() else { throw RewriteError.timeout }
+
+            guard let first = await group.next() else { preconditionFailure("A deadline races two tasks") }
 
             return first
+        }
+
+        return try first.get()
+    }
+
+    private static func result(of operation: () async throws(RewriteError) -> String) async -> Result<String, RewriteError> {
+        do throws(RewriteError) {
+            return try await .success(operation())
+        } catch {
+            return .failure(error)
         }
     }
 }

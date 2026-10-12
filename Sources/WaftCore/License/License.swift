@@ -1,8 +1,10 @@
-import Foundation
-
-package struct License: Codable, Equatable, Sendable {
-    package let id: String
+package struct License: Decodable, Equatable, Sendable {
     package let email: String
     package let name: String?
-    package let issued: String
+
+    package var holder: String {
+        guard let name, !name.isEmpty else { return email }
+
+        return name
+    }
 }

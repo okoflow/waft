@@ -14,8 +14,8 @@ struct DictationJob {
 
     init(
         samples: [Float],
+        recording: ActiveRecording,
         target: FocusTarget,
-        selection: String?,
         settings: Settings,
         vocabulary: Vocabulary,
         allowsAI: Bool,
@@ -33,8 +33,8 @@ struct DictationJob {
         )
         self.vocabulary = vocabulary
         self.target = target
-        self.selection = selection
-        key = selection == nil ? settings.pushToTalkKey : settings.editKey ?? settings.pushToTalkKey
+        selection = recording.selection
+        key = recording.key
         pastes = settings.pastesIntoFocusedField
         self.allowsAI = allowsAI
     }

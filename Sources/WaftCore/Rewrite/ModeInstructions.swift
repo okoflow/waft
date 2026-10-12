@@ -14,7 +14,9 @@ package struct ModeInstructions: Codable, Equatable, Sendable {
     }
 
     package func editableText(for mode: Mode) -> String {
-        custom[mode.rawValue] ?? RewritePrompt.defaultInstructions(for: mode)
+        guard let text = custom[mode.rawValue] else { return RewritePrompt.defaultInstructions(for: mode) }
+
+        return text
     }
 
     package func isCustomized(_ mode: Mode) -> Bool {

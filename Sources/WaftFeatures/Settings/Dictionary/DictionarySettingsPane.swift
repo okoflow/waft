@@ -1,0 +1,78 @@
+import SwiftUI
+
+struct DictionarySettingsPane: View {
+    @Bindable var vocabulary: VocabularyModel
+
+    var body: some View {
+        SettingsSection("Terms", subtitle: "Names and words that come out wrong.") {
+            if vocabulary.terms.isEmpty {
+                EmptyRow("No terms yet")
+            }
+
+            DividedForEach($vocabulary.terms, id: \.wrappedValue.id) { $term in
+                EntryRow(first: $term.term, firstPrompt: "Term", second: $term.spokenForms, secondPrompt: "Heard as") {
+                    vocabulary.removeTerm(term.id)
+                }
+                .rowTransition()
+            }
+        } footer: {
+            Button("Add Term") { vocabulary.addTerm() }
+        }
+        .animation(Motion.layout, value: vocabulary.terms.count)
+
+        SettingsSection("Snippets", subtitle: "Say the phrase on its own to paste the text.") {
+            if vocabulary.snippets.isEmpty {
+                EmptyRow("No snippets yet")
+            }
+
+            DividedForEach($vocabulary.snippets, id: \.wrappedValue.id) { $snippet in
+                EntryRow(
+                    first: $snippet.trigger,
+                    firstPrompt: "Phrase to say",
+                    second: $snippet.text,
+                    secondPrompt: "Text to paste",
+                ) {
+                    vocabulary.removeSnippet(snippet.id)
+                }
+                .rowTransition()
+            }
+        } footer: {
+            Button("Add Snippet") { vocabulary.addSnippet() }
+        }
+        .animation(Motion.layout, value: vocabulary.snippets.count)
+
+        SettingsSection("File", subtitle: "Both lists are saved as a JSON file you can edit.") {
+            SettingsRow("Dictionary file") {
+                Button("Open in Editor") { vocabulary.openInEditor() }
+                Button("Show in Finder") { vocabulary.revealInFinder() }
+            }
+        }
+    }
+}
+
+private struct EntryRow: View {
+    @Binding var first: String
+
+    let firstPrompt: LocalizedStringKey
+
+    @Binding var second: String
+
+    let secondPrompt: LocalizedStringKey
+    let remove: () -> Void
+
+    var body: some View {
+        HStack(spacing: Metrics.controlSpacing) {
+            InputField(firstPrompt, prompt: firstPrompt, text: $first)
+
+            Image(systemName: "arrow.right")
+                .font(.glyph)
+                .foregroundStyle(.tertiary)
+                .accessibilityHidden(true)
+
+            InputField(secondPrompt, prompt: secondPrompt, text: $second)
+
+            RemoveButton(help: "Remove", action: remove)
+        }
+        .settingsRowPadding()
+    }
+}

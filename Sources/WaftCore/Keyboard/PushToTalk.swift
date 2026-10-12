@@ -12,7 +12,7 @@ package struct PushToTalk: Sendable {
     package enum Action: Equatable, Sendable {
         case startRecording
         case lockHandsFree
-        case finishRecording(duration: TimeInterval)
+        case finishRecording
         case discardRecording(DiscardReason)
     }
 
@@ -20,31 +20,29 @@ package struct PushToTalk: Sendable {
         case tooShort
         case otherKeyPressed
         case interrupted
-        case modelNotReady
     }
 
     private enum State: Equatable {
         case idle
         case holding(since: TimeInterval)
         case handsFree(since: TimeInterval)
-        case stopping
-        case cancelled
     }
 
-    package static let minimumHold: TimeInterval = 0.3
-    package static let maximumHold: TimeInterval = 300
-    package static let doubleTapWindow: TimeInterval = 0.4
+    static let minimumHold: TimeInterval = 0.3
+    static let maximumHold: TimeInterval = 300
 
-    package var allowsHandsFree = true
+    private static let doubleTapWindow: TimeInterval = 0.4
+
+    var allowsHandsFree = true
 
     private var state = State.idle
     private var lastTapEnded: TimeInterval?
 
-    package init() {}
+    init() {}
 
-    package mutating func handle(_ event: Event, at time: TimeInterval) -> Action? {
+    mutating func handle(_ event: Event, at time: TimeInterval) -> Action? {
         switch (state, event) {
-        case (.idle, .keyDown), (.cancelled, .keyDown):
+        case (.idle, .keyDown):
             state = .holding(since: time)
 
             return .startRecording
@@ -52,23 +50,19 @@ package struct PushToTalk: Sendable {
         case let (.holding(since), .keyUp):
             return release(heldSince: since, at: time)
 
-        case let (.handsFree(since), .keyDown):
-            state = .stopping
+        case (.handsFree, .keyDown):
+            state = .idle
 
-            return .finishRecording(duration: time - since)
+            return .finishRecording
 
-        case let (.holding(since), .tick) where time - since >= Self.maximumHold:
-            state = .cancelled
+        case let (.holding(since), .tick) where time - since >= Self.maximumHold,
+             let (.handsFree(since), .tick) where time - since >= Self.maximumHold:
+            state = .idle
 
-            return .finishRecording(duration: time - since)
-
-        case let (.handsFree(since), .tick) where time - since >= Self.maximumHold:
-            state = .stopping
-
-            return .finishRecording(duration: time - since)
+            return .finishRecording
 
         case (.holding, .otherKeyDown):
-            state = .cancelled
+            state = .idle
 
             return .discardRecording(.otherKeyPressed)
 
@@ -77,24 +71,17 @@ package struct PushToTalk: Sendable {
 
             return .discardRecording(.interrupted)
 
-        case (.cancelled, .keyUp), (.cancelled, .monitorDisabled), (.stopping, .keyUp), (.stopping, .monitorDisabled):
-            state = .idle
-
-            return nil
-
         default:
             return nil
         }
     }
 
     private mutating func release(heldSince since: TimeInterval, at time: TimeInterval) -> Action {
-        let duration = time - since
-
-        if duration >= Self.minimumHold {
+        if time - since >= Self.minimumHold {
             state = .idle
             lastTapEnded = nil
 
-            return .finishRecording(duration: duration)
+            return .finishRecording
         }
 
         if allowsHandsFree, let lastTapEnded, since - lastTapEnded <= Self.doubleTapWindow {

@@ -1,22 +1,26 @@
+package import Foundation
+package import WaftCore
 @preconcurrency internal import WhisperKit
-import Foundation
-import WaftCore
+import os
 
 package actor WhisperTranscriber: Transcriber {
+    private struct LoadedModel {
+        let whisper: WhisperKit
+        let languages: [Language]
+    }
+
     private static let windowSampleCount = 30 * Int(SpeechAudio.sampleRate)
     private static let maximumPromptTokens = 200
 
-    package nonisolated let modelDirectory: URL
-
-    private let files: SpeechModelFiles
-    private var whisper: WhisperKit?
+    private var loaded: LoadedModel?
     private var isTranscribing = false
     private var waiters: [CheckedContinuation<Void, Never>] = []
 
-    package init(model: String = SpeechModelFiles.defaultModel, baseDirectory: URL = SpeechModelFiles.defaultBaseDirectory) {
-        files = SpeechModelFiles(model: model, baseDirectory: baseDirectory)
-        modelDirectory = files.folder
+    package nonisolated var modelDirectory: URL {
+        SpeechModelFiles.folder
     }
+
+    package init() {}
 
     private static func acceptedText(of results: [TranscriptionResult], language: Language, prompt: String?) -> String? {
         let segments = results.flatMap(\.segments)
@@ -38,58 +42,55 @@ package actor WhisperTranscriber: Transcriber {
     }
 
     package func isModelInstalled() -> Bool {
-        files.isInstalled
+        SpeechModelFiles.isInstalled
     }
 
     package func downloadModel(progress: @escaping @Sendable (Double) -> Void) async throws {
-        try FileManager.default.createDirectory(at: files.baseDirectory, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: SpeechModelFiles.baseDirectory, withIntermediateDirectories: true)
 
         _ = try await WhisperKit.download(
-            variant: files.model,
-            downloadBase: files.baseDirectory,
+            variant: SpeechModelFiles.model,
+            downloadBase: SpeechModelFiles.baseDirectory,
             from: SpeechModelFiles.repository,
         ) { progress($0.fractionCompleted) }
+        _ = try await ModelUtilities.loadTokenizer(for: .largev3, tokenizerFolder: SpeechModelFiles.baseDirectory)
 
-        if files.tokenizerFile != nil {
-            _ = try await ModelUtilities.loadTokenizer(for: .largev3, tokenizerFolder: files.baseDirectory)
-        }
-
-        try files.markComplete()
+        try SpeechModelFiles.markComplete()
     }
 
     package func loadModel(for languages: [Language]) async throws -> Duration {
-        guard files.isInstalled else { throw TranscriberError.modelMissing(files.model) }
+        guard SpeechModelFiles.isInstalled else { throw TranscriberError.modelMissing(SpeechModelFiles.model) }
 
-        whisper = nil
+        loaded = nil
 
         let start = ContinuousClock.now
-        let loaded = try await WhisperKit(configuration())
-        loaded.tokenizer = try restrictedTokenizer(of: loaded, to: languages)
-        whisper = loaded
+        let whisper = try await WhisperKit(configuration())
+        whisper.tokenizer = try restrictedTokenizer(of: whisper, to: languages)
+        loaded = LoadedModel(whisper: whisper, languages: languages)
 
         return ContinuousClock.now - start
     }
 
-    package func deleteModel() {
-        whisper = nil
+    package func deleteModel() throws {
+        loaded = nil
 
-        files.remove()
+        try SpeechModelFiles.remove()
     }
 
     package func transcribe(_ samples: [Float], in language: Language?, vocabulary: [String]) async throws -> Transcript? {
-        guard SpeechGate.containsSpeech(samples, sampleRate: SpeechAudio.sampleRate) else { return nil }
-        guard let whisper else { throw TranscriberError.notLoaded }
+        guard SpeechGate.containsSpeech(samples) else { return nil }
+        guard let loaded else { throw TranscriberError.notLoaded }
 
         await waitForTurn()
         defer { finishTurn() }
 
         let detectionStart = ContinuousClock.now
-        let spoken = try await resolvedLanguage(language, of: samples, with: whisper)
+        let spoken = try await resolvedLanguage(language, of: samples, with: loaded)
 
         let decodingStart = ContinuousClock.now
         let prompt = WhisperPrompt.text(for: spoken, vocabulary: vocabulary)
-        let options = decodingOptions(for: spoken, samples: samples, prompt: prompt, tokenizer: whisper.tokenizer)
-        let results = try await whisper.transcribe(audioArray: samples, decodeOptions: options)
+        let options = decodingOptions(for: spoken, samples: samples, prompt: prompt, tokenizer: loaded.whisper.tokenizer)
+        let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
 
         guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
 
@@ -106,7 +107,7 @@ package actor WhisperTranscriber: Transcriber {
         in language: Language?,
         progress: @Sendable (Double) -> Void,
     ) async throws -> TimedTranscript? {
-        guard let whisper else { throw TranscriberError.notLoaded }
+        guard let loaded else { throw TranscriberError.notLoaded }
 
         let chunks = try await VADAudioChunker().chunkAll(
             audioArray: samples,
@@ -119,13 +120,13 @@ package actor WhisperTranscriber: Transcriber {
         for (index, chunk) in chunks.enumerated() {
             try Task.checkCancellation()
 
-            if SpeechGate.containsSpeech(chunk.audioSamples, sampleRate: SpeechAudio.sampleRate) {
+            if SpeechGate.containsSpeech(chunk.audioSamples) {
                 await waitForTurn()
                 defer { finishTurn() }
 
-                let chunkLanguage = try await resolvedLanguage(spoken, of: chunk.audioSamples, with: whisper)
+                let chunkLanguage = try await resolvedLanguage(spoken, of: chunk.audioSamples, with: loaded)
                 spoken = chunkLanguage
-                segments += try await timedSegments(of: chunk, in: chunkLanguage, with: whisper)
+                segments += try await timedSegments(of: chunk, in: chunkLanguage, with: loaded.whisper)
             }
 
             progress(Double(index + 1) / Double(chunks.count))
@@ -141,9 +142,7 @@ package actor WhisperTranscriber: Transcriber {
         in language: Language,
         with whisper: WhisperKit,
     ) async throws -> [TimedSegment] {
-        var options = decodingOptions(for: language, samples: chunk.audioSamples, prompt: nil, tokenizer: whisper.tokenizer)
-        options.chunkingStrategy = nil
-
+        let options = decodingOptions(for: language, samples: chunk.audioSamples, prompt: nil, tokenizer: whisper.tokenizer)
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
         let offset = Double(chunk.seekOffsetIndex) / SpeechAudio.sampleRate
         let segments = results.flatMap(\.segments).filter(Self.isConfident).compactMap { segment -> TimedSegment? in
@@ -159,10 +158,10 @@ package actor WhisperTranscriber: Transcriber {
 
     private func configuration() -> WhisperKitConfig {
         WhisperKitConfig(
-            model: files.model,
-            downloadBase: files.baseDirectory,
-            modelFolder: files.folder.path,
-            tokenizerFolder: files.baseDirectory,
+            model: SpeechModelFiles.model,
+            downloadBase: SpeechModelFiles.baseDirectory,
+            modelFolder: SpeechModelFiles.folder.path,
+            tokenizerFolder: SpeechModelFiles.baseDirectory,
             verbose: false,
             logLevel: .none,
             load: true,
@@ -173,20 +172,31 @@ package actor WhisperTranscriber: Transcriber {
     private func restrictedTokenizer(of whisper: WhisperKit, to languages: [Language]) throws -> any WhisperTokenizer {
         guard let tokenizer = whisper.tokenizer else { throw TranscriberError.tokenizerMissing }
 
-        let tokens = Set(languages.compactMap { tokenizer.convertTokenToId("<|\($0.code)|>") })
+        let tokens = Set(languages.compactMap { tokenizer.convertTokenToId("<|\($0.rawValue)|>") })
         guard !tokens.isEmpty, tokens.count == languages.count else { throw TranscriberError.languageTokensMissing }
 
         return LanguageRestrictedTokenizer(base: tokenizer, allLanguageTokens: tokens)
     }
 
-    private func resolvedLanguage(_ language: Language?, of samples: [Float], with whisper: WhisperKit) async throws -> Language {
+    private func resolvedLanguage(_ language: Language?, of samples: [Float], with loaded: LoadedModel) async throws -> Language {
         if let language {
             return language
         }
 
-        let detection = try await whisper.detectLangauge(audioArray: samples)
+        let detection = try await loaded.whisper.detectLangauge(audioArray: samples)
+        guard let detected = Language(rawValue: detection.language) else {
+            let fallback = loaded.languages[0]
+            Logger.speech.notice(
+                """
+                Detected \(detection.language, privacy: .public), which Waft doesn't know; \
+                using \(fallback.rawValue, privacy: .public)
+                """,
+            )
 
-        return Language(rawValue: detection.language) ?? .english
+            return fallback
+        }
+
+        return detected
     }
 
     private func decodingOptions(
@@ -195,23 +205,24 @@ package actor WhisperTranscriber: Transcriber {
         prompt: String?,
         tokenizer: (any WhisperTokenizer)?,
     ) -> DecodingOptions {
+        let tokens = promptTokens(for: prompt, tokenizer: tokenizer)
         var options = DecodingOptions()
-        options.language = language.code
+        options.language = language.rawValue
         options.detectLanguage = false
         options.skipSpecialTokens = true
-        options.promptTokens = promptTokens(for: prompt, tokenizer: tokenizer)
+        options.promptTokens = tokens.isEmpty ? nil : tokens
         options.chunkingStrategy = samples.count > Self.windowSampleCount ? .vad : nil
 
         return options
     }
 
-    private func promptTokens(for prompt: String?, tokenizer: (any WhisperTokenizer)?) -> [Int]? {
-        guard let prompt, let tokenizer else { return nil }
+    private func promptTokens(for prompt: String?, tokenizer: (any WhisperTokenizer)?) -> [Int] {
+        guard let prompt, let tokenizer else { return [] }
 
         let firstSpecialToken = tokenizer.specialTokens.specialTokenBegin
         let tokens = tokenizer.encode(text: " " + prompt).filter { $0 < firstSpecialToken }
 
-        return tokens.isEmpty ? nil : Array(tokens.suffix(Self.maximumPromptTokens))
+        return Array(tokens.suffix(Self.maximumPromptTokens))
     }
 
     private func waitForTurn() async {

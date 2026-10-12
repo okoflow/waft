@@ -1,15 +1,15 @@
 import SwiftUI
 
-package struct SettingsWindowView: View {
+struct SettingsWindowView: View {
     private let model: AppModel
     private let state: SettingsWindowState
 
-    package init(model: AppModel, state: SettingsWindowState) {
+    init(model: AppModel, state: SettingsWindowState) {
         self.model = model
         self.state = state
     }
 
-    package var body: some View {
+    var body: some View {
         HStack(spacing: 0) {
             SettingsSidebar(state: state)
                 .frame(width: Metrics.sidebarWidth)

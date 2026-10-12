@@ -6,48 +6,94 @@ package struct TranscriptProcessor: Sendable {
     }
 
     package func process(
-        _ transcript: String,
-        language: Language,
+        _ transcript: Transcript,
         mode: Mode,
         setup: RewriteSetup,
         vocabulary: Vocabulary,
-        allowsAI: Bool = true,
+        allowsAI: Bool,
     ) async -> ProcessedText {
-        let corrected = vocabulary.correcting(transcript)
+        let language = transcript.language
+        let corrected = vocabulary.correcting(transcript.text, language: language)
 
-        if let snippet = vocabulary.snippet(matchingWhole: corrected) {
-            return ProcessedText(text: snippet, requestedMode: mode, appliedMode: .raw, isSnippet: true)
+        if let snippet = vocabulary.snippet(matchingWhole: corrected, language: language) {
+            return ProcessedText(text: snippet, mode: .raw)
         }
 
-        let modeProcessor = ModeProcessor(
-            rewriter: rewriters[setup.provider],
-            deadline: setup.provider.deadline,
-            contactsCloud: setup.provider.isCloud,
-        )
-        let processed = if mode.isCloud, !allowsAI {
-            modeProcessor.light(corrected, language: language, requestedMode: mode, fallback: .needsPro)
-        } else {
-            await modeProcessor.process(corrected, mode: mode, language: language, setup: setup)
-        }
-        let finished = vocabulary.expandingSnippets(in: vocabulary.correcting(processed.text))
+        let processed = await apply(mode, to: corrected, language: language, setup: setup, allowsAI: allowsAI)
+        let recorrected = vocabulary.correcting(processed.text, language: language)
+        let finished = vocabulary.expandingSnippets(in: recorrected, language: language)
 
-        return processed.replacingText(with: finished)
+        return ProcessedText(text: finished, mode: processed.mode, fallback: processed.fallback)
     }
 
-    package func edit(_ selection: String, instruction: String, language: Language, setup: RewriteSetup) async throws -> String {
+    package func edit(
+        _ selection: String,
+        following instruction: Transcript,
+        setup: RewriteSetup,
+    ) async throws(RewriteError) -> String {
         let request = RewriteRequest(
-            text: instruction,
-            instructions: "",
-            language: language,
-            localServer: setup.provider == .localServer ? setup.localServer : nil,
-            selection: selection,
+            text: instruction.text,
+            language: instruction.language,
+            kind: .edit(selection: selection),
+            localServer: setup.serverInUse,
+            deadline: setup.provider.editDeadline,
         )
-        let rewriter = rewriters[setup.provider]
-        let answer = try await RewriteDeadline.run(setup.provider.editDeadline) {
+
+        return try await rewrite(request, with: setup.provider)
+    }
+
+    private func apply(
+        _ mode: Mode,
+        to text: String,
+        language: Language,
+        setup: RewriteSetup,
+        allowsAI: Bool,
+    ) async -> ProcessedText {
+        switch mode {
+        case .raw:
+            return ProcessedText(text: text, mode: .raw)
+
+        case .light:
+            return light(text, language: language)
+
+        case .clean, .formal, .translate:
+            guard allowsAI else { return light(text, language: language, fallback: .needsPro) }
+
+            return await cleanUp(text, mode: mode, language: language, setup: setup)
+        }
+    }
+
+    private func cleanUp(_ text: String, mode: Mode, language: Language, setup: RewriteSetup) async -> ProcessedText {
+        let target = mode == .translate ? setup.translation.target(forSpoken: language) : nil
+        let request = RewriteRequest(
+            text: text,
+            language: language,
+            kind: .cleanup(instructions: setup.instructions, target: target),
+            localServer: setup.serverInUse,
+            deadline: setup.provider.deadline,
+        )
+
+        do throws(RewriteError) {
+            let rewritten = try await rewrite(request, with: setup.provider)
+
+            return ProcessedText(text: rewritten, mode: mode)
+        } catch {
+            return light(text, language: language, fallback: RewriteFallback(error))
+        }
+    }
+
+    private func light(_ text: String, language: Language, fallback: RewriteFallback? = nil) -> ProcessedText {
+        let cleaned = VoiceCommands.apply(LightModeRules.apply(text, language: language), language: language)
+
+        return ProcessedText(text: cleaned, mode: .light, fallback: fallback)
+    }
+
+    private func rewrite(_ request: RewriteRequest, with provider: ModelProvider) async throws(RewriteError) -> String {
+        let rewriter = rewriters[provider]
+        let answer = try await RewriteDeadline.run(request.deadline) { () async throws(RewriteError) -> String in
             try await rewriter.rewrite(request)
         }
-        guard let edited = RewriteValidator.validatedEdit(answer, of: selection) else { throw RewriteError.unreadableResponse }
 
-        return edited
+        return try RewriteValidator.validated(answer, for: request)
     }
 }

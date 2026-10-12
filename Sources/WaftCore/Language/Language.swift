@@ -49,17 +49,20 @@ package enum Language: String, CaseIterable, Codable, Sendable {
 
     private static let localeAliases = ["fil": "tl", "in": "id", "iw": "he", "nb": "no", "nn": "no"]
 
-    package var code: String {
-        rawValue
+    package var localeCode: String {
+        switch self {
+        case .filipino: "fil"
+        default: rawValue
+        }
     }
 
     var locale: Locale {
-        Locale(identifier: code)
+        Locale(identifier: rawValue)
     }
 
     package init?(localeIdentifier: String) {
         guard let code = Locale.Language(identifier: localeIdentifier).languageCode?.identifier else { return nil }
 
-        self.init(rawValue: Self.localeAliases[code] ?? code)
+        self.init(rawValue: Self.localeAliases[code, default: code])
     }
 }

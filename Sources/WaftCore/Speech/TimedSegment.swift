@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package struct TimedSegment: Equatable, Sendable {
     package let start: TimeInterval
