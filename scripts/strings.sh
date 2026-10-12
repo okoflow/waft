@@ -1,11 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-readonly EXTRACTED='.build/strings'
 readonly LOCALIZATIONS='Packaging/Localizations'
 readonly SOURCE_TABLE="${LOCALIZATIONS}/en.lproj/Localizable.strings"
-readonly PLIST_KEYS='NSMicrophoneUsageDescription'
-readonly USAGE='usage: scripts/strings.sh [check|update]'
+readonly PLIST_KEY='NSMicrophoneUsageDescription'
+readonly USAGE='usage: STRINGS_DIR=<extracted strings> scripts/strings.sh [check|update]'
 readonly SPECIFIERS='def specifiers:
   [scan("%(?:[0-9]+\\$)?[-+ 0#]*[0-9]*(?:\\.[0-9]+)?(?:hh|h|ll|l|q|z|t|j|L)?[@dDiuUxXoOfeEgGcCsSpaAF%]")]
   | map(sub("^%[0-9]+\\$"; "%")) | map(select(. != "%%")) | sort;'
@@ -18,20 +17,23 @@ usage() {
   exit 2
 }
 
-fail() {
-  printf 'error: %s\n' "$@" >&2
+die() {
+  local message
+  printf -v message '%s\n' "$@"
+
+  printf 'error: %s' "${message}" >&2
 
   exit 1
 }
 
 cleanup() {
-  [[ -z ${WORK_DIR} ]] || rm -rf "${WORK_DIR}"
+  rm -rf "${WORK_DIR}"
 }
 
 code_keys() {
   local output=$1
 
-  [[ -d ${EXTRACTED} ]] || fail "no strings in ${EXTRACTED}: run make build"
+  [[ -d ${STRINGS_DIR} ]] || die "no strings in ${STRINGS_DIR}: run make build"
 
   local root sources
   root=$(pwd -P)
@@ -40,11 +42,11 @@ code_keys() {
   local file data source
   : >"${output}.unsorted"
   while IFS= read -r file; do
-    data="${EXTRACTED}/$(basename "${file}" .swift).stringsdata"
-    [[ -f ${data} ]] || fail "${file} has no extracted strings: run make build"
+    data="${STRINGS_DIR}/$(basename "${file}" .swift).stringsdata"
+    [[ -f ${data} ]] || die "${file} has no extracted strings: run make build"
 
     source=$(jq -r '.source' "${data}")
-    [[ ${source} == "${root}/${file}" ]] || fail "${data} belongs to ${source}: run make build"
+    [[ ${source} == "${root}/${file}" ]] || die "${data} belongs to ${source}: run make build"
 
     jq '.tables.Localizable[]?.key | select(. != "%@")' "${data}" >>"${output}.unsorted"
   done <<<"${sources}"
@@ -64,15 +66,15 @@ check_keys() {
   local table=$1 expected=$2 hint=$3
   local actual="${WORK_DIR}/actual"
 
-  plutil -lint -s "${table}" || fail "${table} isn't a valid strings file"
+  plutil -lint -s "${table}" || die "${table} isn't a valid strings file"
   table_keys "${table}" "${actual}"
 
   local missing extra
   missing=$(LC_ALL=C comm -23 "${expected}" "${actual}")
   extra=$(LC_ALL=C comm -13 "${expected}" "${actual}")
 
-  [[ -z ${missing} ]] || fail "${table} is missing keys${hint}:" "${missing}"
-  [[ -z ${extra} ]] || fail "${table} has keys the code no longer uses${hint}:" "${extra}"
+  [[ -z ${missing} ]] || die "${table} is missing keys${hint}:" "${missing}"
+  [[ -z ${extra} ]] || die "${table} has keys the code no longer uses${hint}:" "${extra}"
 }
 
 check_specifiers() {
@@ -84,19 +86,15 @@ check_specifiers() {
   local mismatched
   mismatched=$(jq -r "${SPECIFIERS} to_entries[] | select((.key | specifiers) != (.value | specifiers)) | .key" "${json}")
 
-  [[ -z ${mismatched} ]] || fail "${table} changes the placeholders of:" "${mismatched}"
+  [[ -z ${mismatched} ]] || die "${table} changes the placeholders of:" "${mismatched}"
 }
 
 check_plist_strings() {
   local table="$1/InfoPlist.strings"
 
-  [[ -f ${table} ]] || fail "${table} is missing"
-  plutil -lint -s "${table}" || fail "${table} isn't a valid strings file"
-
-  local key
-  for key in ${PLIST_KEYS}; do
-    plutil -extract "${key}" raw -o /dev/null "${table}" || fail "${table} has no ${key}"
-  done
+  [[ -f ${table} ]] || die "${table} is missing"
+  plutil -lint -s "${table}" || die "${table} isn't a valid strings file"
+  plutil -extract "${PLIST_KEY}" raw -o /dev/null "${table}" || die "${table} has no ${PLIST_KEY}"
 }
 
 check() {
@@ -138,6 +136,7 @@ update() {
 
 main() {
   [[ $# -le 1 ]] || usage
+  [[ -n ${STRINGS_DIR:-} ]] || usage
 
   cd "$(dirname "$0")/.."
 

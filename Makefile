@@ -4,13 +4,15 @@ STRINGS_DIR     = $(CURDIR)/.build/strings
 TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
 TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
 TESTING_LIBS    = $(TOOLCHAIN_DIR)/Library/Developer
+MARKDOWNLINT    = bunx --bun markdownlint-cli2@0.23.3
+GITLEAKS        = gitleaks git --no-banner --redact
 
-.PHONY: help build test bundle run release format check format-check lint periphery secrets shellcheck strings strings-update hooks signing clean
+.PHONY: help build test bundle run release format check format-check lint shellcheck docs secrets secrets-staged periphery strings strings-update hooks signing clean
 
-help: ## List targets
+help: ## List the targets
 	@awk 'BEGIN { FS = ":.*## " } /^[a-z0-9-]+:.*## / { printf "  %-14s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-build: ## Build every target and extract its localizable strings
+build: ## Build the package and extract its localizable strings
 	mkdir -p $(STRINGS_DIR)
 	swift build --configuration $(CONFIG) -Xswiftc -emit-localized-strings -Xswiftc -emit-localized-strings-path -Xswiftc $(STRINGS_DIR)
 
@@ -26,42 +28,50 @@ run: bundle ## Build, sign, and open Waft
 release: ## Build, notarize, and package a release with NOTES into build/release
 	scripts/release.sh "$(NOTES)"
 
-format: ## Format Swift, shell, and the property list
+format: ## Format Swift, shell, and the property lists
 	swiftformat .
 	shfmt -w scripts
-	plutil -convert xml1 Packaging/Waft-Info.plist
+	plutil -convert xml1 Packaging/Waft-Info.plist Packaging/Waft.entitlements
 
-check: format-check lint build test periphery secrets shellcheck strings ## Run every check that CI runs
+check: format-check lint shellcheck docs secrets build test periphery strings ## Run every check
 	@echo "make check: OK"
 
 format-check: ## Fail on any formatting difference
 	swiftformat . --lint
 	shfmt -d scripts
 	plutil -convert xml1 -o - Packaging/Waft-Info.plist | diff -u Packaging/Waft-Info.plist -
+	plutil -convert xml1 -o - Packaging/Waft.entitlements | diff -u Packaging/Waft.entitlements -
 
-lint: ## Lint Swift sources in strict mode
+lint: ## Lint the Swift code
 	TOOLCHAIN_DIR=$(TOOLCHAIN_DIR) swiftlint lint --quiet
 
-periphery: test ## Fail on unused code
-	periphery scan --strict --quiet --retain-codable-properties --index-store-path $(INDEX_STORE)
-
-secrets: ## Scan the git history for secrets
-	gitleaks git --no-banner --redact
-
-shellcheck: ## Lint shell scripts
+shellcheck: ## Lint the shell scripts
 	shellcheck scripts/*.sh
 
+docs: ## Lint the Markdown and check the spelling
+	$(MARKDOWNLINT)
+	typos
+
+secrets: ## Scan the git history for secrets
+	$(GITLEAKS)
+
+secrets-staged: ## Scan the staged changes for secrets
+	$(GITLEAKS) --pre-commit --staged
+
+periphery: test ## Fail on unused code
+	periphery scan --index-store-path $(INDEX_STORE)
+
 strings: build ## Check every translation against the strings in the code
-	scripts/strings.sh check
+	STRINGS_DIR=$(STRINGS_DIR) scripts/strings.sh check
 
 strings-update: build ## Rewrite the English strings table from the code
-	scripts/strings.sh update
+	STRINGS_DIR=$(STRINGS_DIR) scripts/strings.sh update
 
-hooks: ## Install the git pre-commit hooks
+hooks: ## Install the pre-commit hook
 	lefthook install
 
 signing: ## Create the stable code-signing identity once
-	scripts/setup-signing.sh
+	scripts/signing.sh
 
 clean: ## Remove the build output
 	rm -rf .build build

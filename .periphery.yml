@@ -1,0 +1,3 @@
+quiet: true
+retain_encodable_properties: true
+strict: true

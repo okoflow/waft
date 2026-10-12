@@ -1,0 +1,26 @@
+pre-commit:
+  jobs:
+    - name: format-check
+      glob:
+        - "*.{entitlements,plist,sh,swift}"
+        - .editorconfig
+        - .swiftformat
+      run: make format-check
+
+    - name: lint
+      glob:
+        - "*.swift"
+        - .swiftlint.yml
+      run: make lint
+
+    - name: shellcheck
+      glob:
+        - "*.sh"
+        - .shellcheckrc
+      run: make shellcheck
+
+    - name: docs
+      run: make docs
+
+    - name: secrets-staged
+      run: make secrets-staged

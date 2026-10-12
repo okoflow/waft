@@ -4,16 +4,32 @@ set -euo pipefail
 readonly NAME='Waft Dev'
 readonly KEYCHAIN="${HOME}/Library/Keychains/login.keychain-db"
 readonly EXPORT_PASSWORD='waft'
+readonly USAGE='usage: scripts/signing.sh'
+
+WORK_DIR=''
+
+usage() {
+  echo "${USAGE}" >&2
+
+  exit 2
+}
 
 die() {
-  echo "error: $*" >&2
+  local message
+  printf -v message '%s\n' "$@"
+
+  printf 'error: %s' "${message}" >&2
 
   exit 1
 }
 
+cleanup() {
+  rm -rf "${WORK_DIR}"
+}
+
 has_identity() {
   security find-identity "$@" -p codesigning "${KEYCHAIN}" \
-    | grep -q "\"${NAME}\""
+    | grep -qF "\"${NAME}\""
 }
 
 write_certificate_config() {
@@ -66,6 +82,8 @@ trust_identity() {
 }
 
 main() {
+  [[ $# -eq 0 ]] || usage
+
   if has_identity -v; then
     echo "\"${NAME}\" is already installed and trusted"
 
@@ -73,8 +91,7 @@ main() {
   fi
 
   WORK_DIR=$(mktemp -d)
-  readonly WORK_DIR
-  trap 'rm -rf "${WORK_DIR}"' EXIT
+  trap cleanup EXIT
 
   if ! has_identity; then
     create_identity

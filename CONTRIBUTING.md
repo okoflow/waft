@@ -1,8 +1,8 @@
 # Contributing
 
-Thank you for helping build Waft. This guide covers the development setup,
-the checks a change has to pass, and how code, commits, and pull requests are
-shaped. Everyone participating agrees to the
+Thank you for helping build Waft. This guide covers the setup, the checks a
+change has to pass, and how code, tests, scripts, docs, commits, and pull
+requests are shaped. Everyone participating agrees to the
 [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Ways to contribute
@@ -16,113 +16,212 @@ shaped. Everyone participating agrees to the
 - **Send a pull request** for an open issue. Comment on the issue first for
   anything larger than a fix, so the approach is agreed before the work.
 
-## Repository layout
-
-| Path | What lives there |
-| --- | --- |
-| `Sources/WaftCore` | Domain types, rules, state machines, and every interface |
-| `Sources/WaftSpeech` | The WhisperKit adapter |
-| `Sources/WaftPlatform` | The macOS adapters |
-| `Sources/WaftFeatures` | Observable models, the dictation flow, and the interface |
-| `Sources/Waft` | The app and its composition root |
-| `Packaging` | The Info.plist and the app icon |
-| `scripts` | Bundling and signing the app |
-| `docs` | Guides for users and the architecture |
-
-[docs/architecture.md](docs/architecture.md) explains how the modules depend
-on each other and where new code goes.
-
 ## Development setup
 
-Prerequisites: macOS 14 or later on Apple silicon, the Command Line Tools for
-Xcode 26 or later, or Xcode itself, and [Homebrew](https://brew.sh) for the
-checks.
+You need an Apple silicon Mac with macOS 26.6 or later and the Command Line
+Tools for Xcode 27, which `xcode-select --install` installs. CI checks every
+change with the same tools.
+
+Build and run Waft:
 
 ```sh
 git clone https://github.com/okoflow/waft.git
 cd waft
-
-brew install swiftformat swiftlint periphery gitleaks shellcheck shfmt lefthook
-make hooks
 make signing
 make run
 ```
 
-`make hooks` installs a pre-commit hook that formats, lints, and scans the
-staged files. `make signing` creates the Waft Dev code-signing identity in
-your login keychain and asks for your password to trust it. Without it, every
-build is signed ad hoc and macOS forgets the permissions you granted.
+`make signing` creates the Waft Dev code-signing identity in your login
+keychain once and asks for your password to trust it. Without it, every build
+is signed ad hoc and macOS forgets the permissions you granted. `make run`
+builds the debug configuration, signs it, and opens `build/Waft.app`; add
+`CONFIG=release` for an optimized build. A debug build doesn't update itself:
+pull and run `make run` again.
 
-The everyday targets:
+To change the code, install the tools the checks use and the pre-commit hook:
 
 ```sh
-make run      # Build, sign, and open Waft
-make bundle   # Build and sign build/Waft.app
-make build    # Build every target
-make check    # Run every check that CI runs
-make format   # Format Swift, shell, and the property list
-make clean    # Remove the build output
+brew bundle
+make hooks
 ```
 
-Targets build the debug configuration; add `CONFIG=release` for an optimized
-build. `make help` lists every target.
+The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the
+checks use, Bun for markdownlint included. The hook runs `format-check`,
+`lint`, and `shellcheck` when the commit touches files they check, and
+always runs `docs` and `secrets-staged`, which scans the staged changes for
+secrets. `make help` lists every target, and [Releasing](docs/releasing.md)
+covers releases.
 
 ## Checks
 
-CI runs `make check` on every pull request. Run it before you push.
+`make check` runs the checks below in this order, except `bundle`, which
+re-signs the app you run. Run it before you push. CI runs `make check` and
+then `make bundle` with the Command Line Tools for Xcode 27 on every pull
+request and every push to `main`, and builds and tests with the Command Line
+Tools for Xcode 26 in a second job.
 
 | Target | Tool | Fails on |
 | --- | --- | --- |
 | `format-check` | SwiftFormat, shfmt, plutil | Any formatting difference; `make format` fixes it |
-| `lint` | SwiftLint, strict | Any violation, including comments in code |
-| `build` | Swift 6 | Any warning, since warnings are errors |
-| `periphery` | Periphery | Unused code |
+| `lint` | SwiftLint | Any violation, including comments in code, `??`, and an unbound `try?` |
+| `shellcheck` | ShellCheck | Any problem in `scripts/*.sh` |
+| `docs` | markdownlint, typos | Markdown style, and spelling mistakes in code and docs |
 | `secrets` | gitleaks | Secrets anywhere in the git history |
-| `shellcheck` | ShellCheck | Problems in `scripts/*.sh`, with every optional check on |
+| `build` | Swift | Any warning, since warnings are errors |
+| `test` | Swift Testing | A failing test |
+| `periphery` | Periphery | Unused code |
+| `strings` | `scripts/strings.sh` | A translation missing a string from the code, keeping one the code dropped, or changing a placeholder |
+| `bundle` | `scripts/bundle.sh` | The app can't be assembled or signed |
 
-Fix the code rather than the rule. A rule that is wrong for one line gets a
-targeted `// swiftlint:disable:next <rule>` directive.
+The linters and formatters read their settings from dotfiles at the root,
+such as `.swiftlint.yml`, `.typos.toml`, or `.editorconfig` for shfmt. Fix the
+code rather than the rule. A rule that is wrong for one line gets a targeted
+`// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>`
+directive.
 
-## Code guidelines
+## Code
 
-### Swift
+[Architecture](docs/architecture.md) explains the modules, the rules that
+keep code in its place, and where new code goes. This section covers how the
+code reads.
 
-- Dependencies point toward `WaftCore`. Interfaces live there; adapters
-  for system frameworks go into `WaftPlatform` or `WaftSpeech`, and
-  features receive them through `AppDependencies`. No singletons.
+### Naming and files
+
 - Name things after what they are and do, following the
   [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
-  Prefer a precise name to a comment.
-- No comments in code. Names, types, and small functions carry the meaning;
-  the `no_comments` lint rule enforces it.
+  No comments in code: names, types, and small functions carry the meaning.
+- One main type per file, named after it. An extension that adds to another
+  type goes into `<Type>+<Topic>.swift`, such as `String+Capitalization.swift`.
+- Give every declaration the narrowest access level that works, and leave
+  nothing unused; Periphery fails on unused code.
+
+### Control flow
+
+- Keep the happy path at the left margin. Check preconditions with `guard` at
+  the top of a function and return or throw early; use `if` for real branches.
+- Separate conditions with commas, not `&&`. Give a long condition a name, as
+  a `let` or a computed property that reads as an assertion, such as
+  `canSaveDraft`.
+- Don't use `??`; the `no_nil_coalescing` rule enforces it. Unwrap with
+  `guard let … else { return … }`, throw when absence is a failure, and use a
+  dictionary's `default:` subscript for lookups.
+- Don't use `try?` to hide a failure. It is fine only where absence is the
+  documented result, as in `guard let key = try? PublicKey(…)`. Other failures
+  are thrown or logged. The `no_optional_try` rule allows `try?` only in a
+  `let` binding.
+- A closed set of failures gets its own error enum, thrown with typed throws
+  when every caller handles every case, as `RewriteError` is.
+
+### Layout
+
 - Separate the steps of a function with one blank line: the guards, the
   values it prepares, the work, and the result. A `return`, `throw`, `break`,
   or `continue` that does not open its scope gets a blank line before it,
-  which the `blank_line_before_exit` lint rule checks, and so does the
-  statement after an `await` that finishes a step. A report, such as a log
-  line, stands apart from the work it reports on. Statements of one kind stay
-  together: consecutive declarations, or the setup of one object.
-- SwiftFormat orders declarations by kind, nested types, properties,
-  initializers, then methods, and each kind from the most to the least
-  visible.
+  which the `blank_line_before_exit` rule checks. Statements of one kind stay
+  together.
+- A `guard` that checks a value declared on the single line directly above it
+  stays under it without a blank line. After a statement of several lines,
+  leave a blank line before the `guard`.
+- SwiftFormat orders declarations by kind (nested types, properties,
+  initializers, methods) and each kind from the most to the least visible.
+
+### Platform
+
 - The package builds with the Command Line Tools alone, which lack Xcode's
   SwiftUI macro plugins. Keep view state in observable models instead of
   `@State`, declare environment values with an `EnvironmentKey` instead of
-  `@Entry`, and do without `#Preview`. The `no_xcode_only_macros` lint rule
-  catches them, since CI builds with Xcode and would accept them.
-- Logs never contain dictated text or audio. Mark only identifiers, durations,
-  and counts as public.
-- User-facing text uses American English and sentence case for messages; menu
-  items and buttons use title case.
+  `@Entry`, and do without `#Preview`. The `no_xcode_only_macros` rule
+  catches them.
+- Logs never contain dictated text, audio, or clipboard contents. Mark only
+  identifiers, durations, and counts as public.
 
-### Shell
+### Text and translations
+
+- User-facing text uses American English. Messages and descriptions use
+  sentence case; menu items and buttons use title case.
+- A menu item or button ends with "…" only when the command needs more input
+  before it completes, such as a choice, a confirmation, or a file.
+  **Settings…** keeps it by macOS convention.
+- Lists of three or more use the serial comma, in the interface and in the
+  docs: "Clean, Formal, and Translate".
+- Every string the code shows is translated into every language in
+  `Packaging/Localizations`. After adding or changing one, run
+  `make strings-update` and add it to every table; `make strings` fails until
+  they match.
+
+## Tests
+
+Tests use [Swift Testing](https://developer.apple.com/documentation/testing)
+and run with `make test`, which passes `swift test` the paths of Swift Testing
+and its macro plugins; with the Command Line Tools alone, a plain
+`swift test` can miss them. Test the value types in `WaftCore` directly,
+adapters through small fakes of their interfaces, and the main-actor models in
+`WaftFeatures` with fakes of the `WaftCore` interfaces they receive. Pass
+fixed pauses in through the initializer, so tests set them to zero instead of
+waiting them out. Tests never touch the microphone, the network, the
+Keychain, or Accessibility.
+
+Every test file follows one pattern:
+
+- A suite tests one type: `struct <Type>Tests` in `<Type>Tests.swift`,
+  without `@Suite`. A suite for an extension that a module adds to another
+  module's type is named after the extension's file, such as
+  `StringCapitalizationTests` for `String+Capitalization.swift`.
+- A test's name is a sentence about the type in the present tense, written
+  as a raw identifier that starts with a verb, such as
+  `` `drops entries older than the retention` ``. Names use American spelling
+  and no contractions.
+- `#expect` makes every check, and `#expect(throws:)` checks errors.
+  `#require` only unwraps a value that the rest of the test needs, in a
+  statement of its own rather than inside an `#expect`.
+- The cases of one behavior are one test with `arguments:`, which takes an
+  array of tuples when the test has several parameters.
+- A test double is named `Fake` and the protocol it implements, such as
+  `FakeTextRewriter`; for a protocol named after a capability, the noun
+  replaces it, so `LicenseSignatureChecking` gets
+  `FakeLicenseSignatureChecker`. A double that one suite uses is `private` at
+  the bottom of that suite's file; a double that several suites share has a
+  file of its own, named after it.
+- Fixtures that several suites share, such as `Calendar.gmt` and
+  `Date.fixed`, are static members in an extension of their type, in
+  `<Type>+Fixtures.swift`. A fixture of one suite is a `private` member of
+  that suite.
+- A suite imports the module under test with `@testable` only when it uses
+  an internal symbol.
+- Each test target keeps its own fakes and fixtures; targets share no test
+  code.
+
+## Shell scripts
 
 Scripts follow the
-[Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html):
-`set -euo pipefail`, a `main` function called with `"$@"`, functions for
-every step, `readonly` constants, and errors on standard error through `die`.
-shfmt formats them with two-space indents, and ShellCheck runs with every
-optional check.
+[Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
+and one layout: `#!/bin/bash` and `set -euo pipefail`, `readonly` constants at
+the top, `usage` and `die` helpers that print to standard error, a `cleanup`
+function trapped on `EXIT` when the script makes temporary files, a function
+for every step, and a `main` function at the bottom called with `"$@"`. A
+`make` target runs each script. shfmt formats them with the settings in
+`.editorconfig`, and ShellCheck checks them with those in `.shellcheckrc`.
+
+## Documentation
+
+Every guide follows the same pattern:
+
+- A title, then one or two sentences on what the page covers and links to the
+  pages next to it.
+- Headings in sentence case. Tables for reference, numbered lists for steps,
+  and `-` bullets for everything else.
+- Second person, active voice, American English.
+- Interface names in **bold**, paths through Settings with "›", keys in
+  `<kbd>`, and code, commands, and file names in code font.
+- Code blocks name their language, such as `sh` or `swift`.
+- Inline links, relative between pages. A link to a guide or a section uses
+  its title as the text, and a link to any other file uses the file's name.
+- No dates: describe the current version. Release history lives in
+  [GitHub Releases](https://github.com/okoflow/waft/releases).
+- Each fact lives on one page; the others link to it instead of repeating it.
+- Lines wrapped at 80 columns, except in tables and code blocks.
+
+Change the docs in the same pull request as the behavior they describe.
 
 ## Commits
 
@@ -131,33 +230,58 @@ Commits follow
 `type(scope): description`.
 
 - Types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`,
-  `chore`. Only `feat` and `fix` move the version.
-- The scope is an area such as `core`, `speech`, `platform`, or `ui`, never a
-  file name.
-- The description is imperative and lowercase, under 72 characters, without
-  a trailing period. It says what the change does, not what task it closes.
+  and `chore`.
+- The scope names the area a change is about, from the list below. Leave it
+  out when the change spans several areas or none of them fits.
+- The description is in the imperative, starts in lowercase, stays under 72
+  characters, and has no trailing period. It says what the change does, not
+  what task it closes.
 - A breaking change carries `!` before the colon and a `BREAKING CHANGE:`
   footer that says what a user must do.
 - One commit is one logical change that builds and passes on its own. Add a
-  body only for what the diff cannot show: the problem, the reason for the
-  approach, a constraint. Footers such as `Fixes #12` go last.
-- Commits credit people. Do not add generator or tooling trailers.
+  body only for what the diff can't show: the problem, the reason for the
+  approach, a constraint.
+- The only footers are `BREAKING CHANGE:` and `Fixes #N`, last. No other
+  trailers, such as `Co-authored-by:` or `Signed-off-by:`.
+
+| Scope | Area |
+| --- | --- |
+| `dictation` | The dictation key, recording, hands-free dictation, and pasting |
+| `languages` | Recognition, the speech model, and the rules of each language |
+| `modes` | Raw, Light, Clean, Formal, and Translate, and their instructions |
+| `models` | The AI models and their providers |
+| `edit` | Editing by voice |
+| `files` | File transcription |
+| `dictionary` | The dictionary and snippets |
+| `history` | History and the statistics |
+| `hud` | The HUD |
+| `onboarding` | The setup guide |
+| `settings` | The menu and Settings |
+| `pro` | Waft Pro and licenses |
+| `ui` | The look shared across the interface, such as spacing, type, and animation |
+| `l10n` | The translations of the interface |
+| `release` | The version bump that prepares a release |
+| `deps` | Dependency updates, which Dependabot opens |
 
 ## Pull requests
 
-- One pull request is one standalone change. Split anything above roughly
-  400 changed lines unless the parts only make sense together.
-- The title is the merge commit subject and follows the commit format. The
-  body says what changed and why in a few sentences and names the risky
-  spot. Add `Verified:` with the checks you ran and `Fixes #N` when it closes
-  an issue.
-- Attach a screenshot or a recording for visible changes.
+- One pull request is one standalone change. Split anything above roughly 400
+  changed lines unless the parts only make sense together.
+- A pull request is merged with a merge commit whose subject is its title and
+  whose body is its body. Write the title in the commit format and the body as
+  a commit body: what changed and why in a few sentences, and the risky spot.
+  End it with `Verified:` and the checks you ran, and `Fixes #N` when it closes
+  an issue. Replace the body of a Dependabot pull request the same way before
+  merging it.
+- Attach a screenshot or a recording for visible changes in a comment, so it
+  stays out of the merge commit.
 - CI has to pass. Reviews focus on correctness, layering, and whether the
   change is the smallest one that solves the problem.
 
 ## Licensing of contributions
 
-Waft is licensed under the [GNU General Public License v3.0](LICENSE). By
-submitting a contribution, you agree that it is licensed under the same terms.
-Add your name to [AUTHORS](AUTHORS) in your first pull request to be listed
-among The Waft Authors.
+Waft is licensed under the
+[GNU General Public License v3.0 only](LICENSE) (GPL-3.0-only). By submitting
+a contribution, you agree that it is licensed under the same terms. Add your
+name to [AUTHORS](AUTHORS) in your first pull request to be listed among The
+Waft Authors.
