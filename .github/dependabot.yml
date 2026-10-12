@@ -6,8 +6,8 @@ updates:
     schedule:
       interval: weekly
     cooldown:
+      default-days: 7
       semver-major-days: 30
-      semver-minor-days: 7
     commit-message:
       prefix: build
       include: scope
@@ -16,6 +16,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: ci
       include: scope
