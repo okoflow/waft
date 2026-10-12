@@ -54,5 +54,20 @@ let package = Package(
             dependencies: ["WaftCore", "WaftFeatures", "WaftPlatform", "WaftSpeech"],
             swiftSettings: mainActorByDefault,
         ),
+        .testTarget(
+            name: "WaftCoreTests",
+            dependencies: ["WaftCore"],
+            swiftSettings: strict,
+        ),
+        .testTarget(
+            name: "WaftPlatformTests",
+            dependencies: ["WaftCore", "WaftPlatform"],
+            swiftSettings: strict,
+        ),
+        .testTarget(
+            name: "WaftFeaturesTests",
+            dependencies: ["WaftCore", "WaftFeatures"],
+            swiftSettings: mainActorByDefault,
+        ),
     ],
 )

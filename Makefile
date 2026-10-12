@@ -1,9 +1,11 @@
-CONFIG        ?= debug
-INDEX_STORE    = $(if $(wildcard .build/out/v5),.build/out,.build/debug/index/store)
-STRINGS_DIR    = $(CURDIR)/.build/strings
-TOOLCHAIN_DIR  = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
+CONFIG         ?= debug
+INDEX_STORE     = $(if $(wildcard .build/out/v5),.build/out,.build/debug/index/store)
+STRINGS_DIR     = $(CURDIR)/.build/strings
+TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
+TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
+TESTING_LIBS    = $(TOOLCHAIN_DIR)/Library/Developer
 
-.PHONY: help build bundle run format check format-check lint periphery secrets shellcheck strings strings-update hooks signing clean
+.PHONY: help build test bundle run format check format-check lint periphery secrets shellcheck strings strings-update hooks signing clean
 
 help: ## List targets
 	@awk 'BEGIN { FS = ":.*## " } /^[a-z0-9-]+:.*## / { printf "  %-14s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -11,6 +13,9 @@ help: ## List targets
 build: ## Build every target and extract its localizable strings
 	mkdir -p $(STRINGS_DIR)
 	swift build --configuration $(CONFIG) -Xswiftc -emit-localized-strings -Xswiftc -emit-localized-strings-path -Xswiftc $(STRINGS_DIR)
+
+test: ## Run the tests
+	swift test -Xswiftc -plugin-path -Xswiftc $(TESTING_PLUGINS) -Xswiftc -F -Xswiftc $(TESTING_LIBS)/Frameworks -Xlinker -rpath -Xlinker $(TESTING_LIBS)/Frameworks -Xlinker -rpath -Xlinker $(TESTING_LIBS)/usr/lib
 
 bundle: ## Build and sign build/Waft.app
 	scripts/bundle.sh $(CONFIG)
@@ -23,7 +28,7 @@ format: ## Format Swift, shell, and the property list
 	shfmt -w scripts
 	plutil -convert xml1 Packaging/Waft-Info.plist
 
-check: format-check lint build periphery secrets shellcheck strings ## Run every check that CI runs
+check: format-check lint build test periphery secrets shellcheck strings ## Run every check that CI runs
 	@echo "make check: OK"
 
 format-check: ## Fail on any formatting difference
@@ -34,7 +39,7 @@ format-check: ## Fail on any formatting difference
 lint: ## Lint Swift sources in strict mode
 	TOOLCHAIN_DIR=$(TOOLCHAIN_DIR) swiftlint lint --quiet
 
-periphery: build ## Fail on unused code
+periphery: test ## Fail on unused code
 	periphery scan --strict --quiet --retain-codable-properties --index-store-path $(INDEX_STORE)
 
 secrets: ## Scan the git history for secrets
