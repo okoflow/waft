@@ -91,12 +91,15 @@ struct TranscriptProcessorTests {
         #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
     }
 
-    @Test
-    func `asks for Pro instead of rewriting without AI access`() async {
+    @Test(arguments: [
+        (Mode.light, ProcessedText(text: "See you tomorrow.", mode: .light)),
+        (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
+    ])
+    func `asks for Pro only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
         let log = RewriteLog()
-        let processed = await process("see you tomorrow", mode: .translate, allowsAI: false, log: log)
+        let processed = await process("see you tomorrow", mode: mode, allowsAI: false, log: log)
 
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro))
+        #expect(processed == expected)
         #expect(await log.requests.isEmpty)
     }
 

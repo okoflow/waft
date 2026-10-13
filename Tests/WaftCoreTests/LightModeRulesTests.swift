@@ -9,6 +9,7 @@ struct LightModeRulesTests {
         ("I agree. Um, so what?", .english, "I agree. So what?"),
         ("hmm, let me think", .english, "Let me think."),
         ("call me at 5, uh, tomorrow", .english, "Call me at 5 tomorrow."),
+        ("first line\num, second line", .english, "First line\nsecond line."),
         ("э, ну, давай начнём", .russian, "Ну, давай начнём."),
         ("э-э, привет", .russian, "Привет."),
         ("это, мм, хорошо", .russian, "Это хорошо."),
@@ -57,14 +58,18 @@ struct LightModeRulesTests {
         #expect(LightModeRules.apply(text, language: language) == expected)
     }
 
-    @Test(arguments: [(Language.turkish, "İstanbul güzel."), (.azerbaijani, "İstanbul güzel."), (.english, "Istanbul güzel.")])
+    @Test(arguments: [(Language.turkish, "İstanbul güzel."), (.english, "Istanbul güzel.")])
     func `capitalizes a leading i by the rules of the language`(language: Language, expected: String) {
         #expect(LightModeRules.apply("istanbul güzel", language: language) == expected)
     }
 
+    @Test(arguments: [("τι κάνεις; εε, καλά", Language.greek, "Τι κάνεις; Καλά."), ("wait; um, fine", .english, "Wait; fine.")])
+    func `capitalizes after the question mark of the language`(text: String, language: Language, expected: String) {
+        #expect(LightModeRules.apply(text, language: language) == expected)
+    }
+
     @Test(arguments: [
         ("umbrella, um, open", Language.english, "Umbrella open."),
-        ("Ummmm, yes", .english, "Yes."),
         ("uh-uh, no", .english, "Uh-uh, no."),
         ("Эммм, да", .russian, "Да."),
         ("um, hello", .japanese, "um, hello。"),

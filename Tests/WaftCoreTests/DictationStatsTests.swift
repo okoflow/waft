@@ -91,12 +91,14 @@ struct DictationStatsTests {
     }
 
     @Test
-    func `survives an encoding round trip`() throws {
-        var stats = DictationStats()
-        try stats.record(words: 3, seconds: 1, on: date(2026, 10, 12), calendar: .gmt)
-        let data = try JSONEncoder().encode(stats)
+    func `decodes the stored format`() throws {
+        let json = #"{"days":{"2026-10-12":{"words":15,"dictations":2,"seconds":6.5}}}"#
+        let stats = try JSONDecoder().decode(DictationStats.self, from: Data(json.utf8))
+        let day = try #require(stats.days["2026-10-12"])
 
-        #expect(try JSONDecoder().decode(DictationStats.self, from: data) == stats)
+        #expect(day.words == 15)
+        #expect(day.dictations == 2)
+        #expect(day.seconds == 6.5)
     }
 
     private func date(_ year: Int, _ month: Int, _ day: Int, hour: Int = 0) throws -> Date {

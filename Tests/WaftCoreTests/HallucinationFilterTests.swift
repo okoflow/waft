@@ -31,6 +31,7 @@ struct HallucinationFilterTests {
         ("Субтитры сделал DimaTorzok", .russian),
         ("Спасибо за просмотр!", .russian),
         ("ご視聴ありがとうございました", .japanese),
+        ("字幕志愿者 李宗盛", .chinese),
         ("Untertitel im Auftrag des ZDF, 2021", .german),
     ])
     func `drops stock subtitle phrases`(text: String, language: Language) {
@@ -41,6 +42,7 @@ struct HallucinationFilterTests {
         ("Thanks for watching the game with me", Language.english),
         ("Thanks for watching", .russian),
         ("Субтитры сделал мой друг вчера вечером", .russian),
+        ("字幕志愿者今天我们讨论一下明天的计划", .chinese),
     ])
     func `keeps stock phrases with real speech after them or in another language`(text: String, language: Language) {
         #expect(!HallucinationFilter.isHallucination(text, in: language, prompt: nil))

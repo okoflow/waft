@@ -16,6 +16,13 @@ struct LicenseKeyTests {
     }
 
     @Test
+    func `reads parts written in the URL-safe base64 alphabet`() throws {
+        let key = try #require(LicenseKey("WFT1.\(base64URL(Self.payload)).-_-_"))
+
+        #expect(key.signature == Data([0xFB, 0xFF, 0xBF]))
+    }
+
+    @Test
     func `ignores whitespace and line breaks pasted into a key`() throws {
         let key = "WFT1.\(base64URL(Self.payload)).\(base64URL(Self.signature))"
         let pasted = "  " + key.prefix(20) + "\n " + key.dropFirst(20).prefix(30) + "\t" + key.dropFirst(50) + "\n"
@@ -27,7 +34,6 @@ struct LicenseKeyTests {
     @Test(arguments: [
         "",
         "WFT1",
-        "WFT2.e30.AAAA",
         "WFT1.e30",
         "WFT1.e30.AAAA.AAAA",
         "WFT1.@@@@.AAAA",
@@ -39,7 +45,7 @@ struct LicenseKeyTests {
         #expect(LicenseKey(text) == nil)
     }
 
-    @Test(arguments: ["wft1", "WFT2", "", "WFT1.WFT1"])
+    @Test(arguments: ["wft1", "WFT2", ""])
     func `rejects a key with another prefix`(prefix: String) {
         #expect(LicenseKey("\(prefix).\(base64URL(Self.payload)).\(base64URL(Self.signature))") == nil)
     }

@@ -53,11 +53,10 @@ struct ModeInstructionsTests {
     }
 
     @Test
-    func `survives an encoding round trip`() throws {
-        var instructions = ModeInstructions()
-        instructions.set("Custom.", for: .formal)
-        let data = try JSONEncoder().encode(instructions)
+    func `decodes the stored format`() throws {
+        let json = #"{"custom":{"formal":"Write like a pirate."}}"#
+        let instructions = try JSONDecoder().decode(ModeInstructions.self, from: Data(json.utf8))
 
-        #expect(try JSONDecoder().decode(ModeInstructions.self, from: data) == instructions)
+        #expect(instructions.text(for: .formal) == "Write like a pirate.")
     }
 }

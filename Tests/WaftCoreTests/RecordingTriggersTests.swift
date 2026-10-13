@@ -7,7 +7,7 @@ struct RecordingTriggersTests {
     func `starts a dictation with the push-to-talk key`() {
         var triggers = RecordingTriggers()
         let settings = Settings(languages: .preferred(by: []))
-        let fired = triggers.handle(KeyEvent(.modifiersChanged, keyCode: 61, flags: KeyEvent.rightOptionFlag), settings: settings)
+        let fired = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
 
         #expect(fired.map(\.purpose) == [.dictation])
         #expect(fired.map(\.key) == [settings.pushToTalkKey])
@@ -19,10 +19,35 @@ struct RecordingTriggersTests {
         var triggers = RecordingTriggers()
         var settings = Settings(languages: .preferred(by: []))
         settings.editKey = PushToTalkKey(keyCode: KeyEvent.f5KeyCode)
-        let fired = triggers.handle(KeyEvent(.keyDown, keyCode: KeyEvent.f5KeyCode), settings: settings)
+        let fired = triggers.handle(.keyDown(KeyEvent.f5KeyCode), settings: settings)
 
         #expect(fired.map(\.purpose) == [.edit])
         #expect(fired.map(\.action) == [.startRecording])
+    }
+
+    @Test
+    func `discards a dictation when the edit key is pressed during it`() {
+        var triggers = RecordingTriggers()
+        var settings = Settings(languages: .preferred(by: []))
+        settings.editKey = PushToTalkKey(keyCode: KeyEvent.f5KeyCode)
+        _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
+        let fired = triggers.handle(.keyDown(KeyEvent.f5KeyCode), settings: settings)
+
+        #expect(fired.map(\.purpose) == [.dictation, .edit])
+        #expect(fired.map(\.action) == [.discardRecording(.otherKeyPressed), .startRecording])
+    }
+
+    @Test
+    func `discards both recordings when the key monitor stops`() {
+        var triggers = RecordingTriggers()
+        var settings = Settings(languages: .preferred(by: []))
+        settings.editKey = PushToTalkKey(keyCode: KeyEvent.f5KeyCode)
+        _ = triggers.handle(.keyDown(KeyEvent.f5KeyCode), settings: settings)
+        _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
+        let fired = triggers.handle(.monitorDisabled, settings: settings)
+
+        #expect(fired.map(\.purpose) == [.dictation, .edit])
+        #expect(fired.map(\.action) == [.discardRecording(.interrupted), .discardRecording(.interrupted)])
     }
 
     @Test
@@ -30,7 +55,7 @@ struct RecordingTriggersTests {
         var triggers = RecordingTriggers()
         var settings = Settings(languages: .preferred(by: []))
         settings.editKey = settings.pushToTalkKey
-        let fired = triggers.handle(KeyEvent(.modifiersChanged, keyCode: 61, flags: KeyEvent.rightOptionFlag), settings: settings)
+        let fired = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
 
         #expect(fired.map(\.purpose) == [.dictation])
     }

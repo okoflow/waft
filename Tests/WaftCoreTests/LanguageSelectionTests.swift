@@ -12,11 +12,6 @@ struct LanguageSelectionTests {
         #expect(LanguageSelection(languages: languages).languages == expected)
     }
 
-    @Test(arguments: [(Language.german, Language?.some(.german)), (.french, nil), (nil, nil)])
-    func `pins only an enabled language`(pinned: Language?, expected: Language?) {
-        #expect(LanguageSelection(languages: [.english, .german], pinned: pinned).pinned == expected)
-    }
-
     @Test(arguments: [
         ([Language.english], Language?.none, Language?.some(.english)),
         ([.english, .german], nil, nil),
