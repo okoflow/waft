@@ -155,7 +155,7 @@ struct DictationControllerTests {
     ) async -> DictationController {
         let speechModel = isSpeechModelReady
             ? await SpeechModelController.ready(settings: settings)
-            : SpeechModelController(transcriber: transcriber, settings: settings)
+            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
         let recordings = RecordingController(
             recorder: recorder,
             focusTracker: FakeFocusTracker(),

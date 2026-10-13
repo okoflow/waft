@@ -19,6 +19,8 @@
 "API key" = "Ключ API";
 "About" = "Про програму";
 "Accessibility" = "Доступність";
+"Accurate" = "Точна";
+"Accurate speech model" = "Точна модель мовлення";
 "Activate" = "Активувати";
 "Add App…" = "Додати програму…";
 "Add Language" = "Додати мову";
@@ -105,6 +107,7 @@
 "Editing on this Mac…" = "Редагую на цьому Mac…";
 "Editing with %@…" = "Редагую через %@…";
 "Exactly what was heard." = "Саме те, що прозвучало.";
+"Fast" = "Швидка";
 "File transcription is part of Waft Pro" = "Розпізнавання файлів входить до Waft Pro";
 "File transcription" = "Розпізнавання файлів";
 "File" = "Файл";
@@ -332,6 +335,9 @@
 "What Pro adds" = "Що дає Pro";
 "When off, Waft copies the text and you paste it yourself." = "Якщо вимкнено, Waft копіює текст, а вставляєте його ви.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Коли модель мовлення буде готова, клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
+"Whisper large-v3 makes fewer mistakes outside English." = "Whisper large-v3 рідше помиляється не англійською.";
+"Whisper large-v3 turbo · 630 MB · quickest" = "Whisper large-v3 turbo · 630 МБ · найшвидша";
+"Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower" = "Whisper large-v3 · 3,1 ГБ · менше помилок не англійською, приблизно втричі повільніша";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper працює на цьому Mac, тож звук нікуди не передається.";
 "Words dictated each day for the last 7 days" = "Слова, продиктовані за кожен з останніх 7 днів";
 "Words" = "Слова";

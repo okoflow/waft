@@ -107,6 +107,12 @@ private struct ProBenefit {
             detail: "Recordings and videos become text and subtitles.",
         ),
         ProBenefit(
+            symbolName: "scope",
+            tint: .green,
+            title: "Accurate speech model",
+            detail: "Whisper large-v3 makes fewer mistakes outside English.",
+        ),
+        ProBenefit(
             symbolName: "slider.horizontal.3",
             tint: .gray,
             title: "Your own instructions",

@@ -8,47 +8,88 @@ final nonisolated class FakeTranscriber: Transcriber {
         let vocabulary: [String]
     }
 
+    enum Call: Equatable {
+        case download(SpeechModel)
+        case cancelDownload(SpeechModel)
+        case load(SpeechModel)
+        case delete(SpeechModel)
+    }
+
     private struct State {
+        var installed: Set<SpeechModel>
+        var calls: [Call] = []
         var requests: [Request] = []
         var releases = 0
     }
 
-    let modelDirectory = URL(filePath: "/dev/null")
-
     private let replies: [Result<Transcript?, any Error>]
     private let fileReply: Result<TimedTranscript?, any Error>
     private let holdsRequests: Bool
-    private let state = OSAllocatedUnfairLock(initialState: State())
+    private let holdsDownloads: Bool
+    private let state: OSAllocatedUnfairLock<State>
 
     var requests: [Request] {
         state.withLock { $0.requests }
+    }
+
+    var calls: [Call] {
+        state.withLock { $0.calls }
     }
 
     init(
         _ replies: Result<Transcript?, any Error>...,
         file fileReply: Result<TimedTranscript?, any Error> = .success(nil),
         holdsRequests: Bool = false,
+        installed: Set<SpeechModel> = Set(SpeechModel.allCases),
+        holdsDownloads: Bool = false,
     ) {
         self.replies = replies
         self.fileReply = fileReply
         self.holdsRequests = holdsRequests
+        self.holdsDownloads = holdsDownloads
+        state = OSAllocatedUnfairLock(initialState: State(installed: installed))
     }
 
     func release() {
         state.withLock { $0.releases += 1 }
     }
 
-    func isModelInstalled() -> Bool {
-        true
+    func modelDirectory(for model: SpeechModel) -> URL {
+        URL(filePath: NSTemporaryDirectory()).appending(path: model.rawValue)
     }
 
-    func downloadModel(progress _: @Sendable (Double) -> Void) {}
-
-    func loadModel(for _: [Language]) -> Duration {
-        .zero
+    func isModelInstalled(_ model: SpeechModel) -> Bool {
+        state.withLock { $0.installed.contains(model) }
     }
 
-    func deleteModel() {}
+    func downloadModel(_ model: SpeechModel, progress _: @Sendable (Double) -> Void) async throws {
+        state.withLock { $0.calls.append(.download(model)) }
+
+        if holdsDownloads {
+            do {
+                try await Task.sleep(for: .seconds(60))
+            } catch {
+                state.withLock { $0.calls.append(.cancelDownload(model)) }
+
+                throw error
+            }
+        }
+
+        state.withLock { _ = $0.installed.insert(model) }
+    }
+
+    func loadModel(_ model: SpeechModel, for _: [Language]) -> Duration {
+        state.withLock { $0.calls.append(.load(model)) }
+
+        return .zero
+    }
+
+    func deleteModel(_ model: SpeechModel) {
+        state.withLock { state in
+            state.calls.append(.delete(model))
+            state.installed.remove(model)
+        }
+    }
 
     func transcribe(_: [Float], in language: Language?, vocabulary: [String]) async throws -> Transcript? {
         let number = await answer(Request(language: language, vocabulary: vocabulary))

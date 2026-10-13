@@ -5,6 +5,7 @@ import os
 
 package actor WhisperTranscriber: Transcriber {
     private struct LoadedModel {
+        let model: SpeechModel
         let whisper: WhisperKit
         let languages: [Language]
     }
@@ -15,10 +16,6 @@ package actor WhisperTranscriber: Transcriber {
     private var loaded: LoadedModel?
     private var isTranscribing = false
     private var waiters: [CheckedContinuation<Void, Never>] = []
-
-    package nonisolated var modelDirectory: URL {
-        SpeechModelFiles.folder
-    }
 
     package init() {}
 
@@ -41,40 +38,46 @@ package actor WhisperTranscriber: Transcriber {
         )
     }
 
-    package func isModelInstalled() -> Bool {
-        SpeechModelFiles.isInstalled
+    package nonisolated func modelDirectory(for model: SpeechModel) -> URL {
+        SpeechModelFiles(model).folder
     }
 
-    package func downloadModel(progress: @escaping @Sendable (Double) -> Void) async throws {
+    package func isModelInstalled(_ model: SpeechModel) -> Bool {
+        SpeechModelFiles(model).isInstalled
+    }
+
+    package func downloadModel(_ model: SpeechModel, progress: @escaping @Sendable (Double) -> Void) async throws {
+        let files = SpeechModelFiles(model)
         try FileManager.default.createDirectory(at: SpeechModelFiles.baseDirectory, withIntermediateDirectories: true)
 
         _ = try await WhisperKit.download(
-            variant: SpeechModelFiles.model,
+            variant: files.variant,
             downloadBase: SpeechModelFiles.baseDirectory,
             from: SpeechModelFiles.repository,
         ) { progress($0.fractionCompleted) }
         _ = try await ModelUtilities.loadTokenizer(for: .largev3, tokenizerFolder: SpeechModelFiles.baseDirectory)
 
-        try SpeechModelFiles.markComplete()
+        try files.markComplete()
     }
 
-    package func loadModel(for languages: [Language]) async throws -> Duration {
-        guard SpeechModelFiles.isInstalled else { throw TranscriberError.modelMissing(SpeechModelFiles.model) }
-
-        loaded = nil
+    package func loadModel(_ model: SpeechModel, for languages: [Language]) async throws -> Duration {
+        let files = SpeechModelFiles(model)
+        guard files.isInstalled else { throw TranscriberError.modelMissing(files.variant) }
 
         let start = ContinuousClock.now
-        let whisper = try await WhisperKit(configuration())
+        let whisper = try await WhisperKit(configuration(for: files))
         whisper.tokenizer = try restrictedTokenizer(of: whisper, to: languages)
-        loaded = LoadedModel(whisper: whisper, languages: languages)
+        loaded = LoadedModel(model: model, whisper: whisper, languages: languages)
 
         return ContinuousClock.now - start
     }
 
-    package func deleteModel() throws {
-        loaded = nil
+    package func deleteModel(_ model: SpeechModel) throws {
+        if loaded?.model == model {
+            loaded = nil
+        }
 
-        try SpeechModelFiles.remove()
+        try SpeechModelFiles(model).remove()
     }
 
     package func transcribe(_ samples: [Float], in language: Language?, vocabulary: [String]) async throws -> Transcript? {
@@ -156,11 +159,11 @@ package actor WhisperTranscriber: Transcriber {
         return HallucinationFilter.isHallucination(text, in: language, prompt: nil) ? [] : segments
     }
 
-    private func configuration() -> WhisperKitConfig {
+    private func configuration(for files: SpeechModelFiles) -> WhisperKitConfig {
         WhisperKitConfig(
-            model: SpeechModelFiles.model,
+            model: files.variant,
             downloadBase: SpeechModelFiles.baseDirectory,
-            modelFolder: SpeechModelFiles.folder.path,
+            modelFolder: files.folder.path,
             tokenizerFolder: SpeechModelFiles.baseDirectory,
             verbose: false,
             logLevel: .none,

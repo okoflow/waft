@@ -19,6 +19,8 @@
 "API key" = "API密钥";
 "About" = "关于";
 "Accessibility" = "辅助功能";
+"Accurate" = "精确";
+"Accurate speech model" = "高精度语音识别模型";
 "Activate" = "激活";
 "Add App…" = "添加App…";
 "Add Language" = "添加语言";
@@ -105,6 +107,7 @@
 "Editing on this Mac…" = "正在此Mac上编辑…";
 "Editing with %@…" = "正在使用%@编辑…";
 "Exactly what was heard." = "按听到的原样输入。";
+"Fast" = "快速";
 "File transcription is part of Waft Pro" = "文件转写是Waft Pro的功能";
 "File transcription" = "文件转写";
 "File" = "文件";
@@ -332,6 +335,9 @@
 "What Pro adds" = "Pro新增功能";
 "When off, Waft copies the text and you paste it yourself." = "关闭后，Waft只会拷贝文本，需要你自行粘贴。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "语音识别模型就绪后，点按输入框，按住%@键并说“你好，Waft”。";
+"Whisper large-v3 makes fewer mistakes outside English." = "Whisper large-v3 在英语以外的语言中错误更少。";
+"Whisper large-v3 turbo · 630 MB · quickest" = "Whisper large-v3 turbo · 630 MB · 最快";
+"Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower" = "Whisper large-v3 · 3.1 GB · 英语以外的错误更少，约慢 3 倍";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper在此Mac上运行，因此音频不会离开此Mac。";
 "Words dictated each day for the last 7 days" = "最近7天每天听写的字词数";
 "Words" = "字词";

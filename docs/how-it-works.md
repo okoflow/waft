@@ -43,7 +43,8 @@ goes there later, and that app decides which mode applies.
 
 Recordings without speech never reach the model: silence, key clicks, and
 steady noise are recognized by how long the audio stays above its own noise
-floor. Everything else goes to Whisper large-v3 turbo, run on Core ML by
+floor. Everything else goes to the speech model you chose, Whisper large-v3
+turbo or large-v3, run on Core ML by
 [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
 - **Language.** With one language pinned, Whisper decodes in that language.
@@ -145,15 +146,25 @@ Texts are pasted one at a time, in the order you spoke them.
 
 ## The speech model
 
-The model, `openai_whisper-large-v3-v20240930_626MB` from
-[argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml),
-downloads once to `~/Library/Application Support/Waft/Models`, about 630 MB.
-Core ML compiles it for your chip the first time it loads, which takes about a
-minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
-about 135 MB. Later loads take about a second.
+Settings › AI Models offers two models from
+[argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml):
 
-Changing the enabled languages reloads the model. A press while the model
-isn't ready records nothing; the HUD says what the model is doing instead.
+| Model | Files | Download | Speed |
+| --- | --- | --- | --- |
+| Fast | `openai_whisper-large-v3-v20240930_626MB`, Whisper large-v3 turbo | About 630 MB | The default |
+| Accurate (Pro) | `openai_whisper-large-v3`, Whisper large-v3 | About 3.1 GB | About three times slower, with fewer mistakes outside English |
+
+The model downloads once to `~/Library/Application Support/Waft/Models`.
+Core ML compiles it for your chip the first time it loads, which takes up to a
+minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
+about 130 MB. Later loads take about a second.
+
+Choosing the other model downloads and loads it while the current one keeps
+recognizing speech. Once the new model is ready, Waft deletes the files of the
+one it replaced. Without Pro, Waft uses Fast.
+
+Changing the enabled languages reloads the model. A press while no model is
+loaded records nothing; the HUD says what the model is doing instead.
 
 ## Limits
 

@@ -2,6 +2,7 @@ package struct Settings: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case mode
         case languages
+        case speechModel
         case appModes
         case modelProvider
         case localServer
@@ -22,6 +23,7 @@ package struct Settings: Codable, Equatable, Sendable {
 
     package var mode = Mode.light
     package var languages = LanguageSelection(languages: [.english])
+    package var speechModel = SpeechModel.fast
     package var appModes = AppModeOverrides()
     package var modelProvider = ModelProvider.cloud(.claude)
     package var localServer = LocalServer()
@@ -49,6 +51,7 @@ package struct Settings: Codable, Equatable, Sendable {
 
         mode = container.decode(.mode, default: mode)
         languages = container.decode(.languages, default: languages)
+        speechModel = container.decode(.speechModel, default: speechModel)
         appModes = container.decode(.appModes, default: appModes)
         modelProvider = container.decode(.modelProvider, default: modelProvider)
         localServer = container.decode(.localServer, default: localServer)

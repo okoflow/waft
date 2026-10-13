@@ -89,8 +89,8 @@ The second line of the HUD starts with "Used Light mode" and says why:
 
 **Retry Speech Model** in the menu resumes a failed download. After a failed
 load, it loads the model again, and if that fails too, it deletes the model
-and downloads it anew. The model needs about 1 GB of free space, including its
-compiled copy.
+and downloads it anew. The Fast model needs about 1 GB of free space, including
+its compiled copy, and switching to the Accurate one about 4 GB.
 
 To start over by hand, quit Waft and remove the model:
 

@@ -19,6 +19,8 @@
 "API key" = "APIキー";
 "About" = "情報";
 "Accessibility" = "アクセシビリティ";
+"Accurate" = "高精度";
+"Accurate speech model" = "高精度の音声認識モデル";
 "Activate" = "有効にする";
 "Add App…" = "アプリを追加…";
 "Add Language" = "言語を追加";
@@ -105,6 +107,7 @@
 "Editing on this Mac…" = "このMacで編集中…";
 "Editing with %@…" = "%@で編集中…";
 "Exactly what was heard." = "聞き取ったとおりに入力します。";
+"Fast" = "高速";
 "File transcription is part of Waft Pro" = "ファイルの文字起こしはWaft Proの機能です";
 "File transcription" = "ファイルの文字起こし";
 "File" = "ファイル";
@@ -332,6 +335,9 @@
 "What Pro adds" = "Proで追加される機能";
 "When off, Waft copies the text and you paste it yourself." = "オフにすると、Waftはテキストをコピーするだけになり、ペーストは手動で行います。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
+"Whisper large-v3 makes fewer mistakes outside English." = "Whisper large-v3 は英語以外での誤りが少なくなります。";
+"Whisper large-v3 turbo · 630 MB · quickest" = "Whisper large-v3 turbo · 630 MB · 最速";
+"Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower" = "Whisper large-v3 · 3.1 GB · 英語以外の誤りが少ない、約3倍遅い";
 "Whisper runs on this Mac, so audio never leaves it." = "WhisperはこのMac上で動作するため、音声がMacの外に出ることはありません。";
 "Words dictated each day for the last 7 days" = "過去7日間に毎日音声入力した単語数";
 "Words" = "単語数";

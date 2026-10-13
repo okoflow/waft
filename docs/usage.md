@@ -217,7 +217,7 @@ of a password field is never saved.
 | General | Opening at login, the menu bar icon, the interface language, sounds, updates, permissions |
 | Dictation | The dictation key, hands-free, the microphone, the editing key, languages |
 | Writing | The mode and its instructions, translation, per-app modes, pasting |
-| AI Models | The model for the AI modes, the speech model, a local server, and Claude or OpenAI with your API keys |
+| AI Models | The speech model, Fast or Accurate, the model for the AI modes, a local server, and Claude or OpenAI with your API keys |
 | Dictionary | Terms and snippets |
 | History | How long and how much to keep, searching, copying, and clearing |
 | Waft Pro | What Pro adds and your license |
@@ -245,12 +245,13 @@ updates the same way.
 Dictation with Whisper, the Raw and Light modes, voice commands, the
 dictionary, and history are free. Waft Pro adds Clean, Formal, and Translate
 with any AI model, translation both ways, your own instructions, editing by
-voice, and file transcription, for a single payment of $13.99.
+voice, file transcription, and the Accurate speech model, for a single payment
+of $13.99.
 
 While Waft is in beta, every Pro feature is free and needs no license. Once
 Pro goes on sale, it works for 3 days after the first launch; after that, the
 AI modes fall back to Light, the HUD says so, and the menu marks them
-**(Pro)** until you add a license in Settings › Waft Pro. The license key
-arrives with your receipt: paste it under **License**, or open the activation
-link from the email. Waft checks the key on your Mac, without contacting a
-server.
+**(Pro)** until you add a license in Settings › Waft Pro, and Waft recognizes
+speech with the Fast model. The license key arrives with your receipt: paste
+it under **License**, or open the activation link from the email. Waft checks
+the key on your Mac, without contacting a server.

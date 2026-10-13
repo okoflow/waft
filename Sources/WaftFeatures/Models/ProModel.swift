@@ -118,6 +118,10 @@ final class ProModel {
         mode.usesAI && !isUnlocked
     }
 
+    func locks(_ model: SpeechModel) -> Bool {
+        model.needsPro && !isUnlocked
+    }
+
     func purchase() {
         urlOpener.open(Self.purchaseURL)
     }

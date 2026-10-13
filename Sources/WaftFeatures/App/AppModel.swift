@@ -37,7 +37,7 @@ package final class AppModel {
             return .needsPermission
         }
 
-        guard speechModel.state.isReady else { return .speechModel(speechModel.state) }
+        guard speechModel.state.canTranscribe else { return .speechModel(speechModel.state) }
 
         return .ready
     }
@@ -53,10 +53,10 @@ package final class AppModel {
     package init(dependencies: AppDependencies) {
         settings = Self.makeSettings(dependencies)
         permissions = PermissionMonitor(provider: dependencies.permissions)
-        speechModel = SpeechModelController(transcriber: dependencies.transcriber, settings: settings)
+        pro = Self.makePro(dependencies)
+        speechModel = SpeechModelController(transcriber: dependencies.transcriber, settings: settings, pro: pro)
         hud = HUDController()
         keyRecorder = KeyRecorder()
-        pro = Self.makePro(dependencies)
         stats = StatsModel(store: dependencies.statsStore)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
@@ -209,6 +209,7 @@ package final class AppModel {
 
     private func connectModels() {
         settings.onLanguagesChange = { [speechModel] in speechModel.reload() }
+        settings.onSpeechModelChange = { [speechModel] in speechModel.modelDidChange() }
         settings.onHistoryLimitsChange = { [history] in history.keepWithinLimits() }
         permissions.onChange = { [weak self] in self?.permissionsDidChange() }
         speechModel.onReady = { [weak self] in self?.speechModelDidBecomeReady() }

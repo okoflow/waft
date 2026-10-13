@@ -19,6 +19,8 @@
 "API key" = "Clé API";
 "About" = "À propos";
 "Accessibility" = "Accessibilité";
+"Accurate" = "Précis";
+"Accurate speech model" = "Modèle vocal précis";
 "Activate" = "Activer";
 "Add App…" = "Ajouter une app…";
 "Add Language" = "Ajouter une langue";
@@ -105,6 +107,7 @@
 "Editing on this Mac…" = "Modification sur ce Mac…";
 "Editing with %@…" = "Modification avec %@…";
 "Exactly what was heard." = "Exactement ce qui a été entendu.";
+"Fast" = "Rapide";
 "File transcription is part of Waft Pro" = "La transcription de fichiers fait partie de Waft Pro";
 "File transcription" = "Transcription de fichiers";
 "File" = "Fichier";
@@ -332,6 +335,9 @@
 "What Pro adds" = "Ce qu’apporte Pro";
 "When off, Waft copies the text and you paste it yourself." = "Si l’option est désactivée, Waft copie le texte et vous le collez vous-même.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Quand le modèle vocal sera prêt, cliquez dans le champ, maintenez %@ et dites « Bonjour, Waft ».";
+"Whisper large-v3 makes fewer mistakes outside English." = "Whisper large-v3 fait moins d’erreurs hors de l’anglais.";
+"Whisper large-v3 turbo · 630 MB · quickest" = "Whisper large-v3 turbo · 630 Mo · le plus rapide";
+"Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower" = "Whisper large-v3 · 3,1 Go · moins d’erreurs hors de l’anglais, environ 3× plus lent";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper fonctionne sur ce Mac : l’audio ne le quitte jamais.";
 "Words dictated each day for the last 7 days" = "Mots dictés chaque jour au cours des 7 derniers jours";
 "Words" = "Mots";

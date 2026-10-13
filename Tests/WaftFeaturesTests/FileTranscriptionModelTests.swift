@@ -146,7 +146,7 @@ struct FileTranscriptionModelTests {
     ) async -> FileTranscriptionModel {
         let speechModel = isSpeechModelReady
             ? await SpeechModelController.ready(settings: settings)
-            : SpeechModelController(transcriber: transcriber, settings: settings)
+            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
 
         return FileTranscriptionModel(
             transcriber: transcriber,

@@ -48,6 +48,8 @@ struct SettingsPaneView: View {
                 speechModel: model.speechModel,
                 apiKeys: model.apiKeys,
                 localModels: model.localModels,
+                pro: model.pro,
+                state: state,
             )
 
         case .dictionary:

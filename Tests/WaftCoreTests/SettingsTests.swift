@@ -11,6 +11,7 @@ struct SettingsTests {
 
         #expect(settings == Self.defaults)
         #expect(settings.mode == .light)
+        #expect(settings.speechModel == .fast)
         #expect(settings.modelProvider == .cloud(.claude))
         #expect(settings.pushToTalkKey == .rightOption)
         #expect(settings.historyLimit == DictationHistory.defaultLimit)
@@ -51,6 +52,11 @@ struct SettingsTests {
         #expect(try decode(#"{"modelProvider":"\#(stored)"}"#).modelProvider == expected)
     }
 
+    @Test(arguments: [("fast", SpeechModel.fast), ("accurate", .accurate), ("huge", .fast)])
+    func `decodes the speech model`(stored: String, expected: SpeechModel) throws {
+        #expect(try decode(#"{"speechModel":"\#(stored)"}"#).speechModel == expected)
+    }
+
     @Test
     func `decodes nested values leniently`() throws {
         let json = #"""
@@ -73,6 +79,7 @@ struct SettingsTests {
         var settings = Self.defaults
         settings.mode = .formal
         settings.languages = LanguageSelection(languages: [.english, .ukrainian], pinned: .ukrainian)
+        settings.speechModel = .accurate
         settings.appModes.set(.raw, for: "com.apple.Terminal")
         settings.modelProvider = .localServer
         settings.localServer = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")

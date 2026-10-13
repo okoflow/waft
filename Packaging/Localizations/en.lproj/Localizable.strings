@@ -19,6 +19,8 @@
 "API key" = "API key";
 "About" = "About";
 "Accessibility" = "Accessibility";
+"Accurate speech model" = "Accurate speech model";
+"Accurate" = "Accurate";
 "Activate" = "Activate";
 "Add App…" = "Add App…";
 "Add Language" = "Add Language";
@@ -105,6 +107,7 @@
 "Editing on this Mac…" = "Editing on this Mac…";
 "Editing with %@…" = "Editing with %@…";
 "Exactly what was heard." = "Exactly what was heard.";
+"Fast" = "Fast";
 "File transcription is part of Waft Pro" = "File transcription is part of Waft Pro";
 "File transcription" = "File transcription";
 "File" = "File";
@@ -332,6 +335,9 @@
 "What Pro adds" = "What Pro adds";
 "When off, Waft copies the text and you paste it yourself." = "When off, Waft copies the text and you paste it yourself.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”.";
+"Whisper large-v3 makes fewer mistakes outside English." = "Whisper large-v3 makes fewer mistakes outside English.";
+"Whisper large-v3 turbo · 630 MB · quickest" = "Whisper large-v3 turbo · 630 MB · quickest";
+"Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower" = "Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper runs on this Mac, so audio never leaves it.";
 "Words dictated each day for the last 7 days" = "Words dictated each day for the last 7 days";
 "Words" = "Words";

@@ -70,7 +70,7 @@ when you want prose rather than a transcript.
 ## Install
 
 Waft runs on a Mac with Apple silicon and macOS 14 or later, and needs about
-1 GB of free space for the speech model.
+1 GB of free space for the speech model, or 4 GB to switch to the Accurate one.
 
 Homebrew and a disk image come with the first notarized release, and Waft
 installed either way updates itself. Until then, build Waft from source as
@@ -98,8 +98,8 @@ modes, and the languages.
 
 ## Waft Pro
 
-AI modes, translation, editing by voice, and file transcription cost $13.99
-once. **Free while Waft is in beta.**
+AI modes, translation, editing by voice, file transcription, and the Accurate
+speech model cost $13.99 once. **Free while Waft is in beta.**
 
 ## Contributing
 
