@@ -1,8 +1,8 @@
 # How it works
 
-This page explains what happens between pressing the dictation key and the
-text appearing in your app. [Usage](usage.md) describes the settings, and
-[Architecture](architecture.md) the code behind each stage.
+This page follows a dictation from the key press to the pasted text.
+[Usage](usage.md) describes the settings, and [Architecture](architecture.md)
+the code behind each stage.
 
 ```mermaid
 flowchart LR
@@ -22,41 +22,40 @@ recording, and what releasing it does depends on **How to start**:
 - **Hold**: a release after at least 0.3 seconds finishes the recording, and
   a shorter press is discarded.
 - **Tap**: the recording keeps running, and the next press finishes it.
-- **Hold or double-tap**: a long press works as with Hold, and a second short
-  press within 0.4 seconds of the first works as with Tap.
+- **Hold or double-tap**: a long press works as with Hold, and a short press
+  that starts within 0.4 seconds after a short one ends works as with Tap.
 
-Another key pressed while the dictation key is down discards the recording.
-A recording that reaches 5 minutes finishes on its own and is transcribed.
-
-macOS can switch an event tap off when the system is busy, and a key-up can
-get lost. Waft turns the tap back on, checks it every 5 seconds, and while you
-record polls the key four times a second, so a lost key-up still ends the
-recording.
+macOS can switch the tap off when the system is busy. Waft then discards the
+recording in progress, turns the tap back on, and checks every 5 seconds that
+it still runs. A key-up can also get lost, so while you hold the key, Waft
+checks it four times a second and ends the recording about a second after you
+let go.
 
 ## Recording
 
-The microphone starts when the key goes down, from the device chosen in
-Settings or the system default. Audio is converted to 16 kHz mono and kept in
-memory; it is never written to disk. Recording continues for up to 0.15
-seconds after you let go, to catch the end of the last word.
+The microphone starts when the key goes down: the one set as **Microphone** in
+Settings › Dictation, or the system default when that one isn't connected.
+Waft converts the audio to 16 kHz mono and keeps it in memory, as
+[Audio](privacy.md#audio) describes. After you let go, it waits up to 0.15
+seconds for audio still on its way from the microphone, so the last word isn't
+cut off.
 
 The HUD appears 0.3 seconds after the press, so a quick tap that does nothing
-doesn't flash it. It never takes focus: the app you are typing in stays active.
-
-Waft notes the focused app and text field when you press the key. The text
-goes there later, and that app decides which mode applies.
+doesn't flash it. It never takes focus: the app you are typing in stays
+active. Waft notes the focused app and text field when you press the key, and
+the text goes there later.
 
 ## Recognition
 
-Recordings without speech never reach the model: silence, key clicks, and
-steady noise are recognized by how long the audio stays above its own noise
-floor. Everything else goes to the speech model you chose, Whisper large-v3
-turbo or large-v3, run on Core ML by
+Waft skips recordings without speech, such as silence, key clicks, or steady
+noise, by measuring how long the audio rises above its own noise floor.
+Everything else goes to the speech model you chose, Whisper large-v3 turbo or
+large-v3, run on Core ML by
 [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
-- **Language.** With one language pinned, Whisper decodes in that language.
-  Otherwise it detects the language first, choosing only among the languages
-  you enabled.
+- **Language.** With one language pinned or only one enabled, Whisper decodes
+  in it. Otherwise it detects the language first, choosing only among the
+  languages you enabled.
 - **Prompt.** For most languages, Whisper first reads a short example sentence
   in the spoken language, which nudges it toward punctuation and
   capitalization, followed by up to 200 characters of your dictionary terms.
@@ -64,8 +63,10 @@ turbo or large-v3, run on Core ML by
 - **Made-up text.** Whisper sometimes invents text in silence. Waft drops
   segments with low confidence or heavy repetition, results made only of tags
   such as `[music]`, an echo of the prompt, and stock phrases such as "Thanks
-  for watching" when they are the whole result. The HUD then says "Didn't
-  catch that".
+  for watching" when they are the whole result.
+
+When Waft skips a recording or drops the whole result, the HUD says "Didn't
+catch that".
 
 ## Cleanup
 
@@ -75,82 +76,76 @@ The recognized text goes through four steps:
 2. If the whole text is a snippet phrase, the snippet is used as it is and the
    steps below are skipped.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
-   modes ask the model you chose, unless nothing but hesitations was said.
+   modes ask the AI model you chose, unless nothing but hesitations was said.
 4. Dictionary terms are applied again, since a rewrite can undo them, and
    snippet phrases inside the text are expanded.
 
 ### Light
 
-Light works word by word. It removes hesitation sounds, such as "um", "uh",
-"ээ", "мм", "äh", "euh", "음", or "えーと", in their stretched and hyphenated
-forms, together with the commas around them, but keeps one that follows a
-number, as in "5 мм". It tidies the spaces around punctuation, following
-French spacing before `!`, `?`, `;`, and `:`, capitalizes the first letter in
-languages with letter case, with a dotted "İ" in Turkish and Azerbaijani, and
-ends text that ends in a letter or digit with a period: "。" in Chinese and
-Japanese, "।" in Hindi, "۔" in Urdu, and none in Thai. Filler words with
-meaning, such as "like", "ну", or "그러니까", stay: telling them apart needs
-Clean.
+Light makes these changes and no others:
+
+- It removes hesitation sounds, such as "um", "uh", "ээ", "мм", "äh", "euh",
+  "음", or "えーと", in their stretched and hyphenated forms, with the commas
+  around them, but keeps one that follows a number, as in "5 мм".
+- It tidies the spaces around punctuation, with French spacing before `!`,
+  `?`, `;`, and `:`.
+- It capitalizes the first letter in languages with letter case, with a
+  dotted "İ" in Turkish and Azerbaijani.
+- It adds a period when the text ends in a letter or digit: "。" in Chinese
+  and Japanese, "।" in Hindi, "۔" in Urdu, and none in Thai.
+- It applies the two voice commands that [Modes](usage.md#modes) describes.
 
 ### The AI modes
 
-Clean, Formal, Translate, and your modes send the text and a short instruction
-for the mode to the model you chose: the Anthropic Messages API, the OpenAI
-Responses API with `store: false`, or the `/chat/completions` endpoint of your
-local server. Each cloud provider offers three models:
+Clean, Formal, Translate, and your modes send the text, the spoken language,
+and the mode's instructions to the AI model you chose: the Anthropic Messages
+API, the OpenAI Responses API, or the `/chat/completions` endpoint of your
+local server. Each model has a time limit for an answer, and a longer one for
+an edit by voice, which can rewrite a long selection:
 
-| Model | Claude | OpenAI |
-| --- | --- | --- |
-| The quickest | `claude-haiku-5-5` | `gpt-6-luna` |
-| Balanced, the default | `claude-sonnet-5-5` | `gpt-6.1-sol` |
-| The smartest | `claude-opus-5-5` | `gpt-6-astra` |
+| Model | API identifier | Dictation | Edit |
+| --- | --- | --- | --- |
+| Haiku 5.5, GPT-6 Luna | `claude-haiku-5-5`, `gpt-6-luna` | 4 s | 20 s |
+| Sonnet 5.5, GPT-6.1 Sol | `claude-sonnet-5-5`, `gpt-6.1-sol` | 6 s | 30 s |
+| Opus 5.5, GPT-6 Astra | `claude-opus-5-5`, `gpt-6-astra` | 10 s | 45 s |
+| A local server | The model you chose | 15 s | 45 s |
 
 Cloud models think at low effort: they answer most dictations right away and
 think briefly over a hard one, such as a misheard name. Waft leaves 4,096
 output tokens for that thinking on top of the answer.
 
-The transcript is marked as text to edit, never instructions to follow, so
-dictating a question gives you the question rather than an answer, and the
-model is told to reply with the text only.
+Waft marks the transcript as text to edit, never instructions to follow, and
+tells the model to reply with the text alone, so dictating a question gives
+you the question rather than an answer. Your modes send your instructions
+between `<instructions>` tags after a short preamble that asks for Clean's
+cleanup wherever they say nothing; with no instructions they work like Clean.
 
-Your modes send your instructions between `<instructions>` tags after a short
-preamble that asks for Clean's cleanup wherever they say nothing; with no
-instructions they work like Clean.
+Waft rejects a dictation's answer that is:
 
-The answer is checked before it is used. Waft rejects an answer that is
-empty, cut off, or refused, one longer than three times what you said plus 60
-characters (five times for a translation from Chinese, Japanese, or Korean),
-and one
-written in another script than both the language you spoke and the transcript
-itself, or, for Translate, than the target language. Your modes may answer in
-any script and at up to ten times the length of what you said, or 600
-characters for a short dictation, since their instructions can ask for a
-translation or a longer text.
+- Empty, cut off, or refused.
+- Longer than three times what you said plus 60 characters, or five times plus
+  60 for a translation from Chinese, Japanese, or Korean.
+- Written in another script than both the language you spoke and the
+  transcript, or, for Translate, than the target language.
 
-The quickest cloud model gets 4 seconds, the balanced one 6, the smartest 10,
-and a local server 15. Without a key, offline, on an error, a rate limit, a
-timeout, or a rejected answer, Waft uses Light instead and the HUD adds a line
-that says why. The text is never lost.
-[The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists
-each reason and what to do about it.
+Your modes may answer in any script and at up to ten times the length of what
+you said or 600 characters, whichever is more, since their instructions can
+ask for a translation or a longer text. An edit's answer is rejected only when
+it is empty, cut off, or refused.
 
-### Editing by voice
-
-An edit sends the selected text and your spoken instruction to the same
-model. It gets 20, 30, or 45 seconds with the quickest, balanced, or smartest
-cloud model, and 45 on a local server, since it can rewrite a long selection.
-When it fails, nothing is pasted and the selection stays as it was.
+When the model fails or its answer is rejected, a dictation gets the Light
+text, as [Modes](usage.md#modes) describes.
 
 ## Pasting
 
 Waft pastes through the clipboard rather than typing key by key:
 
-1. It waits for you to release the dictation key, for up to 10 seconds, since
-   <kbd>⌘</kbd><kbd>V</kbd> with Option held would be a different shortcut.
+1. It waits for you to release the key, for up to 10 seconds, since
+   <kbd>⌘</kbd><kbd>V</kbd> with that key held would be a different shortcut.
 2. It checks the focused field. A password field gets nothing, not even the
    clipboard. If focus moved to another app or field, or Accessibility isn't
-   allowed, the text goes to the clipboard instead and the HUD says "press ⌘V
-   to paste".
+   allowed, Waft copies the text instead and the HUD says "Copied: press ⌘V to
+   paste".
 3. It saves the clipboard, puts the text on it, and presses
    <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard
    layout, so Dvorak and Colemak work too.
@@ -158,22 +153,18 @@ Waft pastes through the clipboard rather than typing key by key:
    the app doesn't read it within 1.5 seconds, the text stays on the
    clipboard.
 
-A space goes before the text when the character before the cursor isn't a
-space, an opening bracket, a quote, or a slash, except in Chinese and Japanese
-text.
+Waft puts a space before the text unless the character before the cursor is a
+space, a line break, an opening bracket, a quote, or a slash, or the text on
+either side of the cursor is Chinese or Japanese.
 
-The clipboard is restored only when nothing else was copied in the meantime,
-when it held no more than 5 MB, and when it didn't hold a password manager's
-concealed item. Text, rich text, HTML, images, PDFs, files, and URLs survive
-the paste. The pasted text is marked transient and concealed, so clipboard
-managers that follow the [nspasteboard.org](http://nspasteboard.org)
-conventions don't store it, and it stays off Universal Clipboard.
-
-Texts are pasted one at a time, in the order you spoke them.
+Waft restores the clipboard only when nothing else was copied in the meantime,
+it held no more than 5 MB, and it held no concealed or transient item, such as
+a password manager's. Text, rich text, HTML, images, PDFs, files, and URLs
+survive the paste.
 
 ## The speech model
 
-Settings › Dictation › **Speech model** offers two models from
+**Speech model** in Settings › Dictation offers two models from
 [argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml):
 
 | Model | Files | Download | Trade-off |
@@ -181,10 +172,10 @@ Settings › Dictation › **Speech model** offers two models from
 | Fast | Whisper large-v3 turbo, `openai_whisper-large-v3-v20240930_626MB` | About 630 MB | The default and the quickest |
 | Accurate (Pro) | Whisper large-v3, `openai_whisper-large-v3` | About 3.1 GB | Two to three times slower, with fewer mistakes outside English |
 
-The model downloads once to `~/Library/Application Support/Waft/Models`.
-Core ML compiles it for your chip the first time it loads, which takes up to a
-minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
-about 130 MB. Later loads take about a second.
+Core ML compiles the model for your chip the first time it loads, which takes
+about a minute, and keeps the compiled copy, about 130 MB. Later loads take
+about a second. [What Waft keeps](privacy.md#what-waft-keeps) lists where the
+model and its compiled copy go.
 
 Choosing the other model downloads and loads it while the current one keeps
 recognizing speech. Once the new model is ready, Waft deletes the files of the
