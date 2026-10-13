@@ -66,6 +66,7 @@ struct ModeEditorPage: View {
             set: { text in
                 var edited = custom
                 edited[keyPath: field] = text
+
                 settings.settings.update(edited)
             },
         )

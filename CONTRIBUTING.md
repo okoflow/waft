@@ -122,8 +122,9 @@ code reads.
   which the `blank_line_before_exit` rule checks. Statements of one kind stay
   together.
 - A `guard` that checks a value declared on the single line directly above it
-  stays under it without a blank line. After a statement of several lines,
-  leave a blank line before the `guard`.
+  stays under it without a blank line, and consecutive `guard`s stay together,
+  as SwiftFormat requires. After any other statement of several lines, leave a
+  blank line before the `guard`.
 - SwiftFormat orders declarations by kind (nested types, properties,
   initializers, methods) and each kind from the most to the least visible.
 

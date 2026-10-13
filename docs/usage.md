@@ -60,7 +60,7 @@ current one keeps working, as
 | Mode in *app* | Gives the app in front a mode of its own |
 | Language | Detects the language automatically, or uses the one you choose; **Choose Languages…** opens Settings › Dictation |
 | Copy Last Dictation | Copies the latest text, pasted or not, within 10 minutes of the dictation |
-| Recent Dictations | Copies one of your last five dictations; **Show History** opens the full list |
+| Recent Dictations | Copies one of your last five dictations from the history; **Show History** opens the full list |
 | Transcribe File… | Turns a recording or a video into text or subtitles; marked **(Pro)** without Pro |
 | Settings… | Opens Settings |
 | Unlock Waft Pro… | Appears once Pro is on sale and you have no license, and opens Settings › Waft Pro |
@@ -273,7 +273,8 @@ menu shows **Install Update…** when one is waiting. Turn off **Check for
 updates automatically** in Settings › General to check only when you choose
 **Check for Updates…**. Updates and the update feed are signed, and Waft
 installs only an update signed with the project's key. A Homebrew installation
-updates the same way.
+updates the same way. A debug build, such as one from `make run`, has no
+updater: pull and build again instead.
 
 ## Waft Pro
 
@@ -284,10 +285,11 @@ Accurate speech model for a single payment of $13.99. Settings marks each of
 them with **Pro**.
 
 While Waft is in beta, every Pro feature is free and needs no license. Once
-Pro goes on sale, it works for 3 days after the first launch. After that,
-until you add a license in Settings › Waft Pro, the AI modes fall back to
-Light and the HUD says so, the menu marks them and file transcription
-**(Pro)**, and Waft recognizes speech with the Fast model. The license key
-arrives with your receipt: paste it under **License**, or open the activation
-link from the email. Waft checks the key on your Mac, without contacting a
-server.
+Pro goes on sale, it works for 3 calendar days, starting with the day of the
+first launch. After that, until you add a license in Settings › Waft Pro, the
+AI modes fall back to Light and the HUD says so, the menu marks them and file
+transcription **(Pro)**, <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches only
+between Raw and Light, and Waft recognizes speech with the Fast model. The
+license key arrives with your receipt: paste it under **License**, or open the
+activation link from the email. Waft checks the key on your Mac, without
+contacting a server.

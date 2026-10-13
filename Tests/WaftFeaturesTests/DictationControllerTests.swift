@@ -201,6 +201,7 @@ struct DictationControllerTests {
             pro: pro,
             queue: queue(),
         )
+
         controller.start()
 
         return controller

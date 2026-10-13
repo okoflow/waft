@@ -20,6 +20,7 @@ enum Palette {
     static let warning = Color.orange
     static let danger = Color.red
     static let proBlue = Color(hex: 0x2554F7)
+
     static let proGradient = LinearGradient(
         colors: [Color(hex: 0x0B2466), proBlue, Color(hex: 0x67D2F3)],
         startPoint: .bottomLeading,

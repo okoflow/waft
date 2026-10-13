@@ -41,6 +41,7 @@ struct SpeechModelFilesTests {
 
             let pending = accurate.folder.deletingLastPathComponent()
                 .appending(path: ".cache/huggingface/download/\(accurate.variant)", directoryHint: .isDirectory)
+
             try FileManager.default.createDirectory(at: pending, withIntermediateDirectories: true)
             try Data().write(to: pending.appending(path: "AudioEncoder.mlmodelc.incomplete"))
 
@@ -53,6 +54,7 @@ struct SpeechModelFilesTests {
             path: "WaftTests-\(UUID().uuidString)",
             directoryHint: .isDirectory,
         )
+
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
 
         do {

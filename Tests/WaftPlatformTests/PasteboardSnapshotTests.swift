@@ -25,6 +25,7 @@ struct PasteboardSnapshotTests {
                 Self.item([Self.privateType: Data([2])]),
                 Self.item([.html: Data("<p>Hi.</p>".utf8)]),
             ])
+
             let snapshot = PasteboardSnapshot.take(from: pasteboard)
 
             pasteboard.writePrivately("Dictated.")

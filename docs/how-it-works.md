@@ -57,9 +57,9 @@ turbo or large-v3, run on Core ML by
 - **Language.** With one language pinned, Whisper decodes in that language.
   Otherwise it detects the language first, choosing only among the languages
   you enabled.
-- **Prompt.** Whisper first reads a short example sentence in the spoken
-  language, which nudges it toward punctuation and capitalization, followed
-  by up to 200 characters of your dictionary terms.
+- **Prompt.** For most languages, Whisper first reads a short example sentence
+  in the spoken language, which nudges it toward punctuation and
+  capitalization, followed by up to 200 characters of your dictionary terms.
 - **Long recordings.** Audio over 30 seconds is split at pauses.
 - **Made-up text.** Whisper sometimes invents text in silence. Waft drops
   segments with low confidence or heavy repetition, results made only of tags
@@ -75,7 +75,7 @@ The recognized text goes through four steps:
 2. If the whole text is a snippet phrase, the snippet is used as it is and the
    steps below are skipped.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
-   modes ask the model you chose.
+   modes ask the model you chose, unless nothing but hesitations was said.
 4. Dictionary terms are applied again, since a rewrite can undo them, and
    snippet phrases inside the text are expanded.
 
@@ -108,8 +108,9 @@ preamble that asks for Clean's cleanup wherever they say nothing; with no
 instructions they work like Clean.
 
 The answer is checked before it is used. Waft rejects an answer that is
-empty, cut off, or refused, one more than three times longer than what you
-said (five times for a translation from Chinese, Japanese, or Korean), and one
+empty, cut off, or refused, one longer than three times what you said plus 60
+characters (five times for a translation from Chinese, Japanese, or Korean),
+and one
 written in another script than both the language you spoke and the transcript
 itself, or, for Translate, than the target language. Your modes may answer in
 any script and at up to ten times the length of what you said, or 600
@@ -147,7 +148,8 @@ Waft pastes through the clipboard rather than typing key by key:
    clipboard.
 
 A space goes before the text when the character before the cursor isn't a
-space, an opening bracket, or a quote, except in Chinese and Japanese text.
+space, an opening bracket, a quote, or a slash, except in Chinese and Japanese
+text.
 
 The clipboard is restored only when nothing else was copied in the meantime,
 when it held no more than 5 MB, and when it didn't hold a password manager's

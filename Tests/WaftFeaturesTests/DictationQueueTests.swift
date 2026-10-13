@@ -7,11 +7,13 @@ struct DictationQueueTests {
     private static let hello = ProcessedText(text: "Hello world", mode: .raw)
 
     private let clipboard = FakeClipboard()
+
     private let history = HistoryModel(
         store: FakeValueStore<DictationHistory>(),
         settings: .inMemory(),
         clipboard: FakeClipboard(),
     )
+
     private let statistics = StatisticsModel(store: FakeValueStore<DictationStatistics>())
     private let hud = HUDController.offscreen()
 
@@ -160,6 +162,7 @@ struct DictationQueueTests {
             statistics: statistics,
             hud: hud,
         )
+
         queue.submit(job())
         queue.submit(job())
 

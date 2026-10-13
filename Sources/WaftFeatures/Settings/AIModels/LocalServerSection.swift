@@ -35,6 +35,7 @@ struct LocalServerSection: View {
                 Button("Detect", action: localModels.detect)
             }
             .settingsRowPadding()
+
             RowDivider()
             SettingsRow("Model", description: status) {
                 if localModels.serverModels.isEmpty {

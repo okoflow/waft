@@ -91,6 +91,15 @@ struct TranscriptProcessorTests {
         #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
     }
 
+    @Test(arguments: [Mode.clean, .translate, .custom(UUID())])
+    func `skips the AI model when nothing but hesitations was said`(mode: Mode) async {
+        let log = RewriteLog()
+        let processed = await process("um, uh", mode: mode, log: log)
+
+        #expect(processed == ProcessedText(text: "", mode: .light))
+        #expect(await log.requests.isEmpty)
+    }
+
     @Test(arguments: [
         (Mode.light, ProcessedText(text: "See you tomorrow.", mode: .light)),
         (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
@@ -204,7 +213,9 @@ struct TranscriptProcessorTests {
         #expect(edited == "From the local server.")
         #expect(await log.requests.first?.deadline == .seconds(45))
     }
+}
 
+extension TranscriptProcessorTests {
     private func process(
         _ text: String,
         mode: Mode,

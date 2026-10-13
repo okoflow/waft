@@ -11,10 +11,12 @@ struct RecordingControllerTests {
     private nonisolated static let emailReply = CustomMode(name: "Email reply", instructions: "Reply.")
 
     private let recorder = FakeAudioRecorder()
+
     private let focusTracker = FakeFocusTracker(.app(
         "com.example.notes",
         element: FakeFocusedElement(selectedText: "Meeting at noon"),
     ))
+
     private let sounds = FakeFeedbackSoundPlayer()
     private let settings = SettingsModel.inMemory()
     private let hud = HUDController.offscreen()
@@ -247,6 +249,7 @@ struct RecordingControllerTests {
             hudDelay: hudDelay,
             watchdogInterval: watchdogInterval,
         )
+
         recordings.start()
 
         return recordings

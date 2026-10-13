@@ -6,6 +6,7 @@ extension FileManager {
             path: "WaftTests-\(UUID().uuidString)",
             directoryHint: .isDirectory,
         )
+
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
 
         do {
