@@ -1,14 +1,15 @@
 # Contributing
 
-Thank you for helping build Waft. This guide covers the setup, the checks a
-change has to pass, and how code, tests, scripts, docs, commits, and pull
-requests are shaped. Everyone participating agrees to the
-[Code of Conduct](CODE_OF_CONDUCT.md).
+This page covers the setup, the checks a change passes, and the rules for
+code, tests, scripts, docs, commits, and pull requests.
+[Architecture](docs/architecture.md) maps the code, and
+[Releasing](docs/releasing.md) covers releases. Everyone who takes part
+follows the Code of Conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Ways to contribute
 
-- **Report a bug** with the bug report form. Include the macOS version, the
-  mode, and the log lines around the problem.
+- **Report a bug** with the bug report form. Include the Waft and macOS
+  versions, the mode, and the log lines around the problem.
 - **Propose a feature** with the feature request form. Describe the problem
   before the solution.
 - **Report a vulnerability** privately, as described in
@@ -18,9 +19,8 @@ requests are shaped. Everyone participating agrees to the
 
 ## Development setup
 
-You need an Apple silicon Mac with macOS 26.6 or later and the Command Line
-Tools for Xcode 27, which `xcode-select --install` installs. CI checks every
-change with the same tools.
+You need a Mac with Apple silicon, macOS 26.6 or later, and the Command Line
+Tools for Xcode 27, which `xcode-select --install` installs.
 
 Build and run Waft:
 
@@ -46,11 +46,10 @@ make hooks
 ```
 
 The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the
-checks use, Bun for markdownlint included. The hook runs `format-check`,
-`lint`, and `shellcheck` when the commit touches files they check, and
-always runs `docs` and `secrets-staged`, which scans the staged changes for
-secrets. `make help` lists every target, and [Releasing](docs/releasing.md)
-covers releases.
+checks use. The hook runs `format-check`, `lint`, and `shellcheck` when the
+commit touches files they check, and always runs `spelling` and
+`secrets-staged`, which scans the staged changes for secrets.
+`make help` lists every target.
 
 ## Checks
 
@@ -58,32 +57,29 @@ covers releases.
 re-signs the app you run. Run it before you push. CI runs `make check` and
 then `make bundle` with the Command Line Tools for Xcode 27 on every pull
 request and every push to `main`, and builds and tests with the Command Line
-Tools for Xcode 26 in a second job.
+Tools for Xcode 26 in a second job. GitHub's CodeQL also scans the Swift code,
+the cask, and the workflows.
 
 | Target | Tool | Fails on |
 | --- | --- | --- |
 | `format-check` | SwiftFormat, shfmt, plutil | Any formatting difference; `make format` fixes it |
 | `lint` | SwiftLint | Any violation, including comments in code, `??`, and an unbound `try?` |
 | `shellcheck` | ShellCheck | Any problem in `scripts/*.sh` |
-| `docs` | markdownlint, typos | Markdown style, and spelling mistakes in code and docs |
+| `spelling` | typos | Spelling mistakes in code and docs |
 | `secrets` | gitleaks | Secrets anywhere in the git history |
 | `build` | Swift | Any warning, since warnings are errors |
 | `test` | Swift Testing | A failing test |
 | `periphery` | Periphery | Unused code |
-| `strings` | `scripts/strings.sh` | A translation missing a string from the code, keeping one the code dropped, or changing a placeholder |
+| `strings` | `scripts/strings.sh` | A translation missing a string from the code, keeping one the code dropped, changing a placeholder, or lacking the microphone prompt in `InfoPlist.strings` |
 | `bundle` | `scripts/bundle.sh` | The app can't be assembled or signed |
 
 The linters and formatters read their settings from dotfiles at the root,
-such as `.swiftlint.yml`, `.typos.toml`, or `.editorconfig` for shfmt. Fix the
-code rather than the rule. A rule that is wrong for one line gets a targeted
+such as `.swiftlint.yml`, `.swiftformat`, and `.typos.toml`. Fix the code
+rather than the rule. A rule that is wrong for one line gets a targeted
 `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>`
 directive.
 
 ## Code
-
-[Architecture](docs/architecture.md) explains the modules, the rules that
-keep code in its place, and where new code goes. This section covers how the
-code reads.
 
 ### Naming and files
 
@@ -94,6 +90,8 @@ code reads.
   `statsFile`; `message`, not `msg`.
 - One main type per file, named after it. An extension that adds to another
   type goes into `<Type>+<Topic>.swift`, such as `String+Capitalization.swift`.
+- Keep the names of Swift files unique across `Sources`: `make strings` finds
+  each file's extracted strings by its name.
 - Give every declaration the narrowest access level that works, and leave
   nothing unused; Periphery fails on unused code.
 
@@ -125,18 +123,21 @@ code reads.
   stays under it without a blank line, and consecutive `guard`s stay together,
   as SwiftFormat requires. After any other statement of several lines, leave a
   blank line before the `guard`.
-- SwiftFormat orders declarations by kind (nested types, properties,
-  initializers, methods) and each kind from the most to the least visible.
+- SwiftFormat orders declarations by kind (nested types, static properties,
+  instance properties, initializers, static methods, instance methods) and
+  each kind from the most to the least visible.
 
 ### Platform
 
 - The package builds with the Command Line Tools alone, which lack Xcode's
   SwiftUI macro plugins. Keep view state in observable models instead of
   `@State`, declare environment values with an `EnvironmentKey` instead of
-  `@Entry`, and do without `#Preview`. The `no_xcode_only_macros` rule
-  catches them.
-- Logs never contain dictated text, audio, or clipboard contents. Mark only
-  identifiers, durations, and counts as public.
+  `@Entry`, and do without `@Animatable` and `#Preview`. The
+  `no_xcode_only_macros` rule catches them, along with `@AnimatableIgnored`
+  and `@Previewable`.
+- Mark only identifiers, durations, and counts `privacy: .public` in a log
+  message. [Invariants](docs/architecture.md#invariants) lists what never
+  reaches the log.
 
 ### Text and translations
 
@@ -147,7 +148,7 @@ code reads.
   **Settings…** keeps it by macOS convention.
 - Lists of three or more use the serial comma, in the interface and in the
   docs: "Clean, Formal, and Translate".
-- Every string the code shows is translated into every language in
+- Translate every string the code shows into every language in
   `Packaging/Localizations`. After adding or changing one, run
   `make strings-update` and add it to every table; `make strings` fails until
   they match.
@@ -162,7 +163,7 @@ adapters through small fakes of their interfaces, and the main-actor models in
 `WaftFeatures` with fakes of the `WaftCore` interfaces they receive. Pass
 fixed pauses in through the initializer, so tests set them to zero instead of
 waiting them out. Tests never touch the microphone, the network, the
-Keychain, or Accessibility.
+keychain, or Accessibility.
 
 Every test file follows one pattern:
 
@@ -198,31 +199,50 @@ Every test file follows one pattern:
 
 Scripts follow the
 [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
-and one layout: `#!/bin/bash` and `set -euo pipefail`, `readonly` constants at
-the top, `usage` and `die` helpers that print to standard error, a `cleanup`
-function trapped on `EXIT` when the script makes temporary files, a function
-for every step, and a `main` function at the bottom called with `"$@"`. A
-`make` target runs each script. shfmt formats them with the settings in
+and run on the Bash 3.2 that macOS ships. Every script has one layout:
+
+- `#!/bin/bash`, a header comment that says what the script does, and
+  `set -euo pipefail`.
+- `readonly` constants, then globals, then functions: `usage` and `die`, which
+  print to standard error, a `cleanup` trapped on `EXIT` when the script makes
+  temporary files, a function for every step, and `main` at the bottom, called
+  with `"$@"`.
+- A function names its arguments on its first line, as in
+  `local version=$1 image=$2`, and separates its steps with blank lines.
+- A `local` that takes a `$(…)` is declared on a line of its own, since
+  `local` hides the command's failure. A function that does work runs as a
+  command, never inside `$(…)`, where Bash 3.2 ignores `set -e`.
+- Options go before operands, long options are used where the tool has them,
+  and argument lists that change go in an array.
+- A guard reads `[[ … ]] || die …`; anything longer is an `if`.
+
+A `make` target runs each script. shfmt formats them with the settings in
 `.editorconfig`, and ShellCheck checks them with those in `.shellcheckrc`.
 
 ## Documentation
 
-Every guide follows the same pattern:
+Every page follows the same pattern:
 
-- A title, then one or two sentences on what the page covers and links to the
-  pages next to it.
+- A title, then one or two sentences that say what the page covers and link
+  to the pages next to it; the first starts with "This page". README.md and
+  AGENTS.md open with what Waft is instead.
 - Headings in sentence case. Tables for reference, numbered lists for steps,
-  and `-` bullets for everything else.
+  and `-` bullets for everything else. Every list item starts with a capital
+  letter or code and ends with a period, or with a colon before a code block.
 - Second person, active voice, American English.
-- Interface names in **bold**, paths through Settings with "›", keys in
-  `<kbd>`, and code, commands, and file names in code font.
+- Controls in **bold**; text Waft shows, such as a HUD message or the first
+  line of the menu, in quotes; keys in `<kbd>`; and code, commands, and file
+  names in code font.
+- A setting is named by its control, then its place:
+  **Editing key** in Settings › Dictation.
 - Code blocks name their language, such as `sh` or `swift`.
-- Inline links, relative between pages. A link to a guide or a section uses
-  its title as the text, and a link to any other file uses the file's name.
+- Inline links, relative between pages. A link to a page in `docs` or to a
+  section uses its title as the text, and a link to any other file uses the
+  file's name, such as [SECURITY.md](SECURITY.md).
 - No dates: describe the current version. Release history lives in
   [GitHub Releases](https://github.com/okoflow/waft/releases).
 - Each fact lives on one page; the others link to it instead of repeating it.
-- Lines wrapped at 80 columns, except in tables and code blocks.
+- Lines wrapped at 80 columns, except in tables, code blocks, and long URLs.
 
 Change the docs in the same pull request as the behavior they describe.
 
@@ -244,14 +264,15 @@ Commits follow
 - One commit is one logical change that builds and passes on its own. Add a
   body only for what the diff can't show: the problem, the reason for the
   approach, a constraint.
-- The only footers are `BREAKING CHANGE:` and `Fixes #N`, last. No other
-  trailers, such as `Co-authored-by:` or `Signed-off-by:`.
+- The only footers, in this order, are `Verified:` in a merge commit,
+  `BREAKING CHANGE:`, and `Fixes #N`. No other trailers, such as
+  `Co-authored-by:` or `Signed-off-by:`.
 
 | Scope | Area |
 | --- | --- |
 | `dictation` | The dictation key, how to start, recording, hands-free dictation, and pasting |
 | `languages` | Recognition, the speech model, and the rules of each language |
-| `modes` | Raw, Light, Clean, Formal, Translate, your own modes, and their instructions |
+| `modes` | Raw, Light, Clean, Formal, Translate, your modes, and their instructions |
 | `models` | The AI models and their providers |
 | `edit` | Editing by voice |
 | `files` | File transcription |
@@ -270,12 +291,12 @@ Commits follow
 
 - One pull request is one standalone change. Split anything above roughly 400
   changed lines unless the parts only make sense together.
-- A pull request is merged with a merge commit whose subject is its title and
-  whose body is its body. Write the title in the commit format and the body as
-  a commit body: what changed and why in a few sentences, and the risky spot.
-  End it with `Verified:` and the checks you ran, and `Fixes #N` when it closes
-  an issue. Replace the body of a Dependabot pull request the same way before
-  merging it.
+- GitHub merges a pull request with a merge commit whose subject is its title
+  and whose body is its body. Write the title in commit form and the body as a
+  commit body: what changed and why in a few sentences, and the risky spot.
+  End it with `Verified:` and the checks you ran, then `Fixes #N` when it
+  closes an issue. Replace the body of a Dependabot pull request the same way
+  before merging it.
 - Attach a screenshot or a recording for visible changes in a comment, so it
   stays out of the merge commit.
 - CI has to pass. Reviews focus on correctness, layering, and whether the
@@ -283,8 +304,8 @@ Commits follow
 
 ## Licensing of contributions
 
-Waft is licensed under the
-[GNU General Public License v3.0 only](LICENSE) (GPL-3.0-only). By submitting
-a contribution, you agree that it is licensed under the same terms. Add your
-name to [AUTHORS](AUTHORS) in your first pull request to be listed among The
-Waft Authors.
+Waft is licensed under the GNU General Public License v3.0 only
+(GPL-3.0-only), whose text is in [LICENSE](LICENSE). By submitting a
+contribution, you agree that it is licensed under the same terms. Add your name
+to [AUTHORS](AUTHORS) in your first pull request to be listed among The Waft
+Authors.

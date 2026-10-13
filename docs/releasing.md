@@ -1,16 +1,16 @@
 # Releasing
 
-This page describes how a maintainer turns `main` into a signed, notarized
-release that users get from GitHub Releases, Homebrew, and in-app updates.
-[CONTRIBUTING.md](../CONTRIBUTING.md) covers the checks every change passes
-before it reaches `main`.
+This page describes how you turn `main` into a release that users get from
+GitHub Releases, Homebrew, and in-app updates.
+[Checks](../CONTRIBUTING.md#checks) lists what every change passes before it
+reaches `main`.
 
 ## What a release is made of
 
 | Artifact | Made by | Used by |
 | --- | --- | --- |
 | `Waft-X.Y.Z.dmg` | `scripts/release.sh`: Developer ID signature, hardened runtime, notarization, stapling | Downloads from GitHub Releases, the Homebrew cask, and Sparkle |
-| `appcast.xml` | Sparkle's `generate_appcast`, signed with the project's EdDSA key | Waft's updater, at `releases/latest/download/appcast.xml` |
+| `appcast.xml` | Sparkle's `generate_appcast`, signed with the project's EdDSA key | Waft's updater, at `releases/latest/download/appcast.xml`, and the cask's `livecheck` |
 | `waft.rb` | `scripts/release.sh` from `Packaging/Homebrew/waft.rb` | `Casks/waft.rb` in the `okoflow/homebrew-tap` repository |
 
 Waft is not sandboxed, so the bundle ships Sparkle without its XPC services.
@@ -28,32 +28,17 @@ The hardened runtime needs the microphone entitlement in
    xcrun notarytool store-credentials waft-notary --apple-id <apple-id> --team-id <team-id>
    ```
 
-3. The Sparkle signing key in the login keychain. `SUPublicEDKey` in
-   `Packaging/Waft-Info.plist` must match it:
+3. The Sparkle signing key in the login keychain, imported from its offline
+   backup with `generate_keys -f <file>`. `generate_keys -p` must then print
+   the `SUPublicEDKey` of `Packaging/Waft-Info.plist`:
 
    ```sh
    swift package resolve
    .build/artifacts/sparkle/Sparkle/bin/generate_keys -p
    ```
 
-   Keep an offline backup made with `generate_keys -x <file>`. Without the
-   key, existing installations can never update again. Waft requires a signed
-   feed and verifies each update before extracting it, so rotating the key
-   later works only because the disk images carry a Developer ID signature.
-
-4. The Homebrew tap, created once with the first notarized release: a public
-   repository named `okoflow/homebrew-tap` with a `Casks` folder, which
-   `brew install --cask okoflow/tap/waft` finds by that name:
-
-   ```sh
-   gh repo create okoflow/homebrew-tap --public --clone
-   mkdir homebrew-tap/Casks
-   ```
-
-5. The install instructions, switched once with the first notarized release: the
-   Install sections of the README and [Getting started](getting-started.md)
-   name `brew install --cask okoflow/tap/waft` and the disk image on GitHub
-   Releases instead of building from source.
+   Make the backup with `generate_keys -x <file>` and keep it offline, since
+   installed copies verify the feed with this key.
 
 ## Cutting a release
 
@@ -64,25 +49,31 @@ The hardened runtime needs the microphone entitlement in
    `Packaging/Waft-Info.plist`. Sparkle compares `CFBundleVersion`, so it must
    always grow.
 2. Write the release notes in Markdown: one summary sentence, then `## Added`,
-   `## Changed`, and `## Fixed`, then `**Contributors**:` with the GitHub
-   handles and `**Full changelog**:` with the compare link from the previous
-   tag. Keep the file outside the repository.
+   `## Changed`, and `## Fixed`, leaving out an empty one, then
+   `**Contributors**:` with the GitHub handles of the release's commit authors
+   and `**Full changelog**:` with the compare link from the previous tag. Keep
+   the file outside the repository, since the script needs a clean working
+   tree.
 3. Build, notarize, and package `main`:
 
    ```sh
    SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)" make release NOTES=../notes.md
    ```
 
-   The script stops unless the working tree has no changes, `HEAD` is
-   `origin/main`, and the version's tag doesn't exist yet. It notarizes the
-   app and the disk image, staples both, writes the appcast with the notes
-   embedded, and writes the cask with the disk image's checksum into
-   `build/release`. `generate_appcast` signs the appcast and the notes too.
-   Never edit `appcast.xml` afterwards, since any edit breaks that signature;
-   run `generate_appcast` again with the arguments that `make_appcast` in
-   `scripts/release.sh` passes instead.
-4. Publish the release with both files attached, using the command the
-   script prints, which tags the commit it built:
+   The script stops unless the working tree is clean, `HEAD` is
+   `origin/main`, the version's tag isn't on `origin` yet, and the identity,
+   notarization profile, and Sparkle key from
+   [One-time setup](#one-time-setup) are in place. It notarizes the app and
+   the disk image, staples both, and writes the appcast with the notes
+   embedded and the cask with the disk image's checksum into `build/release`.
+   `generate_appcast` signs the appcast, notes included, so any edit to
+   `appcast.xml` breaks the signature: to change it, run `generate_appcast`
+   again with the arguments that `make_appcast` in `scripts/release.sh`
+   passes.
+4. Publish the release with both files attached, using the command the script
+   prints, which tags the commit it built. Releases are immutable: once
+   published, the tag and the files can't change, and with them the notes
+   embedded in the appcast, so check both first.
 
    ```sh
    gh release create vX.Y.Z build/release/Waft-X.Y.Z.dmg build/release/appcast.xml \
@@ -94,3 +85,24 @@ The hardened runtime needs the microphone entitlement in
 
 Installed copies find the update within a day, or at once with **Check for
 Updates…**.
+
+## Until the first notarized release
+
+Until a Developer ID certificate arrives, a release is source-only: skip steps
+3 and 5 of [Cutting a release](#cutting-a-release), and in step 4 drop the two
+files and set `--target` to the merge commit of the release pull request. With
+the first notarized release:
+
+1. Create the Homebrew tap: a public `okoflow/homebrew-tap` repository with a
+   `Casks` folder, which `brew install --cask okoflow/tap/waft` reads.
+
+   ```sh
+   gh repo create okoflow/homebrew-tap --public --clone
+   mkdir homebrew-tap/Casks
+   ```
+
+2. Switch [Install](getting-started.md#1-install) and the README's Install
+   section from building from source to `brew install --cask okoflow/tap/waft`
+   and the disk image on GitHub Releases, and add
+   `brew uninstall --zap --cask waft` to
+   [Removing everything](privacy.md#removing-everything).

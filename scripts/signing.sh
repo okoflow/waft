@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Creates the self-signed Waft Dev code-signing identity in the login keychain
+# and trusts it, so local builds keep the permissions macOS granted them.
+
 set -euo pipefail
 
 readonly NAME='Waft Dev'
@@ -24,12 +28,16 @@ die() {
 }
 
 cleanup() {
-  rm -rf "${WORK_DIR}"
+  if [[ -n ${WORK_DIR} ]]; then
+    rm -rf -- "${WORK_DIR}"
+  fi
 }
 
 has_identity() {
-  security find-identity "$@" -p codesigning "${KEYCHAIN}" \
-    | grep -qF "\"${NAME}\""
+  local identities
+  identities=$(security find-identity "$@" -p codesigning "${KEYCHAIN}")
+
+  [[ ${identities} == *"\"${NAME}\""* ]]
 }
 
 write_certificate_config() {
@@ -52,21 +60,26 @@ CONFIG
 }
 
 create_identity() {
-  write_certificate_config "${WORK_DIR}/openssl.cnf"
+  local config="${WORK_DIR}/openssl.cnf"
+  local key="${WORK_DIR}/key.pem"
+  local certificate="${WORK_DIR}/certificate.pem"
+  local identity="${WORK_DIR}/identity.p12"
 
-  /usr/bin/openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
-    -config "${WORK_DIR}/openssl.cnf" \
-    -keyout "${WORK_DIR}/key.pem" \
-    -out "${WORK_DIR}/certificate.pem" 2>/dev/null
+  write_certificate_config "${config}"
+
+  if ! /usr/bin/openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
+    -config "${config}" -keyout "${key}" -out "${certificate}" 2>/dev/null; then
+    die "couldn't create the certificate for \"${NAME}\""
+  fi
 
   /usr/bin/openssl pkcs12 -export \
-    -inkey "${WORK_DIR}/key.pem" \
-    -in "${WORK_DIR}/certificate.pem" \
+    -inkey "${key}" \
+    -in "${certificate}" \
     -name "${NAME}" \
-    -out "${WORK_DIR}/identity.p12" \
-    -passout "pass:${EXPORT_PASSWORD}"
+    -passout "pass:${EXPORT_PASSWORD}" \
+    -out "${identity}"
 
-  security import "${WORK_DIR}/identity.p12" \
+  security import "${identity}" \
     -k "${KEYCHAIN}" \
     -P "${EXPORT_PASSWORD}" \
     -T /usr/bin/codesign >/dev/null
@@ -75,10 +88,10 @@ create_identity() {
 }
 
 trust_identity() {
-  security find-certificate -c "${NAME}" -p "${KEYCHAIN}" \
-    >"${WORK_DIR}/trust.pem"
+  local certificate="${WORK_DIR}/trust.pem"
 
-  security add-trusted-cert -r trustRoot -p codeSign "${WORK_DIR}/trust.pem"
+  security find-certificate -c "${NAME}" -p "${KEYCHAIN}" >"${certificate}"
+  security add-trusted-cert -r trustRoot -p codeSign "${certificate}"
 }
 
 main() {

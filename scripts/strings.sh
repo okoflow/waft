@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Checks every translation in Packaging/Localizations against the strings that
+# make build extracts from the code, or rewrites the English table from them.
+
 set -euo pipefail
 
 readonly LOCALIZATIONS='Packaging/Localizations'
@@ -27,7 +31,9 @@ die() {
 }
 
 cleanup() {
-  rm -rf "${WORK_DIR}"
+  if [[ -n ${WORK_DIR} ]]; then
+    rm -rf -- "${WORK_DIR}"
+  fi
 }
 
 code_keys() {
@@ -41,11 +47,12 @@ code_keys() {
 
   local file data source
   : >"${output}.unsorted"
+
   while IFS= read -r file; do
     data="${STRINGS_DIR}/$(basename "${file}" .swift).stringsdata"
     [[ -f ${data} ]] || die "${file} has no extracted strings: run make build"
 
-    source=$(jq -r '.source' "${data}")
+    source=$(jq --raw-output '.source' "${data}")
     [[ ${source} == "${root}/${file}" ]] || die "${data} belongs to ${source}: run make build"
 
     jq '.tables.Localizable[]?.key | select(. != "%@")' "${data}" >>"${output}.unsorted"
@@ -84,7 +91,7 @@ check_specifiers() {
   plutil -convert json -o "${json}" "${table}"
 
   local mismatched
-  mismatched=$(jq -r "${SPECIFIERS} to_entries[] | select((.key | specifiers) != (.value | specifiers)) | .key" "${json}")
+  mismatched=$(jq --raw-output "${SPECIFIERS} to_entries[] | select((.key | specifiers) != (.value | specifiers)) | .key" "${json}")
 
   [[ -z ${mismatched} ]] || die "${table} changes the placeholders of:" "${mismatched}"
 }
@@ -107,7 +114,10 @@ check() {
   local directory
   for directory in "${LOCALIZATIONS}"/*.lproj; do
     languages=$((languages + 1))
-    [[ ${directory} == "$(dirname "${SOURCE_TABLE}")" ]] && continue
+
+    if [[ ${directory} == "$(dirname "${SOURCE_TABLE}")" ]]; then
+      continue
+    fi
 
     check_keys "${directory}/Localizable.strings" "${expected}" ''
     check_specifiers "${directory}/Localizable.strings"

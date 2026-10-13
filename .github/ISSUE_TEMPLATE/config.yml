@@ -3,4 +3,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Troubleshooting
     url: https://github.com/okoflow/waft/blob/main/docs/troubleshooting.md
-    about: Fixes for permissions, the dictation key, pasting, and the speech model.
+    about: What to do when something doesn't work, and what the menu and the HUD tell you.

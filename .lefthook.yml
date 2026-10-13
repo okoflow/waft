@@ -19,8 +19,8 @@ pre-commit:
         - .shellcheckrc
       run: make shellcheck
 
-    - name: docs
-      run: make docs
+    - name: spelling
+      run: make spelling
 
     - name: secrets-staged
       run: make secrets-staged

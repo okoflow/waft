@@ -1,9 +1,9 @@
 # Security policy
 
-Waft records your voice, reads the focused text field through
-Accessibility, writes to the clipboard, keeps API keys in the Keychain, and
-updates itself. The maintainers handle security reports privately until a fix
-is available.
+This page covers how to report a vulnerability in Waft, how the maintainers
+handle reports, and what is in scope. [Privacy](docs/privacy.md) lists what
+Waft keeps and sends, and [CONTRIBUTING.md](CONTRIBUTING.md) covers every other
+contribution.
 
 ## Supported versions
 
@@ -22,32 +22,35 @@ public issue, pull request, or discussion for a security problem.
 
 Include what helps reproduce and assess the issue:
 
-- the Waft version or commit, and the macOS version
-- steps to reproduce, or a proof of concept
-- the impact you expect
+- The Waft version or commit, and the macOS version.
+- Steps to reproduce, or a proof of concept.
+- The impact you expect.
 
 You receive an acknowledgment within three business days and a triage
-decision within seven business days. Fixes ship with a security advisory that
+decision within seven business days. The maintainers keep the report private
+until a fix is available, and the fix ships with a security advisory that
 credits the reporter unless they prefer otherwise. Please keep the report
 private until the advisory is published.
 
 ## Scope
 
+Waft records your voice, reads the focused text field through Accessibility,
+writes to the clipboard, keeps API keys in the keychain, and updates itself.
 In scope: everything in this repository, including the app, the scripts, and
 the build configuration, and the license service at `api.waft.okoflow.com`,
 which issues Waft Pro license keys. Of particular interest:
 
-- audio leaving the Mac, or text leaving it outside the AI modes
-- text pasted into a password field, or into another app than the one you
-  dictated into
-- an API key leaving the Keychain for anything other than its provider's API
-- dictated text or clipboard contents reaching the logs, the disk, or other
-  apps
-- the event tap or the Accessibility access used beyond what dictation needs
-- an update installed without the project's signature, or a license key
-  accepted without a valid signature
-- the license service issuing a key without a purchase, or revealing a buyer's
-  details
+- Audio leaving the Mac, or text leaving it outside the AI modes.
+- Text pasted into a password field, or into another app than the one you
+  dictated into.
+- An API key leaving the keychain for anything other than its provider's API.
+- Dictated text or clipboard contents reaching the logs, the disk, or other
+  apps.
+- The event tap or the Accessibility access used beyond what dictation needs.
+- An update installed without the project's signature, or a license key
+  accepted without a valid signature.
+- The license service issuing a key without a purchase, or revealing a
+  buyer's details.
 
 Out of scope: vulnerabilities in WhisperKit, Sparkle, the speech model, or
 macOS unless Waft's use of them causes the problem; attacks that need an

@@ -1,10 +1,15 @@
 #!/bin/bash
+#
+# Builds Waft, assembles build/Waft.app with Sparkle and the licenses, and
+# signs it with the Waft Dev identity, SIGNING_IDENTITY, or ad hoc.
+
 set -euo pipefail
 
 readonly PRODUCT='Waft'
 readonly APP="build/${PRODUCT}.app"
-readonly RESOURCES="${APP}/Contents/Resources"
-readonly FRAMEWORK="${APP}/Contents/Frameworks/Sparkle.framework"
+readonly CONTENTS="${APP}/Contents"
+readonly RESOURCES="${CONTENTS}/Resources"
+readonly FRAMEWORK="${CONTENTS}/Frameworks/Sparkle.framework"
 readonly ENTITLEMENTS="Packaging/${PRODUCT}.entitlements"
 readonly IDENTITY="${SIGNING_IDENTITY:-Waft Dev}"
 readonly RULE='================================================================================'
@@ -16,6 +21,10 @@ usage() {
   exit 2
 }
 
+warn() {
+  printf 'warning: %s\n' "$@" >&2
+}
+
 die() {
   local message
   printf -v message '%s\n' "$@"
@@ -25,16 +34,16 @@ die() {
   exit 1
 }
 
-build_binary() {
-  local configuration=$1
+has_identity() {
+  local identities
+  identities=$(security find-identity -v -p codesigning)
 
-  swift build --configuration "${configuration}" --product "${PRODUCT}" >&2
-
-  swift build --configuration "${configuration}" --show-bin-path
+  [[ ${identities} == *"\"${IDENTITY}\""* ]]
 }
 
 print_licenses() {
   local path=$1
+
   local files
   files=$(find "${path}" -maxdepth 1 -type f \( -name 'LICENSE*' -o -name 'NOTICE*' \) | sort)
   [[ -n ${files} ]] || die "${path} has no license file"
@@ -48,8 +57,10 @@ print_licenses() {
 
 print_acknowledgments() {
   local packages
-  packages=$(swift package show-dependencies --format json \
-    | jq -r '.dependencies[] | [.name, .version, (.url | sub("\\.git$"; "")), .path] | @tsv')
+  packages=$(
+    swift package show-dependencies --format json \
+      | jq --raw-output '.dependencies[] | [.name, .version, (.url | sub("\\.git$"; "")), .path] | @tsv'
+  )
 
   echo "${PRODUCT} includes the following third-party software."
 
@@ -63,37 +74,35 @@ print_acknowledgments() {
 assemble_app() {
   local configuration=$1 binary_dir=$2
 
-  rm -rf "${APP}"
-  mkdir -p "${APP}/Contents/MacOS" "${RESOURCES}" "${APP}/Contents/Frameworks"
+  rm -rf -- "${APP:?}"
+  mkdir -p "${CONTENTS}/MacOS" "${CONTENTS}/Frameworks" "${RESOURCES}"
 
-  cp "${binary_dir}/${PRODUCT}" "${APP}/Contents/MacOS/${PRODUCT}"
-  cp "Packaging/${PRODUCT}-Info.plist" "${APP}/Contents/Info.plist"
+  cp "${binary_dir}/${PRODUCT}" "${CONTENTS}/MacOS/${PRODUCT}"
+  cp "Packaging/${PRODUCT}-Info.plist" "${CONTENTS}/Info.plist"
   cp "Packaging/${PRODUCT}.icns" "${RESOURCES}/${PRODUCT}.icns"
   cp -R Packaging/Localizations/*.lproj "${RESOURCES}/"
   cp LICENSE NOTICE "${RESOURCES}/"
   print_acknowledgments >"${RESOURCES}/ACKNOWLEDGMENTS"
+
   ditto "${binary_dir}/Sparkle.framework" "${FRAMEWORK}"
-  rm -rf "${FRAMEWORK}/Versions/B/XPCServices" "${FRAMEWORK}/XPCServices"
-  install_name_tool -add_rpath @executable_path/../Frameworks "${APP}/Contents/MacOS/${PRODUCT}"
+  rm -rf -- "${FRAMEWORK}/Versions/B/XPCServices" "${FRAMEWORK}/XPCServices"
+  install_name_tool -add_rpath @executable_path/../Frameworks "${CONTENTS}/MacOS/${PRODUCT}"
 
   if [[ ${configuration} == debug ]]; then
-    plutil -remove SUFeedURL "${APP}/Contents/Info.plist"
+    plutil -remove SUFeedURL "${CONTENTS}/Info.plist"
   fi
-}
-
-has_identity() {
-  security find-identity -v -p codesigning | grep -qF "\"${IDENTITY}\""
 }
 
 sign() {
   local identity=$1
   shift
 
+  local -a options=(--force --sign "${identity}")
   if [[ ${identity} == 'Developer ID Application'* ]]; then
-    codesign --force --options runtime --timestamp --sign "${identity}" "$@"
-  else
-    codesign --force --sign "${identity}" "$@"
+    options+=(--options runtime --timestamp)
   fi
+
+  codesign "${options[@]}" "$@"
 }
 
 sign_app() {
@@ -102,8 +111,8 @@ sign_app() {
   if ! has_identity; then
     identity='-'
 
-    echo "warning: \"${IDENTITY}\" isn't installed, so ${APP} is signed ad hoc and rebuilds lose its permissions" >&2
-    echo "warning: run make signing once to keep them" >&2
+    warn "\"${IDENTITY}\" isn't installed, so ${APP} is signed ad hoc and rebuilds lose its permissions" \
+      'run make signing once to keep them'
   fi
 
   sign "${identity}" "${FRAMEWORK}/Versions/B/Autoupdate"
@@ -117,15 +126,19 @@ sign_app() {
 main() {
   [[ $# -le 1 ]] || usage
 
-  cd "$(dirname "$0")/.."
-
   local configuration=${1:-debug}
   [[ ${configuration} == debug || ${configuration} == release ]] || usage
 
-  [[ -z ${SIGNING_IDENTITY:-} ]] || has_identity || die "\"${IDENTITY}\" isn't in the keychain"
+  cd "$(dirname "$0")/.."
+
+  if [[ -n ${SIGNING_IDENTITY:-} ]] && ! has_identity; then
+    die "\"${IDENTITY}\" isn't in the keychain"
+  fi
+
+  swift build --configuration "${configuration}" --product "${PRODUCT}" >&2
 
   local binary_dir
-  binary_dir=$(build_binary "${configuration}")
+  binary_dir=$(swift build --configuration "${configuration}" --show-bin-path)
 
   assemble_app "${configuration}" "${binary_dir}"
   sign_app
