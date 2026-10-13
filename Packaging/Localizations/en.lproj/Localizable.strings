@@ -164,6 +164,8 @@
 "Locked" = "Locked";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV, and more";
 "Make modes with your own instructions, or tune the built-in ones." = "Make modes with your own instructions, or tune the built-in ones.";
+"Makes fewer mistakes and is still quick." = "Makes fewer mistakes and is still quick.";
+"Makes the fewest mistakes, but is slower and pricier." = "Makes the fewest mistakes, but is slower and pricier.";
 "Microphone" = "Microphone";
 "Mode in %@" = "Mode in %@";
 "Mode in %@: %@" = "Mode in %@: %@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "The microphone stopped while starting.";
 "The microphone's audio format changed during the recording." = "The microphone's audio format changed during the recording.";
 "The microphone's audio format isn't supported." = "The microphone's audio format isn't supported.";
+"The quickest and cheapest." = "The quickest and cheapest.";
 "The speech model %@ isn't downloaded." = "The speech model %@ isn't downloaded.";
 "The speech model doesn't know one of the chosen languages." = "The speech model doesn't know one of the chosen languages.";
 "The speech model failed to load. Retry from the menu." = "The speech model failed to load. Retry from the menu.";

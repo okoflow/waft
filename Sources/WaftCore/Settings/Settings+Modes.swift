@@ -37,6 +37,7 @@ extension Settings {
         RewriteSetup(
             provider: modelProvider,
             instructions: rewriteInstructions(for: mode),
+            cloudModels: cloudModels,
             translation: translation,
             localServer: localServer,
         )

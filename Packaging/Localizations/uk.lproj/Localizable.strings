@@ -164,6 +164,8 @@
 "Locked" = "Заблоковано";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV та інші";
 "Make modes with your own instructions, or tune the built-in ones." = "Створюйте режими з власними інструкціями або налаштовуйте вбудовані.";
+"Makes fewer mistakes and is still quick." = "Помиляється рідше й усе ще швидка.";
+"Makes the fewest mistakes, but is slower and pricier." = "Помиляється найрідше, але повільніша й дорожча.";
 "Microphone" = "Мікрофон";
 "Mode in %@" = "Режим у програмі «%@»";
 "Mode in %@: %@" = "Режим у програмі «%@»: %@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "Мікрофон зупинився під час запуску.";
 "The microphone's audio format changed during the recording." = "Формат звуку мікрофона змінився під час запису.";
 "The microphone's audio format isn't supported." = "Формат звуку мікрофона не підтримується.";
+"The quickest and cheapest." = "Найшвидша й найдешевша.";
 "The speech model %@ isn't downloaded." = "Модель мовлення %@ не викачано.";
 "The speech model doesn't know one of the chosen languages." = "Модель мовлення не підтримує одну з вибраних мов.";
 "The speech model failed to load. Retry from the menu." = "Не вдалося завантажити модель мовлення. Повторіть спробу з меню.";

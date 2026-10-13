@@ -19,14 +19,30 @@ struct AnthropicAPITests {
         let request = RewriteRequest.cleanup("um hello", target: .german)
         let body = try Self.api.call(for: request).body.jsonObject()
         let messages = try #require(body["messages"] as? [[String: String]])
-        let model = try #require(body["model"] as? String)
 
-        #expect(model.hasPrefix("claude-"))
         #expect(body["max_tokens"] as? Int == request.outputTokenBudget + 4096)
         #expect(body["thinking"] == nil)
         #expect((body["output_config"] as? [String: String])?["effort"] == "low")
         #expect(body["system"] as? String == RewritePrompt.system(for: request))
         #expect(messages == [["role": "user", "content": RewritePrompt.userMessage(for: request)]])
+    }
+
+    @Test(arguments: [
+        (CloudModel.fastest, "claude-haiku-5-5"),
+        (.balanced, "claude-sonnet-5-5"),
+        (.smartest, "claude-opus-5-5"),
+    ])
+    func `calls the chosen model`(model: CloudModel, identifier: String) throws {
+        let body = try Self.api.call(for: .cleanup("hello", cloudModel: model)).body.jsonObject()
+
+        #expect(body["model"] as? String == identifier)
+    }
+
+    @Test
+    func `needs a cloud model`() {
+        #expect(throws: RewriteError.unavailable) {
+            try Self.api.call(for: .cleanup("hello", cloudModel: nil))
+        }
     }
 
     @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-ant-test", isBroken: true)])

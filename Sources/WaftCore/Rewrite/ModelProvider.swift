@@ -19,14 +19,6 @@ package enum ModelProvider: Hashable, Sendable {
         }
     }
 
-    var deadline: Duration {
-        isCloud ? .seconds(3) : .seconds(15)
-    }
-
-    var editDeadline: Duration {
-        isCloud ? .seconds(20) : .seconds(45)
-    }
-
     private var storedName: String {
         switch self {
         case .localServer: "local"

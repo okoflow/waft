@@ -104,9 +104,10 @@ flowchart LR
 3. `DictationQueue` runs finished recordings one at a time: the `Transcriber`
    recognizes them, `TranscriptProcessor` applies the dictionary, snippets,
    and the mode, and the `TextInserter` pastes the result.
-4. An AI mode runs the `TextRewriter` under the provider's deadline, checks the
-   answer with `RewriteValidator`, and on any `RewriteError` falls back to
-   Light with a `RewriteFallback` that says why.
+4. An AI mode runs the `TextRewriter` under the deadline of the chosen
+   `CloudModel` or the local server, checks the answer with
+   `RewriteValidator`, and on any `RewriteError` falls back to Light with a
+   `RewriteFallback` that says why.
 5. The outcome becomes a `HUDMessage`, a history entry, and the latest
    transcript.
 
@@ -179,7 +180,8 @@ others.
   and list it in `Mode.builtIn`. An AI mode needs its instruction in
   `RewritePrompt`.
 - **An AI provider.** Describe its API in `WaftPlatform/Network` as a
-  `RewriteAPI`, add a `CloudProvider` case and a `PerProvider` property, and
-  wire it in `Rewriters.http`.
+  `RewriteAPI` with a model identifier for each `CloudModel`, add a
+  `CloudProvider` case, a `PerProvider` property, and the names of its models
+  in `CloudProvider+Display`, and wire it in `Rewriters.http`.
 - **An adapter.** Implement the interface in `WaftPlatform` and pass it in
   `AppDependencies.live()`.

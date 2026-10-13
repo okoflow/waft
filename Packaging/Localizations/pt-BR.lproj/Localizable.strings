@@ -164,6 +164,8 @@
 "Locked" = "Bloqueado";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV e outros";
 "Make modes with your own instructions, or tune the built-in ones." = "Crie modos com suas próprias instruções ou ajuste os incluídos.";
+"Makes fewer mistakes and is still quick." = "Comete menos erros e continua rápido.";
+"Makes the fewest mistakes, but is slower and pricier." = "Comete o mínimo de erros, mas é mais lento e caro.";
 "Microphone" = "Microfone";
 "Mode in %@" = "Modo em %@";
 "Mode in %@: %@" = "Modo em %@: %@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "O microfone parou ao iniciar.";
 "The microphone's audio format changed during the recording." = "O formato de áudio do microfone mudou durante a gravação.";
 "The microphone's audio format isn't supported." = "O formato de áudio do microfone não é compatível.";
+"The quickest and cheapest." = "O mais rápido e barato.";
 "The speech model %@ isn't downloaded." = "O modelo de fala %@ não foi baixado.";
 "The speech model doesn't know one of the chosen languages." = "O modelo de fala não é compatível com um dos idiomas escolhidos.";
 "The speech model failed to load. Retry from the menu." = "Falha ao carregar o modelo de fala. Tente novamente pelo menu.";

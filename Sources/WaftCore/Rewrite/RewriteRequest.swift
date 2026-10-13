@@ -9,6 +9,7 @@ package struct RewriteRequest: Sendable {
     package let language: Language
     package let kind: Kind
     package let localServer: LocalServer?
+    package let cloudModel: CloudModel?
     package let deadline: Duration
 
     package var outputTokenBudget: Int {
@@ -19,11 +20,19 @@ package struct RewriteRequest: Sendable {
         }
     }
 
-    package init(text: String, language: Language, kind: Kind, localServer: LocalServer?, deadline: Duration) {
+    package init(
+        text: String,
+        language: Language,
+        kind: Kind,
+        localServer: LocalServer?,
+        cloudModel: CloudModel?,
+        deadline: Duration,
+    ) {
         self.text = text
         self.language = language
         self.kind = kind
         self.localServer = localServer
+        self.cloudModel = cloudModel
         self.deadline = deadline
     }
 }

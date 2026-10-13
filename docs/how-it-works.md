@@ -95,9 +95,15 @@ Clean.
 ### The AI modes
 
 Clean, Formal, Translate, and your modes send the text and a short instruction
-for the mode to the model you chose: the Anthropic Messages API with
-`claude-haiku-5-5`, the OpenAI Responses API with `gpt-6-luna` and
-`store: false`, or the `/chat/completions` endpoint of your local server.
+for the mode to the model you chose: the Anthropic Messages API, the OpenAI
+Responses API with `store: false`, or the `/chat/completions` endpoint of your
+local server. Each cloud provider offers three models:
+
+| Model | Claude | OpenAI |
+| --- | --- | --- |
+| The quickest | `claude-haiku-5-5` | `gpt-6-luna` |
+| Balanced, the default | `claude-sonnet-5-5` | `gpt-6.1-sol` |
+| The smartest | `claude-opus-5-5` | `gpt-6-astra` |
 
 Cloud models think at low effort: they answer most dictations right away and
 think briefly over a hard one, such as a misheard name. Waft leaves 4,096
@@ -121,18 +127,19 @@ any script and at up to ten times the length of what you said, or 600
 characters for a short dictation, since their instructions can ask for a
 translation or a longer text.
 
-A cloud model gets 3 seconds and a local server 15. Without a key, offline,
-on an error, a rate limit, a timeout, or a rejected answer, Waft uses Light
-instead and the HUD adds a line that says why. The text is never lost.
+The quickest cloud model gets 4 seconds, the balanced one 6, the smartest 10,
+and a local server 15. Without a key, offline, on an error, a rate limit, a
+timeout, or a rejected answer, Waft uses Light instead and the HUD adds a line
+that says why. The text is never lost.
 [The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists
 each reason and what to do about it.
 
 ### Editing by voice
 
 An edit sends the selected text and your spoken instruction to the same
-model. It gets 20 seconds in the cloud and 45 on a local server, since it can
-rewrite a long selection. When it fails, nothing is pasted and the selection
-stays as it was.
+model. It gets 20, 30, or 45 seconds with the quickest, balanced, or smartest
+cloud model, and 45 on a local server, since it can rewrite a long selection.
+When it fails, nothing is pasted and the selection stays as it was.
 
 ## Pasting
 

@@ -47,7 +47,8 @@ package struct TranscriptProcessor: Sendable {
             language: instruction.language,
             kind: .edit(selection: selection),
             localServer: setup.serverInUse,
-            deadline: setup.provider.editDeadline,
+            cloudModel: setup.cloudModelInUse,
+            deadline: setup.editDeadline,
         )
 
         return try await rewrite(request, with: setup.provider)
@@ -82,7 +83,8 @@ package struct TranscriptProcessor: Sendable {
             language: language,
             kind: Self.kind(for: mode, language: language, setup: setup),
             localServer: setup.serverInUse,
-            deadline: setup.provider.deadline,
+            cloudModel: setup.cloudModelInUse,
+            deadline: setup.deadline,
         )
 
         do throws(RewriteError) {

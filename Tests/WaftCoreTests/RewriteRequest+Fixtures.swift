@@ -12,6 +12,7 @@ extension RewriteRequest {
             language: language,
             kind: .cleanup(instructions: instructions, target: target),
             localServer: nil,
+            cloudModel: .balanced,
             deadline: .seconds(3),
         )
     }
@@ -22,6 +23,7 @@ extension RewriteRequest {
             language: language,
             kind: .custom(instructions: instructions),
             localServer: nil,
+            cloudModel: .balanced,
             deadline: .seconds(3),
         )
     }
@@ -32,6 +34,7 @@ extension RewriteRequest {
             language: language,
             kind: .edit(selection: selection),
             localServer: nil,
+            cloudModel: .balanced,
             deadline: .seconds(20),
         )
     }

@@ -164,6 +164,8 @@
 "Locked" = "잠김";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV 등";
 "Make modes with your own instructions, or tune the built-in ones." = "나만의 지시문으로 모드를 만들거나 기본 제공 모드를 조정할 수 있습니다.";
+"Makes fewer mistakes and is still quick." = "오류가 적고 여전히 빠릅니다.";
+"Makes the fewest mistakes, but is slower and pricier." = "오류가 가장 적지만 더 느리고 비쌉니다.";
 "Microphone" = "마이크";
 "Mode in %@" = "%@용 모드";
 "Mode in %@: %@" = "%1$@용 모드: %2$@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "마이크가 시작하는 중에 멈췄습니다.";
 "The microphone's audio format changed during the recording." = "녹음 중에 마이크의 오디오 형식이 바뀌었습니다.";
 "The microphone's audio format isn't supported." = "마이크의 오디오 형식을 지원하지 않습니다.";
+"The quickest and cheapest." = "가장 빠르고 저렴합니다.";
 "The speech model %@ isn't downloaded." = "%@ 음성 인식 모델이 다운로드되지 않았습니다.";
 "The speech model doesn't know one of the chosen languages." = "음성 인식 모델이 선택한 언어 중 하나를 지원하지 않습니다.";
 "The speech model failed to load. Retry from the menu." = "음성 인식 모델을 로드하지 못했습니다. 메뉴에서 다시 시도하세요.";

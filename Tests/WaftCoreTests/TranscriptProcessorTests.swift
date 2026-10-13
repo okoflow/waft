@@ -65,7 +65,7 @@ struct TranscriptProcessorTests {
         let request = try #require(await log.requests.first)
 
         #expect(processed == ProcessedText(text: answer, mode: mode))
-        #expect(request.deadline == .seconds(3))
+        #expect(request.deadline == .seconds(6))
         #expect(request.localServer == nil)
         #expect(RewritePrompt.system(for: request).hasPrefix("Clean."))
     }
@@ -121,6 +121,30 @@ struct TranscriptProcessorTests {
         #expect(processed == ProcessedText(text: "From OpenAI.", mode: .clean))
     }
 
+    @Test(arguments: [
+        (CloudModel.fastest, Duration.seconds(4), Duration.seconds(20)),
+        (.balanced, .seconds(6), .seconds(30)),
+        (.smartest, .seconds(10), .seconds(45)),
+    ])
+    func `sends the model chosen for the provider and waits longer for a slower one`(
+        model: CloudModel,
+        deadline: Duration,
+        editDeadline: Duration,
+    ) async throws {
+        let log = RewriteLog()
+        let setup = RewriteSetup(
+            provider: .cloud(.claude),
+            instructions: "Clean.",
+            cloudModels: PerProvider(claude: model, openAI: .fastest),
+        )
+        _ = await process("hello", mode: .clean, setup: setup, log: log)
+        _ = try await edit("Text.", following: "shorter", answer: .success("Short."), setup: setup, log: log)
+        let requests = await log.requests
+
+        #expect(requests.map(\.cloudModel) == [model, model])
+        #expect(requests.map(\.deadline) == [deadline, editDeadline])
+    }
+
     @Test
     func `sends the rewrite with the server to the local server`() async throws {
         let log = RewriteLog()
@@ -131,6 +155,7 @@ struct TranscriptProcessorTests {
 
         #expect(processed == ProcessedText(text: "From the local server.", mode: .formal))
         #expect(request.localServer == server)
+        #expect(request.cloudModel == nil)
         #expect(request.deadline == .seconds(15))
     }
 
@@ -186,7 +211,7 @@ struct TranscriptProcessorTests {
 
         #expect(edited == "Short.")
         #expect(request.text == "make it shorter")
-        #expect(request.deadline == .seconds(20))
+        #expect(request.deadline == .seconds(30))
         #expect(RewritePrompt.userMessage(for: request).contains("<text>\nA rather long sentence.\n</text>"))
     }
 
