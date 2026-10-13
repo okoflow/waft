@@ -49,8 +49,8 @@ goes missing, see [Limits](how-it-works.md#limits).
 ## 4. Try the rest
 
 - **Hands-free**: tap <kbd>right ⌥</kbd> twice, speak as long as you like, and
-  press it once more to finish. To start with a single tap instead, choose
-  **Tap** under **How to start** in Settings › Dictation.
+  tap it again to finish. To start with a single tap, choose **Tap** under
+  **How to start** in Settings › Dictation.
 - **Modes**: press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> to switch between Raw,
   Light, Clean, Formal, Translate, and the modes you make in Settings ›
   Writing. Every mode but Raw and Light needs an AI model: add an API key or a

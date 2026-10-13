@@ -40,7 +40,7 @@ when you want prose rather than a transcript.
       <td width="33%" valign="top"><b>45 languages</b><br>Waft detects which of
         your languages you speak, and translates between them.</td>
       <td width="33%" valign="top"><b>AI cleanup</b><br>Clean, Formal,
-        Translate, or modes of your own with Claude, OpenAI, or a local
+        Translate, or your own modes, with Claude, OpenAI, or a local
         model.</td>
     </tr>
   </thead>
@@ -99,9 +99,9 @@ modes, and the languages.
 
 ## Waft Pro
 
-AI modes, your own modes, translation, editing by voice, file transcription,
-and the Accurate speech model cost $13.99 once. **Free while Waft is in
-beta.**
+Waft Pro adds Clean, Formal, Translate, your own modes, editing by voice, file
+transcription, and the Accurate speech model for a single payment of $13.99.
+**Free while Waft is in beta.**
 
 ## Contributing
 

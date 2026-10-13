@@ -1,11 +1,10 @@
 # Troubleshooting
 
-The first line of the Waft menu says what Waft is doing, and the HUD explains
-every dictation that didn't end in pasted text; the sections below cover what
-they point to. [Usage](usage.md) describes each setting named here, and
+This page covers what to do when the first line of the menu or the HUD
+reports a problem. [Usage](usage.md) describes each setting named here, and
 [Privacy](privacy.md) lists the files Waft keeps.
 
-## Holding the key does nothing
+## The dictation key does nothing
 
 - **The menu says "Setup needed".** A permission is missing. Choose **Finish
   Setup…**, or allow it in Settings › General › Permissions.
@@ -61,32 +60,22 @@ when to start speaking.
 
 ## The AI modes use Light
 
-The second line of the HUD starts with "Used Light mode" and says why:
+The second line of the HUD starts with "Used Light mode:" and says why, with
+the name of your provider in place of *provider*:
 
-- **Add your API key**: add it in Settings › AI Models.
-- **Choose a local server and model**: pick both in Settings › AI Models.
-- **Isn't available**: the API answered that the model doesn't exist, or the
-  secure connection to it failed. The `network` log category records the
-  reason.
-- **Need Waft Pro**: add a license in Settings › Waft Pro.
-- **Rejected the API key**: check the key in the
-  [Anthropic Console](https://console.anthropic.com/settings/keys) or the
-  [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys)
-  and paste it again.
-- **You're offline**, **didn't answer in time**, or **is rate-limiting
-  requests**: the next dictation tries again. With OpenAI, the last one also
-  appears when the account is out of credit; the `network` log category says
-  `insufficient_quota`.
-- **The local server isn't running**: start Ollama, LM Studio, or your server,
-  and click **Check** in Settings › AI Models.
-- **Returned an error**: the `network` log category records the reason. With
-  Claude, the common one is a key that isn't scoped to a workspace: create the
-  key inside a workspace in the Anthropic Console and paste it again.
-- **The answer couldn't be used**: the answer was cut off, refused, or in
-  another language. Dictating again usually works. A mode of your own fails
-  every time when its instructions ask for a longer text than
-  [The AI modes](how-it-works.md#the-ai-modes) allows: change its
-  instructions.
+| The HUD says | What to do |
+| --- | --- |
+| add your *provider* API key in Settings › AI Models | Add the key there |
+| choose a local server and model in Settings › AI Models | Choose both there |
+| AI modes need Waft Pro | Add a license in Settings › Waft Pro |
+| you're offline | Nothing: the next dictation tries again |
+| the local server isn't running | Start Ollama, LM Studio, or your server, and click **Check** in Settings › AI Models |
+| *provider* didn't answer in time | Nothing: the next dictation tries again |
+| *provider* is rate-limiting requests | Wait a moment. With OpenAI, it can also mean the account is out of credit; the `network` log category then says `insufficient_quota` |
+| *provider* rejected the API key | Check the key in the [Anthropic Console](https://console.anthropic.com/settings/keys) or the [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys) and paste it again |
+| *provider* isn't available | The API answered that the model doesn't exist, or the secure connection to it failed; the `network` log category records the reason |
+| *provider* returned an error | The `network` log category records the reason. With Claude, the usual one is a key created outside a workspace: create one inside a workspace in the Anthropic Console |
+| *provider*'s answer couldn't be used | The answer was empty, cut off, refused, too long, or in another script; dictating again usually works. If one of your modes fails every time, its instructions ask for a longer text than [The AI modes](how-it-works.md#the-ai-modes) allows |
 
 ## The speech model fails
 

@@ -16,15 +16,17 @@ flowchart LR
 ## The key
 
 A listen-only event tap watches the keyboard. It never swallows a key press,
-so the dictation key keeps working everywhere else. Holding the key starts a
-recording; releasing it after at least 0.3 seconds finishes it. Shorter
-presses and another key pressed while holding are discarded; a recording that
-reaches 5 minutes finishes on its own and is transcribed.
+so the dictation key keeps working everywhere else. Pressing the key starts a
+recording, and what releasing it does depends on **How to start**:
 
-With **Tap**, letting go keeps the recording running and the next press
-finishes it. With **Hold or double-tap**, a second short press within 0.4
-seconds of the first does the same. A recording without the key held finishes
-on the next press or after 5 minutes.
+- **Hold**: a release after at least 0.3 seconds finishes the recording, and
+  a shorter press is discarded.
+- **Tap**: the recording keeps running, and the next press finishes it.
+- **Hold or double-tap**: a long press works as with Hold, and a second short
+  press within 0.4 seconds of the first works as with Tap.
+
+Another key pressed while the dictation key is down discards the recording.
+A recording that reaches 5 minutes finishes on its own and is transcribed.
 
 macOS can switch an event tap off when the system is busy, and a key-up can
 get lost. Waft turns the tap back on, checks it every 5 seconds, and while you
@@ -117,8 +119,8 @@ translation or a longer text.
 A cloud model gets 3 seconds and a local server 15. Without a key, offline,
 on an error, a rate limit, a timeout, or a rejected answer, Waft uses Light
 instead and the HUD adds a line that says why. The text is never lost.
-[Troubleshooting](troubleshooting.md#the-ai-modes-use-light) lists each
-reason and what to do about it.
+[The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists
+each reason and what to do about it.
 
 ### Editing by voice
 
@@ -161,10 +163,10 @@ Texts are pasted one at a time, in the order you spoke them.
 Settings › Dictation › **Speech model** offers two models from
 [argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml):
 
-| Model | Files | Download | Speed |
+| Model | Files | Download | Trade-off |
 | --- | --- | --- | --- |
-| Fast | `openai_whisper-large-v3-v20240930_626MB`, Whisper large-v3 turbo | About 630 MB | The default |
-| Accurate (Pro) | `openai_whisper-large-v3`, Whisper large-v3 | About 3.1 GB | About three times slower, with fewer mistakes outside English |
+| Fast | Whisper large-v3 turbo, `openai_whisper-large-v3-v20240930_626MB` | About 630 MB | The default and the quickest |
+| Accurate (Pro) | Whisper large-v3, `openai_whisper-large-v3` | About 3.1 GB | Two to three times slower, with fewer mistakes outside English |
 
 The model downloads once to `~/Library/Application Support/Waft/Models`.
 Core ML compiles it for your chip the first time it loads, which takes up to a

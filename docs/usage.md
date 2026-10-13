@@ -1,8 +1,8 @@
 # Usage
 
-Everything Waft can do and every setting. [Getting started](getting-started.md)
-covers the first launch; [How it works](how-it-works.md) explains what
-happens behind the scenes.
+This page describes everything Waft does and every setting.
+[Getting started](getting-started.md) covers the first launch, and
+[How it works](how-it-works.md) what happens behind the scenes.
 
 ## Dictating
 
@@ -10,35 +10,41 @@ Hold the dictation key, speak, and let go. While you speak, the HUD at the
 bottom of the screen shows a level meter; once the text is pasted, it shows
 the text.
 
-- When you hold the key, a press shorter than 0.3 seconds does nothing, so a
-  tap keeps the key's usual meaning.
+- Unless you choose **Tap**, a single press shorter than 0.3 seconds does
+  nothing, so a tap keeps the key's usual meaning.
 - Pressing another key while you hold the dictation key cancels the
   recording, so Option shortcuts and special characters keep working.
 - A recording stops on its own after 5 minutes.
 - You can dictate again while the previous text is still being recognized.
   Texts arrive in the order you spoke them.
 
-**How to start.** Choose one of three ways under **How to start** in
-Settings › Dictation:
+### How to start
+
+Choose how the key starts a recording under **How to start** in Settings ›
+Dictation:
 
 - **Hold**: Waft listens while you hold the key.
-- **Tap**: tap the key to start and tap it again to finish. Waft shows
-  **Hands-free** in the HUD while it listens.
-- **Hold or double-tap**, the default: hold the key, or tap it twice quickly
-  to keep listening without holding it, and press it once more to finish.
+- **Tap**: tap the key to start and tap it again to finish.
+- **Hold or double-tap**, the default: hold the key, or tap it twice and tap
+  it again to finish.
 
-The editing key always works by holding.
+While Waft listens without the key held, the HUD shows **Hands-free**. The
+editing key always works by holding.
 
-**The speech model.** Settings › Dictation › **Speech model** offers Fast,
-the default, and Accurate, a Pro model about three times slower with fewer
+### The dictation key
+
+The dictation key is <kbd>right ⌥</kbd>. To change it, click the key next to
+**Dictation key** in Settings › Dictation and press another: Option, Command,
+Shift, or Control on either side, Fn (🌐), or a function key. Keys that type
+text can't be used.
+
+### The speech model
+
+**Speech model** in Settings › Dictation offers Fast, the default, and
+Accurate, a Pro model that is two to three times slower and makes fewer
 mistakes outside English. Choosing the other one downloads it while the
-current one keeps working; [How it works](how-it-works.md#the-speech-model)
-has the details.
-
-**The dictation key** is <kbd>right ⌥</kbd>. To change it, click the key
-next to **Dictation key** in Settings › Dictation and press another: Option,
-Command, Shift, or Control on either side, Fn (🌐), or a function key. Keys
-that type text can't be used.
+current one keeps working, as
+[The speech model](how-it-works.md#the-speech-model) describes.
 
 ## The menu
 
@@ -47,13 +53,13 @@ that type text can't be used.
 | Item | What it does |
 | --- | --- |
 | The first line | Says what Waft is doing: which key to hold or tap, **Listening…**, the speech model's progress, or **Setup needed** |
-| Finish Setup… | Appears while the setup guide is unfinished or a permission is missing, and opens the guide, or only its missing permission steps once setup is done |
+| Finish Setup… | Appears while setup is unfinished or a permission is missing, and opens the steps that remain |
 | Retry Speech Model | Appears when the speech model failed, and downloads or loads it again |
 | Install Update… | Appears when an update is waiting, and offers to install it |
 | Mode | Sets the mode for every app; <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches to the next one |
 | Mode in *app* | Gives the app in front a mode of its own |
 | Language | Detects the language automatically, or uses the one you choose; **Choose Languages…** opens Settings › Dictation |
-| Copy Last Dictation | Copies the latest text again for 10 minutes, even one that wasn't pasted |
+| Copy Last Dictation | Copies the latest text, pasted or not, within 10 minutes of the dictation |
 | Recent Dictations | Copies one of your last five dictations; **Show History** opens the full list |
 | Transcribe File… | Turns a recording or a video into text or subtitles; marked **(Pro)** without Pro |
 | Settings… | Opens Settings |
@@ -94,9 +100,9 @@ what you say in Russian comes out in English.
 
 When the AI model can't be used, Waft pastes the Light text instead and the
 HUD says why: no API key, no network, an error, an unusable answer, or no
-answer in time. [How it works](how-it-works.md#the-ai-modes) gives the time
-limits, and [Troubleshooting](troubleshooting.md#the-ai-modes-use-light) each
-reason.
+answer in time. [The AI modes](how-it-works.md#the-ai-modes) gives the time
+limits, and [The AI modes use Light](troubleshooting.md#the-ai-modes-use-light)
+what to do about each reason.
 
 ### Choosing the AI model
 
@@ -122,19 +128,19 @@ mode: it shows what the mode asks the model to do and lets you rewrite it, for
 example for a more casual tone or your team's style. **Reset to Default**
 brings back the original.
 
-**New Mode** under **Your modes** creates a mode of your own. Give it a name
-and write its instructions, such as "reply as a short, friendly email and sign
-with my name" or "turn what I say into bullet points". Where the instructions
-say nothing, Waft removes hesitations, fixes grammar and punctuation, and
-keeps your language. Your modes appear in the menu, in
+**New Mode** under **Your modes** adds a mode: give it a name and
+instructions, such as "reply as a short, friendly email and sign with my name"
+or "turn what I say into bullet points". Where the instructions say nothing,
+Waft removes hesitations, fixes grammar and punctuation, and keeps your
+language. Your modes appear in the menu, in
 <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd>, and in the modes for each app.
-**Delete Mode…** removes one. The apps that used it go back to the default
-mode, and if it was the default mode, Waft switches to Light.
+**Delete Mode…** removes one: apps that used it switch to the default mode,
+and if it was the default, Waft uses Light.
 
-In either case, type a sentence under **Try it** and click **Run** to see what
+On either page, type a sentence under **Try it** and click **Run** to see what
 the mode writes with your AI model. The test skips the dictionary and assumes
-the first of your languages. Waft still tells the model to treat what you said
-as text, not as a request, and to reply with the text only.
+the first of your languages. As in a dictation, Waft tells the model to treat
+what you said as text, not as a request, and to reply with the text only.
 
 ### A mode for each app
 
@@ -153,7 +159,7 @@ The AI model rewrites the selection and Waft pastes the result over it.
 What you say is an instruction, not text to paste, so nothing changes when the
 model can't be reached: the HUD says why and the selection stays as it was.
 An edit gets more time than a dictation, as
-[How it works](how-it-works.md#editing-by-voice) explains. Apps that don't
+[Editing by voice](how-it-works.md#editing-by-voice) explains. Apps that don't
 expose the selection to Accessibility, such as some web views, show "Select
 the text to edit" instead.
 
@@ -272,16 +278,16 @@ updates the same way.
 ## Waft Pro
 
 Dictation with Whisper, the Raw and Light modes, voice commands, the
-dictionary, and history are free. Waft Pro adds Clean, Formal, and Translate
-with any AI model, translation both ways, your own modes and instructions,
-editing by voice, file transcription, and the Accurate speech model, for a
-single payment of $13.99. Settings marks each of them with **Pro**.
+dictionary, and history are free. Waft Pro adds Clean, Formal, Translate,
+your own modes and instructions, editing by voice, file transcription, and the
+Accurate speech model for a single payment of $13.99. Settings marks each of
+them with **Pro**.
 
 While Waft is in beta, every Pro feature is free and needs no license. Once
-Pro goes on sale, it works for 3 days after the first launch; after that, the
-AI modes fall back to Light, the HUD says so, and the menu marks them and
-file transcription **(Pro)** until you add a license in Settings › Waft Pro,
-and Waft recognizes speech with the
-[Fast model](how-it-works.md#the-speech-model). The license key arrives with
-your receipt: paste it under **License**, or open the activation link from
-the email. Waft checks the key on your Mac, without contacting a server.
+Pro goes on sale, it works for 3 days after the first launch. After that,
+until you add a license in Settings › Waft Pro, the AI modes fall back to
+Light and the HUD says so, the menu marks them and file transcription
+**(Pro)**, and Waft recognizes speech with the Fast model. The license key
+arrives with your receipt: paste it under **License**, or open the activation
+link from the email. Waft checks the key on your Mac, without contacting a
+server.

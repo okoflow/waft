@@ -1,8 +1,8 @@
 # Architecture
 
-A map of the code for contributors: where things live, the rules that keep
-them there, and the paths a dictation takes through them. [How it
-works](how-it-works.md) describes the same flow from the user's side.
+This page maps the code for contributors: where things live, the rules that
+keep them there, and the paths a dictation takes through them.
+[How it works](how-it-works.md) describes the same flow from the user's side.
 
 ## The problem
 
@@ -38,17 +38,15 @@ flowchart TD
 
 **`WaftCore`** is grouped by domain. `Keyboard` holds `PushToTalk`, the state
 machine that turns key events into start, finish, and discard for the chosen
-`DictationStart`,
-`RecordingTriggers`, which runs one for the dictation key and one for the
-editing key, and `ReleaseWatchdog`. `Speech` holds `SpeechModelState`, whose
-transitions return the effects a controller runs, `SpeechGate`, and
-`SubtitleFormatter`. `Text` holds Light mode (`LightModeRules`,
-`VoiceCommands`) and `HallucinationFilter`.
-`Mode` holds the built-in modes, the `CustomMode`s a user writes, and the
-modes for each app; `Settings+Modes` lists them all and turns any mode into a
-`RewriteSetup`.
-`Rewrite` holds `TranscriptProcessor`, which runs the dictionary, the mode,
-and the AI model under a deadline, `RewritePrompt`, and `RewriteValidator`.
+`DictationStart`, `RecordingTriggers`, which runs one for the dictation key and
+one for the editing key, and `ReleaseWatchdog`. `Speech` holds
+`SpeechModelState`, whose transitions return the effects a controller runs,
+`SpeechGate`, and `SubtitleFormatter`. `Text` holds Light mode
+(`LightModeRules`, `VoiceCommands`) and `HallucinationFilter`. `Mode` holds the
+built-in modes, the `CustomMode`s a user writes, and the modes for each app;
+`Settings+Modes` lists them all and turns any mode into a `RewriteSetup`.
+`Rewrite` holds `TranscriptProcessor`, which runs the dictionary, the mode, and
+the AI model under a deadline, `RewritePrompt`, and `RewriteValidator`.
 `Insertion` decides whether and how to paste. `Storage` holds `ValueStore` and
 the lenient decoding that keeps one bad field from resetting the rest.
 
@@ -122,7 +120,8 @@ flowchart LR
   singletons.
 - Declarations shared between modules are `package`, never `public`. With
   `InternalImportsByDefault`, an import is `package import` only when a
-  package declaration's signature uses the module's types.
+  package declaration's signature names the module's types. A type reached
+  through an alias, such as `CustomMode.ID` for `UUID`, doesn't count.
 - Rules that need no system access are value types in `WaftCore`.
 - Audio, dictated text, and clipboard contents never reach the log or the
   disk, apart from the history the user keeps.
