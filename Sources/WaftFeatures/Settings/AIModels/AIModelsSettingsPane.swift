@@ -11,7 +11,6 @@ struct AIModelsSettingsPane: View {
         SettingsSection(
             "AI model",
             subtitle: "AI modes and editing by voice use this model.",
-            isPro: true,
         ) {
             PickerRow(
                 "Provider",

@@ -114,7 +114,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func makeSettingsWindow(model: AppModel) -> NSWindow {
-        let content = NSHostingController(rootView: SettingsWindowView(model: model, state: settingsState))
+        let content = NSHostingController(rootView: SettingsWindowView(model: model, state: settingsState).tint(Palette.accent))
         content.sizingOptions = []
 
         let window = makeWindow(
@@ -133,7 +133,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         let view = TranscriptionView(model: model.transcription) { [weak self] in
             self?.showSettings(.pro)
         }
-        let content = NSHostingController(rootView: view)
+        let content = NSHostingController(rootView: view.tint(Palette.accent))
         content.sizingOptions = []
 
         let window = makeWindow(content, size: NSSize(width: 600, height: 580), minimumSize: Metrics.transcriptionMinimumSize)
@@ -143,7 +143,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func makeOnboardingWindow(model: AppModel) -> NSWindow {
-        let content = NSHostingController(rootView: OnboardingView(model: model))
+        let content = NSHostingController(rootView: OnboardingView(model: model).tint(Palette.accent))
         content.sizingOptions = .preferredContentSize
         content.safeAreaRegions = []
 

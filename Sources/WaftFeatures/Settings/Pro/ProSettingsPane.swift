@@ -7,11 +7,11 @@ struct ProSettingsPane: View {
     var body: some View {
         ProHero(pro: pro)
 
-        SettingsSection("What Pro adds") {
+        SettingsSection("What Waft+ adds") {
             DividedForEach(ProBenefit.all, id: \.symbolName) { benefit in
                 TileRow(symbolName: benefit.symbolName, tint: benefit.tint, title: benefit.title, detail: benefit.detail) {
                     Image(systemName: pro.isUnlocked ? "checkmark.circle.fill" : "lock.fill")
-                        .foregroundStyle(pro.isUnlocked ? Palette.success : .secondary)
+                        .foregroundStyle(pro.isUnlocked ? Palette.accent : .secondary)
                         .accessibilityLabel(pro.isUnlocked ? Text("Included") : Text("Locked"))
                 }
             }
@@ -53,8 +53,16 @@ private struct ProHero: View {
             AppIcon(size: 64)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Waft Pro")
-                    .font(.proTitle)
+                HStack(spacing: 6) {
+                    Text(verbatim: "Waft")
+                        .font(.proTitle)
+
+                    WaftPlusMark(size: 26)
+                }
+                .environment(\.layoutDirection, .leftToRight)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text("Waft+"))
+                .accessibilityAddTraits(.isHeader)
 
                 Text(status)
                     .font(.rowTitle)
@@ -70,7 +78,7 @@ private struct ProHero: View {
         }
         .foregroundStyle(.white)
         .padding(Metrics.heroCardPadding)
-        .background(Palette.proGradient, in: shape)
+        .brandGlow(in: shape)
     }
 }
 
@@ -92,7 +100,7 @@ private struct ProBenefit {
             symbolName: "globe",
             tint: .blue,
             title: "Translate",
-            detail: "Speak any of 45 languages and get another, one way or both.",
+            detail: "Speak any of \(Language.allCases.count) languages and get another, one way or both.",
         ),
         ProBenefit(
             symbolName: SettingsPane.aiModels.symbolName,

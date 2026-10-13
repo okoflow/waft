@@ -34,7 +34,7 @@ struct KeyRecorderField: View {
             HStack(spacing: Metrics.inlineSpacing) {
                 Image(systemName: isRecording ? "record.circle" : "keyboard")
                     .font(.glyph)
-                    .foregroundStyle(isRecording ? Color.accentColor : .secondary)
+                    .foregroundStyle(isRecording ? Palette.accent : .secondary)
                     .contentTransition(.symbolEffect(.replace))
                     .accessibilityHidden(true)
 

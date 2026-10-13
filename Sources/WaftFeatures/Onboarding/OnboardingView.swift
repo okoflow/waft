@@ -91,7 +91,7 @@ private struct PageDots: View {
         HStack(spacing: Metrics.inlineSpacing) {
             ForEach(0 ..< count, id: \.self) { index in
                 Capsule()
-                    .fill(index == current ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary))
+                    .fill(index == current ? AnyShapeStyle(Palette.accent) : AnyShapeStyle(.quaternary))
                     .frame(width: index == current ? 18 : 7, height: 7)
             }
         }

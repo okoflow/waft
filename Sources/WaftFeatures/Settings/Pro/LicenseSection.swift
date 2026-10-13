@@ -20,7 +20,7 @@ struct LicenseSection: View {
                 }
             }
         } else {
-            SettingsSection("License", subtitle: "Bought Pro? Paste the key from your receipt email.") {
+            SettingsSection("License", subtitle: "Bought Waft+? Paste the key from your receipt email.") {
                 SettingsRow("License key", description: problem) {
                     InputField("License key", prompt: .verbatim("WFT1…"), text: $pro.draft)
                         .frame(width: 220)
@@ -37,7 +37,7 @@ struct LicenseSection: View {
     private func confirmRemoval() {
         let confirmation = Confirmation(
             message: String(localized: "Remove the license from this Mac?"),
-            detail: String(localized: "Pro features stop working here until you enter the key again."),
+            detail: String(localized: "Waft+ features stop working here until you enter the key again."),
             action: String(localized: "Remove License"),
         )
 

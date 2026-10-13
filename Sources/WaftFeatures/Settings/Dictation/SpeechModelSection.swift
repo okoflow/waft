@@ -82,7 +82,7 @@ private struct SpeechModelPreview: View {
             HStack(spacing: 3) {
                 ForEach(Array(barHeights.enumerated()), id: \.offset) { _, height in
                     Capsule()
-                        .fill(.tint)
+                        .fill(Palette.accent)
                         .frame(width: 4, height: height)
                 }
             }

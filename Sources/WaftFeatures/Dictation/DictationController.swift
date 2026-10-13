@@ -127,7 +127,7 @@ final class DictationController {
 
     private func reasonNotToRecord(for purpose: RecordingPurpose) -> String? {
         if purpose == .edit, !pro.isUnlocked {
-            return String(localized: "Editing by voice is part of Waft Pro.")
+            return String(localized: "Editing by voice is part of Waft+.")
         }
 
         if let message = speechModelController.state.notReadyMessage {

@@ -11,11 +11,11 @@ struct FieldChrome: ViewModifier {
         content
             .background(isFocused ? Palette.fieldFocused : Palette.field, in: shape)
             .overlay {
-                shape.strokeBorder(Color.accentColor.opacity(isFocused ? 1 : 0), lineWidth: 1)
+                shape.strokeBorder(isFocused ? Palette.accent : Palette.fieldBorder, lineWidth: isFocused ? 1 : 0.5)
             }
             .background {
                 RoundedRectangle(cornerRadius: cornerRadius + ringOffset, style: .continuous)
-                    .stroke(Color.accentColor.opacity(isFocused ? 0.25 : 0), lineWidth: Metrics.focusRingWidth)
+                    .stroke(Palette.accent.opacity(isFocused ? 0.25 : 0), lineWidth: Metrics.focusRingWidth)
                     .padding(-ringOffset)
             }
             .animation(Motion.fade, value: isFocused)

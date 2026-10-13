@@ -38,7 +38,7 @@ private struct StartDiagram: View {
             case .tap:
                 HStack(spacing: 0) {
                     Tap()
-                    Capsule().fill(.tint).frame(width: 46, height: 2)
+                    Capsule().fill(Palette.accent).frame(width: 46, height: 2)
                     Tap()
                 }
 
@@ -73,7 +73,7 @@ private struct Press: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: min(height, 22) / 4, style: .continuous)
-            .fill(.tint)
+            .fill(Palette.accent)
             .frame(width: width, height: height)
     }
 }
@@ -81,7 +81,7 @@ private struct Press: View {
 private struct Tap: View {
     var body: some View {
         Circle()
-            .fill(.tint)
+            .fill(Palette.accent)
             .frame(width: 10, height: 10)
     }
 }

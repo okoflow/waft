@@ -35,7 +35,7 @@ struct ModeEditorPage: View {
     }
 
     var body: some View {
-        SettingsPage(.verbatim(settings.settings.title(of: mode)), back: close) {
+        SettingsPage(.verbatim(settings.settings.title(of: mode)), needsWaftPlus: mode.usesAI, back: close) {
             if let custom {
                 Button("Delete Mode…", role: .destructive) { delete(custom) }
             } else {
@@ -142,6 +142,8 @@ private struct TryoutSection: View {
             Text(processed.text)
                 .font(.rowTitle)
                 .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentDirection(of: processed.text)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let fallback = processed.fallback {

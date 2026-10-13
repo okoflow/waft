@@ -40,7 +40,7 @@ package struct MenuContent: View {
 
         RecentMenu(history: model.history) { model.windows.showSettings(.history) }
 
-        Button(model.transcription.isLocked ? "Transcribe File (Pro)…" : "Transcribe File…") {
+        Button(model.transcription.isLocked ? "Transcribe File (Waft+)…" : "Transcribe File…") {
             model.windows.showTranscription()
         }
 
@@ -132,7 +132,7 @@ private struct ModeOption: View {
         let title = settings.title(of: mode)
 
         if pro.locks(mode) {
-            Text("\(title) (Pro)")
+            Text("\(title) (Waft+)")
         } else {
             Text(title)
         }
@@ -144,7 +144,7 @@ private struct LanguageMenu: View {
     let chooseLanguages: () -> Void
 
     private var languageNames: String {
-        settings.settings.languages.languages.map(\.displayName).joined(separator: ", ")
+        settings.settings.languages.languages.map(\.displayName).formatted(.list(type: .and, width: .narrow))
     }
 
     private var pinnedTitle: String {
@@ -208,7 +208,7 @@ private struct ProMenuItem: View {
     var body: some View {
         switch pro.access.status {
         case .trial, .expired:
-            Button("Unlock Waft Pro…", action: showPro)
+            Button("Unlock Waft+…", action: showPro)
 
         case .licensed, .beta:
             EmptyView()
