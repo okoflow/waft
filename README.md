@@ -108,11 +108,11 @@ first dictation.
 | [Troubleshooting](docs/troubleshooting.md) | What to do when something doesn't work, and what the menu and the HUD tell you |
 | [Architecture](docs/architecture.md) | How the code is organized, for contributors |
 
-## Waft Pro
+## Waft+
 
-Waft Pro adds the AI modes, editing by voice, file transcription, and the
+Waft+ adds the AI modes, editing by voice, file transcription, and the
 Accurate speech model for a single payment of $13.99. **Free while Waft is in
-beta.** [Waft Pro](docs/usage.md#waft-pro) covers the details.
+beta.** [Waft+](docs/usage.md#waft) covers the details.
 
 ## Contributing
 

@@ -40,7 +40,7 @@ describe how each handles the text.
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses from update checks and model downloads | `~/Library/Caches/com.okoflow.waft` |
 | Cookies and other HTTP data from update checks and model downloads | `~/Library/HTTPStorages/com.okoflow.waft` and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
-| Claude and OpenAI API keys and the Waft Pro license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
+| Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk.
 Edits by voice, and text that Waft kept out of a password field, stay out of

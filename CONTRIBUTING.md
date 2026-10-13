@@ -152,6 +152,12 @@ directive.
   `Packaging/Localizations`. After adding or changing one, run
   `make strings-update` and add it to every table; `make strings` fails until
   they match.
+- Interpolate numbers, sizes, prices, and keyboard shortcuts into a localized
+  string rather than typing them into it, so each language formats them and
+  Arabic and Hebrew keep them readable.
+- Arabic and Hebrew lay the interface out from right to left. Use leading and
+  trailing rather than left and right, `.forward` and `.backward` SF Symbols,
+  and `contentDirection(of:)` for text the user dictated.
 
 ## Tests
 
@@ -281,7 +287,7 @@ Commits follow
 | `hud` | The HUD |
 | `onboarding` | The setup guide |
 | `settings` | The menu and Settings |
-| `pro` | Waft Pro and licenses |
+| `pro` | Waft+ and licenses |
 | `ui` | The look shared across the interface, such as spacing, type, and animation |
 | `l10n` | The translations of the interface |
 | `release` | The version bump that prepares a release |

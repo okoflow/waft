@@ -21,8 +21,8 @@ setting named here, and [Privacy](privacy.md) lists the files Waft keeps.
 - **A function key does nothing.** <kbd>F1</kbd>–<kbd>F12</kbd> act as media
   keys unless **Use F1, F2, etc. keys as standard function keys** is on in
   System Settings › Keyboard › Keyboard Shortcuts › Function Keys.
-- **The HUD says "Editing by voice is part of Waft Pro."** Add a license in
-  Settings › Waft Pro.
+- **The HUD says "Editing by voice is part of Waft+."** Add a license in
+  Settings › Waft+.
 - **Permissions were lost after a rebuild.** Run `make signing` once, as
   [Development setup](../CONTRIBUTING.md#development-setup) describes,
   rebuild, remove the old Waft entries in System Settings › Privacy &
@@ -67,7 +67,7 @@ says why, with the name of your provider in place of *provider*:
 | --- | --- |
 | add your *provider* API key in Settings › AI Models | Add the key there |
 | choose a local server and model in Settings › AI Models | Choose both there. If both are set, the server answered that it has no such model: choose one it lists under **Model** |
-| AI modes need Waft Pro | Add a license in Settings › Waft Pro |
+| AI modes need Waft+ | Add a license in Settings › Waft+ |
 | you're offline | Nothing: the next dictation tries again |
 | the local server isn't running | Start Ollama, LM Studio, or your server, and click **Check** in Settings › AI Models |
 | *provider* didn't answer in time | The next dictation tries again. If it keeps happening, choose a quicker model; [The AI modes](how-it-works.md#the-ai-modes) lists each time limit |
