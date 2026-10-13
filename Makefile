@@ -4,10 +4,9 @@ STRINGS_DIR     = $(CURDIR)/.build/strings
 TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
 TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
 TESTING_LIBS    = $(TOOLCHAIN_DIR)/Library/Developer
-MARKDOWNLINT    = bunx --bun markdownlint-cli2@0.23.3
 GITLEAKS        = gitleaks git --no-banner --redact
 
-.PHONY: help build test bundle run release format check format-check lint shellcheck docs secrets secrets-staged periphery strings strings-update hooks signing clean
+.PHONY: help build test bundle run release format check format-check lint shellcheck spelling secrets secrets-staged periphery strings strings-update hooks signing clean
 
 help: ## List the targets
 	@awk 'BEGIN { FS = ":.*## " } /^[a-z0-9-]+:.*## / { printf "  %-14s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -33,7 +32,7 @@ format: ## Format Swift, shell, and the property lists
 	shfmt -w scripts
 	plutil -convert xml1 Packaging/Waft-Info.plist Packaging/Waft.entitlements
 
-check: format-check lint shellcheck docs secrets build test periphery strings ## Run every check
+check: format-check lint shellcheck spelling secrets build test periphery strings ## Run every check
 	@echo "make check: OK"
 
 format-check: ## Fail on any formatting difference
@@ -48,8 +47,7 @@ lint: ## Lint the Swift code
 shellcheck: ## Lint the shell scripts
 	shellcheck scripts/*.sh
 
-docs: ## Lint the Markdown and check the spelling
-	$(MARKDOWNLINT)
+spelling: ## Check the spelling in code and docs
 	typos
 
 secrets: ## Scan the git history for secrets

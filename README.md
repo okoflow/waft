@@ -25,7 +25,6 @@
   <a href="docs/privacy.md">Privacy</a>
 </p>
 
-<!-- markdownlint-disable-next-line MD034 -->
 https://github.com/user-attachments/assets/a6d44cd4-8c34-40dc-84f6-095fab844ae6
 
 **Hold <kbd>right ⌥</kbd>, speak, let go.** The text appears wherever you are

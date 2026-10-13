@@ -46,11 +46,10 @@ make hooks
 ```
 
 The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the
-checks use, Bun for markdownlint included. The hook runs `format-check`,
-`lint`, and `shellcheck` when the commit touches files they check, and
-always runs `docs` and `secrets-staged`, which scans the staged changes for
-secrets. `make help` lists every target, and [Releasing](docs/releasing.md)
-covers releases.
+checks use. The hook runs `format-check`, `lint`, and `shellcheck` when the
+commit touches files they check, and always runs `spelling` and
+`secrets-staged`, which scans the staged changes for secrets. `make help`
+lists every target, and [Releasing](docs/releasing.md) covers releases.
 
 ## Checks
 
@@ -65,7 +64,7 @@ Tools for Xcode 26 in a second job.
 | `format-check` | SwiftFormat, shfmt, plutil | Any formatting difference; `make format` fixes it |
 | `lint` | SwiftLint | Any violation, including comments in code, `??`, and an unbound `try?` |
 | `shellcheck` | ShellCheck | Any problem in `scripts/*.sh` |
-| `docs` | markdownlint, typos | Markdown style, and spelling mistakes in code and docs |
+| `spelling` | typos | Spelling mistakes in code and docs |
 | `secrets` | gitleaks | Secrets anywhere in the git history |
 | `build` | Swift | Any warning, since warnings are errors |
 | `test` | Swift Testing | A failing test |
