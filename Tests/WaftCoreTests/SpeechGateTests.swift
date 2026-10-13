@@ -21,8 +21,25 @@ struct SpeechGateTests {
         #expect(abs(SpeechGate.loudDuration(of: samples) - seconds) < 0.03)
     }
 
+    @Test(arguments: [(0.5, 0.0), (0.0, 0.5)])
+    func `hears speech that reaches an edge of the recording`(silenceBefore: Double, silenceAfter: Double) {
+        let samples = silence(silenceBefore) + tone(0.3, amplitude: 0.5) + silence(silenceAfter)
+
+        #expect(SpeechGate.containsSpeech(samples))
+        #expect(abs(SpeechGate.loudDuration(of: samples) - 0.3) < 0.03)
+    }
+
     @Test
-    func `ignores a burst shorter than a syllable run`() {
+    func `hears speech over a steady background noise`() {
+        let burst = silence(0.5) + tone(0.3, amplitude: 0.5) + silence(0.5)
+        let samples = zip(tone(1.3, amplitude: 0.01), burst).map(+)
+
+        #expect(SpeechGate.containsSpeech(samples))
+        #expect(abs(SpeechGate.loudDuration(of: samples) - 0.3) < 0.03)
+    }
+
+    @Test
+    func `ignores a burst shorter than the minimum speech duration`() {
         let samples = silence(0.5) + tone(0.1, amplitude: 0.5) + silence(0.5)
 
         #expect(!SpeechGate.containsSpeech(samples))

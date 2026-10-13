@@ -5,6 +5,7 @@ import WaftCore
 
 struct ChatCompletionsAPITests {
     private static let api = ChatCompletionsAPI()
+    private static let server = LocalServer(baseURL: "http://localhost:1234/v1/", model: "qwen")
 
     @Test(arguments: [LocalServer?.none, LocalServer(model: ""), LocalServer(baseURL: "", model: "qwen")])
     func `needs a configured local server`(server: LocalServer?) {
@@ -15,16 +16,18 @@ struct ChatCompletionsAPITests {
 
     @Test
     func `calls the chat completions endpoint of the server`() throws {
-        let request = RewriteRequest.cleanup(
-            "hello",
-            localServer: LocalServer(baseURL: "http://localhost:1234/v1/", model: "qwen"),
-        )
-        let call = try Self.api.call(for: request)
-        let body = try call.body.jsonObject()
-        let messages = try #require(body["messages"] as? [[String: String]])
+        let call = try Self.api.call(for: .cleanup("hello", localServer: Self.server))
 
         #expect(call.url.absoluteString == "http://localhost:1234/v1/chat/completions")
         #expect(call.headers.isEmpty)
+    }
+
+    @Test
+    func `sends the prompt to the model of the server`() throws {
+        let request = RewriteRequest.cleanup("hello", localServer: Self.server)
+        let body = try Self.api.call(for: request).body.jsonObject()
+        let messages = try #require(body["messages"] as? [[String: String]])
+
         #expect(body["model"] as? String == "qwen")
         #expect(body["temperature"] as? Double == 0.2)
         #expect(body["stream"] as? Bool == false)

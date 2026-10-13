@@ -1,8 +1,8 @@
 # Architecture
 
-A map of the code for contributors: where things live, the rules that keep
-them there, and the paths a dictation takes through them. [How it
-works](how-it-works.md) describes the same flow from the user's side.
+This page maps the code for contributors: where things live, the rules that
+keep them there, and the paths a dictation takes through them.
+[How it works](how-it-works.md) describes the same flow from the user's side.
 
 ## The problem
 
@@ -37,14 +37,16 @@ flowchart TD
 ## Code map
 
 **`WaftCore`** is grouped by domain. `Keyboard` holds `PushToTalk`, the state
-machine that turns key events into start, finish, and discard,
-`RecordingTriggers`, which runs one for the dictation key and one for the
-editing key, and `ReleaseWatchdog`. `Speech` holds `SpeechModelState`, whose
-transitions return the effects a controller runs, `SpeechGate`, and
-`SubtitleFormatter`. `Text` holds Light mode (`LightModeRules`,
-`VoiceCommands`) and `HallucinationFilter`.
-`Rewrite` holds `TranscriptProcessor`, which runs the dictionary, the mode,
-and the AI model under a deadline, `RewritePrompt`, and `RewriteValidator`.
+machine that turns key events into start, finish, and discard for the chosen
+`DictationStart`, `RecordingTriggers`, which runs one for the dictation key and
+one for the editing key, and `ReleaseWatchdog`. `Speech` holds
+`SpeechModelState`, whose transitions return the effects a controller runs,
+`SpeechGate`, and `SubtitleFormatter`. `Text` holds Light mode
+(`LightModeRules`, `VoiceCommands`) and `HallucinationFilter`. `Mode` holds the
+built-in modes, the `CustomMode`s a user writes, and the modes for each app;
+`Settings+Modes` lists them all and turns any mode into a `RewriteSetup`.
+`Rewrite` holds `TranscriptProcessor`, which runs the dictionary, the mode, and
+the AI model under a deadline, `RewritePrompt`, and `RewriteValidator`.
 `Insertion` decides whether and how to paste. `Storage` holds `ValueStore` and
 the lenient decoding that keeps one bad field from resetting the rest.
 
@@ -68,9 +70,10 @@ building blocks; `Support` holds helpers without a view.
 delegate, and `AppDependencies.live()`, the only place that names concrete
 adapters.
 
-**`Tests`** has a Swift Testing target for `WaftCore`, `WaftPlatform`, and
-`WaftFeatures`. The feature tests build the main-actor models with fakes of
-the `WaftCore` interfaces, so they run without the system.
+**`Tests`** has a Swift Testing target for `WaftCore`, `WaftSpeech`,
+`WaftPlatform`, and `WaftFeatures`. The speech tests cover the model files in
+a temporary folder, and the feature tests build the main-actor models with
+fakes of the `WaftCore` interfaces, so they run without the system.
 
 **`Packaging`** holds what the app bundle is made of besides the code:
 `Waft-Info.plist`, the entitlements, the icon, and the translations, plus the
@@ -117,7 +120,8 @@ flowchart LR
   singletons.
 - Declarations shared between modules are `package`, never `public`. With
   `InternalImportsByDefault`, an import is `package import` only when a
-  package declaration's signature uses the module's types.
+  package declaration's signature names the module's types. A type reached
+  through an alias, such as `CustomMode.ID` for `UUID`, doesn't count.
 - Rules that need no system access are value types in `WaftCore`.
 - Audio, dictated text, and clipboard contents never reach the log or the
   disk, apart from the history the user keeps.
@@ -171,8 +175,9 @@ others.
   `HesitationPattern`, stock phrases in `StockPhrase`, voice commands in
   `VoiceCommands`, the example sentence in `WhisperPrompt`, and a group in
   `Language+SoundAlike` if it sounds like another language.
-- **A mode.** Add a case to `Mode` with its title and summary. An AI mode
-  needs its instruction in `RewritePrompt`.
+- **A mode.** Add a case to `Mode` with its title, summary, and storage key,
+  and list it in `Mode.builtIn`. An AI mode needs its instruction in
+  `RewritePrompt`.
 - **An AI provider.** Describe its API in `WaftPlatform/Network` as a
   `RewriteAPI`, add a `CloudProvider` case and a `PerProvider` property, and
   wire it in `Rewriters.http`.

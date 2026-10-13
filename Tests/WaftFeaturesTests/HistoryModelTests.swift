@@ -85,12 +85,28 @@ struct HistoryModelTests {
     }
 
     @Test
-    func `copies an entry`() {
-        let clipboard = FakeClipboard()
-        let history = HistoryModel(store: FakeValueStore(history(entries: 1)), settings: settingsModel(), clipboard: clipboard)
-        history.copy(entry(1))
+    func `saves an added entry and drops the entries past the retention at its date`() {
+        let settings = settingsModel()
+        settings.settings.historyRetention = .day
+        let store = FakeValueStore(history(entries: 3))
+        let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
+        let added = DictationHistory.Entry(date: Self.start.addingTimeInterval(2 * 86400), text: "Later", mode: .clean, app: nil)
+        history.add(added)
 
-        #expect(clipboard.copied == ["Entry 1"])
+        #expect(history.history.entries == [added])
+        #expect(store.value == history.history)
+    }
+
+    @Test
+    func `trims the stored history to the limit at launch and saves it`() {
+        let settings = settingsModel()
+        settings.settings.historyLimit = 100
+        let store = FakeValueStore(history(entries: 120))
+        let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
+
+        #expect(history.history.entries.first?.text == "Entry 21")
+        #expect(history.history.entries.count == 100)
+        #expect(store.value == history.history)
     }
 
     @Test
@@ -112,10 +128,10 @@ struct HistoryModelTests {
     }
 
     private func settingsModel() -> SettingsModel {
-        var settings = Settings(languages: .preferred(by: []))
-        settings.historyRetention = .forever
+        let settings = SettingsModel.inMemory()
+        settings.settings.historyRetention = .forever
 
-        return SettingsModel(store: FakeValueStore(settings), loginItem: FakeLoginItem(), audioInputs: FakeAudioInputProvider())
+        return settings
     }
 
     private func history(entries count: Int) -> DictationHistory {
@@ -135,13 +151,5 @@ struct HistoryModelTests {
             mode: .light,
             app: nil,
         )
-    }
-}
-
-private final class FakeClipboard: Clipboard {
-    private(set) var copied: [String] = []
-
-    func copy(_ text: String) {
-        copied.append(text)
     }
 }

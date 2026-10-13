@@ -73,12 +73,12 @@ struct VocabularyTests {
         #expect(Self.vocabulary.correcting(text, language: .korean) == expected)
     }
 
-    @Test(arguments: [("My email.", "me@example.com"), ("sign-off", nil), ("Sign off!", "Best regards,\nAnn")])
-    func `expands a snippet only when it is the whole dictation`(text: String, expected: String?) {
+    @Test(arguments: [("My email.", "me@example.com"), ("Sign off!", "Best regards,\nAnn")])
+    func `expands a snippet only when it is the whole dictation`(text: String, expected: String) {
         #expect(Self.vocabulary.snippet(matchingWhole: text, language: .english) == expected)
     }
 
-    @Test(arguments: ["send it to my email", "", "...", "email"])
+    @Test(arguments: ["send it to my email", "", "...", "email", "sign-off"])
     func `finds no snippet for other dictations`(text: String) {
         #expect(Self.vocabulary.snippet(matchingWhole: text, language: .english) == nil)
     }
@@ -88,11 +88,6 @@ struct VocabularyTests {
         let expanded = Self.vocabulary.expandingSnippets(in: "send it to my email, then sign off", language: .english)
 
         #expect(expanded == "send it to me@example.com, then Best regards,\nAnn")
-    }
-
-    @Test
-    func `lists the terms for the speech prompt`() {
-        #expect(Self.vocabulary.promptTerms == ["Kubernetes", "New York", "York", "C++", "Kakao", "Алёна"])
     }
 
     @Test

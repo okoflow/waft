@@ -59,7 +59,7 @@ package final class PasteboardInserter: TextInserter {
     }
 
     private func paste(_ text: String, releasing key: PushToTalkKey) async -> InsertionOutcome {
-        let snapshot = await Task.detached { PasteboardSnapshot.take() }.value
+        let snapshot = await Task.detached { PasteboardSnapshot.take(from: .general) }.value
         let lazyText = LazyPasteboardText(text)
         let item = NSPasteboardItem()
         item.setDataProvider(lazyText, forTypes: [.string])
@@ -95,7 +95,7 @@ package final class PasteboardInserter: TextInserter {
         case .restore where NSPasteboard.general.changeCount != changeCount:
             Logger.insertion.notice("Left the clipboard as it is: it changed during the paste")
         case .restore:
-            snapshot.restore()
+            snapshot.restore(to: .general)
         }
     }
 }

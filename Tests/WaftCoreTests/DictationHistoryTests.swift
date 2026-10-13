@@ -25,10 +25,12 @@ struct DictationHistoryTests {
         (HistoryRetention.day, ["Today."]),
         (.week, ["Three days ago.", "Today."]),
         (.month, ["Three weeks ago.", "Three days ago.", "Today."]),
-        (.forever, ["Two months ago.", "Three weeks ago.", "Three days ago.", "Today."]),
+        (.year, ["Two months ago.", "Three weeks ago.", "Three days ago.", "Today."]),
+        (.forever, ["Two years ago.", "Two months ago.", "Three weeks ago.", "Three days ago.", "Today."]),
     ])
     func `drops entries older than the retention`(retention: HistoryRetention, kept: [String]) {
         var history = DictationHistory()
+        history.add(entry("Two years ago.", minutesAgo: 60 * 24 * 800))
         history.add(entry("Two months ago.", minutesAgo: 60 * 24 * 61))
         history.add(entry("Three weeks ago.", minutesAgo: 60 * 24 * 21))
         history.add(entry("Three days ago.", minutesAgo: 60 * 24 * 3))

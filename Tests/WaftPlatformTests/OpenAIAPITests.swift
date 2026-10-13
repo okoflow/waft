@@ -15,16 +15,16 @@ struct OpenAIAPITests {
     }
 
     @Test
-    func `sends the prompt without storing it`() throws {
-        let request = RewriteRequest.cleanup(String(repeating: "word ", count: 200))
+    func `sends the prompt without storing it or reasoning`() throws {
+        let request = RewriteRequest.cleanup("um hello")
         let body = try Self.api.call(for: request).body.jsonObject()
 
+        #expect(body["model"] is String)
         #expect(body["instructions"] as? String == RewritePrompt.system(for: request))
         #expect(body["input"] as? String == RewritePrompt.userMessage(for: request))
-        #expect(body["max_output_tokens"] as? Int == 2000)
+        #expect(body["max_output_tokens"] as? Int == request.outputTokenBudget)
         #expect(body["store"] as? Bool == false)
-        #expect((body["reasoning"] as? [String: String])?["effort"] != nil)
-        #expect(body["model"] is String)
+        #expect((body["reasoning"] as? [String: String])?["effort"] == "none")
     }
 
     @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-test", isBroken: true)])

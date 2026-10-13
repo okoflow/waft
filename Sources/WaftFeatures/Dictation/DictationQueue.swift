@@ -19,7 +19,7 @@ final class DictationQueue {
     private let inserter: any TextInserter
     private let clipboard: any Clipboard
     private let history: HistoryModel
-    private let stats: StatsModel
+    private let statistics: StatisticsModel
     private let hud: HUDController
     private let continuation: AsyncStream<DictationJob>.Continuation
 
@@ -33,7 +33,7 @@ final class DictationQueue {
         inserter: any TextInserter,
         clipboard: any Clipboard,
         history: HistoryModel,
-        stats: StatsModel,
+        statistics: StatisticsModel,
         hud: HUDController,
     ) {
         self.transcriber = transcriber
@@ -41,7 +41,7 @@ final class DictationQueue {
         self.inserter = inserter
         self.clipboard = clipboard
         self.history = history
-        self.stats = stats
+        self.statistics = statistics
         self.hud = hud
 
         let (jobs, continuation) = AsyncStream.makeStream(of: DictationJob.self)
@@ -200,7 +200,7 @@ final class DictationQueue {
             app: job.target.bundleIdentifier,
         )
 
-        stats.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
+        statistics.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
         history.add(entry)
     }
 
@@ -209,7 +209,7 @@ final class DictationQueue {
             """
             Recognized \(transcript.text.count) characters of \(transcript.language.rawValue, privacy: .public) \
             in \(transcript.detectionDuration + transcript.decodingDuration, privacy: .public); \
-            mode \(job.mode.rawValue, privacy: .public) ran as \(processed.mode.rawValue, privacy: .public), \
+            mode \(job.mode.storageKey, privacy: .public) ran as \(processed.mode.storageKey, privacy: .public), \
             fallback \(Self.describe(processed.fallback), privacy: .public)
             """,
         )

@@ -9,16 +9,24 @@ final class SpeechModelController {
 
     @ObservationIgnored var onReady: (() -> Void)?
 
+    @ObservationIgnored private var downloadTask: Task<Void, Never>?
+
     private let transcriber: any Transcriber
     private let settings: SettingsModel
+    private let pro: ProModel
 
     var modelDirectory: URL {
-        transcriber.modelDirectory
+        transcriber.modelDirectory(for: chosenModel)
     }
 
-    init(transcriber: any Transcriber, settings: SettingsModel) {
+    private var chosenModel: SpeechModel {
+        settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
+    }
+
+    init(transcriber: any Transcriber, settings: SettingsModel, pro: ProModel) {
         self.transcriber = transcriber
         self.settings = settings
+        self.pro = pro
     }
 
     func retry() {
@@ -27,14 +35,25 @@ final class SpeechModelController {
 
     func start() {
         Task {
-            let isInstalled = await transcriber.isModelInstalled()
+            let model = chosenModel
+            let isInstalled = await transcriber.isModelInstalled(model)
 
-            apply(.started(isInstalled: isInstalled))
+            apply(.started(model, isInstalled: isInstalled))
         }
     }
 
     func reload() {
         apply(.reloadRequested)
+    }
+
+    func modelDidChange() {
+        Task {
+            let model = chosenModel
+            let isInstalled = await transcriber.isModelInstalled(model)
+            guard chosenModel == model else { return }
+
+            apply(.chosen(model, isInstalled: isInstalled))
+        }
     }
 
     private func apply(_ event: SpeechModelState.Event) {
@@ -50,15 +69,23 @@ final class SpeechModelController {
 
     private func perform(_ effect: SpeechModelState.Effect) async {
         switch effect {
-        case .deleteModel: await deleteModel()
-        case .download: await download()
-        case .load: await load()
+        case .cancelDownload: await cancelDownload()
+        case let .deleteModel(model): await deleteModel(model)
+        case let .download(model): await download(model)
+        case let .load(model): await load(model)
         }
     }
 
-    private func deleteModel() async {
+    private func cancelDownload() async {
+        guard let downloadTask else { return }
+
+        downloadTask.cancel()
+        await downloadTask.value
+    }
+
+    private func deleteModel(_ model: SpeechModel) async {
         do {
-            try await transcriber.deleteModel()
+            try await transcriber.deleteModel(model)
         } catch {
             let cause = error as NSError
             Logger.speechModel
@@ -66,29 +93,38 @@ final class SpeechModelController {
         }
     }
 
-    private func download() async {
+    private func download(_ model: SpeechModel) async {
+        let task = Task { await fetch(model) }
+        downloadTask = task
+
+        await task.value
+    }
+
+    private func fetch(_ model: SpeechModel) async {
         do {
-            try await transcriber.downloadModel { [weak self] fraction in
-                Task { @MainActor in self?.apply(.downloadProgressed(fraction)) }
+            try await transcriber.downloadModel(model) { [weak self] fraction in
+                Task { @MainActor in self?.apply(.downloadProgressed(model, fraction)) }
             }
 
-            apply(.downloaded)
+            apply(.downloaded(model))
         } catch {
+            guard !Task.isCancelled else { return }
+
             let cause = error as NSError
             Logger.speechModel.error("Download failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
-            apply(.failed(error.localizedDescription))
+            apply(.failed(model, error.localizedDescription))
         }
     }
 
-    private func load() async {
+    private func load(_ model: SpeechModel) async {
         do {
-            let duration = try await transcriber.loadModel(for: settings.settings.languages.languages)
+            let duration = try await transcriber.loadModel(model, for: settings.settings.languages.languages)
 
             Logger.speechModel
                 .info("Loaded the speech model in \(duration.formatted(.units(allowed: [.seconds])), privacy: .public)")
 
-            apply(.loaded)
+            apply(.loaded(model))
 
             if state.isReady {
                 onReady?()
@@ -97,7 +133,7 @@ final class SpeechModelController {
             let cause = error as NSError
             Logger.speechModel.error("Load failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
-            apply(.failed(error.localizedDescription))
+            apply(.failed(model, error.localizedDescription))
         }
     }
 }

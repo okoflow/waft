@@ -33,7 +33,7 @@ struct RewriteFallbackTests {
         (ModelProvider.localServer, "choose a local server and model in Settings › AI Models"),
         (.cloud(.claude), "Claude isn't available"),
     ])
-    func `points an unavailable local server to the settings`(provider: ModelProvider, reason: String) {
+    func `explains being unavailable by provider`(provider: ModelProvider, reason: String) {
         #expect(RewriteFallback.unavailable.reason(for: provider) == reason)
     }
 }

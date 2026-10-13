@@ -49,12 +49,12 @@ private struct ProHero: View {
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
 
-        HStack(spacing: 16) {
+        HStack(spacing: Metrics.rowSpacing) {
             AppIcon(size: 64)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("Waft Pro")
-                    .font(.system(size: 22, weight: .bold))
+                    .font(.proTitle)
 
                 Text(status)
                     .font(.rowTitle)
@@ -69,7 +69,7 @@ private struct ProHero: View {
             }
         }
         .foregroundStyle(.white)
-        .padding(20)
+        .padding(Metrics.heroCardPadding)
         .background(Palette.proGradient, in: shape)
     }
 }
@@ -78,9 +78,15 @@ private struct ProBenefit {
     static let all = [
         ProBenefit(
             symbolName: "text.badge.checkmark",
-            tint: .purple,
+            tint: .indigo,
             title: "Clean and Formal",
-            detail: "Fillers and false starts go; grammar, punctuation, and tone get fixed.",
+            detail: "Removes fillers and false starts, and fixes grammar and tone.",
+        ),
+        ProBenefit(
+            symbolName: SettingsPane.writing.symbolName,
+            tint: SettingsPane.writing.tint,
+            title: "Your own modes",
+            detail: "Make modes with your own instructions, or tune the built-in ones.",
         ),
         ProBenefit(
             symbolName: "globe",
@@ -89,8 +95,8 @@ private struct ProBenefit {
             detail: "Speak any of 45 languages and get another, one way or both.",
         ),
         ProBenefit(
-            symbolName: "cpu.fill",
-            tint: .teal,
+            symbolName: SettingsPane.aiModels.symbolName,
+            tint: SettingsPane.aiModels.tint,
             title: "Any AI model",
             detail: "Claude or OpenAI with your own key, or a local model on your Mac.",
         ),
@@ -107,10 +113,10 @@ private struct ProBenefit {
             detail: "Recordings and videos become text and subtitles.",
         ),
         ProBenefit(
-            symbolName: "slider.horizontal.3",
-            tint: .gray,
-            title: "Your own instructions",
-            detail: "Tune Clean, Formal, and Translate to the way you write.",
+            symbolName: "scope",
+            tint: .green,
+            title: "Accurate speech model",
+            detail: "Recognizes speech more accurately, especially outside English.",
         ),
     ]
 

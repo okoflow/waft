@@ -7,8 +7,8 @@ struct PasteboardSnapshot: Sendable {
     private let items: [[String: Data]]
     private let isWaftItem: Bool
 
-    static func take() -> PasteboardSnapshot {
-        guard let pasteboardItems = NSPasteboard.general.pasteboardItems else {
+    static func take(from pasteboard: NSPasteboard) -> PasteboardSnapshot {
+        guard let pasteboardItems = pasteboard.pasteboardItems else {
             return PasteboardSnapshot(plan: .restore, items: [], isWaftItem: false)
         }
 
@@ -40,9 +40,7 @@ struct PasteboardSnapshot: Sendable {
         )
     }
 
-    func restore() {
-        let pasteboard = NSPasteboard.general
-
+    func restore(to pasteboard: NSPasteboard) {
         if isWaftItem {
             pasteboard.prepareForNewContents(with: .currentHostOnly)
         } else {

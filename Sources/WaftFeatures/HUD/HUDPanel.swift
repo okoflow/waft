@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-final class HUDPanel: NSPanel {
+final class HUDPanel: NSPanel, HUDWindow {
     static let shadowRoom: CGFloat = 18
 
     private static let canvasSize = CGSize(width: 720, height: 220)

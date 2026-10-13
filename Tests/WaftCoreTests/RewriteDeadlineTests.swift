@@ -15,7 +15,7 @@ struct RewriteDeadlineTests {
         let start = clock.now
 
         await #expect(throws: RewriteError.timeout) {
-            try await RewriteDeadline.run(.milliseconds(20)) { () async throws(RewriteError) -> String in
+            try await RewriteDeadline.run(.zero) { () async throws(RewriteError) -> String in
                 do {
                     try await Task.sleep(for: .seconds(10))
                 } catch {

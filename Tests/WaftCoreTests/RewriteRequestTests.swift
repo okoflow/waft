@@ -7,6 +7,11 @@ struct RewriteRequestTests {
         #expect(RewriteRequest.cleanup(String(repeating: "a", count: length)).outputTokenBudget == budget)
     }
 
+    @Test(arguments: [(10, 1024), (256, 1024), (1000, 4000), (2000, 4096)])
+    func `budgets more output tokens for a custom mode from the transcript`(length: Int, budget: Int) {
+        #expect(RewriteRequest.custom(String(repeating: "a", count: length)).outputTokenBudget == budget)
+    }
+
     @Test(arguments: [(10, 1024), (1000, 2000), (3000, 4096)])
     func `budgets output tokens for an edit from the selection`(length: Int, budget: Int) {
         let request = RewriteRequest.edit(

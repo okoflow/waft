@@ -7,10 +7,10 @@ extension Rewriters {
 
         return Rewriters(
             cloud: PerProvider(
-                claude: HTTPRewriter(api: AnthropicAPI(apiKeyStore: apiKeys.claude), session: session),
-                openAI: HTTPRewriter(api: OpenAIAPI(apiKeyStore: apiKeys.openAI), session: session),
+                claude: HTTPRewriter(api: AnthropicAPI(apiKeyStore: apiKeys.claude), transport: session),
+                openAI: HTTPRewriter(api: OpenAIAPI(apiKeyStore: apiKeys.openAI), transport: session),
             ),
-            localServer: HTTPRewriter(api: ChatCompletionsAPI(), session: session),
+            localServer: HTTPRewriter(api: ChatCompletionsAPI(), transport: session),
         )
     }
 }

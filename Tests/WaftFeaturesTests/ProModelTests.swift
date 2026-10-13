@@ -31,11 +31,10 @@ struct ProModelTests {
         #expect(keyStore.value == Self.key)
         #expect(pro.draft.isEmpty)
         #expect(pro.activationProblem == nil)
-        #expect(pro.isUnlocked)
     }
 
     @Test(arguments: [("WFT1.not-a-key", ProModel.ActivationProblem.unreadable), (forgedKey, .invalid)])
-    func `reports a draft that is not a valid key`(draft: String, problem: ProModel.ActivationProblem) {
+    func `reports a draft that is not a valid key until the draft changes`(draft: String, problem: ProModel.ActivationProblem) {
         let keyStore = FakeValueStore<String>()
         let pro = model(keyStore: keyStore)
         pro.draft = draft
@@ -57,6 +56,26 @@ struct ProModelTests {
     }
 
     @Test
+    func `reports each change of access on activation and deactivation`() {
+        var changeCount = 0
+        let pro = model()
+        pro.onAccessChange = { changeCount += 1 }
+        pro.draft = Self.key
+        pro.activateDraft()
+
+        #expect(changeCount == 1)
+
+        pro.draft = Self.forgedKey
+        pro.activateDraft()
+
+        #expect(changeCount == 1)
+
+        pro.deactivate()
+
+        #expect(changeCount == 2)
+    }
+
+    @Test
     func `removes the key on deactivation`() {
         let keyStore = FakeValueStore(Self.key)
         let pro = model(keyStore: keyStore)
@@ -75,45 +94,47 @@ struct ProModelTests {
         #expect(!pro.showsLicenseSection)
     }
 
-    @Test
-    func `opens the purchase page`() {
-        let urlOpener = FakeURLOpener()
-        model(urlOpener: urlOpener).purchase()
+    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    func `saves the trial start on first launch once the beta ends`() {
+        let trialStore = FakeValueStore<Date>()
+        _ = model(trialStore: trialStore)
 
-        #expect(urlOpener.opened.map(\.absoluteString) == ["https://waft.okoflow.com/pro"])
+        #expect(trialStore.value != nil)
+    }
+
+    @Test
+    func `ends the trial from today when the stored start lies in the future`() {
+        let pro = model(trialStore: FakeValueStore(Date().addingTimeInterval(30 * 86400)))
+
+        #expect(pro.trialEnds == ProAccess.trialEnd(startedOn: Date()))
+    }
+
+    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
+    func `locks no mode and no speech model during the beta`() {
+        let pro = model(trialStore: FakeValueStore(Date.distantPast))
+
+        #expect(!(Mode.builtIn + [.custom(UUID())]).contains { pro.locks($0) })
+        #expect(!SpeechModel.allCases.contains { pro.locks($0) })
+    }
+
+    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    func `locks the AI modes and the accurate model without a license once the beta ends`() {
+        let pro = model(trialStore: FakeValueStore(Date.distantPast))
+        let custom = Mode.custom(UUID())
+
+        #expect((Mode.builtIn + [custom]).filter { pro.locks($0) } == [.clean, .formal, .translate, custom])
+        #expect(SpeechModel.allCases.filter { pro.locks($0) } == [.accurate])
     }
 
     private func model(
         keyStore: FakeValueStore<String> = FakeValueStore(),
         trialStore: FakeValueStore<Date> = FakeValueStore(),
-        urlOpener: FakeURLOpener = FakeURLOpener(),
     ) -> ProModel {
         ProModel(
             keyStore: keyStore,
             trialStore: trialStore,
             checker: FakeLicenseSignatureChecker(signature: Self.signature, payload: Self.payload),
-            urlOpener: urlOpener,
+            urlOpener: FakeURLOpener(),
         )
     }
-}
-
-private nonisolated struct FakeLicenseSignatureChecker: LicenseSignatureChecking {
-    let signature: Data
-    let payload: Data
-
-    func isValid(_ signature: Data, for payload: Data) -> Bool {
-        guard signature == self.signature else { return false }
-
-        return payload == self.payload
-    }
-}
-
-private final class FakeURLOpener: URLOpener {
-    private(set) var opened: [URL] = []
-
-    func open(_ url: URL) {
-        opened.append(url)
-    }
-
-    func reveal(_: URL) {}
 }

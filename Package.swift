@@ -60,6 +60,11 @@ let package = Package(
             swiftSettings: strict,
         ),
         .testTarget(
+            name: "WaftSpeechTests",
+            dependencies: ["WaftCore", "WaftSpeech"],
+            swiftSettings: strict,
+        ),
+        .testTarget(
             name: "WaftPlatformTests",
             dependencies: ["WaftCore", "WaftPlatform"],
             swiftSettings: strict,

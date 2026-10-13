@@ -31,7 +31,7 @@ enum DictationOutcome {
             )
 
         case .noSpeech:
-            HUDMessage(kind: .info, title: String(localized: "Didn't catch that"))
+            HUDMessage(kind: .information, title: String(localized: "Didn't catch that"))
 
         case let .failed(reason):
             HUDMessage(kind: .warning, title: String(localized: "Transcription failed"), detail: reason)

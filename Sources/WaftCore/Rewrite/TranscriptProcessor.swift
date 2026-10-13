@@ -5,6 +5,17 @@ package struct TranscriptProcessor: Sendable {
         self.rewriters = rewriters
     }
 
+    private static func kind(for mode: Mode, language: Language, setup: RewriteSetup) -> RewriteRequest.Kind {
+        switch mode {
+        case .custom:
+            .custom(instructions: setup.instructions)
+        case .translate:
+            .cleanup(instructions: setup.instructions, target: setup.translation.target(forSpoken: language))
+        case .raw, .light, .clean, .formal:
+            .cleanup(instructions: setup.instructions, target: nil)
+        }
+    }
+
     package func process(
         _ transcript: Transcript,
         mode: Mode,
@@ -56,7 +67,7 @@ package struct TranscriptProcessor: Sendable {
         case .light:
             return light(text, language: language)
 
-        case .clean, .formal, .translate:
+        case .clean, .formal, .translate, .custom:
             guard allowsAI else { return light(text, language: language, fallback: .needsPro) }
 
             return await cleanUp(text, mode: mode, language: language, setup: setup)
@@ -64,11 +75,10 @@ package struct TranscriptProcessor: Sendable {
     }
 
     private func cleanUp(_ text: String, mode: Mode, language: Language, setup: RewriteSetup) async -> ProcessedText {
-        let target = mode == .translate ? setup.translation.target(forSpoken: language) : nil
         let request = RewriteRequest(
             text: text,
             language: language,
-            kind: .cleanup(instructions: setup.instructions, target: target),
+            kind: Self.kind(for: mode, language: language, setup: setup),
             localServer: setup.serverInUse,
             deadline: setup.provider.deadline,
         )

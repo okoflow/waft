@@ -6,13 +6,22 @@ extension RewriteRequest {
         language: Language = .english,
         target: Language? = nil,
         instructions: String = "Clean.",
-        localServer: LocalServer? = nil,
     ) -> RewriteRequest {
         RewriteRequest(
             text: text,
             language: language,
             kind: .cleanup(instructions: instructions, target: target),
-            localServer: localServer,
+            localServer: nil,
+            deadline: .seconds(3),
+        )
+    }
+
+    static func custom(_ text: String, language: Language = .english, instructions: String = "Reply.") -> RewriteRequest {
+        RewriteRequest(
+            text: text,
+            language: language,
+            kind: .custom(instructions: instructions),
+            localServer: nil,
             deadline: .seconds(3),
         )
     }

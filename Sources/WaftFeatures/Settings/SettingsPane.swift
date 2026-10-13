@@ -2,16 +2,14 @@ import Foundation
 
 package enum SettingsPane: CaseIterable {
     case overview
+    case history
+    case dictionary
     case general
     case dictation
     case writing
     case aiModels
-    case dictionary
-    case history
     case pro
     case about
-
-    static let sidebarPanes: [SettingsPane] = [.overview, .general, .dictation, .writing, .aiModels, .dictionary, .history]
 
     var title: String {
         switch self {
@@ -47,10 +45,10 @@ package enum SettingsPane: CaseIterable {
         case .general, .about: .gray
         case .dictation: .red
         case .writing: .teal
-        case .aiModels: .blue
+        case .aiModels: .purple
         case .dictionary: .orange
         case .history: .indigo
-        case .pro: .purple
+        case .pro: .ocean
         }
     }
 }

@@ -14,6 +14,8 @@ final class ProModel {
 
     private static let purchaseURL = URL(literal: "https://waft.okoflow.com/pro")
 
+    @ObservationIgnored var onAccessChange: (() -> Void)?
+
     private(set) var license: License?
     private(set) var activationProblem: ActivationProblem?
 
@@ -45,7 +47,7 @@ final class ProModel {
     }
 
     var canActivateDraft: Bool {
-        !trimmedDraft.isEmpty
+        !draft.isBlank
     }
 
     private var trimmedDraft: String {
@@ -107,15 +109,23 @@ final class ProModel {
         keyStore.write(trimmedDraft)
         license = key.license
         draft = ""
+
+        onAccessChange?()
     }
 
     func deactivate() {
         keyStore.remove()
         license = nil
+
+        onAccessChange?()
     }
 
     func locks(_ mode: Mode) -> Bool {
         mode.usesAI && !isUnlocked
+    }
+
+    func locks(_ model: SpeechModel) -> Bool {
+        model.needsPro && !isUnlocked
     }
 
     func purchase() {

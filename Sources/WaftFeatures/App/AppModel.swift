@@ -6,10 +6,10 @@ package final class AppModel {
     package let windows = WindowPresenter()
 
     let permissions: PermissionMonitor
-    let speechModel: SpeechModelController
+    let speechModelController: SpeechModelController
     let modeSwitcher: ModeSwitcher
     let history: HistoryModel
-    let stats: StatsModel
+    let statistics: StatisticsModel
     let vocabulary: VocabularyModel
     let apiKeys: PerProvider<APIKeyModel>
     let localModels: LocalModelsModel
@@ -21,6 +21,7 @@ package final class AppModel {
     let updates: UpdatesModel
     let interfaceLanguage: InterfaceLanguageModel
     let queue: DictationQueue
+    let modeTryout: ModeTryoutModel
 
     private let hud: HUDController
     private let keyMonitor: KeyMonitorController
@@ -37,7 +38,7 @@ package final class AppModel {
             return .needsPermission
         }
 
-        guard speechModel.state.isReady else { return .speechModel(speechModel.state) }
+        guard speechModelController.state.canTranscribe else { return .speechModel(speechModelController.state) }
 
         return .ready
     }
@@ -53,21 +54,22 @@ package final class AppModel {
     package init(dependencies: AppDependencies) {
         settings = Self.makeSettings(dependencies)
         permissions = PermissionMonitor(provider: dependencies.permissions)
-        speechModel = SpeechModelController(transcriber: dependencies.transcriber, settings: settings)
+        pro = Self.makePro(dependencies)
+        speechModelController = SpeechModelController(transcriber: dependencies.transcriber, settings: settings, pro: pro)
         hud = HUDController()
         keyRecorder = KeyRecorder()
-        pro = Self.makePro(dependencies)
-        stats = StatsModel(store: dependencies.statsStore)
+        statistics = StatisticsModel(store: dependencies.statisticsStore)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
-        queue = Self.makeQueue(dependencies, history: history, stats: stats, hud: hud)
+        queue = Self.makeQueue(dependencies, history: history, statistics: statistics, hud: hud)
+        modeTryout = ModeTryoutModel(rewriters: dependencies.rewriters, settings: settings, pro: pro)
         keyMonitor = KeyMonitorController(monitor: dependencies.keyEventMonitor)
         dictation = DictationController(
             keyEventMonitor: dependencies.keyEventMonitor,
             recordings: Self.makeRecordings(dependencies, settings: settings, hud: hud),
             settings: settings,
             permissions: permissions,
-            speechModel: speechModel,
+            speechModelController: speechModelController,
             vocabulary: vocabulary,
             keyRecorder: keyRecorder,
             pro: pro,
@@ -78,7 +80,12 @@ package final class AppModel {
         localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
         frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
         onboarding = OnboardingModel(permissions: permissions)
-        transcription = Self.makeTranscription(dependencies, speechModel: speechModel, settings: settings, pro: pro)
+        transcription = Self.makeTranscription(
+            dependencies,
+            speechModelController: speechModelController,
+            settings: settings,
+            pro: pro,
+        )
         updates = UpdatesModel(updater: dependencies.updater)
         interfaceLanguage = InterfaceLanguageModel(store: dependencies.interfaceLanguageStore, lifecycle: dependencies.lifecycle)
         inserter = dependencies.inserter
@@ -88,95 +95,15 @@ package final class AppModel {
         connectModels()
     }
 
-    private static func makeSettings(_ dependencies: AppDependencies) -> SettingsModel {
-        SettingsModel(
-            store: dependencies.settingsStore,
-            loginItem: dependencies.loginItem,
-            audioInputs: dependencies.audioInputs,
-        )
-    }
-
-    private static func makePro(_ dependencies: AppDependencies) -> ProModel {
-        ProModel(
-            keyStore: dependencies.licenseStore,
-            trialStore: dependencies.trialStore,
-            checker: dependencies.licenseChecker,
-            urlOpener: dependencies.urlOpener,
-        )
-    }
-
-    private static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
-        VocabularyModel(
-            store: dependencies.vocabularyStore,
-            fileURL: dependencies.vocabularyFile,
-            urlOpener: dependencies.urlOpener,
-        )
-    }
-
-    private static func makeQueue(
-        _ dependencies: AppDependencies,
-        history: HistoryModel,
-        stats: StatsModel,
-        hud: HUDController,
-    ) -> DictationQueue {
-        DictationQueue(
-            transcriber: dependencies.transcriber,
-            rewriters: dependencies.rewriters,
-            inserter: dependencies.inserter,
-            clipboard: dependencies.clipboard,
-            history: history,
-            stats: stats,
-            hud: hud,
-        )
-    }
-
-    private static func makeRecordings(
-        _ dependencies: AppDependencies,
-        settings: SettingsModel,
-        hud: HUDController,
-    ) -> RecordingController {
-        RecordingController(
-            recorder: dependencies.recorder,
-            focusTracker: dependencies.focusTracker,
-            keyboardState: dependencies.keyboardState,
-            sounds: dependencies.sounds,
-            settings: settings,
-            hud: hud,
-        )
-    }
-
-    private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
-        PerProvider(
-            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
-            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
-        )
-    }
-
-    private static func makeTranscription(
-        _ dependencies: AppDependencies,
-        speechModel: SpeechModelController,
-        settings: SettingsModel,
-        pro: ProModel,
-    ) -> FileTranscriptionModel {
-        FileTranscriptionModel(
-            transcriber: dependencies.transcriber,
-            decoder: dependencies.mediaDecoder,
-            speechModel: speechModel,
-            settings: settings,
-            pro: pro,
-            clipboard: dependencies.clipboard,
-        )
-    }
-
     package func start() {
         permissions.startMonitoring()
-        speechModel.start()
+        speechModelController.start()
         keyMonitor.start()
         dictation.start()
         modeSwitcher.start()
         frontmostApp.start()
         updates.start()
-        hud.makePanel()
+        hud.prepareWindow()
 
         if needsSetup {
             showSetup()
@@ -208,10 +135,12 @@ package final class AppModel {
     }
 
     private func connectModels() {
-        settings.onLanguagesChange = { [speechModel] in speechModel.reload() }
+        settings.onLanguagesChange = { [speechModelController] in speechModelController.reload() }
+        settings.onSpeechModelChange = { [speechModelController] in speechModelController.modelDidChange() }
+        pro.onAccessChange = { [speechModelController] in speechModelController.modelDidChange() }
         settings.onHistoryLimitsChange = { [history] in history.keepWithinLimits() }
         permissions.onChange = { [weak self] in self?.permissionsDidChange() }
-        speechModel.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
+        speechModelController.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
         updates.onShowingUpdateChange = { [weak self] in self?.windows.updateActivationPolicy() }
     }
@@ -222,14 +151,94 @@ package final class AppModel {
     }
 
     private func speechModelDidBecomeReady() {
-        let key = settings.settings.pushToTalkKey.shortTitle
-
-        hud.show(HUDMessage(kind: .info, title: String(localized: "Ready: hold \(key) and speak")))
+        hud.show(HUDMessage(kind: .information, title: AppStatus.readyMessage(in: settings.settings)))
     }
 
     private func finishOnboarding() {
         settings.settings.hasCompletedSetup = true
 
         windows.closeOnboarding()
+    }
+}
+
+extension AppModel {
+    private static func makeSettings(_ dependencies: AppDependencies) -> SettingsModel {
+        SettingsModel(
+            store: dependencies.settingsStore,
+            loginItem: dependencies.loginItem,
+            audioInputs: dependencies.audioInputs,
+        )
+    }
+
+    private static func makePro(_ dependencies: AppDependencies) -> ProModel {
+        ProModel(
+            keyStore: dependencies.licenseStore,
+            trialStore: dependencies.trialStore,
+            checker: dependencies.licenseChecker,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
+    private static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
+        VocabularyModel(
+            store: dependencies.vocabularyStore,
+            fileURL: dependencies.vocabularyFile,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
+    private static func makeQueue(
+        _ dependencies: AppDependencies,
+        history: HistoryModel,
+        statistics: StatisticsModel,
+        hud: HUDController,
+    ) -> DictationQueue {
+        DictationQueue(
+            transcriber: dependencies.transcriber,
+            rewriters: dependencies.rewriters,
+            inserter: dependencies.inserter,
+            clipboard: dependencies.clipboard,
+            history: history,
+            statistics: statistics,
+            hud: hud,
+        )
+    }
+
+    private static func makeRecordings(
+        _ dependencies: AppDependencies,
+        settings: SettingsModel,
+        hud: HUDController,
+    ) -> RecordingController {
+        RecordingController(
+            recorder: dependencies.recorder,
+            focusTracker: dependencies.focusTracker,
+            keyboardState: dependencies.keyboardState,
+            sounds: dependencies.sounds,
+            settings: settings,
+            hud: hud,
+        )
+    }
+
+    private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
+        PerProvider(
+            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
+            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
+        )
+    }
+
+    private static func makeTranscription(
+        _ dependencies: AppDependencies,
+        speechModelController: SpeechModelController,
+        settings: SettingsModel,
+        pro: ProModel,
+    ) -> FileTranscriptionModel {
+        FileTranscriptionModel(
+            transcriber: dependencies.transcriber,
+            decoder: dependencies.mediaDecoder,
+            speechModelController: speechModelController,
+            settings: settings,
+            pro: pro,
+            clipboard: dependencies.clipboard,
+        )
     }
 }

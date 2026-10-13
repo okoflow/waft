@@ -16,10 +16,17 @@ flowchart LR
 ## The key
 
 A listen-only event tap watches the keyboard. It never swallows a key press,
-so the dictation key keeps working everywhere else. Holding the key starts a
-recording; releasing it after at least 0.3 seconds finishes it. Shorter
-presses and another key pressed while holding are discarded; a recording that
-reaches 5 minutes finishes on its own and is transcribed.
+so the dictation key keeps working everywhere else. Pressing the key starts a
+recording, and what releasing it does depends on **How to start**:
+
+- **Hold**: a release after at least 0.3 seconds finishes the recording, and
+  a shorter press is discarded.
+- **Tap**: the recording keeps running, and the next press finishes it.
+- **Hold or double-tap**: a long press works as with Hold, and a second short
+  press within 0.4 seconds of the first works as with Tap.
+
+Another key pressed while the dictation key is down discards the recording.
+A recording that reaches 5 minutes finishes on its own and is transcribed.
 
 macOS can switch an event tap off when the system is busy, and a key-up can
 get lost. Waft turns the tap back on, checks it every 5 seconds, and while you
@@ -33,8 +40,8 @@ Settings or the system default. Audio is converted to 16 kHz mono and kept in
 memory; it is never written to disk. Recording continues for up to 0.15
 seconds after you let go, to catch the end of the last word.
 
-The HUD appears after 0.3 seconds of holding, so a quick tap doesn't flash it.
-It never takes focus: the app you are typing in stays active.
+The HUD appears 0.3 seconds after the press, so a quick tap that does nothing
+doesn't flash it. It never takes focus: the app you are typing in stays active.
 
 Waft notes the focused app and text field when you press the key. The text
 goes there later, and that app decides which mode applies.
@@ -43,7 +50,8 @@ goes there later, and that app decides which mode applies.
 
 Recordings without speech never reach the model: silence, key clicks, and
 steady noise are recognized by how long the audio stays above its own noise
-floor. Everything else goes to Whisper large-v3 turbo, run on Core ML by
+floor. Everything else goes to the speech model you chose, Whisper large-v3
+turbo or large-v3, run on Core ML by
 [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
 - **Language.** With one language pinned, Whisper decodes in that language.
@@ -86,8 +94,8 @@ Clean.
 
 ### The AI modes
 
-Clean, Formal, and Translate send the text and a short instruction for the
-mode to the model you chose: the Anthropic Messages API with
+Clean, Formal, Translate, and your modes send the text and a short instruction
+for the mode to the model you chose: the Anthropic Messages API with
 `claude-haiku-5-5` and thinking turned off, the OpenAI Responses API with
 `gpt-6-luna`, reasoning turned off, and `store: false`, or the
 `/chat/completions` endpoint of your local server. The transcript is marked as
@@ -95,17 +103,24 @@ text to edit, never instructions to follow, so dictating a question gives you
 the question rather than an answer, and the model is told to reply with the
 text only.
 
+Your modes send your instructions between `<instructions>` tags after a short
+preamble that asks for Clean's cleanup wherever they say nothing; with no
+instructions they work like Clean.
+
 The answer is checked before it is used. Waft rejects an answer that is
 empty, cut off, or refused, one more than three times longer than what you
 said (five times for a translation from Chinese, Japanese, or Korean), and one
 written in another script than both the language you spoke and the transcript
-itself, or, for Translate, than the target language.
+itself, or, for Translate, than the target language. Your modes may answer in
+any script and at up to ten times the length of what you said, or 600
+characters for a short dictation, since their instructions can ask for a
+translation or a longer text.
 
 A cloud model gets 3 seconds and a local server 15. Without a key, offline,
 on an error, a rate limit, a timeout, or a rejected answer, Waft uses Light
 instead and the HUD adds a line that says why. The text is never lost.
-[Troubleshooting](troubleshooting.md#the-ai-modes-use-light) lists each
-reason and what to do about it.
+[The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists
+each reason and what to do about it.
 
 ### Editing by voice
 
@@ -145,15 +160,27 @@ Texts are pasted one at a time, in the order you spoke them.
 
 ## The speech model
 
-The model, `openai_whisper-large-v3-v20240930_626MB` from
-[argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml),
-downloads once to `~/Library/Application Support/Waft/Models`, about 630 MB.
-Core ML compiles it for your chip the first time it loads, which takes about a
-minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
-about 135 MB. Later loads take about a second.
+Settings › Dictation › **Speech model** offers two models from
+[argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml):
 
-Changing the enabled languages reloads the model. A press while the model
-isn't ready records nothing; the HUD says what the model is doing instead.
+| Model | Files | Download | Trade-off |
+| --- | --- | --- | --- |
+| Fast | Whisper large-v3 turbo, `openai_whisper-large-v3-v20240930_626MB` | About 630 MB | The default and the quickest |
+| Accurate (Pro) | Whisper large-v3, `openai_whisper-large-v3` | About 3.1 GB | Two to three times slower, with fewer mistakes outside English |
+
+The model downloads once to `~/Library/Application Support/Waft/Models`.
+Core ML compiles it for your chip the first time it loads, which takes up to a
+minute, and keeps the compiled copy in `~/Library/Caches/com.okoflow.waft`,
+about 130 MB. Later loads take about a second.
+
+Choosing the other model downloads and loads it while the current one keeps
+recognizing speech. Once the new model is ready, Waft deletes the files of the
+one it replaced. Without Pro, Waft switches to Fast, downloads it if needed,
+and then deletes Accurate: right away when you remove your license, and on the
+next launch when the trial ends.
+
+Changing the enabled languages reloads the model. A press while no model is
+loaded records nothing; the HUD says what the model is doing instead.
 
 ## Limits
 

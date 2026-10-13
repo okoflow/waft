@@ -3,7 +3,7 @@ import Foundation
 package enum AudioLevel {
     private static let meterFloorDecibels: Float = -50
 
-    package static func rms(_ samples: some Collection<Float>) -> Float {
+    package static func rootMeanSquare(_ samples: some Collection<Float>) -> Float {
         guard !samples.isEmpty else { return 0 }
 
         let sumOfSquares = samples.reduce(Float(0)) { $0 + $1 * $1 }
@@ -11,15 +11,15 @@ package enum AudioLevel {
         return (sumOfSquares / Float(samples.count)).squareRoot()
     }
 
-    package static func meterValue(rms: Float) -> Float {
-        guard rms > 0 else { return 0 }
+    package static func meterValue(rootMeanSquare: Float) -> Float {
+        guard rootMeanSquare > 0 else { return 0 }
 
-        let normalized = (decibels(rms: rms) - meterFloorDecibels) / -meterFloorDecibels
+        let normalized = (decibels(rootMeanSquare: rootMeanSquare) - meterFloorDecibels) / -meterFloorDecibels
 
         return min(1, max(0, normalized))
     }
 
-    static func decibels(rms: Float) -> Float {
-        rms > 0 ? 20 * log10(rms) : -.infinity
+    static func decibels(rootMeanSquare: Float) -> Float {
+        rootMeanSquare > 0 ? 20 * log10(rootMeanSquare) : -.infinity
     }
 }

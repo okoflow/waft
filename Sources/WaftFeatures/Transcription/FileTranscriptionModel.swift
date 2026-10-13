@@ -24,7 +24,7 @@ final class FileTranscriptionModel {
 
     private let transcriber: any Transcriber
     private let decoder: any MediaDecoder
-    private let speechModel: SpeechModelController
+    private let speechModelController: SpeechModelController
     private let settings: SettingsModel
     private let pro: ProModel
     private let clipboard: any Clipboard
@@ -52,7 +52,7 @@ final class FileTranscriptionModel {
     }
 
     var notReadyMessage: String? {
-        speechModel.state.notReadyMessage
+        speechModelController.state.notReadyMessage
     }
 
     private var isWorking: Bool {
@@ -65,14 +65,14 @@ final class FileTranscriptionModel {
     init(
         transcriber: any Transcriber,
         decoder: any MediaDecoder,
-        speechModel: SpeechModelController,
+        speechModelController: SpeechModelController,
         settings: SettingsModel,
         pro: ProModel,
         clipboard: any Clipboard,
     ) {
         self.transcriber = transcriber
         self.decoder = decoder
-        self.speechModel = speechModel
+        self.speechModelController = speechModelController
         self.settings = settings
         self.pro = pro
         self.clipboard = clipboard

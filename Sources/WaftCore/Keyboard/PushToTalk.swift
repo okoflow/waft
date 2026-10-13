@@ -33,7 +33,7 @@ package struct PushToTalk: Sendable {
 
     private static let doubleTapWindow: TimeInterval = 0.4
 
-    var allowsHandsFree = true
+    var dictationStart = DictationStart.holdOrDoubleTap
 
     private var state = State.idle
     private var lastTapEnded: TimeInterval?
@@ -76,7 +76,17 @@ package struct PushToTalk: Sendable {
         }
     }
 
+    mutating func reset() {
+        state = .idle
+    }
+
     private mutating func release(heldSince since: TimeInterval, at time: TimeInterval) -> Action {
+        if dictationStart == .tap {
+            state = .handsFree(since: since)
+
+            return .lockHandsFree
+        }
+
         if time - since >= Self.minimumHold {
             state = .idle
             lastTapEnded = nil
@@ -84,7 +94,7 @@ package struct PushToTalk: Sendable {
             return .finishRecording
         }
 
-        if allowsHandsFree, let lastTapEnded, since - lastTapEnded <= Self.doubleTapWindow {
+        if dictationStart == .holdOrDoubleTap, let lastTapEnded, since - lastTapEnded <= Self.doubleTapWindow {
             state = .handsFree(since: since)
             self.lastTapEnded = nil
 

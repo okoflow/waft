@@ -13,7 +13,7 @@ struct PermissionRow: View {
 
     var body: some View {
         SettingsRow(.verbatim(permission.title), description: description) {
-            HStack(spacing: 5) {
+            HStack(spacing: Metrics.inlineSpacing) {
                 if isGranted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(Palette.success)

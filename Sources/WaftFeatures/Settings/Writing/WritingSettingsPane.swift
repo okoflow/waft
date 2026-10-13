@@ -12,10 +12,6 @@ struct WritingSettingsPane: View {
     let pro: ProModel
     let state: SettingsWindowState
 
-    private var provider: ModelProvider {
-        settings.settings.modelProvider
-    }
-
     private var translationNote: LocalizedStringKey {
         let target = settings.settings.translation.target.inlineName
 
@@ -47,9 +43,9 @@ struct WritingSettingsPane: View {
     }
 
     var body: some View {
-        SettingsSection("Mode", subtitle: modeNote) {
-            DividedForEach(Mode.allCases, id: \.self) { mode in
-                ModeRow(mode: mode, provider: provider, isLocked: pro.locks(mode), settings: settings, state: state)
+        SettingsSection("Modes", subtitle: modeNote) {
+            DividedForEach(Mode.builtIn, id: \.self) { mode in
+                ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
             }
         } footer: {
             if let setupNote {
@@ -61,7 +57,21 @@ struct WritingSettingsPane: View {
             }
         }
 
-        SettingsSection("Translation", subtitle: translationNote) {
+        SettingsSection("Your modes", subtitle: "Write instructions once and dictate in your own style.", isPro: true) {
+            if settings.settings.customModes.isEmpty {
+                EmptyRow("No modes yet")
+            }
+
+            DividedForEach(settings.settings.customModeChoices, id: \.self) { mode in
+                ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
+            }
+            .rowTransition()
+        } footer: {
+            Button("New Mode", action: addMode)
+        }
+        .animation(Motion.layout, value: settings.settings.customModes)
+
+        SettingsSection("Translation", subtitle: translationNote, isPro: true) {
             PickerRow(
                 "Translate into",
                 selection: $settings.settings.translation.target,
@@ -108,6 +118,17 @@ struct WritingSettingsPane: View {
         }
     }
 
+    private func addMode() {
+        guard pro.isUnlocked else {
+            state.selection = .pro
+
+            return
+        }
+
+        let custom = settings.settings.addCustomMode(named: String(localized: "New Mode"))
+        state.editedMode = .custom(custom.id)
+    }
+
     private func addApp() {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
@@ -123,101 +144,6 @@ struct WritingSettingsPane: View {
         }
 
         settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
-    }
-}
-
-private struct ModeRow: View {
-    let mode: Mode
-    let provider: ModelProvider
-    let isLocked: Bool
-    let settings: SettingsModel
-    let state: SettingsWindowState
-
-    private var isSelected: Bool {
-        settings.settings.mode == mode
-    }
-
-    private var isCustomized: Bool {
-        mode.usesAI && settings.settings.instructions.isCustomized(mode)
-    }
-
-    var body: some View {
-        HStack(spacing: Metrics.accessorySpacing) {
-            Button {
-                if isLocked {
-                    state.selection = .pro
-                } else {
-                    settings.settings.mode = mode
-                }
-            } label: {
-                HStack(spacing: 0) {
-                    ModeLabel(mode: mode, provider: provider, isCustomized: isCustomized)
-
-                    Spacer(minLength: 0)
-                }
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityAddTraits(isSelected ? .isSelected : [])
-
-            if isLocked {
-                Badge("Pro", tint: .purple)
-            } else if mode.usesAI {
-                InstructionsButton(mode: mode, provider: provider, settings: settings, state: state)
-            }
-
-            ZStack {
-                if isSelected {
-                    Image(systemName: "checkmark")
-                        .font(.sectionTitle)
-                        .foregroundStyle(.tint)
-                        .transition(.opacity)
-                }
-            }
-            .frame(width: 14)
-            .animation(Motion.feedback, value: isSelected)
-            .accessibilityHidden(true)
-        }
-        .settingsRowPadding()
-    }
-}
-
-private struct ModeLabel: View {
-    let mode: Mode
-    let provider: ModelProvider
-    let isCustomized: Bool
-
-    private var processingNote: Text {
-        provider.isCloud
-            ? Text("Sends the recognized text to \(provider.title)")
-            : Text("Runs on this Mac with \(provider.title)")
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 6) {
-                Text(mode.title)
-                    .font(.rowTitle)
-
-                if mode.usesAI {
-                    Image(systemName: provider.isCloud ? "cloud" : "cpu")
-                        .font(.glyph)
-                        .foregroundStyle(.secondary)
-                        .help(processingNote)
-                        .accessibilityLabel(processingNote)
-                }
-
-                if isCustomized {
-                    Badge("Edited")
-                        .transition(.opacity)
-                }
-            }
-
-            Text(mode.summary)
-                .font(.rowDetail)
-                .foregroundStyle(.secondary)
-        }
-        .animation(Motion.feedback, value: isCustomized)
     }
 }
 
@@ -244,9 +170,9 @@ private struct AppModeRow: View {
 
             Spacer(minLength: Metrics.rowSpacing)
 
-            MenuPicker("Mode", selection: mode, current: mode.wrappedValue.title) {
-                ForEach(Mode.allCases, id: \.self) { mode in
-                    Text(mode.title).tag(mode)
+            MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
+                ForEach(settings.settings.modes, id: \.self) { mode in
+                    Text(settings.settings.title(of: mode)).tag(mode)
                 }
             }
 

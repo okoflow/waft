@@ -3,25 +3,25 @@ import SwiftUI
 import WaftCore
 
 struct OverviewSettingsPane: View {
-    let stats: StatsModel
+    let statistics: StatisticsModel
 
     var body: some View {
-        RecentSection(stats: stats.stats)
-        AllTimeSection(stats: stats)
+        RecentSection(statistics: statistics.statistics)
+        AllTimeSection(statistics: statistics)
     }
 }
 
 private struct RecentSection: View {
     private static let dayCount = 7
 
-    let stats: DictationStats
+    let statistics: DictationStatistics
 
-    private var days: [(date: Date, day: DictationStats.Day)] {
-        stats.daily(last: Self.dayCount, endingOn: Date())
+    private var days: [(date: Date, day: DictationStatistics.Day)] {
+        statistics.daily(last: Self.dayCount, endingOn: Date())
     }
 
     var body: some View {
-        let recent = stats.total(last: Self.dayCount, endingOn: Date())
+        let recent = statistics.total(last: Self.dayCount, endingOn: Date())
 
         SettingsSection("Last 7 days", subtitle: "Counted on this Mac: words and time, never the text.") {
             HStack(spacing: 0) {
@@ -42,11 +42,11 @@ private struct RecentSection: View {
         .animation(Motion.layout, value: recent.words)
     }
 
-    private func savedTime(in recent: DictationStats.Day) -> String {
+    private func savedTime(in recent: DictationStatistics.Day) -> String {
         recent.savedOverTyping.formatted(.units(allowed: [.hours, .minutes], width: .abbreviated))
     }
 
-    private func speed(in recent: DictationStats.Day) -> String {
+    private func speed(in recent: DictationStatistics.Day) -> String {
         guard let wordsPerMinute = recent.wordsPerMinute else { return "–" }
 
         return wordsPerMinute.formatted()
@@ -54,10 +54,10 @@ private struct RecentSection: View {
 }
 
 private struct AllTimeSection: View {
-    let stats: StatsModel
+    let statistics: StatisticsModel
 
-    private var total: DictationStats.Day {
-        stats.stats.allTime
+    private var total: DictationStatistics.Day {
+        statistics.statistics.allTime
     }
 
     var body: some View {
@@ -65,11 +65,11 @@ private struct AllTimeSection: View {
             HStack(spacing: 0) {
                 Metric(value: total.words.formatted(), label: "words")
                 Metric(value: total.dictations.formatted(), label: "dictations")
-                Metric(value: stats.stats.streak(endingOn: Date()).formatted(), label: "days in a row")
+                Metric(value: statistics.statistics.streak(endingOn: Date()).formatted(), label: "days in a row")
             }
         } footer: {
             Button("Reset Statistics…", action: confirmReset)
-                .disabled(stats.stats.days.isEmpty)
+                .disabled(statistics.statistics.days.isEmpty)
         }
         .animation(Motion.layout, value: total.words)
     }
@@ -82,7 +82,7 @@ private struct AllTimeSection: View {
         )
 
         if confirmation.ask() {
-            stats.reset()
+            statistics.reset()
         }
     }
 }
@@ -92,7 +92,7 @@ private struct Metric: View {
     let label: LocalizedStringKey
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: Metrics.labelSpacing) {
             Text(value)
                 .font(.metric)
                 .monospacedDigit()
@@ -109,7 +109,7 @@ private struct Metric: View {
 }
 
 private struct WordsChart: View {
-    let days: [(date: Date, day: DictationStats.Day)]
+    let days: [(date: Date, day: DictationStatistics.Day)]
 
     var body: some View {
         Chart(days, id: \.date) { item in

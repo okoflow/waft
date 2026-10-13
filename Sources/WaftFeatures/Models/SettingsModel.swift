@@ -12,6 +12,7 @@ package final class SettingsModel {
     private(set) var microphones: [AudioInputDevice] = []
 
     @ObservationIgnored var onLanguagesChange: (() -> Void)?
+    @ObservationIgnored var onSpeechModelChange: (() -> Void)?
     @ObservationIgnored var onHistoryLimitsChange: (() -> Void)?
 
     private var isLoginItemEnabled: Bool
@@ -59,6 +60,10 @@ package final class SettingsModel {
 
         if settings.languages.languages != oldValue.languages.languages {
             onLanguagesChange?()
+        }
+
+        if settings.speechModel != oldValue.speechModel {
+            onSpeechModelChange?()
         }
 
         if changesHistoryLimits {

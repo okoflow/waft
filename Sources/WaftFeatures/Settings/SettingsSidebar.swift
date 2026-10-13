@@ -5,8 +5,22 @@ struct SettingsSidebar: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Metrics.sidebarRowSpacing) {
-            ForEach(SettingsPane.sidebarPanes, id: \.self) { pane in
-                SidebarRow(pane: pane, state: state)
+            ForEach(Array(SidebarGroup.all.enumerated()), id: \.offset) { index, group in
+                if let title = group.title {
+                    Text(title)
+                        .font(.sidebarGroup)
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, Metrics.sidebarRowInset)
+                        .padding(.top, index == 0 ? 0 : Metrics.sidebarGroupSpacing)
+                        .accessibilityAddTraits(.isHeader)
+                } else if index > 0 {
+                    Spacer()
+                        .frame(height: Metrics.sidebarGroupSpacing)
+                }
+
+                ForEach(group.panes, id: \.self) { pane in
+                    SidebarRow(pane: pane, state: state)
+                }
             }
 
             Spacer(minLength: 0)
@@ -35,14 +49,8 @@ struct SettingsSidebar: View {
 
 private struct SidebarBackground: View {
     var body: some View {
-        if #available(macOS 26, *) {
-            surface(ConcentricRectangle(corners: .concentric(minimum: .fixed(Metrics.sidebarRadius)), isUniform: true))
-        } else {
-            surface(RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous))
-        }
-    }
+        let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
 
-    private func surface(_ shape: some Shape) -> some View {
         shape
             .fill(Palette.sidebar)
             .overlay {
@@ -77,7 +85,7 @@ private struct SidebarRow: View {
 
                 Spacer(minLength: 0)
             }
-            .padding(.horizontal, 6)
+            .padding(.horizontal, Metrics.sidebarRowInset)
             .frame(height: Metrics.sidebarRowHeight)
             .background {
                 ZStack {

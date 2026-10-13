@@ -15,28 +15,42 @@ package struct SpeechModelState: Equatable, Sendable {
     }
 
     package enum Event: Sendable {
-        case started(isInstalled: Bool)
-        case downloadProgressed(Double)
-        case downloaded
-        case loaded
-        case failed(String)
+        case started(SpeechModel, isInstalled: Bool)
+        case chosen(SpeechModel, isInstalled: Bool)
+        case downloadProgressed(SpeechModel, Double)
+        case downloaded(SpeechModel)
+        case loaded(SpeechModel)
+        case failed(SpeechModel, String)
         case retryRequested
         case reloadRequested
     }
 
     package enum Effect: Equatable, Sendable {
-        case deleteModel
-        case download
-        case load
+        case cancelDownload
+        case deleteModel(SpeechModel)
+        case download(SpeechModel)
+        case load(SpeechModel)
+    }
+
+    private struct Choice: Equatable, Sendable {
+        let model: SpeechModel
+        let isInstalled: Bool
     }
 
     package private(set) var phase = Phase.notInstalled
 
+    private var model = SpeechModel.fast
+    private var servingModel: SpeechModel?
+    private var pendingChoice: Choice?
     private var hasRetriedLoad = false
     private var needsReload = false
 
     package var isReady: Bool {
         phase == .ready
+    }
+
+    package var canTranscribe: Bool {
+        isReady || servingModel != nil
     }
 
     package var canRetry: Bool {
@@ -57,20 +71,22 @@ package struct SpeechModelState: Equatable, Sendable {
 
     package var statusText: String {
         switch phase {
-        case .notInstalled, .loading: String(localized: "Preparing speech model…")
-        case let .downloading(progress): String(localized: "Downloading speech model… \(Self.percent(progress))")
+        case .notInstalled, .loading: String(localized: "Preparing the speech model…")
+        case let .downloading(progress): String(localized: "Downloading the speech model… \(Self.percent(progress))")
         case .ready: String(localized: "Ready")
         case let .failed(reason, _): String(localized: "Speech model failed: \(reason)")
         }
     }
 
     package var notReadyMessage: String? {
+        guard !canTranscribe else { return nil }
+
         switch phase {
-        case .ready: nil
-        case .notInstalled: String(localized: "The speech model isn't ready yet")
-        case let .downloading(progress): String(localized: "Downloading the speech model… \(Self.percent(progress))")
-        case .loading: String(localized: "Preparing the speech model, about a minute the first time…")
-        case .failed: String(localized: "The speech model failed to load. Retry from the menu.")
+        case .ready: return nil
+        case .notInstalled: return String(localized: "The speech model isn't ready yet")
+        case let .downloading(progress): return String(localized: "Downloading the speech model… \(Self.percent(progress))")
+        case .loading: return String(localized: "Preparing the speech model, about a minute the first time…")
+        case .failed: return String(localized: "The speech model failed to load. Retry from the menu.")
         }
     }
 
@@ -82,28 +98,32 @@ package struct SpeechModelState: Equatable, Sendable {
 
     package mutating func handle(_ event: Event) -> [Effect] {
         switch (phase, event) {
-        case let (.notInstalled, .started(isInstalled)):
-            phase = isInstalled ? .loading : .downloading(progress: 0)
+        case let (.notInstalled, .started(model, isInstalled)):
+            return prepare(Choice(model: model, isInstalled: isInstalled))
 
-            return [isInstalled ? .load : .download]
+        case let (_, .chosen(model, isInstalled)):
+            return choose(Choice(model: model, isInstalled: isInstalled))
 
-        case let (.downloading(current), .downloadProgressed(progress)):
+        case let (.downloading(current), .downloadProgressed(downloading, progress)) where downloading == model:
             phase = .downloading(progress: min(1, max(current, progress)))
 
             return []
 
-        case (.downloading, .downloaded):
+        case let (.downloading, .downloaded(downloaded)) where downloaded == model:
             phase = .loading
 
-            return [.load]
+            return [.load(model)]
 
-        case (.loading, .loaded):
+        case let (.loading, .loaded(loaded)) where loaded == model:
             return finishLoading()
 
-        case let (.downloading, .failed(reason)), let (.loading, .failed(reason)):
-            phase = .failed(reason: reason, during: phase == .loading ? .load : .download)
+        case let (.downloading, .failed(failed, reason)) where failed == model:
+            phase = .failed(reason: reason, during: .download)
 
             return []
+
+        case let (.loading, .failed(failed, reason)) where failed == model:
+            return failLoading(reason)
 
         case let (.failed(_, step), .retryRequested):
             return retry(after: step)
@@ -111,30 +131,85 @@ package struct SpeechModelState: Equatable, Sendable {
         case (.ready, .reloadRequested):
             phase = .loading
 
-            return [.load]
+            return [.load(model)]
 
         case (.loading, .reloadRequested):
             needsReload = true
 
             return []
 
+        case (.downloading, .reloadRequested), (.failed, .reloadRequested):
+            guard let servingModel, servingModel != model else { return [] }
+
+            return [.load(servingModel)]
+
         default:
             return []
         }
     }
 
-    private mutating func finishLoading() -> [Effect] {
-        hasRetriedLoad = false
-
-        guard needsReload else {
-            phase = .ready
+    private mutating func choose(_ choice: Choice) -> [Effect] {
+        guard choice.model != model else {
+            pendingChoice = nil
 
             return []
         }
 
-        needsReload = false
+        switch phase {
+        case .notInstalled:
+            return []
 
-        return [.load]
+        case .loading:
+            pendingChoice = choice
+
+            return []
+
+        case .downloading:
+            return [.cancelDownload, .deleteModel(model)] + prepare(choice)
+
+        case .ready, .failed:
+            return prepare(choice)
+        }
+    }
+
+    private mutating func prepare(_ choice: Choice) -> [Effect] {
+        model = choice.model
+        pendingChoice = nil
+        hasRetriedLoad = false
+        needsReload = false
+        phase = choice.isInstalled ? .loading : .downloading(progress: 0)
+
+        return [choice.isInstalled ? .load(model) : .download(model)]
+    }
+
+    private mutating func finishLoading() -> [Effect] {
+        hasRetriedLoad = false
+        servingModel = model
+
+        if let pendingChoice {
+            return prepare(pendingChoice)
+        }
+
+        guard !needsReload else {
+            needsReload = false
+
+            return [.load(model)]
+        }
+
+        phase = .ready
+
+        return SpeechModel.allCases.filter { $0 != model }.map(Effect.deleteModel)
+    }
+
+    private mutating func failLoading(_ reason: String) -> [Effect] {
+        if let pendingChoice {
+            return prepare(pendingChoice)
+        }
+
+        needsReload = false
+        phase = .failed(reason: reason, during: .load)
+
+        return []
     }
 
     private mutating func retry(after step: Step) -> [Effect] {
@@ -142,19 +217,23 @@ package struct SpeechModelState: Equatable, Sendable {
         case .download:
             phase = .downloading(progress: 0)
 
-            return [.download]
+            return [.download(model)]
 
         case .load where !hasRetriedLoad:
             hasRetriedLoad = true
             phase = .loading
 
-            return [.load]
+            return [.load(model)]
 
         case .load:
             hasRetriedLoad = false
             phase = .downloading(progress: 0)
 
-            return [.deleteModel, .download]
+            if servingModel == model {
+                servingModel = nil
+            }
+
+            return [.deleteModel(model), .download(model)]
         }
     }
 }

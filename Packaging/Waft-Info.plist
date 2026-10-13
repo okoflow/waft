@@ -45,7 +45,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2026 The Waft Authors</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Waft records your voice while you hold the dictation key and turns it into text.</string>
+	<string>Waft records your voice while you dictate and turns it into text.</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>

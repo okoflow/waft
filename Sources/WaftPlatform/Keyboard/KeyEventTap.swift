@@ -101,15 +101,3 @@ private let keyEventTapCallback: CGEventTapCallBack = { _, type, event, context 
 
     return Unmanaged.passUnretained(event)
 }
-
-extension KeyEvent.Kind {
-    fileprivate init?(_ type: CGEventType) {
-        switch type {
-        case .flagsChanged: self = .modifiersChanged
-        case .keyDown: self = .keyDown
-        case .keyUp: self = .keyUp
-        case .tapDisabledByTimeout, .tapDisabledByUserInput: self = .monitorDisabled
-        default: return nil
-        }
-    }
-}

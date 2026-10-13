@@ -35,7 +35,9 @@ code map, and [CONTRIBUTING.md](CONTRIBUTING.md) the rules and checks.
   early with `guard`, throw typed errors for closed failure sets, and log the
   rest.
 - `InternalImportsByDefault` is on: an import is `package import` only when a
-  package declaration's signature uses its types.
+  package declaration's signature names its types. A type reached through an
+  alias, such as `CustomMode.ID` for `UUID`, doesn't count, and Swift 6.3
+  rejects the unused `package import`.
 - Every user-facing string needs an entry in every table under
   `Packaging/Localizations`; `make strings` fails otherwise. It finds each
   Swift file's extracted strings by the file name, so keep the names of Swift

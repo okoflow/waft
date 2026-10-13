@@ -17,19 +17,15 @@ struct RewriteErrorHTTPTests {
     }
 
     @Test(arguments: [
-        (URLError.Code.timedOut, RewriteError.timeout),
-        (.cancelled, .timeout),
-        (.serverCertificateUntrusted, .unavailable),
-        (.appTransportSecurityRequiresSecureConnection, .unavailable),
-        (.notConnectedToInternet, .offline),
-        (.cannotConnectToHost, .offline),
-    ])
-    func `maps a failed request to a rewrite error`(code: URLError.Code, error: RewriteError) {
-        #expect(RewriteError.failedRequest(URLError(code), to: "Claude") == error)
-    }
-
-    @Test
-    func `treats a request that fails without a URL error as offline`() {
-        #expect(RewriteError.failedRequest(CocoaError(.fileReadUnknown), to: "Claude") == .offline)
+        (URLError(.timedOut), RewriteError.timeout),
+        (URLError(.cancelled), .timeout),
+        (URLError(.serverCertificateUntrusted), .unavailable),
+        (URLError(.appTransportSecurityRequiresSecureConnection), .unavailable),
+        (URLError(.notConnectedToInternet), .offline),
+        (URLError(.cannotConnectToHost), .offline),
+        (CocoaError(.fileReadUnknown), .offline),
+    ] as [(any Error, RewriteError)])
+    func `maps a failed request to a rewrite error`(failure: any Error, error: RewriteError) {
+        #expect(RewriteError.failedRequest(failure, to: "Claude") == error)
     }
 }

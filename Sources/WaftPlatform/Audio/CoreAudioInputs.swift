@@ -4,8 +4,8 @@ import CoreAudio
 package struct CoreAudioInputs: AudioInputProvider {
     package init() {}
 
-    static func deviceID(for uid: String) -> AudioDeviceID? {
-        inputDeviceIDs().first { string(kAudioDevicePropertyDeviceUID, of: $0) == uid }
+    static func deviceID(for uniqueID: String) -> AudioDeviceID? {
+        inputDeviceIDs().first { string(kAudioDevicePropertyDeviceUID, of: $0) == uniqueID }
     }
 
     static func name(of deviceID: AudioDeviceID) -> String? {
@@ -60,10 +60,10 @@ package struct CoreAudioInputs: AudioInputProvider {
 
     package func inputDevices() -> [AudioInputDevice] {
         Self.inputDeviceIDs().compactMap { deviceID in
-            guard let uid = Self.string(kAudioDevicePropertyDeviceUID, of: deviceID),
+            guard let uniqueID = Self.string(kAudioDevicePropertyDeviceUID, of: deviceID),
                   let name = Self.name(of: deviceID) else { return nil }
 
-            return AudioInputDevice(id: uid, name: name)
+            return AudioInputDevice(id: uniqueID, name: name)
         }
     }
 }

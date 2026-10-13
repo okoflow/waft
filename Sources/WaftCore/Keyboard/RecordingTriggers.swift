@@ -5,7 +5,7 @@ package struct RecordingTriggers: Sendable {
     private var edit = PushToTalk()
 
     package init() {
-        edit.allowsHandsFree = false
+        edit.dictationStart = .hold
     }
 
     private static func key(for purpose: RecordingPurpose, in settings: Settings) -> PushToTalkKey? {
@@ -33,12 +33,19 @@ package struct RecordingTriggers: Sendable {
     ) -> PushToTalk.Action? {
         switch purpose {
         case .dictation:
-            dictation.allowsHandsFree = settings.allowsHandsFree
+            dictation.dictationStart = settings.dictationStart
 
             return dictation.handle(event, at: time)
 
         case .edit:
             return edit.handle(event, at: time)
+        }
+    }
+
+    package mutating func reset(_ purpose: RecordingPurpose) {
+        switch purpose {
+        case .dictation: dictation.reset()
+        case .edit: edit.reset()
         }
     }
 }

@@ -68,10 +68,17 @@ struct PushToTalkTests {
     }
 
     @Test
-    func `treats a double tap as two short taps when hands-free is off`() {
-        let actions = handle([(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4)], allowsHandsFree: false)
+    func `treats a double tap as two short taps when only holding starts dictation`() {
+        let actions = handle([(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4)], start: .hold)
 
         #expect(actions == [.startRecording, .discardRecording(.tooShort), .startRecording, .discardRecording(.tooShort)])
+    }
+
+    @Test(arguments: [0.1, 2])
+    func `locks hands-free when the key is released in tap mode`(holdDuration: TimeInterval) {
+        let actions = handle([(.keyDown, 0), (.keyUp, holdDuration), (.keyDown, 5), (.keyUp, 5.1)], start: .tap)
+
+        #expect(actions == [.startRecording, .lockHandsFree, .finishRecording, nil])
     }
 
     @Test
@@ -164,10 +171,10 @@ struct PushToTalkTests {
 
     private func handle(
         _ steps: [(PushToTalk.Event, TimeInterval)],
-        allowsHandsFree: Bool = true,
+        start: DictationStart = .holdOrDoubleTap,
     ) -> [PushToTalk.Action?] {
         var pushToTalk = PushToTalk()
-        pushToTalk.allowsHandsFree = allowsHandsFree
+        pushToTalk.dictationStart = start
 
         return steps.map { event, time in pushToTalk.handle(event, at: time) }
     }

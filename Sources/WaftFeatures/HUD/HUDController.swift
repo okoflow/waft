@@ -1,4 +1,4 @@
-import AppKit
+import Foundation
 import Observation
 import WaftCore
 
@@ -10,12 +10,16 @@ final class HUDController {
     private(set) var content: HUDContent?
     private(set) var levels = [Float](repeating: 0, count: barCount)
 
-    @ObservationIgnored private var panel: HUDPanel?
+    @ObservationIgnored private var window: (any HUDWindow)?
     @ObservationIgnored private var queuedMessages: [HUDMessage] = []
     @ObservationIgnored private var workingLabel: String?
     @ObservationIgnored private var levelTimer: Timer?
     @ObservationIgnored private var messageTask: Task<Void, Never>?
     @ObservationIgnored private var orderOutTask: Task<Void, Never>?
+
+    private let messageDuration: (HUDMessage) -> Duration
+    private let orderOutPause: Duration
+    private let makeWindow: (HUDController) -> any HUDWindow
 
     private var isListening: Bool {
         if case .listening = content {
@@ -31,6 +35,16 @@ final class HUDController {
         } else {
             false
         }
+    }
+
+    init(
+        messageDuration: @escaping (HUDMessage) -> Duration = \.duration,
+        orderOutPause: Duration = .milliseconds(400),
+        makeWindow: @escaping (HUDController) -> any HUDWindow = { HUDPanel(rootView: HUDView(hud: $0)) },
+    ) {
+        self.messageDuration = messageDuration
+        self.orderOutPause = orderOutPause
+        self.makeWindow = makeWindow
     }
 
     func showListening(badge: String?, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
@@ -76,10 +90,10 @@ final class HUDController {
         showNext()
     }
 
-    func makePanel() {
-        guard panel == nil else { return }
+    func prepareWindow() {
+        guard window == nil else { return }
 
-        panel = HUDPanel(rootView: HUDView(hud: self))
+        window = makeWindow(self)
     }
 
     private func showNext() {
@@ -98,18 +112,18 @@ final class HUDController {
         content = nil
 
         orderOutTask?.cancel()
-        orderOutTask = Task { [weak self] in
-            guard await Task.slept(for: .milliseconds(400)), let self, content == nil else { return }
+        orderOutTask = Task { [weak self, orderOutPause] in
+            guard await Task.slept(for: orderOutPause), let self, content == nil else { return }
 
-            panel?.orderOut(nil)
+            window?.orderOut(nil)
         }
     }
 
     private func showMessage(_ message: HUDMessage) {
         present(.message(message))
 
-        messageTask = Task { [weak self] in
-            guard await Task.slept(for: message.duration) else { return }
+        messageTask = Task { [weak self, duration = messageDuration(message)] in
+            guard await Task.slept(for: duration) else { return }
 
             self?.messageDidExpire()
         }
@@ -123,11 +137,11 @@ final class HUDController {
     }
 
     private func present(_ newContent: HUDContent) {
-        makePanel()
+        prepareWindow()
         orderOutTask?.cancel()
 
         if content == nil {
-            panel?.showOnActiveScreen()
+            window?.showOnActiveScreen()
         }
 
         content = newContent

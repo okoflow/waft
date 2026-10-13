@@ -14,4 +14,8 @@ package struct AppModeOverrides: Codable, Equatable, Sendable {
     package mutating func set(_ mode: Mode?, for bundleIdentifier: String) {
         modes[bundleIdentifier] = mode
     }
+
+    mutating func removeModes(where shouldRemove: (Mode) -> Bool) {
+        modes = modes.filter { !shouldRemove($0.value) }
+    }
 }

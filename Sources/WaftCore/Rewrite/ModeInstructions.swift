@@ -6,7 +6,7 @@ package struct ModeInstructions: Codable, Equatable, Sendable {
     package init() {}
 
     package func text(for mode: Mode) -> String {
-        guard let text = custom[mode.rawValue], !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard let text = custom[mode.storageKey], !text.isBlank else {
             return RewritePrompt.defaultInstructions(for: mode)
         }
 
@@ -14,20 +14,20 @@ package struct ModeInstructions: Codable, Equatable, Sendable {
     }
 
     package func editableText(for mode: Mode) -> String {
-        guard let text = custom[mode.rawValue] else { return RewritePrompt.defaultInstructions(for: mode) }
+        guard let text = custom[mode.storageKey] else { return RewritePrompt.defaultInstructions(for: mode) }
 
         return text
     }
 
     package func isCustomized(_ mode: Mode) -> Bool {
-        custom[mode.rawValue] != nil
+        custom[mode.storageKey] != nil
     }
 
     package mutating func set(_ text: String, for mode: Mode) {
-        custom[mode.rawValue] = text == RewritePrompt.defaultInstructions(for: mode) ? nil : text
+        custom[mode.storageKey] = text == RewritePrompt.defaultInstructions(for: mode) ? nil : text
     }
 
     package mutating func reset(_ mode: Mode) {
-        custom[mode.rawValue] = nil
+        custom[mode.storageKey] = nil
     }
 }

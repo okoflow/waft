@@ -77,9 +77,15 @@ package enum RewritePrompt {
     lines only when the speaker enumerates them explicitly.
     """
 
+    private static let customPreamble = """
+    You turn dictated speech into text by the speaker's own instructions, given between <instructions> tags. \
+    Follow them. Where they say nothing, remove hesitations, fillers and false starts, fix grammar and \
+    punctuation, and keep the language of the transcript.
+    """
+
     package static func system(for request: RewriteRequest) -> String {
         switch request.kind {
-        case let .cleanup(instructions, _): instructions + "\n" + rules
+        case let .cleanup(instructions, _), let .custom(instructions): instructions + "\n" + rules
         case .edit: editInstructions
         }
     }
@@ -95,6 +101,9 @@ package enum RewritePrompt {
                 .compactMap(\.self)
                 .joined(separator: "\n")
 
+        case .custom:
+            return [spokenLanguage, "<transcript>", request.text, "</transcript>"].joined(separator: "\n")
+
         case let .edit(selection):
             return [spokenLanguage, "<instruction>", request.text, "</instruction>", "<text>", selection, "</text>"]
                 .joined(separator: "\n")
@@ -105,8 +114,12 @@ package enum RewritePrompt {
         switch mode {
         case .formal: formalInstructions
         case .translate: translateInstructions
-        case .raw, .light, .clean: cleanInstructions
+        case .raw, .light, .clean, .custom: cleanInstructions
         }
+    }
+
+    static func customInstructions(_ instructions: String) -> String {
+        [customPreamble, "<instructions>", instructions, "</instructions>"].joined(separator: "\n")
     }
 
     private static func targetName(for language: Language) -> String {

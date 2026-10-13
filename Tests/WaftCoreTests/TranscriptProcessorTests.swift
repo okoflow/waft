@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import WaftCore
 
@@ -57,14 +58,13 @@ struct TranscriptProcessorTests {
         #expect(processed.text == "Ok be right back.")
     }
 
-    @Test
-    func `uses the cloud answer for an AI mode`() async throws {
+    @Test(arguments: [(Mode.clean, "So the meeting is on Friday."), (.custom(UUID()), "Итак, встреча в пятницу.")])
+    func `uses the cloud answer for an AI mode, in any script for a custom one`(mode: Mode, answer: String) async throws {
         let log = RewriteLog()
-        let answer = "So the meeting is on Friday."
-        let processed = await process("um so the meeting is on friday", mode: .clean, answer: .success(answer), log: log)
+        let processed = await process("um so the meeting is on friday", mode: mode, answer: .success(answer), log: log)
         let request = try #require(await log.requests.first)
 
-        #expect(processed == ProcessedText(text: answer, mode: .clean))
+        #expect(processed == ProcessedText(text: answer, mode: mode))
         #expect(request.deadline == .seconds(3))
         #expect(request.localServer == nil)
         #expect(RewritePrompt.system(for: request).hasPrefix("Clean."))
@@ -91,12 +91,16 @@ struct TranscriptProcessorTests {
         #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
     }
 
-    @Test
-    func `asks for Pro instead of rewriting without AI access`() async {
+    @Test(arguments: [
+        (Mode.light, ProcessedText(text: "See you tomorrow.", mode: .light)),
+        (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
+        (.custom(UUID()), ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
+    ])
+    func `asks for Pro only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
         let log = RewriteLog()
-        let processed = await process("see you tomorrow", mode: .translate, allowsAI: false, log: log)
+        let processed = await process("see you tomorrow", mode: mode, allowsAI: false, log: log)
 
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro))
+        #expect(processed == expected)
         #expect(await log.requests.isEmpty)
     }
 
@@ -150,7 +154,7 @@ struct TranscriptProcessorTests {
         #expect(processed == ProcessedText(text: answer, mode: .translate))
     }
 
-    @Test(arguments: [Mode.clean, .formal])
+    @Test(arguments: [Mode.clean, .formal, .custom(UUID())])
     func `does not translate outside translate mode`(mode: Mode) async throws {
         let log = RewriteLog()
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean.", translation: Translation(target: .german))

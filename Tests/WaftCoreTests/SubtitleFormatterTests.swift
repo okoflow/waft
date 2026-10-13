@@ -79,6 +79,20 @@ struct SubtitleFormatterTests {
     }
 
     @Test
+    func `keeps a word longer than a line on one line`() {
+        let url = "https://example.com/" + String(repeating: "segment/", count: 12)
+
+        #expect(srt(segment(0, 2, url)) == "1\n00:00:00,000 --> 00:00:02,000\n\(url)\n")
+    }
+
+    @Test
+    func `skips a segment without text`() {
+        let output = srt(segment(0, 1, "One."), segment(1, 2, ""), segment(2, 3, "Two."))
+
+        #expect(output == "1\n00:00:00,000 --> 00:00:01,000\nOne.\n\n2\n00:00:02,000 --> 00:00:03,000\nTwo.\n")
+    }
+
+    @Test
     func `writes nothing for an empty transcript`() {
         #expect(srt().isEmpty)
     }

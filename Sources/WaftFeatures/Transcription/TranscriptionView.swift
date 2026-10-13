@@ -8,7 +8,7 @@ struct TranscriptionView: View {
     let showPro: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: Metrics.windowSpacing) {
             TranscriptionHeader()
 
             if model.isLocked {
@@ -16,7 +16,7 @@ struct TranscriptionView: View {
             } else {
                 switch model.phase {
                 case .idle, .failed:
-                    VStack(spacing: 12) {
+                    VStack(spacing: Metrics.accessorySpacing) {
                         if case let .failed(file, message) = model.phase {
                             FailureCard(file: file, message: message)
                                 .transition(.reveal)
@@ -37,10 +37,16 @@ struct TranscriptionView: View {
                 }
             }
         }
-        .padding(.horizontal, 24)
-        .padding(.top, 52)
-        .padding(.bottom, 24)
-        .frame(minWidth: 520, maxWidth: .infinity, minHeight: 480, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, Metrics.windowPadding)
+        .padding(.top, Metrics.titleBarHeight)
+        .padding(.bottom, Metrics.windowPadding)
+        .frame(
+            minWidth: Metrics.transcriptionMinimumSize.width,
+            maxWidth: .infinity,
+            minHeight: Metrics.transcriptionMinimumSize.height,
+            maxHeight: .infinity,
+            alignment: .top,
+        )
         .background(Palette.window)
         .ignoresSafeArea()
         .buttonStyle(PushButtonStyle())
@@ -60,12 +66,16 @@ struct TranscriptionView: View {
 
 private struct TranscriptionHeader: View {
     var body: some View {
-        HStack(spacing: 12) {
-            IconTile(symbolName: "waveform", tint: .purple, size: 36)
+        HStack(spacing: Metrics.accessorySpacing) {
+            IconTile(symbolName: "waveform", tint: .red, size: Metrics.headerTileSize)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Transcribe File")
-                    .font(.pageTitle)
+            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
+                HStack(spacing: Metrics.inlineSpacing) {
+                    Text("Transcribe File")
+                        .font(.pageTitle)
+
+                    ProBadge()
+                }
 
                 Text("Audio and video files, transcribed on this Mac.")
                     .font(.rowDetail)
@@ -90,9 +100,9 @@ private struct DropZone: View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
         let isTargeted = model.isDropTargeted
 
-        VStack(spacing: 8) {
+        VStack(spacing: Metrics.controlSpacing) {
             Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
-                .font(.system(size: 30))
+                .font(.dropZoneGlyph)
                 .foregroundStyle(isTargeted ? Color.accentColor : .secondary)
                 .contentTransition(.symbolEffect(.replace))
                 .padding(.bottom, 4)
@@ -107,9 +117,9 @@ private struct DropZone: View {
 
             Button("Choose File…", action: chooseFile)
                 .disabled(model.notReadyMessage != nil)
-                .padding(.top, 8)
+                .padding(.top, Metrics.controlSpacing)
         }
-        .frame(maxWidth: .infinity, minHeight: 220)
+        .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
         .background(isTargeted ? Palette.selection : Palette.card, in: shape)
         .overlay {
             shape.strokeBorder(
@@ -165,7 +175,7 @@ private struct FailureCard: View {
 
     var body: some View {
         SettingsCard {
-            HStack(alignment: .top, spacing: 10) {
+            HStack(alignment: .top, spacing: Metrics.iconLabelSpacing) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundStyle(Palette.warning)
                     .accessibilityHidden(true)
@@ -185,9 +195,9 @@ private struct ProGateCard: View {
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
 
-        VStack(spacing: 8) {
+        VStack(spacing: Metrics.controlSpacing) {
             Image(systemName: "lock.fill")
-                .font(.system(size: 24))
+                .font(.proGateGlyph)
                 .padding(.bottom, 4)
                 .accessibilityHidden(true)
 
@@ -204,8 +214,8 @@ private struct ProGateCard: View {
         }
         .foregroundStyle(.white)
         .multilineTextAlignment(.center)
-        .padding(24)
-        .frame(maxWidth: .infinity, minHeight: 220)
+        .padding(Metrics.heroCardPadding)
+        .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
         .background(Palette.proGradient, in: shape)
     }
 }

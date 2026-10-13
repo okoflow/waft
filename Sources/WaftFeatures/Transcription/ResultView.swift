@@ -16,9 +16,9 @@ struct ResultView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: Metrics.accessorySpacing) {
             SettingsCard {
-                HStack(spacing: 12) {
+                HStack(spacing: Metrics.accessorySpacing) {
                     FileIcon(url: file)
 
                     RowLabel(title: .verbatim(file.lastPathComponent), description: .verbatim(details))
@@ -37,7 +37,7 @@ struct ResultView: View {
                         .lineSpacing(3)
                         .textSelection(.enabled)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(Metrics.rowPadding + 2)
+                        .padding(Metrics.transcriptPadding)
                 }
                 .frame(minHeight: 160, maxHeight: .infinity)
             }

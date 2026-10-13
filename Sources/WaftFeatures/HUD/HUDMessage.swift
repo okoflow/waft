@@ -4,7 +4,7 @@ struct HUDMessage: Equatable, Sendable {
     enum Kind: Sendable {
         case pasted
         case copied
-        case info
+        case information
         case warning
     }
 

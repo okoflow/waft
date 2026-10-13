@@ -30,7 +30,7 @@ package enum SpeechGate {
         return stride(from: 0, to: samples.count, by: windowSize).map { start in
             let window = samples[start ..< min(start + windowSize, samples.count)]
 
-            return max(silenceDecibels, AudioLevel.decibels(rms: AudioLevel.rms(window)))
+            return max(silenceDecibels, AudioLevel.decibels(rootMeanSquare: AudioLevel.rootMeanSquare(window)))
         }
     }
 

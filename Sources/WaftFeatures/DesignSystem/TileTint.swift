@@ -9,6 +9,7 @@ enum TileTint {
     case green
     case indigo
     case teal
+    case ocean
 
     var gradient: LinearGradient {
         LinearGradient(colors: [top, bottom], startPoint: .top, endPoint: .bottom)
@@ -24,6 +25,7 @@ enum TileTint {
         case .green: Color(hex: 0x1BAA75)
         case .indigo: Color(hex: 0x6E6CF2)
         case .teal: Color(hex: 0x2BBDD0)
+        case .ocean: Color(hex: 0x3C78FA)
         }
     }
 
@@ -37,6 +39,7 @@ enum TileTint {
         case .green: Color(hex: 0x098551)
         case .indigo: Color(hex: 0x4A46D4)
         case .teal: Color(hex: 0x1593B3)
+        case .ocean: Color(hex: 0x1B3FB5)
         }
     }
 }

@@ -2,22 +2,24 @@ import Testing
 import WaftCore
 
 struct InsertionSpacingTests {
-    @Test(arguments: [
-        ("hello", Character?.none, "hello"),
-        ("  hello \n", nil, "hello"),
-        ("hello", "a", " hello"),
-        ("hello", ".", " hello"),
-        ("hello", "!", " hello"),
-        ("", "a", ""),
-        ("   ", "a", ""),
-    ])
-    func `adds a space after a word`(text: String, previous: Character?, expected: String) {
-        #expect(InsertionSpacing.prepared(text, after: previous) == expected)
+    @Test(arguments: ["a", ".", "!"] as [Character])
+    func `adds a space after a word or punctuation`(previous: Character) {
+        #expect(InsertionSpacing.prepared("hello", after: previous) == " hello")
     }
 
-    @Test(arguments: [" ", "\n", "\t", "(", "[", "{", "<", "\"", "'", "‘", "“", "«", "„", "/"] as [Character])
-    func `adds no space after whitespace or an opening mark`(previous: Character) {
+    @Test(arguments: [nil, " ", "\n", "\t", "(", "[", "{", "<", "\"", "'", "‘", "“", "«", "„", "/"] as [Character?])
+    func `adds no space at the start, after whitespace, or after an opening mark`(previous: Character?) {
         #expect(InsertionSpacing.prepared("hello", after: previous) == "hello")
+    }
+
+    @Test(arguments: [(Character?.none, "hello"), ("a", " hello")])
+    func `trims the text`(previous: Character?, expected: String) {
+        #expect(InsertionSpacing.prepared("  hello \n", after: previous) == expected)
+    }
+
+    @Test(arguments: ["", "   ", "\n"])
+    func `inserts nothing for blank text`(text: String) {
+        #expect(InsertionSpacing.prepared(text, after: "a").isEmpty)
     }
 
     @Test(arguments: [

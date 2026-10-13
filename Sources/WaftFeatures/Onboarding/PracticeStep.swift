@@ -10,15 +10,22 @@ struct PracticeStep: View {
     private var message: LocalizedStringKey {
         let key = model.settings.settings.pushToTalkKey.title
 
-        guard model.speechModel.state.isReady else {
-            return "When the speech model is ready, click the box, hold \(key), and say “Hello, Waft”."
+        return switch (model.settings.settings.dictationStart, model.speechModelController.state.isReady) {
+        case (.tap, true):
+            "Click the box, tap \(key), say “Hello, Waft”, and tap it again."
+        case (.tap, false):
+            "When the speech model is ready, click the box, tap \(key), say “Hello, Waft”, and tap it again."
+        case (.hold, true), (.holdOrDoubleTap, true):
+            "Click the box, hold \(key), and say “Hello, Waft”."
+        case (.hold, false), (.holdOrDoubleTap, false):
+            "When the speech model is ready, click the box, hold \(key), and say “Hello, Waft”."
         }
-
-        return "Click the box, hold \(key), and say “Hello, Waft”."
     }
 
     private var modelStatus: String {
-        model.speechModel.state.isReady ? String(localized: "Speech model ready") : model.speechModel.state.statusText
+        let state = model.speechModelController.state
+
+        return state.isReady ? String(localized: "Speech model ready") : state.statusText
     }
 
     init(model: AppModel) {
@@ -30,7 +37,7 @@ struct PracticeStep: View {
         OnboardingStep(title: "Try it", message: message) {
             IconTile(symbolName: "text.cursor", tint: .purple, size: Metrics.heroTileSize)
         } content: {
-            VStack(spacing: 10) {
+            VStack(spacing: Metrics.groupSpacing) {
                 TextField("Your words appear here", text: $onboarding.practiceText, axis: .vertical)
                     .textFieldStyle(.plain)
                     .font(.practice)
@@ -44,8 +51,8 @@ struct PracticeStep: View {
                         .font(.rowDetail)
                         .foregroundStyle(.secondary)
 
-                    if model.speechModel.state.canRetry {
-                        Button("Retry") { model.speechModel.retry() }
+                    if model.speechModelController.state.canRetry {
+                        Button("Retry") { model.speechModelController.retry() }
                     }
                 }
             }
