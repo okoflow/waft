@@ -23,6 +23,7 @@ enum LightModeRules {
         "।",
         "॥",
     ]
+
     private static let highMarks: Set<Character> = ["!", "?", ";", ":"]
 
     static func apply(_ text: String, language: Language) -> String {

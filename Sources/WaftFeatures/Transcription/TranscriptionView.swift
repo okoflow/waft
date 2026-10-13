@@ -23,6 +23,7 @@ struct TranscriptionView: View {
                         }
 
                         DropZone(model: model)
+
                         LanguageCard(model: model)
                     }
                     .transition(.opacity)

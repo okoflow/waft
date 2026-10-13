@@ -10,6 +10,7 @@ struct HUDView: View {
     var body: some View {
         VStack(spacing: 0) {
             Spacer(minLength: 0)
+
             pill
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

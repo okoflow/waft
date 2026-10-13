@@ -50,6 +50,7 @@ final class SpeechModelController {
         Task {
             let model = chosenModel
             let isInstalled = await transcriber.isModelInstalled(model)
+
             guard chosenModel == model else { return }
 
             apply(.chosen(model, isInstalled: isInstalled))

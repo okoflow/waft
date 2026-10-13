@@ -8,6 +8,7 @@ struct VocabularyModelTests {
         terms: [Vocabulary.Term(term: "Okoflow", spoken: ["oko flow", "okay flow"])],
         snippets: [Vocabulary.Snippet(trigger: "my email", text: "ann@example.com")],
     )
+
     private nonisolated static let edited = Vocabulary(terms: [Vocabulary.Term(term: "Waft", spoken: [])], snippets: [])
     private static let fileURL = URL(filePath: "/tmp/Dictionary.json")
 

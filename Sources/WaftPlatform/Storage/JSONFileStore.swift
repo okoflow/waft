@@ -6,7 +6,6 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     package let name: String
 
     private let url: URL
-
     private let isPrivate: Bool
 
     private var unreadableCopy: URL {

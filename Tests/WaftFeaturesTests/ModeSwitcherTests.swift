@@ -52,6 +52,7 @@ struct ModeSwitcherTests {
             hud: hud,
             pro: .unlicensed(trialStarted: .distantPast),
         )
+
         switcher.start()
         shortcut.fire()
 

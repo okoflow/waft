@@ -78,6 +78,7 @@ final class RecordingController {
 
     func lockHandsFree() {
         recording?.isHandsFree = true
+
         hud.lockHandsFree()
     }
 

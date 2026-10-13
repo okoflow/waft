@@ -7,6 +7,7 @@ struct OverviewSettingsPane: View {
 
     var body: some View {
         RecentSection(statistics: statistics.statistics)
+
         AllTimeSection(statistics: statistics)
     }
 }

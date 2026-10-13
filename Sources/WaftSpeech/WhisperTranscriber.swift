@@ -25,7 +25,6 @@ package actor WhisperTranscriber: Transcriber {
             ? results.map(\.text).joined(separator: " ")
             : segments.filter(isConfident).map(\.text).joined()
         let text = kept.trimmingCharacters(in: .whitespacesAndNewlines)
-
         guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
 
         return text.capitalizedIfUnstyled(in: language)
@@ -94,7 +93,6 @@ package actor WhisperTranscriber: Transcriber {
         let prompt = WhisperPrompt.text(for: spoken, vocabulary: vocabulary)
         let options = decodingOptions(for: spoken, samples: samples, prompt: prompt, tokenizer: loaded.whisper.tokenizer)
         let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
-
         guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
 
         return Transcript(

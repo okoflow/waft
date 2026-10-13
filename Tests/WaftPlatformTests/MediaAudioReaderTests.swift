@@ -13,6 +13,7 @@ struct MediaAudioReaderTests {
                 AVSampleRateKey: buffer.format.sampleRate,
                 AVNumberOfChannelsKey: buffer.format.channelCount,
             ]
+
             try AVAudioFile(forWriting: url, settings: settings).write(from: buffer)
 
             let samples = try await MediaAudioReader().samples(of: url)

@@ -6,6 +6,7 @@ import WaftCore
 struct FileTranscriptionModelTests {
     private nonisolated static let failure = CocoaError(.fileReadCorruptFile)
     private static let file = URL(filePath: "/tmp/Interview.m4a")
+
     private static let transcript = TimedTranscript(
         language: .english,
         segments: [TimedSegment(start: 0, end: 2, text: "Hello world.")],
@@ -132,6 +133,7 @@ struct FileTranscriptionModelTests {
             FakeTranscriber(file: .success(Self.transcript)),
             pro: .unlicensed(trialStarted: .distantPast),
         )
+
         transcription.transcribe(Self.file)
 
         #expect(transcription.phase == .idle)

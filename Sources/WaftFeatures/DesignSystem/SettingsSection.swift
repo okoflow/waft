@@ -42,6 +42,7 @@ struct SettingsSection<Content: View, Accessory: View, Footer: View>: View {
             if let footer {
                 HStack(spacing: Metrics.controlSpacing) {
                     Spacer(minLength: 0)
+
                     footer
                 }
             }

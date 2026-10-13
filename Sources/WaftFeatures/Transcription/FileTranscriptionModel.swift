@@ -101,6 +101,7 @@ final class FileTranscriptionModel {
         task = Task { [weak self, transcriber, decoder, language] in
             do {
                 let samples = try await decoder.samples(of: file)
+
                 self?.enter(.transcribing(file, 0), in: current)
 
                 let transcript = try await transcriber.transcribeFile(samples, in: language) { progress in

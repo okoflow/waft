@@ -126,6 +126,7 @@ struct WritingSettingsPane: View {
         }
 
         let custom = settings.settings.addCustomMode(named: String(localized: "New Mode"))
+
         state.editedMode = .custom(custom.id)
     }
 

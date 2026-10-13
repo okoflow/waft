@@ -45,6 +45,7 @@ private struct StartDiagram: View {
             case .holdOrDoubleTap:
                 Press(width: 34)
                 Track().frame(width: 10)
+
                 HStack(spacing: 9) {
                     Press(width: 15, height: 15)
                     Press(width: 15, height: 15)

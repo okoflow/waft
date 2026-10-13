@@ -47,6 +47,7 @@ package final class CarbonHotKey: GlobalShortcut {
         let registerStatus = RegisterEventHotKey(Self.keyCode, Self.modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKey)
         guard registerStatus == noErr else {
             Logger.keyboard.error("Couldn't register the mode shortcut: OSStatus \(registerStatus, privacy: .public)")
+
             RemoveEventHandler(handler)
             handler = nil
 

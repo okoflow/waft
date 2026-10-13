@@ -73,7 +73,6 @@ extension Mode: Codable {
     package init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let storageKey = try container.decode(String.self)
-
         guard let mode = Mode(storageKey: storageKey) else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown mode \(storageKey)")
         }
