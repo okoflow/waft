@@ -16,6 +16,6 @@ struct OpenAIRequest: Encodable {
     let instructions: String
     let input: String
     let maximumOutputTokens: Int
-    let reasoning = Reasoning(effort: "none")
+    let reasoning = Reasoning(effort: "low")
     let store = false
 }

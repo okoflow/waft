@@ -32,7 +32,7 @@ struct AIModelsSettingsPane: View {
         case .localServer:
             LocalServerSection(settings: settings, localModels: localModels)
         case let .cloud(provider):
-            CloudProviderSection(provider: provider, apiKey: apiKeys[provider])
+            CloudProviderSection(settings: settings, provider: provider, apiKey: apiKeys[provider])
         }
     }
 }

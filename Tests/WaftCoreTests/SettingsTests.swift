@@ -15,6 +15,7 @@ struct SettingsTests {
         #expect(settings.mode == .light)
         #expect(settings.speechModel == .fast)
         #expect(settings.modelProvider == .cloud(.claude))
+        #expect(settings.cloudModels == PerProvider(claude: .balanced, openAI: .balanced))
         #expect(settings.pushToTalkKey == .rightOption)
         #expect(settings.historyLimit == DictationHistory.defaultLimit)
         #expect(settings.editKey == nil)
@@ -54,6 +55,15 @@ struct SettingsTests {
         #expect(try decode(#"{"modelProvider":"\#(stored)"}"#).modelProvider == expected)
     }
 
+    @Test(arguments: [
+        (#"{"claude":"smartest","openAI":"fastest"}"#, PerProvider(claude: CloudModel.smartest, openAI: .fastest)),
+        (#"{"claude":"huge","openAI":"fastest"}"#, PerProvider(claude: .balanced, openAI: .balanced)),
+        (#"{"claude":"fastest"}"#, PerProvider(claude: .balanced, openAI: .balanced)),
+    ])
+    func `decodes the cloud models`(stored: String, expected: PerProvider<CloudModel>) throws {
+        #expect(try decode(#"{"cloudModels":\#(stored)}"#).cloudModels == expected)
+    }
+
     @Test(arguments: [("fast", SpeechModel.fast), ("accurate", .accurate), ("huge", .fast)])
     func `decodes the speech model`(stored: String, expected: SpeechModel) throws {
         #expect(try decode(#"{"speechModel":"\#(stored)"}"#).speechModel == expected)
@@ -84,6 +94,7 @@ struct SettingsTests {
         settings.speechModel = .accurate
         settings.appModes.set(.raw, for: "com.apple.Terminal")
         settings.modelProvider = .localServer
+        settings.cloudModels[.openAI] = .smartest
         settings.localServer = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")
         settings.instructions.set("Be brief.", for: .clean)
         settings.translation = Translation(target: .german, twoWayLanguage: .english)

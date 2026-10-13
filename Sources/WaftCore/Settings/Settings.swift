@@ -10,6 +10,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case speechModel
         case appModes
         case modelProvider
+        case cloudModels
         case localServer
         case instructions
         case translation
@@ -32,6 +33,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var speechModel = SpeechModel.fast
     package var appModes = AppModeOverrides()
     package var modelProvider = ModelProvider.cloud(.claude)
+    package var cloudModels = CloudModel.defaultChoices
     package var localServer = LocalServer()
     package var instructions = ModeInstructions()
     package var translation = Translation()
@@ -63,6 +65,7 @@ package struct Settings: Codable, Equatable, Sendable {
         speechModel = container.decode(.speechModel, default: speechModel)
         appModes = container.decode(.appModes, default: appModes)
         modelProvider = container.decode(.modelProvider, default: modelProvider)
+        cloudModels = container.decode(.cloudModels, default: cloudModels)
         localServer = container.decode(.localServer, default: localServer)
         instructions = container.decode(.instructions, default: instructions)
         translation = container.decode(.translation, default: translation)

@@ -15,16 +15,29 @@ struct OpenAIAPITests {
     }
 
     @Test
-    func `sends the prompt without storing it or reasoning`() throws {
+    func `sends the prompt with little reasoning and room for it, without storing it`() throws {
         let request = RewriteRequest.cleanup("um hello")
         let body = try Self.api.call(for: request).body.jsonObject()
 
-        #expect(body["model"] is String)
         #expect(body["instructions"] as? String == RewritePrompt.system(for: request))
         #expect(body["input"] as? String == RewritePrompt.userMessage(for: request))
-        #expect(body["max_output_tokens"] as? Int == request.outputTokenBudget)
+        #expect(body["max_output_tokens"] as? Int == request.outputTokenBudget + 4096)
         #expect(body["store"] as? Bool == false)
-        #expect((body["reasoning"] as? [String: String])?["effort"] == "none")
+        #expect((body["reasoning"] as? [String: String])?["effort"] == "low")
+    }
+
+    @Test(arguments: [(CloudModel.fastest, "gpt-6-luna"), (.balanced, "gpt-6.1-sol"), (.smartest, "gpt-6-astra")])
+    func `calls the chosen model`(model: CloudModel, identifier: String) throws {
+        let body = try Self.api.call(for: .cleanup("hello", cloudModel: model)).body.jsonObject()
+
+        #expect(body["model"] as? String == identifier)
+    }
+
+    @Test
+    func `needs a cloud model`() {
+        #expect(throws: RewriteError.unavailable) {
+            try Self.api.call(for: .cleanup("hello", cloudModel: nil))
+        }
     }
 
     @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-test", isBroken: true)])

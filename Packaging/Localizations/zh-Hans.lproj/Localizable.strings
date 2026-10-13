@@ -164,6 +164,8 @@
 "Locked" = "已锁定";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOV等";
 "Make modes with your own instructions, or tune the built-in ones." = "用你自己的指令创建模式，或调整内置模式。";
+"Makes fewer mistakes and is still quick." = "错误更少，速度依然快。";
+"Makes the fewest mistakes, but is slower and pricier." = "错误最少，但更慢、更贵。";
 "Microphone" = "麦克风";
 "Mode in %@" = "模式（%@）";
 "Mode in %@: %@" = "模式（%1$@）：%2$@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "麦克风在启动时停止了。";
 "The microphone's audio format changed during the recording." = "录音期间麦克风的音频格式发生了变化。";
 "The microphone's audio format isn't supported." = "不支持麦克风的音频格式。";
+"The quickest and cheapest." = "最快、最便宜。";
 "The speech model %@ isn't downloaded." = "尚未下载语音识别模型“%@”。";
 "The speech model doesn't know one of the chosen languages." = "语音识别模型不支持所选语言中的一种。";
 "The speech model failed to load. Retry from the menu." = "语音识别模型载入失败。请从菜单中重试。";

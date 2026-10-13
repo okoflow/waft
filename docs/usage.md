@@ -115,9 +115,13 @@ it up in the section that appears below it.
   server with an OpenAI-compatible `/v1/chat/completions` endpoint works, and
   the text never leaves your Mac.
 - **Claude** needs an API key created inside a workspace in the
-  [Anthropic Console](https://console.anthropic.com/settings/keys).
+  [Anthropic Console](https://console.anthropic.com/settings/keys). **Model**
+  offers Haiku 5.5, the quickest and cheapest, Sonnet 5.5, the default, and
+  Opus 5.5, which makes the fewest mistakes but is slower and pricier.
 - **OpenAI** needs an API key from the
   [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
+  **Model** offers GPT-6 Luna, GPT-6.1 Sol, the default, and GPT-6 Astra, in
+  the same order.
 
 API keys are kept in your login Keychain on this Mac. **Remove** deletes them.
 

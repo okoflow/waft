@@ -4,18 +4,27 @@ import WaftCore
 
 struct OpenAIAPI: RewriteAPI {
     private static let endpoint = URL(literal: "https://api.openai.com/v1/responses")
-    private static let model = "gpt-6-luna"
 
     let service = "OpenAI"
     let apiKeyStore: any ValueStore<String>
 
+    private static func identifier(of model: CloudModel) -> String {
+        switch model {
+        case .fastest: "gpt-6-luna"
+        case .balanced: "gpt-6.1-sol"
+        case .smartest: "gpt-6-astra"
+        }
+    }
+
     func call(for request: RewriteRequest) throws(RewriteError) -> APICall<OpenAIRequest> {
+        guard let model = request.cloudModel else { throw .unavailable }
+
         let headers = try ["authorization": "Bearer \(APIKey.load(from: apiKeyStore))"]
         let body = OpenAIRequest(
-            model: Self.model,
+            model: Self.identifier(of: model),
             instructions: RewritePrompt.system(for: request),
             input: RewritePrompt.userMessage(for: request),
-            maximumOutputTokens: request.outputTokenBudget,
+            maximumOutputTokens: request.outputTokenLimitWithThinking,
         )
 
         return APICall(url: Self.endpoint, headers: headers, body: body)

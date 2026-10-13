@@ -164,6 +164,8 @@
 "Locked" = "ロック中";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOVなど";
 "Make modes with your own instructions, or tune the built-in ones." = "自分の指示でモードを作ったり、標準のモードを調整したりできます。";
+"Makes fewer mistakes and is still quick." = "誤りが少なく、十分に高速です。";
+"Makes the fewest mistakes, but is slower and pricier." = "誤りが最も少ないですが、遅く、高価です。";
 "Microphone" = "マイク";
 "Mode in %@" = "%@でのモード";
 "Mode in %@: %@" = "%1$@でのモード：%2$@";
@@ -311,6 +313,7 @@
 "The microphone stopped while starting." = "マイクが起動中に停止しました。";
 "The microphone's audio format changed during the recording." = "録音中にマイクのオーディオフォーマットが変わりました。";
 "The microphone's audio format isn't supported." = "マイクのオーディオフォーマットに対応していません。";
+"The quickest and cheapest." = "最速で、最も安価です。";
 "The speech model %@ isn't downloaded." = "音声認識モデル「%@」がダウンロードされていません。";
 "The speech model doesn't know one of the chosen languages." = "選択した言語のいずれかに、音声認識モデルが対応していません。";
 "The speech model failed to load. Retry from the menu." = "音声認識モデルを読み込めませんでした。メニューから再試行してください。";

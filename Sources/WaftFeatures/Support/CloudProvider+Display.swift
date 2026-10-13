@@ -22,4 +22,15 @@ extension CloudProvider {
         case .openAI: "sk-proj-…"
         }
     }
+
+    func name(of model: CloudModel) -> String {
+        switch (self, model) {
+        case (.claude, .fastest): "Haiku 5.5"
+        case (.claude, .balanced): "Sonnet 5.5"
+        case (.claude, .smartest): "Opus 5.5"
+        case (.openAI, .fastest): "GPT-6 Luna"
+        case (.openAI, .balanced): "GPT-6.1 Sol"
+        case (.openAI, .smartest): "GPT-6 Astra"
+        }
+    }
 }
