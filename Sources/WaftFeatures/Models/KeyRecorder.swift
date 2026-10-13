@@ -53,7 +53,7 @@ final class KeyRecorder {
         self.purpose == purpose
     }
 
-    private func handle(_ event: NSEvent) {
+    func handle(_ event: NSEvent) {
         guard let purpose else { return }
 
         let isKeyDown = event.type == .keyDown

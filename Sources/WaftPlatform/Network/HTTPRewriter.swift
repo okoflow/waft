@@ -4,11 +4,11 @@ import WaftCore
 
 struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
     private let api: API
-    private let session: URLSession
+    private let transport: any HTTPTransport
 
-    init(api: API, session: URLSession) {
+    init(api: API, transport: any HTTPTransport) {
         self.api = api
-        self.session = session
+        self.transport = transport
     }
 
     private static func encoded(_ body: API.Body) throws(RewriteError) -> Data {
@@ -50,7 +50,7 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
         let response: URLResponse
 
         do {
-            (data, response) = try await session.data(for: request)
+            (data, response) = try await transport.data(for: request)
         } catch {
             throw .failedRequest(error, to: api.service)
         }

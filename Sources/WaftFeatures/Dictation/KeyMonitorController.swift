@@ -11,18 +11,19 @@ final class KeyMonitorController {
         case unavailable
     }
 
-    private static let retryInterval: TimeInterval = 2
-    private static let healthCheckInterval: TimeInterval = 5
-
     private(set) var status = Status.starting
 
     @ObservationIgnored private var retryTimer: Timer?
     @ObservationIgnored private var healthCheckTimer: Timer?
 
     private let monitor: any KeyEventMonitor
+    private let retryInterval: TimeInterval
+    private let healthCheckInterval: TimeInterval
 
-    init(monitor: any KeyEventMonitor) {
+    init(monitor: any KeyEventMonitor, retryInterval: TimeInterval = 2, healthCheckInterval: TimeInterval = 5) {
         self.monitor = monitor
+        self.retryInterval = retryInterval
+        self.healthCheckInterval = healthCheckInterval
     }
 
     func start() {
@@ -30,7 +31,7 @@ final class KeyMonitorController {
 
         guard monitor.start() else {
             status = .unavailable
-            retryTimer = .scheduledInCommonModes(every: Self.retryInterval, repeats: false) { [weak self] in
+            retryTimer = .scheduledInCommonModes(every: retryInterval, repeats: false) { [weak self] in
                 self?.start()
             }
 
@@ -51,7 +52,7 @@ final class KeyMonitorController {
     private func watchHealth() {
         guard healthCheckTimer == nil else { return }
 
-        healthCheckTimer = .scheduledInCommonModes(every: Self.healthCheckInterval, repeats: true) { [weak self] in
+        healthCheckTimer = .scheduledInCommonModes(every: healthCheckInterval, repeats: true) { [weak self] in
             self?.restartIfStopped()
         }
     }

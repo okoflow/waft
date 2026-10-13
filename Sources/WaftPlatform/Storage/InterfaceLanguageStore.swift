@@ -6,21 +6,31 @@ package struct InterfaceLanguageStore: ValueStore {
 
     package let name = "interface language"
 
-    package init() {}
+    private nonisolated(unsafe) let defaults: UserDefaults
+    private let domainName: String
+
+    package init() {
+        self.init(defaults: .standard, domainName: AppIdentity.bundleIdentifier)
+    }
+
+    init(defaults: UserDefaults, domainName: String) {
+        self.defaults = defaults
+        self.domainName = domainName
+    }
 
     package func load() -> String? {
-        let domain = UserDefaults.standard.persistentDomain(forName: AppIdentity.bundleIdentifier)
+        let domain = defaults.persistentDomain(forName: domainName)
         guard let languages = domain?[Self.key] as? [String] else { return nil }
 
         return languages.first
     }
 
     package func save(_ value: String) {
-        UserDefaults.standard.set([value], forKey: Self.key)
+        defaults.set([value], forKey: Self.key)
     }
 
     package func delete() {
-        UserDefaults.standard.removeObject(forKey: Self.key)
+        defaults.removeObject(forKey: Self.key)
     }
 
     package func exists() -> Bool {

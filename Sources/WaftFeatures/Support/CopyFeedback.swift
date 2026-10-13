@@ -7,12 +7,18 @@ final class CopyFeedback<Item: Equatable> {
 
     @ObservationIgnored private var reset: Task<Void, Never>?
 
+    private let pause: Duration
+
+    init(pause: Duration = .seconds(1.6)) {
+        self.pause = pause
+    }
+
     func show(_ item: Item) {
         self.item = item
 
         reset?.cancel()
-        reset = Task { [weak self] in
-            guard await Task.slept(for: .seconds(1.6)) else { return }
+        reset = Task { [weak self, pause] in
+            guard await Task.slept(for: pause) else { return }
 
             self?.item = nil
         }

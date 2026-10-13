@@ -5,9 +5,6 @@ import WaftCore
 
 @Observable
 final class RecordingController {
-    private static let hudDelay = Duration.milliseconds(300)
-    private static let watchdogInterval: TimeInterval = 0.25
-
     @ObservationIgnored var onPoll: ((PushToTalk.Event, TimeInterval) -> Void)?
     @ObservationIgnored var onFinish: ((ActiveRecording, FocusTarget, [Float]) -> Void)?
 
@@ -22,6 +19,8 @@ final class RecordingController {
     private let sounds: any FeedbackSoundPlayer
     private let settings: SettingsModel
     private let hud: HUDController
+    private let hudDelay: Duration
+    private let watchdogInterval: TimeInterval
 
     var isRecording: Bool {
         guard let recording, !recording.isRejected, !recording.hasFailed else { return false }
@@ -36,6 +35,8 @@ final class RecordingController {
         sounds: any FeedbackSoundPlayer,
         settings: SettingsModel,
         hud: HUDController,
+        hudDelay: Duration = .milliseconds(300),
+        watchdogInterval: TimeInterval = 0.25,
     ) {
         self.recorder = recorder
         self.focusTracker = focusTracker
@@ -43,6 +44,8 @@ final class RecordingController {
         self.sounds = sounds
         self.settings = settings
         self.hud = hud
+        self.hudDelay = hudDelay
+        self.watchdogInterval = watchdogInterval
     }
 
     func start() {
@@ -110,7 +113,7 @@ final class RecordingController {
         watchdog.reset()
 
         var made = ActiveRecording(id: lastRecordingID, purpose: trigger.purpose, key: trigger.key)
-        made.watchdogTimer = .scheduledInCommonModes(every: Self.watchdogInterval, repeats: true) { [weak self] in
+        made.watchdogTimer = .scheduledInCommonModes(every: watchdogInterval, repeats: true) { [weak self] in
             self?.pollKey()
         }
 
@@ -162,8 +165,8 @@ final class RecordingController {
     }
 
     private func scheduleListeningHUD(for id: RecordingID) -> Task<Void, Never> {
-        Task { [weak self] in
-            guard await Task.slept(for: Self.hudDelay) else { return }
+        Task { [weak self, hudDelay] in
+            guard await Task.slept(for: hudDelay) else { return }
 
             self?.showListeningHUD(for: id)
         }

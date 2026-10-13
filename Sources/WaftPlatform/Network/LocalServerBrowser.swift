@@ -5,9 +5,15 @@ package struct LocalServerBrowser: LocalServerBrowsing {
     private static let timeout: TimeInterval = 1.5
     private static let service = "The local server"
 
-    private let session = URLSession(configuration: .ephemeral)
+    private let transport: any HTTPTransport
 
-    package init() {}
+    package init() {
+        self.init(transport: URLSession(configuration: .ephemeral))
+    }
+
+    init(transport: any HTTPTransport) {
+        self.transport = transport
+    }
 
     package func models(at server: LocalServer) async throws(RewriteError) -> [String] {
         let request = try URLRequest(url: server.url(appending: "/models"), timeoutInterval: Self.timeout)
@@ -15,7 +21,7 @@ package struct LocalServerBrowser: LocalServerBrowsing {
         let response: URLResponse
 
         do {
-            (data, response) = try await session.data(for: request)
+            (data, response) = try await transport.data(for: request)
         } catch {
             throw .failedRequest(error, to: Self.service)
         }
