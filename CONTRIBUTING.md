@@ -197,11 +197,24 @@ Every test file follows one pattern:
 
 Scripts follow the
 [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
-and one layout: `#!/bin/bash` and `set -euo pipefail`, `readonly` constants at
-the top, `usage` and `die` helpers that print to standard error, a `cleanup`
-function trapped on `EXIT` when the script makes temporary files, a function
-for every step, and a `main` function at the bottom called with `"$@"`. A
-`make` target runs each script. shfmt formats them with the settings in
+and run on the Bash 3.2 that macOS ships. Every script has one layout:
+
+- `#!/bin/bash`, a header comment that says what the script does, and
+  `set -euo pipefail`.
+- `readonly` constants, then globals, then functions: `usage` and `die`, which
+  print to standard error, a `cleanup` trapped on `EXIT` when the script makes
+  temporary files, a function for every step, and `main` at the bottom, called
+  with `"$@"`.
+- A function names its arguments on its first line, as in
+  `local version=$1 image=$2`, and separates its steps with blank lines.
+- A `local` that takes a `$(…)` is declared on a line of its own, since
+  `local` hides the command's failure. A function that does work runs as a
+  command, never inside `$(…)`, where Bash 3.2 ignores `set -e`.
+- Options go before operands, long options are used where the tool has them,
+  and argument lists that change go in an array.
+- A guard reads `[[ … ]] || die …`; anything longer is an `if`.
+
+A `make` target runs each script. shfmt formats them with the settings in
 `.editorconfig`, and ShellCheck checks them with those in `.shellcheckrc`.
 
 ## Documentation

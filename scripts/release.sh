@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Builds, notarizes, and packages a release of Waft from origin/main: the
+# disk image, the signed appcast, and the Homebrew cask, in build/release.
+
 set -euo pipefail
 
 readonly PRODUCT='Waft'
@@ -29,7 +33,9 @@ die() {
 }
 
 cleanup() {
-  rm -rf "${WORK_DIR}"
+  if [[ -n ${WORK_DIR} ]]; then
+    rm -rf -- "${WORK_DIR}"
+  fi
 }
 
 app_version() {
@@ -54,20 +60,23 @@ check_tree() {
 check_prerequisites() {
   swift package resolve >&2
 
-  [[ ${SIGNING_IDENTITY:-} == 'Developer ID Application'* ]] \
-    || die 'set SIGNING_IDENTITY to your Developer ID Application identity'
+  if [[ ${SIGNING_IDENTITY:-} != 'Developer ID Application'* ]]; then
+    die 'set SIGNING_IDENTITY to your Developer ID Application identity'
+  fi
 
-  xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null \
-    || die "no notarytool profile \"${NOTARY_PROFILE}\": run xcrun notarytool store-credentials ${NOTARY_PROFILE}"
+  if ! xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null; then
+    die "no notarytool profile \"${NOTARY_PROFILE}\": run xcrun notarytool store-credentials ${NOTARY_PROFILE}"
+  fi
 
-  "${SPARKLE_TOOLS}/generate_keys" -p >/dev/null \
-    || die 'no Sparkle signing key in the login keychain'
+  if ! "${SPARKLE_TOOLS}/generate_keys" -p >/dev/null; then
+    die 'no Sparkle signing key in the login keychain'
+  fi
 }
 
 notarize() {
   local path=$1
 
-  xcrun notarytool submit "${path}" --keychain-profile "${NOTARY_PROFILE}" --wait
+  xcrun notarytool submit --keychain-profile "${NOTARY_PROFILE}" --wait "${path}"
 }
 
 notarize_app() {
@@ -108,8 +117,9 @@ make_appcast() {
 
 write_cask() {
   local version=$1 image=$2
+
   local checksum
-  checksum=$(shasum -a 256 "${image}" | cut -d ' ' -f 1)
+  checksum=$(shasum --algorithm 256 "${image}" | cut -d ' ' -f 1)
 
   sed -e "s/VERSION/${version}/" -e "s/SHA256/${checksum}/" "${CASK_TEMPLATE}" >"${OUTPUT}/waft.rb"
 }
@@ -135,10 +145,11 @@ main() {
   local notes=$1
   [[ -f ${notes} ]] || die "no release notes at \"${notes}\""
 
-  local version commit image
+  local version commit
   version=$(app_version)
   commit=$(git rev-parse HEAD)
-  image="${OUTPUT}/${PRODUCT}-${version}.dmg"
+
+  local image="${OUTPUT}/${PRODUCT}-${version}.dmg"
 
   check_tree "v${version}" "${commit}"
   check_prerequisites
@@ -146,7 +157,7 @@ main() {
   WORK_DIR=$(mktemp -d)
   trap cleanup EXIT
 
-  rm -rf "${OUTPUT}"
+  rm -rf -- "${OUTPUT:?}"
   mkdir -p "${OUTPUT}"
 
   scripts/bundle.sh release
