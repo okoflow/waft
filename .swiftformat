@@ -1,38 +1,46 @@
---swift-version 6.2
---language-mode 6
---min-version   0.63.1
-
---max-width              130
---wrap-arguments         before-first
---wrap-collections       before-first
---wrap-conditions        after-first
---wrap-return-type       never
---wrap-effects           never
---allow-partial-wrapping false
-
---header                  strip
---extension-acl           on-declarations
---type-attributes         prev-line
---func-attributes         prev-line
+--allow-partial-wrapping  false
 --computed-var-attributes prev-line
---stored-var-attributes   same-line
---preserve-acronyms       convertTokenToId,convertIdToToken,tokenIds
-
---organization-mode       type
---organize-types          class,actor,struct,enum,extension,protocol
+--extension-acl           on-declarations
+--func-attributes         prev-line
+--header                  strip
+--language-mode           6
 --mark-categories         false
---type-body-marks         remove
+--max-width               130
+--organization-mode       type
+--organize-types          actor,class,enum,extension,protocol,struct
+--preserve-acronyms       convertIdToToken,convertTokenToId,tokenIds
 --sort-swiftui-properties first-appearance-sort
+--stored-var-attributes   same-line
+--strip-unused-args       closure-only
+--swift-version           6.3
+--type-attributes         prev-line
+--type-body-marks         remove
+--wrap-arguments          before-first
+--wrap-collections        before-first
+--wrap-conditions         after-first
+--wrap-effects            never
+--wrap-return-type        never
 
---enable acronyms
---enable blankLineAfterSwitchCase
---enable blankLinesAfterGuardStatements
---enable organizeDeclarations
---enable preferCountWhere
---enable preferFinalClasses
---enable privateStateVariables
---enable singlePropertyPerLine
---enable wrapEnumCases
+--min-version 0.63.1
 
---disable environmentEntry
---disable wrapMultilineStatementBraces
+--enable                             \
+  acronyms,                          \
+  blankLineAfterSwitchCase,          \
+  blankLinesAfterGuardStatements,    \
+  isEmpty,                           \
+  noGuardInTests,                    \
+  organizeDeclarations,              \
+  preferContains,                    \
+  preferCountWhere,                  \
+  preferFinalClasses,                \
+  preferFirstWhere,                  \
+  preferMinOverSorted,               \
+  singlePropertyPerLine,             \
+  testSuiteAccessControl,            \
+  validateTestCases,                 \
+  wrapEnumCases,                     \
+  wrapMultilineConditionalAssignment
+
+--disable                      \
+  environmentEntry,            \
+  wrapMultilineStatementBraces

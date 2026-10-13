@@ -1,4 +1,4 @@
-@preconcurrency import AVFoundation
+import AVFoundation
 import os
 import WaftCore
 
@@ -7,9 +7,23 @@ final class AudioSampleSink: @unchecked Sendable {
         var samples: [Float] = []
         var hasAudio = false
         var coveredUntil: TimeInterval = 0
+        var hasLoggedFailure = false
     }
 
-    static let sampleRate = 16000.0
+    private final class PendingInput: @unchecked Sendable {
+        private var buffer: AVAudioPCMBuffer?
+
+        init(_ buffer: AVAudioPCMBuffer) {
+            self.buffer = buffer
+        }
+
+        func take() -> AVAudioPCMBuffer? {
+            let taken = buffer
+            buffer = nil
+
+            return taken
+        }
+    }
 
     private let converter: AVAudioConverter
     private let outputFormat: AVAudioFormat
@@ -33,7 +47,7 @@ final class AudioSampleSink: @unchecked Sendable {
     init?(inputFormat: AVAudioFormat, meter: LevelMeter, onFirstBuffer: @escaping @Sendable () -> Void) {
         guard let outputFormat = AVAudioFormat(
             commonFormat: .pcmFormatFloat32,
-            sampleRate: Self.sampleRate,
+            sampleRate: SpeechAudio.sampleRate,
             channels: 1,
             interleaved: false,
         ),
@@ -52,46 +66,71 @@ final class AudioSampleSink: @unchecked Sendable {
     func consume(_ input: AVAudioPCMBuffer, at time: AVAudioTime) {
         let start = time.isHostTimeValid ? AVAudioTime.seconds(forHostTime: time.hostTime) : Uptime.now
         let end = start + Double(input.frameLength) / inputSampleRate
-        guard let converted = convert(input) else { return }
+        let converted = convert(input)
+        guard !converted.isEmpty else { return }
 
         meter.value = AudioLevel.meterValue(rms: AudioLevel.rms(converted))
 
-        let isFirst = captured.withLock { captured in
-            defer { captured.hasAudio = true }
-
+        let isFirstBuffer = captured.withLock { captured in
+            let isFirst = !captured.hasAudio
+            captured.hasAudio = true
             captured.samples.append(contentsOf: converted)
             captured.coveredUntil = end
 
-            return !captured.hasAudio
+            return isFirst
         }
 
-        if isFirst {
+        if isFirstBuffer {
             onFirstBuffer()
         }
     }
 
-    private func convert(_ input: AVAudioPCMBuffer) -> [Float]? {
-        let capacity = AVAudioFrameCount((Double(input.frameLength) * Self.sampleRate / inputSampleRate).rounded(.up)) + 32
-        guard let output = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: capacity) else { return nil }
+    private func convert(_ input: AVAudioPCMBuffer) -> [Float] {
+        let capacity = AVAudioFrameCount((Double(input.frameLength) * SpeechAudio.sampleRate / inputSampleRate).rounded(.up)) + 32
+        guard let output = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: capacity) else {
+            logFirstFailure {
+                Logger.audio.error("Couldn't allocate a buffer of \(capacity, privacy: .public) frames for the input audio")
+            }
 
-        nonisolated(unsafe) var hasHandedOver = false
+            return []
+        }
+
+        let pending = PendingInput(input)
         var error: NSError?
 
         converter.convert(to: output, error: &error) { _, status in
-            guard !hasHandedOver else {
+            guard let buffer = pending.take() else {
                 status.pointee = .noDataNow
 
                 return nil
             }
 
-            hasHandedOver = true
             status.pointee = .haveData
 
-            return input
+            return buffer
         }
 
-        guard error == nil, output.frameLength > 0, let channel = output.floatChannelData?[0] else { return nil }
+        if let error {
+            logFirstFailure {
+                Logger.audio.error("Couldn't convert audio: \(error.domain, privacy: .public) \(error.code, privacy: .public)")
+            }
+        }
+
+        guard error == nil, output.frameLength > 0, let channel = output.floatChannelData?[0] else { return [] }
 
         return Array(UnsafeBufferPointer(start: channel, count: Int(output.frameLength)))
+    }
+
+    private func logFirstFailure(_ log: () -> Void) {
+        let isFirst = captured.withLock { captured in
+            let isFirst = !captured.hasLoggedFailure
+            captured.hasLoggedFailure = true
+
+            return isFirst
+        }
+
+        guard isFirst else { return }
+
+        log()
     }
 }

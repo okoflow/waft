@@ -9,9 +9,10 @@ extension Language {
         [.hindi, .urdu],
     ]
 
-    package static func soundAlike(among languages: [Language]) -> [Language]? {
-        soundAlikeGroups
-            .map { group in group.filter(languages.contains) }
-            .first { $0.count > 1 }
+    package static func soundAlike(among languages: [Language]) -> [Language] {
+        let groups = soundAlikeGroups.map { group in group.filter(languages.contains) }
+        guard let alike = groups.first(where: { $0.count > 1 }) else { return [] }
+
+        return alike
     }
 }

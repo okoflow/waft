@@ -6,4 +6,6 @@ extension Logger {
     static let insertion = Logger(subsystem: AppIdentity.bundleIdentifier, category: "insertion")
     static let keyboard = Logger(subsystem: AppIdentity.bundleIdentifier, category: "keyboard")
     static let network = Logger(subsystem: AppIdentity.bundleIdentifier, category: "network")
+    static let storage = Logger(subsystem: AppIdentity.bundleIdentifier, category: "storage")
+    static let system = Logger(subsystem: AppIdentity.bundleIdentifier, category: "system")
 }

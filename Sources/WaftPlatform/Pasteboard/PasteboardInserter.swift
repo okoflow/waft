@@ -1,8 +1,8 @@
+package import WaftCore
 import AppKit
 import ApplicationServices
 import Carbon.HIToolbox
 import os
-import WaftCore
 
 @MainActor
 package final class PasteboardInserter: TextInserter {
@@ -10,7 +10,6 @@ package final class PasteboardInserter: TextInserter {
     private static let settleDelay = Duration.milliseconds(150)
     private static let keyReleaseTimeout = Duration.seconds(10)
     private static let idleTimeout = Duration.seconds(2)
-    private static let pollInterval = Duration.milliseconds(20)
 
     private let focusTracker: any FocusTracker
     private let keyboardState: any KeyboardState
@@ -25,9 +24,14 @@ package final class PasteboardInserter: TextInserter {
         activeInsertions += 1
         defer { activeInsertions -= 1 }
 
-        let wasReleased = await waitForRelease(of: key)
+        let wasReleased = await Poll.until(timeout: Self.keyReleaseTimeout) { !keyboardState.isHeld(key) }
         let current = focusTracker.currentFocus()
-        let decision = decide(target: target, current: current, isKeyHeld: !wasReleased)
+        let decision = InsertionDecision.decide(
+            isSecureField: isSecureField(current),
+            canPostKeys: AXIsProcessTrusted(),
+            isFocusOnTarget: target.isSameFocus(as: current),
+            isKeyHeld: !wasReleased,
+        )
 
         if case let .skip(reason) = decision {
             Logger.insertion.notice("Skipped pasting: \(reason.rawValue, privacy: .public)")
@@ -36,100 +40,52 @@ package final class PasteboardInserter: TextInserter {
         }
 
         let prepared = InsertionSpacing.prepared(text, after: current.element?.characterBeforeCaret)
-        guard await paste(prepared, releasing: key) else { return .skipped(.keyHeld) }
+        let outcome = await paste(prepared, releasing: key)
+        guard outcome == .pasted else { return outcome }
 
-        let app = current.bundleIdentifier ?? "an unknown app"
-
-        Logger.insertion.info("Pasted \(prepared.count) characters into \(app, privacy: .public)")
+        Logger.insertion.info("Pasted \(prepared.count) characters into \(current.appDescription, privacy: .public)")
 
         return .pasted
     }
 
     package func waitUntilIdle() async {
-        let deadline = ContinuousClock.now + Self.idleTimeout
-
-        while activeInsertions > 0, ContinuousClock.now < deadline {
-            try? await Task.sleep(for: Self.pollInterval)
-        }
+        await Poll.until(timeout: Self.idleTimeout) { activeInsertions == 0 }
     }
 
-    private func decide(target: FocusTarget, current: FocusTarget, isKeyHeld: Bool) -> InsertionDecision {
-        let isSecureField = current.element?.isSecureTextField ?? IsSecureEventInputEnabled()
-        let comparison = target.element.flatMap { element in current.element.map(element.compare) } ?? .unknown
-        let isFocusOnTarget = InsertionDecision.isFocusOnTarget(
-            comparison,
-            targetProcessID: target.processID,
-            currentProcessID: current.processID,
-        )
+    private func isSecureField(_ focus: FocusTarget) -> Bool {
+        guard let element = focus.element else { return IsSecureEventInputEnabled() }
 
-        return InsertionDecision.decide(
-            isSecureField: isSecureField,
-            canPostKeys: AXIsProcessTrusted(),
-            isFocusOnTarget: isFocusOnTarget,
-            isKeyHeld: isKeyHeld,
-        )
+        return element.isSecureTextField
     }
 
-    private func paste(_ text: String, releasing key: PushToTalkKey) async -> Bool {
-        let pasteboard = NSPasteboard.general
+    private func paste(_ text: String, releasing key: PushToTalkKey) async -> InsertionOutcome {
         let snapshot = await Task.detached { PasteboardSnapshot.take() }.value
-
         let lazyText = LazyPasteboardText(text)
         let item = NSPasteboardItem()
         item.setDataProvider(lazyText, forTypes: [.string])
 
-        let ownChangeCount = pasteboard.writePrivately(item)
+        let ownChangeCount = NSPasteboard.general.writePrivately(item)
 
         guard !keyboardState.isHeld(key) else {
             restore(snapshot, expecting: ownChangeCount)
 
-            return false
+            return .skipped(.keyHeld)
         }
 
         lazyText.arm()
         PasteShortcut.post()
 
-        guard await waitUntilRead(lazyText) else {
-            keepOnPasteboard(text, expecting: ownChangeCount)
+        guard await Poll.until(timeout: Self.readTimeout, { lazyText.wasReadAfterArming }) else {
+            Logger.insertion.notice("Skipped pasting: the app didn't read the text in time")
 
-            Logger.insertion.notice("Kept the text on the clipboard: the app didn't read it in time")
-
-            return true
+            return .skipped(.notRead)
         }
 
-        try? await Task.sleep(for: Self.settleDelay)
+        await Task.slept(for: Self.settleDelay)
 
         restore(snapshot, expecting: ownChangeCount)
 
-        return true
-    }
-
-    private func waitForRelease(of key: PushToTalkKey) async -> Bool {
-        let deadline = ContinuousClock.now + Self.keyReleaseTimeout
-
-        while keyboardState.isHeld(key) {
-            guard ContinuousClock.now < deadline else { return false }
-
-            try? await Task.sleep(for: Self.pollInterval)
-        }
-
-        return true
-    }
-
-    private func waitUntilRead(_ lazyText: LazyPasteboardText) async -> Bool {
-        let deadline = ContinuousClock.now + Self.readTimeout
-
-        while !lazyText.wasReadAfterArming, ContinuousClock.now < deadline {
-            try? await Task.sleep(for: Self.pollInterval)
-        }
-
-        return withExtendedLifetime(lazyText) { lazyText.wasReadAfterArming }
-    }
-
-    private func keepOnPasteboard(_ text: String, expecting changeCount: Int) {
-        guard NSPasteboard.general.changeCount == changeCount else { return }
-
-        NSPasteboard.general.writePrivately(text)
+        return .pasted
     }
 
     private func restore(_ snapshot: PasteboardSnapshot, expecting changeCount: Int) {

@@ -4,6 +4,10 @@ package struct RewriteSetup: Sendable {
     package let translation: Translation
     package let localServer: LocalServer
 
+    var serverInUse: LocalServer? {
+        provider == .localServer ? localServer : nil
+    }
+
     package init(
         provider: ModelProvider,
         instructions: String,

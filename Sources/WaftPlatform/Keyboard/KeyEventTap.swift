@@ -1,7 +1,7 @@
+package import WaftCore
 import ApplicationServices
 import CoreGraphics
 import os
-import WaftCore
 
 @MainActor
 package final class KeyEventTap: KeyEventMonitor {
@@ -12,7 +12,9 @@ package final class KeyEventTap: KeyEventMonitor {
     private var runLoopSource: CFRunLoopSource?
 
     package var isRunning: Bool {
-        tap.map { CGEvent.tapIsEnabled(tap: $0) } ?? false
+        guard let tap else { return false }
+
+        return CGEvent.tapIsEnabled(tap: tap)
     }
 
     package init() {
@@ -90,6 +92,7 @@ private let keyEventTapCallback: CGEventTapCallBack = { _, type, event, context 
         kind: kind,
         keyCode: event.getIntegerValueField(.keyboardEventKeycode),
         flags: event.flags.rawValue,
+        isRepeat: event.getIntegerValueField(.keyboardEventAutorepeat) != 0,
         timestamp: timestamp,
     )
     let tap = Unmanaged<KeyEventTap>.fromOpaque(context).takeUnretainedValue()

@@ -3,35 +3,30 @@ import Observation
 import WaftCore
 
 @Observable
-package final class KeyRecorder {
-    package enum Field: Hashable {
-        case dictation
-        case edit
-    }
-
-    package struct Rejection: Equatable {
-        let field: Field
+final class KeyRecorder {
+    struct Rejection: Equatable {
+        let purpose: RecordingPurpose
         let isTaken: Bool
     }
 
     private static let escapeKeyCode: UInt16 = 53
 
-    package private(set) var field: Field?
-    package private(set) var rejection: Rejection?
-    package private(set) var rejections: [Field: Int] = [:]
+    private(set) var purpose: RecordingPurpose?
+    private(set) var rejection: Rejection?
+    private(set) var rejections: [RecordingPurpose: Int] = [:]
 
     @ObservationIgnored private var monitor: Any?
     @ObservationIgnored private var takenKey: PushToTalkKey?
     @ObservationIgnored private var record: ((PushToTalkKey) -> Void)?
 
-    package var isRecording: Bool {
-        field != nil
+    var isRecording: Bool {
+        purpose != nil
     }
 
-    func start(_ field: Field, excluding takenKey: PushToTalkKey?, _ record: @escaping (PushToTalkKey) -> Void) {
+    func start(_ purpose: RecordingPurpose, excluding takenKey: PushToTalkKey?, _ record: @escaping (PushToTalkKey) -> Void) {
         stop()
 
-        self.field = field
+        self.purpose = purpose
         self.takenKey = takenKey
         self.record = record
         rejection = nil
@@ -51,34 +46,36 @@ package final class KeyRecorder {
 
         monitor = nil
         record = nil
-        field = nil
+        purpose = nil
     }
 
-    func isRecording(_ field: Field) -> Bool {
-        self.field == field
+    func isRecording(_ purpose: RecordingPurpose) -> Bool {
+        self.purpose == purpose
     }
 
     private func handle(_ event: NSEvent) {
-        if event.type == .keyDown, event.keyCode == Self.escapeKeyCode {
+        guard let purpose else { return }
+
+        let isKeyDown = event.type == .keyDown
+
+        if isKeyDown, event.keyCode == Self.escapeKeyCode {
             stop()
 
             return
         }
 
-        guard let field, let key = PushToTalkKey(keyCode: Int64(event.keyCode)) else {
-            if event.type == .keyDown, let field {
-                reject(in: field, isTaken: false)
+        guard let key = PushToTalkKey(keyCode: Int64(event.keyCode)) else {
+            if isKeyDown {
+                reject(for: purpose, isTaken: false)
             }
 
             return
         }
 
-        if event.type == .flagsChanged, !key.isHeld(in: UInt64(event.modifierFlags.rawValue)) {
-            return
-        }
-
+        let isPress = isKeyDown || key.isHeld(in: UInt64(event.modifierFlags.rawValue))
+        guard isPress else { return }
         guard key != takenKey else {
-            reject(in: field, isTaken: true)
+            reject(for: purpose, isTaken: true)
 
             return
         }
@@ -87,8 +84,8 @@ package final class KeyRecorder {
         stop()
     }
 
-    private func reject(in field: Field, isTaken: Bool) {
-        rejection = Rejection(field: field, isTaken: isTaken)
-        rejections[field, default: 0] += 1
+    private func reject(for purpose: RecordingPurpose, isTaken: Bool) {
+        rejection = Rejection(purpose: purpose, isTaken: isTaken)
+        rejections[purpose, default: 0] += 1
     }
 }

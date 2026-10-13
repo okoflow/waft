@@ -1,27 +1,52 @@
+package import Foundation
 import AVFoundation
+import os
 import WaftCore
 
 package struct MediaAudioReader: MediaDecoder {
     package init() {}
 
-    private static func append(_ buffer: CMSampleBuffer, to samples: inout [Float]) {
-        guard let block = CMSampleBufferGetDataBuffer(buffer) else { return }
+    private static func append(_ buffer: CMSampleBuffer, to samples: inout [Float]) throws(MediaAudioError) {
+        guard let block = CMSampleBufferGetDataBuffer(buffer) else {
+            Logger.audio.error("A sample buffer of the file has no data")
 
-        let length = CMBlockBufferGetDataLength(block)
-        let count = length / MemoryLayout<Float>.size
+            throw .unreadable
+        }
+
+        let count = CMBlockBufferGetDataLength(block) / MemoryLayout<Float>.size
         let start = samples.count
 
         samples.append(contentsOf: repeatElement(0, count: count))
-        samples.withUnsafeMutableBytes { bytes in
-            guard let base = bytes.baseAddress else { return }
 
-            _ = CMBlockBufferCopyDataBytes(
+        let status = samples.withUnsafeMutableBytes { bytes in
+            guard let base = bytes.baseAddress else { return kCMBlockBufferNoErr }
+
+            return CMBlockBufferCopyDataBytes(
                 block,
                 atOffset: 0,
                 dataLength: count * MemoryLayout<Float>.size,
                 destination: base + start * MemoryLayout<Float>.size,
             )
         }
+
+        guard status == kCMBlockBufferNoErr else {
+            Logger.audio.error("Couldn't copy the file's audio: OSStatus \(status, privacy: .public)")
+
+            throw .unreadable
+        }
+    }
+
+    private static func failure(of reader: AVAssetReader) -> MediaAudioError {
+        if let error = reader.error as NSError? {
+            Logger.audio.error(
+                """
+                Couldn't read the file's audio: \(error.domain, privacy: .public) \(error.code, privacy: .public) \
+                \(error.localizedDescription, privacy: .private)
+                """,
+            )
+        }
+
+        return .unreadable
     }
 
     @concurrent
@@ -42,29 +67,17 @@ package struct MediaAudioReader: MediaDecoder {
         output.alwaysCopiesSampleData = false
         reader.add(output)
 
-        guard reader.startReading() else { throw reader.error ?? MediaAudioError.unreadable }
+        guard reader.startReading() else { throw Self.failure(of: reader) }
 
         var samples: [Float] = []
 
         while let buffer = output.copyNextSampleBuffer() {
             try Task.checkCancellation()
-            Self.append(buffer, to: &samples)
+            try Self.append(buffer, to: &samples)
         }
 
-        guard reader.status == .completed else { throw reader.error ?? MediaAudioError.unreadable }
+        guard reader.status == .completed else { throw Self.failure(of: reader) }
 
         return samples
-    }
-}
-
-package enum MediaAudioError: LocalizedError {
-    case noAudio
-    case unreadable
-
-    package var errorDescription: String? {
-        switch self {
-        case .noAudio: String(localized: "The file has no sound to transcribe.")
-        case .unreadable: String(localized: "Waft can't read this file.")
-        }
     }
 }

@@ -19,11 +19,11 @@ package enum ModelProvider: Hashable, Sendable {
         }
     }
 
-    package var deadline: Duration {
+    var deadline: Duration {
         isCloud ? .seconds(3) : .seconds(15)
     }
 
-    package var editDeadline: Duration {
+    var editDeadline: Duration {
         isCloud ? .seconds(20) : .seconds(45)
     }
 
@@ -34,17 +34,28 @@ package enum ModelProvider: Hashable, Sendable {
         }
     }
 
-    private init(storedName: String) {
-        switch storedName {
-        case "local": self = .localServer
-        default: self = .cloud(CloudProvider(rawValue: storedName) ?? .claude)
+    private init?(storedName: String) {
+        if storedName == "local" {
+            self = .localServer
+
+            return
         }
+
+        guard let provider = CloudProvider(rawValue: storedName) else { return nil }
+
+        self = .cloud(provider)
     }
 }
 
 extension ModelProvider: Codable {
     package init(from decoder: any Decoder) throws {
-        try self.init(storedName: decoder.singleValueContainer().decode(String.self))
+        let container = try decoder.singleValueContainer()
+        let storedName = try container.decode(String.self)
+        guard let provider = ModelProvider(storedName: storedName) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown model provider \(storedName)")
+        }
+
+        self = provider
     }
 
     package func encode(to encoder: any Encoder) throws {

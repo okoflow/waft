@@ -14,13 +14,17 @@ package enum InsertionSpacing {
     }
 
     private static func isWrittenWithoutSpaces(_ character: Character) -> Bool {
-        character.unicodeScalars.contains { scalar in
-            switch scalar.value {
-            case 0x3000 ... 0x303F, 0xFF00 ... 0xFFEF:
-                true
-            default:
-                WritingScript(scalar).map { $0 == .han || $0 == .kana } ?? false
-            }
+        character.unicodeScalars.contains(where: isUnspaced)
+    }
+
+    private static func isUnspaced(_ scalar: Unicode.Scalar) -> Bool {
+        switch scalar.value {
+        case 0x3000 ... 0x303F, 0xFF00 ... 0xFFEF:
+            return true
+        default:
+            guard let script = WritingScript(scalar) else { return false }
+
+            return script == .han || script == .kana
         }
     }
 }

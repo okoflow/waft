@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 import WaftCore
 
@@ -16,35 +15,33 @@ struct LicenseSection: View {
     var body: some View {
         if let license = pro.license {
             SettingsSection("License") {
-                SettingsRow(.verbatim(license.name ?? license.email), description: .verbatim(license.email)) {
+                SettingsRow(.verbatim(license.holder), description: .verbatim(license.email)) {
                     Button("Remove License…", role: .destructive, action: confirmRemoval)
                 }
             }
         } else {
             SettingsSection("License", subtitle: "Bought Pro? Paste the key from your receipt email.") {
                 SettingsRow("License key", description: problem) {
-                    InputField(.verbatim("WFT1…"), text: $pro.draft)
+                    InputField("License key", prompt: .verbatim("WFT1…"), text: $pro.draft)
                         .frame(width: 220)
-                        .onChange(of: pro.draft) { pro.clearProblem() }
 
-                    Button("Activate") { pro.activate(pro.draft) }
+                    Button("Activate", action: pro.activateDraft)
                         .buttonStyle(PushButtonStyle(isProminent: true))
                         .fixedSize()
-                        .disabled(pro.draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        .disabled(!pro.canActivateDraft)
                 }
             }
         }
     }
 
     private func confirmRemoval() {
-        let alert = NSAlert()
-        alert.messageText = String(localized: "Remove the license from this Mac?")
-        alert.informativeText = String(localized: "Pro features stop working here until you enter the key again.")
-        alert.addButton(withTitle: String(localized: "Remove License"))
-        alert.addButton(withTitle: String(localized: "Cancel"))
-        alert.buttons.first?.hasDestructiveAction = true
+        let confirmation = Confirmation(
+            message: String(localized: "Remove the license from this Mac?"),
+            detail: String(localized: "Pro features stop working here until you enter the key again."),
+            action: String(localized: "Remove License"),
+        )
 
-        if alert.runModal() == .alertFirstButtonReturn {
+        if confirmation.ask() {
             pro.deactivate()
         }
     }

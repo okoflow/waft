@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package protocol AudioRecorder: Sendable {
     var events: AsyncStream<RecordingEvent> { get }
@@ -6,5 +6,5 @@ package protocol AudioRecorder: Sendable {
 
     func start(_ recording: RecordingID, deviceID: String?) async
     func stop(_ recording: RecordingID, releasedAt: TimeInterval?) async -> [Float]
-    func failureReason(for recording: RecordingID) async -> String?
+    func failure(for recording: RecordingID) async -> RecordingFailure?
 }

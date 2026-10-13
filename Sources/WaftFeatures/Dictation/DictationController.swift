@@ -1,88 +1,58 @@
 import Foundation
-import Observation
 import os
 import WaftCore
 
-@Observable
-package final class DictationController {
-    enum Ending {
-        case finish(releasedAt: TimeInterval)
-        case discard(PushToTalk.DiscardReason)
+final class DictationController {
+    private var triggers = RecordingTriggers()
+
+    private let keyEventMonitor: any KeyEventMonitor
+    private let recordings: RecordingController
+    private let settings: SettingsModel
+    private let permissions: PermissionMonitor
+    private let speechModel: SpeechModelController
+    private let vocabulary: VocabularyModel
+    private let keyRecorder: KeyRecorder
+    private let pro: ProModel
+    private let queue: DictationQueue
+
+    var isRecording: Bool {
+        recordings.isRecording
     }
 
-    static let hudDelay = Duration.milliseconds(300)
-    static let watchdogInterval: TimeInterval = 0.25
-
-    package internal(set) var isRecording = false
-
-    @ObservationIgnored let recorder: any AudioRecorder
-    @ObservationIgnored let keyEventMonitor: any KeyEventMonitor
-    @ObservationIgnored let keyboardState: any KeyboardState
-    @ObservationIgnored let focusTracker: any FocusTracker
-    @ObservationIgnored let sounds: any FeedbackSoundPlayer
-    @ObservationIgnored let settings: SettingsModel
-    @ObservationIgnored let permissions: PermissionMonitor
-    @ObservationIgnored let speechModel: SpeechModelController
-    @ObservationIgnored let vocabulary: VocabularyModel
-    @ObservationIgnored let hud: HUDController
-    @ObservationIgnored let keyRecorder: KeyRecorder
-    @ObservationIgnored let pro: ProModel
-    @ObservationIgnored let queue: DictationQueue
-    @ObservationIgnored var triggers = RecordingTriggers()
-    @ObservationIgnored var watchdog = ReleaseWatchdog()
-    @ObservationIgnored var lastRecordingID = RecordingID.none
-
-    @ObservationIgnored var recording: ActiveRecording?
-
-    package var latestTranscript: String? {
-        queue.latestTranscript
-    }
-
-    init(dependencies: AppDependencies, models: FeatureModels, queue: DictationQueue) {
-        recorder = dependencies.recorder
-        keyEventMonitor = dependencies.keyEventMonitor
-        keyboardState = dependencies.keyboardState
-        focusTracker = dependencies.focusTracker
-        sounds = dependencies.sounds
-        settings = models.settings
-        permissions = models.permissions
-        speechModel = models.speechModel
-        vocabulary = models.vocabulary
-        hud = models.hud
-        keyRecorder = models.keyRecorder
-        pro = models.pro
+    init(
+        keyEventMonitor: any KeyEventMonitor,
+        recordings: RecordingController,
+        settings: SettingsModel,
+        permissions: PermissionMonitor,
+        speechModel: SpeechModelController,
+        vocabulary: VocabularyModel,
+        keyRecorder: KeyRecorder,
+        pro: ProModel,
+        queue: DictationQueue,
+    ) {
+        self.keyEventMonitor = keyEventMonitor
+        self.recordings = recordings
+        self.settings = settings
+        self.permissions = permissions
+        self.speechModel = speechModel
+        self.vocabulary = vocabulary
+        self.keyRecorder = keyRecorder
+        self.pro = pro
         self.queue = queue
-    }
 
-    func start() {
-        consumeKeyEvents()
-        consumeRecorderEvents()
-    }
+        recordings.onPoll = { [weak self] event, time in
+            self?.tick(event, at: time)
+        }
 
-    func waitUntilIdle() async {
-        await queue.waitUntilIdle()
-    }
-}
-
-extension DictationController {
-    func tick(_ event: PushToTalk.Event, at time: TimeInterval) {
-        guard let recording,
-              let action = triggers.handle(event, for: recording.purpose, at: time, settings: settings.settings)
-        else { return }
-
-        perform(RecordingTrigger(purpose: recording.purpose, key: recording.key, action: action), at: time)
-    }
-
-    private func consumeKeyEvents() {
-        Task { [weak self, events = keyEventMonitor.events] in
-            for await event in events {
-                self?.handle(event)
-            }
+        recordings.onFinish = { [weak self] recording, target, samples in
+            self?.submit(samples, from: recording, at: target)
         }
     }
 
-    private func consumeRecorderEvents() {
-        Task { [weak self, events = recorder.events] in
+    func start() {
+        recordings.start()
+
+        Task { [weak self, events = keyEventMonitor.events] in
             for await event in events {
                 self?.handle(event)
             }
@@ -92,56 +62,87 @@ extension DictationController {
     private func handle(_ keyEvent: KeyEvent) {
         guard !keyRecorder.isRecording else { return }
 
-        if let recording, recording.key.isPressed(by: keyEvent) {
-            watchdog.keyWasSeen()
-        }
+        recordings.resetWatchdog(on: keyEvent)
 
         for trigger in triggers.handle(keyEvent, settings: settings.settings) {
             perform(trigger, at: keyEvent.timestamp)
         }
     }
 
+    private func tick(_ event: PushToTalk.Event, at time: TimeInterval) {
+        guard let recording = recordings.recording,
+              let action = triggers.handle(event, for: recording.purpose, at: time, settings: settings.settings)
+        else { return }
+
+        perform(RecordingTrigger(purpose: recording.purpose, key: recording.key, action: action), at: time)
+    }
+
     private func perform(_ trigger: RecordingTrigger, at time: TimeInterval) {
-        if trigger.action == .startRecording {
-            if recording == nil {
-                beginRecording(for: trigger)
-            }
-
-            return
-        }
-
-        guard recording?.purpose == trigger.purpose else { return }
-
         switch trigger.action {
         case .startRecording:
-            break
+            guard recordings.recording == nil else { return }
+
+            startRecording(for: trigger)
 
         case .lockHandsFree:
-            recording?.isHandsFree = true
-            hud.lockHandsFree()
+            guard owns(trigger) else { return }
+
+            recordings.lockHandsFree()
 
         case .finishRecording:
-            endRecording(.finish(releasedAt: time))
+            guard owns(trigger) else { return }
+
+            recordings.finish(releasedAt: time)
 
         case let .discardRecording(reason):
-            endRecording(.discard(reason))
+            guard owns(trigger) else { return }
+
+            recordings.discard(because: reason)
         }
     }
 
-    private func handle(_ event: RecordingEvent) {
-        switch event {
-        case let .started(id, deviceName) where id == recording?.id:
-            Logger.dictation.info("Recording from \(deviceName, privacy: .public)")
+    private func owns(_ trigger: RecordingTrigger) -> Bool {
+        recordings.recording?.purpose == trigger.purpose
+    }
 
-            if settings.settings.playsSounds {
-                sounds.play(.recordingStarted)
-            }
-
-        case let .failed(id, reason) where id == recording?.id:
-            failRecording(reason)
-
-        case .started, .failed:
-            break
+    private func startRecording(for trigger: RecordingTrigger) {
+        if let problem = reasonNotToRecord(for: trigger.purpose) {
+            recordings.refuse(trigger, because: problem)
+        } else {
+            recordings.begin(trigger)
         }
+    }
+
+    private func reasonNotToRecord(for purpose: RecordingPurpose) -> String? {
+        if purpose == .edit, !pro.isUnlocked {
+            return String(localized: "Editing by voice is part of Waft Pro.")
+        }
+
+        if let message = speechModel.state.notReadyMessage {
+            return message
+        }
+
+        if permissions.status(of: .microphone) == .denied {
+            return String(localized: "Waft can't use the microphone. Allow it in Settings › General.")
+        }
+
+        return nil
+    }
+
+    private func submit(_ samples: [Float], from recording: ActiveRecording, at target: FocusTarget) {
+        let current = settings.settings
+
+        if current.appModes.mode(for: target.bundleIdentifier) != nil {
+            Logger.dictation.info("Using the app's own mode for \(target.appDescription, privacy: .public)")
+        }
+
+        queue.submit(DictationJob(
+            samples: samples,
+            recording: recording,
+            target: target,
+            settings: current,
+            vocabulary: vocabulary.reloadFromDisk(),
+            allowsAI: pro.isUnlocked,
+        ))
     }
 }

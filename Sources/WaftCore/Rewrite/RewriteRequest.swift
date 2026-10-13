@@ -1,28 +1,27 @@
 package struct RewriteRequest: Sendable {
-    package let text: String
-    package let instructions: String
-    package let language: Language
-    package let target: Language?
-    package let localServer: LocalServer?
-    package let selection: String?
-
-    package var outputTokenBudget: Int {
-        min(4096, max(selection == nil ? 512 : 1024, (selection ?? text).count * 2))
+    package enum Kind: Sendable {
+        case cleanup(instructions: String, target: Language?)
+        case edit(selection: String)
     }
 
-    package init(
-        text: String,
-        instructions: String,
-        language: Language,
-        target: Language? = nil,
-        localServer: LocalServer? = nil,
-        selection: String? = nil,
-    ) {
+    package let text: String
+    package let language: Language
+    package let kind: Kind
+    package let localServer: LocalServer?
+    package let deadline: Duration
+
+    package var outputTokenBudget: Int {
+        switch kind {
+        case .cleanup: min(4096, max(512, text.count * 2))
+        case let .edit(selection): min(4096, max(1024, selection.count * 2))
+        }
+    }
+
+    package init(text: String, language: Language, kind: Kind, localServer: LocalServer?, deadline: Duration) {
         self.text = text
-        self.instructions = instructions
         self.language = language
-        self.target = target
+        self.kind = kind
         self.localServer = localServer
-        self.selection = selection
+        self.deadline = deadline
     }
 }

@@ -1,17 +1,20 @@
 import Foundation
 import Observation
-import os
 import WaftCore
 
 @Observable
-package final class APIKeyModel {
-    package private(set) var isSet: Bool
-    package var draft = ""
+final class APIKeyModel {
+    private(set) var isSet: Bool
+    var draft = ""
 
-    @ObservationIgnored private let store: any ValueStore<String>
+    private let store: any ValueStore<String>
 
-    package var canSaveDraft: Bool {
-        !draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    var canSaveDraft: Bool {
+        !trimmedDraft.isEmpty
+    }
+
+    private var trimmedDraft: String {
+        draft.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     init(store: any ValueStore<String>) {
@@ -19,27 +22,16 @@ package final class APIKeyModel {
         isSet = store.exists()
     }
 
-    package func saveDraft() {
-        let key = draft.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !key.isEmpty else { return }
+    func saveDraft() {
+        guard canSaveDraft else { return }
 
-        do {
-            try store.save(key)
-
-            draft = ""
-        } catch {
-            Logger.settings.error("Couldn't save the API key: \(error.localizedDescription, privacy: .public)")
-        }
-
-        refresh()
+        store.write(trimmedDraft)
+        draft = ""
+        isSet = store.exists()
     }
 
-    package func remove() {
-        try? store.delete()
-        refresh()
-    }
-
-    private func refresh() {
+    func remove() {
+        store.remove()
         isSet = store.exists()
     }
 }

@@ -1,115 +1,126 @@
-import AppKit
+import Foundation
 import Observation
-import UniformTypeIdentifiers
 import WaftCore
 
 @Observable
-package final class FileTranscriptionModel {
-    package enum Phase: Equatable {
+final class FileTranscriptionModel {
+    enum Phase: Equatable {
         case idle
-        case reading
-        case transcribing(Double)
-        case finished(TimedTranscript)
-        case failed(String)
+        case reading(URL)
+        case transcribing(URL, Double)
+        case finished(URL, TimedTranscript)
+        case failed(URL, String)
     }
 
-    enum Format {
-        case text
-        case subtitles
-    }
+    let copyFeedback = CopyFeedback<URL>()
 
-    static let mediaTypes: [UTType] = [.audio, .movie, .audiovisualContent]
+    private(set) var phase = Phase.idle
+    var isDropTargeted = false
 
-    package private(set) var phase = Phase.idle
-    package private(set) var file: URL?
-    package private(set) var copiedAt: Date?
-    package var language: Language?
-    package var isDropTargeted = false
+    private var chosenLanguage: Language?
 
-    @ObservationIgnored private let transcriber: any Transcriber
-    @ObservationIgnored private let decoder: any MediaDecoder
-    @ObservationIgnored private let speechModel: SpeechModelController
-    @ObservationIgnored private let clipboard: any Clipboard
     @ObservationIgnored private var task: Task<Void, Never>?
+    @ObservationIgnored private var run = 0
 
-    var isWorking: Bool {
+    private let transcriber: any Transcriber
+    private let decoder: any MediaDecoder
+    private let speechModel: SpeechModelController
+    private let settings: SettingsModel
+    private let pro: ProModel
+    private let clipboard: any Clipboard
+
+    var language: Language? {
+        get {
+            guard let chosenLanguage, languages.contains(chosenLanguage) else { return nil }
+
+            return chosenLanguage
+        }
+
+        set { chosenLanguage = newValue }
+    }
+
+    var isLocked: Bool {
+        !pro.isUnlocked
+    }
+
+    var acceptsFiles: Bool {
+        !isLocked && !isWorking
+    }
+
+    var languages: [Language] {
+        settings.settings.languages.languages
+    }
+
+    var notReadyMessage: String? {
+        speechModel.state.notReadyMessage
+    }
+
+    private var isWorking: Bool {
         switch phase {
         case .reading, .transcribing: true
         case .idle, .finished, .failed: false
         }
     }
 
-    var transcript: TimedTranscript? {
-        if case let .finished(transcript) = phase {
-            return transcript
-        }
-
-        return nil
-    }
-
-    var notReadyMessage: String? {
-        speechModel.state.isReady ? nil : speechModel.state.notReadyMessage
-    }
-
-    init(transcriber: any Transcriber, decoder: any MediaDecoder, speechModel: SpeechModelController, clipboard: any Clipboard) {
+    init(
+        transcriber: any Transcriber,
+        decoder: any MediaDecoder,
+        speechModel: SpeechModelController,
+        settings: SettingsModel,
+        pro: ProModel,
+        clipboard: any Clipboard,
+    ) {
         self.transcriber = transcriber
         self.decoder = decoder
         self.speechModel = speechModel
+        self.settings = settings
+        self.pro = pro
         self.clipboard = clipboard
     }
 
-    package func transcribe(_ url: URL) {
+    private static func result(_ transcript: TimedTranscript?, of file: URL) -> Phase {
+        guard let transcript else { return .failed(file, String(localized: "There's no speech in this file.")) }
+
+        return .finished(file, transcript)
+    }
+
+    func transcribe(_ file: URL) {
+        guard !isLocked else { return }
+
         cancel()
-        file = url
-        copiedAt = nil
 
         if let notReadyMessage {
-            phase = .failed(notReadyMessage)
+            phase = .failed(file, notReadyMessage)
 
             return
         }
 
-        phase = .reading
+        let current = run
+
+        phase = .reading(file)
         task = Task { [weak self, transcriber, decoder, language] in
             do {
-                let samples = try await decoder.samples(of: url)
-                self?.phase = .transcribing(0)
+                let samples = try await decoder.samples(of: file)
+                self?.enter(.transcribing(file, 0), in: current)
 
                 let transcript = try await transcriber.transcribeFile(samples, in: language) { progress in
-                    Task { @MainActor in self?.update(progress) }
+                    Task { @MainActor in self?.update(progress, in: current) }
                 }
-                try Task.checkCancellation()
 
-                self?.phase = transcript.map(Phase.finished) ?? .failed(String(localized: "There's no speech in this file."))
-            } catch is CancellationError {
-                return
+                self?.enter(Self.result(transcript, of: file), in: current)
             } catch {
-                self?
-                    .phase = .failed((error as? LocalizedError)?
-                        .errorDescription ?? String(localized: "Waft can't read this file."))
+                self?.enter(.failed(file, error.localizedDescription), in: current)
             }
         }
     }
 
-    package func reset() {
+    func reset() {
         cancel()
         phase = .idle
-        file = nil
-        copiedAt = nil
-    }
-
-    func chooseFile() {
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = Self.mediaTypes
-        panel.allowsMultipleSelection = false
-        panel.prompt = String(localized: "Transcribe")
-
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-
-        transcribe(url)
     }
 
     func cancel() {
+        run += 1
         task?.cancel()
         task = nil
 
@@ -119,52 +130,21 @@ package final class FileTranscriptionModel {
     }
 
     func copyText() {
-        guard let transcript else { return }
+        guard case let .finished(file, transcript) = phase else { return }
 
         clipboard.copy(transcript.text)
-        copiedAt = Date()
-
-        let copied = copiedAt
-
-        Task { [weak self] in
-            try? await Task.sleep(for: .seconds(1.6))
-
-            if self?.copiedAt == copied {
-                self?.copiedAt = nil
-            }
-        }
+        copyFeedback.show(file)
     }
 
-    func save(_ format: Format) {
-        guard let transcript else { return }
+    private func enter(_ next: Phase, in current: Int) {
+        guard current == run else { return }
 
-        let panel = NSSavePanel()
-        let name = file?.deletingPathExtension().lastPathComponent ?? String(localized: "Transcript")
-
-        switch format {
-        case .text:
-            panel.allowedContentTypes = [.plainText]
-            panel.nameFieldStringValue = name + ".txt"
-
-        case .subtitles:
-            panel.allowedContentTypes = [UTType(filenameExtension: "srt") ?? .plainText]
-            panel.nameFieldStringValue = name + ".srt"
-        }
-
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-
-        let contents = format == .text ? transcript.text + "\n" : SubtitleFormatter.srt(transcript)
-
-        do {
-            try contents.write(to: url, atomically: true, encoding: .utf8)
-        } catch {
-            NSAlert(error: error).runModal()
-        }
+        phase = next
     }
 
-    private func update(_ progress: Double) {
-        guard case .transcribing = phase else { return }
+    private func update(_ progress: Double, in current: Int) {
+        guard case let .transcribing(file, _) = phase else { return }
 
-        phase = .transcribing(progress)
+        enter(.transcribing(file, progress), in: current)
     }
 }

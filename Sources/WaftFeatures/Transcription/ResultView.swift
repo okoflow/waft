@@ -1,8 +1,10 @@
+import AppKit
 import SwiftUI
 import WaftCore
 
 struct ResultView: View {
     let model: FileTranscriptionModel
+    let file: URL
     let transcript: TimedTranscript
 
     private var details: String {
@@ -17,13 +19,13 @@ struct ResultView: View {
         VStack(spacing: 12) {
             SettingsCard {
                 HStack(spacing: 12) {
-                    FileIcon(url: model.file)
+                    FileIcon(url: file)
 
-                    RowLabel(title: .verbatim(model.file?.lastPathComponent ?? ""), description: .verbatim(details))
+                    RowLabel(title: .verbatim(file.lastPathComponent), description: .verbatim(details))
 
                     Spacer(minLength: 0)
 
-                    CopyButton(isCopied: model.copiedAt != nil, action: model.copyText)
+                    CopyButton(isCopied: model.copyFeedback.isShowing(file), action: model.copyText)
                 }
                 .settingsRowPadding()
 
@@ -68,11 +70,25 @@ struct ResultView: View {
 
     @ViewBuilder
     private var saveButtons: some View {
-        Button("Save Text…") { model.save(.text) }
+        Button("Save Text…") { save(.text) }
             .fixedSize()
 
-        Button("Save Subtitles…") { model.save(.subtitles) }
+        Button("Save Subtitles…") { save(.subtitles) }
             .buttonStyle(PushButtonStyle(isProminent: true))
             .fixedSize()
+    }
+
+    private func save(_ format: TranscriptFormat) {
+        let panel = NSSavePanel()
+        panel.allowedContentTypes = [format.contentType]
+        panel.nameFieldStringValue = file.deletingPathExtension().appendingPathExtension(format.fileExtension).lastPathComponent
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        do {
+            try format.contents(of: transcript).write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            NSAlert(error: error).runModal()
+        }
     }
 }

@@ -4,7 +4,7 @@ import WaftCore
 struct AccessibilityElement: FocusedElement, @unchecked Sendable {
     private static let messagingTimeout: Float = 0.1
 
-    let element: AXUIElement
+    private let element: AXUIElement
 
     var isSecureTextField: Bool {
         string(kAXSubroleAttribute) == kAXSecureTextFieldSubrole
@@ -27,6 +27,7 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
             parameter,
             &value,
         )
+
         guard status == .success, let character = (value as? String)?.first, character != "\u{FFFD}" else { return nil }
 
         return character
@@ -36,7 +37,7 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
         Self.attribute(kAXWindowAttribute, of: element)
     }
 
-    init(_ element: AXUIElement) {
+    private init(_ element: AXUIElement) {
         AXUIElementSetMessagingTimeout(element, Self.messagingTimeout)
         self.element = element
     }
@@ -64,8 +65,9 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
             return .same
         }
 
-        let sameRole = string(kAXRoleAttribute).map { $0 == other.string(kAXRoleAttribute) } ?? false
-        guard sameRole, let window, let otherWindow = other.window, CFEqual(window, otherWindow) else { return .different }
+        guard let role = string(kAXRoleAttribute), role == other.string(kAXRoleAttribute),
+              let window, let otherWindow = other.window, CFEqual(window, otherWindow)
+        else { return .different }
 
         return .same
     }

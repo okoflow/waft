@@ -1,11 +1,11 @@
 package struct Translation: Codable, Equatable, Sendable {
-    private enum CodingKeys: String, CodingKey {
-        case target
-        case twoWayLanguage
+    package var target: Language {
+        didSet { dropTwoWayLanguageEqualToTarget() }
     }
 
-    package var target = Language.english
-    package var twoWayLanguage: Language?
+    package var twoWayLanguage: Language? {
+        didSet { dropTwoWayLanguageEqualToTarget() }
+    }
 
     package init(target: Language = .english, twoWayLanguage: Language? = nil) {
         self.target = target
@@ -14,15 +14,19 @@ package struct Translation: Codable, Equatable, Sendable {
 
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let target = (try? container.decodeIfPresent(Language.self, forKey: .target)) ?? .english
-        let twoWayLanguage = try? container.decodeIfPresent(Language.self, forKey: .twoWayLanguage)
 
-        self.init(target: target, twoWayLanguage: twoWayLanguage)
+        self.init(target: container.decode(.target, default: .english), twoWayLanguage: container.decodeIfValid(.twoWayLanguage))
     }
 
     package func target(forSpoken spoken: Language) -> Language {
         guard spoken == target, let twoWayLanguage else { return target }
 
         return twoWayLanguage
+    }
+
+    private mutating func dropTwoWayLanguageEqualToTarget() {
+        guard twoWayLanguage == target else { return }
+
+        twoWayLanguage = nil
     }
 }

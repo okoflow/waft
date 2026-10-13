@@ -1,47 +1,40 @@
+import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 import WaftCore
 
-package struct TranscriptionView: View {
-    @Bindable private var model: FileTranscriptionModel
+struct TranscriptionView: View {
+    let model: FileTranscriptionModel
+    let showPro: () -> Void
 
-    private let settings: SettingsModel
-    private let pro: ProModel
-    private let showPro: () -> Void
-
-    package init(model: FileTranscriptionModel, settings: SettingsModel, pro: ProModel, showPro: @escaping () -> Void) {
-        self.model = model
-        self.settings = settings
-        self.pro = pro
-        self.showPro = showPro
-    }
-
-    package var body: some View {
+    var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             TranscriptionHeader()
 
-            switch model.phase {
-            case .idle where !pro.allows(.fileTranscription):
+            if model.isLocked {
                 ProGateCard(showPro: showPro)
+            } else {
+                switch model.phase {
+                case .idle, .failed:
+                    VStack(spacing: 12) {
+                        if case let .failed(file, message) = model.phase {
+                            FailureCard(file: file, message: message)
+                                .transition(.reveal)
+                        }
 
-            case .idle, .failed:
-                VStack(spacing: 12) {
-                    if case let .failed(message) = model.phase {
-                        FailureCard(fileName: model.file?.lastPathComponent, message: message)
-                            .transition(.reveal)
+                        DropZone(model: model)
+                        LanguageCard(model: model)
                     }
+                    .transition(.opacity)
 
-                    DropZone(model: model)
-                    LanguageCard(model: model, languages: settings.settings.languages.languages)
+                case let .reading(file), let .transcribing(file, _):
+                    ProgressCard(model: model, file: file)
+                        .transition(.opacity)
+
+                case let .finished(file, transcript):
+                    ResultView(model: model, file: file, transcript: transcript)
+                        .transition(.opacity)
                 }
-                .transition(.opacity)
-
-            case .reading, .transcribing:
-                ProgressCard(model: model)
-                    .transition(.opacity)
-
-            case let .finished(transcript):
-                ResultView(model: model, transcript: transcript)
-                    .transition(.opacity)
             }
         }
         .padding(.horizontal, 24)
@@ -54,7 +47,7 @@ package struct TranscriptionView: View {
         .animation(Motion.layout, value: model.phase)
         .reducedMotionPolicy()
         .dropDestination(for: URL.self) { urls, _ in
-            guard let url = urls.first, !model.isWorking, pro.allows(.fileTranscription) else { return false }
+            guard let url = urls.first, model.acceptsFiles else { return false }
 
             model.transcribe(url)
 
@@ -71,7 +64,7 @@ private struct TranscriptionHeader: View {
             IconTile(symbolName: "waveform", tint: .purple, size: 36)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text("Transcribe a File")
+                Text("Transcribe File")
                     .font(.pageTitle)
 
                 Text("Audio and video files, transcribed on this Mac.")
@@ -83,7 +76,15 @@ private struct TranscriptionHeader: View {
 }
 
 private struct DropZone: View {
+    private static let mediaTypes: [UTType] = [.audio, .movie, .audiovisualContent]
+
     let model: FileTranscriptionModel
+
+    private var hint: LocalizedStringKey {
+        guard let message = model.notReadyMessage else { return "MP3, M4A, WAV, MP4, MOV, and more" }
+
+        return .verbatim(message)
+    }
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
@@ -95,15 +96,16 @@ private struct DropZone: View {
                 .foregroundStyle(isTargeted ? Color.accentColor : .secondary)
                 .contentTransition(.symbolEffect(.replace))
                 .padding(.bottom, 4)
+                .accessibilityHidden(true)
 
             Text("Drop an audio or video file here")
                 .font(.rowTitle)
 
-            Text(model.notReadyMessage.map { .verbatim($0) } ?? "MP3, M4A, WAV, MP4, MOV and more")
+            Text(hint)
                 .font(.rowDetail)
                 .foregroundStyle(.secondary)
 
-            Button("Choose File…", action: model.chooseFile)
+            Button("Choose File…", action: chooseFile)
                 .disabled(model.notReadyMessage != nil)
                 .padding(.top, 8)
         }
@@ -117,24 +119,39 @@ private struct DropZone: View {
         }
         .animation(Motion.fade, value: isTargeted)
     }
+
+    private func chooseFile() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = Self.mediaTypes
+        panel.allowsMultipleSelection = false
+        panel.prompt = String(localized: "Transcribe")
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        model.transcribe(url)
+    }
 }
 
 private struct LanguageCard: View {
     @Bindable var model: FileTranscriptionModel
 
-    let languages: [Language]
+    private var languageTitle: String {
+        guard let language = model.language else { return String(localized: "Automatic") }
+
+        return language.displayName
+    }
 
     var body: some View {
         SettingsCard {
             PickerRow(
                 "Language",
                 selection: $model.language,
-                current: model.language?.displayName ?? String(localized: "Detect automatically"),
+                current: languageTitle,
                 description: "The languages you chose in Settings › Dictation.",
             ) {
-                Text("Detect automatically").tag(Language?.none)
+                Text("Automatic").tag(Language?.none)
 
-                ForEach(languages, id: \.self) { language in
+                ForEach(model.languages, id: \.self) { language in
                     Text(language.displayName).tag(Language?.some(language))
                 }
             }
@@ -143,20 +160,17 @@ private struct LanguageCard: View {
 }
 
 private struct FailureCard: View {
-    let fileName: String?
+    let file: URL
     let message: String
 
     var body: some View {
         SettingsCard {
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(Palette.warning)
+                    .accessibilityHidden(true)
 
-                RowLabel(
-                    title: fileName
-                        .map { name -> LocalizedStringKey in "Couldn't transcribe \(name)" } ?? "Couldn't transcribe the file",
-                    description: .verbatim(message),
-                )
+                RowLabel(title: "Couldn't transcribe \(file.lastPathComponent)", description: .verbatim(message))
 
                 Spacer(minLength: 0)
             }
@@ -175,6 +189,7 @@ private struct ProGateCard: View {
             Image(systemName: "lock.fill")
                 .font(.system(size: 24))
                 .padding(.bottom, 4)
+                .accessibilityHidden(true)
 
             Text("File transcription is part of Waft Pro")
                 .font(.sectionTitle)
@@ -183,7 +198,7 @@ private struct ProGateCard: View {
                 .font(.rowDetail)
                 .opacity(0.9)
 
-            Button("See Waft Pro", action: showPro)
+            Button("Unlock Waft Pro…", action: showPro)
                 .buttonStyle(ProButtonStyle())
                 .padding(.top, 10)
         }
@@ -191,6 +206,6 @@ private struct ProGateCard: View {
         .multilineTextAlignment(.center)
         .padding(24)
         .frame(maxWidth: .infinity, minHeight: 220)
-        .background(LinearGradient.pro, in: shape)
+        .background(Palette.proGradient, in: shape)
     }
 }

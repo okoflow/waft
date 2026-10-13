@@ -1,4 +1,4 @@
-package enum WritingScript: Sendable {
+enum WritingScript: Sendable {
     case arabic
     case cyrillic
     case devanagari
@@ -38,7 +38,7 @@ package enum WritingScript: Sendable {
         }
     }
 
-    package init?(_ scalar: Unicode.Scalar) {
+    init?(_ scalar: Unicode.Scalar) {
         switch scalar.value {
         case 0x0041 ... 0x005A, 0x0061 ... 0x007A, 0x00C0 ... 0x02AF, 0x1E00 ... 0x1EFF:
             self = .latin
@@ -67,7 +67,7 @@ package enum WritingScript: Sendable {
         }
     }
 
-    package static func dominant(in text: String) -> WritingScript? {
+    static func dominant(in text: String) -> WritingScript? {
         var counts: [WritingScript: Int] = [:]
         var letters = 0
 

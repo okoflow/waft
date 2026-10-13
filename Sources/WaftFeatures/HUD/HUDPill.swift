@@ -2,6 +2,10 @@ import AppKit
 import SwiftUI
 
 struct HUDPill: View {
+    fileprivate static let spacing: CGFloat = 10
+    fileprivate static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
+    fileprivate static let detailFont = NSFont.systemFont(ofSize: 12)
+
     private let content: HUDContent
     private let levels: [Float]
 
@@ -12,8 +16,6 @@ struct HUDPill: View {
 
     var body: some View {
         switch content {
-        case .hidden:
-            EmptyView()
         case let .listening(badge, isHandsFree):
             ListeningPill(levels: levels, badge: badge, isHandsFree: isHandsFree)
         case let .working(label):
@@ -29,11 +31,16 @@ private struct ListeningPill: View {
     let badge: String?
     let isHandsFree: Bool
 
+    private var state: String {
+        let handsFree = isHandsFree ? String(localized: "Hands-free") : nil
+
+        return [badge, handsFree].compactMap(\.self).joined(separator: ", ")
+    }
+
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: HUDPill.spacing) {
             Image(systemName: "mic.fill")
-                .foregroundStyle(.red)
-                .symbolEffect(.pulse, options: .repeating)
+                .foregroundStyle(Palette.danger)
 
             LevelBars(levels: levels)
 
@@ -47,16 +54,15 @@ private struct ListeningPill: View {
                 Label("Hands-free", systemImage: "lock.fill")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
-                    .transition(.scale(scale: 0.8).combined(with: .opacity))
+                    .transition(.opacity)
             }
         }
-        .animation(.snappy(duration: 0.25), value: isHandsFree)
+        .animation(Motion.feedback, value: isHandsFree)
         .font(.system(size: 15, weight: .semibold))
-        .padding(.horizontal, 18)
-        .frame(height: 44)
         .hudBackground()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Waft is listening")
+        .accessibilityValue(state)
     }
 }
 
@@ -64,24 +70,22 @@ private struct WorkingPill: View {
     let label: String
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: HUDPill.spacing) {
             Image(systemName: "waveform")
                 .symbolEffect(.variableColor.iterative, options: .repeating)
+                .accessibilityHidden(true)
 
             Text(label)
-                .font(.system(size: 14, weight: .medium))
+                .font(Font(HUDPill.titleFont))
         }
         .font(.system(size: 15, weight: .semibold))
-        .padding(.horizontal, 18)
-        .frame(height: 44)
         .hudBackground()
+        .accessibilityElement(children: .combine)
     }
 }
 
 private struct MessagePill: View {
     private static let maximumTextWidth: CGFloat = 520
-    private static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
-    private static let detailFont = NSFont.systemFont(ofSize: 12)
 
     let message: HUDMessage
 
@@ -96,50 +100,51 @@ private struct MessagePill: View {
 
     private var symbolColor: Color {
         switch message.kind {
-        case .pasted: .green
+        case .pasted: Palette.success
         case .copied, .info: .secondary
-        case .warning: .orange
+        case .warning: Palette.warning
         }
     }
 
     private var textWidth: CGFloat {
-        let widths = [
-            width(of: message.title, font: Self.titleFont),
-            message.detail.map { width(of: $0, font: Self.detailFont) } ?? 0,
-        ]
+        var widest = width(of: message.title, font: HUDPill.titleFont)
 
-        return min(Self.maximumTextWidth, ceil(widths.max() ?? 0) + 1)
+        if let detail = message.detail {
+            widest = max(widest, width(of: detail, font: HUDPill.detailFont))
+        }
+
+        return min(Self.maximumTextWidth, ceil(widest) + 1)
     }
 
     var body: some View {
-        HStack(alignment: .center, spacing: 10) {
+        HStack(spacing: HUDPill.spacing) {
             Image(systemName: symbolName)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(symbolColor)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(message.title)
-                    .font(.system(size: 14, weight: .medium))
+                    .font(Font(HUDPill.titleFont))
                     .lineLimit(6)
 
                 if let detail = message.detail {
                     Text(detail)
-                        .font(.system(size: 12))
+                        .font(Font(HUDPill.detailFont))
                         .foregroundStyle(.secondary)
                 }
             }
             .frame(width: textWidth, alignment: .leading)
             .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 11)
-        .frame(minHeight: 44)
         .hudBackground()
         .accessibilityElement(children: .combine)
     }
 
     private func width(of text: String, font: NSFont) -> CGFloat {
-        text.split(separator: "\n").map { (String($0) as NSString).size(withAttributes: [.font: font]).width }.max() ?? 0
+        text.split(separator: "\n").reduce(0) { widest, line in
+            max(widest, (String(line) as NSString).size(withAttributes: [.font: font]).width)
+        }
     }
 }
 

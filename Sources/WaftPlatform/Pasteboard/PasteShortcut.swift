@@ -1,6 +1,8 @@
 import Carbon.HIToolbox
 import CoreGraphics
+import os
 
+@MainActor
 enum PasteShortcut {
     private static let fallbackKeyCode = CGKeyCode(kVK_ANSI_V)
     private static let commandModifierState = UInt32((cmdKey >> 8) & 0xFF)
@@ -13,33 +15,38 @@ enum PasteShortcut {
         let commandFlags = CGEventFlags(rawValue: CGEventFlags.maskCommand.rawValue | leftCommandDeviceFlag)
 
         post(leftCommand, isDown: true, flags: commandFlags, isModifier: true, source: source)
-        defer { post(leftCommand, isDown: false, flags: [], isModifier: true, source: source) }
-
         post(vKey, isDown: true, flags: commandFlags, isModifier: false, source: source)
         post(vKey, isDown: false, flags: commandFlags, isModifier: false, source: source)
+        post(leftCommand, isDown: false, flags: [], isModifier: true, source: source)
     }
 
     private static func post(_ keyCode: CGKeyCode, isDown: Bool, flags: CGEventFlags, isModifier: Bool, source: CGEventSource?) {
-        let event = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: isDown)
+        guard let event = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: isDown) else {
+            Logger.insertion.error("Couldn't create the event for key code \(keyCode, privacy: .public)")
 
-        if isModifier {
-            event?.type = .flagsChanged
+            return
         }
 
-        event?.flags = flags
-        event?.post(tap: .cghidEventTap)
+        if isModifier {
+            event.type = .flagsChanged
+        }
+
+        event.flags = flags
+        event.post(tap: .cghidEventTap)
     }
 
     private static func keyCodeTypingV() -> CGKeyCode {
-        guard let source = TISCopyCurrentASCIICapableKeyboardLayoutInputSource()?.takeRetainedValue(),
-              let property = TISGetInputSourceProperty(source, kTISPropertyUnicodeKeyLayoutData)
+        guard let inputSource = TISCopyCurrentASCIICapableKeyboardLayoutInputSource()?.takeRetainedValue(),
+              let property = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData),
+              let eventSource = CGEventSource(stateID: .combinedSessionState)
         else { return fallbackKeyCode }
 
         let layout = unsafeBitCast(property, to: CFData.self)
-        let keyboardType = UInt32(CGEventSource(stateID: .combinedSessionState)?.keyboardType ?? 0)
+        let keyboardType = UInt32(eventSource.keyboardType)
         let keyCode = (0 ..< 128).first { character(for: UInt16($0), layout: layout, keyboardType: keyboardType) == "v" }
+        guard let keyCode else { return fallbackKeyCode }
 
-        return keyCode.map(CGKeyCode.init) ?? fallbackKeyCode
+        return CGKeyCode(keyCode)
     }
 
     private static func character(for keyCode: UInt16, layout: CFData, keyboardType: UInt32) -> Character? {
@@ -59,6 +66,7 @@ enum PasteShortcut {
             &length,
             &characters,
         )
+
         guard status == noErr, length == 1 else { return nil }
 
         return String(utf16CodeUnits: characters, count: length).first

@@ -2,9 +2,12 @@ import Foundation
 import WaftCore
 
 package struct UserDefaultsStore<Value: Codable & Sendable>: ValueStore {
+    package let name: String
+
     private let key: String
 
-    package init(key: String) {
+    package init(name: String, key: String) {
+        self.name = name
         self.key = key
     }
 
@@ -20,5 +23,9 @@ package struct UserDefaultsStore<Value: Codable & Sendable>: ValueStore {
 
     package func delete() {
         UserDefaults.standard.removeObject(forKey: key)
+    }
+
+    package func exists() -> Bool {
+        UserDefaults.standard.object(forKey: key) != nil
     }
 }

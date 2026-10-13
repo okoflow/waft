@@ -1,20 +1,9 @@
-# Build
-
 .build/
 build/
-
-# Editors
 
 .idea/
 .swiftpm/
 .vscode/
 .zed/
 
-# System
-
 .DS_Store
-
-# Secrets
-
-.env
-.env.*

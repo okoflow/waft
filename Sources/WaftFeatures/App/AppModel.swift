@@ -1,95 +1,171 @@
-import AppKit
-import Foundation
-import Observation
+package import Foundation
 import WaftCore
 
-@Observable
 package final class AppModel {
     package let settings: SettingsModel
-    package let permissions: PermissionMonitor
-    package let speechModel: SpeechModelController
-    package let keyMonitor: KeyMonitorController
-    package let dictation: DictationController
-    package let modeSwitcher: ModeSwitcher
-    package let history: HistoryModel
-    package let stats: StatsModel
-    package let vocabulary: VocabularyModel
-    package let apiKeys: PerProvider<APIKeyModel>
-    package let localModels: LocalModelsModel
-    package let frontmostApp: FrontmostAppTracker
-    package let hud: HUDController
-    package let keyRecorder: KeyRecorder
-    package let onboarding: OnboardingModel
-    package let transcription: FileTranscriptionModel
-    package let pro: ProModel
+    package let windows = WindowPresenter()
 
-    @ObservationIgnored package let windows: WindowPresenter
+    let permissions: PermissionMonitor
+    let speechModel: SpeechModelController
+    let modeSwitcher: ModeSwitcher
+    let history: HistoryModel
+    let stats: StatsModel
+    let vocabulary: VocabularyModel
+    let apiKeys: PerProvider<APIKeyModel>
+    let localModels: LocalModelsModel
+    let frontmostApp: FrontmostAppTracker
+    let keyRecorder: KeyRecorder
+    let onboarding: OnboardingModel
+    let transcription: FileTranscriptionModel
+    let pro: ProModel
+    let updates: UpdatesModel
+    let interfaceLanguage: InterfaceLanguageModel
+    let queue: DictationQueue
 
-    @ObservationIgnored private let clipboard: any Clipboard
+    private let hud: HUDController
+    private let keyMonitor: KeyMonitorController
+    private let dictation: DictationController
+    private let inserter: any TextInserter
+    private let lifecycle: any AppLifecycle
 
-    package var status: AppStatus {
+    var status: AppStatus {
         if dictation.isRecording {
             return .recording
         }
 
-        if !permissions.allGranted || keyMonitor.status == .unavailable {
+        if lacksPermissions {
             return .needsPermission
         }
 
-        switch speechModel.state.phase {
-        case let .downloading(progress): return .downloading(progress)
-        case .notInstalled, .loading: return .preparing
-        case .failed: return .modelFailed
-        case .ready: return .ready
-        }
+        guard speechModel.state.isReady else { return .speechModel(speechModel.state) }
+
+        return .ready
     }
 
-    package var needsSetup: Bool {
+    var needsSetup: Bool {
         !settings.settings.hasCompletedSetup || !permissions.allGranted
     }
 
-    package init(dependencies: AppDependencies) {
-        let models = FeatureModels(dependencies: dependencies)
+    private var lacksPermissions: Bool {
+        !permissions.allGranted || keyMonitor.status == .unavailable
+    }
 
-        settings = models.settings
-        permissions = models.permissions
-        speechModel = models.speechModel
+    package init(dependencies: AppDependencies) {
+        settings = Self.makeSettings(dependencies)
+        permissions = PermissionMonitor(provider: dependencies.permissions)
+        speechModel = SpeechModelController(transcriber: dependencies.transcriber, settings: settings)
+        hud = HUDController()
+        keyRecorder = KeyRecorder()
+        pro = Self.makePro(dependencies)
+        stats = StatsModel(store: dependencies.statsStore)
+        history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
+        vocabulary = Self.makeVocabulary(dependencies)
+        queue = Self.makeQueue(dependencies, history: history, stats: stats, hud: hud)
         keyMonitor = KeyMonitorController(monitor: dependencies.keyEventMonitor)
         dictation = DictationController(
-            dependencies: dependencies,
-            models: models,
-            queue: models.makeQueue(dependencies: dependencies),
+            keyEventMonitor: dependencies.keyEventMonitor,
+            recordings: Self.makeRecordings(dependencies, settings: settings, hud: hud),
+            settings: settings,
+            permissions: permissions,
+            speechModel: speechModel,
+            vocabulary: vocabulary,
+            keyRecorder: keyRecorder,
+            pro: pro,
+            queue: queue,
         )
-        modeSwitcher = ModeSwitcher(
-            shortcut: dependencies.modeShortcut,
-            settings: models.settings,
-            hud: models.hud,
-            pro: models.pro,
-        )
-        history = models.history
-        stats = models.stats
-        vocabulary = models.vocabulary
-        apiKeys = PerProvider(
-            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
-            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
-        )
-        localModels = LocalModelsModel(browser: dependencies.localServers)
-        frontmostApp = FrontmostAppTracker()
-        hud = models.hud
-        keyRecorder = models.keyRecorder
-        onboarding = OnboardingModel()
-        pro = models.pro
-        transcription = FileTranscriptionModel(
-            transcriber: dependencies.transcriber,
-            decoder: dependencies.mediaDecoder,
-            speechModel: models.speechModel,
-            clipboard: dependencies.clipboard,
-        )
-        windows = WindowPresenter()
-        clipboard = dependencies.clipboard
+        modeSwitcher = ModeSwitcher(shortcut: dependencies.modeShortcut, settings: settings, hud: hud, pro: pro)
+        apiKeys = Self.makeAPIKeys(dependencies)
+        localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
+        frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
+        onboarding = OnboardingModel(permissions: permissions)
+        transcription = Self.makeTranscription(dependencies, speechModel: speechModel, settings: settings, pro: pro)
+        updates = UpdatesModel(updater: dependencies.updater)
+        interfaceLanguage = InterfaceLanguageModel(store: dependencies.interfaceLanguageStore, lifecycle: dependencies.lifecycle)
+        inserter = dependencies.inserter
+        lifecycle = dependencies.lifecycle
 
         windows.model = self
         connectModels()
+    }
+
+    private static func makeSettings(_ dependencies: AppDependencies) -> SettingsModel {
+        SettingsModel(
+            store: dependencies.settingsStore,
+            loginItem: dependencies.loginItem,
+            audioInputs: dependencies.audioInputs,
+        )
+    }
+
+    private static func makePro(_ dependencies: AppDependencies) -> ProModel {
+        ProModel(
+            keyStore: dependencies.licenseStore,
+            trialStore: dependencies.trialStore,
+            checker: dependencies.licenseChecker,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
+    private static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
+        VocabularyModel(
+            store: dependencies.vocabularyStore,
+            fileURL: dependencies.vocabularyFile,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
+    private static func makeQueue(
+        _ dependencies: AppDependencies,
+        history: HistoryModel,
+        stats: StatsModel,
+        hud: HUDController,
+    ) -> DictationQueue {
+        DictationQueue(
+            transcriber: dependencies.transcriber,
+            rewriters: dependencies.rewriters,
+            inserter: dependencies.inserter,
+            clipboard: dependencies.clipboard,
+            history: history,
+            stats: stats,
+            hud: hud,
+        )
+    }
+
+    private static func makeRecordings(
+        _ dependencies: AppDependencies,
+        settings: SettingsModel,
+        hud: HUDController,
+    ) -> RecordingController {
+        RecordingController(
+            recorder: dependencies.recorder,
+            focusTracker: dependencies.focusTracker,
+            keyboardState: dependencies.keyboardState,
+            sounds: dependencies.sounds,
+            settings: settings,
+            hud: hud,
+        )
+    }
+
+    private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
+        PerProvider(
+            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
+            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
+        )
+    }
+
+    private static func makeTranscription(
+        _ dependencies: AppDependencies,
+        speechModel: SpeechModelController,
+        settings: SettingsModel,
+        pro: ProModel,
+    ) -> FileTranscriptionModel {
+        FileTranscriptionModel(
+            transcriber: dependencies.transcriber,
+            decoder: dependencies.mediaDecoder,
+            speechModel: speechModel,
+            settings: settings,
+            pro: pro,
+            clipboard: dependencies.clipboard,
+        )
     }
 
     package func start() {
@@ -98,58 +174,51 @@ package final class AppModel {
         keyMonitor.start()
         dictation.start()
         modeSwitcher.start()
-        history.keep(for: settings.settings.historyRetention, limit: settings.settings.historyLimit)
+        frontmostApp.start()
+        updates.start()
         hud.makePanel()
 
         if needsSetup {
-            windows.showOnboarding()
+            showSetup()
         }
     }
 
     package func prepareToQuit() async {
-        await dictation.waitUntilIdle()
+        await inserter.waitUntilIdle()
     }
 
-    package func copyLastTranscript() {
-        if let text = dictation.latestTranscript {
-            clipboard.copy(text)
+    package func open(_ url: URL) {
+        guard let key = ActivationLink.key(in: url) else { return }
+
+        pro.draft = key
+        pro.activateDraft()
+        windows.showSettings(.pro)
+    }
+
+    func showSetup() {
+        if settings.settings.hasCompletedSetup {
+            onboarding.resume()
         }
+
+        windows.showOnboarding()
     }
 
-    package func copy(_ entry: DictationHistory.Entry) {
-        clipboard.copy(entry.text)
-    }
-
-    package func quit() {
-        NSApplication.shared.terminate(nil)
+    func quit() {
+        lifecycle.quit()
     }
 
     private func connectModels() {
-        settings.onLanguagesChange = { [speechModel] languages in
-            speechModel.reload(for: languages)
-        }
-
-        permissions.onChange = { [weak self] in
-            self?.permissionsDidChange()
-        }
-
-        speechModel.onReady = { [weak self] in
-            self?.speechModelDidBecomeReady()
-        }
-
-        onboarding.onFinish = { [weak self] in
-            self?.finishOnboarding()
-        }
+        settings.onLanguagesChange = { [speechModel] in speechModel.reload() }
+        settings.onHistoryLimitsChange = { [history] in history.keepWithinLimits() }
+        permissions.onChange = { [weak self] in self?.permissionsDidChange() }
+        speechModel.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
+        onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
+        updates.onShowingUpdateChange = { [weak self] in self?.windows.updateActivationPolicy() }
     }
 
     private func permissionsDidChange() {
-        if keyMonitor.status != .ready {
-            keyMonitor.start()
-        }
-
-        if onboarding.step == .accessibility, permissions.status(of: .accessibility).isGranted {
-            onboarding.advance()
-        }
+        keyMonitor.permissionsDidChange()
+        onboarding.permissionsDidChange()
     }
 
     private func speechModelDidBecomeReady() {

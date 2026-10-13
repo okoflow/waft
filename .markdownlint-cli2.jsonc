@@ -1,0 +1,33 @@
+{
+  "config": {
+    "MD013": {
+      "code_blocks": false,
+      "tables": false
+    },
+    "MD033": {
+      "allowed_elements": [
+        "a",
+        "b",
+        "br",
+        "h1",
+        "img",
+        "kbd",
+        "p",
+        "picture",
+        "source",
+        "table",
+        "tbody",
+        "td",
+        "thead",
+        "tr"
+      ]
+    },
+    "MD041": {
+      "allow_preamble": true
+    }
+  },
+  "gitignore": true,
+  "globs": [
+    "**/*.md"
+  ]
+}

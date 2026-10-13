@@ -19,8 +19,16 @@ struct SettingsPaneView: View {
     @ViewBuilder
     private var content: some View {
         switch state.selection {
+        case .overview:
+            OverviewSettingsPane(stats: model.stats)
+
         case .general:
-            GeneralSettingsPane(settings: model.settings, permissions: model.permissions)
+            GeneralSettingsPane(
+                settings: model.settings,
+                permissions: model.permissions,
+                interfaceLanguage: model.interfaceLanguage,
+                updates: model.updates,
+            )
 
         case .dictation:
             DictationSettingsPane(settings: model.settings, keyRecorder: model.keyRecorder, pro: model.pro, state: state)
@@ -46,13 +54,7 @@ struct SettingsPaneView: View {
             DictionarySettingsPane(vocabulary: model.vocabulary)
 
         case .history:
-            HistorySettingsPane(
-                settings: model.settings,
-                history: model.history,
-                stats: model.stats,
-                state: state,
-                copy: model.copy,
-            )
+            HistorySettingsPane(settings: model.settings, history: model.history, state: state)
 
         case .pro:
             ProSettingsPane(pro: model.pro)

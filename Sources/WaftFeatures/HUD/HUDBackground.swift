@@ -1,12 +1,19 @@
 import AppKit
 import SwiftUI
 
-struct HUDBackground: ViewModifier {
+private struct HUDBackground: ViewModifier {
+    private static let padding = EdgeInsets(top: 11, leading: 18, bottom: 11, trailing: 18)
+    private static let minimumHeight: CGFloat = 44
+
     func body(content: Content) -> some View {
+        let pill = content
+            .padding(Self.padding)
+            .frame(minHeight: Self.minimumHeight)
+
         if #available(macOS 26, *) {
-            content.glassEffect(.regular, in: .capsule)
+            pill.glassEffect(.regular, in: .capsule)
         } else {
-            content
+            pill
                 .environment(\.colorScheme, .dark)
                 .background(VisualEffectBackground().clipShape(Capsule()))
                 .overlay(Capsule().strokeBorder(.white.opacity(0.18), lineWidth: 0.5))

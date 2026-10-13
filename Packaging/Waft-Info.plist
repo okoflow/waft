@@ -46,5 +46,15 @@
 	<string>Copyright 2026 The Waft Authors</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Waft records your voice while you hold the dictation key and turns it into text.</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/okoflow/waft/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>vrX0UEH6WtcKl2M3R4E/jbqFQTGuxrHy2wCSSV124GE=</string>
+	<key>SURequireSignedFeed</key>
+	<true/>
+	<key>SUVerifyUpdateBeforeExtraction</key>
+	<true/>
 </dict>
 </plist>

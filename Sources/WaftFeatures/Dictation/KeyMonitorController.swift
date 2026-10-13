@@ -4,8 +4,8 @@ import os
 import WaftCore
 
 @Observable
-package final class KeyMonitorController {
-    package enum Status: Equatable {
+final class KeyMonitorController {
+    enum Status: Equatable {
         case starting
         case ready
         case unavailable
@@ -14,11 +14,12 @@ package final class KeyMonitorController {
     private static let retryInterval: TimeInterval = 2
     private static let healthCheckInterval: TimeInterval = 5
 
-    package private(set) var status = Status.starting
+    private(set) var status = Status.starting
 
-    @ObservationIgnored private let monitor: any KeyEventMonitor
     @ObservationIgnored private var retryTimer: Timer?
     @ObservationIgnored private var healthCheckTimer: Timer?
+
+    private let monitor: any KeyEventMonitor
 
     init(monitor: any KeyEventMonitor) {
         self.monitor = monitor
@@ -39,6 +40,12 @@ package final class KeyMonitorController {
         status = .ready
 
         watchHealth()
+    }
+
+    func permissionsDidChange() {
+        guard status != .ready else { return }
+
+        start()
     }
 
     private func watchHealth() {

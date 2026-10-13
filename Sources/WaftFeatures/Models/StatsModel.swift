@@ -1,28 +1,20 @@
 import Foundation
 import NaturalLanguage
 import Observation
-import os
 import WaftCore
 
 @Observable
-package final class StatsModel {
-    package private(set) var stats: DictationStats
+final class StatsModel {
+    private(set) var stats: DictationStats
 
-    @ObservationIgnored private let store: any ValueStore<DictationStats>
+    private let store: any ValueStore<DictationStats>
 
     init(store: any ValueStore<DictationStats>) {
         self.store = store
-
-        do {
-            stats = try store.load() ?? DictationStats()
-        } catch {
-            Logger.settings.error("Couldn't read the stats: \(error.localizedDescription, privacy: .public)")
-
-            stats = DictationStats()
-        }
+        stats = store.read(default: DictationStats())
     }
 
-    package static func wordCount(of text: String) -> Int {
+    private static func wordCount(of text: String) -> Int {
         let tokenizer = NLTokenizer(unit: .word)
         tokenizer.string = text
 
@@ -31,24 +23,11 @@ package final class StatsModel {
 
     func record(_ text: String, seconds: Double) {
         stats.record(words: Self.wordCount(of: text), seconds: seconds, on: Date())
-        save()
+        store.write(stats)
     }
 
     func reset() {
         stats = DictationStats()
-
-        do {
-            try store.delete()
-        } catch {
-            Logger.settings.error("Couldn't delete the stats: \(error.localizedDescription, privacy: .public)")
-        }
-    }
-
-    private func save() {
-        do {
-            try store.save(stats)
-        } catch {
-            Logger.settings.error("Couldn't save the stats: \(error.localizedDescription, privacy: .public)")
-        }
+        store.remove()
     }
 }

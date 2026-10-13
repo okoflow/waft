@@ -1,7 +1,7 @@
+package import WaftCore
 import AppKit
 import ApplicationServices
-@preconcurrency import AVFoundation
-import WaftCore
+import AVFoundation
 
 @MainActor
 package final class SystemPermissions: PermissionProvider {
@@ -39,10 +39,11 @@ package final class SystemPermissions: PermissionProvider {
     }
 
     private func openSystemSettings(for permission: Permission) {
-        let anchor = switch permission {
-        case .microphone: "Privacy_Microphone"
-        case .accessibility: "Privacy_Accessibility"
-        }
+        let anchor =
+            switch permission {
+            case .microphone: "Privacy_Microphone"
+            case .accessibility: "Privacy_Accessibility"
+            }
 
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?\(anchor)") {
             NSWorkspace.shared.open(url)

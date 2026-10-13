@@ -1,7 +1,7 @@
+package import WaftCore
 import Foundation
 import Observation
 import os
-import WaftCore
 
 @Observable
 package final class SettingsModel {
@@ -9,65 +9,60 @@ package final class SettingsModel {
         didSet { settingsDidChange(from: oldValue) }
     }
 
-    package private(set) var launchesAtLogin: Bool
-    package private(set) var microphones: [AudioInputDevice] = []
+    private(set) var microphones: [AudioInputDevice] = []
 
-    @ObservationIgnored var onLanguagesChange: (([Language]) -> Void)?
-    @ObservationIgnored var onModeChange: ((Mode) -> Void)?
+    @ObservationIgnored var onLanguagesChange: (() -> Void)?
+    @ObservationIgnored var onHistoryLimitsChange: (() -> Void)?
 
-    @ObservationIgnored private let store: any ValueStore<Settings>
-    @ObservationIgnored private let loginItem: any LoginItem
-    @ObservationIgnored private let audioInputs: any AudioInputProvider
+    private var isLoginItemEnabled: Bool
+
+    private let store: any ValueStore<Settings>
+    private let loginItem: any LoginItem
+    private let audioInputs: any AudioInputProvider
+
+    var launchesAtLogin: Bool {
+        get { isLoginItemEnabled }
+
+        set {
+            do {
+                try loginItem.setEnabled(newValue)
+            } catch {
+                let cause = error as NSError
+                Logger.settings.error(
+                    "Couldn't change the login item: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
+                )
+            }
+
+            isLoginItemEnabled = loginItem.isEnabled
+        }
+    }
 
     init(store: any ValueStore<Settings>, loginItem: any LoginItem, audioInputs: any AudioInputProvider) {
         self.store = store
         self.loginItem = loginItem
         self.audioInputs = audioInputs
-        settings = Self.loadSettings(from: store)
-        launchesAtLogin = loginItem.isEnabled
+        settings = store.read(default: Settings(languages: .preferred(by: Locale.preferredLanguages)))
+        isLoginItemEnabled = loginItem.isEnabled
     }
 
-    private static func loadSettings(from store: any ValueStore<Settings>) -> Settings {
-        do {
-            if let settings = try store.load() {
-                return settings
-            }
-        } catch {
-            Logger.settings.error("Couldn't read the settings: \(error.localizedDescription, privacy: .public)")
-        }
-
-        return Settings(languages: .preferred(by: Locale.preferredLanguages))
-    }
-
-    package func setLaunchesAtLogin(_ isEnabled: Bool) {
-        do {
-            try loginItem.setEnabled(isEnabled)
-        } catch {
-            Logger.settings.error("Couldn't change the login item: \(error.localizedDescription, privacy: .public)")
-        }
-
-        launchesAtLogin = loginItem.isEnabled
-    }
-
-    package func refreshMicrophones() {
+    func refreshMicrophones() {
         microphones = audioInputs.inputDevices()
     }
 
     private func settingsDidChange(from oldValue: Settings) {
         guard settings != oldValue else { return }
 
-        do {
-            try store.save(settings)
-        } catch {
-            Logger.settings.error("Couldn't save the settings: \(error.localizedDescription, privacy: .public)")
-        }
+        let changesHistoryLimits = settings.historyRetention != oldValue.historyRetention
+            || settings.historyLimit != oldValue.historyLimit
+
+        store.write(settings)
 
         if settings.languages.languages != oldValue.languages.languages {
-            onLanguagesChange?(settings.languages.languages)
+            onLanguagesChange?()
         }
 
-        if settings.mode != oldValue.mode {
-            onModeChange?(settings.mode)
+        if changesHistoryLimits {
+            onHistoryLimitsChange?()
         }
     }
 }

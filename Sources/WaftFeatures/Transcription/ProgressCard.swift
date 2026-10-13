@@ -2,13 +2,12 @@ import SwiftUI
 
 struct ProgressCard: View {
     let model: FileTranscriptionModel
+    let file: URL
 
     private var progress: Double? {
-        if case let .transcribing(progress) = model.phase {
-            return progress
-        }
+        guard case let .transcribing(_, progress) = model.phase else { return nil }
 
-        return nil
+        return progress
     }
 
     private var status: String {
@@ -20,15 +19,15 @@ struct ProgressCard: View {
     var body: some View {
         SettingsCard {
             HStack(spacing: 12) {
-                FileIcon(url: model.file)
+                FileIcon(url: file)
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(model.file?.lastPathComponent ?? "")
+                    Text(file.lastPathComponent)
                         .font(.rowTitle)
                         .lineLimit(1)
                         .truncationMode(.middle)
 
-                    ProgressView(value: progress ?? 0)
+                    ProgressView(value: progress)
                         .progressViewStyle(.linear)
                         .opacity(progress == nil ? 0.4 : 1)
                         .animation(Motion.meter, value: progress)
@@ -37,7 +36,6 @@ struct ProgressCard: View {
                         .font(.rowDetail)
                         .foregroundStyle(.secondary)
                         .monospacedDigit()
-                        .contentTransition(.numericText())
                 }
 
                 Button("Cancel", action: model.cancel)

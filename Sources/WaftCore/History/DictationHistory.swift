@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package struct DictationHistory: Codable, Equatable, Sendable {
     package struct Entry: Codable, Equatable, Sendable {
@@ -22,7 +22,8 @@ package struct DictationHistory: Codable, Equatable, Sendable {
     }
 
     package static let limits = [100, 500, 1000, 5000, 10000]
-    package static let defaultLimit = 1000
+
+    static let defaultLimit = 1000
 
     package private(set) var entries: [Entry] = []
 
@@ -31,6 +32,12 @@ package struct DictationHistory: Codable, Equatable, Sendable {
     }
 
     package init() {}
+
+    package init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        entries = container.decodeValidElements(.entries)
+    }
 
     package mutating func add(_ entry: Entry) {
         guard !entry.text.isEmpty else { return }

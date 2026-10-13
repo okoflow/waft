@@ -4,24 +4,24 @@ import os
 import WaftCore
 
 @Observable
-package final class SpeechModelController {
-    package private(set) var state = SpeechModelState()
+final class SpeechModelController {
+    private(set) var state = SpeechModelState()
 
     @ObservationIgnored var onReady: (() -> Void)?
 
-    @ObservationIgnored private let transcriber: any Transcriber
-    @ObservationIgnored private var languages: [Language]
+    private let transcriber: any Transcriber
+    private let settings: SettingsModel
 
-    package var modelDirectory: URL {
+    var modelDirectory: URL {
         transcriber.modelDirectory
     }
 
-    init(transcriber: any Transcriber, languages: [Language]) {
+    init(transcriber: any Transcriber, settings: SettingsModel) {
         self.transcriber = transcriber
-        self.languages = languages
+        self.settings = settings
     }
 
-    package func retry() {
+    func retry() {
         apply(.retryRequested)
     }
 
@@ -33,26 +33,36 @@ package final class SpeechModelController {
         }
     }
 
-    func reload(for languages: [Language]) {
-        self.languages = languages
-
+    func reload() {
         apply(.reloadRequested)
     }
 
     private func apply(_ event: SpeechModelState.Event) {
-        for effect in state.handle(event) {
-            perform(effect)
+        let effects = state.handle(event)
+        guard !effects.isEmpty else { return }
+
+        Task {
+            for effect in effects {
+                await perform(effect)
+            }
         }
     }
 
-    private func perform(_ effect: SpeechModelState.Effect) {
+    private func perform(_ effect: SpeechModelState.Effect) async {
         switch effect {
-        case .deleteModel:
-            Task { await transcriber.deleteModel() }
-        case .download:
-            Task { await download() }
-        case .load:
-            Task { await load() }
+        case .deleteModel: await deleteModel()
+        case .download: await download()
+        case .load: await load()
+        }
+    }
+
+    private func deleteModel() async {
+        do {
+            try await transcriber.deleteModel()
+        } catch {
+            let cause = error as NSError
+            Logger.speechModel
+                .error("Couldn't delete the speech model: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
         }
     }
 
@@ -64,7 +74,8 @@ package final class SpeechModelController {
 
             apply(.downloaded)
         } catch {
-            Logger.speechModel.error("Download failed: \(error.localizedDescription, privacy: .public)")
+            let cause = error as NSError
+            Logger.speechModel.error("Download failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             apply(.failed(error.localizedDescription))
         }
@@ -72,7 +83,7 @@ package final class SpeechModelController {
 
     private func load() async {
         do {
-            let duration = try await transcriber.loadModel(for: languages)
+            let duration = try await transcriber.loadModel(for: settings.settings.languages.languages)
 
             Logger.speechModel
                 .info("Loaded the speech model in \(duration.formatted(.units(allowed: [.seconds])), privacy: .public)")
@@ -83,7 +94,8 @@ package final class SpeechModelController {
                 onReady?()
             }
         } catch {
-            Logger.speechModel.error("Load failed: \(error.localizedDescription, privacy: .public)")
+            let cause = error as NSError
+            Logger.speechModel.error("Load failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             apply(.failed(error.localizedDescription))
         }

@@ -1,56 +1,70 @@
 import Foundation
 
-package enum RewriteValidator {
-    private static let wrappers: [(open: String, close: String)] = [("<transcript>", "</transcript>"), ("\"", "\""), ("«", "»")]
+enum RewriteValidator {
+    private typealias Wrapper = (open: String, close: String)
+
+    private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
+    private static let cleanupWrappers: [Wrapper] = [("<transcript>", "</transcript>")] + quotes
+    private static let editWrappers: [Wrapper] = [("<text>", "</text>")] + quotes
     private static let compactScripts: Set<WritingScript> = [.han, .hangul, .kana]
 
-    package static func validated(_ answer: String, for request: RewriteRequest, mode: Mode) -> String? {
-        let input = request.text
-        let language = request.language
-        let text = unwrapped(answer, input: input)
-        guard !text.isEmpty, text.count <= maximumLength(for: input, mode: mode, language: language) else { return nil }
+    static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
+        switch request.kind {
+        case let .cleanup(_, target):
+            try validatedCleanup(answer, of: request.text, language: request.language, target: target)
+        case let .edit(selection):
+            try validatedEdit(answer, of: selection)
+        }
+    }
 
-        let scripts = expectedScripts(for: input, mode: mode, language: language, target: request.target)
+    private static func validatedCleanup(
+        _ answer: String,
+        of transcript: String,
+        language: Language,
+        target: Language?,
+    ) throws(RewriteError) -> String {
+        let text = unwrapped(answer, input: transcript, from: cleanupWrappers)
+        guard !text.isEmpty, text.count <= maximumLength(for: transcript, language: language, target: target) else {
+            throw .unreadableResponse
+        }
+
+        let scripts = expectedScripts(for: transcript, language: language, target: target)
 
         if let script = WritingScript.dominant(in: text), !scripts.contains(script) {
-            return nil
+            throw .unreadableResponse
         }
 
         return text
     }
 
-    package static func validatedEdit(_ answer: String, of selection: String) -> String? {
-        var text = unwrapped(answer, input: selection)
+    private static func validatedEdit(_ answer: String, of selection: String) throws(RewriteError) -> String {
+        let text = unwrapped(answer, input: selection, from: editWrappers)
+        guard !text.isEmpty else { throw .unreadableResponse }
 
-        if isWrapped(text, in: ("<text>", "</text>")) {
-            text = String(text.dropFirst(6).dropLast(7)).trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-
-        return text.isEmpty ? nil : text
+        return text
     }
 
-    private static func maximumLength(for input: String, mode: Mode, language: Language) -> Int {
-        let translatesCompactScript = mode == .translate && !language.scripts.isDisjoint(with: compactScripts)
+    private static func maximumLength(for input: String, language: Language, target: Language?) -> Int {
+        let translatesCompactScript = target != nil && !language.scripts.isDisjoint(with: compactScripts)
 
         return input.count * (translatesCompactScript ? 5 : 3) + 60
     }
 
-    private static func expectedScripts(
-        for input: String,
-        mode: Mode,
-        language: Language,
-        target: Language?,
-    ) -> Set<WritingScript> {
-        guard mode != .translate else { return (target ?? .english).scripts }
+    private static func expectedScripts(for input: String, language: Language, target: Language?) -> Set<WritingScript> {
+        if let target {
+            return target.scripts
+        }
+
         guard let transcriptScript = WritingScript.dominant(in: input) else { return language.scripts }
 
         return language.scripts.union([transcriptScript])
     }
 
-    private static func unwrapped(_ answer: String, input: String) -> String {
+    private static func unwrapped(_ answer: String, input: String, from wrappers: [Wrapper]) -> String {
+        let applicable = wrappers.filter { !input.hasPrefix($0.open) }
         var text = answer.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        for wrapper in wrappers where isWrapped(text, in: wrapper) && !input.hasPrefix(wrapper.open) {
+        for wrapper in applicable where isWrapped(text, in: wrapper) {
             text = String(text.dropFirst(wrapper.open.count).dropLast(wrapper.close.count))
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         }
@@ -58,7 +72,14 @@ package enum RewriteValidator {
         return text
     }
 
-    private static func isWrapped(_ text: String, in wrapper: (open: String, close: String)) -> Bool {
-        text.hasPrefix(wrapper.open) && text.hasSuffix(wrapper.close) && text.count > wrapper.open.count + wrapper.close.count
+    private static func isWrapped(_ text: String, in wrapper: Wrapper) -> Bool {
+        guard text.hasPrefix(wrapper.open), text.hasSuffix(wrapper.close),
+              text.count >= wrapper.open.count + wrapper.close.count else {
+            return false
+        }
+
+        let inner = text.dropFirst(wrapper.open.count).dropLast(wrapper.close.count)
+
+        return [wrapper.open, wrapper.close].allSatisfy { !inner.contains($0) }
     }
 }

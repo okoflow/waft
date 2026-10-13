@@ -1,6 +1,23 @@
 package struct Settings: Codable, Equatable, Sendable {
-    private enum LegacyKeys: String, CodingKey {
-        case cloudProvider
+    private enum CodingKeys: String, CodingKey {
+        case mode
+        case languages
+        case appModes
+        case modelProvider
+        case localServer
+        case instructions
+        case translation
+        case pushToTalkKey
+        case allowsHandsFree = "handsFreeDoubleTap"
+        case editKey
+        case pastesIntoFocusedField
+        case keepsHistory
+        case historyRetention
+        case historyLimit
+        case playsSounds
+        case showsMenuBarIcon
+        case microphoneID
+        case hasCompletedSetup
     }
 
     package var mode = Mode.light
@@ -11,7 +28,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var instructions = ModeInstructions()
     package var translation = Translation()
     package var pushToTalkKey = PushToTalkKey.rightOption
-    package var handsFreeDoubleTap = true
+    package var allowsHandsFree = true
     package var editKey: PushToTalkKey?
     package var pastesIntoFocusedField = true
     package var keepsHistory = true
@@ -28,34 +45,31 @@ package struct Settings: Codable, Equatable, Sendable {
 
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let defaults = Settings(languages: LanguageSelection(languages: [.english]))
+        let storedLimit = container.decode(.historyLimit, default: historyLimit)
 
-        mode = try container.decodeIfPresent(Mode.self, forKey: .mode) ?? defaults.mode
-        languages = try container.decodeIfPresent(LanguageSelection.self, forKey: .languages) ?? defaults.languages
-        appModes = try container.decodeIfPresent(AppModeOverrides.self, forKey: .appModes) ?? defaults.appModes
-        modelProvider = try container.decodeIfPresent(ModelProvider.self, forKey: .modelProvider)
-            ?? decoder.container(keyedBy: LegacyKeys.self).decodeIfPresent(ModelProvider.self, forKey: .cloudProvider)
-            ?? defaults.modelProvider
-        localServer = try container.decodeIfPresent(LocalServer.self, forKey: .localServer) ?? defaults.localServer
-        instructions = try container.decodeIfPresent(ModeInstructions.self, forKey: .instructions) ?? defaults.instructions
-        translation = try container.decodeIfPresent(Translation.self, forKey: .translation) ?? defaults.translation
-        pushToTalkKey = try container.decodeIfPresent(PushToTalkKey.self, forKey: .pushToTalkKey) ?? defaults.pushToTalkKey
-        handsFreeDoubleTap = try container.decodeIfPresent(Bool.self, forKey: .handsFreeDoubleTap) ?? defaults.handsFreeDoubleTap
-        editKey = try container.decodeIfPresent(PushToTalkKey.self, forKey: .editKey)
-        pastesIntoFocusedField = try container.decodeIfPresent(Bool.self, forKey: .pastesIntoFocusedField)
-            ?? defaults.pastesIntoFocusedField
-        keepsHistory = try container.decodeIfPresent(Bool.self, forKey: .keepsHistory) ?? defaults.keepsHistory
-        historyRetention = try container.decodeIfPresent(HistoryRetention.self, forKey: .historyRetention)
-            ?? defaults.historyRetention
-        historyLimit = try container.decodeIfPresent(Int.self, forKey: .historyLimit)
-            .flatMap { DictationHistory.limits.contains($0) ? $0 : nil } ?? defaults.historyLimit
-        playsSounds = try container.decodeIfPresent(Bool.self, forKey: .playsSounds) ?? defaults.playsSounds
-        showsMenuBarIcon = try container.decodeIfPresent(Bool.self, forKey: .showsMenuBarIcon) ?? defaults.showsMenuBarIcon
-        microphoneID = try container.decodeIfPresent(String.self, forKey: .microphoneID)
-        hasCompletedSetup = try container.decodeIfPresent(Bool.self, forKey: .hasCompletedSetup) ?? defaults.hasCompletedSetup
+        mode = container.decode(.mode, default: mode)
+        languages = container.decode(.languages, default: languages)
+        appModes = container.decode(.appModes, default: appModes)
+        modelProvider = container.decode(.modelProvider, default: modelProvider)
+        localServer = container.decode(.localServer, default: localServer)
+        instructions = container.decode(.instructions, default: instructions)
+        translation = container.decode(.translation, default: translation)
+        pushToTalkKey = container.decode(.pushToTalkKey, default: pushToTalkKey)
+        allowsHandsFree = container.decode(.allowsHandsFree, default: allowsHandsFree)
+        editKey = container.decodeIfValid(.editKey)
+        pastesIntoFocusedField = container.decode(.pastesIntoFocusedField, default: pastesIntoFocusedField)
+        keepsHistory = container.decode(.keepsHistory, default: keepsHistory)
+        historyRetention = container.decode(.historyRetention, default: historyRetention)
+        historyLimit = DictationHistory.limits.contains(storedLimit) ? storedLimit : historyLimit
+        playsSounds = container.decode(.playsSounds, default: playsSounds)
+        showsMenuBarIcon = container.decode(.showsMenuBarIcon, default: showsMenuBarIcon)
+        microphoneID = container.decodeIfValid(.microphoneID)
+        hasCompletedSetup = container.decode(.hasCompletedSetup, default: hasCompletedSetup)
     }
 
     package func mode(for bundleIdentifier: String?) -> Mode {
-        appModes.mode(for: bundleIdentifier) ?? mode
+        guard let appMode = appModes.mode(for: bundleIdentifier) else { return mode }
+
+        return appMode
     }
 }

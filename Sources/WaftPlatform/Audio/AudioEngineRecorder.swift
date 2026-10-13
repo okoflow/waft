@@ -1,6 +1,7 @@
-@preconcurrency import AVFoundation
+package import Foundation
+package import WaftCore
+import AVFoundation
 import os
-import WaftCore
 
 package actor AudioEngineRecorder: AudioRecorder {
     private struct Session {
@@ -12,21 +13,7 @@ package actor AudioEngineRecorder: AudioRecorder {
         let channelCount: AVAudioChannelCount
     }
 
-    private enum StartError: Error, CustomStringConvertible {
-        case noInputChannels(String)
-        case unsupportedFormat
-        case deviceUnavailable(OSStatus)
-
-        var description: String {
-            switch self {
-            case let .noInputChannels(device): "the input device \"\(device)\" reports no channels"
-            case .unsupportedFormat: "the input format isn't supported"
-            case let .deviceUnavailable(status): "the input device can't be selected (OSStatus \(status))"
-            }
-        }
-    }
-
-    private static let tailGrace: TimeInterval = 0.15
+    private static let tailGrace = Duration.milliseconds(150)
 
     package nonisolated let events: AsyncStream<RecordingEvent>
 
@@ -35,7 +22,7 @@ package actor AudioEngineRecorder: AudioRecorder {
     private let queue = DispatchSerialQueue(label: "\(AppIdentity.bundleIdentifier).recorder")
     private var session: Session?
     private var stoppedThrough = RecordingID.none
-    private var lastFailure: (recording: RecordingID, reason: String)?
+    private var lastFailure: (recording: RecordingID, failure: RecordingFailure)?
 
     package nonisolated var inputLevel: Float {
         meter.value
@@ -62,10 +49,10 @@ package actor AudioEngineRecorder: AudioRecorder {
 
         tearDown()
 
-        do {
+        do throws(RecordingFailure) {
             session = try makeSession(for: recording, deviceID: deviceID)
         } catch {
-            report(String(describing: error), for: recording)
+            report(error, for: recording)
         }
     }
 
@@ -85,21 +72,34 @@ package actor AudioEngineRecorder: AudioRecorder {
         return current.sink.samples
     }
 
-    package func failureReason(for recording: RecordingID) -> String? {
-        lastFailure?.recording == recording ? lastFailure?.reason : nil
+    package func failure(for recording: RecordingID) -> RecordingFailure? {
+        guard let lastFailure, lastFailure.recording == recording else { return nil }
+
+        return lastFailure.failure
     }
 
-    private func makeSession(for recording: RecordingID, deviceID: String?) throws -> Session {
+    private func makeSession(for recording: RecordingID, deviceID: String?) throws(RecordingFailure) -> Session {
         let engine = AVAudioEngine()
         let deviceName = try selectInput(deviceID, on: engine)
         let format = engine.inputNode.inputFormat(forBus: 0)
-        guard format.channelCount > 0, format.sampleRate > 0 else { throw StartError.noInputChannels(deviceName) }
+        guard format.channelCount > 0, format.sampleRate > 0 else {
+            Logger.audio.error(
+                "\(deviceName, privacy: .public) reports \(format.channelCount) channels at \(format.sampleRate) Hz",
+            )
+
+            throw .noInputChannels
+        }
 
         let continuation = continuation
         let sink = AudioSampleSink(inputFormat: format, meter: meter) {
             continuation.yield(.started(recording, deviceName: deviceName))
         }
-        guard let sink else { throw StartError.unsupportedFormat }
+
+        guard let sink else {
+            Logger.audio.error("Can't convert the input format: \(format.description, privacy: .public)")
+
+            throw .unsupportedFormat
+        }
 
         engine.inputNode.installTap(onBus: 0, bufferSize: 1024, format: format, block: Self.tapBlock(for: sink))
         let observer = observeConfigurationChanges(of: engine, for: recording)
@@ -110,7 +110,10 @@ package actor AudioEngineRecorder: AudioRecorder {
             NotificationCenter.default.removeObserver(observer)
             engine.inputNode.removeTap(onBus: 0)
 
-            throw error
+            let cause = error as NSError
+            Logger.audio.error("The audio engine didn't start: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+
+            throw .engineDidNotStart
         }
 
         return Session(
@@ -123,13 +126,17 @@ package actor AudioEngineRecorder: AudioRecorder {
         )
     }
 
-    private func selectInput(_ deviceID: String?, on engine: AVAudioEngine) throws -> String {
-        let defaultName = CoreAudioInputs.defaultInputName() ?? "Default input"
-        guard let deviceID else { return defaultName }
-        guard let audioDeviceID = CoreAudioInputs.deviceID(for: deviceID), let unit = engine.inputNode.audioUnit else {
-            Logger.audio.notice("The chosen microphone isn't connected; recording from the default input")
+    private func selectInput(_ deviceID: String?, on engine: AVAudioEngine) throws(RecordingFailure) -> String {
+        guard let deviceID else { return CoreAudioInputs.defaultInputName() }
+        guard let audioDeviceID = CoreAudioInputs.deviceID(for: deviceID) else {
+            Logger.audio.notice("Microphone \(deviceID, privacy: .public) isn't connected; using the default input")
 
-            return defaultName
+            return CoreAudioInputs.defaultInputName()
+        }
+        guard let unit = engine.inputNode.audioUnit else {
+            Logger.audio.error("No audio unit to select microphone \(deviceID, privacy: .public); using the default input")
+
+            return CoreAudioInputs.defaultInputName()
         }
 
         var selected = audioDeviceID
@@ -141,9 +148,15 @@ package actor AudioEngineRecorder: AudioRecorder {
             &selected,
             UInt32(MemoryLayout<AudioDeviceID>.size),
         )
-        guard status == noErr else { throw StartError.deviceUnavailable(status) }
 
-        return CoreAudioInputs.name(of: audioDeviceID) ?? defaultName
+        guard status == noErr else {
+            Logger.audio.error("Couldn't select microphone \(deviceID, privacy: .public): OSStatus \(status, privacy: .public)")
+
+            throw .deviceUnavailable
+        }
+        guard let name = CoreAudioInputs.name(of: audioDeviceID) else { return deviceID }
+
+        return name
     }
 
     private func observeConfigurationChanges(of engine: AVAudioEngine, for recording: RecordingID) -> any NSObjectProtocol {
@@ -156,40 +169,41 @@ package actor AudioEngineRecorder: AudioRecorder {
     private func configurationChanged(for recording: RecordingID) async {
         guard let current = session, current.recording == recording else { return }
         guard current.sink.hasAudio else {
-            guard !current.engine.isRunning else { return }
-
-            try? await Task.sleep(for: .milliseconds(200))
-
-            if session?.recording == recording, !current.sink.hasAudio, !current.engine.isRunning {
-                report("the audio engine stopped while starting", for: recording)
-            }
+            await checkStartup(of: current)
 
             return
         }
 
         let format = current.engine.inputNode.inputFormat(forBus: 0)
+        let hasFormatChanged = format.sampleRate != current.sampleRate || format.channelCount != current.channelCount
 
         if !current.engine.isRunning {
-            report("the audio engine stopped after a device change", for: recording)
-        } else if format.sampleRate != current.sampleRate || format.channelCount != current.channelCount {
-            report("the input format changed during the recording", for: recording)
+            report(.stoppedAfterDeviceChange, for: recording)
+        } else if hasFormatChanged {
+            report(.formatChanged, for: recording)
+        }
+    }
+
+    private func checkStartup(of current: Session) async {
+        guard !current.engine.isRunning else { return }
+
+        let resumed = await Poll.until(timeout: .milliseconds(200)) { current.sink.hasAudio || current.engine.isRunning }
+
+        if !resumed, session?.recording == current.recording {
+            report(.stoppedWhileStarting, for: current.recording)
         }
     }
 
     private func waitForTail(of sink: AudioSampleSink, after releasedAt: TimeInterval) async {
-        let deadline = Uptime.now + Self.tailGrace
-
-        while sink.coveredUntil < releasedAt, Uptime.now < deadline {
-            try? await Task.sleep(for: .milliseconds(10))
-        }
+        await Poll.until(timeout: Self.tailGrace, every: .milliseconds(10)) { sink.coveredUntil >= releasedAt }
     }
 
-    private func report(_ reason: String, for recording: RecordingID) {
-        lastFailure = (recording, reason)
+    private func report(_ failure: RecordingFailure, for recording: RecordingID) {
+        lastFailure = (recording, failure)
 
-        continuation.yield(.failed(recording, reason: reason))
+        continuation.yield(.failed(recording, failure))
 
-        Logger.audio.error("Recording failed: \(reason, privacy: .public)")
+        Logger.audio.error("Recording failed: \(failure.rawValue, privacy: .public)")
     }
 
     private func tearDown() {

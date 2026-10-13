@@ -25,7 +25,7 @@ package enum RewriteFallback: String, Sendable {
     }
 
     package func message(for provider: ModelProvider) -> String {
-        String(localized: "Used Light: \(reason(for: provider))")
+        String(localized: "Used Light mode: \(reason(for: provider))")
     }
 
     package func reason(for provider: ModelProvider) -> String {
@@ -40,16 +40,15 @@ package enum RewriteFallback: String, Sendable {
         case .rateLimited: String(localized: "\(name) is rate-limiting requests")
         case .serviceError: String(localized: "\(name) returned an error")
         case .unusableAnswer: String(localized: "\(name)'s answer couldn't be used")
-        case .needsPro: String(localized: "Clean, Formal and Translate need Waft Pro")
+        case .needsPro: String(localized: "Clean, Formal, and Translate need Waft Pro")
         }
     }
 
     private func offlineReason(for provider: ModelProvider) -> String {
-        if provider == .localServer {
-            return String(localized: "the local server isn't running")
+        switch provider {
+        case .localServer: String(localized: "the local server isn't running")
+        case .cloud: String(localized: "you're offline")
         }
-
-        return String(localized: "you're offline")
     }
 
     private func unavailableReason(for provider: ModelProvider) -> String {

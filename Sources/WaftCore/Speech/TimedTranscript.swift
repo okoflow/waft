@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package struct TimedTranscript: Equatable, Sendable {
     private static let paragraphPause: TimeInterval = 2
@@ -7,7 +7,9 @@ package struct TimedTranscript: Equatable, Sendable {
     package let segments: [TimedSegment]
 
     package var duration: TimeInterval {
-        segments.last?.end ?? 0
+        guard let last = segments.last else { return 0 }
+
+        return last.end
     }
 
     package var text: String {
@@ -15,7 +17,7 @@ package struct TimedTranscript: Equatable, Sendable {
         var previousEnd: TimeInterval?
 
         for segment in segments {
-            if let previousEnd, segment.start - previousEnd < Self.paragraphPause, !paragraphs.isEmpty {
+            if let previousEnd, segment.start - previousEnd < Self.paragraphPause {
                 paragraphs[paragraphs.count - 1].append(segment.text)
             } else {
                 paragraphs.append([segment.text])

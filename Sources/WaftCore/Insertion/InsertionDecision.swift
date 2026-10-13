@@ -20,15 +20,4 @@ package enum InsertionDecision: Equatable, Sendable {
             .paste
         }
     }
-
-    package static func isFocusOnTarget(_ comparison: FocusComparison, targetProcessID: Int32, currentProcessID: Int32) -> Bool {
-        targetProcessID == currentProcessID && comparison != .different
-    }
-}
-
-package enum InsertionSkipReason: String, Sendable {
-    case secureField
-    case noAccessibility
-    case focusChanged
-    case keyHeld
 }

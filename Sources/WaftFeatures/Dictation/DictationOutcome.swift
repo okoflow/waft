@@ -27,7 +27,7 @@ enum DictationOutcome {
             HUDMessage(
                 kind: .warning,
                 title: String(localized: "Not pasted into a password field"),
-                detail: String(localized: "Copy it from the menu: Copy Last Transcript"),
+                detail: String(localized: "Choose Copy Last Dictation in the Waft menu."),
             )
 
         case .noSpeech:

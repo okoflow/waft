@@ -1,68 +1,120 @@
 import Foundation
 import Observation
-import os
 import WaftCore
 
 @Observable
-package final class HistoryModel {
-    package private(set) var history: DictationHistory
-    package var searchText = ""
+final class HistoryModel {
+    struct Page {
+        let entries: [DictationHistory.Entry]
+        let firstPosition: Int
+        let total: Int
+        let hasPrevious: Bool
+        let hasNext: Bool
 
-    @ObservationIgnored private let store: any ValueStore<DictationHistory>
+        var lastPosition: Int {
+            firstPosition + entries.count - 1
+        }
 
-    package var matchingEntries: [DictationHistory.Entry] {
+        var isPaged: Bool {
+            hasPrevious || hasNext
+        }
+    }
+
+    private static let pageSize = 50
+    private static let recentCount = 5
+
+    private(set) var history: DictationHistory
+
+    var searchText = "" {
+        didSet { pageIndex = 0 }
+    }
+
+    private var pageIndex = 0
+
+    private let store: any ValueStore<DictationHistory>
+    private let settings: SettingsModel
+    private let clipboard: any Clipboard
+
+    var currentPage: Page {
+        let matching = matchingEntries
+        let lastIndex = Self.lastPageIndex(forCount: matching.count)
+        let index = min(pageIndex, lastIndex)
+        let entries = Array(matching.dropFirst(index * Self.pageSize).prefix(Self.pageSize))
+
+        return Page(
+            entries: entries,
+            firstPosition: index * Self.pageSize + 1,
+            total: matching.count,
+            hasPrevious: index > 0,
+            hasNext: index < lastIndex,
+        )
+    }
+
+    var recentEntries: [DictationHistory.Entry] {
+        Array(history.newestFirst.prefix(Self.recentCount))
+    }
+
+    private var matchingEntries: [DictationHistory.Entry] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else { return history.newestFirst }
 
         return history.newestFirst.filter { $0.text.localizedCaseInsensitiveContains(query) }
     }
 
-    init(store: any ValueStore<DictationHistory>) {
+    init(store: any ValueStore<DictationHistory>, settings: SettingsModel, clipboard: any Clipboard) {
         self.store = store
+        self.settings = settings
+        self.clipboard = clipboard
+        history = store.read(default: DictationHistory())
 
-        do {
-            history = try store.load() ?? DictationHistory()
-        } catch {
-            Logger.settings.error("Couldn't read the history: \(error.localizedDescription, privacy: .public)")
-
-            history = DictationHistory()
-        }
+        keepWithinLimits()
     }
 
-    package func recentEntries(limit: Int) -> [DictationHistory.Entry] {
-        Array(history.newestFirst.prefix(limit))
+    private static func lastPageIndex(forCount count: Int) -> Int {
+        max(0, (count - 1) / pageSize)
     }
 
-    package func removeAll() {
+    func showPreviousPage() {
+        let shown = min(pageIndex, Self.lastPageIndex(forCount: matchingEntries.count))
+
+        pageIndex = max(0, shown - 1)
+    }
+
+    func showNextPage() {
+        guard currentPage.hasNext else { return }
+
+        pageIndex += 1
+    }
+
+    func copy(_ entry: DictationHistory.Entry) {
+        clipboard.copy(entry.text)
+    }
+
+    func removeAll() {
         history.removeAll()
-
-        do {
-            try store.delete()
-        } catch {
-            Logger.settings.error("Couldn't delete the history: \(error.localizedDescription, privacy: .public)")
-        }
+        pageIndex = 0
+        store.remove()
     }
 
-    package func keep(for retention: HistoryRetention, limit: Int) {
-        let previous = history
-        history.prune(keeping: retention, limit: limit, now: Date())
+    func add(_ entry: DictationHistory.Entry) {
+        guard settings.settings.keepsHistory else { return }
 
-        if history != previous {
-            save()
-        }
-    }
-
-    func add(_ entry: DictationHistory.Entry, keepingFor retention: HistoryRetention, limit: Int) {
         history.add(entry)
-        history.prune(keeping: retention, limit: limit, now: entry.date)
-        save()
+        prune(at: entry.date)
+        store.write(history)
     }
 
-    private func save() {
-        do {
-            try store.save(history)
-        } catch {
-            Logger.settings.error("Couldn't save the history: \(error.localizedDescription, privacy: .public)")
-        }
+    func keepWithinLimits() {
+        let count = history.entries.count
+
+        prune(at: Date())
+
+        guard history.entries.count != count else { return }
+
+        store.write(history)
+    }
+
+    private func prune(at now: Date) {
+        history.prune(keeping: settings.settings.historyRetention, limit: settings.settings.historyLimit, now: now)
     }
 }

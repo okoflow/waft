@@ -1,6 +1,7 @@
 import Foundation
 
 package enum SettingsPane: CaseIterable {
+    case overview
     case general
     case dictation
     case writing
@@ -10,10 +11,11 @@ package enum SettingsPane: CaseIterable {
     case pro
     case about
 
-    static let sidebarPanes: [SettingsPane] = [.general, .dictation, .writing, .aiModels, .dictionary, .history]
+    static let sidebarPanes: [SettingsPane] = [.overview, .general, .dictation, .writing, .aiModels, .dictionary, .history]
 
     var title: String {
         switch self {
+        case .overview: String(localized: "Overview")
         case .general: String(localized: "General")
         case .dictation: String(localized: "Dictation")
         case .writing: String(localized: "Writing")
@@ -27,19 +29,21 @@ package enum SettingsPane: CaseIterable {
 
     var symbolName: String {
         switch self {
+        case .overview: "chart.bar.fill"
         case .general: "gearshape.fill"
         case .dictation: "mic.fill"
         case .writing: "slider.horizontal.3"
         case .aiModels: "cpu.fill"
         case .dictionary: "book.closed.fill"
         case .history: "clock.fill"
-        case .pro: "sparkles"
+        case .pro: "crown.fill"
         case .about: "info.circle.fill"
         }
     }
 
     var tint: TileTint {
         switch self {
+        case .overview: .green
         case .general, .about: .gray
         case .dictation: .red
         case .writing: .teal

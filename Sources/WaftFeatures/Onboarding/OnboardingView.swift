@@ -1,14 +1,14 @@
 import SwiftUI
 import WaftCore
 
-package struct OnboardingView: View {
+struct OnboardingView: View {
     private let model: AppModel
 
-    package init(model: AppModel) {
+    init(model: AppModel) {
         self.model = model
     }
 
-    package var body: some View {
+    var body: some View {
         VStack(spacing: 0) {
             step
                 .id(model.onboarding.step)
@@ -17,7 +17,7 @@ package struct OnboardingView: View {
                 .padding(.top, 56)
                 .padding(.horizontal, 72)
 
-            OnboardingFooter(model: model)
+            OnboardingFooter(onboarding: model.onboarding)
         }
         .animation(Motion.page, value: model.onboarding.step)
         .buttonStyle(PushButtonStyle())
@@ -31,45 +31,29 @@ package struct OnboardingView: View {
     private var step: some View {
         switch model.onboarding.step {
         case .welcome:
-            WelcomeStep(keyTitle: model.settings.settings.pushToTalkKey.shortTitle)
+            WelcomeStep(keyTitle: model.settings.settings.pushToTalkKey.title)
         case .microphone:
             PermissionStep(permission: .microphone, monitor: model.permissions)
         case .accessibility:
             PermissionStep(permission: .accessibility, monitor: model.permissions)
         case .practice:
             PracticeStep(model: model)
-        case .finish:
-            FinishStep(model: model)
+        case .done:
+            DoneStep(model: model)
         }
     }
 }
 
 private struct OnboardingFooter: View {
-    let model: AppModel
-
-    private var onboarding: OnboardingModel {
-        model.onboarding
-    }
-
-    private var missingPermission: Permission? {
-        let permission: Permission? = switch onboarding.step {
-        case .microphone: .microphone
-        case .accessibility: .accessibility
-        default: nil
-        }
-
-        return permission.flatMap { model.permissions.status(of: $0).isGranted ? nil : $0 }
-    }
+    let onboarding: OnboardingModel
 
     private var primaryTitle: LocalizedStringKey {
-        if let permission = missingPermission {
-            return permission == .microphone ? "Allow Microphone" : "Open System Settings"
-        }
-
-        return switch onboarding.step {
-        case .welcome: "Get Started"
-        case .finish: "Done"
-        default: "Continue"
+        switch (onboarding.pendingStatus, onboarding.step) {
+        case (.notDetermined, _): "Allow Access…"
+        case (.denied, _): "Open System Settings"
+        case (_, .welcome): "Get Started"
+        case (_, .done): "Done"
+        case (_, .microphone), (_, .accessibility), (_, .practice): "Continue"
         }
     }
 
@@ -79,44 +63,23 @@ private struct OnboardingFooter: View {
 
             HStack {
                 Button("Back") { onboarding.goBack() }
-                    .opacity(onboarding.isFirstStep ? 0 : 1)
-                    .disabled(onboarding.isFirstStep)
+                    .opacity(onboarding.canGoBack ? 1 : 0)
+                    .disabled(!onboarding.canGoBack)
+                    .accessibilityHidden(!onboarding.canGoBack)
 
                 Spacer()
 
-                Button(primaryTitle, action: primaryAction)
-                    .buttonStyle(PushButtonStyle(isProminent: true))
-                    .keyboardShortcut(.defaultAction)
+                Button(primaryTitle) {
+                    Task { await onboarding.proceed() }
+                }
+                .buttonStyle(PushButtonStyle(isProminent: true))
+                .keyboardShortcut(.defaultAction)
             }
         }
         .controlSize(.large)
         .padding(.horizontal, 28)
         .padding(.top, 12)
         .padding(.bottom, 24)
-    }
-
-    private func primaryAction() {
-        guard let permission = missingPermission else {
-            onboarding.advance()
-
-            return
-        }
-
-        Task {
-            let step = onboarding.step
-            await model.permissions.request(permission)
-
-            let status = model.permissions.status(of: permission)
-            guard permission == .microphone, status != .notDetermined else { return }
-
-            if status.isGranted {
-                try? await Task.sleep(for: .milliseconds(600))
-            }
-
-            if onboarding.step == step {
-                onboarding.advance()
-            }
-        }
     }
 }
 
@@ -134,5 +97,13 @@ private struct PageDots: View {
         }
         .accessibilityElement()
         .accessibilityLabel("Step \(current + 1) of \(count)")
+    }
+}
+
+private struct StepTransition: Transition {
+    func body(content: Content, phase: TransitionPhase) -> some View {
+        content
+            .opacity(phase.isIdentity ? 1 : 0)
+            .offset(y: phase.value * -8)
     }
 }

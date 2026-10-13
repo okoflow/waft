@@ -1,12 +1,12 @@
 import Foundation
 import WaftCore
 
-package struct SpeechModelFiles: Sendable {
-    package static let defaultModel = "openai_whisper-large-v3-v20240930_626MB"
-    package static let repository = "argmaxinc/whisperkit-coreml"
-    package static let defaultBaseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
+enum SpeechModelFiles {
+    static let model = "openai_whisper-large-v3-v20240930_626MB"
+    static let repository = "argmaxinc/whisperkit-coreml"
+    static let baseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
 
-    package static let completionMarker = ".waft-complete"
+    private static let completionMarker = ".waft-complete"
 
     private static let requiredParts = [
         completionMarker,
@@ -16,39 +16,52 @@ package struct SpeechModelFiles: Sendable {
         "config.json",
     ]
 
-    let model: String
-    let baseDirectory: URL
-
-    var folder: URL {
-        baseDirectory.appending(path: "models/\(Self.repository)/\(model)", directoryHint: .isDirectory)
+    static var folder: URL {
+        baseDirectory.appending(path: "models/\(repository)/\(model)", directoryHint: .isDirectory)
     }
 
-    var tokenizerFile: URL? {
-        guard model.contains("large-v3") else { return nil }
+    static var isInstalled: Bool {
+        guard hasEveryPart, hasTokenizer else { return false }
 
-        return baseDirectory.appending(path: "models/openai/whisper-large-v3/tokenizer.json")
+        return !hasIncompleteDownload
     }
 
-    var isInstalled: Bool {
-        let fileManager = FileManager.default
-        let hasEveryPart = Self.requiredParts.allSatisfy { fileManager.fileExists(atPath: folder.appending(path: $0).path) }
-        let hasTokenizer = tokenizerFile.map { fileManager.fileExists(atPath: $0.path) } ?? true
-
-        return hasEveryPart && hasTokenizer && !hasIncompleteDownload
+    private static var hasEveryPart: Bool {
+        requiredParts.allSatisfy { FileManager.default.fileExists(atPath: folder.appending(path: $0).path) }
     }
 
-    private var hasIncompleteDownload: Bool {
-        let cache = folder.deletingLastPathComponent().appending(path: ".cache/huggingface/download/\(model)")
-        let pending = (try? FileManager.default.subpathsOfDirectory(atPath: cache.path)) ?? []
+    private static var hasTokenizer: Bool {
+        FileManager.default.fileExists(atPath: tokenizerFolder.appending(path: "tokenizer.json").path)
+    }
+
+    private static var tokenizerFolder: URL {
+        baseDirectory.appending(path: "models/openai/whisper-large-v3", directoryHint: .isDirectory)
+    }
+
+    private static var downloadCache: URL {
+        folder.deletingLastPathComponent().appending(path: ".cache/huggingface/download/\(model)", directoryHint: .isDirectory)
+    }
+
+    private static var hasIncompleteDownload: Bool {
+        guard let pending = try? FileManager.default.subpathsOfDirectory(atPath: downloadCache.path) else { return false }
 
         return pending.contains { $0.hasSuffix(".incomplete") }
     }
 
-    func markComplete() throws {
-        try Data().write(to: folder.appending(path: Self.completionMarker))
+    static func markComplete() throws {
+        try Data().write(to: folder.appending(path: completionMarker))
+        try removeIfPresent(downloadCache)
     }
 
-    func remove() {
-        try? FileManager.default.removeItem(at: folder)
+    static func remove() throws {
+        try removeIfPresent(folder)
+        try removeIfPresent(downloadCache)
+        try removeIfPresent(tokenizerFolder)
+    }
+
+    private static func removeIfPresent(_ url: URL) throws {
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+
+        try FileManager.default.removeItem(at: url)
     }
 }

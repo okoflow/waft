@@ -30,20 +30,3 @@ body:
     attributes:
       label: Alternatives
       description: Workarounds you tried or other designs you considered.
-
-  - type: dropdown
-    id: area
-    attributes:
-      label: Area
-      multiple: true
-      options:
-        - Dictation key
-        - Recording and microphone
-        - Recognition and languages
-        - Modes and Claude
-        - Pasting and clipboard
-        - Dictionary, snippets, and history
-        - Menu and Settings
-        - Other
-    validations:
-      required: true

@@ -1,5 +1,5 @@
 extension Language {
-    package var scripts: Set<WritingScript> {
+    var scripts: Set<WritingScript> {
         switch self {
         case .arabic, .urdu:
             [.arabic]
@@ -30,23 +30,23 @@ extension Language {
         }
     }
 
-    package var hasLetterCase: Bool {
+    var hasLetterCase: Bool {
         scripts.contains(where: \.hasLetterCase)
     }
 
-    package var separatesWordsWithSpaces: Bool {
+    var separatesWordsWithSpaces: Bool {
         scripts.allSatisfy(\.separatesWordsWithSpaces)
     }
 
-    package var hasLooseWordSpacing: Bool {
+    var hasLooseWordSpacing: Bool {
         scripts.contains(where: \.hasLooseWordSpacing)
     }
 
-    package var spacesBeforeHighPunctuation: Bool {
+    var spacesBeforeHighPunctuation: Bool {
         self == .french
     }
 
-    package var fullStop: String {
+    var fullStop: String {
         switch self {
         case .chinese, .japanese:
             "。"

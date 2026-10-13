@@ -1,92 +1,124 @@
-import AppKit
+import Foundation
 import Observation
+import os
 import WaftCore
 
 @Observable
-package final class ProModel {
-    package enum ActivationProblem: Equatable {
+final class ProModel {
+    enum ActivationProblem: Equatable {
         case unreadable
         case invalid
     }
 
-    static let purchaseURL = URL(literal: "https://waft.okoflow.com/pro")
     static let price = "$13.99"
 
-    package private(set) var license: License?
-    package private(set) var activationProblem: ActivationProblem?
-    package var draft = ""
+    private static let purchaseURL = URL(literal: "https://waft.okoflow.com/pro")
 
-    @ObservationIgnored private let keyStore: any ValueStore<String>
-    @ObservationIgnored private let checker: any LicenseSignatureChecking
-    @ObservationIgnored private let trialStarted: Date
+    private(set) var license: License?
+    private(set) var activationProblem: ActivationProblem?
 
-    package var trialEnds: Date {
-        Calendar.current.date(byAdding: .day, value: ProAccess.trialLength, to: Calendar.current.startOfDay(for: trialStarted))
-            ?? trialStarted
+    var draft = "" {
+        didSet { activationProblem = nil }
     }
 
-    package var access: ProAccess {
+    private var hasTriedActivation = false
+
+    private let keyStore: any ValueStore<String>
+    private let checker: any LicenseSignatureChecking
+    private let urlOpener: any URLOpener
+    private let trialStarted: Date
+
+    var trialEnds: Date {
+        ProAccess.trialEnd(startedOn: min(trialStarted, Date()))
+    }
+
+    var access: ProAccess {
         ProAccess(license: license, trialStarted: trialStarted, now: Date())
     }
 
-    init(keyStore: any ValueStore<String>, trialStore: any ValueStore<Date>, checker: any LicenseSignatureChecking) {
+    var isUnlocked: Bool {
+        access.isUnlocked
+    }
+
+    var showsLicenseSection: Bool {
+        license != nil || hasTriedActivation || !ProAccess.isFreeDuringBeta
+    }
+
+    var canActivateDraft: Bool {
+        !trimmedDraft.isEmpty
+    }
+
+    private var trimmedDraft: String {
+        draft.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    init(
+        keyStore: any ValueStore<String>,
+        trialStore: any ValueStore<Date>,
+        checker: any LicenseSignatureChecking,
+        urlOpener: any URLOpener,
+    ) {
         self.keyStore = keyStore
         self.checker = checker
+        self.urlOpener = urlOpener
+        trialStarted = Self.trialStart(in: trialStore)
+        license = Self.storedLicense(in: keyStore, checker: checker)
+    }
 
-        if let started = try? trialStore.load() {
-            trialStarted = started
-        } else {
-            trialStarted = Date()
-
-            if !ProAccess.isFreeDuringBeta {
-                try? trialStore.save(trialStarted)
-            }
+    private static func trialStart(in store: any ValueStore<Date>) -> Date {
+        if let started = store.read() {
+            return started
         }
 
-        license = (try? keyStore.load()).flatMap { Self.verifiedKey($0, checker: checker)?.license }
+        let now = Date()
+
+        if !ProAccess.isFreeDuringBeta {
+            store.write(now)
+        }
+
+        return now
     }
 
-    private static func verifiedKey(_ text: String, checker: any LicenseSignatureChecking) -> LicenseKey? {
-        guard let key = LicenseKey(text), checker.isValid(key.signature, for: key.payload) else { return nil }
+    private static func storedLicense(in store: any ValueStore<String>, checker: any LicenseSignatureChecking) -> License? {
+        guard let text = store.read() else { return nil }
+        guard let key = LicenseKey(text), key.isVerified(by: checker) else {
+            Logger.settings.error("The stored license key isn't valid")
 
-        return key
+            return nil
+        }
+
+        return key.license
     }
 
-    package func allows(_ feature: ProFeature) -> Bool {
-        access.allows(feature)
-    }
+    func activateDraft() {
+        hasTriedActivation = true
 
-    @discardableResult
-    package func activate(_ text: String) -> Bool {
-        guard LicenseKey(text) != nil else {
+        guard let key = LicenseKey(draft) else {
             activationProblem = .unreadable
 
-            return false
+            return
         }
-        guard let key = Self.verifiedKey(text, checker: checker) else {
+        guard key.isVerified(by: checker) else {
             activationProblem = .invalid
 
-            return false
+            return
         }
 
-        try? keyStore.save(text.trimmingCharacters(in: .whitespacesAndNewlines))
+        keyStore.write(trimmedDraft)
         license = key.license
-        activationProblem = nil
         draft = ""
-
-        return true
     }
 
     func deactivate() {
-        try? keyStore.delete()
+        keyStore.remove()
         license = nil
     }
 
-    func clearProblem() {
-        activationProblem = nil
+    func locks(_ mode: Mode) -> Bool {
+        mode.usesAI && !isUnlocked
     }
 
     func purchase() {
-        NSWorkspace.shared.open(Self.purchaseURL)
+        urlOpener.open(Self.purchaseURL)
     }
 }
