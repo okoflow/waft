@@ -102,7 +102,12 @@ final class DictationQueue {
         let transcript: Transcript?
 
         do {
-            transcript = try await transcriber.transcribe(job.samples, in: job.language, vocabulary: job.vocabulary.promptTerms)
+            transcript = try await transcriber.transcribe(
+                job.samples,
+                in: job.language,
+                writing: job.variants,
+                vocabulary: job.vocabulary.promptTerms,
+            )
         } catch {
             let cause = error as NSError
             Logger.dictation.error("Transcription failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")

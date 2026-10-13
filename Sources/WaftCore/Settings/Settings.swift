@@ -7,6 +7,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case mode
         case customModes
         case languages
+        case writingVariants
         case speechModel
         case appModes
         case modelProvider
@@ -30,6 +31,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var mode = Mode.light
     package var customModes: [CustomMode] = []
     package var languages = LanguageSelection(languages: [.english])
+    package var writingVariants = WritingVariants()
     package var speechModel = SpeechModel.fast
     package var appModes = AppModeOverrides()
     package var modelProvider = ModelProvider.cloud(.claude)
@@ -62,6 +64,7 @@ package struct Settings: Codable, Equatable, Sendable {
         customModes = container.decodeValidElements(.customModes)
         mode = container.decode(.mode, default: mode)
         languages = container.decode(.languages, default: languages)
+        writingVariants = container.decode(.writingVariants, default: writingVariants)
         speechModel = container.decode(.speechModel, default: speechModel)
         appModes = container.decode(.appModes, default: appModes)
         modelProvider = container.decode(.modelProvider, default: modelProvider)

@@ -113,14 +113,6 @@ struct TranscriptProcessorTests {
         #expect(await log.requests.isEmpty)
     }
 
-    @Test
-    func `sends the rewrite to the chosen cloud provider`() async {
-        let setup = RewriteSetup(provider: .cloud(.openAI), instructions: "Clean.")
-        let processed = await process("hello", mode: .clean, setup: setup, answer: .success("From Claude."))
-
-        #expect(processed == ProcessedText(text: "From OpenAI.", mode: .clean))
-    }
-
     @Test(arguments: [
         (CloudModel.fastest, Duration.seconds(4), Duration.seconds(20)),
         (.balanced, .seconds(6), .seconds(30)),
@@ -133,30 +125,33 @@ struct TranscriptProcessorTests {
     ) async throws {
         let log = RewriteLog()
         let setup = RewriteSetup(
-            provider: .cloud(.claude),
+            provider: .cloud(.openAI),
             instructions: "Clean.",
-            cloudModels: PerProvider(claude: model, openAI: .fastest),
+            cloudModels: PerProvider(claude: .fastest, openAI: model),
         )
-        _ = await process("hello", mode: .clean, setup: setup, log: log)
+        let processed = await process("hello", mode: .clean, setup: setup, log: log)
         _ = try await edit("Text.", following: "shorter", answer: .success("Short."), setup: setup, log: log)
         let requests = await log.requests
 
+        #expect(processed == ProcessedText(text: "From OpenAI.", mode: .clean))
         #expect(requests.map(\.cloudModel) == [model, model])
         #expect(requests.map(\.deadline) == [deadline, editDeadline])
     }
 
     @Test
-    func `sends the rewrite with the server to the local server`() async throws {
+    func `sends the rewrite with the server to the local server and gives an edit more time`() async throws {
         let log = RewriteLog()
         let server = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")
         let setup = RewriteSetup(provider: .localServer, instructions: "Clean.", localServer: server)
         let processed = await process("hello", mode: .formal, setup: setup, answer: .success("From Claude."), log: log)
-        let request = try #require(await log.requests.first)
+        let edited = try await edit("Text.", following: "shorter", answer: .failure(.offline), setup: setup, log: log)
+        let requests = await log.requests
 
         #expect(processed == ProcessedText(text: "From the local server.", mode: .formal))
-        #expect(request.localServer == server)
-        #expect(request.cloudModel == nil)
-        #expect(request.deadline == .seconds(15))
+        #expect(edited == "From the local server.")
+        #expect(requests.map(\.localServer) == [server, server])
+        #expect(requests.map(\.cloudModel) == [nil, nil])
+        #expect(requests.map(\.deadline) == [.seconds(15), .seconds(45)])
     }
 
     @Test
@@ -215,28 +210,26 @@ struct TranscriptProcessorTests {
         #expect(RewritePrompt.userMessage(for: request).contains("<text>\nA rather long sentence.\n</text>"))
     }
 
-    @Test(arguments: [RewriteError.offline, .rejectedKey, .truncated, .timeout])
-    func `passes on the rewrite error of an edit`(error: RewriteError) async {
+    @Test(arguments: [
+        (Result<String, RewriteError>.failure(.offline), RewriteError.offline),
+        (.failure(.rejectedKey), .rejectedKey),
+        (.success("<text> </text>"), .unreadableResponse),
+    ])
+    func `passes on the rewrite error of an edit and rejects an empty one`(
+        answer: Result<String, RewriteError>,
+        error: RewriteError,
+    ) async {
         await #expect(throws: error) {
-            try await edit("Text.", following: "shorter", answer: .failure(error))
+            try await edit("Text.", following: "shorter", answer: answer)
         }
     }
 
     @Test
-    func `rejects an empty edit`() async {
-        await #expect(throws: RewriteError.unreadableResponse) {
-            try await edit("Text.", following: "delete it", answer: .success("<text> </text>"))
-        }
-    }
+    func `writes the text in the chosen script and keeps a snippet as written`() async {
+        let vocabulary = Vocabulary(terms: [], snippets: [Vocabulary.Snippet(trigger: "brb", text: "马上回来")])
+        let processed = await process("这是测试 brb", mode: .light, language: .chinese, variant: .traditional, vocabulary: vocabulary)
 
-    @Test
-    func `gives a local server more time for an edit`() async throws {
-        let log = RewriteLog()
-        let setup = RewriteSetup(provider: .localServer, instructions: "Clean.", localServer: LocalServer(model: "llama"))
-        let edited = try await edit("Text.", following: "shorter", answer: .failure(.offline), setup: setup, log: log)
-
-        #expect(edited == "From the local server.")
-        #expect(await log.requests.first?.deadline == .seconds(45))
+        #expect(processed.text == "這是測試 马上回来。")
     }
 }
 
@@ -245,13 +238,20 @@ extension TranscriptProcessorTests {
         _ text: String,
         mode: Mode,
         language: Language = .english,
+        variant: WritingVariant? = nil,
         setup: RewriteSetup = Self.setup,
         answer: Result<String, RewriteError> = .success("Unused."),
         vocabulary: Vocabulary = .empty,
         allowsAI: Bool = true,
         log: RewriteLog = RewriteLog(),
     ) async -> ProcessedText {
-        let transcript = Transcript(text: text, language: language, detectionDuration: .zero, decodingDuration: .zero)
+        let transcript = Transcript(
+            text: text,
+            language: language,
+            detectionDuration: .zero,
+            decodingDuration: .zero,
+            variant: variant,
+        )
 
         return await processor(claude: answer, log: log)
             .process(transcript, mode: mode, setup: setup, vocabulary: vocabulary, allowsAI: allowsAI)

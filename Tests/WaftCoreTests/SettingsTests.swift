@@ -91,6 +91,7 @@ struct SettingsTests {
         var settings = Self.defaults
         settings.mode = .formal
         settings.languages = LanguageSelection(languages: [.english, .ukrainian], pinned: .ukrainian)
+        settings.writingVariants = WritingVariants().choosing(.cyrillic, for: .serbian)
         settings.speechModel = .accurate
         settings.appModes.set(.raw, for: "com.apple.Terminal")
         settings.modelProvider = .localServer
@@ -112,9 +113,7 @@ struct SettingsTests {
         settings.microphoneID = "usb-mic"
         settings.hasCompletedSetup = true
 
-        let data = try JSONEncoder().encode(settings)
-
-        #expect(try JSONDecoder().decode(Settings.self, from: data) == settings)
+        #expect(try JSONDecoder().decode(Settings.self, from: JSONEncoder().encode(settings)) == settings)
     }
 
     @Test(arguments: [
