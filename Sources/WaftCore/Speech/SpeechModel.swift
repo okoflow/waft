@@ -20,9 +20,13 @@ package enum SpeechModel: String, CaseIterable, Codable, Sendable {
 
     package var summary: String {
         switch self {
-        case .fast: String(localized: "630 MB · quickest")
-        case .accurate: String(localized: "3.1 GB · fewer mistakes, 2–3× slower")
+        case .fast: String(localized: "\(Self.size(of: 630_000_000)) · quickest")
+        case .accurate: String(localized: "\(Self.size(of: 3_100_000_000)) · fewer mistakes, \(2)–\(3)× slower")
         }
+    }
+
+    private static func size(of bytes: Int64) -> String {
+        bytes.formatted(.byteCount(style: .file))
     }
 
     package func usable(withProUnlocked isUnlocked: Bool) -> SpeechModel {

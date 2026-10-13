@@ -34,7 +34,7 @@ private struct ListeningPill: View {
     private var state: String {
         let handsFree = isHandsFree ? String(localized: "Hands-free") : nil
 
-        return [badge, handsFree].compactMap(\.self).joined(separator: ", ")
+        return [badge, handsFree].compactMap(\.self).formatted(.list(type: .and, width: .narrow))
     }
 
     var body: some View {
@@ -127,6 +127,8 @@ private struct MessagePill: View {
                 Text(message.title)
                     .font(Font(HUDPill.titleFont))
                     .lineLimit(6)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentDirection(of: message.title)
 
                 if let detail = message.detail {
                     Text(detail)

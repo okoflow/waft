@@ -64,7 +64,7 @@ private struct EntryRow: View {
         HStack(spacing: Metrics.controlSpacing) {
             InputField(firstPrompt, prompt: firstPrompt, text: $first)
 
-            Image(systemName: "arrow.right")
+            Image(systemName: "arrow.forward")
                 .font(.glyph)
                 .foregroundStyle(.tertiary)
                 .accessibilityHidden(true)

@@ -18,7 +18,7 @@ struct LinkRow: View {
                         .foregroundStyle(.secondary)
                 }
 
-                Image(systemName: "arrow.up.right")
+                Image(systemName: "arrow.up.forward")
                     .font(.glyph)
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)

@@ -1,4 +1,4 @@
-enum WritingScript: Sendable {
+package enum WritingScript: Sendable {
     case arabic
     case cyrillic
     case devanagari
@@ -10,6 +10,15 @@ enum WritingScript: Sendable {
     case latin
     case tamil
     case thai
+
+    package var isRightToLeft: Bool {
+        switch self {
+        case .arabic, .hebrew:
+            true
+        case .cyrillic, .devanagari, .greek, .han, .hangul, .kana, .latin, .tamil, .thai:
+            false
+        }
+    }
 
     var hasLetterCase: Bool {
         switch self {
@@ -67,7 +76,7 @@ enum WritingScript: Sendable {
         }
     }
 
-    static func dominant(in text: String) -> WritingScript? {
+    package static func dominant(in text: String) -> WritingScript? {
         var counts: [WritingScript: Int] = [:]
         var letters = 0
 

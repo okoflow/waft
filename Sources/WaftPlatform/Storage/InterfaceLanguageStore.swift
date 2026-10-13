@@ -3,6 +3,7 @@ import WaftCore
 
 package struct InterfaceLanguageStore: ValueStore {
     private static let key = "AppleLanguages"
+    private static let textDirectionKey = "AppleTextDirection"
 
     package let name = "interface language"
 
@@ -27,10 +28,12 @@ package struct InterfaceLanguageStore: ValueStore {
 
     package func save(_ value: String) {
         defaults.set([value], forKey: Self.key)
+        defaults.set(true, forKey: Self.textDirectionKey)
     }
 
     package func delete() {
         defaults.removeObject(forKey: Self.key)
+        defaults.removeObject(forKey: Self.textDirectionKey)
     }
 
     package func exists() -> Bool {
