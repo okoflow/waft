@@ -61,21 +61,39 @@ struct RecordingTriggersTests {
     }
 
     @Test(arguments: [
-        (RecordingPurpose.dictation, true, PushToTalk.Action?.some(.lockHandsFree)),
-        (.dictation, false, .discardRecording(.tooShort)),
-        (.edit, true, .discardRecording(.tooShort)),
+        (
+            RecordingPurpose.dictation,
+            DictationStart.holdOrDoubleTap,
+            [PushToTalk.Action?.some(.startRecording), .discardRecording(.tooShort), .startRecording, .lockHandsFree],
+        ),
+        (.dictation, .hold, [.startRecording, .discardRecording(.tooShort), .startRecording, .discardRecording(.tooShort)]),
+        (.dictation, .tap, [.startRecording, .lockHandsFree, .finishRecording, nil]),
+        (.edit, .tap, [.startRecording, .discardRecording(.tooShort), .startRecording, .discardRecording(.tooShort)]),
     ])
-    func `locks hands-free only for a dictation that allows it`(
+    func `starts a dictation the way the settings say and always holds the edit key`(
         purpose: RecordingPurpose,
-        allowsHandsFree: Bool,
-        secondRelease: PushToTalk.Action?,
+        start: DictationStart,
+        expected: [PushToTalk.Action?],
     ) {
         var triggers = RecordingTriggers()
         var settings = Settings(languages: .preferred(by: []))
-        settings.allowsHandsFree = allowsHandsFree
+        settings.dictationStart = start
         let steps: [(PushToTalk.Event, TimeInterval)] = [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4)]
         let actions = steps.map { event, time in triggers.handle(event, for: purpose, at: time, settings: settings) }
 
-        #expect(actions.last == secondRelease)
+        #expect(actions == expected)
+    }
+
+    @Test
+    func `returns a purpose to idle on reset`() {
+        var triggers = RecordingTriggers()
+        var settings = Settings(languages: .preferred(by: []))
+        settings.dictationStart = .tap
+        _ = triggers.handle(.keyDown, for: .dictation, at: 0, settings: settings)
+        _ = triggers.handle(.keyUp, for: .dictation, at: 0.1, settings: settings)
+
+        triggers.reset(.dictation)
+
+        #expect(triggers.handle(.keyDown, for: .dictation, at: 0.3, settings: settings) == .startRecording)
     }
 }

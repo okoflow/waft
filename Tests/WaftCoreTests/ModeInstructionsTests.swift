@@ -3,7 +3,7 @@ import Testing
 @testable import WaftCore
 
 struct ModeInstructionsTests {
-    @Test(arguments: Mode.allCases)
+    @Test(arguments: Mode.builtIn)
     func `falls back to the default instructions`(mode: Mode) {
         let instructions = ModeInstructions()
 

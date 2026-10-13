@@ -25,12 +25,7 @@ struct DictationJob {
         self.samples = samples
         language = settings.languages.forcedLanguage
         self.mode = mode
-        setup = RewriteSetup(
-            provider: settings.modelProvider,
-            instructions: settings.instructions.text(for: mode),
-            translation: settings.translation,
-            localServer: settings.localServer,
-        )
+        setup = settings.rewriteSetup(for: mode)
         self.vocabulary = vocabulary
         self.target = target
         selection = recording.selection

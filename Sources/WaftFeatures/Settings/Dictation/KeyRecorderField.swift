@@ -31,7 +31,7 @@ struct KeyRecorderField: View {
                 recorder.start(purpose, excluding: takenKey, record)
             }
         } label: {
-            HStack(spacing: 6) {
+            HStack(spacing: Metrics.inlineSpacing) {
                 Image(systemName: isRecording ? "record.circle" : "keyboard")
                     .font(.glyph)
                     .foregroundStyle(isRecording ? Color.accentColor : .secondary)

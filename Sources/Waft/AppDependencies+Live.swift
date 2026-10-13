@@ -14,7 +14,7 @@ extension AppDependencies {
         )
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
-        let statsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
+        let statisticsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
 
         return AppDependencies(
             recorder: AudioEngineRecorder(),
@@ -40,7 +40,7 @@ extension AppDependencies {
             vocabularyStore: JSONFileStore<Vocabulary>(name: "dictionary", url: vocabularyFile),
             vocabularyFile: vocabularyFile,
             historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile, isPrivate: true),
-            statsStore: JSONFileStore<DictationStats>(name: "stats", url: statsFile),
+            statisticsStore: JSONFileStore<DictationStatistics>(name: "statistics", url: statisticsFile),
             apiKeyStores: apiKeyStores,
             licenseStore: KeychainStore.license(),
             trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),

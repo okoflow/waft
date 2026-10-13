@@ -37,12 +37,16 @@ flowchart TD
 ## Code map
 
 **`WaftCore`** is grouped by domain. `Keyboard` holds `PushToTalk`, the state
-machine that turns key events into start, finish, and discard,
+machine that turns key events into start, finish, and discard for the chosen
+`DictationStart`,
 `RecordingTriggers`, which runs one for the dictation key and one for the
 editing key, and `ReleaseWatchdog`. `Speech` holds `SpeechModelState`, whose
 transitions return the effects a controller runs, `SpeechGate`, and
 `SubtitleFormatter`. `Text` holds Light mode (`LightModeRules`,
 `VoiceCommands`) and `HallucinationFilter`.
+`Mode` holds the built-in modes, the `CustomMode`s a user writes, and the
+modes for each app; `Settings+Modes` lists them all and turns any mode into a
+`RewriteSetup`.
 `Rewrite` holds `TranscriptProcessor`, which runs the dictionary, the mode,
 and the AI model under a deadline, `RewritePrompt`, and `RewriteValidator`.
 `Insertion` decides whether and how to paste. `Storage` holds `ValueStore` and
@@ -68,9 +72,10 @@ building blocks; `Support` holds helpers without a view.
 delegate, and `AppDependencies.live()`, the only place that names concrete
 adapters.
 
-**`Tests`** has a Swift Testing target for `WaftCore`, `WaftPlatform`, and
-`WaftFeatures`. The feature tests build the main-actor models with fakes of
-the `WaftCore` interfaces, so they run without the system.
+**`Tests`** has a Swift Testing target for `WaftCore`, `WaftSpeech`,
+`WaftPlatform`, and `WaftFeatures`. The speech tests cover the model files in
+a temporary folder, and the feature tests build the main-actor models with
+fakes of the `WaftCore` interfaces, so they run without the system.
 
 **`Packaging`** holds what the app bundle is made of besides the code:
 `Waft-Info.plist`, the entitlements, the icon, and the translations, plus the
@@ -171,8 +176,9 @@ others.
   `HesitationPattern`, stock phrases in `StockPhrase`, voice commands in
   `VoiceCommands`, the example sentence in `WhisperPrompt`, and a group in
   `Language+SoundAlike` if it sounds like another language.
-- **A mode.** Add a case to `Mode` with its title and summary. An AI mode
-  needs its instruction in `RewritePrompt`.
+- **A mode.** Add a case to `Mode` with its title, summary, and storage key,
+  and list it in `Mode.builtIn`. An AI mode needs its instruction in
+  `RewritePrompt`.
 - **An AI provider.** Describe its API in `WaftPlatform/Network` as a
   `RewriteAPI`, add a `CloudProvider` case and a `PerProvider` property, and
   wire it in `Rewriters.http`.

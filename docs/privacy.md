@@ -18,11 +18,11 @@ Waft connects to these services, and only for these reasons:
 
 | Service | When | What is sent |
 | --- | --- | --- |
-| Hugging Face | Downloading the speech model, once | Requests for the model files |
+| Hugging Face | Downloading the speech model you choose, once per model | Requests for the model files |
 | GitHub | Checking for updates, once a day unless you turn it off, and downloading them | A request for the update feed that names the Waft version |
-| Anthropic API | Clean, Formal, Translate, or an edit with Claude chosen and a key added | The recognized text, the mode's instruction, the spoken language, the target language when translating, your API key |
-| OpenAI API | Clean, Formal, Translate, or an edit with OpenAI chosen and a key added | The same, with your OpenAI API key |
-| A local server you run | Clean, Formal, Translate, or an edit with Local server chosen | The same without a key, sent only to the address you set |
+| Anthropic API | Clean, Formal, Translate, your modes, **Try it**, or an edit with Claude chosen and a key added | The recognized text, the mode's instructions, including the ones you wrote, the spoken language, the target language when translating, your API key |
+| OpenAI API | Clean, Formal, Translate, your modes, **Try it**, or an edit with OpenAI chosen and a key added | The same, with your OpenAI API key |
+| A local server you run | Clean, Formal, Translate, your modes, **Try it**, or an edit with Local server chosen | The same without a key, sent only to the address you set |
 
 An edit also sends the selected text. Raw and Light never use the network. In
 the AI modes only the model you chose receives the text, never audio. Waft asks

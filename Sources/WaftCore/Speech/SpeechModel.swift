@@ -20,8 +20,8 @@ package enum SpeechModel: String, CaseIterable, Codable, Sendable {
 
     package var summary: String {
         switch self {
-        case .fast: String(localized: "Whisper large-v3 turbo · 630 MB · quickest")
-        case .accurate: String(localized: "Whisper large-v3 · 3.1 GB · fewer mistakes outside English, about 3× slower")
+        case .fast: String(localized: "630 MB · quickest")
+        case .accurate: String(localized: "3.1 GB · fewer mistakes, about 3× slower")
         }
     }
 

@@ -46,19 +46,19 @@ private struct ListeningPill: View {
 
             if let badge {
                 Text(badge)
-                    .font(.caption.weight(.semibold))
+                    .font(.hudBadge)
                     .foregroundStyle(.secondary)
             }
 
             if isHandsFree {
                 Label("Hands-free", systemImage: "lock.fill")
-                    .font(.caption.weight(.semibold))
+                    .font(.hudBadge)
                     .foregroundStyle(.secondary)
                     .transition(.opacity)
             }
         }
         .animation(Motion.feedback, value: isHandsFree)
-        .font(.system(size: 15, weight: .semibold))
+        .font(.hudSymbol)
         .hudBackground()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Waft is listening")
@@ -78,7 +78,7 @@ private struct WorkingPill: View {
             Text(label)
                 .font(Font(HUDPill.titleFont))
         }
-        .font(.system(size: 15, weight: .semibold))
+        .font(.hudSymbol)
         .hudBackground()
         .accessibilityElement(children: .combine)
     }
@@ -93,7 +93,7 @@ private struct MessagePill: View {
         switch message.kind {
         case .pasted: "checkmark.circle.fill"
         case .copied: "doc.on.clipboard"
-        case .info: "info.circle"
+        case .information: "info.circle"
         case .warning: "exclamationmark.triangle.fill"
         }
     }
@@ -101,7 +101,7 @@ private struct MessagePill: View {
     private var symbolColor: Color {
         switch message.kind {
         case .pasted: Palette.success
-        case .copied, .info: .secondary
+        case .copied, .information: .secondary
         case .warning: Palette.warning
         }
     }
@@ -119,11 +119,11 @@ private struct MessagePill: View {
     var body: some View {
         HStack(spacing: HUDPill.spacing) {
             Image(systemName: symbolName)
-                .font(.system(size: 16, weight: .semibold))
+                .font(.hudMessageSymbol)
                 .foregroundStyle(symbolColor)
                 .accessibilityHidden(true)
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text(message.title)
                     .font(Font(HUDPill.titleFont))
                     .lineLimit(6)

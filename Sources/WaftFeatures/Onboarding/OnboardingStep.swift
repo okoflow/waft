@@ -12,18 +12,18 @@ struct OnboardingStep<Hero: View, Content: View>: View {
 
             Text(title)
                 .font(.heroTitle)
-                .padding(.top, 20)
+                .padding(.top, Metrics.windowSpacing)
 
             Text(message)
                 .font(.rowTitle)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, 8)
+                .padding(.top, Metrics.controlSpacing)
 
             content
-                .padding(.top, 28)
+                .padding(.top, Metrics.onboardingSectionSpacing)
         }
-        .frame(maxWidth: 480)
+        .frame(maxWidth: Metrics.onboardingContentWidth)
     }
 }

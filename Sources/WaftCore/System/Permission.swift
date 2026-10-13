@@ -13,7 +13,7 @@ package enum Permission: CaseIterable, Sendable {
 
     package var purpose: String {
         switch self {
-        case .microphone: String(localized: "Records your voice while you hold the dictation key.")
+        case .microphone: String(localized: "Records your voice while you dictate.")
         case .accessibility: String(localized: "Notices the dictation key and pastes the text where you type.")
         }
     }

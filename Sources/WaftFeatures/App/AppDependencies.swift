@@ -25,7 +25,7 @@ package struct AppDependencies {
     let vocabularyStore: any ValueStore<Vocabulary>
     let vocabularyFile: URL
     let historyStore: any ValueStore<DictationHistory>
-    let statsStore: any ValueStore<DictationStats>
+    let statisticsStore: any ValueStore<DictationStatistics>
     let apiKeyStores: PerProvider<any ValueStore<String>>
     let licenseStore: any ValueStore<String>
     let trialStore: any ValueStore<Date>
@@ -56,7 +56,7 @@ package struct AppDependencies {
         vocabularyStore: any ValueStore<Vocabulary>,
         vocabularyFile: URL,
         historyStore: any ValueStore<DictationHistory>,
-        statsStore: any ValueStore<DictationStats>,
+        statisticsStore: any ValueStore<DictationStatistics>,
         apiKeyStores: PerProvider<any ValueStore<String>>,
         licenseStore: any ValueStore<String>,
         trialStore: any ValueStore<Date>,
@@ -86,7 +86,7 @@ package struct AppDependencies {
         self.vocabularyStore = vocabularyStore
         self.vocabularyFile = vocabularyFile
         self.historyStore = historyStore
-        self.statsStore = statsStore
+        self.statisticsStore = statisticsStore
         self.apiKeyStores = apiKeyStores
         self.licenseStore = licenseStore
         self.trialStore = trialStore

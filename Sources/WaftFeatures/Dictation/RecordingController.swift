@@ -73,7 +73,7 @@ final class RecordingController {
         refused.isRejected = true
         recording = refused
 
-        hud.show(HUDMessage(kind: .info, title: reason))
+        hud.show(HUDMessage(kind: .information, title: reason))
     }
 
     func lockHandsFree() {
@@ -189,7 +189,7 @@ final class RecordingController {
 
         let mode = settings.settings.mode(for: recording.target?.bundleIdentifier)
 
-        return mode == .light ? nil : mode.title
+        return mode == .light ? nil : settings.settings.title(of: mode)
     }
 
     private func captureTarget(for id: RecordingID) {
@@ -213,7 +213,7 @@ final class RecordingController {
         recording?.isRejected = true
 
         hud.hideListening()
-        hud.show(HUDMessage(kind: .info, title: reason))
+        hud.show(HUDMessage(kind: .information, title: reason))
 
         let id = rejected.id
 

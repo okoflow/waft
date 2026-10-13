@@ -3,9 +3,9 @@ import WaftCore
 @testable import WaftFeatures
 
 struct HUDControllerTests {
-    private static let first = HUDMessage(kind: .info, title: "First")
+    private static let first = HUDMessage(kind: .information, title: "First")
     private static let second = HUDMessage(kind: .warning, title: "Second")
-    private static let third = HUDMessage(kind: .info, title: "Third")
+    private static let third = HUDMessage(kind: .information, title: "Third")
 
     private let window = FakeHUDWindow()
 

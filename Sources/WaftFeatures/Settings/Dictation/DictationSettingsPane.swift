@@ -1,10 +1,11 @@
-import AppKit
+import Foundation
 import SwiftUI
 import WaftCore
 
 struct DictationSettingsPane: View {
     @Bindable var settings: SettingsModel
 
+    let speechModelController: SpeechModelController
     let keyRecorder: KeyRecorder
     let pro: ProModel
     let state: SettingsWindowState
@@ -63,6 +64,8 @@ struct DictationSettingsPane: View {
     }
 
     var body: some View {
+        DictationStartSection(settings: settings)
+
         SettingsSection("Recording") {
             SettingsRow("Dictation key", description: keyNote) {
                 KeyRecorderField(
@@ -75,12 +78,6 @@ struct DictationSettingsPane: View {
                 }
             }
             RowDivider()
-            ToggleRow(
-                "Double-tap for hands-free",
-                isOn: $settings.settings.allowsHandsFree,
-                description: "Tap the key twice to dictate without holding it, then press it once to finish.",
-            )
-            RowDivider()
             PickerRow("Microphone", selection: $settings.settings.microphoneID, current: microphoneName) {
                 Text("System default").tag(String?.none)
                 ForEach(settings.microphones) { microphone in
@@ -89,6 +86,8 @@ struct DictationSettingsPane: View {
             }
         }
         .onAppear(perform: settings.refreshMicrophones)
+
+        SpeechModelSection(settings: settings, controller: speechModelController, pro: pro, state: state)
 
         EditKeySection(settings: settings, keyRecorder: keyRecorder, isLocked: !pro.isUnlocked) {
             state.selection = .pro

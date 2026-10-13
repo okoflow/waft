@@ -21,7 +21,7 @@ struct AboutSettingsPane: View {
             Text("On-device dictation for macOS with AI cleanup.")
                 .font(.rowTitle)
                 .multilineTextAlignment(.center)
-                .padding(.top, 8)
+                .padding(.top, Metrics.controlSpacing)
         }
         .frame(maxWidth: .infinity)
 

@@ -17,6 +17,7 @@ final nonisolated class FakeTranscriber: Transcriber {
 
     private struct State {
         var installed: Set<SpeechModel>
+        var failsDownloads = false
         var calls: [Call] = []
         var requests: [Request] = []
         var releases = 0
@@ -34,6 +35,11 @@ final nonisolated class FakeTranscriber: Transcriber {
 
     var calls: [Call] {
         state.withLock { $0.calls }
+    }
+
+    var failsDownloads: Bool {
+        get { state.withLock { $0.failsDownloads } }
+        set { state.withLock { $0.failsDownloads = newValue } }
     }
 
     init(
@@ -63,7 +69,13 @@ final nonisolated class FakeTranscriber: Transcriber {
     }
 
     func downloadModel(_ model: SpeechModel, progress _: @Sendable (Double) -> Void) async throws {
-        state.withLock { $0.calls.append(.download(model)) }
+        let fails = state.withLock { state in
+            state.calls.append(.download(model))
+
+            return state.failsDownloads
+        }
+
+        guard !fails else { throw URLError(.notConnectedToInternet) }
 
         if holdsDownloads {
             do {

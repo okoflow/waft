@@ -144,14 +144,14 @@ struct FileTranscriptionModelTests {
         isSpeechModelReady: Bool = true,
         pro: ProModel = .unlicensed(),
     ) async -> FileTranscriptionModel {
-        let speechModel = isSpeechModelReady
+        let speechModelController = isSpeechModelReady
             ? await SpeechModelController.ready(settings: settings)
             : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
 
         return FileTranscriptionModel(
             transcriber: transcriber,
             decoder: decoder,
-            speechModel: speechModel,
+            speechModelController: speechModelController,
             settings: settings,
             pro: pro,
             clipboard: clipboard,

@@ -39,8 +39,9 @@ when you want prose rather than a transcript.
         through WhisperKit. Audio is never saved or sent.</td>
       <td width="33%" valign="top"><b>45 languages</b><br>Waft detects which of
         your languages you speak, and translates between them.</td>
-      <td width="33%" valign="top"><b>AI cleanup</b><br>Clean, Formal, or
-        Translate with Claude, OpenAI, or a local model.</td>
+      <td width="33%" valign="top"><b>AI cleanup</b><br>Clean, Formal,
+        Translate, or modes of your own with Claude, OpenAI, or a local
+        model.</td>
     </tr>
   </thead>
   <tbody>
@@ -98,8 +99,9 @@ modes, and the languages.
 
 ## Waft Pro
 
-AI modes, translation, editing by voice, file transcription, and the Accurate
-speech model cost $13.99 once. **Free while Waft is in beta.**
+AI modes, your own modes, translation, editing by voice, file transcription,
+and the Accurate speech model cost $13.99 once. **Free while Waft is in
+beta.**
 
 ## Contributing
 

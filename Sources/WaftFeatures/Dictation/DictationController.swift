@@ -9,7 +9,7 @@ final class DictationController {
     private let recordings: RecordingController
     private let settings: SettingsModel
     private let permissions: PermissionMonitor
-    private let speechModel: SpeechModelController
+    private let speechModelController: SpeechModelController
     private let vocabulary: VocabularyModel
     private let keyRecorder: KeyRecorder
     private let pro: ProModel
@@ -24,7 +24,7 @@ final class DictationController {
         recordings: RecordingController,
         settings: SettingsModel,
         permissions: PermissionMonitor,
-        speechModel: SpeechModelController,
+        speechModelController: SpeechModelController,
         vocabulary: VocabularyModel,
         keyRecorder: KeyRecorder,
         pro: ProModel,
@@ -34,7 +34,7 @@ final class DictationController {
         self.recordings = recordings
         self.settings = settings
         self.permissions = permissions
-        self.speechModel = speechModel
+        self.speechModelController = speechModelController
         self.vocabulary = vocabulary
         self.keyRecorder = keyRecorder
         self.pro = pro
@@ -85,7 +85,11 @@ final class DictationController {
             startRecording(for: trigger)
 
         case .lockHandsFree:
-            guard owns(trigger) else { return }
+            guard owns(trigger), recordings.isRecording else {
+                abandonHandsFree(for: trigger)
+
+                return
+            }
 
             recordings.lockHandsFree()
 
@@ -105,6 +109,14 @@ final class DictationController {
         recordings.recording?.purpose == trigger.purpose
     }
 
+    private func abandonHandsFree(for trigger: RecordingTrigger) {
+        triggers.reset(trigger.purpose)
+
+        guard owns(trigger) else { return }
+
+        recordings.discard(because: .interrupted)
+    }
+
     private func startRecording(for trigger: RecordingTrigger) {
         if let problem = reasonNotToRecord(for: trigger.purpose) {
             recordings.refuse(trigger, because: problem)
@@ -118,7 +130,7 @@ final class DictationController {
             return String(localized: "Editing by voice is part of Waft Pro.")
         }
 
-        if let message = speechModel.state.notReadyMessage {
+        if let message = speechModelController.state.notReadyMessage {
             return message
         }
 

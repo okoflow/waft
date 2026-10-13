@@ -14,8 +14,8 @@ struct OnboardingView: View {
                 .id(model.onboarding.step)
                 .transition(StepTransition())
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.top, 56)
-                .padding(.horizontal, 72)
+                .padding(.top, Metrics.onboardingTopInset)
+                .padding(.horizontal, Metrics.onboardingSideInset)
 
             OnboardingFooter(onboarding: model.onboarding)
         }
@@ -31,7 +31,7 @@ struct OnboardingView: View {
     private var step: some View {
         switch model.onboarding.step {
         case .welcome:
-            WelcomeStep(keyTitle: model.settings.settings.pushToTalkKey.title)
+            WelcomeStep(keyTitle: model.settings.settings.pushToTalkKey.title, start: model.settings.settings.dictationStart)
         case .microphone:
             PermissionStep(permission: .microphone, monitor: model.permissions)
         case .accessibility:
@@ -77,9 +77,9 @@ private struct OnboardingFooter: View {
             }
         }
         .controlSize(.large)
-        .padding(.horizontal, 28)
-        .padding(.top, 12)
-        .padding(.bottom, 24)
+        .padding(.horizontal, Metrics.onboardingFooterInset)
+        .padding(.top, Metrics.accessorySpacing)
+        .padding(.bottom, Metrics.windowPadding)
     }
 }
 
@@ -88,7 +88,7 @@ private struct PageDots: View {
     let current: Int
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: Metrics.inlineSpacing) {
             ForEach(0 ..< count, id: \.self) { index in
                 Capsule()
                     .fill(index == current ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary))

@@ -1,14 +1,28 @@
+import Foundation
 import Testing
 import WaftCore
 
 struct ModeTests {
-    @Test
-    func `cycles through every mode`() {
-        #expect(Mode.allCases.map { $0.next(includingAI: true) } == [.light, .clean, .formal, .translate, .raw])
+    private static let customID = UUID()
+
+    @Test(arguments: [
+        ("raw", Mode.raw),
+        ("light", .light),
+        ("clean", .clean),
+        ("formal", .formal),
+        ("translate", .translate),
+        ("custom:\(customID.uuidString)", .custom(customID)),
+    ])
+    func `encodes to its stored key`(storageKey: String, mode: Mode) throws {
+        let data = try JSONEncoder().encode(mode)
+
+        #expect(data == Data("\"\(storageKey)\"".utf8))
+        #expect(try JSONDecoder().decode(Mode.self, from: data) == mode)
+        #expect(Mode(storageKey: storageKey) == mode)
     }
 
-    @Test
-    func `skips the AI modes without Pro`() {
-        #expect(Mode.allCases.map { $0.next(includingAI: false) } == [.light, .raw, .light, .light, .light])
+    @Test(arguments: ["", "bogus", "Clean", "custom:", "custom:not-a-uuid"])
+    func `rejects an unknown storage key`(storageKey: String) {
+        #expect(Mode(storageKey: storageKey) == nil)
     }
 }

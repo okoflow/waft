@@ -16,7 +16,7 @@ struct DictationOutcomeTests {
             "Copied: press ⌘V to paste\n\(fallback)",
         ),
         (.blockedInPasswordField, .warning, "Not pasted into a password field", "Choose Copy Last Dictation in the Waft menu."),
-        (.noSpeech, .info, "Didn't catch that", nil),
+        (.noSpeech, .information, "Didn't catch that", nil),
         (.failed("The model crashed."), .warning, "Transcription failed", "The model crashed."),
         (.editFailed("You're offline"), .warning, "Couldn't edit the text", "You're offline"),
     ])

@@ -56,6 +56,26 @@ struct ProModelTests {
     }
 
     @Test
+    func `reports each change of access on activation and deactivation`() {
+        var changeCount = 0
+        let pro = model()
+        pro.onAccessChange = { changeCount += 1 }
+        pro.draft = Self.key
+        pro.activateDraft()
+
+        #expect(changeCount == 1)
+
+        pro.draft = Self.forgedKey
+        pro.activateDraft()
+
+        #expect(changeCount == 1)
+
+        pro.deactivate()
+
+        #expect(changeCount == 2)
+    }
+
+    @Test
     func `removes the key on deactivation`() {
         let keyStore = FakeValueStore(Self.key)
         let pro = model(keyStore: keyStore)
@@ -90,17 +110,20 @@ struct ProModelTests {
     }
 
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))
-    func `locks no mode during the beta`() {
+    func `locks no mode and no speech model during the beta`() {
         let pro = model(trialStore: FakeValueStore(Date.distantPast))
 
-        #expect(!Mode.allCases.contains(where: pro.locks))
+        #expect(!(Mode.builtIn + [.custom(UUID())]).contains { pro.locks($0) })
+        #expect(!SpeechModel.allCases.contains { pro.locks($0) })
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `locks the AI modes without a license once the beta ends`() {
+    func `locks the AI modes and the accurate model without a license once the beta ends`() {
         let pro = model(trialStore: FakeValueStore(Date.distantPast))
+        let custom = Mode.custom(UUID())
 
-        #expect(Mode.allCases.filter(pro.locks) == [.clean, .formal, .translate])
+        #expect((Mode.builtIn + [custom]).filter { pro.locks($0) } == [.clean, .formal, .translate, custom])
+        #expect(SpeechModel.allCases.filter { pro.locks($0) } == [.accurate])
     }
 
     private func model(

@@ -9,6 +9,11 @@ struct DictationControllerTests {
     private static let leftOption: Int64 = 58
     private static let leftOptionFlag: UInt64 = 0x20
 
+    private static let microphoneDenied = HUDMessage(
+        kind: .information,
+        title: "Waft can't use the microphone. Allow it in Settings › General.",
+    )
+
     private let monitor = FakeKeyEventMonitor()
     private let recorder = FakeAudioRecorder()
     private let transcriber = FakeTranscriber(.success(.spoken("Hello world")))
@@ -18,6 +23,12 @@ struct DictationControllerTests {
     private let vocabularyStore = FakeValueStore(Vocabulary.empty)
     private let keyRecorder = KeyRecorder()
     private let start = Uptime.now
+
+    private static func permissions(microphone: PermissionStatus, answer: PermissionStatus = .granted) -> PermissionMonitor {
+        let provider = FakePermissionProvider([.microphone: microphone, .accessibility: .granted], answers: [.microphone: answer])
+
+        return PermissionMonitor(provider: provider)
+    }
 
     @Test
     func `starts a recording when the dictation key goes down`() async {
@@ -54,24 +65,20 @@ struct DictationControllerTests {
     @Test
     func `refuses to record while the speech model is not ready and shows its message`() async throws {
         let message = try #require(SpeechModelState().notReadyMessage)
+        let refusal = HUDMessage(kind: .information, title: message)
         let controller = await controller(isSpeechModelReady: false)
         await pressDictationKey(at: 0)
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(HUDMessage(kind: .info, title: message)) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(refusal) })
         #expect(!controller.isRecording)
     }
 
     @Test
     func `refuses to record when the microphone is denied`() async {
-        let controller = await controller(microphone: .denied)
+        let controller = await controller(permissions: Self.permissions(microphone: .denied))
         await pressDictationKey(at: 0)
 
-        #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(
-                kind: .info,
-                title: "Waft can't use the microphone. Allow it in Settings › General.",
-            ))
-        })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(Self.microphoneDenied) })
         #expect(!controller.isRecording)
     }
 
@@ -82,7 +89,7 @@ struct DictationControllerTests {
         await send(Self.leftOption, flags: Self.leftOptionFlag, at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(kind: .info, title: "Editing by voice is part of Waft Pro."))
+            hud.content == .message(HUDMessage(kind: .information, title: "Editing by voice is part of Waft Pro."))
         })
         #expect(!controller.isRecording)
     }
@@ -126,6 +133,23 @@ struct DictationControllerTests {
     }
 
     @Test
+    func `starts a recording on the tap after a refused one`() async {
+        settings.settings.dictationStart = .tap
+        let permissions = Self.permissions(microphone: .denied, answer: .granted)
+        let controller = await controller(permissions: permissions)
+        await pressDictationKey(at: 0)
+        await releaseDictationKey(at: 0.1)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(Self.microphoneDenied) })
+
+        await permissions.request(.microphone)
+        await pressDictationKey(at: 1)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !recorder.startedDevices.isEmpty })
+        #expect(controller.isRecording)
+    }
+
+    @Test
     func `finishes a recording whose key-up never arrives`() async {
         let controller = await controller(keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         await pressDictationKey(at: -1)
@@ -148,12 +172,12 @@ struct DictationControllerTests {
 
     private func controller(
         isSpeechModelReady: Bool = true,
-        microphone: PermissionStatus = .granted,
+        permissions: PermissionMonitor = DictationControllerTests.permissions(microphone: .granted),
         pro: ProModel = .unlicensed(),
         keyboardState: FakeKeyboardState = FakeKeyboardState(holdsKeys: true),
         watchdogInterval: TimeInterval = 60,
     ) async -> DictationController {
-        let speechModel = isSpeechModelReady
+        let speechModelController = isSpeechModelReady
             ? await SpeechModelController.ready(settings: settings)
             : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
         let recordings = RecordingController(
@@ -170,8 +194,8 @@ struct DictationControllerTests {
             keyEventMonitor: monitor,
             recordings: recordings,
             settings: settings,
-            permissions: PermissionMonitor(provider: FakePermissionProvider([.microphone: microphone, .accessibility: .granted])),
-            speechModel: speechModel,
+            permissions: permissions,
+            speechModelController: speechModelController,
             vocabulary: VocabularyModel(store: vocabularyStore, fileURL: URL(filePath: "/dev/null"), urlOpener: FakeURLOpener()),
             keyRecorder: keyRecorder,
             pro: pro,
@@ -189,7 +213,7 @@ struct DictationControllerTests {
             inserter: inserter,
             clipboard: FakeClipboard(),
             history: HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settings, clipboard: FakeClipboard()),
-            stats: StatsModel(store: FakeValueStore<DictationStats>()),
+            statistics: StatisticsModel(store: FakeValueStore<DictationStatistics>()),
             hud: hud,
         )
     }

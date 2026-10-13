@@ -3,8 +3,8 @@ import Testing
 
 struct HUDMessageTests {
     @Test(arguments: [
-        (HUDMessage.Kind.info, "", String?.none, Duration.seconds(2)),
-        (.info, String(repeating: "a", count: 20), String(repeating: "b", count: 10), .seconds(4)),
+        (HUDMessage.Kind.information, "", String?.none, Duration.seconds(2)),
+        (.information, String(repeating: "a", count: 20), String(repeating: "b", count: 10), .seconds(4)),
         (.warning, String(repeating: "a", count: 300), nil, .seconds(10)),
         (.pasted, String(repeating: "a", count: 300), nil, .seconds(4)),
     ])

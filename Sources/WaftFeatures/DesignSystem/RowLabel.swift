@@ -5,7 +5,7 @@ struct RowLabel: View {
     var description: LocalizedStringKey?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
             Text(title)
                 .font(.rowTitle)
 

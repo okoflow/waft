@@ -10,7 +10,7 @@ final class APIKeyModel {
     private let store: any ValueStore<String>
 
     var canSaveDraft: Bool {
-        !trimmedDraft.isEmpty
+        !draft.isBlank
     }
 
     private var trimmedDraft: String {

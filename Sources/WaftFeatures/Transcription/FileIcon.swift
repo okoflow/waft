@@ -7,7 +7,7 @@ struct FileIcon: View {
     var body: some View {
         Image(nsImage: NSWorkspace.shared.icon(forFile: url.path))
             .resizable()
-            .frame(width: 32, height: 32)
+            .frame(width: Metrics.fileIconSize, height: Metrics.fileIconSize)
             .accessibilityHidden(true)
     }
 }

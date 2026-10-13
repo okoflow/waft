@@ -12,6 +12,8 @@ enum RewriteValidator {
         switch request.kind {
         case let .cleanup(_, target):
             try validatedCleanup(answer, of: request.text, language: request.language, target: target)
+        case .custom:
+            try validatedCustom(answer, of: request.text)
         case let .edit(selection):
             try validatedEdit(answer, of: selection)
         }
@@ -33,6 +35,13 @@ enum RewriteValidator {
         if let script = WritingScript.dominant(in: text), !scripts.contains(script) {
             throw .unreadableResponse
         }
+
+        return text
+    }
+
+    private static func validatedCustom(_ answer: String, of transcript: String) throws(RewriteError) -> String {
+        let text = unwrapped(answer, input: transcript, from: cleanupWrappers)
+        guard !text.isEmpty, text.count <= max(transcript.count * 10, 600) else { throw .unreadableResponse }
 
         return text
     }

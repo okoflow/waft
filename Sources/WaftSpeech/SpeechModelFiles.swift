@@ -3,7 +3,7 @@ import WaftCore
 
 struct SpeechModelFiles {
     static let repository = "argmaxinc/whisperkit-coreml"
-    static let baseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
+    static let defaultBaseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
 
     private static let completionMarker = ".waft-complete"
 
@@ -15,22 +15,15 @@ struct SpeechModelFiles {
         "config.json",
     ]
 
-    private static var tokenizerFolder: URL {
-        baseDirectory.appending(path: "models/openai/whisper-large-v3", directoryHint: .isDirectory)
-    }
-
-    private static var hasTokenizer: Bool {
-        FileManager.default.fileExists(atPath: tokenizerFolder.appending(path: "tokenizer.json").path)
-    }
-
     let variant: String
+    let baseDirectory: URL
 
     var folder: URL {
-        Self.baseDirectory.appending(path: "models/\(Self.repository)/\(variant)", directoryHint: .isDirectory)
+        baseDirectory.appending(path: "models/\(Self.repository)/\(variant)", directoryHint: .isDirectory)
     }
 
     var isInstalled: Bool {
-        guard hasEveryPart, Self.hasTokenizer else { return false }
+        guard hasEveryPart, hasTokenizer else { return false }
 
         return !hasIncompleteDownload
     }
@@ -53,11 +46,21 @@ struct SpeechModelFiles {
         FileManager.default.fileExists(atPath: folder.path) || FileManager.default.fileExists(atPath: downloadCache.path)
     }
 
-    init(_ model: SpeechModel) {
+    private var tokenizerFolder: URL {
+        baseDirectory.appending(path: "models/openai/whisper-large-v3", directoryHint: .isDirectory)
+    }
+
+    private var hasTokenizer: Bool {
+        FileManager.default.fileExists(atPath: tokenizerFolder.appending(path: "tokenizer.json").path)
+    }
+
+    init(_ model: SpeechModel, baseDirectory: URL = Self.defaultBaseDirectory) {
         switch model {
         case .fast: variant = "openai_whisper-large-v3-v20240930_626MB"
         case .accurate: variant = "openai_whisper-large-v3"
         }
+
+        self.baseDirectory = baseDirectory
     }
 
     private static func removeIfPresent(_ url: URL) throws {
@@ -75,8 +78,9 @@ struct SpeechModelFiles {
         try Self.removeIfPresent(folder)
         try Self.removeIfPresent(downloadCache)
 
-        guard !SpeechModel.allCases.map(SpeechModelFiles.init).contains(where: \.isPresent) else { return }
+        let modelFiles = SpeechModel.allCases.map { SpeechModelFiles($0, baseDirectory: baseDirectory) }
+        guard !modelFiles.contains(where: \.isPresent) else { return }
 
-        try Self.removeIfPresent(Self.tokenizerFolder)
+        try Self.removeIfPresent(tokenizerFolder)
     }
 }

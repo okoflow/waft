@@ -71,8 +71,8 @@ package struct SpeechModelState: Equatable, Sendable {
 
     package var statusText: String {
         switch phase {
-        case .notInstalled, .loading: String(localized: "Preparing speech model…")
-        case let .downloading(progress): String(localized: "Downloading speech model… \(Self.percent(progress))")
+        case .notInstalled, .loading: String(localized: "Preparing the speech model…")
+        case let .downloading(progress): String(localized: "Downloading the speech model… \(Self.percent(progress))")
         case .ready: String(localized: "Ready")
         case let .failed(reason, _): String(localized: "Speech model failed: \(reason)")
         }
@@ -137,6 +137,11 @@ package struct SpeechModelState: Equatable, Sendable {
             needsReload = true
 
             return []
+
+        case (.downloading, .reloadRequested), (.failed, .reloadRequested):
+            guard let servingModel, servingModel != model else { return [] }
+
+            return [.load(servingModel)]
 
         default:
             return []

@@ -83,7 +83,10 @@ The second line of the HUD starts with "Used Light mode" and says why:
   Claude, the common one is a key that isn't scoped to a workspace: create the
   key inside a workspace in the Anthropic Console and paste it again.
 - **The answer couldn't be used**: the answer was cut off, refused, or in
-  another language. Dictating again usually works.
+  another language. Dictating again usually works. A mode of your own fails
+  every time when its instructions ask for a longer text than
+  [The AI modes](how-it-works.md#the-ai-modes) allows: change its
+  instructions.
 
 ## The speech model fails
 

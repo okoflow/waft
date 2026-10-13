@@ -6,7 +6,7 @@ struct CopyButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 4) {
+            HStack(spacing: Metrics.inlineSpacing) {
                 if isCopied {
                     Image(systemName: "checkmark")
                         .font(.glyph)

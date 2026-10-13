@@ -24,7 +24,24 @@ struct ModeSwitcherTests {
         shortcut.fire()
 
         #expect(settings.settings.mode == .clean)
-        #expect(hud.content == .message(HUDMessage(kind: .info, title: "Mode: Clean")))
+        #expect(hud.content == .message(HUDMessage(kind: .information, title: "Mode: Clean")))
+    }
+
+    @Test
+    func `switches through the custom modes and announces them by name`() {
+        let emailReply = CustomMode(name: "Email reply", instructions: "Reply.")
+        settings.settings.customModes = [emailReply]
+        settings.settings.mode = .translate
+        let switcher = ModeSwitcher(shortcut: shortcut, settings: settings, hud: hud, pro: .unlicensed())
+        switcher.start()
+        shortcut.fire()
+
+        #expect(settings.settings.mode == .custom(emailReply.id))
+        #expect(hud.content == .message(HUDMessage(kind: .information, title: "Mode: Email reply")))
+
+        shortcut.fire()
+
+        #expect(settings.settings.mode == .raw)
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))

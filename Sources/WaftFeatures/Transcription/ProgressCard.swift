@@ -18,10 +18,10 @@ struct ProgressCard: View {
 
     var body: some View {
         SettingsCard {
-            HStack(spacing: 12) {
+            HStack(spacing: Metrics.accessorySpacing) {
                 FileIcon(url: file)
 
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: Metrics.inlineSpacing) {
                     Text(file.lastPathComponent)
                         .font(.rowTitle)
                         .lineLimit(1)

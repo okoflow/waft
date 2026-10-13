@@ -1,4 +1,4 @@
-import AppKit
+import Foundation
 import Observation
 import WaftCore
 
@@ -10,7 +10,7 @@ final class HUDController {
     private(set) var content: HUDContent?
     private(set) var levels = [Float](repeating: 0, count: barCount)
 
-    @ObservationIgnored private var panel: (any HUDWindow)?
+    @ObservationIgnored private var window: (any HUDWindow)?
     @ObservationIgnored private var queuedMessages: [HUDMessage] = []
     @ObservationIgnored private var workingLabel: String?
     @ObservationIgnored private var levelTimer: Timer?
@@ -90,10 +90,10 @@ final class HUDController {
         showNext()
     }
 
-    func makePanel() {
-        guard panel == nil else { return }
+    func prepareWindow() {
+        guard window == nil else { return }
 
-        panel = makeWindow(self)
+        window = makeWindow(self)
     }
 
     private func showNext() {
@@ -115,7 +115,7 @@ final class HUDController {
         orderOutTask = Task { [weak self, orderOutPause] in
             guard await Task.slept(for: orderOutPause), let self, content == nil else { return }
 
-            panel?.orderOut(nil)
+            window?.orderOut(nil)
         }
     }
 
@@ -137,11 +137,11 @@ final class HUDController {
     }
 
     private func present(_ newContent: HUDContent) {
-        makePanel()
+        prepareWindow()
         orderOutTask?.cancel()
 
         if content == nil {
-            panel?.showOnActiveScreen()
+            window?.showOnActiveScreen()
         }
 
         content = newContent

@@ -12,11 +12,11 @@ struct DictationQueueTests {
         settings: .inMemory(),
         clipboard: FakeClipboard(),
     )
-    private let stats = StatsModel(store: FakeValueStore<DictationStats>())
+    private let statistics = StatisticsModel(store: FakeValueStore<DictationStatistics>())
     private let hud = HUDController.offscreen()
 
     @Test
-    func `pastes the processed text into the target and records it in history and stats`() async {
+    func `pastes the processed text into the target and records it in history and statistics`() async {
         let inserter = FakeTextInserter()
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
         queue.submit(job())
@@ -25,8 +25,8 @@ struct DictationQueueTests {
         #expect(inserter.insertions.map(\.text) == ["Hello world"])
         #expect(inserter.insertions.map(\.app) == ["com.example.notes"])
         #expect(history.history.entries.map(\.text) == ["Hello world"])
-        #expect(stats.stats.allTime.words == 2)
-        #expect(stats.stats.allTime.seconds == 1)
+        #expect(statistics.statistics.allTime.words == 2)
+        #expect(statistics.statistics.allTime.seconds == 1)
         #expect(hud.content == shown(.pasted(Self.hello)))
     }
 
@@ -62,7 +62,7 @@ struct DictationQueueTests {
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.blockedInPasswordField) })
         #expect(clipboard.copied.isEmpty)
         #expect(history.history.entries.isEmpty)
-        #expect(stats.stats.allTime.dictations == 0)
+        #expect(statistics.statistics.allTime.dictations == 0)
         #expect(queue.latestTranscript == "Hello world")
     }
 
@@ -108,7 +108,7 @@ struct DictationQueueTests {
         #expect(rewriter.requests.map(\.text) == ["Make it three"])
         #expect(inserter.insertions.map(\.text) == ["Meeting at three"])
         #expect(history.history.entries.isEmpty)
-        #expect(stats.stats.allTime.dictations == 0)
+        #expect(statistics.statistics.allTime.dictations == 0)
     }
 
     @Test
@@ -157,7 +157,7 @@ struct DictationQueueTests {
             inserter: inserter,
             clipboard: clipboard,
             history: history,
-            stats: stats,
+            statistics: statistics,
             hud: hud,
         )
         queue.submit(job())
@@ -204,7 +204,7 @@ struct DictationQueueTests {
             inserter: inserter,
             clipboard: clipboard,
             history: history,
-            stats: stats,
+            statistics: statistics,
             hud: hud,
         )
     }

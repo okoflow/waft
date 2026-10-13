@@ -23,8 +23,8 @@ struct DoneStep: View {
                 if needsAIModel {
                     RowDivider()
                     SettingsRow(
-                        "Cleanup modes",
-                        description: "Clean, Formal, and Translate need an AI model, on this Mac or in the cloud.",
+                        "AI modes",
+                        description: "Clean, Formal, and Translate need an AI model.",
                     ) {
                         Button("Set Up…") {
                             model.onboarding.finish()

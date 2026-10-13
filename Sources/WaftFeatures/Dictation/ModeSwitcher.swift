@@ -34,8 +34,9 @@ final class ModeSwitcher {
     }
 
     private func switchToNextMode() {
-        settings.settings.mode = settings.settings.mode.next(includingAI: pro.isUnlocked)
+        settings.settings.mode = settings.settings.mode(after: settings.settings.mode, includingAI: pro.isUnlocked)
 
-        hud.show(HUDMessage(kind: .info, title: String(localized: "Mode: \(settings.settings.mode.title)")))
+        let title = settings.settings.title(of: settings.settings.mode)
+        hud.show(HUDMessage(kind: .information, title: String(localized: "Mode: \(title)")))
     }
 }

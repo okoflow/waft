@@ -69,7 +69,7 @@ final class AudioSampleSink: @unchecked Sendable {
         let converted = convert(input)
         guard !converted.isEmpty else { return }
 
-        meter.value = AudioLevel.meterValue(rms: AudioLevel.rms(converted))
+        meter.value = AudioLevel.meterValue(rootMeanSquare: AudioLevel.rootMeanSquare(converted))
 
         let isFirstBuffer = captured.withLock { captured in
             let isFirst = !captured.hasAudio

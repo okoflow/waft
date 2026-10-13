@@ -141,14 +141,14 @@ struct SpeechModelStateTests {
         #expect(state.notReadyMessage == nil)
     }
 
-    @Test
-    func `switches to a model chosen during loading once the load finishes`() {
+    @Test(arguments: [(SpeechModelState.Event.loaded(.fast), true), (.failed(.fast, "corrupt"), false)])
+    func `switches to a model chosen during loading once the load ends`(outcome: SpeechModelState.Event, canTranscribe: Bool) {
         var state = state(after: [.started(.fast, isInstalled: true)])
 
         #expect(state.handle(.chosen(.accurate, isInstalled: false)).isEmpty)
-        #expect(state.handle(.loaded(.fast)) == [.download(.accurate)])
+        #expect(state.handle(outcome) == [.download(.accurate)])
         #expect(state.phase == .downloading(progress: 0))
-        #expect(state.canTranscribe)
+        #expect(state.canTranscribe == canTranscribe)
     }
 
     @Test
@@ -220,8 +220,8 @@ struct SpeechModelStateTests {
     }
 
     @Test(arguments: [
-        ([SpeechModelState.Event](), "Preparing speech model…", true),
-        ([.started(.fast, isInstalled: true)], "Preparing speech model…", true),
+        ([SpeechModelState.Event](), "Preparing the speech model…", true),
+        ([.started(.fast, isInstalled: true)], "Preparing the speech model…", true),
         ([.started(.fast, isInstalled: true), .loaded(.fast)], "Ready", false),
     ])
     func `reports the status and whether a press must wait`(events: [SpeechModelState.Event], status: String, waits: Bool) {

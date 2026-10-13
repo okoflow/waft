@@ -1,6 +1,6 @@
 package import Foundation
 
-package struct DictationStats: Codable, Equatable, Sendable {
+package struct DictationStatistics: Codable, Equatable, Sendable {
     package struct Day: Codable, Equatable, Sendable {
         private static let typingWordsPerMinute = 40.0
 
@@ -20,11 +20,11 @@ package struct DictationStats: Codable, Equatable, Sendable {
 
         package init() {}
 
-        fileprivate static func + (lhs: Day, rhs: Day) -> Day {
-            var sum = lhs
-            sum.words += rhs.words
-            sum.dictations += rhs.dictations
-            sum.seconds += rhs.seconds
+        fileprivate static func + (left: Day, right: Day) -> Day {
+            var sum = left
+            sum.words += right.words
+            sum.dictations += right.dictations
+            sum.seconds += right.seconds
 
             return sum
         }

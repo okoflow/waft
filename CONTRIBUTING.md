@@ -90,6 +90,8 @@ code reads.
 - Name things after what they are and do, following the
   [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
   No comments in code: names, types, and small functions carry the meaning.
+- Write names in full words, without abbreviations: `statisticsFile`, not
+  `statsFile`; `message`, not `msg`.
 - One main type per file, named after it. An extension that adds to another
   type goes into `<Type>+<Topic>.swift`, such as `String+Capitalization.swift`.
 - Give every declaration the narrowest access level that works, and leave
@@ -246,9 +248,9 @@ Commits follow
 
 | Scope | Area |
 | --- | --- |
-| `dictation` | The dictation key, recording, hands-free dictation, and pasting |
+| `dictation` | The dictation key, how to start, recording, hands-free dictation, and pasting |
 | `languages` | Recognition, the speech model, and the rules of each language |
-| `modes` | Raw, Light, Clean, Formal, and Translate, and their instructions |
+| `modes` | Raw, Light, Clean, Formal, Translate, your own modes, and their instructions |
 | `models` | The AI models and their providers |
 | `edit` | Editing by voice |
 | `files` | File transcription |

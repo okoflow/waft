@@ -48,14 +48,14 @@ package actor WhisperTranscriber: Transcriber {
 
     package func downloadModel(_ model: SpeechModel, progress: @escaping @Sendable (Double) -> Void) async throws {
         let files = SpeechModelFiles(model)
-        try FileManager.default.createDirectory(at: SpeechModelFiles.baseDirectory, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: files.baseDirectory, withIntermediateDirectories: true)
 
         _ = try await WhisperKit.download(
             variant: files.variant,
-            downloadBase: SpeechModelFiles.baseDirectory,
+            downloadBase: files.baseDirectory,
             from: SpeechModelFiles.repository,
         ) { progress($0.fractionCompleted) }
-        _ = try await ModelUtilities.loadTokenizer(for: .largev3, tokenizerFolder: SpeechModelFiles.baseDirectory)
+        _ = try await ModelUtilities.loadTokenizer(for: .largev3, tokenizerFolder: files.baseDirectory)
 
         try files.markComplete()
     }
@@ -162,9 +162,9 @@ package actor WhisperTranscriber: Transcriber {
     private func configuration(for files: SpeechModelFiles) -> WhisperKitConfig {
         WhisperKitConfig(
             model: files.variant,
-            downloadBase: SpeechModelFiles.baseDirectory,
+            downloadBase: files.baseDirectory,
             modelFolder: files.folder.path,
-            tokenizerFolder: SpeechModelFiles.baseDirectory,
+            tokenizerFolder: files.baseDirectory,
             verbose: false,
             logLevel: .none,
             load: true,

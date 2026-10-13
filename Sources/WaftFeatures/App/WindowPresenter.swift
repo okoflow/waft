@@ -39,7 +39,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         }
 
         if closing == settingsWindow {
-            settingsState.editedInstructions = nil
+            settingsState.editedMode = nil
             model?.keyRecorder.stop()
         }
 
@@ -136,7 +136,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         let content = NSHostingController(rootView: view)
         content.sizingOptions = []
 
-        let window = makeWindow(content, size: NSSize(width: 600, height: 580), minimumSize: NSSize(width: 520, height: 480))
+        let window = makeWindow(content, size: NSSize(width: 600, height: 580), minimumSize: Metrics.transcriptionMinimumSize)
         window.title = String(localized: "Transcribe File")
 
         return window

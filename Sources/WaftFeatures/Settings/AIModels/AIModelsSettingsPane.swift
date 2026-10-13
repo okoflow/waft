@@ -4,16 +4,15 @@ import WaftCore
 struct AIModelsSettingsPane: View {
     @Bindable var settings: SettingsModel
 
-    let speechModel: SpeechModelController
     let apiKeys: PerProvider<APIKeyModel>
     let localModels: LocalModelsModel
-    let pro: ProModel
-    let state: SettingsWindowState
 
     var body: some View {
-        SpeechModelSection(settings: settings, controller: speechModel, pro: pro, state: state)
-
-        SettingsSection("AI model", subtitle: "Clean, Formal, Translate, and editing by voice use this model.") {
+        SettingsSection(
+            "AI model",
+            subtitle: "AI modes and editing by voice use this model.",
+            isPro: true,
+        ) {
             PickerRow(
                 "Provider",
                 selection: $settings.settings.modelProvider,

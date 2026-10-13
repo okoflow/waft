@@ -9,14 +9,14 @@ package struct MenuContent: View {
     }
 
     package var body: some View {
-        Text(model.status.title(key: model.settings.settings.pushToTalkKey))
+        Text(model.status.title(in: model.settings.settings))
 
         if model.needsSetup {
             Button("Finish Setup…", action: model.showSetup)
         }
 
-        if model.speechModel.state.canRetry {
-            Button("Retry Speech Model") { model.speechModel.retry() }
+        if model.speechModelController.state.canRetry {
+            Button("Retry Speech Model") { model.speechModelController.retry() }
         }
 
         if model.updates.hasPendingUpdate {
@@ -40,7 +40,9 @@ package struct MenuContent: View {
 
         RecentMenu(history: model.history) { model.windows.showSettings(.history) }
 
-        Button("Transcribe File…") { model.windows.showTranscription() }
+        Button(model.transcription.isLocked ? "Transcribe File (Pro)…" : "Transcribe File…") {
+            model.windows.showTranscription()
+        }
 
         Divider()
 
@@ -67,10 +69,10 @@ private struct ModeMenu: View {
     let shortcutTitle: String?
 
     var body: some View {
-        Menu("Mode: \(settings.settings.mode.title)") {
+        Menu("Mode: \(settings.settings.title(of: settings.settings.mode))") {
             Picker("Mode", selection: $settings.settings.mode) {
-                ForEach(Mode.allCases, id: \.self) { mode in
-                    ModeOption(mode: mode, pro: pro).tag(mode)
+                ForEach(settings.settings.modes, id: \.self) { mode in
+                    ModeOption(mode: mode, settings: settings.settings, pro: pro).tag(mode)
                 }
             }
             .pickerStyle(.inline)
@@ -97,7 +99,7 @@ private struct AppModeMenu: View {
     private var ownModeTitle: String {
         guard let ownMode else { return String(localized: "Default") }
 
-        return ownMode.title
+        return settings.settings.title(of: ownMode)
     }
 
     private var mode: Binding<Mode?> {
@@ -110,9 +112,9 @@ private struct AppModeMenu: View {
     var body: some View {
         Menu("Mode in \(app.name): \(ownModeTitle)") {
             Picker("Mode in \(app.name)", selection: mode) {
-                Text("Default (\(settings.settings.mode.title))").tag(Mode?.none)
-                ForEach(Mode.allCases, id: \.self) { mode in
-                    ModeOption(mode: mode, pro: pro).tag(Mode?.some(mode))
+                Text("Default (\(settings.settings.title(of: settings.settings.mode)))").tag(Mode?.none)
+                ForEach(settings.settings.modes, id: \.self) { mode in
+                    ModeOption(mode: mode, settings: settings.settings, pro: pro).tag(Mode?.some(mode))
                 }
             }
             .pickerStyle(.inline)
@@ -123,13 +125,16 @@ private struct AppModeMenu: View {
 
 private struct ModeOption: View {
     let mode: Mode
+    let settings: WaftCore.Settings
     let pro: ProModel
 
     var body: some View {
+        let title = settings.title(of: mode)
+
         if pro.locks(mode) {
-            Text("\(mode.title) (Pro)")
+            Text("\(title) (Pro)")
         } else {
-            Text(mode.title)
+            Text(title)
         }
     }
 }

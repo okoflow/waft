@@ -10,17 +10,22 @@ struct SettingsPaneView: View {
     }
 
     var body: some View {
-        SettingsPage(.verbatim(state.selection.title)) {
-            content
+        if let mode = state.editedMode, state.selection == .writing {
+            ModeEditorPage(mode: mode, settings: model.settings, tryout: model.modeTryout, state: state)
+                .id(mode)
+        } else {
+            SettingsPage(.verbatim(state.selection.title)) {
+                content
+            }
+            .id(state.selection)
         }
-        .id(state.selection)
     }
 
     @ViewBuilder
     private var content: some View {
         switch state.selection {
         case .overview:
-            OverviewSettingsPane(stats: model.stats)
+            OverviewSettingsPane(statistics: model.statistics)
 
         case .general:
             GeneralSettingsPane(
@@ -31,7 +36,13 @@ struct SettingsPaneView: View {
             )
 
         case .dictation:
-            DictationSettingsPane(settings: model.settings, keyRecorder: model.keyRecorder, pro: model.pro, state: state)
+            DictationSettingsPane(
+                settings: model.settings,
+                speechModelController: model.speechModelController,
+                keyRecorder: model.keyRecorder,
+                pro: model.pro,
+                state: state,
+            )
 
         case .writing:
             WritingSettingsPane(
@@ -43,14 +54,7 @@ struct SettingsPaneView: View {
             )
 
         case .aiModels:
-            AIModelsSettingsPane(
-                settings: model.settings,
-                speechModel: model.speechModel,
-                apiKeys: model.apiKeys,
-                localModels: model.localModels,
-                pro: model.pro,
-                state: state,
-            )
+            AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)
 
         case .dictionary:
             DictionarySettingsPane(vocabulary: model.vocabulary)

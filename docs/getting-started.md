@@ -21,15 +21,15 @@ downloads the speech model in the background, about 630 MB.
 
 1. **Welcome to Waft** shows the gesture: hold the key, speak, let go.
 2. **Allow microphone access**: click **Allow Access…** and allow the
-   microphone. Waft records only while you hold the key, and the audio stays
-   on your Mac.
+   microphone. Waft records only while you dictate, and the audio stays on
+   your Mac.
 3. **Allow Accessibility access**: click **Open System Settings** and turn on
    Waft. Accessibility lets Waft notice the key and paste the text.
 4. **Try it**: click the box, hold <kbd>right ⌥</kbd>, and say "Hello, Waft".
    While the model is still downloading, the line under the box says how far
    along it is.
 5. **You're all set**: choose whether Waft opens at login, then click
-   **Done**. Without an AI model, **Set Up…** next to **Cleanup modes** opens
+   **Done**. Without an AI model, **Set Up…** next to **AI modes** opens
    Settings › AI Models.
 
 The guide moves on by itself once a permission is allowed, and skips a
@@ -49,10 +49,12 @@ goes missing, see [Limits](how-it-works.md#limits).
 ## 4. Try the rest
 
 - **Hands-free**: tap <kbd>right ⌥</kbd> twice, speak as long as you like, and
-  press it once more to finish.
+  press it once more to finish. To start with a single tap instead, choose
+  **Tap** under **How to start** in Settings › Dictation.
 - **Modes**: press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> to switch between Raw,
-  Light, Clean, Formal, and Translate. Clean, Formal, and Translate need an AI
-  model: add an API key or a local server in Settings › AI Models.
+  Light, Clean, Formal, Translate, and the modes you make in Settings ›
+  Writing. Every mode but Raw and Light needs an AI model: add an API key or a
+  local server in Settings › AI Models.
 - **Languages**: add the languages you speak in Settings › Dictation.
 
 [Usage](usage.md) describes every feature and setting.

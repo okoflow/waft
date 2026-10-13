@@ -21,6 +21,11 @@ recording; releasing it after at least 0.3 seconds finishes it. Shorter
 presses and another key pressed while holding are discarded; a recording that
 reaches 5 minutes finishes on its own and is transcribed.
 
+With **Tap**, letting go keeps the recording running and the next press
+finishes it. With **Hold or double-tap**, a second short press within 0.4
+seconds of the first does the same. A recording without the key held finishes
+on the next press or after 5 minutes.
+
 macOS can switch an event tap off when the system is busy, and a key-up can
 get lost. Waft turns the tap back on, checks it every 5 seconds, and while you
 record polls the key four times a second, so a lost key-up still ends the
@@ -33,8 +38,8 @@ Settings or the system default. Audio is converted to 16 kHz mono and kept in
 memory; it is never written to disk. Recording continues for up to 0.15
 seconds after you let go, to catch the end of the last word.
 
-The HUD appears after 0.3 seconds of holding, so a quick tap doesn't flash it.
-It never takes focus: the app you are typing in stays active.
+The HUD appears 0.3 seconds after the press, so a quick tap that does nothing
+doesn't flash it. It never takes focus: the app you are typing in stays active.
 
 Waft notes the focused app and text field when you press the key. The text
 goes there later, and that app decides which mode applies.
@@ -87,8 +92,8 @@ Clean.
 
 ### The AI modes
 
-Clean, Formal, and Translate send the text and a short instruction for the
-mode to the model you chose: the Anthropic Messages API with
+Clean, Formal, Translate, and your modes send the text and a short instruction
+for the mode to the model you chose: the Anthropic Messages API with
 `claude-haiku-5-5` and thinking turned off, the OpenAI Responses API with
 `gpt-6-luna`, reasoning turned off, and `store: false`, or the
 `/chat/completions` endpoint of your local server. The transcript is marked as
@@ -96,11 +101,18 @@ text to edit, never instructions to follow, so dictating a question gives you
 the question rather than an answer, and the model is told to reply with the
 text only.
 
+Your modes send your instructions between `<instructions>` tags after a short
+preamble that asks for Clean's cleanup wherever they say nothing; with no
+instructions they work like Clean.
+
 The answer is checked before it is used. Waft rejects an answer that is
 empty, cut off, or refused, one more than three times longer than what you
 said (five times for a translation from Chinese, Japanese, or Korean), and one
 written in another script than both the language you spoke and the transcript
-itself, or, for Translate, than the target language.
+itself, or, for Translate, than the target language. Your modes may answer in
+any script and at up to ten times the length of what you said, or 600
+characters for a short dictation, since their instructions can ask for a
+translation or a longer text.
 
 A cloud model gets 3 seconds and a local server 15. Without a key, offline,
 on an error, a rate limit, a timeout, or a rejected answer, Waft uses Light
@@ -146,7 +158,7 @@ Texts are pasted one at a time, in the order you spoke them.
 
 ## The speech model
 
-Settings › AI Models offers two models from
+Settings › Dictation › **Speech model** offers two models from
 [argmaxinc/whisperkit-coreml](https://huggingface.co/argmaxinc/whisperkit-coreml):
 
 | Model | Files | Download | Speed |
@@ -161,7 +173,9 @@ about 130 MB. Later loads take about a second.
 
 Choosing the other model downloads and loads it while the current one keeps
 recognizing speech. Once the new model is ready, Waft deletes the files of the
-one it replaced. Without Pro, Waft uses Fast.
+one it replaced. Without Pro, Waft switches to Fast, downloads it if needed,
+and then deletes Accurate: right away when you remove your license, and on the
+next launch when the trial ends.
 
 Changing the enabled languages reloads the model. A press while no model is
 loaded records nothing; the HUD says what the model is doing instead.

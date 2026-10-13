@@ -37,7 +37,7 @@ struct PermissionStep: View {
     private var message: LocalizedStringKey {
         switch permission {
         case .microphone:
-            "Waft listens only while you hold the key, and the audio stays on your Mac."
+            "Waft listens only while you dictate, and the audio stays on your Mac."
         case .accessibility:
             "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens."
         }
@@ -47,7 +47,7 @@ struct PermissionStep: View {
         OnboardingStep(title: title, message: message) {
             IconTile(symbolName: symbolName, tint: tint, size: Metrics.heroTileSize)
         } content: {
-            VStack(spacing: 10) {
+            VStack(spacing: Metrics.groupSpacing) {
                 SettingsCard {
                     PermissionRow(permission: permission, monitor: monitor, offersRequest: false)
                 }

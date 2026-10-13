@@ -65,7 +65,7 @@ struct AudioSampleSinkTests {
         let loudLevel = meter.value
         sink.consume(silent, at: Self.time)
 
-        #expect(loudLevel == AudioLevel.meterValue(rms: 0.5))
+        #expect(loudLevel == AudioLevel.meterValue(rootMeanSquare: 0.5))
         #expect(meter.value == 0)
     }
 }

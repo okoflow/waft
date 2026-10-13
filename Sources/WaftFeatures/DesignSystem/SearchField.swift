@@ -12,7 +12,7 @@ struct SearchField: View {
     }
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: Metrics.inlineSpacing) {
             Image(systemName: "magnifyingglass")
                 .font(.glyph)
                 .foregroundStyle(.secondary)

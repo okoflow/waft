@@ -5,10 +5,10 @@ import WaftCore
 @Observable
 final class SettingsWindowState {
     var selection = SettingsPane.overview {
-        didSet { editedInstructions = nil }
+        didSet { editedMode = nil }
     }
 
-    var editedInstructions: Mode?
+    var editedMode: Mode?
 
     let copiedEntries = CopyFeedback<Date>()
 

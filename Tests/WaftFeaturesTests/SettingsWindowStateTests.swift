@@ -7,7 +7,7 @@ struct SettingsWindowStateTests {
         (SettingsPane.general, 1, SettingsPane.dictation),
         (.overview, -1, .overview),
         (.about, 1, .about),
-        (.overview, 3, .writing),
+        (.overview, 3, .general),
     ])
     func `moves the selection by an offset within the panes`(selected: SettingsPane, offset: Int, moved: SettingsPane) {
         let state = SettingsWindowState()
@@ -18,12 +18,12 @@ struct SettingsWindowStateTests {
     }
 
     @Test
-    func `closes the instructions editor when the selection changes`() {
+    func `closes the mode editor when the selection changes`() {
         let state = SettingsWindowState()
-        state.editedInstructions = .clean
+        state.editedMode = .clean
         state.selection = .writing
 
-        #expect(state.editedInstructions == nil)
+        #expect(state.editedMode == nil)
     }
 
     @Test

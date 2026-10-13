@@ -16,6 +16,16 @@ extension RewriteRequest {
         )
     }
 
+    static func custom(_ text: String, language: Language = .english, instructions: String = "Reply.") -> RewriteRequest {
+        RewriteRequest(
+            text: text,
+            language: language,
+            kind: .custom(instructions: instructions),
+            localServer: nil,
+            deadline: .seconds(3),
+        )
+    }
+
     static func edit(_ instruction: String, selection: String, language: Language = .english) -> RewriteRequest {
         RewriteRequest(
             text: instruction,

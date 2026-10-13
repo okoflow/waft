@@ -28,6 +28,6 @@ struct SettingsRow<Accessory: View>: View {
 extension View {
     func settingsRowPadding() -> some View {
         padding(Metrics.rowPadding)
-            .frame(minHeight: Metrics.rowMinHeight)
+            .frame(minHeight: Metrics.rowMinimumHeight)
     }
 }

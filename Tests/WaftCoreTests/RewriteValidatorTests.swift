@@ -81,6 +81,33 @@ struct RewriteValidatorTests {
     }
 
     @Test(arguments: [
+        ("hello there", Language.english, "Привет всем."),
+        ("see you friday", .english, "金曜日に会いましょう。"),
+        ("привет всем", .russian, "Hello everyone."),
+    ])
+    func `accepts a custom answer in any script`(transcript: String, language: Language, answer: String) throws {
+        #expect(try RewriteValidator.validated(answer, for: .custom(transcript, language: language)) == answer)
+    }
+
+    @Test
+    func `allows a custom answer to expand a short dictation`() throws {
+        let request = RewriteRequest.custom("tell him yes friday works")
+        let limit = 600
+
+        #expect(try RewriteValidator.validated(String(repeating: "a", count: limit), for: request).count == limit)
+        #expect(throws: RewriteError.unreadableResponse) {
+            try RewriteValidator.validated(String(repeating: "a", count: limit + 1), for: request)
+        }
+    }
+
+    @Test(arguments: ["", "  ", "\"\"", "<transcript></transcript>"])
+    func `rejects an empty custom answer`(answer: String) {
+        #expect(throws: RewriteError.unreadableResponse) {
+            try RewriteValidator.validated(answer, for: .custom("hello there"))
+        }
+    }
+
+    @Test(arguments: [
         ("<text>Shorter.</text>", "Shorter."),
         ("<text>\nShorter.\n</text>", "Shorter."),
         ("<text>\"Shorter.\"</text>", "Shorter."),

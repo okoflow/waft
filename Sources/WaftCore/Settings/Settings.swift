@@ -1,6 +1,11 @@
 package struct Settings: Codable, Equatable, Sendable {
+    private enum LegacyCodingKeys: String, CodingKey {
+        case allowsHandsFree = "handsFreeDoubleTap"
+    }
+
     private enum CodingKeys: String, CodingKey {
         case mode
+        case customModes
         case languages
         case speechModel
         case appModes
@@ -9,7 +14,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case instructions
         case translation
         case pushToTalkKey
-        case allowsHandsFree = "handsFreeDoubleTap"
+        case dictationStart
         case editKey
         case pastesIntoFocusedField
         case keepsHistory
@@ -22,6 +27,7 @@ package struct Settings: Codable, Equatable, Sendable {
     }
 
     package var mode = Mode.light
+    package var customModes: [CustomMode] = []
     package var languages = LanguageSelection(languages: [.english])
     package var speechModel = SpeechModel.fast
     package var appModes = AppModeOverrides()
@@ -30,7 +36,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var instructions = ModeInstructions()
     package var translation = Translation()
     package var pushToTalkKey = PushToTalkKey.rightOption
-    package var allowsHandsFree = true
+    package var dictationStart = DictationStart.holdOrDoubleTap
     package var editKey: PushToTalkKey?
     package var pastesIntoFocusedField = true
     package var keepsHistory = true
@@ -47,8 +53,11 @@ package struct Settings: Codable, Equatable, Sendable {
 
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let legacy = try decoder.container(keyedBy: LegacyCodingKeys.self)
         let storedLimit = container.decode(.historyLimit, default: historyLimit)
+        let allowedHandsFree = legacy.decode(.allowsHandsFree, default: true)
 
+        customModes = container.decodeValidElements(.customModes)
         mode = container.decode(.mode, default: mode)
         languages = container.decode(.languages, default: languages)
         speechModel = container.decode(.speechModel, default: speechModel)
@@ -58,7 +67,7 @@ package struct Settings: Codable, Equatable, Sendable {
         instructions = container.decode(.instructions, default: instructions)
         translation = container.decode(.translation, default: translation)
         pushToTalkKey = container.decode(.pushToTalkKey, default: pushToTalkKey)
-        allowsHandsFree = container.decode(.allowsHandsFree, default: allowsHandsFree)
+        dictationStart = container.decode(.dictationStart, default: allowedHandsFree ? .holdOrDoubleTap : .hold)
         editKey = container.decodeIfValid(.editKey)
         pastesIntoFocusedField = container.decode(.pastesIntoFocusedField, default: pastesIntoFocusedField)
         keepsHistory = container.decode(.keepsHistory, default: keepsHistory)
@@ -68,6 +77,8 @@ package struct Settings: Codable, Equatable, Sendable {
         showsMenuBarIcon = container.decode(.showsMenuBarIcon, default: showsMenuBarIcon)
         microphoneID = container.decodeIfValid(.microphoneID)
         hasCompletedSetup = container.decode(.hasCompletedSetup, default: hasCompletedSetup)
+
+        dropMissingCustomModes()
     }
 
     package func mode(for bundleIdentifier: String?) -> Mode {

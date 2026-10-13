@@ -7,7 +7,7 @@ package struct RecordingID: Comparable, Hashable, Sendable {
         RecordingID(rawValue: rawValue + 1)
     }
 
-    package static func < (lhs: RecordingID, rhs: RecordingID) -> Bool {
-        lhs.rawValue < rhs.rawValue
+    package static func < (left: RecordingID, right: RecordingID) -> Bool {
+        left.rawValue < right.rawValue
     }
 }

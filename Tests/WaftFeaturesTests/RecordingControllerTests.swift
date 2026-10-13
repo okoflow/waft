@@ -8,6 +8,7 @@ struct RecordingControllerTests {
     private static let second = first.next
     private nonisolated static let dictation = RecordingTrigger(purpose: .dictation, key: .function, action: .startRecording)
     private nonisolated static let edit = RecordingTrigger(purpose: .edit, key: .function, action: .startRecording)
+    private nonisolated static let emailReply = CustomMode(name: "Email reply", instructions: "Reply.")
 
     private let recorder = FakeAudioRecorder()
     private let focusTracker = FakeFocusTracker(.app(
@@ -126,7 +127,7 @@ struct RecordingControllerTests {
         recordings.refuse(Self.dictation, because: "The speech model isn't ready yet")
 
         #expect(!recordings.isRecording)
-        #expect(hud.content == .message(HUDMessage(kind: .info, title: "The speech model isn't ready yet")))
+        #expect(hud.content == .message(HUDMessage(kind: .information, title: "The speech model isn't ready yet")))
 
         recordings.finish(releasedAt: 2)
 
@@ -136,7 +137,7 @@ struct RecordingControllerTests {
 
     @Test(arguments: [0, 0.1] as [TimeInterval])
     func `rejects an edit without selected text even after a slow focus lookup`(focusLookup: TimeInterval) async {
-        let message = HUDMessage(kind: .info, title: "Select the text to edit, then hold the key and say what to change.")
+        let message = HUDMessage(kind: .information, title: "Select the text to edit, then hold the key and say what to change.")
         focusTracker.focus = .app("com.example.notes", element: FakeFocusedElement(selectedText: nil))
         focusTracker.lookupDuration = focusLookup
         let recordings = model(recorder: recorder, hudDelay: .milliseconds(10))
@@ -159,6 +160,7 @@ struct RecordingControllerTests {
     @Test(arguments: [
         (Self.dictation, Mode?.none, String?.none),
         (Self.dictation, .clean, "Clean"),
+        (Self.dictation, .custom(Self.emailReply.id), "Email reply"),
         (Self.edit, .clean, "Edit"),
     ])
     func `shows the listening HUD with the target app's mode as its badge`(
@@ -166,6 +168,7 @@ struct RecordingControllerTests {
         appMode: Mode?,
         badge: String?,
     ) async {
+        settings.settings.customModes = [Self.emailReply]
         settings.settings.appModes.set(appMode, for: "com.example.notes")
         let recordings = model()
         recordings.begin(trigger)

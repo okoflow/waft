@@ -54,6 +54,7 @@ struct HistorySettingsPane: View {
             DividedForEach(page.entries, id: \.date) { entry in
                 HistoryRow(
                     entry: entry,
+                    modeTitle: settings.settings.title(of: entry.mode),
                     appName: entry.app.map(InstalledApp.name(of:)),
                     isCopied: state.copiedEntries.isShowing(entry.date),
                 ) {
@@ -94,6 +95,7 @@ struct HistorySettingsPane: View {
 
 private struct HistoryRow: View {
     let entry: DictationHistory.Entry
+    let modeTitle: String
     let appName: String?
     let isCopied: Bool
     let copy: () -> Void
@@ -101,12 +103,12 @@ private struct HistoryRow: View {
     private var details: String {
         let time = entry.date.formatted(date: .abbreviated, time: .shortened)
 
-        return [time, entry.mode.title, appName].compactMap(\.self).joined(separator: " · ")
+        return [time, modeTitle, appName].compactMap(\.self).joined(separator: " · ")
     }
 
     var body: some View {
         HStack(spacing: Metrics.rowSpacing) {
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text(entry.text)
                     .font(.rowTitle)
                     .lineLimit(3)

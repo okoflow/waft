@@ -7,7 +7,7 @@ struct RemoveButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: "minus.circle.fill")
-                .font(.system(size: 14))
+                .font(.removeGlyph)
                 .foregroundStyle(.secondary)
         }
         .buttonStyle(.borderless)
