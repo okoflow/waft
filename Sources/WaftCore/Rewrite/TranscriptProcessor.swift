@@ -68,6 +68,8 @@ package struct TranscriptProcessor: Sendable {
             return light(text, language: language)
 
         case .clean, .formal, .translate, .custom:
+            let lightened = light(text, language: language)
+            guard !lightened.text.isBlank else { return lightened }
             guard allowsAI else { return light(text, language: language, fallback: .needsPro) }
 
             return await cleanUp(text, mode: mode, language: language, setup: setup)
