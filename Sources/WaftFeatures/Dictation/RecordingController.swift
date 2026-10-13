@@ -128,7 +128,11 @@ final class RecordingController {
         ended.hudTask?.cancel()
         ended.watchdogTimer?.invalidate()
 
-        guard !ended.isRejected, !ended.hasFailed else { return nil }
+        guard !ended.isRejected, !ended.hasFailed else {
+            hud.hideListening()
+
+            return nil
+        }
 
         return ended
     }
@@ -173,7 +177,7 @@ final class RecordingController {
     }
 
     private func showListeningHUD(for id: RecordingID) {
-        guard let recording, recording.id == id, !recording.hasFailed else { return }
+        guard let recording, recording.id == id, !recording.isRejected, !recording.hasFailed else { return }
 
         let recorder = recorder
 

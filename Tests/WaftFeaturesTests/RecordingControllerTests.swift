@@ -36,7 +36,7 @@ struct RecordingControllerTests {
         recordings.begin(Self.dictation)
         recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
 
-        #expect(await Poll.until(timeout: .seconds(5)) { !recorder.startedDevices.isEmpty })
+        #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == Array(played.dropLast()) })
 
         recordings.finish(releasedAt: 2)
 
@@ -134,18 +134,17 @@ struct RecordingControllerTests {
         #expect(sounds.played.isEmpty)
     }
 
-    @Test
-    func `rejects an edit without selected text and stops the recorder`() async {
+    @Test(arguments: [0, 0.1] as [TimeInterval])
+    func `rejects an edit without selected text even after a slow focus lookup`(focusLookup: TimeInterval) async {
+        let message = HUDMessage(kind: .info, title: "Select the text to edit, then hold the key and say what to change.")
         focusTracker.focus = .app("com.example.notes", element: FakeFocusedElement(selectedText: nil))
-        let recordings = model(recorder: recorder, hudDelay: .seconds(60))
+        focusTracker.lookupDuration = focusLookup
+        let recordings = model(recorder: recorder, hudDelay: .milliseconds(10))
         recordings.begin(Self.edit)
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
         #expect(!recordings.isRecording)
-        #expect(hud.content == .message(HUDMessage(
-            kind: .info,
-            title: "Select the text to edit, then hold the key and say what to change.",
-        )))
+        #expect(hud.content == .message(message))
     }
 
     @Test
