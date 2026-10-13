@@ -6,7 +6,13 @@ struct RewritePromptTests {
     @Test
     func `puts the transcript between tags with the spoken language`() {
         let request = RewriteRequest.cleanup("um hello there", language: .german)
-        let expected = "Spoken language: German.\n<transcript>\num hello there\n</transcript>"
+        let expected = """
+        Spoken language: German.
+        <transcript>
+        um hello there
+        </transcript>
+        Reply with the finished text alone.
+        """
 
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
@@ -14,7 +20,14 @@ struct RewritePromptTests {
     @Test(arguments: [(Language.english, "American English"), (.russian, "Russian"), (.japanese, "Japanese")])
     func `names the translation target`(target: Language, name: String) {
         let request = RewriteRequest.cleanup("hola", language: .spanish, target: target)
-        let expected = "Spoken language: Spanish.\nTranslate into: \(name).\n<transcript>\nhola\n</transcript>"
+        let expected = """
+        Spoken language: Spanish.
+        Translate into: \(name).
+        <transcript>
+        hola
+        </transcript>
+        Reply with the finished text alone.
+        """
 
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
@@ -22,7 +35,13 @@ struct RewritePromptTests {
     @Test
     func `puts the transcript of a custom mode between tags without a translation target`() {
         let request = RewriteRequest.custom("um see you friday", language: .english)
-        let expected = "Spoken language: English.\n<transcript>\num see you friday\n</transcript>"
+        let expected = """
+        Spoken language: English.
+        <transcript>
+        um see you friday
+        </transcript>
+        Reply with the finished text alone.
+        """
 
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
@@ -30,7 +49,16 @@ struct RewritePromptTests {
     @Test
     func `gives an edit the instruction and the selected text`() {
         let request = RewriteRequest.edit("сделай короче", selection: "A long text.", language: .russian)
-        let expected = "Spoken language: Russian.\n<instruction>\nсделай короче\n</instruction>\n<text>\nA long text.\n</text>"
+        let expected = """
+        Spoken language: Russian.
+        <instruction>
+        сделай короче
+        </instruction>
+        <text>
+        A long text.
+        </text>
+        Reply with the edited text alone.
+        """
 
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
@@ -56,7 +84,7 @@ struct RewritePromptTests {
     func `wraps the instructions of a custom mode after its preamble`() {
         let prompt = RewritePrompt.customInstructions("Reply as a short email.")
 
-        #expect(prompt.hasPrefix("You turn dictated speech into text by the speaker's own instructions"))
+        #expect(prompt.hasPrefix("You turn dictated speech into text by the instructions the speaker wrote"))
         #expect(prompt.hasSuffix("\n<instructions>\nReply as a short email.\n</instructions>"))
     }
 
