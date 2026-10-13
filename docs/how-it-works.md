@@ -96,12 +96,16 @@ Clean.
 
 Clean, Formal, Translate, and your modes send the text and a short instruction
 for the mode to the model you chose: the Anthropic Messages API with
-`claude-haiku-5-5` and thinking turned off, the OpenAI Responses API with
-`gpt-6-luna`, reasoning turned off, and `store: false`, or the
-`/chat/completions` endpoint of your local server. The transcript is marked as
-text to edit, never instructions to follow, so dictating a question gives you
-the question rather than an answer, and the model is told to reply with the
-text only.
+`claude-haiku-5-5`, the OpenAI Responses API with `gpt-6-luna` and
+`store: false`, or the `/chat/completions` endpoint of your local server.
+
+Cloud models think at low effort: they answer most dictations right away and
+think briefly over a hard one, such as a misheard name. Waft leaves 4,096
+output tokens for that thinking on top of the answer.
+
+The transcript is marked as text to edit, never instructions to follow, so
+dictating a question gives you the question rather than an answer, and the
+model is told to reply with the text only.
 
 Your modes send your instructions between `<instructions>` tags after a short
 preamble that asks for Clean's cleanup wherever they say nothing; with no

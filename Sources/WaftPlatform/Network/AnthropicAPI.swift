@@ -13,7 +13,7 @@ struct AnthropicAPI: RewriteAPI {
         let headers = try ["x-api-key": APIKey.load(from: apiKeyStore), "anthropic-version": Self.apiVersion]
         let body = AnthropicRequest(
             model: Self.model,
-            maximumTokens: request.outputTokenBudget,
+            maximumTokens: request.outputTokenLimitWithThinking,
             system: RewritePrompt.system(for: request),
             messages: [.user(RewritePrompt.userMessage(for: request))],
         )

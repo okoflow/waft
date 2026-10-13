@@ -15,7 +15,7 @@ struct OpenAIAPI: RewriteAPI {
             model: Self.model,
             instructions: RewritePrompt.system(for: request),
             input: RewritePrompt.userMessage(for: request),
-            maximumOutputTokens: request.outputTokenBudget,
+            maximumOutputTokens: request.outputTokenLimitWithThinking,
         )
 
         return APICall(url: Self.endpoint, headers: headers, body: body)

@@ -15,15 +15,16 @@ struct AnthropicAPITests {
     }
 
     @Test
-    func `sends the prompt without thinking`() throws {
+    func `sends the prompt with little thinking and room for it`() throws {
         let request = RewriteRequest.cleanup("um hello", target: .german)
         let body = try Self.api.call(for: request).body.jsonObject()
         let messages = try #require(body["messages"] as? [[String: String]])
         let model = try #require(body["model"] as? String)
 
         #expect(model.hasPrefix("claude-"))
-        #expect(body["max_tokens"] as? Int == request.outputTokenBudget)
-        #expect((body["thinking"] as? [String: String])?["type"] == "disabled")
+        #expect(body["max_tokens"] as? Int == request.outputTokenBudget + 4096)
+        #expect(body["thinking"] == nil)
+        #expect((body["output_config"] as? [String: String])?["effort"] == "low")
         #expect(body["system"] as? String == RewritePrompt.system(for: request))
         #expect(messages == [["role": "user", "content": RewritePrompt.userMessage(for: request)]])
     }
