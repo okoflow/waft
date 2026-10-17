@@ -27,15 +27,12 @@ Include what helps reproduce and assess the issue:
 - The impact you expect.
 
 You receive an acknowledgment within three business days and a triage
-decision within seven business days. The maintainers keep the report private
-until a fix is available, and the fix ships with a security advisory that
-credits the reporter unless they prefer otherwise. Please keep the report
-private until the advisory is published.
+decision within seven. The maintainers keep the report private until a fix is
+available, and the fix ships with a security advisory that credits you unless
+you prefer otherwise. Keep the report private until the advisory is published.
 
 ## Scope
 
-Waft records your voice, reads the focused text field through Accessibility,
-writes to the clipboard, keeps API keys in the keychain, and updates itself.
 In scope: everything in this repository, including the app, the scripts, and
 the build configuration, and the license service at `api.waft.okoflow.com`,
 which issues Waft+ license keys. Of particular interest:
@@ -56,9 +53,3 @@ Out of scope: vulnerabilities in WhisperKit, Sparkle, the speech model, or
 macOS unless Waft's use of them causes the problem; attacks that need an
 already compromised user account; the Waft Dev identity that `make signing`
 creates for local builds.
-
-## Dependencies
-
-The packages Waft depends on are pinned to exact versions in `Package.swift`,
-with every resolved package recorded in `Package.resolved`. Dependabot
-proposes updates for them and for the GitHub Actions.
