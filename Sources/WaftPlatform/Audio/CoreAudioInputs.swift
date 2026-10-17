@@ -13,7 +13,7 @@ package struct CoreAudioInputs: AudioInputProvider {
     }
 
     static func defaultInputName() -> String {
-        var address = address(kAudioHardwarePropertyDefaultInputDevice, scope: kAudioObjectPropertyScopeGlobal)
+        var address = AudioObjectPropertyAddress(kAudioHardwarePropertyDefaultInputDevice, scope: kAudioObjectPropertyScopeGlobal)
         var deviceID = AudioDeviceID(kAudioObjectUnknown)
         var size = UInt32(MemoryLayout<AudioDeviceID>.size)
         let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &size, &deviceID)
@@ -23,7 +23,7 @@ package struct CoreAudioInputs: AudioInputProvider {
     }
 
     private static func inputDeviceIDs() -> [AudioDeviceID] {
-        var address = address(kAudioHardwarePropertyDevices, scope: kAudioObjectPropertyScopeGlobal)
+        var address = AudioObjectPropertyAddress(kAudioHardwarePropertyDevices, scope: kAudioObjectPropertyScopeGlobal)
         let system = AudioObjectID(kAudioObjectSystemObject)
         var size: UInt32 = 0
         guard AudioObjectGetPropertyDataSize(system, &address, 0, nil, &size) == noErr else { return [] }
@@ -35,7 +35,7 @@ package struct CoreAudioInputs: AudioInputProvider {
     }
 
     private static func hasInputStreams(_ deviceID: AudioDeviceID) -> Bool {
-        var address = address(kAudioDevicePropertyStreams, scope: kAudioObjectPropertyScopeInput)
+        var address = AudioObjectPropertyAddress(kAudioDevicePropertyStreams, scope: kAudioObjectPropertyScopeInput)
         var size: UInt32 = 0
         guard AudioObjectGetPropertyDataSize(deviceID, &address, 0, nil, &size) == noErr else { return false }
 
@@ -43,19 +43,12 @@ package struct CoreAudioInputs: AudioInputProvider {
     }
 
     private static func string(_ selector: AudioObjectPropertySelector, of objectID: AudioObjectID) -> String? {
-        var address = address(selector, scope: kAudioObjectPropertyScopeGlobal)
+        var address = AudioObjectPropertyAddress(selector, scope: kAudioObjectPropertyScopeGlobal)
         var value: Unmanaged<CFString>?
         var size = UInt32(MemoryLayout<Unmanaged<CFString>?>.size)
         guard AudioObjectGetPropertyData(objectID, &address, 0, nil, &size, &value) == noErr else { return nil }
 
         return value?.takeRetainedValue() as String?
-    }
-
-    private static func address(
-        _ selector: AudioObjectPropertySelector,
-        scope: AudioObjectPropertyScope,
-    ) -> AudioObjectPropertyAddress {
-        AudioObjectPropertyAddress(mSelector: selector, mScope: scope, mElement: kAudioObjectPropertyElementMain)
     }
 
     package func inputDevices() -> [AudioInputDevice] {
