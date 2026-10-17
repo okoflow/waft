@@ -46,6 +46,22 @@ struct JSONFileStoreTests {
     }
 
     @Test
+    func `writes a new private file restricted to its owner and leaves no temporary file`() async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "nested/history.json")
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url, isPrivate: true)
+            try store.save(Self.sample)
+
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            let leftovers = try FileManager.default.contentsOfDirectory(atPath: url.deletingLastPathComponent().path)
+
+            #expect(attributes[.posixPermissions] as? Int == 0o600)
+            #expect(leftovers == ["history.json"])
+            #expect(try store.load() == Self.sample)
+        }
+    }
+
+    @Test
     func `restricts the copy of an unreadable private file to its owner`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
