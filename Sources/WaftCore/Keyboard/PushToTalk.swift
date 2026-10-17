@@ -5,6 +5,7 @@ package struct PushToTalk: Sendable {
         case keyDown
         case keyUp
         case otherKeyDown
+        case escapeDown
         case monitorDisabled
         case tick
     }
@@ -19,6 +20,7 @@ package struct PushToTalk: Sendable {
     package enum DiscardReason: String, Sendable {
         case tooShort
         case otherKeyPressed
+        case cancelled
         case interrupted
     }
 
@@ -65,6 +67,11 @@ package struct PushToTalk: Sendable {
             state = .idle
 
             return .discardRecording(.otherKeyPressed)
+
+        case (.holding, .escapeDown), (.handsFree, .escapeDown):
+            state = .idle
+
+            return .discardRecording(.cancelled)
 
         case (.holding, .monitorDisabled), (.handsFree, .monitorDisabled):
             state = .idle

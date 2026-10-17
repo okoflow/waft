@@ -44,6 +44,7 @@ struct PushToTalkKeyTests {
         (.modifiersChanged(61), .keyUp),
         (.modifiersChanged(58, flags: leftOptionFlag), nil),
         (.keyDown(0, flags: KeyEvent.rightOptionFlag), .otherKeyDown),
+        (.keyDown(53), .escapeDown),
         (.keyUp(0), nil),
         (.monitorDisabled, .monitorDisabled),
     ])
@@ -55,6 +56,7 @@ struct PushToTalkKeyTests {
         (KeyEvent.keyDown(96), PushToTalk.Event?.some(.keyDown)),
         (.keyUp(96), .keyUp),
         (.keyDown(97), .otherKeyDown),
+        (.keyDown(53), .escapeDown),
         (.keyUp(97), nil),
         (.modifiersChanged(96), nil),
         (.monitorDisabled, .monitorDisabled),

@@ -43,6 +43,20 @@ struct HTTPRewriterTests {
         }
     }
 
+    @Test(arguments: [
+        #"{"error":{"message":"private dictated text","type":"private clipboard text","code":"Bearer private-token"}}"#,
+        #"{"error":{"message":false,"type":[],"code":{}}}"#,
+        "private dictated text",
+    ])
+    func `maps a failure by its status regardless of server diagnostics`(body: String) async {
+        let transport = FakeHTTPTransport(.status(401, body: Data(body.utf8)))
+        let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
+
+        await #expect(throws: RewriteError.rejectedKey) {
+            try await rewriter.rewrite(.cleanup("private dictated text"))
+        }
+    }
+
     @Test
     func `sends nothing when the API cannot build the call`() async {
         let transport = FakeHTTPTransport(.status(200))
