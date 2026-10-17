@@ -29,11 +29,8 @@ struct RewriteValidatorTests {
         }
     }
 
-    @Test
-    func `rejects an answer far longer than the transcript`() throws {
-        let request = RewriteRequest.cleanup("hi")
-        let limit = 2 * 3 + 60
-
+    @Test(arguments: [(RewriteRequest.cleanup("hi"), 2 * 3 + 60), (.custom("tell him yes friday works"), 600)])
+    func `rejects an answer longer than the limit of its request`(request: RewriteRequest, limit: Int) throws {
         #expect(try RewriteValidator.validated(String(repeating: "a", count: limit), for: request).count == limit)
         #expect(throws: RewriteError.unreadableResponse) {
             try RewriteValidator.validated(String(repeating: "a", count: limit + 1), for: request)
@@ -87,17 +84,6 @@ struct RewriteValidatorTests {
     ])
     func `accepts a custom answer in any script`(transcript: String, language: Language, answer: String) throws {
         #expect(try RewriteValidator.validated(answer, for: .custom(transcript, language: language)) == answer)
-    }
-
-    @Test
-    func `allows a custom answer to expand a short dictation`() throws {
-        let request = RewriteRequest.custom("tell him yes friday works")
-        let limit = 600
-
-        #expect(try RewriteValidator.validated(String(repeating: "a", count: limit), for: request).count == limit)
-        #expect(throws: RewriteError.unreadableResponse) {
-            try RewriteValidator.validated(String(repeating: "a", count: limit + 1), for: request)
-        }
     }
 
     @Test(arguments: ["", "  ", "\"\"", "<transcript></transcript>"])

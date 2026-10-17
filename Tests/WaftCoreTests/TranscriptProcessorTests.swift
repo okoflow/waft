@@ -70,18 +70,19 @@ struct TranscriptProcessorTests {
         #expect(RewritePrompt.system(for: request).hasPrefix("Clean."))
     }
 
-    @Test
-    func `falls back to light when the cloud fails`() async {
-        let processed = await process("um, see you tomorrow", mode: .formal, answer: .failure(.timeout))
+    @Test(arguments: [
+        ("um, see you tomorrow", Mode.formal, Result<String, RewriteError>.failure(.timeout), RewriteFallback.timeout),
+        ("see you tomorrow", .clean, .success(""), .unusableAnswer),
+    ])
+    func `falls back to light when the cloud fails or its answer is unusable`(
+        text: String,
+        mode: Mode,
+        answer: Result<String, RewriteError>,
+        fallback: RewriteFallback,
+    ) async {
+        let processed = await process(text, mode: mode, answer: answer)
 
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .timeout))
-    }
-
-    @Test
-    func `falls back to light when the answer is unusable`() async {
-        let processed = await process("see you tomorrow", mode: .clean, answer: .success(""))
-
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
+        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: fallback))
     }
 
     @Test(arguments: [Mode.clean, .translate, .custom(UUID())])
