@@ -119,6 +119,19 @@ struct HistoryModelTests {
         #expect(store.value == nil)
     }
 
+    @Test
+    func `keeps history and its shown page when deletion fails`() {
+        let stored = history(entries: 120)
+        let store = FakeValueStore(stored, failsDeleting: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+        history.showNextPage()
+        history.removeAll()
+
+        #expect(history.history == stored)
+        #expect(history.currentPage.firstPosition == 51)
+        #expect(store.value == stored)
+    }
+
     private func model(entries count: Int) -> HistoryModel {
         model(entries: count, settings: settingsModel())
     }

@@ -2,9 +2,9 @@ import Testing
 @testable import WaftFeatures
 
 struct APIKeyModelTests {
-    @Test
-    func `saves the trimmed draft and clears it`() {
-        let store = FakeValueStore<String>()
+    @Test(arguments: [nil, "existing-key"] as [String?])
+    func `saves the trimmed draft and clears it`(stored: String?) {
+        let store = FakeValueStore(stored)
         let apiKey = APIKeyModel(store: store)
         apiKey.draft = "  my-api-key\n"
         apiKey.saveDraft()
@@ -12,6 +12,20 @@ struct APIKeyModelTests {
         #expect(store.value == "my-api-key")
         #expect(apiKey.draft.isEmpty)
         #expect(apiKey.isSet)
+    }
+
+    @Test(arguments: [nil, "existing-key"] as [String?])
+    func `preserves the draft and stored state when saving fails`(stored: String?) {
+        let store = FakeValueStore(stored, failsSaving: true)
+        let apiKey = APIKeyModel(store: store)
+        let draft = "  replacement-key\n"
+        apiKey.draft = draft
+        apiKey.saveDraft()
+
+        #expect(apiKey.draft == draft)
+        #expect(apiKey.canSaveDraft)
+        #expect(apiKey.isSet == (stored != nil))
+        #expect(store.value == stored)
     }
 
     @Test(arguments: ["", " \n\t"])

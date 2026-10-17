@@ -91,9 +91,10 @@ final class HistoryModel {
     }
 
     func removeAll() {
+        guard store.remove() else { return }
+
         history.removeAll()
         pageIndex = 0
-        store.remove()
     }
 
     func add(_ entry: DictationHistory.Entry) {

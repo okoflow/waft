@@ -42,6 +42,12 @@ describe how each handles the text.
 | Cookies and other HTTP data from update checks and model downloads | `~/Library/HTTPStorages/com.okoflow.waft` and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
+If Waft cannot decode a saved JSON file, it keeps an `*.unreadable.json`
+recovery copy beside the original. Saving new data preserves that copy.
+When you use **Clear History** in Settings › History, Waft deletes both
+`history.json` and `history.unreadable.json`. If either cannot be removed,
+the history stays visible so you can retry.
+
 **Copy Last Dictation** keeps your last text in memory only, never on disk.
 Edits by voice, and text that Waft kept out of a password field, stay out of
 the history and the statistics.

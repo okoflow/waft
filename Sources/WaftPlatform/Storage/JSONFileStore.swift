@@ -46,9 +46,21 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     package func delete() throws {
-        guard exists() else { return }
+        var firstFailure: (any Error)?
 
-        try FileManager.default.removeItem(at: url)
+        for file in [url, unreadableCopy] where FileManager.default.fileExists(atPath: file.path) {
+            do {
+                try FileManager.default.removeItem(at: file)
+            } catch {
+                if firstFailure == nil {
+                    firstFailure = error
+                }
+            }
+        }
+
+        if let firstFailure {
+            throw firstFailure
+        }
     }
 
     private func keepUnreadableCopy(of data: Data) {
