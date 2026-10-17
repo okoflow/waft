@@ -163,6 +163,7 @@
 "Listening…" = "Hört zu …";
 "Local server" = "Lokaler Server";
 "Locked" = "Gesperrt";
+"Lower other sounds while recording" = "Andere Töne während der Aufnahme leiser stellen";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV und mehr";
 "Make modes with your own instructions, or tune the built-in ones." = "Erstelle Modi mit eigenen Anweisungen oder passe die integrierten an.";
 "Makes fewer mistakes and is still quick." = "Macht weniger Fehler und ist trotzdem schnell.";
@@ -341,6 +342,7 @@
 "Translation" = "Übersetzung";
 "Try it" = "Ausprobieren";
 "Turn off editing by voice" = "Bearbeiten per Stimme deaktivieren";
+"Turns the Mac's volume down by half while you speak, then back up." = "Halbiert die Lautstärke deines Mac, während du sprichst, und stellt sie danach wieder her.";
 "Two-way with" = "In beide Richtungen mit";
 "Unlock Waft+…" = "Waft+ freischalten …";
 "Unlock…" = "Freischalten …";

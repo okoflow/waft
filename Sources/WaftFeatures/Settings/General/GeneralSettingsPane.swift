@@ -28,6 +28,12 @@ struct GeneralSettingsPane: View {
                 isOn: $settings.settings.playsSounds,
                 description: "A soft click when recording starts and stops.",
             )
+            RowDivider()
+            ToggleRow(
+                "Lower other sounds while recording",
+                isOn: $settings.settings.lowersOtherSounds,
+                description: "Turns the Mac's volume down by half while you speak, then back up.",
+            )
         }
 
         if updates.isAvailable {

@@ -163,6 +163,7 @@
 "Listening…" = "듣는 중…";
 "Local server" = "로컬 서버";
 "Locked" = "잠김";
+"Lower other sounds while recording" = "녹음 중 다른 소리 줄이기";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV 등";
 "Make modes with your own instructions, or tune the built-in ones." = "나만의 지시문으로 모드를 만들거나 기본 제공 모드를 조정할 수 있습니다.";
 "Makes fewer mistakes and is still quick." = "오류가 적고 여전히 빠릅니다.";
@@ -341,6 +342,7 @@
 "Translation" = "번역";
 "Try it" = "사용해 보기";
 "Turn off editing by voice" = "음성으로 편집 끄기";
+"Turns the Mac's volume down by half while you speak, then back up." = "말하는 동안 Mac의 음량을 절반으로 줄였다가 다시 되돌립니다.";
 "Two-way with" = "양방향 번역";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
 "Unlock…" = "잠금 해제…";

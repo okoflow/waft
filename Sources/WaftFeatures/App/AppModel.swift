@@ -111,6 +111,8 @@ package final class AppModel {
     }
 
     package func prepareToQuit() async {
+        dictation.prepareToQuit()
+
         await inserter.waitUntilIdle()
     }
 
@@ -214,6 +216,7 @@ extension AppModel {
             focusTracker: dependencies.focusTracker,
             keyboardState: dependencies.keyboardState,
             sounds: dependencies.sounds,
+            otherSounds: OtherSoundsLowering(outputVolume: dependencies.outputVolume),
             settings: settings,
             hud: hud,
         )

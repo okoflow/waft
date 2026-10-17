@@ -163,6 +163,7 @@
 "Listening…" = "يجري الاستماع…";
 "Local server" = "الخادم المحلي";
 "Locked" = "مقفل";
+"Lower other sounds while recording" = "خفض الأصوات الأخرى أثناء التسجيل";
 "MP3, M4A, WAV, MP4, MOV, and more" = "ملفات MP3 و M4A و WAV و MP4 و MOV وغيرها";
 "Make modes with your own instructions, or tune the built-in ones." = "أنشئ أنماطًا بتعليماتك الخاصة، أو عدّل الأنماط المضمّنة.";
 "Makes fewer mistakes and is still quick." = "أخطاؤه أقل ويبقى سريعًا.";
@@ -341,6 +342,7 @@
 "Translation" = "الترجمة";
 "Try it" = "جرّبه";
 "Turn off editing by voice" = "إيقاف التعديل بالصوت";
+"Turns the Mac's volume down by half while you speak, then back up." = "يخفض مستوى صوت Mac إلى النصف أثناء حديثك، ثم يعيده كما كان.";
 "Two-way with" = "في الاتجاهين مع";
 "Unlock Waft+…" = "فتح قفل Waft+‎…";
 "Unlock…" = "فتح القفل…";

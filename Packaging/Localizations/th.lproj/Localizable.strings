@@ -163,6 +163,7 @@
 "Listening…" = "กำลังฟัง…";
 "Local server" = "เซิร์ฟเวอร์ในเครื่อง";
 "Locked" = "ล็อคอยู่";
+"Lower other sounds while recording" = "ลดเสียงอื่นขณะบันทึก";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV และอื่นๆ";
 "Make modes with your own instructions, or tune the built-in ones." = "สร้างโหมดด้วยคำสั่งของคุณเอง หรือปรับแต่งโหมดในตัว";
 "Makes fewer mistakes and is still quick." = "ผิดพลาดน้อยกว่าและยังเร็วอยู่";
@@ -341,6 +342,7 @@
 "Translation" = "การแปล";
 "Try it" = "ลองใช้";
 "Turn off editing by voice" = "ปิดการแก้ไขด้วยเสียง";
+"Turns the Mac's volume down by half while you speak, then back up." = "ลดระดับเสียงของ Mac ลงครึ่งหนึ่งขณะที่คุณพูด แล้วคืนค่าเดิมเมื่อพูดจบ";
 "Two-way with" = "แปลสองทางกับ";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
 "Unlock…" = "ปลดล็อค…";

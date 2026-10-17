@@ -252,7 +252,7 @@ The sidebar lists Overview, History, and Dictionary first, your settings under
 | Overview | Statistics for the last 7 days and all time |
 | History | How long and how much to keep, searching, copying, and clearing |
 | Dictionary | Terms and snippets |
-| General | Opening at login, the menu bar icon, the interface language, sounds, updates, and permissions |
+| General | Opening at login, the menu bar icon, the interface language, sounds and lowering other sounds while recording, updates, and permissions |
 | Dictation | How to start, the dictation key, the microphone, the speech model, the editing key, and the languages |
 | Writing | The modes and their instructions, your modes, translation, per-app modes, and pasting |
 | AI Models | The provider for the AI modes, a local server, and Claude or OpenAI with your API keys and models |
@@ -266,6 +266,11 @@ Korean, Norwegian, Polish, Portuguese (Brazil and Portugal), Russian, Spanish
 (Spain and Latin America), Swedish, Thai, Turkish, and Ukrainian. Arabic and
 Hebrew lay the interface out from right to left. Click **Relaunch** to apply
 it.
+
+**Lower other sounds while recording**, in the same pane and on by default,
+turns the Mac's volume down by half once recording starts, after the start
+click, and brings it back when recording ends. If you change the volume while
+you speak, Waft leaves your choice alone.
 
 ## Updates
 

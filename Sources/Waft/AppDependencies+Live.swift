@@ -8,10 +8,7 @@ extension AppDependencies {
     static func live() -> AppDependencies {
         let focusTracker = AccessibilityFocusTracker()
         let keyboardState = SystemKeyboardState()
-        let apiKeyStores = PerProvider<any ValueStore<String>>(
-            claude: KeychainStore.apiKey(for: .claude),
-            openAI: KeychainStore.apiKey(for: .openAI),
-        )
+        let apiKeyStores = apiKeyStores()
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
         let statisticsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
@@ -34,6 +31,7 @@ extension AppDependencies {
             permissions: SystemPermissions(),
             loginItem: MainAppLoginItem(),
             sounds: SystemSoundPlayer(),
+            outputVolume: CoreAudioOutputVolume(),
             updater: SparkleUpdater(),
             lifecycle: SystemAppLifecycle(),
             settingsStore: UserDefaultsStore<Settings>(name: "settings", key: "settings"),
@@ -46,6 +44,13 @@ extension AppDependencies {
             trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),
             interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),
+        )
+    }
+
+    private static func apiKeyStores() -> PerProvider<any ValueStore<String>> {
+        PerProvider(
+            claude: KeychainStore.apiKey(for: .claude),
+            openAI: KeychainStore.apiKey(for: .openAI),
         )
     }
 }

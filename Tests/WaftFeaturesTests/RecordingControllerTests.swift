@@ -228,7 +228,9 @@ struct RecordingControllerTests {
 
         #expect(!events.contains(.keyUp))
     }
+}
 
+extension RecordingControllerTests {
     private func model() -> RecordingController {
         model(recorder: recorder)
     }
@@ -244,6 +246,7 @@ struct RecordingControllerTests {
             focusTracker: focusTracker,
             keyboardState: keyboardState,
             sounds: sounds,
+            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume(), delay: .zero),
             settings: settings,
             hud: hud,
             hudDelay: hudDelay,

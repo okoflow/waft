@@ -185,6 +185,7 @@ struct DictationControllerTests {
             focusTracker: FakeFocusTracker(),
             keyboardState: keyboardState,
             sounds: FakeFeedbackSoundPlayer(),
+            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume()),
             settings: settings,
             hud: hud,
             hudDelay: .zero,
