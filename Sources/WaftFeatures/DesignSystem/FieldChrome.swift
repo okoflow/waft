@@ -9,7 +9,7 @@ struct FieldChrome: ViewModifier {
         let ringOffset = Metrics.focusRingWidth / 2
 
         content
-            .background(isFocused ? Palette.fieldFocused : Palette.field, in: shape)
+            .background(Palette.field, in: shape)
             .overlay {
                 shape.strokeBorder(isFocused ? Palette.accent : Palette.fieldBorder, lineWidth: isFocused ? 1 : 0.5)
             }
