@@ -272,7 +272,6 @@
 "Server address" = "Адреса сервера";
 "Set Up…" = "Налаштувати…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "У Системних параметрах › Клавіатура для «Натискати клавішу 🌐, щоб» виберіть «нічого не робити».";
-"Settings" = "Параметри";
 "Settings…" = "Параметри…";
 "Setup needed" = "Потрібне налаштування";
 "Show History" = "Показати історію";
@@ -301,6 +300,7 @@
 "Term" = "Термін";
 "Terms" = "Терміни";
 "Text to paste" = "Текст для вставлення";
+"Text" = "Текст";
 "That doesn't look like a Waft license key." = "Це не схоже на ліцензійний ключ Waft.";
 "That key is already in use. Choose another one." = "Ця клавіша вже використовується. Виберіть іншу.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Ця клавіша друкує текст. Натисніть Option, Command, Shift, Control, Fn або функціональну клавішу.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Використовуються на цьому Mac: %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Використовується ваш власний ключ API. До %@ надсилається лише текст, а не звук.";
 "Version %@" = "Версія %@";
+"Voice" = "Голос";
 "Waft can't read this file." = "Waft не може прочитати цей файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не може використовувати мікрофон. Надайте доступ у Параметрах › Загальні.";
 "Waft is listening" = "Waft слухає";

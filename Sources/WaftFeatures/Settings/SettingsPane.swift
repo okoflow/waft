@@ -2,12 +2,12 @@ import Foundation
 
 package enum SettingsPane: CaseIterable {
     case overview
-    case history
-    case dictionary
-    case general
     case dictation
+    case dictionary
     case writing
     case aiModels
+    case history
+    case general
     case pro
     case about
 

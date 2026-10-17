@@ -272,7 +272,6 @@
 "Server address" = "Tjeneradresse";
 "Set Up…" = "Konfigurer…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐 for å» til «ikke gjøre noe» i Systeminnstillinger › Tastatur.";
-"Settings" = "Innstillinger";
 "Settings…" = "Innstillinger…";
 "Setup needed" = "Oppsett kreves";
 "Show History" = "Vis logg";
@@ -301,6 +300,7 @@
 "Term" = "Term";
 "Terms" = "Termer";
 "Text to paste" = "Tekst som limes inn";
+"Text" = "Tekst";
 "That doesn't look like a Waft license key." = "Det ser ikke ut som en lisensnøkkel for Waft.";
 "That key is already in use. Choose another one." = "Den tasten er allerede i bruk. Velg en annen.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Den tasten skriver tekst. Trykk på Tilvalg, Kommando, Skift, Kontroll, Fn eller en funksjonstast.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Brukes av %@ på denne Macen.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Bruker din egen API-nøkkel. Bare teksten sendes til %@, aldri lyden.";
 "Version %@" = "Versjon %@";
+"Voice" = "Stemme";
 "Waft can't read this file." = "Waft kan ikke lese denne filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruke mikrofonen. Gi tilgang i Innstillinger › Generelt.";
 "Waft is listening" = "Waft lytter";

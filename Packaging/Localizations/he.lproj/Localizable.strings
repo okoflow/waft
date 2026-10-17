@@ -272,7 +272,6 @@
 "Server address" = "כתובת השרת";
 "Set Up…" = "הגדרה…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ב״הגדרות המערכת״ › ״מקלדת״ יש להגדיר את ״לחיצה על המקש 🌐״ לאפשרות ״לא לבצע כל פעולה״.";
-"Settings" = "הגדרות";
 "Settings…" = "הגדרות…";
 "Setup needed" = "נדרשת הגדרה";
 "Show History" = "הצגת ההיסטוריה";
@@ -301,6 +300,7 @@
 "Term" = "מונח";
 "Terms" = "מונחים";
 "Text to paste" = "מלל להדבקה";
+"Text" = "טקסט";
 "That doesn't look like a Waft license key." = "זה לא נראה כמו מפתח רישיון של Waft.";
 "That key is already in use. Choose another one." = "מקש זה כבר בשימוש. יש לבחור מקש אחר.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "מקש זה מקליד מלל. יש ללחוץ על Option, Command, Shift, Control, Fn או על מקש פונקציה.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "מועברות אל %@ ב-Mac זה.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "נעשה שימוש במפתח API משלך. רק המלל נשלח אל %@, אף פעם לא השמע.";
 "Version %@" = "גירסה %@";
+"Voice" = "קול";
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft is listening" = "היישום Waft מאזין";

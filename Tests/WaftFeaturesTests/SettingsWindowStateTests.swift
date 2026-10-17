@@ -4,10 +4,10 @@ import WaftCore
 
 struct SettingsWindowStateTests {
     @Test(arguments: [
-        (SettingsPane.general, 1, SettingsPane.dictation),
+        (SettingsPane.dictation, 1, SettingsPane.dictionary),
         (.overview, -1, .overview),
         (.about, 1, .about),
-        (.overview, 3, .general),
+        (.overview, 3, .writing),
     ])
     func `moves the selection by an offset within the panes`(selected: SettingsPane, offset: Int, moved: SettingsPane) {
         let state = SettingsWindowState()

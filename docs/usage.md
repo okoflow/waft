@@ -246,18 +246,19 @@ the mode, and opening Waft again brings up Settings.
 
 ## Settings
 
-The sidebar lists Overview, History, and Dictionary first, your settings under
-**Settings**, and Waft+ and About at the bottom.
+The sidebar follows a dictation from your voice to the text: Overview first,
+then **Voice** with Dictation and Dictionary, **Text** with Writing and AI
+Models, **App** with History and General, and Waft+ and About at the bottom.
 
 | Pane | What you set there |
 | --- | --- |
 | Overview | Statistics for the last 7 days and all time |
-| History | How long and how much to keep, searching, copying, and clearing |
-| Dictionary | Terms and snippets |
-| General | Opening at login, the menu bar icon, the interface language, sounds and lowering other sounds while recording, updates, and permissions |
 | Dictation | How to start, the dictation key, the microphone, the speech model, the editing key, and the languages |
+| Dictionary | Terms and snippets |
 | Writing | The modes and their instructions, your modes, translation, per-app modes, and pasting |
 | AI Models | The provider for the AI modes, a local server, and Claude or OpenAI with your API keys and models |
+| History | How long and how much to keep, searching, copying, and clearing |
+| General | Opening at login, the menu bar icon, the interface language, sounds and lowering other sounds while recording, updates, and permissions |
 | Waft+ | What Waft+ adds and your license |
 | About | The version, the website, the source code, and the license |
 

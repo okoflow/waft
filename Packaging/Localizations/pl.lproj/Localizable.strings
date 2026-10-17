@@ -272,7 +272,6 @@
 "Server address" = "Adres serwera";
 "Set Up…" = "Skonfiguruj…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "W Ustawieniach systemowych › Klawiatura ustaw „Efekt naciśnięcia 🌐” na „Brak efektu”.";
-"Settings" = "Ustawienia";
 "Settings…" = "Ustawienia…";
 "Setup needed" = "Wymagana konfiguracja";
 "Show History" = "Pokaż historię";
@@ -301,6 +300,7 @@
 "Term" = "Termin";
 "Terms" = "Terminy";
 "Text to paste" = "Tekst do wklejenia";
+"Text" = "Tekst";
 "That doesn't look like a Waft license key." = "To nie wygląda na klucz licencyjny Waft.";
 "That key is already in use. Choose another one." = "Ten klawisz jest już używany. Wybierz inny.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Ten klawisz wpisuje tekst. Naciśnij Option, Command, Shift, Control, Fn lub klawisz funkcyjny.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Używane na tym Macu: %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Używa Twojego klucza API. Do firmy %@ trafia tylko tekst, nigdy dźwięk.";
 "Version %@" = "Wersja %@";
+"Voice" = "Głos";
 "Waft can't read this file." = "Waft nie może odczytać tego pliku.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft nie może używać mikrofonu. Pozwól na to w Ustawieniach › Ogólne.";
 "Waft is listening" = "Waft słucha";

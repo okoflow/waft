@@ -272,7 +272,6 @@
 "Server address" = "伺服器位址";
 "Set Up…" = "設定⋯";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "在「系統設定」›「鍵盤」中，將「按下🌐鍵來」設為「不執行任何動作」。";
-"Settings" = "設定";
 "Settings…" = "設定⋯";
 "Setup needed" = "需要設定";
 "Show History" = "顯示記錄";
@@ -301,6 +300,7 @@
 "Term" = "詞彙";
 "Terms" = "詞彙";
 "Text to paste" = "要貼上的文字";
+"Text" = "文字";
 "That doesn't look like a Waft license key." = "這看起來不像是Waft授權碼。";
 "That key is already in use. Choose another one." = "該按鍵已在使用中。請選擇其他按鍵。";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "該按鍵會輸入文字。請按下Option、Command、Shift、Control、Fn鍵或功能鍵。";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "此Mac上的%@會使用這些指示。";
 "Uses your own API key. Only the text goes to %@, never the audio." = "使用你自己的API密鑰。只會將文字傳送給%@，絕不傳送音訊。";
 "Version %@" = "版本%@";
+"Voice" = "語音";
 "Waft can't read this file." = "Waft無法讀取此檔案。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft無法使用麥克風。請在「設定」›「一般」中允許。";
 "Waft is listening" = "Waft正在聆聽";
