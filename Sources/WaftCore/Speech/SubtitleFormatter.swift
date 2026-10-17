@@ -8,7 +8,6 @@ package enum SubtitleFormatter {
     }
 
     private static let lineLength = 42
-    private static let pauseMarks: Set<Character> = [",", ".", ";", ":", "!", "?", "…", "、", "。", "，", "！", "？", "；", "："]
     private static let compactLineLength = 18
 
     package static func srt(_ transcript: TimedTranscript) -> String {
@@ -120,7 +119,7 @@ package enum SubtitleFormatter {
     private static func endsWithPause(_ unit: String) -> Bool {
         guard let last = unit.last else { return false }
 
-        return pauseMarks.contains(last)
+        return last.isPauseMark
     }
 
     private static func timestamp(_ time: TimeInterval) -> String {

@@ -48,7 +48,6 @@ enum VoiceCommands {
         .ukrainian: ["новий абзац", "з нового абзацу"],
     ]
 
-    private static let pauseMarks: Set<Character> = [".", ",", "!", "?", ";", ":", "…", "。", "，", "、", "！", "？", "：", "；"]
     private static let joiningMarks: Set<Character> = [",", "，", "、", ";", "；", ":", "：", "-", "–", "—"]
 
     static func apply(_ text: String, language: Language) -> String {
@@ -69,7 +68,7 @@ enum VoiceCommands {
                 index = end + 1
                 capitalizesNext = true
             } else if capitalizesNext, !segment.isWord {
-                result += String(segment.text.filter { !pauseMarks.contains($0) && $0 != " " })
+                result += String(segment.text.filter { !$0.isPauseMark && $0 != " " })
                 index += 1
             } else {
                 let capitalizes = capitalizesNext && language.hasLetterCase
@@ -127,11 +126,11 @@ enum VoiceCommands {
     }
 
     private static func isPause(before index: Int, in segments: [TextSegment]) -> Bool {
-        index == 0 || segments[index - 1].text.contains { pauseMarks.contains($0) || $0 == "\n" }
+        index == 0 || segments[index - 1].text.contains { $0.isPauseMark || $0 == "\n" }
     }
 
     private static func isPause(after index: Int, in segments: [TextSegment]) -> Bool {
-        index + 1 >= segments.count || segments[index + 1].text.contains { pauseMarks.contains($0) || $0 == "\n" }
+        index + 1 >= segments.count || segments[index + 1].text.contains { $0.isPauseMark || $0 == "\n" }
     }
 
     private static func endingLine(_ text: String, language: Language, isParagraph: Bool) -> String {
