@@ -21,6 +21,7 @@ enum Palette {
     static let danger = Color.red
     static let accent = Color(nsColor: hex(light: 0x7C3AED, dark: 0x8B5CF6))
     static let plusTint = Color(nsColor: hex(light: 0xF1EDFD, dark: 0x241F38))
+    static let pressedOpacity = 0.82
 
     private nonisolated static func hex(light: UInt32, dark: UInt32) -> NSColor {
         NSColor(name: nil) { appearance in

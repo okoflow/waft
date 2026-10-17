@@ -29,7 +29,7 @@ private struct PushButton: View {
 
     private var fill: Color {
         if isProminent {
-            return Palette.accent.opacity(configuration.isPressed ? 0.82 : 1)
+            return Palette.accent.opacity(configuration.isPressed ? Palette.pressedOpacity : 1)
         }
 
         return configuration.isPressed ? Palette.controlPressed : Palette.control
