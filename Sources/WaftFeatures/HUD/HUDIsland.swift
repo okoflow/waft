@@ -4,6 +4,9 @@ import SwiftUI
 struct HUDIsland: View {
     fileprivate static let compactInset: CGFloat = 14
     fileprivate static let cardInset: CGFloat = 18
+    fileprivate static let bottomInset: CGFloat = 14
+    fileprivate static let textSpacing: CGFloat = 4
+    fileprivate static let cardOrbSize: CGFloat = 18
     fileprivate static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
     fileprivate static let detailFont = NSFont.systemFont(ofSize: 12)
     fileprivate static let footnoteFont = NSFont.systemFont(ofSize: 11)
@@ -95,7 +98,7 @@ private struct IslandCard<Leading: View, Trailing: View, Content: View>: View {
 
             content
                 .padding(.horizontal, HUDIsland.cardInset)
-                .padding(.bottom, 14)
+                .padding(.bottom, HUDIsland.bottomInset)
         }
         .foregroundStyle(.white)
     }
@@ -114,7 +117,7 @@ private struct TranscribingCard: View {
         }
         .frame(width: layout.spanWidth)
         .padding(.top, layout.topHeight)
-        .padding(.bottom, 14)
+        .padding(.bottom, HUDIsland.bottomInset)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label)
     }
@@ -127,11 +130,11 @@ private struct CleanupCard: View {
 
     var body: some View {
         IslandCard(layout: layout) {
-            IslandOrb(style: .scanning, size: 18, tint: Palette.accent)
+            IslandOrb(style: .scanning, size: HUDIsland.cardOrbSize, tint: Palette.accent)
         } trailing: {
             Text(cleanup.mode)
         } content: {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: HUDIsland.textSpacing) {
                 Text(cleanup.transcript)
                     .font(Font(HUDIsland.titleFont))
                     .foregroundStyle(.tertiary)
@@ -215,7 +218,7 @@ private struct MessageCard: View {
         } trailing: {
             EmptyView()
         } content: {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: HUDIsland.textSpacing) {
                 Text(message.title)
                     .font(Font(HUDIsland.titleFont))
                     .lineLimit(3)
@@ -244,7 +247,7 @@ private struct MessageCard: View {
     private var symbol: some View {
         switch message.kind {
         case .pasted:
-            IslandOrb(style: .still, size: 18, tint: Palette.success)
+            IslandOrb(style: .still, size: HUDIsland.cardOrbSize, tint: Palette.success)
 
         case .copied:
             Image(systemName: "doc.on.clipboard")
