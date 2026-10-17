@@ -54,7 +54,7 @@ struct AppModelTests {
             transcriber: FakeTranscriber(),
             mediaDecoder: FakeMediaDecoder(),
             rewriters: .all(FakeTextRewriter()),
-            localServers: FakeLocalServerBrowser(),
+            localServers: FakeLocalServerBrowser([:]),
             keyEventMonitor: FakeKeyEventMonitor(),
             keyboardState: FakeKeyboardState(holdsKeys: false),
             modeShortcut: FakeGlobalShortcut(),
@@ -83,47 +83,9 @@ struct AppModelTests {
     }
 }
 
-private nonisolated struct FakeMediaDecoder: MediaDecoder {
-    func samples(of _: URL) -> [Float] {
-        []
-    }
-}
-
-private nonisolated struct FakeLocalServerBrowser: LocalServerBrowsing {
-    func models(at _: LocalServer) -> [String] {
-        []
-    }
-}
-
-private final class FakeGlobalShortcut: GlobalShortcut {
-    let title = ""
-
-    func register(_: @MainActor () -> Void) -> Bool {
-        false
-    }
-}
-
 private final class FakeFrontmostAppMonitor: FrontmostAppMonitor {
     let frontmostApp: RunningApp? = nil
     let activations = AsyncStream<RunningApp> { $0.finish() }
 
     func start() {}
-}
-
-private final class FakeAppUpdater: AppUpdater {
-    let isAvailable = false
-    var checksAutomatically = false
-
-    func start(
-        onPendingUpdateChange _: @MainActor (Bool) -> Void,
-        onSessionChange _: @MainActor (Bool) -> Void,
-    ) {}
-
-    func checkForUpdates() {}
-}
-
-private final class FakeAppLifecycle: AppLifecycle {
-    func relaunch() {}
-
-    func quit() {}
 }
