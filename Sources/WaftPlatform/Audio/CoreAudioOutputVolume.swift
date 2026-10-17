@@ -1,6 +1,6 @@
-package import WaftCore
 import AudioToolbox
 import CoreAudio
+import WaftCore
 
 @MainActor
 package final class CoreAudioOutputVolume: OutputVolume {
