@@ -84,7 +84,7 @@ package actor AudioEngineRecorder: AudioRecorder {
         let format = engine.inputNode.inputFormat(forBus: 0)
         guard format.channelCount > 0, format.sampleRate > 0 else {
             Logger.audio.error(
-                "\(deviceName, privacy: .public) reports \(format.channelCount) channels at \(format.sampleRate) Hz",
+                "\(deviceName) reports \(format.channelCount) channels at \(format.sampleRate) Hz",
             )
 
             throw .noInputChannels

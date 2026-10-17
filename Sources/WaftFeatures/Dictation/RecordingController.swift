@@ -145,7 +145,7 @@ final class RecordingController {
     private func handle(_ event: RecordingEvent) {
         switch event {
         case let .started(id, deviceName) where id == recording?.id:
-            Logger.dictation.info("Recording from \(deviceName, privacy: .public)")
+            Logger.dictation.info("Recording from \(deviceName)")
 
             if settings.settings.playsSounds {
                 sounds.play(.recordingStarted)
