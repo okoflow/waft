@@ -16,7 +16,7 @@ package struct KeyEvent: Sendable {
     package let isRepeat: Bool
     package let timestamp: TimeInterval
 
-    package var isEscape: Bool {
+    var isEscape: Bool {
         keyCode == Self.escapeKeyCode
     }
 
