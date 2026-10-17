@@ -77,6 +77,8 @@
 "Clear" = "Очистити";
 "Click the box, hold %@, and say “Hello, Waft”." = "Клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Клацніть у полі, натисніть %@, скажіть «Привіт, Waft» і натисніть клавішу ще раз.";
+"Click to copy all" = "Натисніть, щоб скопіювати все";
+"Click to copy" = "Натисніть, щоб скопіювати";
 "Click, then press the key to use" = "Клацніть, а потім натисніть потрібну клавішу";
 "Continue" = "Продовжити";
 "Copied" = "Скопійовано";

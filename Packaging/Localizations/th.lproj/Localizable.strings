@@ -77,6 +77,8 @@
 "Clear" = "ล้าง";
 "Click the box, hold %@, and say “Hello, Waft”." = "คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "คลิกในช่อง กด %@ พูดว่า “สวัสดี Waft” แล้วกดอีกครั้ง";
+"Click to copy all" = "คลิกเพื่อคัดลอกทั้งหมด";
+"Click to copy" = "คลิกเพื่อคัดลอก";
 "Click, then press the key to use" = "คลิก แล้วกดปุ่มที่จะใช้";
 "Continue" = "ดำเนินการต่อ";
 "Copied" = "คัดลอกแล้ว";

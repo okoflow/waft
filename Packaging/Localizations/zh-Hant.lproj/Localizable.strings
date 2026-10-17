@@ -77,6 +77,8 @@
 "Clear" = "清除";
 "Click the box, hold %@, and say “Hello, Waft”." = "按一下輸入框，按住%@，然後說「你好，Waft」。";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "按一下輸入框，按一下%@，說「你好，Waft」，然後再按一下。";
+"Click to copy all" = "按一下以拷貝全部";
+"Click to copy" = "按一下以拷貝";
 "Click, then press the key to use" = "按一下，然後按下要使用的按鍵";
 "Continue" = "繼續";
 "Copied" = "已拷貝";

@@ -77,6 +77,8 @@
 "Clear" = "ניקוי";
 "Click the box, hold %@, and say “Hello, Waft”." = "יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
+"Click to copy all" = "לחצו להעתקת הכול";
+"Click to copy" = "לחצו להעתקה";
 "Click, then press the key to use" = "יש ללחוץ כאן ואז על המקש הרצוי";
 "Continue" = "המשך";
 "Copied" = "הועתק";

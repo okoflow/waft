@@ -128,7 +128,7 @@ struct DictationControllerTests {
         await pressDictationKey(at: 0.2)
         await releaseDictationKey(at: 0.3)
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: nil, isHandsFree: true) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
         #expect(controller.isRecording)
     }
 

@@ -77,6 +77,8 @@
 "Clear" = "消去";
 "Click the box, hold %@, and say “Hello, Waft”." = "入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "入力欄をクリックし、%@キーを押して「こんにちは、Waft」と話してから、もう一度押してください。";
+"Click to copy all" = "クリックしてすべてコピー";
+"Click to copy" = "クリックしてコピー";
 "Click, then press the key to use" = "クリックしてから、使用するキーを押してください";
 "Continue" = "続ける";
 "Copied" = "コピー済み";

@@ -77,6 +77,8 @@
 "Clear" = "Clear";
 "Click the box, hold %@, and say “Hello, Waft”." = "Click the box, hold %@, and say “Hello, Waft”.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Click the box, tap %@, say “Hello, Waft”, and tap it again.";
+"Click to copy all" = "Click to copy all";
+"Click to copy" = "Click to copy";
 "Click, then press the key to use" = "Click, then press the key to use";
 "Continue" = "Continue";
 "Copied" = "Copied";

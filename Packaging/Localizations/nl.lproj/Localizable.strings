@@ -77,6 +77,8 @@
 "Clear" = "Wis";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klik in het veld, houd %@ ingedrukt en zeg ‘Hallo, Waft’.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klik in het veld, druk op %@, zeg ‘Hallo, Waft’ en druk er nogmaals op.";
+"Click to copy all" = "Klik om alles te kopiëren";
+"Click to copy" = "Klik om te kopiëren";
 "Click, then press the key to use" = "Klik en druk dan op de gewenste toets";
 "Continue" = "Ga door";
 "Copied" = "Gekopieerd";

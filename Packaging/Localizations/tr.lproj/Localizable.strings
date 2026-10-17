@@ -77,6 +77,8 @@
 "Clear" = "Temizle";
 "Click the box, hold %@, and say “Hello, Waft”." = "Kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
+"Click to copy all" = "Tümünü kopyalamak için tıklayın";
+"Click to copy" = "Kopyalamak için tıklayın";
 "Click, then press the key to use" = "Tıklayın, ardından kullanılacak tuşa basın";
 "Continue" = "Sürdür";
 "Copied" = "Kopyalandı";

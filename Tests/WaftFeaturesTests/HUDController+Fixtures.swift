@@ -2,6 +2,11 @@
 
 extension HUDController {
     static func offscreen(messageDuration: @escaping (HUDMessage) -> Duration = \.duration) -> HUDController {
-        HUDController(messageDuration: messageDuration, orderOutPause: .zero) { _ in FakeHUDWindow() }
+        HUDController(
+            messageDuration: messageDuration,
+            orderOutPause: .zero,
+            copy: { _ in },
+            makeWindow: { _ in FakeHUDWindow() },
+        )
     }
 }

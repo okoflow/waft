@@ -75,7 +75,7 @@ when you want prose rather than a transcript.
   </tbody>
 </table>
 
-![The HUD while listening, transcribing, and after pasting](.github/screenshots/hud.jpg)
+![The HUD at the notch while listening, cleaning up, and after pasting](.github/screenshots/hud.jpg)
 
 ## How it compares
 

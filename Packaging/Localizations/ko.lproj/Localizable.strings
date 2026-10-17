@@ -77,6 +77,8 @@
 "Clear" = "지우기";
 "Click the box, hold %@, and say “Hello, Waft”." = "입력란을 클릭하고 %@ 키를 길게 누른 채 “안녕하세요, Waft”라고 말하세요.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "입력란을 클릭하고 %@ 키를 누른 뒤 “안녕하세요, Waft”라고 말하고 다시 누르세요.";
+"Click to copy all" = "클릭하여 모두 복사";
+"Click to copy" = "클릭하여 복사";
 "Click, then press the key to use" = "클릭한 다음 사용할 키를 누르세요";
 "Continue" = "계속";
 "Copied" = "복사됨";

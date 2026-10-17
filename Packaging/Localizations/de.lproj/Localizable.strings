@@ -77,6 +77,8 @@
 "Clear" = "Löschen";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klicke in das Feld, halte %@ gedrückt und sag „Hallo, Waft“.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klicke in das Feld, tippe %@ an, sag „Hallo, Waft“ und tippe die Taste noch einmal an.";
+"Click to copy all" = "Klicken, um alles zu kopieren";
+"Click to copy" = "Zum Kopieren klicken";
 "Click, then press the key to use" = "Klicke und drücke dann die gewünschte Taste";
 "Continue" = "Fortfahren";
 "Copied" = "Kopiert";
