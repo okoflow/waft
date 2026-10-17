@@ -43,7 +43,7 @@ package actor WhisperTranscriber: Transcriber {
 
     package func loadModel(_ model: SpeechModel, for languages: [Language]) async throws -> Duration {
         let files = SpeechModelFiles(model)
-        guard files.isInstalled else { throw TranscriberError.modelMissing(files.variant) }
+        guard files.isInstalled else { throw TranscriberError.modelMissing(model) }
 
         let start = ContinuousClock.now
         let whisper = try await WhisperKit(configuration(for: files))
