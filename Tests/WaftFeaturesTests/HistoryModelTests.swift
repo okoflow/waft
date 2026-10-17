@@ -136,6 +136,11 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `does not flag a saved history that holds no entries`() {
+        #expect(!model(entries: 0).hasUnreadableHistory)
+    }
+
+    @Test
     func `removes every entry from the store`() {
         let store = FakeValueStore(history(entries: 3))
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())

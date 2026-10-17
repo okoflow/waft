@@ -68,8 +68,13 @@ final class HistoryModel {
         self.store = store
         self.settings = settings
         self.clipboard = clipboard
-        history = store.read(default: DictationHistory())
-        hasUnreadableHistory = history.entries.isEmpty && store.exists()
+
+        if let savedHistory = store.read() {
+            history = savedHistory
+        } else {
+            history = DictationHistory()
+            hasUnreadableHistory = store.exists()
+        }
 
         keepWithinLimits()
     }
