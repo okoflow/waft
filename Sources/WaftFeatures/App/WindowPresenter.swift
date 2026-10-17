@@ -96,9 +96,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         guard clickMonitor == nil else { return }
 
         clickMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
-            MainActor.assumeIsolated {
-                self?.releaseFocus(for: event)
-            }
+            self?.releaseFocus(for: event)
 
             return event
         }
