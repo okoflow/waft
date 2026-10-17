@@ -6,11 +6,10 @@ network. [How it works](how-it-works.md) follows a dictation step by step, and
 
 ## Audio
 
-Waft records only while you hold the dictation or editing key, or while
-hands-free dictation runs. It keeps the audio in memory until Whisper has
-recognized it, then discards it; it never writes audio to disk or sends it
-anywhere, in any mode. Files you transcribe stay where they are, and Whisper
-recognizes them on your Mac the same way.
+Waft records only while you hold the dictation or editing key or while
+hands-free dictation runs, and keeps the audio in memory until Whisper has
+recognized it. It then discards the audio and never writes it to disk or sends
+it anywhere, in any mode; files you transcribe stay where they are.
 
 ## The network
 
@@ -35,34 +34,34 @@ describe how each handles the text.
 | --- | --- |
 | Settings | The `com.okoflow.waft` preferences domain |
 | Dictionary and snippets | `~/Library/Application Support/Waft/dictionary.json` |
-| Word, dictation, and time counts per day for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
+| Daily word, dictation, and time counts for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
 | History, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json`, readable only by you |
 | Speech model | `~/Library/Application Support/Waft/Models` |
-| The model compiled for your chip, and cached responses from update checks and model downloads | `~/Library/Caches/com.okoflow.waft` |
-| Cookies and other HTTP data from update checks and model downloads | `~/Library/HTTPStorages/com.okoflow.waft` and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
+| The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
-If Waft cannot decode a saved JSON file, it keeps an `*.unreadable.json`
-recovery copy beside the original. Saving new data preserves that copy.
-When you use **Clear History** in Settings › History, Waft deletes both
-`history.json` and `history.unreadable.json`. If either cannot be removed,
-the history stays visible so you can retry.
+If Waft can't read a saved JSON file, it keeps an `*.unreadable.json` copy
+beside it, which **Clear History** in Settings › History also deletes for the
+history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared)
+says how to recover it.
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk.
 Edits by voice, and text that Waft kept out of a password field, stay out of
 the history and the statistics.
 
-Waft marks the text it puts on the clipboard, pasted or copied, as transient
-and concealed, so clipboard managers that follow the
-[nspasteboard.org](http://nspasteboard.org) conventions don't store it, and
-it stays off Universal Clipboard.
+Waft marks the text it puts on the clipboard as transient and concealed, so
+clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org)
+conventions don't store it, and Universal Clipboard skips it.
 
 ## Logs
 
-Waft writes to the unified log under the `com.okoflow.waft` subsystem: what it
-did and how long it took, the microphone, the language and the mode, why an AI
-mode fell back to Light, and the app it pasted into and how many characters.
-The dictated text, the audio, and the clipboard never reach the log.
+The unified log, under the `com.okoflow.waft` subsystem, never contains:
+
+- The dictated text.
+- The audio.
+- The clipboard contents.
+
+[Logs](troubleshooting.md#logs) has the commands to read it.
 
 ## Removing everything
 

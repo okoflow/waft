@@ -31,17 +31,16 @@
 
 <p align="center">
   <a href="https://waft.okoflow.com">Website</a> ·
-  <a href="#install">Install</a> ·
-  <a href="docs/getting-started.md">Getting started</a> ·
+  <a href="docs/getting-started.md#1-install">Install</a> ·
   <a href="docs/usage.md">Usage</a> ·
   <a href="docs/privacy.md">Privacy</a>
 </p>
 
 https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
 
-**Hold <kbd>right ⌥</kbd>, speak, let go.** The text appears wherever you are
-typing, in any app. Speech is recognized on your Mac; an AI mode cleans it up
-when you want prose rather than a transcript.
+**Hold <kbd>right ⌥</kbd>, speak, let go.** The text appears wherever you
+type, in any app. Whisper recognizes your speech on your Mac, and an AI mode
+cleans it up when you want prose.
 
 <table>
   <thead>
@@ -49,28 +48,28 @@ when you want prose rather than a transcript.
       <td
         width="33%"
         valign="top"
-      ><b>Private</b><br>Whisper runs on your Mac through WhisperKit. Audio is
-        never saved or sent.</td>
+      ><b>Private</b><br>Whisper runs on your Mac. Audio is never saved or
+        sent.</td>
       <td
         width="33%"
         valign="top"
-      ><b>45 languages</b><br>Waft detects which of your languages you speak,
-        and translates between them.</td>
+      ><b>45 languages</b><br>Waft detects which of your languages you
+        speak, and translates.</td>
       <td
         width="33%"
         valign="top"
       ><b>AI cleanup</b><br>Clean, Formal, Translate, or your modes, with
-        Claude, OpenAI, or a local server.</td>
+        Claude, OpenAI, or a local model.</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td valign="top"><b>Edit by voice</b><br>Select text, hold a key, and say
+      <td valign="top"><b>Edit by voice</b><br>Select text, hold a key, say
         "make it shorter".</td>
-      <td valign="top"><b>Transcribe files</b><br>Recordings and videos to text
-        or SRT subtitles.</td>
-      <td valign="top"><b>Your words</b><br>A dictionary for names, snippets for
-        phrases, history on your Mac.</td>
+      <td valign="top"><b>Transcribe files</b><br>Recordings and videos to
+        text or SRT.</td>
+      <td valign="top"><b>Your words</b><br>A dictionary, snippets, and history
+        on your Mac.</td>
     </tr>
   </tbody>
 </table>
@@ -91,38 +90,32 @@ when you want prose rather than a transcript.
   >
 </picture>
 
-## Install
-
-Waft runs on a Mac with Apple silicon and macOS 14 or later.
-[Getting started](docs/getting-started.md) walks you from building it to your
-first dictation.
-
 ## Documentation
 
 | Guide | What it covers |
 | --- | --- |
-| [Getting started](docs/getting-started.md) | Installing, the permissions, and your first dictation |
-| [Usage](docs/usage.md) | Modes, languages, editing by voice, files, the dictionary, history, and every setting |
-| [How it works](docs/how-it-works.md) | What happens between the key and the pasted text |
-| [Privacy](docs/privacy.md) | What stays on your Mac, what leaves it, and how to remove everything |
-| [Troubleshooting](docs/troubleshooting.md) | What to do when something doesn't work, and what the menu and the HUD tell you |
-| [Architecture](docs/architecture.md) | How the code is organized, for contributors |
+| [Getting started](docs/getting-started.md) | Install and first dictation |
+| [Usage](docs/usage.md) | Every feature and setting |
+| [How it works](docs/how-it-works.md) | From key press to pasted text |
+| [Privacy](docs/privacy.md) | What Waft keeps and sends |
+| [Troubleshooting](docs/troubleshooting.md) | When something doesn't work |
+| [Architecture](docs/architecture.md) | The code, for contributors |
 
 ## Waft+
 
-Waft+ adds the AI modes, editing by voice, file transcription, and the
-Accurate speech model for a single payment of $13.99. **Free while Waft is in
-beta.** [Waft+](docs/usage.md#waft) covers the details.
+[Waft+](docs/usage.md#waft) adds the AI modes, editing by voice, file
+transcription, and the Accurate speech model for a single payment of $13.99,
+and is free while Waft is in beta.
 
 ## Contributing
 
-Pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers the
-setup, the checks CI runs, and the conventions. Report vulnerabilities
-privately as described in [SECURITY.md](SECURITY.md).
+Pull requests are welcome; [CONTRIBUTING.md](CONTRIBUTING.md) covers the
+setup, checks, and conventions. Report vulnerabilities privately as
+[SECURITY.md](SECURITY.md) describes.
 
 ## License
 
-Waft is copyright The Waft Authors, listed in [AUTHORS](AUTHORS), and licensed
-under GPL-3.0-only, whose text is in [LICENSE](LICENSE). Releases up to 0.3.0
-were MIT; [NOTICE](NOTICE) keeps those terms. The license covers the code, not
-the Waft name and logo.
+Waft is copyright The Waft Authors ([AUTHORS](AUTHORS)) and licensed under
+GPL-3.0-only ([LICENSE](LICENSE)). Releases up to 0.3.0 were MIT;
+[NOTICE](NOTICE) keeps those terms. The license covers the code, not the Waft
+name and logo.
