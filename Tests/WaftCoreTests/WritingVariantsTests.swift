@@ -9,7 +9,7 @@ struct WritingVariantsTests {
     }
 
     @Test
-    func `remembers the chosen script and ignores one the language doesn't have`() {
+    func `remembers the chosen script and ignores one the language does not have`() {
         let variants = WritingVariants()
             .choosing(.traditional, for: .chinese)
             .choosing(.cyrillic, for: .chinese)

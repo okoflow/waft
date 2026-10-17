@@ -124,7 +124,7 @@ struct HistoryModelTests {
     }
 
     @Test
-    func `flags a saved history it couldn't read until it is cleared`() {
+    func `flags a saved history it could not read until it is cleared`() {
         let store = FakeValueStore(DictationHistory(), isBroken: true)
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
 
