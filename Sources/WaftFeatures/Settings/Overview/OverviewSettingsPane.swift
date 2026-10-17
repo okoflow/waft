@@ -69,7 +69,7 @@ private struct AllTimeSection: View {
                 Metric(value: statistics.statistics.streak(endingOn: Date()).formatted(), label: "days in a row")
             }
         } footer: {
-            Button("Reset Statistics…", action: confirmReset)
+            Button("Reset Statistics…", role: .destructive, action: confirmReset)
                 .disabled(statistics.statistics.days.isEmpty)
         }
         .motion(Motion.layout, value: total.words)
