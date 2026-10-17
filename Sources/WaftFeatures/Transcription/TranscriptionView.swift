@@ -80,6 +80,7 @@ private struct TranscriptionHeader: View {
                 HStack(spacing: Metrics.inlineSpacing) {
                     Text("Transcribe File")
                         .font(.pageTitle)
+                        .accessibilityAddTraits(.isHeader)
 
                     ProBadge()
                 }

@@ -13,6 +13,7 @@ struct AboutSettingsPane: View {
 
             Text("Waft")
                 .font(.heroTitle)
+                .accessibilityAddTraits(.isHeader)
 
             Text(AppVersion.title)
                 .font(.rowTitle)
