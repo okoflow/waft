@@ -137,10 +137,10 @@ package final class AppModel {
     }
 
     private func connectModels() {
-        settings.onLanguagesChange = { [speechModelController] in speechModelController.reload() }
-        settings.onSpeechModelChange = { [speechModelController] in speechModelController.modelDidChange() }
-        pro.onAccessChange = { [speechModelController] in speechModelController.modelDidChange() }
-        settings.onHistoryLimitsChange = { [history] in history.keepWithinLimits() }
+        settings.onLanguagesChange = { [weak speechModelController] in speechModelController?.reload() }
+        settings.onSpeechModelChange = { [weak speechModelController] in speechModelController?.modelDidChange() }
+        pro.onAccessChange = { [weak speechModelController] in speechModelController?.modelDidChange() }
+        settings.onHistoryLimitsChange = { [weak history] in history?.keepWithinLimits() }
         permissions.onChange = { [weak self] in self?.permissionsDidChange() }
         speechModelController.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
