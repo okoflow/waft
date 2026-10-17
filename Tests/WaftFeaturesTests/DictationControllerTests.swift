@@ -89,7 +89,7 @@ struct DictationControllerTests {
         await send(Self.leftOption, flags: Self.leftOptionFlag, at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(kind: .information, title: "Editing by voice is part of Waft Pro."))
+            hud.content == .message(HUDMessage(kind: .information, title: "Editing by voice is part of Waft+."))
         })
         #expect(!controller.isRecording)
     }
