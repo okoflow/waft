@@ -5,12 +5,6 @@ package struct TranscriptProcessor: Sendable {
         self.rewriters = rewriters
     }
 
-    private static func written(_ text: String, in variant: WritingVariant?, keeping terms: [String]) -> String {
-        guard let variant else { return text }
-
-        return variant.converting(text, keeping: terms)
-    }
-
     private static func kind(for mode: Mode, language: Language, setup: RewriteSetup) -> RewriteRequest.Kind {
         switch mode {
         case .custom:
@@ -37,7 +31,7 @@ package struct TranscriptProcessor: Sendable {
         }
 
         let processed = await apply(mode, to: corrected, language: language, setup: setup, allowsAI: allowsAI)
-        let written = Self.written(processed.text, in: transcript.variant, keeping: vocabulary.promptTerms)
+        let written = processed.text.written(in: transcript.variant, keeping: vocabulary.promptTerms)
         let recorrected = vocabulary.correcting(written, language: language)
         let finished = vocabulary.expandingSnippets(in: recorrected, language: language)
 

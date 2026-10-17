@@ -30,7 +30,7 @@ package enum WritingVariant: String, CaseIterable, Codable, Sendable {
         return result
     }
 
-    package func converting(_ text: String, keeping terms: [String] = []) -> String {
+    func converting(_ text: String, keeping terms: [String] = []) -> String {
         switch self {
         case .simplified: Self.transformed(text, by: "Hant-Hans")
         case .traditional: Self.transformed(text, by: "Hans-Hant")

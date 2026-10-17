@@ -1,5 +1,5 @@
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct WritingVariantTests {
     @Test(arguments: [

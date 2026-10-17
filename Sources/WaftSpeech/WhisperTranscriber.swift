@@ -84,7 +84,7 @@ package actor WhisperTranscriber: Transcriber {
         guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
 
         return Transcript(
-            text: Self.written(text, in: variant, keeping: vocabulary),
+            text: text.written(in: variant, keeping: vocabulary),
             language: spoken,
             detectionDuration: decodingStart - detectionStart,
             decodingDuration: ContinuousClock.now - decodingStart,
@@ -147,7 +147,7 @@ package actor WhisperTranscriber: Transcriber {
             let text = segment.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return nil }
 
-            let written = Self.written(text, in: variant, keeping: [])
+            let written = text.written(in: variant, keeping: [])
 
             return TimedSegment(start: offset + Double(segment.start), end: offset + Double(segment.end), text: written)
         }
@@ -254,12 +254,6 @@ extension WhisperTranscriber {
         guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
 
         return text.capitalizedIfUnstyled(in: language)
-    }
-
-    private static func written(_ text: String, in variant: WritingVariant?, keeping terms: [String]) -> String {
-        guard let variant else { return text }
-
-        return variant.converting(text, keeping: terms)
     }
 
     private static func isConfident(_ segment: TranscriptionSegment) -> Bool {
