@@ -62,10 +62,11 @@ The tables list the folders whose names don't say enough.
 | Folder | What lives there |
 | --- | --- |
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which gives Waft a Dock icon while Sparkle shows an update |
-| `Models` | The app-wide observable state, including `PermissionMonitor` |
+| `Models` | The observable state that several features share, including `PermissionMonitor`; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
+| `Support` | Logging, timers, and display helpers that several features share |
 
 **`Tests`** has a Swift Testing target for every module but `Waft`; see
 [Tests](../CONTRIBUTING.md#tests).
