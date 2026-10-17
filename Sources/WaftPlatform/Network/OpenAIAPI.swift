@@ -35,7 +35,7 @@ struct OpenAIAPI: RewriteAPI {
 
         switch response.status {
         case "failed":
-            Logger.network.error("\(service, privacy: .public) failed the response")
+            logFailure(response.error)
 
             throw .serviceUnavailable
 
@@ -53,6 +53,21 @@ struct OpenAIAPI: RewriteAPI {
 
         return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+
+    private func logFailure(_ error: APIErrorBody.Detail?) {
+        guard let error else {
+            Logger.network.error("\(service, privacy: .public) failed the response without an error")
+
+            return
+        }
+
+        Logger.network.error(
+            """
+            \(service, privacy: .public) failed the response: \
+            \(error.kind, privacy: .public) \(error.redactedMessage, privacy: .private)
+            """,
+        )
+    }
 }
 
 private struct OpenAIResponse: Decodable {
@@ -63,11 +78,13 @@ private struct OpenAIResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case status
         case incompleteDetails = "incomplete_details"
+        case error
         case output
     }
 
     let status: String?
     let incompleteDetails: IncompleteDetails?
+    let error: APIErrorBody.Detail?
     let output: [OpenAIOutputItem]
 }
 

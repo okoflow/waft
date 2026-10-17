@@ -37,7 +37,7 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
 
         let (data, status) = try await send(urlRequest)
         guard (200 ..< 300).contains(status) else {
-            Logger.network.error("\(api.service, privacy: .public) answered HTTP \(status, privacy: .public)")
+            logFailure(status: status, body: data)
 
             throw RewriteError(httpStatus: status)
         }
@@ -58,5 +58,20 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
         guard let http = response as? HTTPURLResponse else { throw .unreadableResponse }
 
         return (data, http.statusCode)
+    }
+
+    private func logFailure(status: Int, body: Data) {
+        guard let detail = APIErrorBody.detail(in: body) else {
+            Logger.network.error("\(api.service, privacy: .public) answered HTTP \(status, privacy: .public) with no details")
+
+            return
+        }
+
+        Logger.network.error(
+            """
+            \(api.service, privacy: .public) answered HTTP \(status, privacy: .public): \
+            \(detail.kind, privacy: .public) \(detail.redactedMessage, privacy: .private)
+            """,
+        )
     }
 }
