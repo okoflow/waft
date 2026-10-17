@@ -1,7 +1,7 @@
 package import Foundation
 package import WaftCore
-@preconcurrency internal import WhisperKit
 import os
+@preconcurrency import WhisperKit
 
 package actor WhisperTranscriber: Transcriber {
     private struct LoadedModel {

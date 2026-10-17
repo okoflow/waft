@@ -1,5 +1,3 @@
-import Foundation
-
 enum SerbianCyrillic {
     private static let digraphs: [(latin: String, cyrillic: String)] = [
         ("dž", "џ"),

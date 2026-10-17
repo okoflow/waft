@@ -1,5 +1,3 @@
-import Foundation
-
 enum VoiceCommands {
     private struct Command {
         let words: [String]

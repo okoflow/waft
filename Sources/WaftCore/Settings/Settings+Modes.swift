@@ -1,5 +1,3 @@
-import Foundation
-
 extension Settings {
     package var modes: [Mode] {
         Mode.builtIn + customModeChoices

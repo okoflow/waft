@@ -1,4 +1,4 @@
-@preconcurrency internal import WhisperKit
+@preconcurrency import WhisperKit
 
 struct LanguageRestrictedTokenizer: WhisperTokenizer {
     let base: any WhisperTokenizer

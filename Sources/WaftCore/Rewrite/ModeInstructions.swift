@@ -1,5 +1,3 @@
-import Foundation
-
 package struct ModeInstructions: Codable, Equatable, Sendable {
     private var custom: [String: String] = [:]
 
