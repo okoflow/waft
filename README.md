@@ -116,6 +116,5 @@ setup, checks, and conventions. Report vulnerabilities privately as
 ## License
 
 Waft is copyright The Waft Authors ([AUTHORS](AUTHORS)) and licensed under
-GPL-3.0-only ([LICENSE](LICENSE)). Releases up to 0.3.0 were MIT;
-[NOTICE](NOTICE) keeps those terms. The license covers the code, not the Waft
+GPL-3.0-only ([LICENSE](LICENSE)). The license covers the code, not the Waft
 name and logo.

@@ -81,7 +81,7 @@ assemble_app() {
   cp "Packaging/${PRODUCT}-Info.plist" "${CONTENTS}/Info.plist"
   cp "Packaging/${PRODUCT}.icns" "${RESOURCES}/${PRODUCT}.icns"
   cp -R Packaging/Localizations/*.lproj "${RESOURCES}/"
-  cp LICENSE NOTICE "${RESOURCES}/"
+  cp LICENSE "${RESOURCES}/"
   print_acknowledgments >"${RESOURCES}/ACKNOWLEDGMENTS"
 
   ditto "${binary_dir}/Sparkle.framework" "${FRAMEWORK}"
