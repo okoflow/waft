@@ -6,12 +6,12 @@ struct OtherSoundsLoweringTests {
     private let outputVolume = FakeOutputVolume()
 
     @Test
-    func `lowers other sounds by half after the delay`() async {
+    func `lowers other sounds to a quarter after the delay`() async {
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
         lowering.lower { true }
 
         #expect(await Poll.until(timeout: .seconds(5)) { outputVolume.isLowered })
-        #expect(outputVolume.loweredFractions == [0.5])
+        #expect(outputVolume.loweredFractions == [0.25])
     }
 
     @Test

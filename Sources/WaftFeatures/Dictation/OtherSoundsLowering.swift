@@ -15,7 +15,7 @@ final class OtherSoundsLowering {
         task = Task { [weak self, delay] in
             guard await Task.slept(for: delay), let self, isWanted() else { return }
 
-            outputVolume.lower(to: 0.5)
+            outputVolume.lower(to: 0.25)
         }
     }
 

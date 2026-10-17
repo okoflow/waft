@@ -342,7 +342,7 @@
 "Translation" = "การแปล";
 "Try it" = "ลองใช้";
 "Turn off editing by voice" = "ปิดการแก้ไขด้วยเสียง";
-"Turns the Mac's volume down by half while you speak, then back up." = "ลดระดับเสียงของ Mac ลงครึ่งหนึ่งขณะที่คุณพูด แล้วคืนค่าเดิมเมื่อพูดจบ";
+"Turns the Mac's volume down to a quarter while you speak, then back up." = "ลดระดับเสียงของ Mac เหลือหนึ่งในสี่ขณะที่คุณพูด แล้วคืนค่าเดิมเมื่อพูดจบ";
 "Two-way with" = "แปลสองทางกับ";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
 "Unlock…" = "ปลดล็อค…";

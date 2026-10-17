@@ -270,7 +270,7 @@ Hebrew lay the interface out from right to left. Click **Relaunch** to apply
 it.
 
 **Lower other sounds while recording**, in the same pane and on by default,
-turns the Mac's volume down by half once recording starts, after the start
+turns the Mac's volume down to a quarter once recording starts, after the start
 click, and brings it back when recording ends. If you change the volume while
 you speak, Waft leaves your choice alone.
 

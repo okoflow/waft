@@ -32,7 +32,7 @@ struct GeneralSettingsPane: View {
             ToggleRow(
                 "Lower other sounds while recording",
                 isOn: $settings.settings.lowersOtherSounds,
-                description: "Turns the Mac's volume down by half while you speak, then back up.",
+                description: "Turns the Mac's volume down to a quarter while you speak, then back up.",
             )
         }
 

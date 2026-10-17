@@ -342,7 +342,7 @@
 "Translation" = "번역";
 "Try it" = "사용해 보기";
 "Turn off editing by voice" = "음성으로 편집 끄기";
-"Turns the Mac's volume down by half while you speak, then back up." = "말하는 동안 Mac의 음량을 절반으로 줄였다가 다시 되돌립니다.";
+"Turns the Mac's volume down to a quarter while you speak, then back up." = "말하는 동안 Mac의 음량을 4분의 1로 줄였다가 다시 되돌립니다.";
 "Two-way with" = "양방향 번역";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
 "Unlock…" = "잠금 해제…";

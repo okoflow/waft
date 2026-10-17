@@ -342,7 +342,7 @@
 "Translation" = "Перевод";
 "Try it" = "Попробуйте";
 "Turn off editing by voice" = "Выключить правку голосом";
-"Turns the Mac's volume down by half while you speak, then back up." = "Убавляет громкость Mac вдвое, пока вы говорите, а потом возвращает её.";
+"Turns the Mac's volume down to a quarter while you speak, then back up." = "Убавляет громкость Mac до четверти, пока вы говорите, а потом возвращает её.";
 "Two-way with" = "Двусторонний перевод";
 "Unlock Waft+…" = "Разблокировать Waft+…";
 "Unlock…" = "Разблокировать…";
