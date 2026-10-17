@@ -272,7 +272,6 @@
 "Server address" = "ที่อยู่เซิร์ฟเวอร์";
 "Set Up…" = "ตั้งค่า…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ในการตั้งค่าระบบ › แป้นพิมพ์ ให้ตั้ง “กดปุ่ม 🌐 เพื่อ” เป็น “ไม่ดำเนินการใดๆ”";
-"Settings" = "การตั้งค่า";
 "Settings…" = "การตั้งค่า…";
 "Setup needed" = "ต้องตั้งค่า";
 "Show History" = "แสดงประวัติ";
@@ -301,6 +300,7 @@
 "Term" = "คำศัพท์";
 "Terms" = "คำศัพท์";
 "Text to paste" = "ข้อความที่จะวาง";
+"Text" = "ข้อความ";
 "That doesn't look like a Waft license key." = "ดูเหมือนว่านี่ไม่ใช่คีย์ใบอนุญาตของ Waft";
 "That key is already in use. Choose another one." = "ปุ่มนั้นถูกใช้อยู่แล้ว เลือกปุ่มอื่น";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชั่น";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "ใช้โดย %@ บน Mac เครื่องนี้";
 "Uses your own API key. Only the text goes to %@, never the audio." = "ใช้คีย์ API ของคุณเอง ส่งเฉพาะข้อความไปยัง %@ ไม่ส่งเสียง";
 "Version %@" = "เวอร์ชั่น %@";
+"Voice" = "เสียง";
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
 "Waft is listening" = "Waft กำลังฟัง";

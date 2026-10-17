@@ -272,7 +272,6 @@
 "Server address" = "Sunucu adresi";
 "Set Up…" = "Ayarla…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sistem Ayarları › Klavye bölümünde “🌐 tuşuna basıldığında” ayarını “Hiçbir Şey Yapma” olarak belirleyin.";
-"Settings" = "Ayarlar";
 "Settings…" = "Ayarlar…";
 "Setup needed" = "Kurulum gerekli";
 "Show History" = "Geçmişi Göster";
@@ -301,6 +300,7 @@
 "Term" = "Terim";
 "Terms" = "Terimler";
 "Text to paste" = "Yapıştırılacak metin";
+"Text" = "Metin";
 "That doesn't look like a Waft license key." = "Bu bir Waft lisans anahtarına benzemiyor.";
 "That key is already in use. Choose another one." = "Bu tuş zaten kullanılıyor. Başka bir tuş seçin.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Bu tuş metin yazar. Option, Komut, Shift, Kontrol, Fn ya da bir işlev tuşuna basın.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Bu Mac’te %@ tarafından kullanılır.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Kendi API anahtarınızı kullanır. %@ hizmetine yalnızca metin gider, ses asla gitmez.";
 "Version %@" = "Sürüm %@";
+"Voice" = "Ses";
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft is listening" = "Waft dinliyor";

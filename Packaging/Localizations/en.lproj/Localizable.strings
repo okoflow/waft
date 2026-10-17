@@ -272,7 +272,6 @@
 "Server address" = "Server address";
 "Set Up…" = "Set Up…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard.";
-"Settings" = "Settings";
 "Settings…" = "Settings…";
 "Setup needed" = "Setup needed";
 "Show History" = "Show History";
@@ -301,6 +300,7 @@
 "Term" = "Term";
 "Terms" = "Terms";
 "Text to paste" = "Text to paste";
+"Text" = "Text";
 "That doesn't look like a Waft license key." = "That doesn't look like a Waft license key.";
 "That key is already in use. Choose another one." = "That key is already in use. Choose another one.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "That key types text. Press Option, Command, Shift, Control, Fn, or a function key.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Used by %@ on this Mac.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Uses your own API key. Only the text goes to %@, never the audio.";
 "Version %@" = "Version %@";
+"Voice" = "Voice";
 "Waft can't read this file." = "Waft can't read this file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft can't use the microphone. Allow it in Settings › General.";
 "Waft is listening" = "Waft is listening";

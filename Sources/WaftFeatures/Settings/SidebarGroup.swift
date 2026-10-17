@@ -2,8 +2,10 @@ import SwiftUI
 
 struct SidebarGroup {
     static let all = [
-        SidebarGroup(title: nil, panes: [.overview, .history, .dictionary]),
-        SidebarGroup(title: "Settings", panes: [.general, .dictation, .writing, .aiModels]),
+        SidebarGroup(title: nil, panes: [.overview]),
+        SidebarGroup(title: "Voice", panes: [.dictation, .dictionary]),
+        SidebarGroup(title: "Text", panes: [.writing, .aiModels]),
+        SidebarGroup(title: "App", panes: [.history, .general]),
     ]
 
     let title: LocalizedStringKey?

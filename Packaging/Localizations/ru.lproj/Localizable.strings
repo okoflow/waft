@@ -272,7 +272,6 @@
 "Server address" = "Адрес сервера";
 "Set Up…" = "Настроить…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "В Системных настройках › Клавиатура для «Нажатие клавиши 🌐» выберите «действие не требуется».";
-"Settings" = "Настройки";
 "Settings…" = "Настройки…";
 "Setup needed" = "Нужна настройка";
 "Show History" = "Показать историю";
@@ -301,6 +300,7 @@
 "Term" = "Термин";
 "Terms" = "Термины";
 "Text to paste" = "Текст для вставки";
+"Text" = "Текст";
 "That doesn't look like a Waft license key." = "Это не похоже на лицензионный ключ Waft.";
 "That key is already in use. Choose another one." = "Эта клавиша уже занята. Выберите другую.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Эта клавиша вводит текст. Нажмите Option, Command, Shift, Control, Fn или функциональную клавишу.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Используются на этом Mac: %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Работает с вашим ключом API. В %@ отправляется только текст, звук — никогда.";
 "Version %@" = "Версия %@";
+"Voice" = "Голос";
 "Waft can't read this file." = "Waft не может прочитать этот файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не может использовать микрофон. Разрешите доступ в Настройках › Основные.";
 "Waft is listening" = "Waft слушает";

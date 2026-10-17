@@ -272,7 +272,6 @@
 "Server address" = "서버 주소";
 "Set Up…" = "설정하기…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "시스템 설정 › 키보드에서 ‘🌐 키를 누를 때 실행할 동작’을 ‘안 함’으로 설정하세요.";
-"Settings" = "설정";
 "Settings…" = "설정…";
 "Setup needed" = "설정 필요";
 "Show History" = "기록 보기";
@@ -301,6 +300,7 @@
 "Term" = "용어";
 "Terms" = "용어";
 "Text to paste" = "붙여넣을 텍스트";
+"Text" = "텍스트";
 "That doesn't look like a Waft license key." = "Waft 라이선스 키가 아닌 것 같습니다.";
 "That key is already in use. Choose another one." = "이미 사용 중인 키입니다. 다른 키를 선택하세요.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "이 키는 문자를 입력합니다. Option, Command, Shift, Control, Fn 키 또는 기능 키를 누르세요.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "이 Mac의 %@에서 사용됩니다.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "본인의 API 키를 사용합니다. %@에는 오디오가 아닌 텍스트만 전송됩니다.";
 "Version %@" = "버전 %@";
+"Voice" = "음성";
 "Waft can't read this file." = "Waft가 이 파일을 읽을 수 없습니다.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft가 마이크를 사용할 수 없습니다. 설정 › 일반에서 허용하세요.";
 "Waft is listening" = "Waft가 듣는 중";

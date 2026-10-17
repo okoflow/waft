@@ -272,7 +272,6 @@
 "Server address" = "Serveradress";
 "Set Up…" = "Ställ in…";
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”göra ingenting” i Systeminställningar › Tangentbord.";
-"Settings" = "Inställningar";
 "Settings…" = "Inställningar…";
 "Setup needed" = "Inställning krävs";
 "Show History" = "Visa historik";
@@ -301,6 +300,7 @@
 "Term" = "Term";
 "Terms" = "Termer";
 "Text to paste" = "Text att klistra in";
+"Text" = "Text";
 "That doesn't look like a Waft license key." = "Det ser inte ut som en licensnyckel för Waft.";
 "That key is already in use. Choose another one." = "Den tangenten används redan. Välj en annan.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Den tangenten skriver text. Tryck på alternativ-, kommando-, skift- eller kontrolltangenten, Fn eller en funktionstangent.";
@@ -352,6 +352,7 @@
 "Used by %@ on this Mac." = "Används av %@ på den här datorn.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Använder din egen API-nyckel. Bara texten skickas till %@, aldrig ljudet.";
 "Version %@" = "Version %@";
+"Voice" = "Röst";
 "Waft can't read this file." = "Waft kan inte läsa den här filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan inte använda mikrofonen. Tillåt åtkomst i Inställningar › Allmänt.";
 "Waft is listening" = "Waft lyssnar";
