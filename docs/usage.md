@@ -104,8 +104,8 @@ dictation and 45 for an edit.
   keeps your language.
 - **Delete Mode…** removes one. Apps that used it switch to the default mode,
   or to Light if it was the default.
-- **Try it** on a mode's page runs the sentence under **You say** through your
-  AI model, without the dictionary.
+- **Run** in **Try it** on a mode's page runs the sentence under **You say**
+  through your AI model, without the dictionary.
 - Give an app its own mode, such as Formal in Mail, with **Mode in *app*** in
   the menu while the app is in front, or **Add App…** in Settings › Writing ›
   Apps. Waft uses the mode of the app that was in front when you pressed the
@@ -158,13 +158,15 @@ next dictation.
 
 ## History and statistics
 
-- Settings › Overview shows your words, dictations, and days in a row for the
-  last 7 days and of all time, the time saved over typing at 40 words a minute,
-  and your speaking speed. **Reset Statistics…** sets the counts to zero.
-- Settings › History lists your dictations with the time, mode, and app. Click
-  one to copy it, or use **Search**. They stay for a month and up to 1,000
-  unless you change **Keep dictations for** or **Keep at most**. Turn off
-  **Keep history** to stop saving; **Clear History…** deletes them all.
+- Settings › Overview shows your words, the time saved over typing at 40 words
+  a minute, and your speaking speed for the last 7 days, and your words,
+  dictations, and days in a row of all time. **Reset Statistics…** sets the
+  counts to zero.
+- Settings › History lists your dictations with the time, mode, and app.
+  **Copy** next to one copies it, and **Search** finds one. They stay for a
+  month and up to 1,000 unless you change **Keep dictations for** or
+  **Keep at most**. Turn off **Keep history** to stop saving;
+  **Clear History…** deletes them all.
 
 ## The menu
 

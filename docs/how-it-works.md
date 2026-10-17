@@ -32,7 +32,7 @@ does. The timings:
 | HUD delay | 0.3 s | The HUD appears after it |
 | Audio tail | 0.15 s | Waft waits up to this long after you let go for audio still arriving |
 | Lost key-up | About 1 s | Waft checks the key four times a second and ends the recording if macOS never reported the release |
-| Event tap check | 5 s | If macOS switched the tap off, Waft discards the recording in progress and turns the tap back on |
+| Event tap check | 5 s | Waft starts the key listener again if it stopped. If macOS switches the tap off, Waft discards the recording in progress and turns the tap back on at once |
 
 ## Recognition
 
@@ -43,7 +43,8 @@ noise. The rest goes to the speech model you chose, run on Core ML by
 - **Language.** With one language pinned or enabled, Whisper decodes in it.
   Otherwise it detects the language first, among those you enabled.
 - **Prompt.** Whisper first reads a short example sentence in the spoken
-  language, then up to 200 characters of your dictionary terms.
+  language, except in Japanese, Korean, and Thai, then up to 200 characters of
+  your dictionary terms.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into
   the script you chose. Latin to Cyrillic goes letter by letter and leaves
   your dictionary terms and words with q, w, x, or y, digits, inner capitals,
