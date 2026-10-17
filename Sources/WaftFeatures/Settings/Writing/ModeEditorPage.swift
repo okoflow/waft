@@ -60,11 +60,16 @@ struct ModeEditorPage: View {
         .onAppear(perform: tryout.reset)
     }
 
-    private func binding(_ field: WritableKeyPath<CustomMode, String>, of custom: CustomMode) -> Binding<String> {
+    func binding(_ field: WritableKeyPath<CustomMode, String>, of custom: CustomMode) -> Binding<String> {
         Binding(
-            get: { custom[keyPath: field] },
+            get: {
+                guard let current = settings.settings.customMode(custom.id) else { return "" }
+
+                return current[keyPath: field]
+            },
             set: { text in
-                var edited = custom
+                guard var edited = settings.settings.customMode(custom.id) else { return }
+
                 edited[keyPath: field] = text
 
                 settings.settings.update(edited)
