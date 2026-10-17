@@ -33,7 +33,7 @@ package enum SubtitleFormatter {
     private static func cues(for segment: TimedSegment, language: Language) -> [Cue] {
         let isSpaced = language.separatesWordsWithSpaces
         let limit = isSpaced ? lineLength : compactLineLength
-        let joiner = isSpaced ? " " : ""
+        let joiner = language.wordSeparator
         let units = isSpaced ? segment.text.split(separator: " ").map(String.init) : segment.text.map(String.init)
         let total = units.joined(separator: joiner).count
         let count = max(1, Int((Double(total) / Double(limit * 2)).rounded(.up)))

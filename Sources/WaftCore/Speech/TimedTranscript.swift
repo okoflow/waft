@@ -26,7 +26,7 @@ package struct TimedTranscript: Equatable, Sendable {
             previousEnd = segment.end
         }
 
-        let separator = language.separatesWordsWithSpaces ? " " : ""
+        let separator = language.wordSeparator
 
         return paragraphs.map { $0.joined(separator: separator) }.joined(separator: "\n\n")
     }
