@@ -27,6 +27,7 @@ final nonisolated class FakeTranscriber: Transcriber {
     private let fileReply: Result<TimedTranscript?, any Error>
     private let holdsRequests: Bool
     private let holdsDownloads: Bool
+    private let beforeInstallationCheck: @Sendable (SpeechModel) async -> Void
     private let state: OSAllocatedUnfairLock<State>
 
     var requests: [Request] {
@@ -48,11 +49,13 @@ final nonisolated class FakeTranscriber: Transcriber {
         holdsRequests: Bool = false,
         installed: Set<SpeechModel> = Set(SpeechModel.allCases),
         holdsDownloads: Bool = false,
+        beforeInstallationCheck: @escaping @Sendable (SpeechModel) async -> Void = { _ in },
     ) {
         self.replies = replies
         self.fileReply = fileReply
         self.holdsRequests = holdsRequests
         self.holdsDownloads = holdsDownloads
+        self.beforeInstallationCheck = beforeInstallationCheck
         state = OSAllocatedUnfairLock(initialState: State(installed: installed))
     }
 
@@ -64,8 +67,10 @@ final nonisolated class FakeTranscriber: Transcriber {
         URL(filePath: NSTemporaryDirectory()).appending(path: model.rawValue)
     }
 
-    func isModelInstalled(_ model: SpeechModel) -> Bool {
-        state.withLock { $0.installed.contains(model) }
+    func isModelInstalled(_ model: SpeechModel) async -> Bool {
+        await beforeInstallationCheck(model)
+
+        return state.withLock { $0.installed.contains(model) }
     }
 
     func downloadModel(_ model: SpeechModel, progress _: @Sendable (Double) -> Void) async throws {

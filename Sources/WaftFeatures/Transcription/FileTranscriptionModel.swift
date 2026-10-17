@@ -17,9 +17,10 @@ final class FileTranscriptionModel {
     private(set) var phase = Phase.idle
     var isDropTargeted = false
 
+    @ObservationIgnored private(set) var task: Task<Void, Never>?
+
     private var chosenLanguage: Language?
 
-    @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var run = 0
 
     private let transcriber: any Transcriber
@@ -102,7 +103,11 @@ final class FileTranscriptionModel {
 
         task = Task { [weak self, transcriber, decoder, language] in
             do {
+                try Task.checkCancellation()
+
                 let samples = try await decoder.samples(of: file)
+
+                try Task.checkCancellation()
 
                 self?.enter(.transcribing(file, 0), in: current)
 

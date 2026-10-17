@@ -1,4 +1,5 @@
 import Foundation
+import os
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -66,16 +67,52 @@ struct FileTranscriptionModelTests {
         #expect(transcriber.requests.isEmpty)
     }
 
-    @Test
-    func `ignores the result of a canceled transcription`() async {
+    @Test(arguments: [(false, false), (false, true), (true, false), (true, true)])
+    func `stops canceled decoding before it can start transcription`(resets: Bool, beginsDecoding: Bool) async throws {
+        let decoder = FakeMediaDecoder(holding: beginsDecoding ? Self.file : nil)
         let transcriber = FakeTranscriber(file: .success(Self.transcript))
-        let transcription = await model(transcriber, decoder: FakeMediaDecoder(holdsUntilCanceled: true))
+        let transcription = await model(transcriber, decoder: decoder)
         transcription.transcribe(Self.file)
-        transcription.cancel()
+        let canceled = try #require(transcription.task)
+
+        if beginsDecoding {
+            await decoder.waitUntilReading()
+        }
+
+        if resets {
+            transcription.reset()
+        } else {
+            transcription.cancel()
+        }
+
+        decoder.release()
+        await canceled.value
 
         #expect(transcription.phase == .idle)
-        #expect(await Poll.until(timeout: .seconds(5)) { !transcriber.requests.isEmpty })
-        #expect(transcription.phase == .idle)
+        #expect(decoder.requests == (beginsDecoding ? [Self.file] : []))
+        #expect(transcriber.requests.isEmpty)
+    }
+
+    @Test
+    func `transcribes only the replacement when a file changes during decoding`() async throws {
+        let replacement = URL(filePath: "/tmp/Replacement.m4a")
+        let decoder = FakeMediaDecoder(holding: Self.file)
+        let transcriber = FakeTranscriber(file: .success(Self.transcript))
+        let transcription = await model(transcriber, decoder: decoder)
+        transcription.transcribe(Self.file)
+        let canceled = try #require(transcription.task)
+        await decoder.waitUntilReading()
+
+        transcription.transcribe(replacement)
+        let current = try #require(transcription.task)
+        await current.value
+
+        decoder.release()
+        await canceled.value
+
+        #expect(transcription.phase == .finished(replacement, Self.transcript))
+        #expect(decoder.requests == [Self.file, replacement])
+        #expect(transcriber.requests.count == 1)
     }
 
     @Test(arguments: [(Language.german, Language?.some(.german)), (.french, nil)])
@@ -161,13 +198,48 @@ struct FileTranscriptionModelTests {
     }
 }
 
-private nonisolated struct FakeMediaDecoder: MediaDecoder {
-    var decoded: Result<[Float], any Error> = .success([0])
-    var holdsUntilCanceled = false
+private final nonisolated class FakeMediaDecoder: MediaDecoder {
+    private let decoded: Result<[Float], any Error>
+    private let heldFile: URL?
+    private let readings: AsyncStream<Void>
+    private let readingContinuation: AsyncStream<Void>.Continuation
+    private let pendingRelease = OSAllocatedUnfairLock<CheckedContinuation<Void, Never>?>(initialState: nil)
+    private let requestedFiles = OSAllocatedUnfairLock(initialState: [URL]())
 
-    func samples(of _: URL) async throws -> [Float] {
-        if holdsUntilCanceled {
-            await Task.slept(for: .seconds(60))
+    var requests: [URL] {
+        requestedFiles.withLock { $0 }
+    }
+
+    init(decoded: Result<[Float], any Error> = .success([0]), holding heldFile: URL? = nil) {
+        self.decoded = decoded
+        self.heldFile = heldFile
+        (readings, readingContinuation) = AsyncStream.makeStream(of: Void.self)
+    }
+
+    func release() {
+        let continuation = pendingRelease.withLock { pending in
+            let continuation = pending
+            pending = nil
+
+            return continuation
+        }
+
+        continuation?.resume()
+    }
+
+    func waitUntilReading() async {
+        var iterator = readings.makeAsyncIterator()
+        _ = await iterator.next()
+    }
+
+    func samples(of file: URL) async throws -> [Float] {
+        requestedFiles.withLock { $0.append(file) }
+
+        if file == heldFile {
+            await withCheckedContinuation { continuation in
+                pendingRelease.withLock { $0 = continuation }
+                readingContinuation.yield(())
+            }
         }
 
         return try decoded.get()

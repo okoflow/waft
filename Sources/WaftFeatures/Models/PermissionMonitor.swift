@@ -42,7 +42,7 @@ final class PermissionMonitor {
         }
     }
 
-    private func refresh() {
+    func refresh() {
         let latest = Dictionary(uniqueKeysWithValues: Permission.allCases.map { ($0, provider.status(of: $0)) })
         guard latest != statuses else { return }
 

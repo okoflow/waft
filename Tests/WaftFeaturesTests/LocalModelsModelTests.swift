@@ -50,53 +50,114 @@ struct LocalModelsModelTests {
     }
 
     @Test
-    func `ignores the result of a check that a newer one replaced`() async {
+    func `ignores the result of a check that a newer one replaced`() async throws {
         let browser = FakeLocalServerBrowser([Self.ollama: ["stale"], Self.lmStudio: ["qwen3"]], holding: Self.ollama)
         let localModels = LocalModelsModel(browser: browser, settings: settings)
         localModels.refresh()
+        let canceled = try #require(localModels.check)
+        await browser.waitUntilAsked()
+
         settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
         localModels.refresh()
-
-        #expect(await Poll.until(timeout: .seconds(5)) { localModels.serverModels == ["qwen3"] })
+        let current = try #require(localModels.check)
+        await current.value
 
         browser.release()
+        await canceled.value
 
-        #expect(await Poll.until(timeout: .seconds(5)) { browser.answered == [Self.lmStudio, Self.ollama] })
+        #expect(browser.answered == [Self.lmStudio, Self.ollama])
+        #expect(localModels.serverModels == ["qwen3"])
+    }
+
+    @Test
+    func `stops detecting servers after a superseded probe fails`() async throws {
+        let browser = FakeLocalServerBrowser([Self.lmStudio: ["qwen3"]], holding: Self.ollama)
+        let localModels = LocalModelsModel(browser: browser, settings: settings)
+        localModels.detect()
+        let canceled = try #require(localModels.check)
+        await browser.waitUntilAsked()
+
+        settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
+        localModels.refresh()
+        let current = try #require(localModels.check)
+        await current.value
+
+        browser.release()
+        await canceled.value
+
+        #expect(browser.answered == [Self.lmStudio, Self.ollama])
+        #expect(localModels.serverState == .running)
+        #expect(localModels.serverModels == ["qwen3"])
+        #expect(settings.settings.localServer == LocalServer(baseURL: Self.lmStudio))
+    }
+
+    @Test(arguments: [false, true])
+    func `makes no requests for a check canceled before it starts`(detects: Bool) async throws {
+        let browser = FakeLocalServerBrowser([Self.lmStudio: ["qwen3"]])
+        let localModels = LocalModelsModel(browser: browser, settings: settings)
+
+        if detects {
+            localModels.detect()
+        } else {
+            localModels.refresh()
+        }
+
+        let canceled = try #require(localModels.check)
+        settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
+        localModels.refresh()
+        let current = try #require(localModels.check)
+
+        await canceled.value
+        await current.value
+
+        #expect(browser.answered == [Self.lmStudio])
         #expect(localModels.serverModels == ["qwen3"])
     }
 }
 
 private final nonisolated class FakeLocalServerBrowser: LocalServerBrowsing {
-    private struct State {
-        var answered: [String] = []
-        var isReleased = false
-    }
-
     private let served: [String: [String]]
     private let heldURL: String?
-    private let state = OSAllocatedUnfairLock(initialState: State())
+    private let queries: AsyncStream<Void>
+    private let queryContinuation: AsyncStream<Void>.Continuation
+    private let pendingRelease = OSAllocatedUnfairLock<CheckedContinuation<Void, Never>?>(initialState: nil)
+    private let answeredURLs = OSAllocatedUnfairLock(initialState: [String]())
 
     var answered: [String] {
-        state.withLock { $0.answered }
+        answeredURLs.withLock { $0 }
     }
 
     init(_ served: [String: [String]], holding heldURL: String? = nil) {
         self.served = served
         self.heldURL = heldURL
+        (queries, queryContinuation) = AsyncStream.makeStream(of: Void.self)
     }
 
     func release() {
-        state.withLock { $0.isReleased = true }
+        let continuation = pendingRelease.withLock { pending in
+            let continuation = pending
+            pending = nil
+
+            return continuation
+        }
+
+        continuation?.resume()
+    }
+
+    func waitUntilAsked() async {
+        var iterator = queries.makeAsyncIterator()
+        _ = await iterator.next()
     }
 
     func models(at server: LocalServer) async throws(RewriteError) -> [String] {
-        let deadline = ContinuousClock.now + .seconds(5)
-
-        while server.baseURL == heldURL, !state.withLock({ $0.isReleased }), ContinuousClock.now < deadline {
-            await Task.yield()
+        if server.baseURL == heldURL {
+            await withCheckedContinuation { continuation in
+                pendingRelease.withLock { $0 = continuation }
+                queryContinuation.yield(())
+            }
         }
 
-        state.withLock { $0.answered.append(server.baseURL) }
+        answeredURLs.withLock { $0.append(server.baseURL) }
 
         guard let models = served[server.baseURL] else { throw .offline }
 

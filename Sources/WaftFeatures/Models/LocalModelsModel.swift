@@ -13,7 +13,7 @@ final class LocalModelsModel {
     private(set) var serverState = ServerState.unknown
     private(set) var serverModels: [String] = []
 
-    @ObservationIgnored private var check: Task<Void, Never>?
+    @ObservationIgnored private(set) var check: Task<Void, Never>?
 
     private let browser: any LocalServerBrowsing
     private let settings: SettingsModel
@@ -45,6 +45,8 @@ final class LocalModelsModel {
     }
 
     private func checkServer(at server: LocalServer) async {
+        guard !Task.isCancelled else { return }
+
         do throws(RewriteError) {
             let models = try await browser.models(at: server)
 
@@ -60,12 +62,16 @@ final class LocalModelsModel {
 
     private func detectServer() async {
         for known in LocalServer.knownServers {
+            guard !Task.isCancelled else { return }
+
             var server = LocalServer(baseURL: known.baseURL)
             let models: [String]
 
             do throws(RewriteError) {
                 models = try await browser.models(at: server)
             } catch {
+                guard !Task.isCancelled else { return }
+
                 continue
             }
 
