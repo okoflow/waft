@@ -33,19 +33,55 @@ struct SpeechModelFilesTests {
     }
 
     @Test
+    func `counts a complete model without a download cache as installed`() throws {
+        try withTemporaryDirectory { directory in
+            let accurate = try installed(.accurate, in: directory)
+
+            #expect(!FileManager.default.fileExists(atPath: downloadCache(for: accurate).path))
+            #expect(accurate.isInstalled)
+        }
+    }
+
+    @Test
+    func `counts a complete model with finished download metadata as installed`() throws {
+        try withTemporaryDirectory { directory in
+            let accurate = try installed(.accurate, in: directory)
+            let cache = downloadCache(for: accurate)
+            try FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
+            try Data().write(to: cache.appending(path: "config.json.metadata"))
+
+            #expect(accurate.isInstalled)
+        }
+    }
+
+    @Test
     func `counts a model with an incomplete download as not installed`() throws {
         try withTemporaryDirectory { directory in
             let accurate = try installed(.accurate, in: directory)
 
             #expect(accurate.isInstalled)
 
-            let pending = accurate.folder.deletingLastPathComponent()
-                .appending(path: ".cache/huggingface/download/\(accurate.variant)", directoryHint: .isDirectory)
+            let pending = downloadCache(for: accurate)
 
             try FileManager.default.createDirectory(at: pending, withIntermediateDirectories: true)
             try Data().write(to: pending.appending(path: "AudioEncoder.mlmodelc.incomplete"))
 
             #expect(!accurate.isInstalled)
+        }
+    }
+
+    @Test(arguments: [CocoaError.Code.fileReadNoPermission, .fileReadUnknown])
+    func `counts a model with unreadable download metadata as not installed`(failure: CocoaError.Code) throws {
+        try withTemporaryDirectory { directory in
+            let accurate = try installed(.accurate, in: directory)
+
+            #expect(accurate.isInstalled)
+
+            let unreadable = SpeechModelFiles(.accurate, baseDirectory: directory) { _ in
+                throw CocoaError(failure)
+            }
+
+            #expect(!unreadable.isInstalled)
         }
     }
 
@@ -86,5 +122,10 @@ struct SpeechModelFilesTests {
 
     private func tokenizerFile(in directory: URL) -> URL {
         directory.appending(path: "models/openai/whisper-large-v3/tokenizer.json")
+    }
+
+    private func downloadCache(for files: SpeechModelFiles) -> URL {
+        files.folder.deletingLastPathComponent()
+            .appending(path: ".cache/huggingface/download/\(files.variant)", directoryHint: .isDirectory)
     }
 }
