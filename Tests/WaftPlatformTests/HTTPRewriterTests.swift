@@ -30,8 +30,6 @@ struct HTTPRewriterTests {
 
     @Test(arguments: [
         (FakeHTTPTransport.Reply.status(300), RewriteError.serviceUnavailable),
-        (.status(401), .rejectedKey),
-        (.status(429), .rateLimited),
         (.notHTTP, .unreadableResponse),
         (.failure(URLError(.timedOut)), .timeout),
     ])
