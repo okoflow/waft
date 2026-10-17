@@ -196,6 +196,7 @@
 "Not running at this address" = "לא פועל בכתובת זו";
 "Notices the dictation key and pastes the text where you type." = "מזהה את מקש ההכתבה ומדביק את המלל במקום ההקלדה.";
 "Off" = "כבוי";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "באמצעות Ollama, LM Studio, llama.cpp, MLX או Jan בשרת בכתובת הזו; המלל נשלח רק אליו.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "באמצעות Ollama, LM Studio, llama.cpp, MLX או Jan ב-Mac זה; המלל אף פעם לא יוצא ממנו.";
 "On macOS 27, it's under Device Control and Data Access." = "ב-macOS 27 ההרשאה נמצאת תחת ״שליטה במכשיר וגישה לנתונים״.";
 "On-device dictation for macOS with AI cleanup." = "הכתבה במכשיר עבור macOS, עם עיבוד מלל בבינה מלאכותית.";
@@ -355,6 +356,7 @@
 "Voice" = "קול";
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
 "Waft is listening" = "היישום Waft מאזין";
 "Waft listens for these languages." = "אלה השפות ש-Waft מזהה.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "ההאזנה פעילה רק בזמן ההכתבה, והשמע נשאר ב-Mac שלך.";

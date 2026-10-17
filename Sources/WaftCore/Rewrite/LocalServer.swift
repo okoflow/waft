@@ -1,3 +1,5 @@
+import Foundation
+
 package struct LocalServer: Codable, Equatable, Sendable {
     package static let knownServers: [(name: String, baseURL: String)] = [
         ("Ollama", defaultBaseURL),
@@ -7,12 +9,20 @@ package struct LocalServer: Codable, Equatable, Sendable {
     ]
 
     private static let defaultBaseURL = "http://localhost:11434/v1"
+    private static let loopbackHosts: Set = ["localhost", "127.0.0.1", "::1", "[::1]", "0.0.0.0"]
 
     package var baseURL: String
     package var model: String
 
     package var isConfigured: Bool {
         !baseURL.isEmpty && !model.isEmpty
+    }
+
+    package var isOnThisMac: Bool {
+        let address = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let host = URLComponents(string: address)?.host?.lowercased() else { return true }
+
+        return Self.loopbackHosts.contains(host) || host.hasSuffix(".localhost")
     }
 
     package init(baseURL: String = defaultBaseURL, model: String = "") {

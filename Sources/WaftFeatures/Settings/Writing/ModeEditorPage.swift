@@ -18,9 +18,11 @@ struct ModeEditorPage: View {
     }
 
     private var instructionsNote: LocalizedStringKey {
-        provider.isCloud
-            ? "Sent to \(provider.title) with your text."
-            : "Used by \(provider.title) on this Mac."
+        guard !provider.isCloud, settings.settings.localServer.isOnThisMac else {
+            return "Sent to \(provider.title) with your text."
+        }
+
+        return "Used by \(provider.title) on this Mac."
     }
 
     private var instructions: Binding<String> {
@@ -60,11 +62,16 @@ struct ModeEditorPage: View {
         .onAppear(perform: tryout.reset)
     }
 
-    private func binding(_ field: WritableKeyPath<CustomMode, String>, of custom: CustomMode) -> Binding<String> {
+    func binding(_ field: WritableKeyPath<CustomMode, String>, of custom: CustomMode) -> Binding<String> {
         Binding(
-            get: { custom[keyPath: field] },
+            get: {
+                guard let current = settings.settings.customMode(custom.id) else { return "" }
+
+                return current[keyPath: field]
+            },
             set: { text in
-                var edited = custom
+                guard var edited = settings.settings.customMode(custom.id) else { return }
+
                 edited[keyPath: field] = text
 
                 settings.settings.update(edited)

@@ -110,6 +110,32 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `drops entries past the retention while the app keeps running`() async {
+        let settings = settingsModel()
+        var stored = DictationHistory()
+        stored.add(DictationHistory.Entry(date: Date().addingTimeInterval(-3 * 86400), text: "Old", mode: .clean, app: nil))
+        let store = FakeValueStore(stored)
+        let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
+        settings.settings.historyRetention = .day
+        history.expireOldEntries(every: .milliseconds(10))
+
+        #expect(await Poll.until(timeout: .seconds(5)) { history.history.entries.isEmpty })
+        #expect(store.value == history.history)
+    }
+
+    @Test
+    func `flags a saved history it couldn't read until it is cleared`() {
+        let store = FakeValueStore(DictationHistory(), isBroken: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
+        #expect(history.hasUnreadableHistory)
+
+        history.removeAll()
+
+        #expect(!history.hasUnreadableHistory)
+    }
+
+    @Test
     func `removes every entry from the store`() {
         let store = FakeValueStore(history(entries: 3))
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
@@ -117,6 +143,19 @@ struct HistoryModelTests {
 
         #expect(history.history.entries.isEmpty)
         #expect(store.value == nil)
+    }
+
+    @Test
+    func `keeps history and its shown page when deletion fails`() {
+        let stored = history(entries: 120)
+        let store = FakeValueStore(stored, failsDeleting: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+        history.showNextPage()
+        history.removeAll()
+
+        #expect(history.history == stored)
+        #expect(history.currentPage.firstPosition == 51)
+        #expect(store.value == stored)
     }
 
     private func model(entries count: Int) -> HistoryModel {

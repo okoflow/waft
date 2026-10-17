@@ -1,4 +1,5 @@
 import Foundation
+import os
 import WaftCore
 
 struct SpeechModelFiles {
@@ -17,6 +18,8 @@ struct SpeechModelFiles {
 
     let variant: String
     let baseDirectory: URL
+
+    private let readSubpaths: @Sendable (URL) throws -> [String]
 
     var folder: URL {
         baseDirectory.appending(path: "models/\(Self.repository)/\(variant)", directoryHint: .isDirectory)
@@ -37,9 +40,20 @@ struct SpeechModelFiles {
     }
 
     private var hasIncompleteDownload: Bool {
-        guard let pending = try? FileManager.default.subpathsOfDirectory(atPath: downloadCache.path) else { return false }
+        do {
+            let pending = try readSubpaths(downloadCache)
 
-        return pending.contains { $0.hasSuffix(".incomplete") }
+            return pending.contains { $0.hasSuffix(".incomplete") }
+        } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
+            return false
+        } catch {
+            let cause = error as NSError
+            Logger.speech.error(
+                "Couldn't inspect the speech model download: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
+            )
+
+            return true
+        }
     }
 
     private var isPresent: Bool {
@@ -54,13 +68,20 @@ struct SpeechModelFiles {
         FileManager.default.fileExists(atPath: tokenizerFolder.appending(path: "tokenizer.json").path)
     }
 
-    init(_ model: SpeechModel, baseDirectory: URL = Self.defaultBaseDirectory) {
+    init(
+        _ model: SpeechModel,
+        baseDirectory: URL = Self.defaultBaseDirectory,
+        readSubpaths: @escaping @Sendable (URL) throws -> [String] = { directory in
+            try FileManager.default.subpathsOfDirectory(atPath: directory.path)
+        },
+    ) {
         switch model {
         case .fast: variant = "openai_whisper-large-v3-v20240930_626MB"
         case .accurate: variant = "openai_whisper-large-v3"
         }
 
         self.baseDirectory = baseDirectory
+        self.readSubpaths = readSubpaths
     }
 
     private static func removeIfPresent(_ url: URL) throws {

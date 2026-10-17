@@ -196,6 +196,7 @@
 "Not running at this address" = "Bu adreste çalışmıyor";
 "Notices the dictation key and pastes the text where you type." = "Dikte tuşunu algılar ve metni yazdığınız yere yapıştırır.";
 "Off" = "Kapalı";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Bu adresteki sunucuda Ollama, LM Studio, llama.cpp, MLX veya Jan; metin yalnızca oraya gider.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Bu Mac’te Ollama, LM Studio, llama.cpp, MLX veya Jan; metin Mac’ten hiç çıkmaz.";
 "On macOS 27, it's under Device Control and Data Access." = "macOS 27’de bu ayar “Aygıt Denetimi ve Veri Erişimi” bölümündedir.";
 "On-device dictation for macOS with AI cleanup." = "macOS için aygıt üzerinde dikte ve YZ ile düzeltme.";
@@ -355,6 +356,7 @@
 "Voice" = "Ses";
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. Geçmişi Sil ikisini de siler.";
 "Waft is listening" = "Waft dinliyor";
 "Waft listens for these languages." = "Waft bu dilleri tanır.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft yalnızca siz dikte ederken dinler ve ses Mac’inizde kalır.";

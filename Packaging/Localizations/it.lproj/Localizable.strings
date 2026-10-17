@@ -196,6 +196,7 @@
 "Not running at this address" = "Non in esecuzione a questo indirizzo";
 "Notices the dictation key and pastes the text where you type." = "Rileva il tasto di dettatura e incolla il testo dove scrivi.";
 "Off" = "Nessuna";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX o Jan sul server a questo indirizzo; il testo va solo lì.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX o Jan su questo Mac; il testo non ne esce mai.";
 "On macOS 27, it's under Device Control and Data Access." = "Su macOS 27, l’impostazione si trova nella sezione dedicata al controllo del dispositivo e all’accesso ai dati.";
 "On-device dictation for macOS with AI cleanup." = "Dettatura sul dispositivo per macOS, con rifinitura tramite IA.";
@@ -355,6 +356,7 @@
 "Voice" = "Voce";
 "Waft can't read this file." = "Waft non riesce a leggere questo file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft non può usare il microfono. Consenti l’accesso in Impostazioni › Generali.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft non è riuscito a leggere la cronologia salvata e ne ha conservato una copia. “Cancella cronologia” elimina entrambe.";
 "Waft is listening" = "Waft è in ascolto";
 "Waft listens for these languages." = "Waft riconosce queste lingue.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft ascolta solo mentre detti e l’audio resta sul tuo Mac.";

@@ -14,6 +14,41 @@ struct SpeechModelControllerTests {
         #expect(controller.state.isReady)
     }
 
+    @Test(arguments: [true, false])
+    func `starts the current model when the choice changes during the installation check`(isChosenInstalled: Bool) async {
+        let (queries, queryContinuation) = AsyncStream.makeStream(of: SpeechModel.self)
+        let (releases, releaseContinuation) = AsyncStream.makeStream(of: Void.self)
+        defer {
+            queryContinuation.finish()
+            releaseContinuation.finish()
+        }
+
+        let installed: Set<SpeechModel> = isChosenInstalled ? [.fast, .accurate] : [.fast]
+        let transcriber = FakeTranscriber(installed: installed) { model in
+            guard model == .fast else { return }
+
+            queryContinuation.yield(model)
+            var iterator = releases.makeAsyncIterator()
+            _ = await iterator.next()
+        }
+        let settings = SettingsModel.inMemory()
+        let controller = SpeechModelController(transcriber: transcriber, settings: settings, pro: .unlicensed())
+        controller.start()
+
+        var iterator = queries.makeAsyncIterator()
+        #expect(await iterator.next() == .fast)
+
+        settings.settings.speechModel = .accurate
+        releaseContinuation.yield(())
+
+        let expected: [FakeTranscriber.Call] = isChosenInstalled
+            ? [.load(.accurate), .delete(.fast)]
+            : [.download(.accurate), .load(.accurate), .delete(.fast)]
+
+        #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == expected })
+        #expect(controller.state.isReady)
+    }
+
     @Test
     func `downloads and loads a chosen model, then deletes the previous one`() async {
         let transcriber = FakeTranscriber(installed: [.fast])

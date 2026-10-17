@@ -7,15 +7,19 @@ final nonisolated class FakeValueStore<Value: Sendable>: ValueStore {
 
     private let stored: OSAllocatedUnfairLock<Value?>
     private let isBroken: Bool
+    private let failsSaving: Bool
+    private let failsDeleting: Bool
 
     var value: Value? {
         get { stored.withLock { $0 } }
         set { stored.withLock { $0 = newValue } }
     }
 
-    init(_ value: Value? = nil, isBroken: Bool = false) {
+    init(_ value: Value? = nil, isBroken: Bool = false, failsSaving: Bool = false, failsDeleting: Bool = false) {
         stored = OSAllocatedUnfairLock(initialState: value)
         self.isBroken = isBroken
+        self.failsSaving = failsSaving
+        self.failsDeleting = failsDeleting
     }
 
     func load() throws -> Value? {
@@ -24,11 +28,15 @@ final nonisolated class FakeValueStore<Value: Sendable>: ValueStore {
         return value
     }
 
-    func save(_ value: Value) {
+    func save(_ value: Value) throws {
+        guard !failsSaving else { throw CocoaError(.fileWriteNoPermission) }
+
         stored.withLock { $0 = value }
     }
 
-    func delete() {
+    func delete() throws {
+        guard !failsDeleting else { throw CocoaError(.fileWriteNoPermission) }
+
         stored.withLock { $0 = nil }
     }
 

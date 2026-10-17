@@ -24,8 +24,8 @@ final class APIKeyModel {
 
     func saveDraft() {
         guard canSaveDraft else { return }
+        guard store.write(trimmedDraft) else { return }
 
-        store.write(trimmedDraft)
         draft = ""
         isSet = store.exists()
     }

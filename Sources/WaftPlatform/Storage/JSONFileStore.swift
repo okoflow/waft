@@ -1,4 +1,5 @@
 package import Foundation
+import Darwin
 import os
 import WaftCore
 
@@ -16,6 +17,25 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         self.name = name
         self.url = url
         self.isPrivate = isPrivate
+    }
+
+    private static func removeTemporary(_ file: URL) {
+        guard FileManager.default.fileExists(atPath: file.path) else { return }
+
+        do {
+            try FileManager.default.removeItem(at: file)
+        } catch {
+            let cause = error as NSError
+            Logger.storage.error(
+                "Couldn't remove a temporary file: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
+            )
+        }
+    }
+
+    private static func lastPOSIXError() -> any Error {
+        guard let code = POSIXErrorCode(rawValue: errno) else { return CocoaError(.fileWriteUnknown) }
+
+        return POSIXError(code)
     }
 
     package func load() throws -> Value? {
@@ -37,8 +57,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
 
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try encoder.encode(value).write(to: url, options: .atomic)
-        try restrictIfPrivate(url)
+        try write(encoder.encode(value), to: url)
     }
 
     package func exists() -> Bool {
@@ -46,15 +65,26 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     package func delete() throws {
-        guard exists() else { return }
+        var firstFailure: (any Error)?
 
-        try FileManager.default.removeItem(at: url)
+        for file in [url, unreadableCopy] where FileManager.default.fileExists(atPath: file.path) {
+            do {
+                try FileManager.default.removeItem(at: file)
+            } catch {
+                if firstFailure == nil {
+                    firstFailure = error
+                }
+            }
+        }
+
+        if let firstFailure {
+            throw firstFailure
+        }
     }
 
     private func keepUnreadableCopy(of data: Data) {
         do {
-            try data.write(to: unreadableCopy, options: .atomic)
-            try restrictIfPrivate(unreadableCopy)
+            try write(data, to: unreadableCopy)
         } catch {
             let cause = error as NSError
             Logger.storage.error(
@@ -63,9 +93,29 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         }
     }
 
-    private func restrictIfPrivate(_ file: URL) throws {
-        guard isPrivate else { return }
+    private func write(_ data: Data, to file: URL) throws {
+        guard isPrivate else {
+            try data.write(to: file, options: .atomic)
 
-        try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: file.path)
+            return
+        }
+
+        let temporary = file.deletingLastPathComponent().appending(path: ".\(UUID().uuidString).tmp")
+        let descriptor = open(temporary.path, O_WRONLY | O_CREAT | O_EXCL, 0o600)
+        guard descriptor >= 0 else { throw Self.lastPOSIXError() }
+
+        let handle = FileHandle(fileDescriptor: descriptor, closeOnDealloc: true)
+
+        do {
+            try handle.write(contentsOf: data)
+            try handle.synchronize()
+            try handle.close()
+
+            guard rename(temporary.path, file.path) == 0 else { throw Self.lastPOSIXError() }
+        } catch {
+            Self.removeTemporary(temporary)
+
+            throw error
+        }
     }
 }

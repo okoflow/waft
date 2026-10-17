@@ -15,6 +15,10 @@ final class FakePermissionProvider: PermissionProvider {
         statuses[permission, default: .notDetermined]
     }
 
+    func setStatus(_ status: PermissionStatus, for permission: Permission) {
+        statuses[permission] = status
+    }
+
     func request(_ permission: Permission) {
         requests.append(permission)
         statuses[permission] = answers[permission, default: status(of: permission)]

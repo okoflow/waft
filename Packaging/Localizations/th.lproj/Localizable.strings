@@ -196,6 +196,7 @@
 "Not running at this address" = "ที่อยู่นี้ไม่มีเซิร์ฟเวอร์ทำงานอยู่";
 "Notices the dictation key and pastes the text where you type." = "ตรวจจับปุ่มป้อนตามคำบอกและวางข้อความในตำแหน่งที่คุณพิมพ์";
 "Off" = "ปิด";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX หรือ Jan บนเซิร์ฟเวอร์ที่อยู่นี้ ข้อความจะส่งไปที่นั่นเท่านั้น";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX หรือ Jan บน Mac เครื่องนี้ ข้อความจะไม่ออกไปนอกเครื่อง";
 "On macOS 27, it's under Device Control and Data Access." = "ใน macOS 27 จะอยู่ใน “การควบคุมอุปกรณ์และการเข้าถึงข้อมูล”";
 "On-device dictation for macOS with AI cleanup." = "การป้อนตามคำบอกบนอุปกรณ์สำหรับ macOS พร้อมการเกลาข้อความด้วย AI";
@@ -355,6 +356,7 @@
 "Voice" = "เสียง";
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
 "Waft is listening" = "Waft กำลังฟัง";
 "Waft listens for these languages." = "Waft จะฟังภาษาเหล่านี้";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft จะฟังเฉพาะขณะที่คุณป้อนตามคำบอก และเสียงจะอยู่บน Mac ของคุณเท่านั้น";

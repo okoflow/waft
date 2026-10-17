@@ -46,6 +46,22 @@ struct JSONFileStoreTests {
     }
 
     @Test
+    func `writes a new private file restricted to its owner and leaves no temporary file`() async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "nested/history.json")
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url, isPrivate: true)
+            try store.save(Self.sample)
+
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            let leftovers = try FileManager.default.contentsOfDirectory(atPath: url.deletingLastPathComponent().path)
+
+            #expect(attributes[.posixPermissions] as? Int == 0o600)
+            #expect(leftovers == ["history.json"])
+            #expect(try store.load() == Self.sample)
+        }
+    }
+
+    @Test
     func `restricts the copy of an unreadable private file to its owner`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
@@ -76,6 +92,66 @@ struct JSONFileStoreTests {
             }
             #expect(try Data(contentsOf: directory.appending(path: "settings.unreadable.json")) == corrupt)
             #expect(try Data(contentsOf: url) == corrupt)
+
+            try store.save(Self.sample)
+
+            #expect(try Data(contentsOf: directory.appending(path: "settings.unreadable.json")) == corrupt)
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func `deletes an unreadable recovery copy with or without its original`(isOriginalMissing: Bool) async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "history.json")
+            let recoveryCopy = directory.appending(path: "history.unreadable.json")
+            try Data(#"{"name": "#.utf8).write(to: url)
+            let store = JSONFileStore<StoredSample>(name: "history", url: url, isPrivate: true)
+
+            #expect(throws: DecodingError.self) {
+                try store.load()
+            }
+            #expect(FileManager.default.fileExists(atPath: recoveryCopy.path))
+
+            if isOriginalMissing {
+                try FileManager.default.removeItem(at: url)
+            }
+
+            try store.delete()
+
+            #expect(!FileManager.default.fileExists(atPath: url.path))
+            #expect(!FileManager.default.fileExists(atPath: recoveryCopy.path))
+            #expect(try store.load() == nil)
+            #expect(throws: Never.self) {
+                try store.delete()
+            }
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func `attempts both deletions and reports the first failure`(isRecoveryImmutable: Bool) async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "history.json")
+            let recoveryCopy = directory.appending(path: "history.unreadable.json")
+            try Data(#"{"name": "#.utf8).write(to: url)
+            let store = JSONFileStore<StoredSample>(name: "history", url: url, isPrivate: true)
+
+            #expect(throws: DecodingError.self) {
+                try store.load()
+            }
+
+            let immutableFiles = isRecoveryImmutable ? [url, recoveryCopy] : [url]
+
+            try withImmutableFiles(immutableFiles) {
+                #expect(performing: {
+                    try store.delete()
+                }, throws: { error in
+                    let cause = error as NSError
+
+                    return cause.userInfo[NSFilePathErrorKey] as? String == url.path
+                })
+                #expect(FileManager.default.fileExists(atPath: url.path))
+                #expect(FileManager.default.fileExists(atPath: recoveryCopy.path) == isRecoveryImmutable)
+            }
         }
     }
 
@@ -93,6 +169,22 @@ struct JSONFileStoreTests {
                 try store.delete()
             }
         }
+    }
+
+    private func withImmutableFiles(_ files: [URL], performing body: () throws -> Void) throws {
+        defer {
+            for file in files {
+                #expect(throws: Never.self) {
+                    try FileManager.default.setAttributes([.immutable: false], ofItemAtPath: file.path)
+                }
+            }
+        }
+
+        for file in files {
+            try FileManager.default.setAttributes([.immutable: true], ofItemAtPath: file.path)
+        }
+
+        try body()
     }
 }
 

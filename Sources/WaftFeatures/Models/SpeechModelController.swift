@@ -35,10 +35,16 @@ final class SpeechModelController {
 
     func start() {
         Task {
-            let model = chosenModel
-            let isInstalled = await transcriber.isModelInstalled(model)
+            while true {
+                let model = chosenModel
+                let isInstalled = await transcriber.isModelInstalled(model)
 
-            apply(.started(model, isInstalled: isInstalled))
+                guard chosenModel == model else { continue }
+
+                apply(.started(model, isInstalled: isInstalled))
+
+                return
+            }
         }
     }
 

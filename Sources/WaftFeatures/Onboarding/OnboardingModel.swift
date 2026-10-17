@@ -23,11 +23,13 @@ final class OnboardingModel {
     var practiceText = ""
 
     @ObservationIgnored var onFinish: (() -> Void)?
+    @ObservationIgnored private(set) var advanceTask: Task<Void, Never>?
 
     private var isResuming = false
 
     private let permissions: PermissionMonitor
     private let grantedPause: Duration
+    private let waitForPause: (Duration) async -> Bool
 
     var canGoBack: Bool {
         previousStep != nil
@@ -53,14 +55,20 @@ final class OnboardingModel {
         Step.allCases.first { $0.rawValue > step.rawValue && shows($0) }
     }
 
-    init(permissions: PermissionMonitor, grantedPause: Duration = .milliseconds(600)) {
+    init(
+        permissions: PermissionMonitor,
+        grantedPause: Duration = .milliseconds(600),
+        waitForPause: @escaping (Duration) async -> Bool = { await Task.slept(for: $0) },
+    ) {
         self.permissions = permissions
         self.grantedPause = grantedPause
+        self.waitForPause = waitForPause
     }
 
     func goBack() {
         guard let previousStep else { return }
 
+        cancelAdvance()
         step = previousStep
     }
 
@@ -75,6 +83,7 @@ final class OnboardingModel {
     }
 
     func resume() {
+        cancelAdvance()
         isResuming = true
 
         guard let firstStep = Step.allCases.first(where: shows) else { return }
@@ -83,23 +92,32 @@ final class OnboardingModel {
     }
 
     func finish() {
+        cancelAdvance()
         onFinish?()
     }
 
     func permissionsDidChange() {
+        cancelAdvance()
+
         guard let permission = step.permission, !isMissing(permission) else { return }
 
         let grantedStep = step
         let pause = grantedPause
 
-        Task { [weak self] in
-            guard await Task.slept(for: pause), let self, step == grantedStep else { return }
+        advanceTask = Task { [weak self, waitForPause] in
+            guard await waitForPause(pause), !Task.isCancelled, let self, step == grantedStep else { return }
 
+            permissions.refresh()
+
+            guard !Task.isCancelled, step == grantedStep, !isMissing(permission) else { return }
+
+            advanceTask = nil
             advance()
         }
     }
 
     func reset() {
+        cancelAdvance()
         step = .welcome
         practiceText = ""
         isResuming = false
@@ -116,6 +134,8 @@ final class OnboardingModel {
     }
 
     private func advance() {
+        cancelAdvance()
+
         guard let nextStep else {
             finish()
 
@@ -123,5 +143,10 @@ final class OnboardingModel {
         }
 
         step = nextStep
+    }
+
+    private func cancelAdvance() {
+        advanceTask?.cancel()
+        advanceTask = nil
     }
 }

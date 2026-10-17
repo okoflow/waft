@@ -196,6 +196,7 @@
 "Not running at this address" = "此地址无响应";
 "Notices the dictation key and pastes the text where you type." = "检测听写键，并将文本粘贴到你正在输入的位置。";
 "Off" = "关闭";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "此地址服务器上的Ollama、LM Studio、llama.cpp、MLX或Jan，文本只会发送到该服务器。";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "此Mac上的Ollama、LM Studio、llama.cpp、MLX或Jan，文本不会离开此Mac。";
 "On macOS 27, it's under Device Control and Data Access." = "在macOS 27中，它位于“设备控制和数据访问”下。";
 "On-device dictation for macOS with AI cleanup." = "适用于macOS的设备端听写，由AI整理文字。";
@@ -355,6 +356,7 @@
 "Voice" = "语音";
 "Waft can't read this file." = "Waft无法读取此文件。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft无法使用麦克风。请在“设置”›“通用”中允许。";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft无法读取已保存的历史记录，已保留一份副本。“清除历史记录”会同时删除两者。";
 "Waft is listening" = "Waft正在聆听";
 "Waft listens for these languages." = "Waft会识别以下语言。";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft仅在你听写时聆听，音频不会离开你的Mac。";

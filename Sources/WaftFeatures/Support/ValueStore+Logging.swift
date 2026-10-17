@@ -19,19 +19,29 @@ extension ValueStore {
         return value
     }
 
-    func write(_ value: Value) {
+    @discardableResult
+    func write(_ value: Value) -> Bool {
         do {
             try save(value)
+
+            return true
         } catch {
             logFailure(to: "save", error)
+
+            return false
         }
     }
 
-    func remove() {
+    @discardableResult
+    func remove() -> Bool {
         do {
             try delete()
+
+            return true
         } catch {
             logFailure(to: "delete", error)
+
+            return false
         }
     }
 
