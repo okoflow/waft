@@ -7,30 +7,12 @@ enum AppStatus: Equatable {
     case recording
     case ready
 
-    var symbolName: String {
-        switch self {
-        case .needsPermission: "mic.slash"
-        case let .speechModel(state): Self.symbolName(for: state.phase)
-        case .recording: "mic.fill"
-        case .ready: "mic"
-        }
-    }
-
     static func readyMessage(in settings: Settings) -> String {
         let key = settings.pushToTalkKey.shortTitle
 
         return settings.dictationStart == .tap
             ? String(localized: "Ready: tap \(key) and speak")
             : String(localized: "Ready: hold \(key) and speak")
-    }
-
-    private static func symbolName(for phase: SpeechModelState.Phase) -> String {
-        switch phase {
-        case .notInstalled, .loading: "hourglass"
-        case .downloading: "arrow.down.circle"
-        case .failed: "mic.badge.xmark"
-        case .ready: "mic"
-        }
     }
 
     func title(in settings: Settings) -> String {
