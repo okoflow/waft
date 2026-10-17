@@ -47,7 +47,7 @@ private struct ProHero: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
             AppIcon(size: 64)

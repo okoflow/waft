@@ -104,7 +104,7 @@ private struct DropZone: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
         let isTargeted = model.isDropTargeted
 
         VStack(spacing: Metrics.controlSpacing) {
@@ -200,7 +200,7 @@ private struct ProGateBanner: View {
     let showPro: () -> Void
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
             WaftPlusMark(size: 20)
