@@ -15,6 +15,8 @@ mode's name; once the text is pasted, it shows the text.
 - Pressing another key while you hold the dictation key cancels the
   recording, so shortcuts and special characters that use the key keep
   working.
+- Press <kbd>Esc</kbd> to cancel a recording you started by mistake, held or
+  hands-free: nothing is pasted. The key still reaches the app in front.
 - A recording ends on its own after 5 minutes, and Waft pastes what you said.
 - You can dictate again while the previous text is still being recognized;
   texts arrive in the order you spoke them.

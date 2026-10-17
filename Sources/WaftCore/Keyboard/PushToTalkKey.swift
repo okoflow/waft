@@ -96,7 +96,7 @@ package struct PushToTalkKey: Hashable, Sendable {
         case .modifiersChanged:
             modifierEvent(for: keyEvent)
         case .keyDown:
-            isOwnFunctionKey(keyEvent) ? .keyDown : .otherKeyDown
+            keyDownEvent(for: keyEvent)
         case .keyUp:
             isOwnFunctionKey(keyEvent) ? .keyUp : nil
         }
@@ -112,6 +112,14 @@ package struct PushToTalkKey: Hashable, Sendable {
         guard modifierFlag == nil else { return isHeld(in: keyEvent.flags) }
 
         return keyEvent.kind == .keyDown && keyEvent.keyCode == keyCode
+    }
+
+    private func keyDownEvent(for keyEvent: KeyEvent) -> PushToTalk.Event {
+        if isOwnFunctionKey(keyEvent) {
+            return .keyDown
+        }
+
+        return keyEvent.isEscape ? .escapeDown : .otherKeyDown
     }
 
     private func modifierEvent(for keyEvent: KeyEvent) -> PushToTalk.Event? {

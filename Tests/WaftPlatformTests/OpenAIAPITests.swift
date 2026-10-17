@@ -78,4 +78,18 @@ struct OpenAIAPITests {
             try Self.api.answer(from: Data(json.utf8))
         }
     }
+
+    @Test(arguments: [
+        #"{"message":"private dictated text","type":"private clipboard text","code":"Bearer private-token"}"#,
+        #"{"message":false,"type":[],"code":{}}"#,
+        #""private dictated text""#,
+        "null",
+    ])
+    func `reports a failed response regardless of optional server diagnostics`(diagnostics: String) {
+        let body = Data("{\"status\":\"failed\",\"error\":\(diagnostics),\"output\":[]}".utf8)
+
+        #expect(throws: RewriteError.serviceUnavailable) {
+            try Self.api.answer(from: body)
+        }
+    }
 }

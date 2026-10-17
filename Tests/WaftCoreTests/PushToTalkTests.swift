@@ -102,6 +102,14 @@ struct PushToTalkTests {
         #expect(actions == [.startRecording, .discardRecording(.otherKeyPressed), nil, .startRecording])
     }
 
+    @Test(arguments: [
+        [(PushToTalk.Event.keyDown, 0.0), (.escapeDown, 1)],
+        [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.escapeDown, 3)],
+    ])
+    func `cancels the recording on Escape, also hands-free`(steps: [(PushToTalk.Event, TimeInterval)]) {
+        #expect(handle(steps).last == .discardRecording(.cancelled))
+    }
+
     @Test
     func `restarts on a new press right after another key canceled the hold`() {
         let actions = handle([(.keyDown, 0), (.otherKeyDown, 1), (.keyDown, 2)])
@@ -117,7 +125,7 @@ struct PushToTalkTests {
         #expect(handle(steps).last == .discardRecording(.interrupted))
     }
 
-    @Test(arguments: [PushToTalk.Event.keyUp, .otherKeyDown, .monitorDisabled, .tick])
+    @Test(arguments: [PushToTalk.Event.keyUp, .otherKeyDown, .escapeDown, .monitorDisabled, .tick])
     func `ignores events while idle`(event: PushToTalk.Event) {
         #expect(handle([(event, 1)]) == [nil])
     }
