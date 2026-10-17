@@ -116,6 +116,8 @@ private struct HistoryRow: View {
                     .font(.rowTitle)
                     .lineLimit(3)
                     .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentDirection(of: entry.text)
 
                 Text(details)
                     .font(.rowDetail)
