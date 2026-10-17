@@ -342,7 +342,7 @@
 "Translation" = "翻訳";
 "Try it" = "試してみましょう";
 "Turn off editing by voice" = "「音声で編集」をオフにする";
-"Turns the Mac's volume down by half while you speak, then back up." = "話している間はMacの音量を半分にし、終わったら元に戻します。";
+"Turns the Mac's volume down to a quarter while you speak, then back up." = "話している間はMacの音量を4分の1にし、終わったら元に戻します。";
 "Two-way with" = "双方向翻訳";
 "Unlock Waft+…" = "Waft+のロックを解除…";
 "Unlock…" = "ロックを解除…";
