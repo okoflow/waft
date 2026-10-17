@@ -1,23 +1,23 @@
 pre-commit:
   jobs:
     - name: format-check
+      run: make format-check
       glob:
         - "*.{entitlements,plist,sh,swift}"
         - .editorconfig
         - .swiftformat
-      run: make format-check
 
     - name: lint
+      run: make lint
       glob:
         - "*.swift"
         - .swiftlint.yml
-      run: make lint
 
     - name: shellcheck
+      run: make shellcheck
       glob:
         - "*.sh"
         - .shellcheckrc
-      run: make shellcheck
 
     - name: spelling
       run: make spelling
