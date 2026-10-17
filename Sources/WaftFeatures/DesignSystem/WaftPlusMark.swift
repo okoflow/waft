@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WaftPlusMark: View {
-    var size: CGFloat = 12
+    let size: CGFloat
 
     var body: some View {
         PlusShape()
