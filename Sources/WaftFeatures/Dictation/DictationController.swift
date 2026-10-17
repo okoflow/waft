@@ -59,6 +59,10 @@ final class DictationController {
         }
     }
 
+    func prepareToQuit() {
+        recordings.discard(because: .interrupted)
+    }
+
     private func handle(_ keyEvent: KeyEvent) {
         guard !keyRecorder.isRecording else { return }
 

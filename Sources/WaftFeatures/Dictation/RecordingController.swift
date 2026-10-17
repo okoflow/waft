@@ -17,6 +17,7 @@ final class RecordingController {
     private let focusTracker: any FocusTracker
     private let keyboardState: any KeyboardState
     private let sounds: any FeedbackSoundPlayer
+    private let otherSounds: OtherSoundsLowering
     private let settings: SettingsModel
     private let hud: HUDController
     private let hudDelay: Duration
@@ -33,6 +34,7 @@ final class RecordingController {
         focusTracker: any FocusTracker,
         keyboardState: any KeyboardState,
         sounds: any FeedbackSoundPlayer,
+        otherSounds: OtherSoundsLowering,
         settings: SettingsModel,
         hud: HUDController,
         hudDelay: Duration = .milliseconds(300),
@@ -42,6 +44,7 @@ final class RecordingController {
         self.focusTracker = focusTracker
         self.keyboardState = keyboardState
         self.sounds = sounds
+        self.otherSounds = otherSounds
         self.settings = settings
         self.hud = hud
         self.hudDelay = hudDelay
@@ -125,6 +128,7 @@ final class RecordingController {
         guard let ended = recording else { return nil }
 
         recording = nil
+        otherSounds.restore()
 
         ended.hudTask?.cancel()
         ended.watchdogTimer?.invalidate()
@@ -147,6 +151,10 @@ final class RecordingController {
                 sounds.play(.recordingStarted)
             }
 
+            if settings.settings.lowersOtherSounds {
+                otherSounds.lower { [weak self] in self?.recording?.id == id && self?.isRecording == true }
+            }
+
         case let .failed(id, failure) where id == recording?.id:
             fail(with: failure)
 
@@ -160,6 +168,7 @@ final class RecordingController {
 
         failed.hasFailed = true
         recording = failed
+        otherSounds.restore()
 
         hud.hideListening()
         hud.show(.recordingFailed(failure.message))

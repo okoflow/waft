@@ -163,6 +163,7 @@
 "Listening…" = "正在聆聽⋯";
 "Local server" = "本機伺服器";
 "Locked" = "已鎖定";
+"Lower other sounds while recording" = "錄音時降低其他聲音";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOV等";
 "Make modes with your own instructions, or tune the built-in ones." = "用你自己的指示建立模式，或調整內建模式。";
 "Makes fewer mistakes and is still quick." = "錯誤較少，速度依然很快。";
@@ -341,6 +342,7 @@
 "Translation" = "翻譯";
 "Try it" = "試試看";
 "Turn off editing by voice" = "關閉語音編輯";
+"Turns the Mac's volume down by half while you speak, then back up." = "說話時將Mac的音量減半，說完後恢復。";
 "Two-way with" = "雙向互譯";
 "Unlock Waft+…" = "解鎖Waft+⋯";
 "Unlock…" = "解鎖⋯";

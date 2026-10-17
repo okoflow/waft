@@ -23,6 +23,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case historyRetention
         case historyLimit
         case playsSounds
+        case lowersOtherSounds
         case showsMenuBarIcon
         case microphoneID
         case hasCompletedSetup
@@ -47,6 +48,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var historyRetention = HistoryRetention.month
     package var historyLimit = DictationHistory.defaultLimit
     package var playsSounds = true
+    package var lowersOtherSounds = true
     package var showsMenuBarIcon = true
     package var microphoneID: String?
     package var hasCompletedSetup = false
@@ -80,6 +82,7 @@ package struct Settings: Codable, Equatable, Sendable {
         historyRetention = container.decode(.historyRetention, default: historyRetention)
         historyLimit = DictationHistory.limits.contains(storedLimit) ? storedLimit : historyLimit
         playsSounds = container.decode(.playsSounds, default: playsSounds)
+        lowersOtherSounds = container.decode(.lowersOtherSounds, default: lowersOtherSounds)
         showsMenuBarIcon = container.decode(.showsMenuBarIcon, default: showsMenuBarIcon)
         microphoneID = container.decodeIfValid(.microphoneID)
         hasCompletedSetup = container.decode(.hasCompletedSetup, default: hasCompletedSetup)

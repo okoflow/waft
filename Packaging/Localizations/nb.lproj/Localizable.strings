@@ -163,6 +163,7 @@
 "Listening…" = "Lytter…";
 "Local server" = "Lokal tjener";
 "Locked" = "Låst";
+"Lower other sounds while recording" = "Demp andre lyder under opptak";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV og flere";
 "Make modes with your own instructions, or tune the built-in ones." = "Lag moduser med egne instruksjoner, eller juster de innebygde.";
 "Makes fewer mistakes and is still quick." = "Gjør færre feil og er fortsatt rask.";
@@ -341,6 +342,7 @@
 "Translation" = "Oversetting";
 "Try it" = "Prøv selv";
 "Turn off editing by voice" = "Slå av redigering med stemmen";
+"Turns the Mac's volume down by half while you speak, then back up." = "Halverer volumet på Macen mens du snakker, og setter det tilbake etterpå.";
 "Two-way with" = "Toveis med";
 "Unlock Waft+…" = "Lås opp Waft+…";
 "Unlock…" = "Lås opp…";

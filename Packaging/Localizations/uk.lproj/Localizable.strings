@@ -163,6 +163,7 @@
 "Listening…" = "Слухаю…";
 "Local server" = "Локальний сервер";
 "Locked" = "Заблоковано";
+"Lower other sounds while recording" = "Приглушувати інші звуки під час запису";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV та інші";
 "Make modes with your own instructions, or tune the built-in ones." = "Створюйте режими з власними інструкціями або налаштовуйте вбудовані.";
 "Makes fewer mistakes and is still quick." = "Помиляється рідше й усе ще швидка.";
@@ -341,6 +342,7 @@
 "Translation" = "Переклад";
 "Try it" = "Спробуйте";
 "Turn off editing by voice" = "Вимкнути редагування голосом";
+"Turns the Mac's volume down by half while you speak, then back up." = "Зменшує гучність Mac удвічі, поки ви говорите, а потім повертає її.";
 "Two-way with" = "Двосторонній переклад";
 "Unlock Waft+…" = "Розблокувати Waft+…";
 "Unlock…" = "Розблокувати…";

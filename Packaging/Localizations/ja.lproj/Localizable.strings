@@ -163,6 +163,7 @@
 "Listening…" = "聞き取り中…";
 "Local server" = "ローカルサーバ";
 "Locked" = "ロック中";
+"Lower other sounds while recording" = "録音中はほかのサウンドを小さくする";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOVなど";
 "Make modes with your own instructions, or tune the built-in ones." = "自分の指示でモードを作ったり、標準のモードを調整したりできます。";
 "Makes fewer mistakes and is still quick." = "誤りが少なく、十分に高速です。";
@@ -341,6 +342,7 @@
 "Translation" = "翻訳";
 "Try it" = "試してみましょう";
 "Turn off editing by voice" = "「音声で編集」をオフにする";
+"Turns the Mac's volume down by half while you speak, then back up." = "話している間はMacの音量を半分にし、終わったら元に戻します。";
 "Two-way with" = "双方向翻訳";
 "Unlock Waft+…" = "Waft+のロックを解除…";
 "Unlock…" = "ロックを解除…";

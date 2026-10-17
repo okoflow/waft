@@ -19,6 +19,7 @@ package struct AppDependencies {
     let permissions: any PermissionProvider
     let loginItem: any LoginItem
     let sounds: any FeedbackSoundPlayer
+    let outputVolume: any OutputVolume
     let updater: any AppUpdater
     let lifecycle: any AppLifecycle
     let settingsStore: any ValueStore<Settings>
@@ -50,6 +51,7 @@ package struct AppDependencies {
         permissions: any PermissionProvider,
         loginItem: any LoginItem,
         sounds: any FeedbackSoundPlayer,
+        outputVolume: any OutputVolume,
         updater: any AppUpdater,
         lifecycle: any AppLifecycle,
         settingsStore: any ValueStore<Settings>,
@@ -80,6 +82,7 @@ package struct AppDependencies {
         self.permissions = permissions
         self.loginItem = loginItem
         self.sounds = sounds
+        self.outputVolume = outputVolume
         self.updater = updater
         self.lifecycle = lifecycle
         self.settingsStore = settingsStore
