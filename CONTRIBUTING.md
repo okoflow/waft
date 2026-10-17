@@ -139,8 +139,10 @@ directive.
   message. [Invariants](docs/architecture.md#invariants) lists what never
   reaches the log.
 - Animate with `.motion(_:value:)` and a `Motion` token rather than
-  `.animation(_:value:)`, so Reduce Motion turns every animation into
-  `Motion.reduced`.
+  `.animation(_:value:)`, and pass a scoped or transition animation through
+  `Motion.adapted(_:reducesMotion:)`, so Reduce Motion turns every animation
+  into `Motion.reduced`. The `no_bare_animation` rule catches the plain
+  modifiers.
 
 ### Text and translations
 
