@@ -77,6 +77,8 @@
 "Clear" = "مسح";
 "Click the box, hold %@, and say “Hello, Waft”." = "انقر على الحقل، واضغط مطولًا على %@، وقل \"مرحبًا يا Waft\".";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "انقر على الحقل، واضغط على %@، وقل \"مرحبًا يا Waft\"، ثم اضغط عليه مرة أخرى.";
+"Click to copy all" = "انقر لنسخ الكل";
+"Click to copy" = "انقر للنسخ";
 "Click, then press the key to use" = "انقر، ثم اضغط على المفتاح المراد استخدامه";
 "Continue" = "متابعة";
 "Copied" = "تم النسخ";

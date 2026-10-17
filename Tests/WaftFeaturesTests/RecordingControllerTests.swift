@@ -58,7 +58,7 @@ struct RecordingControllerTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
         #expect(recordings.isRecording)
-        #expect(hud.content == .listening(badge: nil, isHandsFree: false))
+        #expect(hud.content == .listening(badge: "Light", isHandsFree: false))
     }
 
     @Test
@@ -79,7 +79,7 @@ struct RecordingControllerTests {
         recordings.onFinish = { _, target, samples in delivery = (target.bundleIdentifier, samples) }
         recordings.begin(Self.dictation)
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: nil, isHandsFree: false) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
 
         focusTracker.focus = .app("com.example.mail")
         recordings.finish(releasedAt: 2)
@@ -114,7 +114,7 @@ struct RecordingControllerTests {
         let recordings = model()
         recordings.begin(Self.dictation)
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: nil, isHandsFree: false) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
 
         recordings.discard(because: .otherKeyPressed)
 
@@ -160,7 +160,7 @@ struct RecordingControllerTests {
     }
 
     @Test(arguments: [
-        (Self.dictation, Mode?.none, String?.none),
+        (Self.dictation, Mode?.none, "Light"),
         (Self.dictation, .clean, "Clean"),
         (Self.dictation, .custom(Self.emailReply.id), "Email reply"),
         (Self.edit, .clean, "Edit"),
@@ -168,7 +168,7 @@ struct RecordingControllerTests {
     func `shows the listening HUD with the target app's mode as its badge`(
         trigger: RecordingTrigger,
         appMode: Mode?,
-        badge: String?,
+        badge: String,
     ) async {
         settings.settings.customModes = [Self.emailReply]
         settings.settings.appModes.set(appMode, for: "com.example.notes")
@@ -194,7 +194,7 @@ struct RecordingControllerTests {
         recordings.begin(Self.dictation)
         recordings.lockHandsFree()
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: nil, isHandsFree: true) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
     }
 
     @Test

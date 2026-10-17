@@ -21,7 +21,7 @@ struct WaftApp: App {
         MenuBarExtra(isInserted: isInserted) {
             MenuContent(model: appDelegate.model)
         } label: {
-            MenuBarIcon(model: appDelegate.model)
+            MenuBarIcon()
         }
         .menuBarExtraStyle(.menu)
     }

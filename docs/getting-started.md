@@ -39,8 +39,9 @@ menu brings it back.
 ## 3. Dictate anywhere
 
 1. Click into any text field: a message, a document, a prompt for an AI.
-2. Hold <kbd>right ⌥</kbd> and speak. The HUD at the bottom of the screen
-   shows that Waft is listening.
+2. Hold <kbd>right ⌥</kbd> and speak. The HUD grows out of the notch, or
+   out of the top edge of a screen without one, to show that Waft is
+   listening.
 3. Let go. The text appears at the cursor.
 
 If the first word goes missing, [Limits](how-it-works.md#limits) explains why.

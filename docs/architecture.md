@@ -70,7 +70,7 @@ sends a rewrite through an API description per service (`AnthropicAPI`,
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter` |
 | `Models` | The app-wide observable state |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) |
-| `HUD` | `HUDController` and the HUD window |
+| `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon and the menu |
 | `Onboarding` | The setup guide |
 | `Settings` | The Settings window and a folder per pane |

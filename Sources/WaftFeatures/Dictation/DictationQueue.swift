@@ -126,7 +126,10 @@ final class DictationQueue {
         }
 
         if job.mode.usesAI, job.allowsAI {
-            hud.setWorking(Self.workingLabel(for: job, spoken: transcript.language))
+            hud.setWorking(
+                Self.workingLabel(for: job, spoken: transcript.language),
+                cleanup: HUDCleanup(mode: job.modeTitle, transcript: transcript.text),
+            )
         }
 
         let processed = await processor.process(

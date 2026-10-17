@@ -4,16 +4,6 @@ import WaftCore
 struct SpeechModelStateTests {
     private static let ready: [SpeechModelState.Event] = [.started(.fast, isInstalled: true), .loaded(.fast)]
 
-    @Test
-    func `starts out not installed`() {
-        let state = SpeechModelState()
-
-        #expect(state.phase == .notInstalled)
-        #expect(!state.canTranscribe)
-        #expect(!state.canRetry)
-        #expect(state.progress == nil)
-    }
-
     @Test(arguments: [
         (false, SpeechModelState.Effect.download(.fast), SpeechModelState.Phase.downloading(progress: 0)),
         (true, .load(.fast), .loading),

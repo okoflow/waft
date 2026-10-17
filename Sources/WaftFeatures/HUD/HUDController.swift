@@ -9,6 +9,9 @@ final class HUDController {
 
     private(set) var content: HUDContent?
     private(set) var levels = [Float](repeating: 0, count: barCount)
+    private(set) var listeningSince = Date.now
+    private(set) var cleanup: HUDCleanup?
+    private(set) var hasCopied = false
 
     @ObservationIgnored private var window: (any HUDWindow)?
     @ObservationIgnored private var queuedMessages: [HUDMessage] = []
@@ -19,7 +22,15 @@ final class HUDController {
 
     private let messageDuration: (HUDMessage) -> Duration
     private let orderOutPause: Duration
+    private let copiedPause: Duration
+    private let copy: (String) -> Void
     private let makeWindow: (HUDController) -> any HUDWindow
+
+    var canCopyMessage: Bool {
+        guard case let .message(message) = content else { return false }
+
+        return message.isCopyable
+    }
 
     private var isListening: Bool {
         if case .listening = content {
@@ -39,17 +50,22 @@ final class HUDController {
 
     init(
         messageDuration: @escaping (HUDMessage) -> Duration = \.duration,
-        orderOutPause: Duration = .milliseconds(400),
-        makeWindow: @escaping (HUDController) -> any HUDWindow = { HUDPanel(rootView: HUDView(hud: $0)) },
+        orderOutPause: Duration = .seconds(1),
+        copiedPause: Duration = .milliseconds(1200),
+        copy: @escaping (String) -> Void,
+        makeWindow: @escaping (HUDController) -> any HUDWindow = { HUDPanel(hud: $0) },
     ) {
         self.messageDuration = messageDuration
         self.orderOutPause = orderOutPause
+        self.copiedPause = copiedPause
+        self.copy = copy
         self.makeWindow = makeWindow
     }
 
-    func showListening(badge: String?, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
+    func showListening(badge: String, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
         messageTask?.cancel()
         levels = [Float](repeating: 0, count: Self.barCount)
+        listeningSince = .now
 
         present(.listening(badge: badge, isHandsFree: isHandsFree))
 
@@ -72,6 +88,7 @@ final class HUDController {
         levelTimer = nil
 
         if let label {
+            cleanup = nil
             content = .working(label)
         } else {
             hide()
@@ -79,10 +96,25 @@ final class HUDController {
         }
     }
 
-    func setWorking(_ label: String?) {
+    func setWorking(_ label: String?, cleanup: HUDCleanup? = nil) {
         workingLabel = label
+        self.cleanup = cleanup
 
         showNext()
+    }
+
+    func copyMessage() {
+        guard case let .message(message) = content, message.isCopyable else { return }
+
+        copy(message.title)
+        hasCopied = true
+
+        messageTask?.cancel()
+        messageTask = Task { [weak self, copiedPause] in
+            guard await Task.slept(for: copiedPause) else { return }
+
+            self?.messageDidExpire()
+        }
     }
 
     func show(_ message: HUDMessage) {
@@ -120,6 +152,7 @@ final class HUDController {
     }
 
     private func showMessage(_ message: HUDMessage) {
+        hasCopied = false
         present(.message(message))
 
         messageTask = Task { [weak self, duration = messageDuration(message)] in

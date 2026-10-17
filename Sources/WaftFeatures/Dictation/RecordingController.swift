@@ -194,12 +194,10 @@ final class RecordingController {
         hud.showListening(badge: badge(for: recording), isHandsFree: recording.isHandsFree) { recorder.inputLevel }
     }
 
-    private func badge(for recording: ActiveRecording) -> String? {
+    private func badge(for recording: ActiveRecording) -> String {
         guard recording.purpose == .dictation else { return String(localized: "Edit") }
 
-        let mode = settings.settings.mode(for: recording.target?.bundleIdentifier)
-
-        return mode == .light ? nil : settings.settings.title(of: mode)
+        return settings.settings.title(of: settings.settings.mode(for: recording.target?.bundleIdentifier))
     }
 
     private func captureTarget(for id: RecordingID) {

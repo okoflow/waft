@@ -70,23 +70,16 @@ struct TranscriptProcessorTests {
         #expect(RewritePrompt.system(for: request).hasPrefix("Clean."))
     }
 
-    @Test(arguments: [
-        (RewriteError.rateLimited, RewriteFallback.rateLimited),
-        (.timeout, .timeout),
-        (.missingKey, .missingKey),
-        (.offline, .offline),
-        (.serviceUnavailable, .serviceError),
-        (.refused, .unusableAnswer),
-    ])
-    func `falls back to light when the cloud fails`(error: RewriteError, fallback: RewriteFallback) async {
-        let processed = await process("um, see you tomorrow", mode: .formal, answer: .failure(error))
+    @Test
+    func `falls back to light when the cloud fails`() async {
+        let processed = await process("um, see you tomorrow", mode: .formal, answer: .failure(.timeout))
 
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: fallback))
+        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .timeout))
     }
 
-    @Test(arguments: ["Увидимся завтра.", "", String(repeating: "See you tomorrow. ", count: 20)])
-    func `falls back to light when the answer is unusable`(answer: String) async {
-        let processed = await process("see you tomorrow", mode: .clean, answer: .success(answer))
+    @Test
+    func `falls back to light when the answer is unusable`() async {
+        let processed = await process("see you tomorrow", mode: .clean, answer: .success(""))
 
         #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
     }

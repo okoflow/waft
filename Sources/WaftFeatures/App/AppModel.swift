@@ -56,7 +56,7 @@ package final class AppModel {
         permissions = PermissionMonitor(provider: dependencies.permissions)
         pro = Self.makePro(dependencies)
         speechModelController = SpeechModelController(transcriber: dependencies.transcriber, settings: settings, pro: pro)
-        hud = HUDController()
+        hud = HUDController(copy: dependencies.clipboard.copy)
         keyRecorder = KeyRecorder()
         statistics = StatisticsModel(store: dependencies.statisticsStore)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)

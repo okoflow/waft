@@ -77,6 +77,8 @@
 "Clear" = "Ryd";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klik i feltet, hold %@ nede, og sig “Hej, Waft”.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klik i feltet, tryk på %@, sig “Hej, Waft”, og tryk på tasten igen.";
+"Click to copy all" = "Klik for at kopiere alt";
+"Click to copy" = "Klik for at kopiere";
 "Click, then press the key to use" = "Klik, og tryk derefter på den ønskede tast";
 "Continue" = "Fortsæt";
 "Copied" = "Kopieret";

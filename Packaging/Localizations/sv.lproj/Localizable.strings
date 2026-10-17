@@ -77,6 +77,8 @@
 "Clear" = "Rensa";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klicka i fältet, håll ned %@ och säg ”Hej, Waft”.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klicka i fältet, tryck på %@, säg ”Hej, Waft” och tryck på den igen.";
+"Click to copy all" = "Klicka för att kopiera allt";
+"Click to copy" = "Klicka för att kopiera";
 "Click, then press the key to use" = "Klicka och tryck sedan på önskad tangent";
 "Continue" = "Fortsätt";
 "Copied" = "Kopierad";

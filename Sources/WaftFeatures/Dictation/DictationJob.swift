@@ -5,6 +5,7 @@ struct DictationJob {
     let language: Language?
     let variants: WritingVariants
     let mode: Mode
+    let modeTitle: String
     let setup: RewriteSetup
     let vocabulary: Vocabulary
     let target: FocusTarget
@@ -27,6 +28,7 @@ struct DictationJob {
         language = settings.languages.forcedLanguage
         variants = settings.writingVariants
         self.mode = mode
+        modeTitle = settings.title(of: mode)
         setup = settings.rewriteSetup(for: mode)
         self.vocabulary = vocabulary
         self.target = target

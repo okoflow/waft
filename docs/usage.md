@@ -6,9 +6,13 @@ This page describes everything Waft does and every setting.
 
 ## Dictating
 
-Hold the dictation key, speak, and let go. While you speak, the HUD at the
-bottom of the screen shows a level meter and, in any mode but Light, the
-mode's name; once the text is pasted, it shows the text.
+Hold the dictation key, speak, and let go. While you speak, the HUD beside
+the notch, or at the top of a screen without one, shows how long you've
+been speaking and a level meter. Once you let go, it shows that Waft is
+transcribing, and while an AI mode cleans the text up, the mode's name and
+what Whisper heard.
+After pasting, it shows the text, up to three lines; click it to copy the
+whole text again.
 
 - A quick tap does nothing unless you choose **Tap**, so the key keeps its
   usual meaning.
@@ -36,7 +40,8 @@ sets what the key does:
 - **Hold or double-tap**, the default: hold the key, or tap it twice to start
   and once more to finish.
 
-While Waft listens without the key held, the HUD shows "Hands-free".
+While Waft listens without the key held, the HUD shows a lock instead of
+the microphone.
 
 ### The speech model
 

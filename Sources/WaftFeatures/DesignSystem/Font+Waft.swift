@@ -20,7 +20,6 @@ extension Font {
     static let menuChevron = Font.system(size: 8, weight: .bold)
     static let removeGlyph = Font.system(size: 14)
     static let dropZoneGlyph = Font.system(size: 30)
-    static let hudSymbol = Font.system(size: 15, weight: .semibold)
-    static let hudMessageSymbol = Font.system(size: 16, weight: .semibold)
-    static let hudBadge = Font.caption.weight(.semibold)
+    static let hudSymbol = Font.system(size: 13, weight: .semibold)
+    static let hudCaption = Font.system(size: 11, weight: .semibold)
 }
