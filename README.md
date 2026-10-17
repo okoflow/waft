@@ -37,7 +37,7 @@
   <a href="docs/privacy.md">Privacy</a>
 </p>
 
-https://github.com/user-attachments/assets/a6d44cd4-8c34-40dc-84f6-095fab844ae6
+https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
 
 **Hold <kbd>right ⌥</kbd>, speak, let go.** The text appears wherever you are
 typing, in any app. Speech is recognized on your Mac; an AI mode cleans it up
