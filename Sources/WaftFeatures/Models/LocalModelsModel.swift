@@ -15,6 +15,8 @@ final class LocalModelsModel {
 
     @ObservationIgnored private(set) var check: Task<Void, Never>?
 
+    @ObservationIgnored private var checkedAddress: String?
+
     private let browser: any LocalServerBrowsing
     private let settings: SettingsModel
 
@@ -27,6 +29,7 @@ final class LocalModelsModel {
         let server = settings.settings.localServer
 
         beginCheck()
+        checkedAddress = server.baseURL
         check = Task { [weak self] in
             await self?.checkServer(at: server)
         }
@@ -37,6 +40,16 @@ final class LocalModelsModel {
         check = Task { [weak self] in
             await self?.detectServer()
         }
+    }
+
+    func addressDidChange() {
+        guard settings.settings.localServer.baseURL != checkedAddress else { return }
+
+        check?.cancel()
+        check = nil
+        checkedAddress = nil
+        serverModels = []
+        serverState = .unknown
     }
 
     private func beginCheck() {
@@ -50,11 +63,11 @@ final class LocalModelsModel {
         do throws(RewriteError) {
             let models = try await browser.models(at: server)
 
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, isCurrent(server) else { return }
 
             showRunning(with: models)
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, isCurrent(server) else { return }
 
             showNotRunning()
         }
@@ -81,6 +94,7 @@ final class LocalModelsModel {
                 server.model = model
             }
 
+            checkedAddress = server.baseURL
             settings.settings.localServer = server
             showRunning(with: models)
 
@@ -90,6 +104,10 @@ final class LocalModelsModel {
         guard !Task.isCancelled else { return }
 
         showNotRunning()
+    }
+
+    private func isCurrent(_ server: LocalServer) -> Bool {
+        settings.settings.localServer.baseURL == server.baseURL
     }
 
     private func showRunning(with models: [String]) {

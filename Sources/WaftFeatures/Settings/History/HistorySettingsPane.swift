@@ -8,7 +8,10 @@ struct HistorySettingsPane: View {
     let state: SettingsWindowState
 
     private var emptyText: LocalizedStringKey {
-        history.searchText.isEmpty ? "No dictations yet" : "No matches"
+        guard history.searchText.isEmpty else { return "No matches" }
+        guard history.hasUnreadableHistory else { return "No dictations yet" }
+
+        return "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both."
     }
 
     var body: some View {
@@ -72,7 +75,7 @@ struct HistorySettingsPane: View {
                 .frame(width: 200)
         } footer: {
             Button("Clear History…", role: .destructive, action: confirmClear)
-                .disabled(history.history.entries.isEmpty)
+                .disabled(history.history.entries.isEmpty && !history.hasUnreadableHistory)
         }
     }
 

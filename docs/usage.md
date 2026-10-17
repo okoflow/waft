@@ -111,8 +111,9 @@ up in the section that appears below it.
 - **Local server** calls a model you run yourself with Ollama, LM Studio,
   llama.cpp, MLX, or Jan. **Detect** finds a running server, fills in
   **Server address**, and picks one of its models under **Model**. Any server
-  with an OpenAI-compatible `/v1/chat/completions` endpoint works, and the text
-  never leaves your Mac.
+  with an OpenAI-compatible `/v1/chat/completions` endpoint works. With a server
+  on your Mac the text never leaves it; with an address elsewhere it goes only
+  to that server, and Settings says so.
 - **Claude** needs an API key created inside a workspace in the
   [Anthropic Console](https://console.anthropic.com/settings/keys).
 - **OpenAI** needs an API key from the

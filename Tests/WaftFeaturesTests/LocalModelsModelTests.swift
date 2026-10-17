@@ -50,6 +50,33 @@ struct LocalModelsModelTests {
     }
 
     @Test
+    func `forgets the status and models of an address that was edited`() async {
+        let localModels = LocalModelsModel(browser: FakeLocalServerBrowser([Self.ollama: ["qwen3"]]), settings: settings)
+        localModels.refresh()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { localModels.serverState == .running })
+
+        settings.settings.localServer.baseURL = "http://192.168.1.20:11434/v1"
+        localModels.addressDidChange()
+
+        #expect(localModels.serverState == .unknown)
+        #expect(localModels.serverModels.isEmpty)
+    }
+
+    @Test
+    func `keeps the models of the address it just detected`() async {
+        let localModels = LocalModelsModel(browser: FakeLocalServerBrowser([Self.lmStudio: ["qwen3"]]), settings: settings)
+        localModels.detect()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { localModels.serverState == .running })
+
+        localModels.addressDidChange()
+
+        #expect(localModels.serverState == .running)
+        #expect(localModels.serverModels == ["qwen3"])
+    }
+
+    @Test
     func `ignores the result of a check that a newer one replaced`() async throws {
         let browser = FakeLocalServerBrowser([Self.ollama: ["stale"], Self.lmStudio: ["qwen3"]], holding: Self.ollama)
         let localModels = LocalModelsModel(browser: browser, settings: settings)

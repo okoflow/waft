@@ -103,6 +103,7 @@ package final class AppModel {
         modeSwitcher.start()
         frontmostApp.start()
         updates.start()
+        history.expireOldEntries()
         hud.prepareWindow()
 
         if needsSetup {

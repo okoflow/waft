@@ -18,9 +18,11 @@ struct ModeEditorPage: View {
     }
 
     private var instructionsNote: LocalizedStringKey {
-        provider.isCloud
-            ? "Sent to \(provider.title) with your text."
-            : "Used by \(provider.title) on this Mac."
+        guard !provider.isCloud, settings.settings.localServer.isOnThisMac else {
+            return "Sent to \(provider.title) with your text."
+        }
+
+        return "Used by \(provider.title) on this Mac."
     }
 
     private var instructions: Binding<String> {

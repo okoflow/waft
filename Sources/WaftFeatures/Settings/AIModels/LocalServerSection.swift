@@ -15,15 +15,20 @@ struct LocalServerSection: View {
         }
     }
 
+    private var subtitle: LocalizedStringKey {
+        guard settings.settings.localServer.isOnThisMac else {
+            return "Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there."
+        }
+
+        return "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it."
+    }
+
     private var modelTitle: String {
         settings.settings.localServer.model.isEmpty ? String(localized: "Choose") : settings.settings.localServer.model
     }
 
     var body: some View {
-        SettingsSection(
-            "Local server",
-            subtitle: "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it.",
-        ) {
+        SettingsSection("Local server", subtitle: subtitle) {
             HStack(spacing: Metrics.controlSpacing) {
                 InputField(
                     "Server address",
@@ -50,5 +55,6 @@ struct LocalServerSection: View {
             }
         }
         .onAppear(perform: localModels.refresh)
+        .onChange(of: settings.settings.localServer.baseURL, localModels.addressDidChange)
     }
 }

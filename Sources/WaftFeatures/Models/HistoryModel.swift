@@ -24,12 +24,15 @@ final class HistoryModel {
     private static let recentCount = 5
 
     private(set) var history: DictationHistory
+    private(set) var hasUnreadableHistory = false
 
     var searchText = "" {
         didSet { pageIndex = 0 }
     }
 
     private var pageIndex = 0
+
+    @ObservationIgnored private var expiry: Task<Void, Never>?
 
     private let store: any ValueStore<DictationHistory>
     private let settings: SettingsModel
@@ -66,6 +69,7 @@ final class HistoryModel {
         self.settings = settings
         self.clipboard = clipboard
         history = store.read(default: DictationHistory())
+        hasUnreadableHistory = history.entries.isEmpty && store.exists()
 
         keepWithinLimits()
     }
@@ -93,6 +97,7 @@ final class HistoryModel {
     func removeAll() {
         guard store.remove() else { return }
 
+        hasUnreadableHistory = false
         history.removeAll()
         pageIndex = 0
     }
@@ -103,6 +108,17 @@ final class HistoryModel {
         history.add(entry)
         prune(at: entry.date)
         store.write(history)
+    }
+
+    func expireOldEntries(every interval: Duration = .seconds(3600)) {
+        expiry?.cancel()
+        expiry = Task { [weak self] in
+            while await Task.slept(for: interval) {
+                guard let self else { return }
+
+                keepWithinLimits()
+            }
+        }
     }
 
     func keepWithinLimits() {
