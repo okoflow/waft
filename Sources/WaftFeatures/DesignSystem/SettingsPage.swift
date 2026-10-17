@@ -2,17 +2,20 @@ import SwiftUI
 
 struct SettingsPage<Content: View, Accessory: View>: View {
     private let title: LocalizedStringKey
+    private let needsWaftPlus: Bool
     private let back: (() -> Void)?
     private let accessory: Accessory
     private let content: Content
 
     init(
         _ title: LocalizedStringKey,
+        needsWaftPlus: Bool = false,
         back: @escaping () -> Void,
         @ViewBuilder accessory: () -> Accessory,
         @ViewBuilder content: () -> Content,
     ) {
         self.title = title
+        self.needsWaftPlus = needsWaftPlus
         self.back = back
         self.accessory = accessory()
         self.content = content()
@@ -39,7 +42,7 @@ struct SettingsPage<Content: View, Accessory: View>: View {
         HStack(spacing: Metrics.controlSpacing) {
             if let back {
                 Button(action: back) {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "chevron.backward")
                         .font(.glyph)
                         .frame(width: Metrics.controlHeight, height: Metrics.controlHeight)
                         .background(Palette.control, in: Circle())
@@ -53,6 +56,10 @@ struct SettingsPage<Content: View, Accessory: View>: View {
             Text(title)
                 .font(.pageTitle)
                 .accessibilityAddTraits(.isHeader)
+
+            if needsWaftPlus {
+                ProBadge()
+            }
 
             Spacer(minLength: 0)
 
@@ -77,8 +84,9 @@ struct SettingsPage<Content: View, Accessory: View>: View {
 }
 
 extension SettingsPage where Accessory == EmptyView {
-    init(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
+    init(_ title: LocalizedStringKey, needsWaftPlus: Bool = false, @ViewBuilder content: () -> Content) {
         self.title = title
+        self.needsWaftPlus = needsWaftPlus
         back = nil
         accessory = EmptyView()
         self.content = content()

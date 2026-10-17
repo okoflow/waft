@@ -44,15 +44,15 @@ flowchart TD
 | `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine that turns key events into start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up |
 | `Recording` | The `AudioRecorder` interface, input devices, and audio levels |
 | `Speech` | The `Transcriber` interface, `SpeechModelState`, whose transitions return the effects a controller runs, `SpeechGate`, `WhisperPrompt`, and `SubtitleFormatter` |
-| `Language` | `Language` with its names, writing systems, and the languages that sound alike |
-| `Text` | Light mode (`LightModeRules`, `VoiceCommands`) and `HallucinationFilter` |
+| `Language` | `Language` with its names, writing systems, the languages that sound alike, and the `WritingVariants` a user chooses for Chinese and Serbian |
+| `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
 | `Vocabulary` | The dictionary and snippets |
 | `Mode` | The built-in modes, the `CustomMode`s a user writes, and the modes for each app |
 | `Settings` | `Settings`, and `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup` |
 | `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
 | `Insertion` | Whether and how to paste |
 | `History` | The history, the statistics, and the recent transcripts |
-| `License` | License keys and access to Pro |
+| `License` | License keys and access to Waft+ |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 | `System` | Interfaces to permissions, updates, sounds, the login item, and running apps |
 
@@ -166,7 +166,10 @@ earn their cost:
   read, so a later save doesn't destroy it.
 - **Localization.** User-facing strings use `String(localized:)` or
   `LocalizedStringKey`, including the names of domain values in `WaftCore`,
-  so every surface says the same thing.
+  so every surface says the same thing. Choosing a language in Waft writes
+  `AppleTextDirection` next to `AppleLanguages`, so Arabic and Hebrew lay out
+  right to left; `contentDirection(of:)` aligns dictated text by its own
+  script.
 - **Permissions.** `PermissionMonitor` polls the microphone and Accessibility
   status once a second; a change restarts the key monitor and moves
   onboarding on.

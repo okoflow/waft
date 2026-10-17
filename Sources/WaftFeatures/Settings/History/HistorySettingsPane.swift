@@ -103,7 +103,7 @@ private struct HistoryRow: View {
     private var details: String {
         let time = entry.date.formatted(date: .abbreviated, time: .shortened)
 
-        return [time, modeTitle, appName].compactMap(\.self).joined(separator: " · ")
+        return [time, modeTitle, appName].compactMap(\.self).map { "\u{2068}\($0)\u{2069}" }.joined(separator: " · ")
     }
 
     var body: some View {
@@ -149,14 +149,14 @@ private struct PagerRow: View {
             Spacer(minLength: 0)
 
             Button(action: previous) {
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.backward")
             }
             .disabled(!page.hasPrevious)
             .help("Previous Page")
             .accessibilityLabel("Previous Page")
 
             Button(action: next) {
-                Image(systemName: "chevron.right")
+                Image(systemName: "chevron.forward")
             }
             .disabled(!page.hasNext)
             .help("Next Page")

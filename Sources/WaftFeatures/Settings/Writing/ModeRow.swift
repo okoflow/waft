@@ -28,7 +28,7 @@ struct ModeRow: View {
                 if isSelected {
                     Image(systemName: "checkmark")
                         .font(.sectionTitle)
-                        .foregroundStyle(.tint)
+                        .foregroundStyle(Palette.accent)
                         .transition(.opacity)
                 }
             }
@@ -37,7 +37,7 @@ struct ModeRow: View {
             .accessibilityHidden(true)
 
             Button(action: edit) {
-                Image(systemName: "chevron.right")
+                Image(systemName: "chevron.forward")
                     .font(.glyph)
                     .foregroundStyle(.secondary)
                     .frame(width: Metrics.controlHeight, height: Metrics.controlHeight)

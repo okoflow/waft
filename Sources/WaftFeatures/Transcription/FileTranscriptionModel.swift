@@ -98,13 +98,15 @@ final class FileTranscriptionModel {
         let current = run
 
         phase = .reading(file)
+        let variants = settings.settings.writingVariants
+
         task = Task { [weak self, transcriber, decoder, language] in
             do {
                 let samples = try await decoder.samples(of: file)
 
                 self?.enter(.transcribing(file, 0), in: current)
 
-                let transcript = try await transcriber.transcribeFile(samples, in: language) { progress in
+                let transcript = try await transcriber.transcribeFile(samples, in: language, writing: variants) { progress in
                     Task { @MainActor in self?.update(progress, in: current) }
                 }
 

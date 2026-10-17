@@ -119,7 +119,7 @@ private struct WordsChart: View {
                 y: .value("Words", item.day.words),
                 width: .ratio(0.6),
             )
-            .foregroundStyle(Color.accentColor.gradient)
+            .foregroundStyle(Palette.accent.gradient)
             .cornerRadius(3)
         }
         .chartYAxis(.hidden)

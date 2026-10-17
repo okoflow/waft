@@ -12,7 +12,13 @@ struct TranscriptionView: View {
             TranscriptionHeader()
 
             if model.isLocked {
-                ProGateCard(showPro: showPro)
+                VStack(spacing: Metrics.accessorySpacing) {
+                    ProGateBanner(showPro: showPro)
+
+                    DropZone(model: model)
+                        .disabled(true)
+                        .opacity(0.5)
+                }
             } else {
                 switch model.phase {
                 case .idle, .failed:
@@ -104,7 +110,7 @@ private struct DropZone: View {
         VStack(spacing: Metrics.controlSpacing) {
             Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
                 .font(.dropZoneGlyph)
-                .foregroundStyle(isTargeted ? Color.accentColor : .secondary)
+                .foregroundStyle(isTargeted ? Palette.accent : .secondary)
                 .contentTransition(.symbolEffect(.replace))
                 .padding(.bottom, 4)
                 .accessibilityHidden(true)
@@ -124,7 +130,7 @@ private struct DropZone: View {
         .background(isTargeted ? Palette.selection : Palette.card, in: shape)
         .overlay {
             shape.strokeBorder(
-                isTargeted ? Color.accentColor : Palette.dropZoneBorder,
+                isTargeted ? Palette.accent : Palette.dropZoneBorder,
                 style: StrokeStyle(lineWidth: 1.5, dash: [6, 4]),
             )
         }
@@ -190,33 +196,31 @@ private struct FailureCard: View {
     }
 }
 
-private struct ProGateCard: View {
+private struct ProGateBanner: View {
     let showPro: () -> Void
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
 
-        VStack(spacing: Metrics.controlSpacing) {
-            Image(systemName: "lock.fill")
-                .font(.proGateGlyph)
-                .padding(.bottom, 4)
-                .accessibilityHidden(true)
+        HStack(spacing: Metrics.rowSpacing) {
+            WaftPlusMark(size: 20)
 
-            Text("File transcription is part of Waft Pro")
-                .font(.sectionTitle)
+            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
+                Text("File transcription is part of Waft+")
+                    .font(.rowTitle.weight(.semibold))
 
-            Text("Recordings and videos become text and subtitles, right on your Mac.")
-                .font(.rowDetail)
-                .opacity(0.9)
+                Text("Recordings and videos become text and subtitles, right on your Mac.")
+                    .font(.rowDetail)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
-            Button("Unlock Waft Pro…", action: showPro)
-                .buttonStyle(ProButtonStyle())
-                .padding(.top, 10)
+            Spacer(minLength: 0)
+
+            Button("Unlock Waft+…", action: showPro)
+                .buttonStyle(PushButtonStyle(isProminent: true))
         }
-        .foregroundStyle(.white)
-        .multilineTextAlignment(.center)
-        .padding(Metrics.heroCardPadding)
-        .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
-        .background(Palette.proGradient, in: shape)
+        .padding(Metrics.rowPadding)
+        .background(Palette.plusTint, in: shape)
     }
 }

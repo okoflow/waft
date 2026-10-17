@@ -3,6 +3,7 @@ import WaftCore
 struct DictationJob {
     let samples: [Float]
     let language: Language?
+    let variants: WritingVariants
     let mode: Mode
     let setup: RewriteSetup
     let vocabulary: Vocabulary
@@ -24,6 +25,7 @@ struct DictationJob {
 
         self.samples = samples
         language = settings.languages.forcedLanguage
+        variants = settings.writingVariants
         self.mode = mode
         setup = settings.rewriteSetup(for: mode)
         self.vocabulary = vocabulary

@@ -37,6 +37,7 @@ struct ResultView: View {
                         .lineSpacing(3)
                         .textSelection(.enabled)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentDirection(of: transcript.text)
                         .padding(Metrics.transcriptPadding)
                 }
                 .frame(minHeight: 160, maxHeight: .infinity)

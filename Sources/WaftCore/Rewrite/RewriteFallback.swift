@@ -40,7 +40,7 @@ package enum RewriteFallback: String, Sendable {
         case .rateLimited: String(localized: "\(name) is rate-limiting requests")
         case .serviceError: String(localized: "\(name) returned an error")
         case .unusableAnswer: String(localized: "\(name)'s answer couldn't be used")
-        case .needsPro: String(localized: "AI modes need Waft Pro")
+        case .needsPro: String(localized: "AI modes need Waft+")
         }
     }
 

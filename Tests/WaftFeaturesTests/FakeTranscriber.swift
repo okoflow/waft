@@ -103,7 +103,12 @@ final nonisolated class FakeTranscriber: Transcriber {
         }
     }
 
-    func transcribe(_: [Float], in language: Language?, vocabulary: [String]) async throws -> Transcript? {
+    func transcribe(
+        _: [Float],
+        in language: Language?,
+        writing _: WritingVariants,
+        vocabulary: [String],
+    ) async throws -> Transcript? {
         let number = await answer(Request(language: language, vocabulary: vocabulary))
         guard let reply = replies.dropFirst(number - 1).first else { return nil }
 
@@ -113,6 +118,7 @@ final nonisolated class FakeTranscriber: Transcriber {
     func transcribeFile(
         _: [Float],
         in language: Language?,
+        writing _: WritingVariants,
         progress: @Sendable (Double) -> Void,
     ) async throws -> TimedTranscript? {
         progress(0.5)

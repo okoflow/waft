@@ -78,12 +78,20 @@ private struct SidebarRow: View {
             state.selection = pane
         } label: {
             HStack(spacing: Metrics.iconLabelSpacing) {
-                IconTile(symbolName: pane.symbolName, tint: pane.tint)
+                if pane == .pro {
+                    WaftPlusMark(size: Metrics.tileSize)
+                } else {
+                    IconTile(symbolName: pane.symbolName, tint: pane.tint)
+                }
 
                 Text(pane.title)
                     .font(.rowTitle)
 
                 Spacer(minLength: 0)
+
+                if pane.needsWaftPlus {
+                    ProBadge()
+                }
             }
             .padding(.horizontal, Metrics.sidebarRowInset)
             .frame(height: Metrics.sidebarRowHeight)

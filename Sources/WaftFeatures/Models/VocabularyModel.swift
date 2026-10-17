@@ -44,7 +44,7 @@ final class VocabularyModel {
             let term = draft.term.trimmingCharacters(in: .whitespaces)
             guard !term.isEmpty else { return nil }
 
-            let spoken = draft.spokenForms.split(separator: ",")
+            let spoken = draft.spokenForms.split { $0 == "," || $0 == "،" }
                 .map { $0.trimmingCharacters(in: .whitespaces) }
                 .filter { !$0.isEmpty }
 

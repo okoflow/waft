@@ -14,7 +14,7 @@ struct SettingsPaneView: View {
             ModeEditorPage(mode: mode, settings: model.settings, tryout: model.modeTryout, state: state)
                 .id(mode)
         } else {
-            SettingsPage(.verbatim(state.selection.title)) {
+            SettingsPage(.verbatim(state.selection.title), needsWaftPlus: state.selection.needsWaftPlus) {
                 content
             }
             .id(state.selection)

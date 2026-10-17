@@ -9,10 +9,12 @@ enum DictationOutcome {
     case failed(String)
     case editFailed(String)
 
+    private static let pasteShortcut = "⌘V"
+
     private static func copiedDetail(_ processed: ProcessedText, provider: ModelProvider) -> String {
         let fallback = processed.fallback?.message(for: provider)
 
-        return [String(localized: "Copied: press ⌘V to paste"), fallback].compactMap(\.self).joined(separator: "\n")
+        return [String(localized: "Copied: press \(pasteShortcut) to paste"), fallback].compactMap(\.self).joined(separator: "\n")
     }
 
     func message(for provider: ModelProvider) -> HUDMessage {

@@ -59,6 +59,12 @@ large-v3, run on Core ML by
 - **Prompt.** For most languages, Whisper first reads a short example sentence
   in the spoken language, which nudges it toward punctuation and
   capitalization, followed by up to 200 characters of your dictionary terms.
+- **Writing system.** For Chinese and Serbian, the prompt is written in the
+  script you chose, and Waft converts the result into it with the transforms
+  macOS has for Simplified and Traditional characters and for Cyrillic to
+  Latin. From Latin to Cyrillic it converts letter by letter, but leaves your
+  dictionary terms and words with q, w, x, or y, digits, inner capitals, or
+  two to four capitals, such as GitHub or API, in Latin letters.
 - **Long recordings.** Audio over 30 seconds is split at pauses.
 - **Made-up text.** Whisper sometimes invents text in silence. Waft drops
   segments with low confidence or heavy repetition, results made only of tags
@@ -70,15 +76,18 @@ catch that".
 
 ## Cleanup
 
-The recognized text goes through four steps:
+The recognized text goes through five steps:
 
 1. Dictionary terms replace their misheard spellings.
 2. If the whole text is a snippet phrase, the snippet is used as it is and the
    steps below are skipped.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
    modes ask the AI model you chose, unless nothing but hesitations was said.
-4. Dictionary terms are applied again, since a rewrite can undo them, and
-   snippet phrases inside the text are expanded.
+4. For Chinese and Serbian, the result is converted into the writing system
+   you chose, in case the AI model answered in the other one.
+5. Dictionary terms are applied again, since a rewrite can undo them, and
+   snippet phrases inside the text are expanded, so a snippet keeps the script
+   you wrote it in.
 
 ### Light
 
@@ -170,7 +179,7 @@ survive the paste.
 | Model | Files | Download | Trade-off |
 | --- | --- | --- | --- |
 | Fast | Whisper large-v3 turbo, `openai_whisper-large-v3-v20240930_626MB` | About 630 MB | The default and the quickest |
-| Accurate (Pro) | Whisper large-v3, `openai_whisper-large-v3` | About 3.1 GB | Two to three times slower, with fewer mistakes outside English |
+| Accurate (Waft+) | Whisper large-v3, `openai_whisper-large-v3` | About 3.1 GB | Two to three times slower, with fewer mistakes outside English |
 
 Core ML compiles the model for your chip the first time it loads, which takes
 about a minute, and keeps the compiled copy, about 130 MB. Later loads take
@@ -179,7 +188,7 @@ model and its compiled copy go.
 
 Choosing the other model downloads and loads it while the current one keeps
 recognizing speech. Once the new model is ready, Waft deletes the files of the
-one it replaced. Without Pro, Waft switches to Fast, downloads it if needed,
+one it replaced. Without Waft+, Waft switches to Fast, downloads it if needed,
 and then deletes Accurate: right away when you remove your license, and on the
 next launch when the trial ends.
 

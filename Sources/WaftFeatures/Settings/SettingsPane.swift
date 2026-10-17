@@ -20,9 +20,13 @@ package enum SettingsPane: CaseIterable {
         case .aiModels: String(localized: "AI Models")
         case .dictionary: String(localized: "Dictionary")
         case .history: String(localized: "History")
-        case .pro: String(localized: "Waft Pro")
+        case .pro: String(localized: "Waft+")
         case .about: String(localized: "About")
         }
+    }
+
+    var needsWaftPlus: Bool {
+        self == .aiModels
     }
 
     var symbolName: String {
@@ -48,7 +52,7 @@ package enum SettingsPane: CaseIterable {
         case .aiModels: .purple
         case .dictionary: .orange
         case .history: .indigo
-        case .pro: .ocean
+        case .pro: .purple
         }
     }
 }

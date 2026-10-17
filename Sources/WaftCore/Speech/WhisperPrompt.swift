@@ -3,14 +3,16 @@ import Foundation
 package enum WhisperPrompt {
     static let maximumGlossaryLength = 200
 
-    package static func text(for language: Language, vocabulary: [String]) -> String? {
-        let parts = [styleSentence(for: language), glossary(from: vocabulary)].compactMap(\.self)
+    package static func text(for language: Language, variant: WritingVariant?, vocabulary: [String]) -> String? {
+        let parts = [styleSentence(for: language, variant: variant), glossary(from: vocabulary)].compactMap(\.self)
 
         return parts.isEmpty ? nil : parts.joined(separator: " ")
     }
 
-    private static func styleSentence(for language: Language) -> String? {
-        styleSentences[language]
+    private static func styleSentence(for language: Language, variant: WritingVariant?) -> String? {
+        guard let variant else { return styleSentences[language] }
+
+        return variant.styleSentence
     }
 
     private static func glossary(from terms: [String]) -> String? {
@@ -34,7 +36,6 @@ extension WhisperPrompt {
         .bosnian: "Zdravo! Ovo je primjer teksta s velikim slovima, zarezima i tačkama.",
         .bulgarian: "Здравейте! Това е примерен текст с главни букви, запетаи и точки.",
         .catalan: "Hola! Aquest és un text d'exemple amb majúscules, comes i punts.",
-        .chinese: "你好！这是一段示例文本，包含逗号和句号。",
         .croatian: "Bok! Ovo je primjer teksta s velikim slovima, zarezima i točkama.",
         .czech: "Ahoj! Toto je ukázkový text s velkými písmeny, čárkami a tečkami.",
         .danish: "Hej! Dette er en eksempeltekst med store bogstaver, kommaer og punktummer.",

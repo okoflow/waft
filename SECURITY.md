@@ -38,7 +38,7 @@ Waft records your voice, reads the focused text field through Accessibility,
 writes to the clipboard, keeps API keys in the keychain, and updates itself.
 In scope: everything in this repository, including the app, the scripts, and
 the build configuration, and the license service at `api.waft.okoflow.com`,
-which issues Waft Pro license keys. Of particular interest:
+which issues Waft+ license keys. Of particular interest:
 
 - Audio leaving the Mac, or text leaving it outside the AI modes.
 - Text pasted into a password field, or into another app than the one you

@@ -10,7 +10,7 @@ final class ProModel {
         case invalid
     }
 
-    static let price = "$13.99"
+    static let price = (Decimal(1399) / 100).formatted(.currency(code: "USD"))
 
     private static let purchaseURL = URL(literal: "https://waft.okoflow.com/pro")
 

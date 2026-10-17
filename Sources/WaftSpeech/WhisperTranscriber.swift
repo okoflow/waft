@@ -19,24 +19,6 @@ package actor WhisperTranscriber: Transcriber {
 
     package init() {}
 
-    private static func acceptedText(of results: [TranscriptionResult], language: Language, prompt: String?) -> String? {
-        let segments = results.flatMap(\.segments)
-        let kept = segments.isEmpty
-            ? results.map(\.text).joined(separator: " ")
-            : segments.filter(isConfident).map(\.text).joined()
-        let text = kept.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
-
-        return text.capitalizedIfUnstyled(in: language)
-    }
-
-    private static func isConfident(_ segment: TranscriptionSegment) -> Bool {
-        HallucinationFilter.keepsSegment(
-            averageLogProbability: Double(segment.avgLogprob),
-            compressionRatio: Double(segment.compressionRatio),
-        )
-    }
-
     package nonisolated func modelDirectory(for model: SpeechModel) -> URL {
         SpeechModelFiles(model).folder
     }
@@ -79,7 +61,12 @@ package actor WhisperTranscriber: Transcriber {
         try SpeechModelFiles(model).remove()
     }
 
-    package func transcribe(_ samples: [Float], in language: Language?, vocabulary: [String]) async throws -> Transcript? {
+    package func transcribe(
+        _ samples: [Float],
+        in language: Language?,
+        writing variants: WritingVariants,
+        vocabulary: [String],
+    ) async throws -> Transcript? {
         guard SpeechGate.containsSpeech(samples) else { return nil }
         guard let loaded else { throw TranscriberError.notLoaded }
 
@@ -88,24 +75,27 @@ package actor WhisperTranscriber: Transcriber {
 
         let detectionStart = ContinuousClock.now
         let spoken = try await resolvedLanguage(language, of: samples, with: loaded)
+        let variant = variants.variant(for: spoken)
 
         let decodingStart = ContinuousClock.now
-        let prompt = WhisperPrompt.text(for: spoken, vocabulary: vocabulary)
+        let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
         let options = decodingOptions(for: spoken, samples: samples, prompt: prompt, tokenizer: loaded.whisper.tokenizer)
         let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
         guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
 
         return Transcript(
-            text: text,
+            text: Self.written(text, in: variant, keeping: vocabulary),
             language: spoken,
             detectionDuration: decodingStart - detectionStart,
             decodingDuration: ContinuousClock.now - decodingStart,
+            variant: variant,
         )
     }
 
     package func transcribeFile(
         _ samples: [Float],
         in language: Language?,
+        writing variants: WritingVariants,
         progress: @Sendable (Double) -> Void,
     ) async throws -> TimedTranscript? {
         guard let loaded else { throw TranscriberError.notLoaded }
@@ -127,7 +117,12 @@ package actor WhisperTranscriber: Transcriber {
 
                 let chunkLanguage = try await resolvedLanguage(spoken, of: chunk.audioSamples, with: loaded)
                 spoken = chunkLanguage
-                segments += try await timedSegments(of: chunk, in: chunkLanguage, with: loaded.whisper)
+                segments += try await timedSegments(
+                    of: chunk,
+                    in: chunkLanguage,
+                    variant: variants.variant(for: chunkLanguage),
+                    with: loaded.whisper,
+                )
             }
 
             progress(Double(index + 1) / Double(chunks.count))
@@ -141,20 +136,24 @@ package actor WhisperTranscriber: Transcriber {
     private func timedSegments(
         of chunk: AudioChunk,
         in language: Language,
+        variant: WritingVariant?,
         with whisper: WhisperKit,
     ) async throws -> [TimedSegment] {
-        let options = decodingOptions(for: language, samples: chunk.audioSamples, prompt: nil, tokenizer: whisper.tokenizer)
+        let prompt = variant == nil ? nil : WhisperPrompt.text(for: language, variant: variant, vocabulary: [])
+        let options = decodingOptions(for: language, samples: chunk.audioSamples, prompt: prompt, tokenizer: whisper.tokenizer)
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
         let offset = Double(chunk.seekOffsetIndex) / SpeechAudio.sampleRate
         let segments = results.flatMap(\.segments).filter(Self.isConfident).compactMap { segment -> TimedSegment? in
             let text = segment.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return nil }
 
-            return TimedSegment(start: offset + Double(segment.start), end: offset + Double(segment.end), text: text)
+            let written = Self.written(text, in: variant, keeping: [])
+
+            return TimedSegment(start: offset + Double(segment.start), end: offset + Double(segment.end), text: written)
         }
         let text = segments.map(\.text).joined(separator: " ")
 
-        return HallucinationFilter.isHallucination(text, in: language, prompt: nil) ? [] : segments
+        return HallucinationFilter.isHallucination(text, in: language, prompt: prompt) ? [] : segments
     }
 
     private func configuration(for files: SpeechModelFiles) -> WhisperKitConfig {
@@ -242,5 +241,31 @@ package actor WhisperTranscriber: Transcriber {
         } else {
             waiters.removeFirst().resume()
         }
+    }
+}
+
+extension WhisperTranscriber {
+    private static func acceptedText(of results: [TranscriptionResult], language: Language, prompt: String?) -> String? {
+        let segments = results.flatMap(\.segments)
+        let kept = segments.isEmpty
+            ? results.map(\.text).joined(separator: " ")
+            : segments.filter(isConfident).map(\.text).joined()
+        let text = kept.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
+
+        return text.capitalizedIfUnstyled(in: language)
+    }
+
+    private static func written(_ text: String, in variant: WritingVariant?, keeping terms: [String]) -> String {
+        guard let variant else { return text }
+
+        return variant.converting(text, keeping: terms)
+    }
+
+    private static func isConfident(_ segment: TranscriptionSegment) -> Bool {
+        HallucinationFilter.keepsSegment(
+            averageLogProbability: Double(segment.avgLogprob),
+            compressionRatio: Double(segment.compressionRatio),
+        )
     }
 }

@@ -95,7 +95,7 @@ struct DictationSettingsPane: View {
 
         SettingsSection("Languages", subtitle: "Waft listens for these languages.") {
             ForEach(selection.languages, id: \.self) { language in
-                LanguageRow(language: language, canRemove: selection.languages.count > 1) {
+                LanguageRow(language: language, settings: settings, canRemove: selection.languages.count > 1) {
                     settings.settings.languages = selection.removing(language)
                 }
                 .rowTransition()
@@ -160,6 +160,7 @@ private struct AddLanguageButton: View {
 
 private struct LanguageRow: View {
     let language: Language
+    let settings: SettingsModel
     let canRemove: Bool
     let remove: () -> Void
 
@@ -168,8 +169,23 @@ private struct LanguageRow: View {
             .verbatim(language.nativeName),
             description: language.nativeName == language.displayName ? nil : .verbatim(language.displayName),
         ) {
+            if let chosen = settings.settings.writingVariants.variant(for: language) {
+                MenuPicker("Writing system", selection: variantBinding(showing: chosen), current: chosen.nativeName) {
+                    ForEach(language.writingVariants, id: \.self) { variant in
+                        Text(verbatim: variant.nativeName).tag(variant)
+                    }
+                }
+            }
+
             RemoveButton(help: "Remove \(language.displayName)", action: remove)
                 .disabled(!canRemove)
         }
+    }
+
+    private func variantBinding(showing chosen: WritingVariant) -> Binding<WritingVariant> {
+        Binding(
+            get: { chosen },
+            set: { settings.settings.writingVariants = settings.settings.writingVariants.choosing($0, for: language) },
+        )
     }
 }

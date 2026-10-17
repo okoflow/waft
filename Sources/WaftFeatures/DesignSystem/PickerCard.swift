@@ -55,7 +55,7 @@ struct PickerCard<Preview: View>: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Palette.card, in: shape)
             .overlay {
-                shape.strokeBorder(isSelected ? Color.accentColor : Palette.cardBorder, lineWidth: isSelected ? 2 : 1)
+                shape.strokeBorder(isSelected ? Palette.accent : Palette.cardBorder, lineWidth: isSelected ? 2 : 1)
             }
             .contentShape(shape)
         }

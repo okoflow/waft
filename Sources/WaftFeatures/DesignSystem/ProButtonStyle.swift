@@ -4,7 +4,7 @@ struct ProButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.prominentControl)
-            .foregroundStyle(Palette.proBlue)
+            .foregroundStyle(Palette.accent)
             .padding(.horizontal, Metrics.largeControlPadding)
             .frame(height: Metrics.largeControlHeight)
             .background(.white.opacity(configuration.isPressed ? 0.8 : 1), in: Capsule())

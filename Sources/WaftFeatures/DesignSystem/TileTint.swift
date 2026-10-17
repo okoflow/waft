@@ -9,7 +9,6 @@ enum TileTint {
     case green
     case indigo
     case teal
-    case ocean
 
     var gradient: LinearGradient {
         LinearGradient(colors: [top, bottom], startPoint: .top, endPoint: .bottom)
@@ -17,29 +16,27 @@ enum TileTint {
 
     private var top: Color {
         switch self {
-        case .gray: Color(hex: 0x8C8C8C)
-        case .red: Color(hex: 0xF04B5B)
-        case .purple: Color(hex: 0x8A4DD2)
-        case .orange: Color(hex: 0xF4922A)
-        case .blue: Color(hex: 0x30A2F3)
-        case .green: Color(hex: 0x1BAA75)
-        case .indigo: Color(hex: 0x6E6CF2)
-        case .teal: Color(hex: 0x2BBDD0)
-        case .ocean: Color(hex: 0x3C78FA)
+        case .gray: Color(hex: 0xA2A2AA)
+        case .red: Color(hex: 0xF4646B)
+        case .purple: Color(hex: 0xA37BEF)
+        case .orange: Color(hex: 0xF6A54A)
+        case .blue: Color(hex: 0x4B98F8)
+        case .green: Color(hex: 0x3EC77F)
+        case .indigo: Color(hex: 0x7878F2)
+        case .teal: Color(hex: 0x3CC0D2)
         }
     }
 
     private var bottom: Color {
         switch self {
-        case .gray: Color(hex: 0x585858)
-        case .red: Color(hex: 0xD02E47)
-        case .purple: Color(hex: 0x6130BB)
-        case .orange: Color(hex: 0xEE7618)
-        case .blue: Color(hex: 0x247DE1)
-        case .green: Color(hex: 0x098551)
-        case .indigo: Color(hex: 0x4A46D4)
-        case .teal: Color(hex: 0x1593B3)
-        case .ocean: Color(hex: 0x1B3FB5)
+        case .gray: Color(hex: 0x8A8A93)
+        case .red: Color(hex: 0xE8515A)
+        case .purple: Color(hex: 0x9068E4)
+        case .orange: Color(hex: 0xEF9236)
+        case .blue: Color(hex: 0x3A85EE)
+        case .green: Color(hex: 0x2FB36D)
+        case .indigo: Color(hex: 0x6565E6)
+        case .teal: Color(hex: 0x2BA9BD)
         }
     }
 }

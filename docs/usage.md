@@ -39,7 +39,7 @@ While Waft listens without the key held, the HUD shows "Hands-free".
 ### The speech model
 
 **Speech model** in Settings › Dictation offers Fast, the default, and
-Accurate (Pro). [The speech model](how-it-works.md#the-speech-model) compares
+Accurate (Waft+). [The speech model](how-it-works.md#the-speech-model) compares
 the two.
 
 ## Languages
@@ -63,6 +63,11 @@ Languages that sound alike, such as Russian and Ukrainian, Danish and
 Norwegian, Indonesian and Malay, or Serbian, Croatian, and Bosnian, get mixed
 up when you enable them together. Settings › Dictation then suggests choosing
 the one you speak as the **Spoken language**.
+
+Chinese and Serbian each have a **Writing system** next to them in Settings ›
+Dictation: Simplified or Traditional characters, and Latin or Cyrillic
+letters. Waft writes dictations, AI answers, and transcribed files in the one
+you choose.
 
 ## Modes
 
@@ -227,9 +232,9 @@ to stop saving new ones; **Clear History…** deletes them all.
 | Language | Detects the language automatically, or uses the one you choose; **Choose Languages…** opens Settings › Dictation |
 | Copy Last Dictation | Copies the latest text, pasted or not, within 10 minutes of the dictation |
 | Recent Dictations | Copies one of your last five dictations from the history; **Show History** opens the full list |
-| Transcribe File… | Turns a recording or a video into text or subtitles; marked "(Pro)" without Pro |
+| Transcribe File… | Turns a recording or a video into text or subtitles; marked "(Waft+)" without Waft+ |
 | Settings… | Opens Settings |
-| Unlock Waft Pro… | Appears once Pro is on sale and you have no license, and opens Settings › Waft Pro |
+| Unlock Waft+… | Appears once Waft+ is on sale and you have no license, and opens Settings › Waft+ |
 | Check for Updates… | Looks for a new version now |
 | Quit Waft | Quits Waft |
 
@@ -240,7 +245,7 @@ the mode, and opening Waft again brings up Settings.
 ## Settings
 
 The sidebar lists Overview, History, and Dictionary first, your settings under
-**Settings**, and Waft Pro and About at the bottom.
+**Settings**, and Waft+ and About at the bottom.
 
 | Pane | What you set there |
 | --- | --- |
@@ -251,13 +256,16 @@ The sidebar lists Overview, History, and Dictionary first, your settings under
 | Dictation | How to start, the dictation key, the microphone, the speech model, the editing key, and the languages |
 | Writing | The modes and their instructions, your modes, translation, per-app modes, and pasting |
 | AI Models | The provider for the AI modes, a local server, and Claude or OpenAI with your API keys and models |
-| Waft Pro | What Pro adds and your license |
+| Waft+ | What Waft+ adds and your license |
 | About | The version, the website, the source code, and the license |
 
-**App language** in Settings › General switches Waft's interface between
-English, Chinese, French, German, Italian, Japanese, Korean, Portuguese,
-Russian, Spanish, and Ukrainian, or **Same as macOS**. Click **Relaunch** to
-apply it.
+**App language** in Settings › General switches Waft's interface between 23
+languages, or **Same as macOS**: English, Arabic, Chinese (Simplified and
+Traditional), Danish, Dutch, French, German, Hebrew, Italian, Japanese,
+Korean, Norwegian, Polish, Portuguese (Brazil and Portugal), Russian, Spanish
+(Spain and Latin America), Swedish, Thai, Turkish, and Ukrainian. Arabic and
+Hebrew lay the interface out from right to left. Click **Relaunch** to apply
+it.
 
 ## Updates
 
@@ -268,22 +276,22 @@ menu. Waft installs only an update signed with the project's key. A debug
 build, such as one from `make run`, doesn't update itself: pull and build
 again, as [Development setup](../CONTRIBUTING.md#development-setup) describes.
 
-## Waft Pro
+## Waft+
 
 Dictation with Whisper, the Raw and Light modes, voice commands, the
-dictionary, and history are free. Waft Pro adds Clean, Formal, Translate,
+dictionary, and history are free. Waft+ adds Clean, Formal, Translate,
 your modes, rewritten instructions, editing by voice, file transcription, and
 the Accurate speech model for a single payment of $13.99. Settings marks each
-of them with "Pro".
+of them with the Waft+ mark, a "+" in a dark circle.
 
-While Waft is in beta, every Pro feature is free and needs no license. Once
-Pro goes on sale, a trial unlocks it for 3 calendar days, starting on the day
+While Waft is in beta, every Waft+ feature is free and needs no license. Once
+Waft+ goes on sale, a trial unlocks it for 3 calendar days, starting on the day
 you first open a version that sells it. After the trial, until you add a
-license in Settings › Waft Pro:
+license in Settings › Waft+:
 
 - The AI modes fall back to Light, and the HUD says so.
-- The editing key records nothing, and the HUD says it needs Pro.
-- The menu marks the AI modes and file transcription "(Pro)".
+- The editing key records nothing, and the HUD says it needs Waft+.
+- The menu marks the AI modes and file transcription "(Waft+)".
 - <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches only between Raw and Light.
 - Waft recognizes speech with the Fast model.
 

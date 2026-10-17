@@ -61,7 +61,10 @@ package struct PushToTalkKey: Hashable, Sendable {
     package var title: String {
         guard let modifier = Self.modifiers[keyCode] else { return functionKeyTitle }
 
-        return "\(modifier.name) (\(modifier.symbol))"
+        return String(
+            localized: "\(modifier.name) (\(modifier.symbol))",
+            comment: "A key name and its symbol, such as Right Option (⌥)",
+        )
     }
 
     package var shortTitle: String {
