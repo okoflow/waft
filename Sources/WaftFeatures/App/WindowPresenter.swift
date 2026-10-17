@@ -1,7 +1,6 @@
 package import AppKit
 import SwiftUI
 
-@MainActor
 package final class WindowPresenter: NSObject, NSWindowDelegate {
     weak var model: AppModel?
 
