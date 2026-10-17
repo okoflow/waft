@@ -207,7 +207,7 @@ private struct ProGateBanner: View {
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text("File transcription is part of Waft+")
-                    .font(.rowTitle.weight(.semibold))
+                    .font(.cardTitle)
 
                 Text("Recordings and videos become text and subtitles, right on your Mac.")
                     .font(.rowDetail)
