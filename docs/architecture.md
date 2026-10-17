@@ -79,7 +79,9 @@ entitlements, the icon, the translations, and the Homebrew cask template.
 
 1. `PermissionMonitor` polls the microphone and Accessibility status once a
    second. A change moves onboarding on and makes `KeyMonitorController`
-   restart the `KeyEventMonitor`, as does macOS switching it off.
+   start the `KeyEventMonitor` if it isn't running. The controller also
+   restarts a monitor that stops, and `KeyEventTap` turns itself back on when
+   macOS switches it off.
 2. `DictationController` feeds the monitor's key events to
    `RecordingTriggers` and hands finished recordings to the queue.
    `RecordingController` starts and stops the `AudioRecorder`, polls
@@ -91,10 +93,11 @@ entitlements, the icon, the translations, and the Homebrew cask template.
    `CloudModel` or the local server, validates the answer with
    `RewriteValidator`, and on any `RewriteError` falls back to Light with a
    `RewriteFallback` that says why.
-5. An edit by voice skips the dictionary, snippets, and mode:
-   `TranscriptProcessor.edit` sends the selection read at the key press and
-   the spoken instruction to the `TextRewriter`, and the answer replaces the
-   selection. A failure pastes nothing.
+5. An edit by voice gives Whisper the dictionary terms but skips their
+   replacements, the snippets, and the mode: `TranscriptProcessor.edit` sends
+   the selection read at the key press and the spoken instruction to the
+   `TextRewriter`, and the answer replaces the selection. A failure pastes
+   nothing.
 6. The outcome becomes a `HUDMessage`. Text that is pasted or copied becomes
    the latest transcript and, unless it came from an edit, a history entry.
 
