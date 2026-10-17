@@ -27,10 +27,6 @@ struct PhraseReplacer {
         self.language = language
     }
 
-    static func words(of text: String, in language: Language) -> [String] {
-        TextSegment.split(text).filter(\.isWord).map { $0.text.normalizedWord(in: language) }
-    }
-
     private static func rule(for replacement: Replacement, in language: Language) -> Rule? {
         let segments = TextSegment.split(replacement.phrase.trimmingCharacters(in: .whitespacesAndNewlines))
         guard let first = segments.first, first.isWord else { return nil }

@@ -21,6 +21,10 @@ struct TextSegment: Equatable {
         return segments
     }
 
+    static func words(of text: String, in language: Language) -> [String] {
+        split(text).filter(\.isWord).map { $0.text.normalizedWord(in: language) }
+    }
+
     private static func isWordCharacter(at index: Int, in characters: [Character]) -> Bool {
         let character = characters[index]
         let isMark = character.unicodeScalars.allSatisfy { $0.properties.generalCategory == .nonspacingMark }

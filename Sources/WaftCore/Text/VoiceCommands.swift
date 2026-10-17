@@ -90,11 +90,7 @@ enum VoiceCommands {
     }
 
     private static func commands(_ phrases: [String], isParagraph: Bool, in language: Language) -> [Command] {
-        phrases.map { Command(words: words(of: $0, in: language), isParagraph: isParagraph) }
-    }
-
-    private static func words(of phrase: String, in language: Language) -> [String] {
-        TextSegment.split(phrase).filter(\.isWord).map { $0.text.normalizedWord(in: language) }
+        phrases.map { Command(words: TextSegment.words(of: $0, in: language), isParagraph: isParagraph) }
     }
 
     private static func match(

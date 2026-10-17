@@ -56,10 +56,10 @@ package struct Vocabulary: Codable, Equatable, Sendable {
     }
 
     func snippet(matchingWhole text: String, language: Language) -> String? {
-        let spoken = PhraseReplacer.words(of: text, in: language)
+        let spoken = TextSegment.words(of: text, in: language)
         guard !spoken.isEmpty else { return nil }
 
-        return snippets.first { PhraseReplacer.words(of: $0.trigger, in: language) == spoken }?.text
+        return snippets.first { TextSegment.words(of: $0.trigger, in: language) == spoken }?.text
     }
 
     func expandingSnippets(in text: String, language: Language) -> String {
