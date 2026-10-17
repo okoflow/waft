@@ -18,7 +18,6 @@ struct SettingsWindowView: View {
             SettingsPaneView(model: model, state: state)
         }
         .buttonStyle(PushButtonStyle())
-        .reducedMotionPolicy()
         .background(Palette.window)
         .ignoresSafeArea()
     }

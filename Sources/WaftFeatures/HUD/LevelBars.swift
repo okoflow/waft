@@ -11,6 +11,6 @@ struct LevelBars: View {
             }
         }
         .frame(height: 14)
-        .animation(Motion.meter, value: levels)
+        .motion(Motion.meter, value: levels)
     }
 }

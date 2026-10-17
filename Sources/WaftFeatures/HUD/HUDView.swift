@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HUDView: View {
+    @Environment(\.accessibilityReduceMotion) private var reducesMotion
+
     private let hud: HUDController
     private let layout: HUDLayout
 
@@ -34,7 +36,6 @@ struct HUDView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(\.colorScheme, .dark)
-        .reducedMotionPolicy()
     }
 
     private var island: some View {
@@ -52,7 +53,7 @@ struct HUDView: View {
                 .fixedSize()
                 .geometryGroup()
                 .id(contentKey)
-                .transition(.islandContent)
+                .transition(.islandContent(reducesMotion: reducesMotion))
                 .frame(width: size.width, height: size.height, alignment: .top)
         }
         .clipShape(shape)
@@ -64,8 +65,8 @@ struct HUDView: View {
                 .onGeometryChange(for: CGSize.self) { $0.size } action: { layout.contentSize = $0 }
         }
         .onGeometryChange(for: CGRect.self) { $0.frame(in: .global) } action: { layout.islandFrame = $0 }
-        .animation(animation, value: size)
-        .animation(animation, value: contentKey)
+        .motion(animation, value: size)
+        .motion(animation, value: contentKey)
     }
 }
 
@@ -81,11 +82,11 @@ private struct IslandContentPhase: ViewModifier {
 }
 
 extension AnyTransition {
-    fileprivate static var islandContent: AnyTransition {
+    fileprivate static func islandContent(reducesMotion: Bool) -> AnyTransition {
         .asymmetric(
             insertion: .modifier(active: IslandContentPhase(progress: 0), identity: IslandContentPhase(progress: 1))
-                .animation(Motion.islandContent),
-            removal: .opacity.animation(Motion.fade),
+                .animation(Motion.adapted(Motion.islandContent, reducesMotion: reducesMotion)),
+            removal: .opacity.animation(Motion.adapted(Motion.fade, reducesMotion: reducesMotion)),
         )
     }
 }

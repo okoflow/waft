@@ -18,6 +18,6 @@ struct FieldChrome: ViewModifier {
                     .stroke(Palette.accent.opacity(isFocused ? 0.25 : 0), lineWidth: Metrics.focusRingWidth)
                     .padding(-ringOffset)
             }
-            .animation(Motion.fade, value: isFocused)
+            .motion(Motion.fade, value: isFocused)
     }
 }

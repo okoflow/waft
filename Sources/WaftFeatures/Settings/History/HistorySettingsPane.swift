@@ -45,7 +45,7 @@ struct HistorySettingsPane: View {
                 .rowTransition()
             }
         }
-        .animation(Motion.layout, value: settings.settings.keepsHistory)
+        .motion(Motion.layout, value: settings.settings.keepsHistory)
 
         let page = history.currentPage
 

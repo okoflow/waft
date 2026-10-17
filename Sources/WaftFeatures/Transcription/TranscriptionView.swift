@@ -57,8 +57,7 @@ struct TranscriptionView: View {
         .background(Palette.window)
         .ignoresSafeArea()
         .buttonStyle(PushButtonStyle())
-        .animation(Motion.layout, value: model.phase)
-        .reducedMotionPolicy()
+        .motion(Motion.layout, value: model.phase)
         .dropDestination(for: URL.self) { urls, _ in
             guard let url = urls.first, model.acceptsFiles else { return false }
 
@@ -135,7 +134,7 @@ private struct DropZone: View {
                 style: StrokeStyle(lineWidth: 1.5, dash: [6, 4]),
             )
         }
-        .animation(Motion.fade, value: isTargeted)
+        .motion(Motion.fade, value: isTargeted)
     }
 
     private func chooseFile() {

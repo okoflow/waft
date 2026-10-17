@@ -33,7 +33,7 @@ struct ModeRow: View {
                 }
             }
             .frame(width: 14)
-            .animation(Motion.feedback, value: isSelected)
+            .motion(Motion.feedback, value: isSelected)
             .accessibilityHidden(true)
 
             Button(action: edit) {
@@ -126,6 +126,6 @@ private struct ModeLabel: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(isBuiltIn ? nil : 1)
         }
-        .animation(Motion.feedback, value: isEdited)
+        .motion(Motion.feedback, value: isEdited)
     }
 }

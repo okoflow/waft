@@ -1,21 +1,18 @@
 import SwiftUI
 
-private struct ReducedMotionPolicy: ViewModifier {
+private struct ReducedMotionPolicy<Value: Equatable>: ViewModifier {
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
+    let animation: Animation?
+    let value: Value
+
     func body(content: Content) -> some View {
-        let reducesMotion = reducesMotion
-
-        content.transaction { transaction in
-            guard reducesMotion, transaction.animation != nil else { return }
-
-            transaction.animation = Motion.reduced
-        }
+        content.animation(Motion.adapted(animation, reducesMotion: reducesMotion), value: value)
     }
 }
 
 extension View {
-    func reducedMotionPolicy() -> some View {
-        modifier(ReducedMotionPolicy())
+    func motion(_ animation: Animation?, value: some Equatable) -> some View {
+        modifier(ReducedMotionPolicy(animation: animation, value: value))
     }
 }

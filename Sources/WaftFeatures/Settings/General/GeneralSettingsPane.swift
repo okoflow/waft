@@ -20,7 +20,7 @@ struct GeneralSettingsPane: View {
             RowDivider()
             InterfaceLanguageRow(model: interfaceLanguage)
         }
-        .animation(Motion.layout, value: settings.settings.showsMenuBarIcon)
+        .motion(Motion.layout, value: settings.settings.showsMenuBarIcon)
 
         SettingsSection("Sounds") {
             ToggleRow(
@@ -76,7 +76,7 @@ private struct InterfaceLanguageRow: View {
                 }
             }
         }
-        .animation(Motion.feedback, value: model.needsRelaunch)
+        .motion(Motion.feedback, value: model.needsRelaunch)
     }
 }
 

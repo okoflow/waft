@@ -138,6 +138,9 @@ directive.
 - Mark only identifiers, durations, and counts `privacy: .public` in a log
   message. [Invariants](docs/architecture.md#invariants) lists what never
   reaches the log.
+- Animate with `.motion(_:value:)` and a `Motion` token rather than
+  `.animation(_:value:)`, so Reduce Motion turns every animation into
+  `Motion.reduced`.
 
 ### Text and translations
 

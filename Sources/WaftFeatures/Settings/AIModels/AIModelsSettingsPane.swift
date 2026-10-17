@@ -25,7 +25,7 @@ struct AIModelsSettingsPane: View {
                 }
             }
         }
-        .animation(Motion.layout, value: settings.settings.modelProvider)
+        .motion(Motion.layout, value: settings.settings.modelProvider)
 
         switch settings.settings.modelProvider {
         case .localServer:

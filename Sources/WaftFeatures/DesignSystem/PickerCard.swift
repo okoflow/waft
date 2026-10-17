@@ -60,7 +60,7 @@ struct PickerCard<Preview: View>: View {
             .contentShape(shape)
         }
         .buttonStyle(.plain)
-        .animation(Motion.feedback, value: isSelected)
+        .motion(Motion.feedback, value: isSelected)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }

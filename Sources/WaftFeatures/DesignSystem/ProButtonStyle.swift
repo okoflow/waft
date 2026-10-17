@@ -8,6 +8,6 @@ struct ProButtonStyle: ButtonStyle {
             .padding(.horizontal, Metrics.largeControlPadding)
             .frame(height: Metrics.largeControlHeight)
             .background(.white.opacity(configuration.isPressed ? Palette.pressedOpacity : 1), in: Capsule())
-            .animation(configuration.isPressed ? nil : Motion.fade, value: configuration.isPressed)
+            .motion(configuration.isPressed ? nil : Motion.fade, value: configuration.isPressed)
     }
 }

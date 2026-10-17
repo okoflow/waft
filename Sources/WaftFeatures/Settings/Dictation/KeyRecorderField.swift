@@ -67,8 +67,8 @@ struct KeyRecorderField: View {
             }
         }
         .buttonStyle(.plain)
-        .animation(Motion.feedback, value: isRecording)
-        .animation(Motion.feedback, value: key)
+        .motion(Motion.feedback, value: isRecording)
+        .motion(Motion.feedback, value: key)
         .help(isRecording ? Text("Press the key to use, or Esc to cancel") : Text("Click, then press the key to use"))
         .accessibilityLabel(purpose == .dictation ? Text("Dictation key") : Text("Editing key"))
         .accessibilityValue(title)

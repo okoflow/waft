@@ -40,7 +40,7 @@ private struct RecentSection: View {
                     .settingsRowPadding()
             }
         }
-        .animation(Motion.layout, value: recent.words)
+        .motion(Motion.layout, value: recent.words)
     }
 
     private func savedTime(in recent: DictationStatistics.Day) -> String {
@@ -72,7 +72,7 @@ private struct AllTimeSection: View {
             Button("Reset Statistics…", action: confirmReset)
                 .disabled(statistics.statistics.days.isEmpty)
         }
-        .animation(Motion.layout, value: total.words)
+        .motion(Motion.layout, value: total.words)
     }
 
     private func confirmReset() {
