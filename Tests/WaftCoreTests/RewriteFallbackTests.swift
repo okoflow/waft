@@ -23,6 +23,11 @@ struct RewriteFallbackTests {
         (.offline, .cloud(.openAI), "you're offline"),
         (.unavailable, .localServer, "choose a local server and model in Settings › AI Models"),
         (.unavailable, .cloud(.claude), "Claude isn't available"),
+        (.missingKey, .cloud(.openAI), "add your OpenAI API key in Settings › AI Models"),
+        (.rejectedKey, .cloud(.openAI), "OpenAI rejected the API key"),
+        (.serviceError, .cloud(.openAI), "OpenAI returned an error"),
+        (.unusableAnswer, .cloud(.openAI), "OpenAI's answer couldn't be used"),
+        (.needsPro, .cloud(.openAI), "AI modes need Waft+"),
     ])
     func `explains a fallback by provider`(fallback: RewriteFallback, provider: ModelProvider, reason: String) {
         #expect(fallback.reason(for: provider) == reason)
