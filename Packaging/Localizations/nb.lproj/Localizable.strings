@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Start Waft på nytt for å bytte språk.";
 "Relaunch" = "Start på nytt";
 "Remove %@" = "Fjern %@";
+"Remove Key" = "Fjern nøkkel";
 "Remove License" = "Fjern lisens";
 "Remove License…" = "Fjern lisens…";
+"Remove the API key?" = "Vil du fjerne API-nøkkelen?";
 "Remove the license from this Mac?" = "Vil du fjerne lisensen fra denne Macen?";
 "Remove" = "Fjern";
 "Removes fillers and false starts, and fixes grammar and tone." = "Fjerner fyllord og forsnakkelser og retter grammatikk og tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Fjerner fyllord og forsnakkelser, retter grammatikk og beholder språket ditt.";
+"Remove…" = "Fjern…";
 "Replace the key" = "Erstatt nøkkelen";
 "Reset Statistics" = "Nullstill statistikk";
 "Reset Statistics…" = "Nullstill statistikk…";
+"Reset the instructions of “%@”?" = "Vil du nullstille instruksjonene for «%@»?";
 "Reset to Default" = "Nullstill til standard";
+"Reset to Default…" = "Nullstill til standard…";
 "Reset your dictation statistics?" = "Vil du nullstille dikteringsstatistikken?";
 "Retry Speech Model" = "Last inn talemodellen på nytt";
 "Retry" = "Prøv igjen";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft kan ikke lese denne filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruke mikrofonen. Gi tilgang i Innstillinger › Generelt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunne ikke lese den lagrede loggen og har tatt vare på en kopi av den. Tøm logg sletter begge.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft sletter den fra nøkkelringen. KI-modusene bruker «Lett» til du legger til en nøkkel.";
 "Waft is listening" = "Waft lytter";
 "Waft listens for these languages." = "Waft lytter etter disse språkene.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft lytter bare mens du dikterer, og lyden blir på Macen din.";
@@ -386,6 +392,7 @@
 "Writing" = "Skriving";
 "You say" = "Du sier";
 "You're all set" = "Alt er klart";
+"Your changes to these instructions are deleted." = "Endringene dine i disse instruksjonene slettes.";
 "Your free trial has ended." = "Den gratis prøveperioden er over.";
 "Your mode" = "Din modus";
 "Your modes" = "Dine moduser";

@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Start Waft opnieuw om de taal te wijzigen.";
 "Relaunch" = "Start opnieuw";
 "Remove %@" = "Verwijder %@";
+"Remove Key" = "Verwijder sleutel";
 "Remove License" = "Verwijder licentie";
 "Remove License…" = "Verwijder licentie…";
+"Remove the API key?" = "API-sleutel verwijderen?";
 "Remove the license from this Mac?" = "Licentie van deze Mac verwijderen?";
 "Remove" = "Verwijder";
 "Removes fillers and false starts, and fixes grammar and tone." = "Verwijdert stopwoorden en haperingen en verbetert grammatica en toon.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Verwijdert stopwoorden en haperingen, verbetert de grammatica en behoudt je taal.";
+"Remove…" = "Verwijder…";
 "Replace the key" = "Vervang de sleutel";
 "Reset Statistics" = "Stel statistieken opnieuw in";
 "Reset Statistics…" = "Stel statistieken opnieuw in…";
+"Reset the instructions of “%@”?" = "Standaardinstructies van ‘%@’ herstellen?";
 "Reset to Default" = "Herstel standaardinstelling";
+"Reset to Default…" = "Herstel standaardinstelling…";
 "Reset your dictation statistics?" = "Dicteerstatistieken opnieuw instellen?";
 "Retry Speech Model" = "Laad spraakmodel opnieuw";
 "Retry" = "Probeer opnieuw";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft kan dit bestand niet lezen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan de microfoon niet gebruiken. Geef toegang in Instellingen › Algemeen.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kon de bewaarde geschiedenis niet lezen en heeft er een kopie van bewaard. Wis geschiedenis verwijdert beide.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft verwijdert hem uit de sleutelhanger. De AI-modi gebruiken ‘Licht’ totdat je een sleutel toevoegt.";
 "Waft is listening" = "Waft luistert";
 "Waft listens for these languages." = "Waft herkent deze talen.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft luistert alleen terwijl je dicteert, en de audio blijft op je Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Schrijven";
 "You say" = "Jij zegt";
 "You're all set" = "Alles is klaar";
+"Your changes to these instructions are deleted." = "Je wijzigingen in deze instructies worden verwijderd.";
 "Your free trial has ended." = "Je gratis proefperiode is afgelopen.";
 "Your mode" = "Eigen modus";
 "Your modes" = "Eigen modi";

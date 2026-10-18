@@ -41,7 +41,7 @@ struct ModeEditorPage: View {
             if let custom {
                 Button("Delete Mode…", role: .destructive) { delete(custom) }
             } else {
-                Button("Reset to Default") { settings.settings.instructions.reset(mode) }
+                Button("Reset to Default…", role: .destructive, action: reset)
                     .disabled(!settings.settings.instructions.isCustomized(mode))
             }
         } content: {
@@ -94,6 +94,18 @@ struct ModeEditorPage: View {
 
         close()
         settings.settings.removeCustomMode(custom.id)
+    }
+
+    private func reset() {
+        let confirmation = Confirmation(
+            message: String(localized: "Reset the instructions of “\(settings.settings.title(of: mode))”?"),
+            detail: String(localized: "Your changes to these instructions are deleted."),
+            action: String(localized: "Reset to Default"),
+        )
+
+        if confirmation.ask() {
+            settings.settings.instructions.reset(mode)
+        }
     }
 }
 

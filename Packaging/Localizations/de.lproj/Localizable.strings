@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Starte Waft neu, um die Sprache zu wechseln.";
 "Relaunch" = "Neu starten";
 "Remove %@" = "%@ entfernen";
+"Remove Key" = "Schlüssel entfernen";
 "Remove License" = "Lizenz entfernen";
 "Remove License…" = "Lizenz entfernen …";
+"Remove the API key?" = "API-Schlüssel entfernen?";
 "Remove the license from this Mac?" = "Lizenz von diesem Mac entfernen?";
 "Remove" = "Entfernen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Entfernt Füllwörter und Versprecher und korrigiert Grammatik und Ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Entfernt Füllwörter und Versprecher, korrigiert die Grammatik und behält deine Sprache bei.";
+"Remove…" = "Entfernen …";
 "Replace the key" = "Schlüssel ersetzen";
 "Reset Statistics" = "Statistik zurücksetzen";
 "Reset Statistics…" = "Statistik zurücksetzen …";
+"Reset the instructions of “%@”?" = "Anweisungen von „%@“ zurücksetzen?";
 "Reset to Default" = "Standard wiederherstellen";
+"Reset to Default…" = "Standard wiederherstellen …";
 "Reset your dictation statistics?" = "Diktierstatistik zurücksetzen?";
 "Retry Speech Model" = "Spracherkennungsmodell erneut laden";
 "Retry" = "Erneut versuchen";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft kann diese Datei nicht lesen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kann das Mikrofon nicht verwenden. Erlaube den Zugriff unter Einstellungen › Allgemein.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft konnte den gespeicherten Verlauf nicht lesen und hat eine Kopie davon behalten. „Verlauf löschen“ entfernt beides.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft löscht ihn aus dem Schlüsselbund. Bis du einen Schlüssel hinzufügst, nutzen die KI-Modi den Modus „Leicht“.";
 "Waft is listening" = "Waft hört zu";
 "Waft listens for these languages." = "Waft erkennt diese Sprachen.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft hört nur zu, während du diktierst, und das Audio bleibt auf deinem Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Text";
 "You say" = "Du sagst";
 "You're all set" = "Alles bereit";
+"Your changes to these instructions are deleted." = "Deine Änderungen an diesen Anweisungen werden gelöscht.";
 "Your free trial has ended." = "Deine kostenlose Testphase ist abgelaufen.";
 "Your mode" = "Dein Modus";
 "Your modes" = "Deine Modi";

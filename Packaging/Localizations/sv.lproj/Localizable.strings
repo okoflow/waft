@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Starta om Waft för att byta språk.";
 "Relaunch" = "Starta om";
 "Remove %@" = "Ta bort %@";
+"Remove Key" = "Ta bort nyckel";
 "Remove License" = "Ta bort licens";
 "Remove License…" = "Ta bort licens…";
+"Remove the API key?" = "Vill du ta bort API-nyckeln?";
 "Remove the license from this Mac?" = "Vill du ta bort licensen från den här datorn?";
 "Remove" = "Ta bort";
 "Removes fillers and false starts, and fixes grammar and tone." = "Tar bort utfyllnadsord och felstarter och rättar grammatik och ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Tar bort utfyllnadsord och felstarter, rättar grammatik och behåller ditt språk.";
+"Remove…" = "Ta bort…";
 "Replace the key" = "Ersätt nyckeln";
 "Reset Statistics" = "Nollställ statistik";
 "Reset Statistics…" = "Nollställ statistik…";
+"Reset the instructions of “%@”?" = "Vill du återställa instruktionerna för ”%@”?";
 "Reset to Default" = "Återställ till förval";
+"Reset to Default…" = "Återställ till förval…";
 "Reset your dictation statistics?" = "Vill du nollställa dikteringsstatistiken?";
 "Retry Speech Model" = "Läs in talmodellen igen";
 "Retry" = "Försök igen";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft kan inte läsa den här filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan inte använda mikrofonen. Tillåt åtkomst i Inställningar › Allmänt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunde inte läsa den sparade historiken och har behållit en kopia av den. Rensa historik raderar båda.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft raderar den från nyckelringen. AI-lägena använder ”Lätt” tills du lägger till en nyckel.";
 "Waft is listening" = "Waft lyssnar";
 "Waft listens for these languages." = "Waft lyssnar efter de här språken.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft lyssnar bara medan du dikterar, och ljudet stannar på din Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Text";
 "You say" = "Du säger";
 "You're all set" = "Allt är klart";
+"Your changes to these instructions are deleted." = "Dina ändringar i de här instruktionerna raderas.";
 "Your free trial has ended." = "Din gratis provperiod har tagit slut.";
 "Your mode" = "Ditt läge";
 "Your modes" = "Dina lägen";

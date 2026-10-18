@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "언어를 바꾸려면 Waft를 다시 실행하세요.";
 "Relaunch" = "다시 실행";
 "Remove %@" = "%@ 제거";
+"Remove Key" = "키 제거";
 "Remove License" = "라이선스 제거";
 "Remove License…" = "라이선스 제거…";
+"Remove the API key?" = "API 키를 제거하겠습니까?";
 "Remove the license from this Mac?" = "이 Mac에서 라이선스를 제거하겠습니까?";
 "Remove" = "제거";
 "Removes fillers and false starts, and fixes grammar and tone." = "군말과 고쳐 말한 부분을 지우고 문법과 어조를 다듬습니다.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "군말과 고쳐 말한 부분을 지우고 문법을 바로잡으며, 언어는 그대로 둡니다.";
+"Remove…" = "제거…";
 "Replace the key" = "새 키로 교체";
 "Reset Statistics" = "통계 재설정";
 "Reset Statistics…" = "통계 재설정…";
+"Reset the instructions of “%@”?" = "‘%@’ 모드의 지시문을 재설정하겠습니까?";
 "Reset to Default" = "기본값으로 재설정";
+"Reset to Default…" = "기본값으로 재설정…";
 "Reset your dictation statistics?" = "받아쓰기 통계를 재설정하겠습니까?";
 "Retry Speech Model" = "음성 인식 모델 재시도";
 "Retry" = "재시도";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft가 이 파일을 읽을 수 없습니다.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft가 마이크를 사용할 수 없습니다. 설정 › 일반에서 허용하세요.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft가 저장된 기록을 읽지 못해 사본을 보관했습니다. ‘기록 지우기’를 누르면 둘 다 삭제됩니다.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft가 키체인에서 키를 삭제합니다. 키를 추가할 때까지 AI 모드는 ‘가벼운 정리’ 모드로 처리됩니다.";
 "Waft is listening" = "Waft가 듣는 중";
 "Waft listens for these languages." = "Waft는 다음 언어를 인식합니다.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft는 받아쓰는 동안에만 들으며, 오디오는 Mac 밖으로 나가지 않습니다.";
@@ -386,6 +392,7 @@
 "Writing" = "글쓰기";
 "You say" = "말한 내용";
 "You're all set" = "모든 준비가 끝났습니다";
+"Your changes to these instructions are deleted." = "이 지시문에 대한 변경 사항이 삭제됩니다.";
 "Your free trial has ended." = "무료 체험이 종료되었습니다.";
 "Your mode" = "나만의 모드";
 "Your modes" = "나만의 모드";

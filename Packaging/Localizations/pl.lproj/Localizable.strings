@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Uruchom ponownie Waft, aby zmienić język.";
 "Relaunch" = "Uruchom ponownie";
 "Remove %@" = "Usuń „%@”";
+"Remove Key" = "Usuń klucz";
 "Remove License" = "Usuń licencję";
 "Remove License…" = "Usuń licencję…";
+"Remove the API key?" = "Usunąć klucz API?";
 "Remove the license from this Mac?" = "Usunąć licencję z tego Maca?";
 "Remove" = "Usuń";
 "Removes fillers and false starts, and fixes grammar and tone." = "Usuwa przerywniki i przejęzyczenia, poprawia gramatykę i ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Usuwa przerywniki i przejęzyczenia, poprawia gramatykę, zachowuje Twój język.";
+"Remove…" = "Usuń…";
 "Replace the key" = "Zastąp klucz";
 "Reset Statistics" = "Wyzeruj statystyki";
 "Reset Statistics…" = "Wyzeruj statystyki…";
+"Reset the instructions of “%@”?" = "Przywrócić domyślne instrukcje trybu „%@”?";
 "Reset to Default" = "Przywróć domyślne";
+"Reset to Default…" = "Przywróć domyślne…";
 "Reset your dictation statistics?" = "Wyzerować statystyki dyktowania?";
 "Retry Speech Model" = "Ponów wczytywanie modelu mowy";
 "Retry" = "Ponów";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft nie może odczytać tego pliku.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft nie może używać mikrofonu. Pozwól na to w Ustawieniach › Ogólne.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft nie mógł odczytać zapisanej historii i zachował jej kopię. Wymaż historię usuwa obie.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft usunie go z pęku kluczy. Dopóki nie dodasz klucza, tryby AI będą używać trybu „Lekki”.";
 "Waft is listening" = "Waft słucha";
 "Waft listens for these languages." = "Waft rozpoznaje te języki.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft słucha tylko wtedy, gdy dyktujesz, a dźwięk zostaje na Twoim Macu.";
@@ -386,6 +392,7 @@
 "Writing" = "Tekst";
 "You say" = "Mówisz";
 "You're all set" = "Wszystko gotowe";
+"Your changes to these instructions are deleted." = "Twoje zmiany w tych instrukcjach zostaną usunięte.";
 "Your free trial has ended." = "Twój bezpłatny okres próbny dobiegł końca.";
 "Your mode" = "Twój tryb";
 "Your modes" = "Twoje tryby";

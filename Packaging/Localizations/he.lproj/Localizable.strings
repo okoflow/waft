@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "כדי להחליף את השפה, יש להפעיל מחדש את Waft.";
 "Relaunch" = "הפעלה מחדש";
 "Remove %@" = "הסרת %@";
+"Remove Key" = "הסרת המפתח";
 "Remove License" = "הסרת הרישיון";
 "Remove License…" = "הסרת הרישיון…";
+"Remove the API key?" = "להסיר את מפתח ה-API?";
 "Remove the license from this Mac?" = "להסיר את הרישיון מ-Mac זה?";
 "Remove" = "הסרה";
 "Removes fillers and false starts, and fixes grammar and tone." = "מסיר מילות מילוי והתחלות שגויות, ומתקן דקדוק וטון.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "מסיר מילות מילוי והתחלות שגויות, מתקן דקדוק ושומר על שפת הדיבור.";
+"Remove…" = "הסרה…";
 "Replace the key" = "החלפת המפתח";
 "Reset Statistics" = "איפוס הסטטיסטיקה";
 "Reset Statistics…" = "איפוס הסטטיסטיקה…";
+"Reset the instructions of “%@”?" = "לאפס את ההוראות של ״%@״?";
 "Reset to Default" = "שחזור ברירת המחדל";
+"Reset to Default…" = "שחזור ברירת המחדל…";
 "Reset your dictation statistics?" = "לאפס את סטטיסטיקת ההכתבה?";
 "Retry Speech Model" = "טעינה מחדש של מודל זיהוי הדיבור";
 "Retry" = "ניסיון חוזר";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft ימחק אותו מצרור המפתחות. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
 "Waft listens for these languages." = "אלה השפות ש-Waft מזהה.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "ההאזנה פעילה רק בזמן ההכתבה, והשמע נשאר ב-Mac שלך.";
@@ -386,6 +392,7 @@
 "Writing" = "כתיבה";
 "You say" = "מה שנאמר";
 "You're all set" = "הכול מוכן";
+"Your changes to these instructions are deleted." = "השינויים שלך בהוראות אלה יימחקו.";
 "Your free trial has ended." = "תקופת הניסיון ללא תשלום הסתיימה.";
 "Your mode" = "המצב שלך";
 "Your modes" = "המצבים שלך";

@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Reabra o Waft para trocar o idioma.";
 "Relaunch" = "Reabrir";
 "Remove %@" = "Remover “%@”";
+"Remove Key" = "Remover Chave";
 "Remove License" = "Remover Licença";
 "Remove License…" = "Remover Licença…";
+"Remove the API key?" = "Remover a chave de API?";
 "Remove the license from this Mac?" = "Remover a licença deste Mac?";
 "Remove" = "Remover";
 "Removes fillers and false starts, and fixes grammar and tone." = "Remove vícios de linguagem e recomeços, e corrige a gramática e o tom.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Remove vícios de linguagem e recomeços, corrige a gramática e mantém seu idioma.";
+"Remove…" = "Remover…";
 "Replace the key" = "Substituir a chave";
 "Reset Statistics" = "Redefinir Estatísticas";
 "Reset Statistics…" = "Redefinir Estatísticas…";
+"Reset the instructions of “%@”?" = "Restaurar o padrão das instruções de “%@”?";
 "Reset to Default" = "Restaurar Padrão";
+"Reset to Default…" = "Restaurar Padrão…";
 "Reset your dictation statistics?" = "Redefinir as estatísticas de ditado?";
 "Retry Speech Model" = "Recarregar Modelo de Fala";
 "Retry" = "Tentar Novamente";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "O Waft não consegue ler este arquivo.";
 "Waft can't use the microphone. Allow it in Settings › General." = "O Waft não pode usar o microfone. Permita o acesso em Ajustes › Geral.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "O Waft não conseguiu ler o histórico salvo e guardou uma cópia dele. Limpar Histórico apaga os dois.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "O Waft a apaga das Chaves. Os modos de IA usam o modo Leve até você adicionar uma chave.";
 "Waft is listening" = "O Waft está ouvindo";
 "Waft listens for these languages." = "O Waft reconhece estes idiomas.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "O Waft só ouve enquanto você dita, e o áudio fica no seu Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Escrita";
 "You say" = "Você diz";
 "You're all set" = "Tudo pronto";
+"Your changes to these instructions are deleted." = "Suas alterações nestas instruções serão apagadas.";
 "Your free trial has ended." = "Sua avaliação gratuita terminou.";
 "Your mode" = "Seu modo";
 "Your modes" = "Seus modos";

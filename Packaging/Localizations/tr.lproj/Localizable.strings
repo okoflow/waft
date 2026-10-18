@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Dili değiştirmek için Waft’ı yeniden çalıştırın.";
 "Relaunch" = "Yeniden Çalıştır";
 "Remove %@" = "Kaldır: %@";
+"Remove Key" = "Anahtarı Kaldır";
 "Remove License" = "Lisansı Kaldır";
 "Remove License…" = "Lisansı Kaldır…";
+"Remove the API key?" = "API anahtarı kaldırılsın mı?";
 "Remove the license from this Mac?" = "Lisans bu Mac’ten kaldırılsın mı?";
 "Remove" = "Kaldır";
 "Removes fillers and false starts, and fixes grammar and tone." = "Dolgu sözcüklerini ve yanlış başlangıçları atar, dilbilgisini ve tonu düzeltir.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Dolgu sözcüklerini ve yanlış başlangıçları atar, dilbilgisini düzeltir, dilinizi korur.";
+"Remove…" = "Kaldır…";
 "Replace the key" = "Anahtarı değiştirin";
 "Reset Statistics" = "İstatistikleri Sıfırla";
 "Reset Statistics…" = "İstatistikleri Sıfırla…";
+"Reset the instructions of “%@”?" = "“%@” modunun talimatları sıfırlansın mı?";
 "Reset to Default" = "Saptanmışa Dön";
+"Reset to Default…" = "Saptanmışa Dön…";
 "Reset your dictation statistics?" = "Dikte istatistikleriniz sıfırlansın mı?";
 "Retry Speech Model" = "Konuşma Modelini Yeniden Dene";
 "Retry" = "Yeniden Dene";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. Geçmişi Sil ikisini de siler.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft onu Anahtar Zinciri’nden siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";
 "Waft listens for these languages." = "Waft bu dilleri tanır.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft yalnızca siz dikte ederken dinler ve ses Mac’inizde kalır.";
@@ -386,6 +392,7 @@
 "Writing" = "Yazma";
 "You say" = "Söylediğiniz";
 "You're all set" = "Her şey hazır";
+"Your changes to these instructions are deleted." = "Bu talimatlarda yaptığınız değişiklikler silinir.";
 "Your free trial has ended." = "Ücretsiz deneme süreniz sona erdi.";
 "Your mode" = "Modunuz";
 "Your modes" = "Modlarınız";

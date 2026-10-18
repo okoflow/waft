@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Перезапустіть Waft, щоб змінити мову.";
 "Relaunch" = "Перезапустити";
 "Remove %@" = "Вилучити «%@»";
+"Remove Key" = "Вилучити ключ";
 "Remove License" = "Вилучити ліцензію";
 "Remove License…" = "Вилучити ліцензію…";
+"Remove the API key?" = "Вилучити ключ API?";
 "Remove the license from this Mac?" = "Вилучити ліцензію з цього Mac?";
 "Remove" = "Вилучити";
 "Removes fillers and false starts, and fixes grammar and tone." = "Прибирає слова-паразити й обмовки, виправляє граматику й тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Прибирає слова-паразити й обмовки, виправляє граматику, зберігає вашу мову.";
+"Remove…" = "Вилучити…";
 "Replace the key" = "Замінити ключ";
 "Reset Statistics" = "Скинути статистику";
 "Reset Statistics…" = "Скинути статистику…";
+"Reset the instructions of “%@”?" = "Скинути інструкції режиму «%@»?";
 "Reset to Default" = "Скинути до типових";
+"Reset to Default…" = "Скинути до типових…";
 "Reset your dictation statistics?" = "Скинути статистику диктування?";
 "Retry Speech Model" = "Повторити завантаження моделі мовлення";
 "Retry" = "Повторити";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft не може прочитати цей файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не може використовувати мікрофон. Надайте доступ у Параметрах › Загальні.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не зміг прочитати збережену історію й залишив її копію. «Очистити історію» видалить обидві.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft видалить його з вʼязки ключів. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
 "Waft is listening" = "Waft слухає";
 "Waft listens for these languages." = "Waft розпізнає ці мови.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft слухає, лише поки ви диктуєте, а звук залишається на вашому Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Текст";
 "You say" = "Ви кажете";
 "You're all set" = "Усе готово";
+"Your changes to these instructions are deleted." = "Ваші зміни в цих інструкціях буде видалено.";
 "Your free trial has ended." = "Безкоштовний пробний період закінчився.";
 "Your mode" = "Ваш режим";
 "Your modes" = "Ваші режими";

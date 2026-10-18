@@ -77,8 +77,8 @@ the reasons.
 Choose the **Provider** in Settings › AI Models, Claude by default.
 
 - **Claude** and **OpenAI** need an API key: paste it under **API key** and
-  click **Save**, and **Remove** deletes it. Create the Claude key inside a
-  workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
+  click **Save**, and **Remove…** deletes it after you confirm. Create the
+  Claude key inside a workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
   and the OpenAI key in the
   [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
 - **Local server** calls Ollama, LM Studio, llama.cpp, MLX, Jan, or any server
@@ -99,7 +99,8 @@ dictation and 45 for an edit.
 ### Custom and per-app modes
 
 - The arrow next to Clean, Formal, or Translate in Settings › Writing opens its
-  **Instructions**, which you can rewrite. **Reset to Default** restores them.
+  **Instructions**, which you can rewrite. **Reset to Default…** restores them
+  after you confirm.
 - **New Mode** under **Your modes** adds a mode from a name and instructions,
   such as "reply as a short, friendly email and sign with my name". Where they
   say nothing, Waft removes hesitations, fixes grammar and punctuation, and

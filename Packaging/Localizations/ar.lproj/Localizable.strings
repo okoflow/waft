@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "أعد تشغيل Waft لتغيير اللغة.";
 "Relaunch" = "إعادة التشغيل";
 "Remove %@" = "إزالة %@";
+"Remove Key" = "إزالة المفتاح";
 "Remove License" = "إزالة الترخيص";
 "Remove License…" = "إزالة الترخيص…";
+"Remove the API key?" = "هل تريد إزالة مفتاح API؟";
 "Remove the license from this Mac?" = "هل تريد إزالة الترخيص من هذا الـ Mac؟";
 "Remove" = "إزالة";
 "Removes fillers and false starts, and fixes grammar and tone." = "يحذفان كلمات الحشو والبدايات المتعثرة، ويصححان القواعد والنبرة.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "يحذف كلمات الحشو والبدايات المتعثرة، ويصحح القواعد، ويحافظ على لغتك.";
+"Remove…" = "إزالة…";
 "Replace the key" = "استبدال المفتاح";
 "Reset Statistics" = "إعادة تعيين الإحصائيات";
 "Reset Statistics…" = "إعادة تعيين الإحصائيات…";
+"Reset the instructions of “%@”?" = "هل تريد إعادة تعيين تعليمات \"%@\"؟";
 "Reset to Default" = "إعادة التعيين إلى الافتراضي";
+"Reset to Default…" = "إعادة التعيين إلى الافتراضي…";
 "Reset your dictation statistics?" = "هل تريد إعادة تعيين إحصائيات الإملاء؟";
 "Retry Speech Model" = "إعادة تحميل نموذج الكلام";
 "Retry" = "إعادة المحاولة";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "يتعذر على Waft قراءة هذا الملف.";
 "Waft can't use the microphone. Allow it in Settings › General." = "يتعذر على Waft استخدام الميكروفون. اسمح بالوصول إليه في الإعدادات › عام.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "تعذّرت على Waft قراءة السجل المحفوظ، فاحتفظ بنسخة منه. يحذف «مسح سجل التاريخ» الاثنين معًا.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "سيحذفه Waft من سلسلة المفاتيح. ستستخدم أنماط الذكاء الاصطناعي النمط \"خفيف\" إلى أن تضيف مفتاحًا.";
 "Waft is listening" = "يستمع Waft";
 "Waft listens for these languages." = "يتعرف Waft على هذه اللغات.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "لا يستمع Waft إلا أثناء الإملاء، ويبقى الصوت على الـ Mac الخاص بك.";
@@ -386,6 +392,7 @@
 "Writing" = "الكتابة";
 "You say" = "ما تقوله";
 "You're all set" = "كل شيء جاهز";
+"Your changes to these instructions are deleted." = "سيتم حذف التغييرات التي أجريتها على هذه التعليمات.";
 "Your free trial has ended." = "انتهت تجربتك المجانية.";
 "Your mode" = "نمطك";
 "Your modes" = "أنماطك";

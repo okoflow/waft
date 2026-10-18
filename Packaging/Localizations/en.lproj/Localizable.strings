@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "Relaunch Waft to switch the language.";
 "Relaunch" = "Relaunch";
 "Remove %@" = "Remove %@";
+"Remove Key" = "Remove Key";
 "Remove License" = "Remove License";
 "Remove License…" = "Remove License…";
+"Remove the API key?" = "Remove the API key?";
 "Remove the license from this Mac?" = "Remove the license from this Mac?";
 "Remove" = "Remove";
 "Removes fillers and false starts, and fixes grammar and tone." = "Removes fillers and false starts, and fixes grammar and tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Removes fillers and false starts, fixes grammar, keeps your language.";
+"Remove…" = "Remove…";
 "Replace the key" = "Replace the key";
 "Reset Statistics" = "Reset Statistics";
 "Reset Statistics…" = "Reset Statistics…";
+"Reset the instructions of “%@”?" = "Reset the instructions of “%@”?";
 "Reset to Default" = "Reset to Default";
+"Reset to Default…" = "Reset to Default…";
 "Reset your dictation statistics?" = "Reset your dictation statistics?";
 "Retry Speech Model" = "Retry Speech Model";
 "Retry" = "Retry";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft can't read this file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft can't use the microphone. Allow it in Settings › General.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft deletes it from the Keychain. The AI modes use Light until you add a key.";
 "Waft is listening" = "Waft is listening";
 "Waft listens for these languages." = "Waft listens for these languages.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft listens only while you dictate, and the audio stays on your Mac.";
@@ -386,6 +392,7 @@
 "Writing" = "Writing";
 "You say" = "You say";
 "You're all set" = "You're all set";
+"Your changes to these instructions are deleted." = "Your changes to these instructions are deleted.";
 "Your free trial has ended." = "Your free trial has ended.";
 "Your mode" = "Your mode";
 "Your modes" = "Your modes";

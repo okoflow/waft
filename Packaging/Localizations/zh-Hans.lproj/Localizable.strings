@@ -235,16 +235,21 @@
 "Relaunch Waft to switch the language." = "重新启动Waft以切换语言。";
 "Relaunch" = "重新启动";
 "Remove %@" = "移除“%@”";
+"Remove Key" = "移除密钥";
 "Remove License" = "移除许可证";
 "Remove License…" = "移除许可证…";
+"Remove the API key?" = "要移除API密钥吗？";
 "Remove the license from this Mac?" = "要从此Mac上移除许可证吗？";
 "Remove" = "移除";
 "Removes fillers and false starts, and fixes grammar and tone." = "去掉赘词和改口，修正语法和语气。";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "去掉赘词和改口，修正语法，保留原语言。";
+"Remove…" = "移除…";
 "Replace the key" = "替换密钥";
 "Reset Statistics" = "重置统计";
 "Reset Statistics…" = "重置统计…";
+"Reset the instructions of “%@”?" = "要将“%@”的指令还原为默认吗？";
 "Reset to Default" = "还原为默认";
+"Reset to Default…" = "还原为默认…";
 "Reset your dictation statistics?" = "要重置听写统计吗？";
 "Retry Speech Model" = "重试语音识别模型";
 "Retry" = "重试";
@@ -359,6 +364,7 @@
 "Waft can't read this file." = "Waft无法读取此文件。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft无法使用麦克风。请在“设置”›“通用”中允许。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft无法读取已保存的历史记录，已保留一份副本。“清除历史记录”会同时删除两者。";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft会将其从钥匙串中删除。在你添加密钥之前，AI模式将使用“轻度”模式。";
 "Waft is listening" = "Waft正在聆听";
 "Waft listens for these languages." = "Waft会识别以下语言。";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft仅在你听写时聆听，音频不会离开你的Mac。";
@@ -386,6 +392,7 @@
 "Writing" = "文本";
 "You say" = "你说";
 "You're all set" = "一切就绪";
+"Your changes to these instructions are deleted." = "你对这些指令所做的更改将被删除。";
 "Your free trial has ended." = "免费试用已结束。";
 "Your mode" = "自定义模式";
 "Your modes" = "自定义模式";
