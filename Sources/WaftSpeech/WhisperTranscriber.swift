@@ -82,7 +82,8 @@ package actor WhisperTranscriber: Transcriber {
         let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
         let options = decodingOptions(for: spoken, samples: samples, prompt: prompt, tokenizer: loaded.whisper.tokenizer)
         let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
-        guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
+        guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt, vocabulary: vocabulary)
+        else { return nil }
 
         return Transcript(
             text: text.written(in: variant, keeping: vocabulary),
@@ -248,13 +249,21 @@ package actor WhisperTranscriber: Transcriber {
 }
 
 extension WhisperTranscriber {
-    private static func acceptedText(of results: [TranscriptionResult], language: Language, prompt: String?) -> String? {
+    private static func acceptedText(
+        of results: [TranscriptionResult],
+        language: Language,
+        prompt: String?,
+        vocabulary: [String],
+    ) -> String? {
         let segments = results.flatMap(\.segments)
         let kept = segments.isEmpty
             ? results.map(\.text).joined(separator: " ")
             : segments.filter(isConfident).map(\.text).joined()
         let text = kept.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
+        guard !text.isEmpty,
+              !HallucinationFilter.isHallucination(text, in: language, prompt: prompt, vocabulary: vocabulary) else {
+            return nil
+        }
 
         return text.capitalizedIfUnstyled(in: language)
     }

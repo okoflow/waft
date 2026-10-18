@@ -57,6 +57,21 @@ struct HallucinationFilterTests {
         #expect(!HallucinationFilter.isHallucination(echo, in: .english, prompt: nil))
     }
 
+    @Test(arguments: [(Language.japanese, "ウェフト"), (.korean, "웨프트"), (.thai, "เวฟท์")])
+    func `keeps a dictionary term said on its own`(language: Language, term: String) {
+        let prompt = WhisperPrompt.text(for: language, variant: nil, vocabulary: [term])
+
+        #expect(!HallucinationFilter.isHallucination(term + ".", in: language, prompt: prompt, vocabulary: [term]))
+    }
+
+    @Test
+    func `drops an echo of several dictionary terms`() {
+        let vocabulary = ["Waft", "Kubernetes"]
+        let prompt = WhisperPrompt.text(for: .japanese, variant: nil, vocabulary: vocabulary)
+
+        #expect(HallucinationFilter.isHallucination("Waft, Kubernetes.", in: .japanese, prompt: prompt, vocabulary: vocabulary))
+    }
+
     @Test
     func `keeps a short phrase that happens to appear in the prompt`() {
         let prompt = "Hello! This is a sample of text, with capital letters, commas and full stops."

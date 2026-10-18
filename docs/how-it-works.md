@@ -52,8 +52,8 @@ noise. The rest goes to the speech model you chose, run on Core ML by
   API, in Latin letters.
 - **Made-up text.** Waft drops segments with low confidence or heavy
   repetition, results made only of tags such as `[music]`, an echo of the
-  prompt, and stock phrases such as "Thanks for watching" when they are the
-  whole result.
+  prompt other than one dictionary term said on its own, and stock phrases
+  such as "Thanks for watching" when they are the whole result.
 
 ## Cleanup
 
