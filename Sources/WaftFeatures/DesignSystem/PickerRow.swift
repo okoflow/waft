@@ -23,7 +23,7 @@ struct PickerRow<Value: Hashable, Options: View>: View {
     }
 
     var body: some View {
-        SettingsRow(title, description: description) {
+        SettingsRow(title, description: description, labelsAccessory: true) {
             MenuPicker(title, selection: $selection, current: current) {
                 options
             }
