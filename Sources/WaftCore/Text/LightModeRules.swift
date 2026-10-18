@@ -3,6 +3,10 @@ import Foundation
 enum LightModeRules {
     static let framingMarks: Set<Character> = [",", "，", "、", "،", "…", "-", "–", "—"]
 
+    static let openingMarks: Set<Character> = ["¿", "¡", "(", "[", "«", "„", "“", "\"", "「", "『", "（", "《"]
+
+    static let groupClosingMarks: Set<Character> = ["?", "!", ")", "]", "»", "“", "”", "\"", "」", "』", "）", "》"]
+
     private static let sentenceEnds: Set<Character> = [".", "!", "?", "。", "！", "？", "؟", "۔", "।", "॥"]
 
     private static let closingMarks: Set<Character> = [

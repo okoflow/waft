@@ -73,7 +73,9 @@ Light makes these changes and no others:
 
 - It removes hesitation sounds, such as "um" or "uh", with the commas around
   them, but keeps one after a number, as in "5 мм", or written in capitals,
-  as in "ER".
+  as in "ER". An opening "¿", bracket, or quote next to a removed sound stays
+  with the next word, and a sound inside its own marks, as in "¿eh?" or
+  "(um)", goes with them.
 - It tidies the spaces around punctuation, with French spacing before `!`,
   `?`, `;`, and `:`; capitalizes the first letter, with a dotted "İ" in
   Turkish and Azerbaijani, but leaves a first word such as "iPhone" as written;

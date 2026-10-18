@@ -19,6 +19,28 @@ struct HesitationRemover {
         segments = TextSegment.split(text.replacingOccurrences(of: "...", with: "…"))
     }
 
+    private static func keptMark(_ before: String, _ after: String) -> String {
+        let isFraming = LightModeRules.framingMarks.contains
+        let trimmedBefore = before.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedAfter = after.trimmingCharacters(in: .whitespacesAndNewlines)
+        let left = String(trimmedBefore.reversed().drop(while: isFraming).reversed())
+        let right = String(trimmedAfter.drop(while: isFraming))
+
+        return left.isEmpty ? right : left
+    }
+
+    private static func closesGroup(_ character: Character?) -> Bool {
+        guard let character else { return false }
+
+        return LightModeRules.groupClosingMarks.contains(character)
+    }
+
+    private static func splittingOpeningMarks(off separator: String) -> (closing: String, opening: String) {
+        let opening = String(separator.reversed().prefix(while: LightModeRules.openingMarks.contains).reversed())
+
+        return (String(separator.dropLast(opening.count)), opening)
+    }
+
     mutating func run() -> String {
         while index < segments.count {
             let segment = segments[index]
@@ -77,16 +99,26 @@ struct HesitationRemover {
     }
 
     private func joinedSeparator(_ before: String, _ after: String, isAtStart: Bool, isAtEnd: Bool) -> String {
-        guard !isAtStart else { return "" }
+        let (closingBefore, openingBefore) = Self.splittingOpeningMarks(off: before)
+        let marksAfter = after.drop(while: \.isWhitespace)
+        guard openingBefore.isEmpty || !Self.closesGroup(marksAfter.first) else {
+            return joinedSeparator(closingBefore, String(marksAfter.dropFirst()), isAtStart: isAtStart, isAtEnd: isAtEnd)
+        }
+        guard !isAtEnd else { return isAtStart ? "" : Self.keptMark(before, after) }
 
-        let isFraming = LightModeRules.framingMarks.contains
-        let trimmedBefore = before.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedAfter = after.trimmingCharacters(in: .whitespacesAndNewlines)
-        let left = String(trimmedBefore.reversed().drop(while: isFraming).reversed())
-        let right = String(trimmedAfter.drop(while: isFraming))
-        let core = left.isEmpty ? right : left
+        let (closingAfter, openingAfter) = Self.splittingOpeningMarks(off: after)
+
+        let trimmedAfter = closingAfter.trimmingCharacters(in: .whitespacesAndNewlines)
+        let movesOpening = !openingBefore.isEmpty && trimmedAfter.allSatisfy(LightModeRules.framingMarks.contains)
+        let opening = movesOpening ? openingBefore + openingAfter : openingAfter
+
+        guard !isAtStart else { return opening }
+
+        let markBefore = closingBefore.trimmingCharacters(in: .whitespacesAndNewlines)
+        let keepsMarkBefore = movesOpening || (!openingAfter.isEmpty && !markBefore.isEmpty)
+        let mark = keepsMarkBefore ? markBefore : Self.keptMark(before, closingAfter)
         let gap = (before + after).contains("\n") ? "\n" : language.wordSeparator
 
-        return isAtEnd ? core : core + gap
+        return mark + gap + opening
     }
 }
