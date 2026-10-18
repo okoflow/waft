@@ -19,7 +19,7 @@ final class SpeechModelController {
         transcriber.modelDirectory(for: chosenModel)
     }
 
-    private var chosenModel: SpeechModel {
+    var chosenModel: SpeechModel {
         settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
 
