@@ -13,6 +13,7 @@ struct InputEditor: View {
             .font(.editor)
             .scrollContentBackground(.hidden)
             .focused($isFocused)
+            .contentDirection(of: text)
             .padding(6)
             .modifier(FieldChrome(isFocused: isFocused, cornerRadius: Metrics.editorRadius))
     }

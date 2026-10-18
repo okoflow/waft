@@ -43,6 +43,7 @@ struct PracticeStep: View {
                     .font(.practice)
                     .lineLimit(4, reservesSpace: true)
                     .focused($isTyping)
+                    .contentDirection(of: onboarding.practiceText)
                     .padding(14)
                     .modifier(FieldChrome(isFocused: isTyping, cornerRadius: Metrics.cardRadius))
 

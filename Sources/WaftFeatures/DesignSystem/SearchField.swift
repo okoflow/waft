@@ -19,6 +19,7 @@ struct SearchField: View {
                 .accessibilityHidden(true)
 
             TextField(prompt, text: $text, prompt: Text(prompt))
+                .contentDirection(of: text)
                 .textFieldStyle(.plain)
                 .font(.control)
                 .focused($isFocused)

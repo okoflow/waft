@@ -31,6 +31,7 @@ struct InputField: View {
             SecureField(label, text: $text, prompt: Text(prompt))
         } else {
             TextField(label, text: $text, prompt: Text(prompt))
+                .contentDirection(of: text)
         }
     }
 }
