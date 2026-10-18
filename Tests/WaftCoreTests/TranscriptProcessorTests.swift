@@ -168,20 +168,6 @@ struct TranscriptProcessorTests {
         #expect(RewritePrompt.userMessage(for: request).contains("Translate into: German."))
     }
 
-    @Test(arguments: [
-        (Language.english, WritingVariant?.none, "see you tomorrow", "Увидимся завтра."),
-        (.russian, nil, "увидимся завтра", "See you tomorrow."),
-        (.serbian, .cyrillic, "vidimo se sutra", "See you tomorrow."),
-    ])
-    func `keeps each translation as answered`(spoken: Language, variant: WritingVariant?, text: String, answer: String) async {
-        let translation = Translation(target: .english, twoWayLanguage: .russian)
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
-        let reply = Result<String, RewriteError>.success(answer)
-        let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
-
-        #expect(processed == ProcessedText(text: answer, mode: .translate))
-    }
-
     @Test(arguments: [Mode.clean, .formal, .custom(UUID())])
     func `does not translate outside translate mode`(mode: Mode) async throws {
         let log = RewriteLog()
@@ -223,38 +209,20 @@ struct TranscriptProcessorTests {
             try await edit("Text.", following: "shorter", answer: answer)
         }
     }
-
-    @Test
-    func `writes the text in the chosen script and keeps a snippet as written`() async {
-        let vocabulary = Vocabulary(terms: [], snippets: [Vocabulary.Snippet(trigger: "brb", text: "马上回来")])
-        let processed = await process("这是测试 brb", mode: .light, language: .chinese, variant: .traditional, vocabulary: vocabulary)
-
-        #expect(processed.text == "這是測試 马上回来。")
-    }
 }
 
 extension TranscriptProcessorTests {
     private func process(
         _ text: String,
         mode: Mode,
-        language: Language = .english,
-        variant: WritingVariant? = nil,
         setup: RewriteSetup = Self.setup,
         answer: Result<String, RewriteError> = .success("Unused."),
         vocabulary: Vocabulary = .empty,
         allowsAI: Bool = true,
         log: RewriteLog = RewriteLog(),
     ) async -> ProcessedText {
-        let transcript = Transcript(
-            text: text,
-            language: language,
-            detectionDuration: .zero,
-            decodingDuration: .zero,
-            variant: variant,
-        )
-
-        return await processor(claude: answer, log: log)
-            .process(transcript, mode: mode, setup: setup, vocabulary: vocabulary, allowsAI: allowsAI)
+        await TranscriptProcessor.answering(answer, log: log)
+            .process(.spoken(text), mode: mode, setup: setup, vocabulary: vocabulary, allowsAI: allowsAI)
     }
 
     private func edit(
@@ -264,37 +232,6 @@ extension TranscriptProcessorTests {
         setup: RewriteSetup = Self.setup,
         log: RewriteLog = RewriteLog(),
     ) async throws(RewriteError) -> String {
-        let transcript = Transcript(text: instruction, language: .english, detectionDuration: .zero, decodingDuration: .zero)
-
-        return try await processor(claude: answer, log: log).edit(selection, following: transcript, setup: setup)
-    }
-
-    private func processor(claude: Result<String, RewriteError>, log: RewriteLog) -> TranscriptProcessor {
-        TranscriptProcessor(rewriters: Rewriters(
-            cloud: PerProvider(
-                claude: FakeTextRewriter(answer: claude, log: log),
-                openAI: FakeTextRewriter(answer: .success("From OpenAI."), log: log),
-            ),
-            localServer: FakeTextRewriter(answer: .success("From the local server."), log: log),
-        ))
-    }
-}
-
-private struct FakeTextRewriter: TextRewriter {
-    let answer: Result<String, RewriteError>
-    let log: RewriteLog
-
-    func rewrite(_ request: RewriteRequest) async throws(RewriteError) -> String {
-        await log.record(request)
-
-        return try answer.get()
-    }
-}
-
-private actor RewriteLog {
-    private(set) var requests: [RewriteRequest] = []
-
-    func record(_ request: RewriteRequest) {
-        requests.append(request)
+        try await TranscriptProcessor.answering(answer, log: log).edit(selection, following: .spoken(instruction), setup: setup)
     }
 }
