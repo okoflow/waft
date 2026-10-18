@@ -103,7 +103,7 @@ final class RecordingController {
         hud.hideListening()
         Logger.dictation.info("Discarded the recording: \(reason.rawValue, privacy: .public)")
 
-        Task { _ = await recorder.stop(ended.id, releasedAt: nil) }
+        stopRecorder(ended.id)
     }
 
     func resetWatchdog(on keyEvent: KeyEvent) {
@@ -173,8 +173,10 @@ final class RecordingController {
         hud.hideListening()
         hud.show(.recordingFailed(failure.message))
 
-        let id = failed.id
+        stopRecorder(failed.id)
+    }
 
+    private func stopRecorder(_ id: RecordingID) {
         Task { _ = await recorder.stop(id, releasedAt: nil) }
     }
 
@@ -223,9 +225,7 @@ final class RecordingController {
         hud.hideListening()
         hud.show(HUDMessage(kind: .information, title: reason))
 
-        let id = rejected.id
-
-        Task { _ = await recorder.stop(id, releasedAt: nil) }
+        stopRecorder(rejected.id)
     }
 
     private func deliver(_ ended: ActiveRecording, releasedAt time: TimeInterval) async {
