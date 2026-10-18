@@ -41,7 +41,7 @@ describe how each handles the text.
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
 If Waft can't read a saved JSON file, it keeps an `*.unreadable.json` copy
-beside it, which **Clear History** in Settings › History also deletes for the
+beside it, which **Clear History…** in Settings › History also deletes for the
 history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared)
 says how to recover it.
 
