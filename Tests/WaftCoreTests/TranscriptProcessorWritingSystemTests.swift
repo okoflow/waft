@@ -44,6 +44,22 @@ struct TranscriptProcessorWritingSystemTests {
     }
 
     @Test(arguments: [
+        (Mode.clean, Result<String, RewriteError>.success("Vidimo se sutra."), Mode.clean, RewriteFallback?.none),
+        (.formal, .success("Vidimo se sutra."), .formal, nil),
+        (.translate, .failure(.timeout), .light, .timeout),
+    ])
+    func `writes a cleanup and a translation that falls back to light in the chosen script`(
+        mode: Mode,
+        answer: Result<String, RewriteError>,
+        processedMode: Mode,
+        fallback: RewriteFallback?,
+    ) async {
+        let processed = await process("vidimo se sutra", mode: mode, language: .serbian, variant: .cyrillic, answer: answer)
+
+        #expect(processed == ProcessedText(text: "Видимо се сутра.", mode: processedMode, fallback: fallback))
+    }
+
+    @Test(arguments: [
         (Language.serbian, WritingVariant.latin, "Привет, как дела?"),
         (.serbian, .cyrillic, "See you tomorrow."),
         (.serbian, .cyrillic, "Novak Đoković played the match."),
