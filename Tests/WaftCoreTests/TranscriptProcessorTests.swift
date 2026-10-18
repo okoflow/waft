@@ -166,13 +166,15 @@ struct TranscriptProcessorTests {
     }
 
     @Test(arguments: [
-        (Language.english, "see you tomorrow", "Увидимся завтра."),
-        (.russian, "увидимся завтра", "See you tomorrow."),
+        (Language.english, WritingVariant?.none, "see you tomorrow", "Увидимся завтра."),
+        (.russian, nil, "увидимся завтра", "See you tomorrow."),
+        (.serbian, .cyrillic, "vidimo se sutra", "See you tomorrow."),
     ])
-    func `translates both ways between two languages`(spoken: Language, text: String, answer: String) async {
+    func `keeps each translation as answered`(spoken: Language, variant: WritingVariant?, text: String, answer: String) async {
         let translation = Translation(target: .english, twoWayLanguage: .russian)
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
-        let processed = await process(text, mode: .translate, language: spoken, setup: setup, answer: .success(answer))
+        let reply = Result<String, RewriteError>.success(answer)
+        let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
 
         #expect(processed == ProcessedText(text: answer, mode: .translate))
     }

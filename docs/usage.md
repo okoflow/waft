@@ -50,7 +50,9 @@ languages detect faster and more accurately. To skip detection, choose a
   language**.
 - Chinese and Serbian have a **Writing system** in Settings › Dictation:
   Simplified or Traditional characters, and Latin or Cyrillic letters. Waft
-  writes all text in it.
+  converts what you dictate or transcribe in that language into it, including
+  what your own modes return; a Translate result in another language and an
+  edit by voice keep the script the AI model wrote.
 
 ## Modes
 

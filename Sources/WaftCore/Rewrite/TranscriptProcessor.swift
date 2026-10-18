@@ -16,6 +16,19 @@ package struct TranscriptProcessor: Sendable {
         }
     }
 
+    private static func writingVariant(
+        of transcript: Transcript,
+        after processed: ProcessedText,
+        setup: RewriteSetup,
+    ) -> WritingVariant? {
+        let language = transcript.language
+        guard processed.mode == .translate, setup.translation.target(forSpoken: language) != language else {
+            return transcript.variant
+        }
+
+        return nil
+    }
+
     package func process(
         _ transcript: Transcript,
         mode: Mode,
@@ -31,7 +44,8 @@ package struct TranscriptProcessor: Sendable {
         }
 
         let processed = await apply(mode, to: corrected, language: language, setup: setup, allowsAI: allowsAI)
-        let written = processed.text.written(in: transcript.variant, keeping: vocabulary.promptTerms)
+        let variant = Self.writingVariant(of: transcript, after: processed, setup: setup)
+        let written = processed.text.written(in: variant, keeping: vocabulary.promptTerms)
         let recorrected = vocabulary.correcting(written, language: language)
         let finished = vocabulary.expandingSnippets(in: recorrected, language: language)
 
