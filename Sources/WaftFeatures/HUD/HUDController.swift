@@ -110,11 +110,7 @@ final class HUDController {
         hasCopied = true
 
         messageTask?.cancel()
-        messageTask = Task { [weak self, copiedPause] in
-            guard await Task.slept(for: copiedPause) else { return }
-
-            self?.messageDidExpire()
-        }
+        expireMessage(after: copiedPause)
     }
 
     func show(_ message: HUDMessage) {
@@ -155,7 +151,11 @@ final class HUDController {
         hasCopied = false
         present(.message(message))
 
-        messageTask = Task { [weak self, duration = messageDuration(message)] in
+        expireMessage(after: messageDuration(message))
+    }
+
+    private func expireMessage(after duration: Duration) {
+        messageTask = Task { [weak self] in
             guard await Task.slept(for: duration) else { return }
 
             self?.messageDidExpire()
