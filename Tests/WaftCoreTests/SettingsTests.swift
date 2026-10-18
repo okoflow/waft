@@ -106,6 +106,7 @@ struct SettingsTests {
         settings.historyRetention = .forever
         settings.historyLimit = 5000
         settings.playsSounds = false
+        settings.lowersOtherSounds = false
         settings.showsMenuBarIcon = false
         settings.microphoneID = "usb-mic"
         settings.hasCompletedSetup = true
