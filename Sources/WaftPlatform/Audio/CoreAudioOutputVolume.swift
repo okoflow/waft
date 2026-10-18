@@ -16,19 +16,6 @@ package final class CoreAudioOutputVolume: OutputVolume {
 
     package init() {}
 
-    private static func defaultOutputDeviceID() -> AudioDeviceID? {
-        var address = AudioObjectPropertyAddress(
-            kAudioHardwarePropertyDefaultOutputDevice,
-            scope: kAudioObjectPropertyScopeGlobal,
-        )
-        var deviceID = AudioDeviceID(kAudioObjectUnknown)
-        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
-        let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &size, &deviceID)
-        guard status == noErr, deviceID != kAudioObjectUnknown else { return nil }
-
-        return deviceID
-    }
-
     private static func volume(of deviceID: AudioDeviceID) -> Float32? {
         var address = volumeAddress()
         var volume: Float32 = 0
@@ -58,7 +45,7 @@ package final class CoreAudioOutputVolume: OutputVolume {
 
     package func lower(to fraction: Float) {
         guard lowered == nil,
-              let deviceID = Self.defaultOutputDeviceID(),
+              let deviceID = DefaultAudioDevice.output.deviceID,
               let original = Self.volume(of: deviceID),
               original > 0
         else { return }
