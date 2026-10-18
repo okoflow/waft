@@ -7,6 +7,10 @@ package struct PerProvider<Value> {
         self.openAI = openAI
     }
 
+    package init(_ value: (CloudProvider) -> Value) {
+        self.init(claude: value(.claude), openAI: value(.openAI))
+    }
+
     package subscript(_ provider: CloudProvider) -> Value {
         get {
             switch provider {

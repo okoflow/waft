@@ -237,10 +237,7 @@ extension AppModel {
     }
 
     private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
-        PerProvider(
-            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
-            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
-        )
+        PerProvider { APIKeyModel(store: dependencies.apiKeyStores[$0]) }
     }
 
     private static func makeTranscription(
