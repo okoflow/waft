@@ -17,7 +17,7 @@ struct AboutSettingsPane: View {
 
             Text(AppVersion.title)
                 .font(.rowTitle)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
 
             Text("On-device dictation for macOS with AI cleanup.")
                 .font(.rowTitle)
@@ -37,7 +37,7 @@ struct AboutSettingsPane: View {
         if let copyright = Self.copyright {
             Text(verbatim: copyright)
                 .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .frame(maxWidth: .infinity)
         }
     }

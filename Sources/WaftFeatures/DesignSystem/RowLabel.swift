@@ -12,7 +12,7 @@ struct RowLabel: View {
             if let description {
                 Text(description)
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

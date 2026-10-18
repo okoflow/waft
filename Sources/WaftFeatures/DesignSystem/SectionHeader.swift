@@ -22,7 +22,7 @@ struct SectionHeader: View {
             if let subtitle {
                 Text(subtitle)
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

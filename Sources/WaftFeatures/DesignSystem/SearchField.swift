@@ -15,7 +15,7 @@ struct SearchField: View {
         HStack(spacing: Metrics.inlineSpacing) {
             Image(systemName: "magnifyingglass")
                 .font(.glyph)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .accessibilityHidden(true)
 
             TextField(prompt, text: $text, prompt: Text(prompt))

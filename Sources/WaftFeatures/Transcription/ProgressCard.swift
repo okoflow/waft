@@ -34,7 +34,7 @@ struct ProgressCard: View {
 
                     Text(status)
                         .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .monospacedDigit()
                 }
 

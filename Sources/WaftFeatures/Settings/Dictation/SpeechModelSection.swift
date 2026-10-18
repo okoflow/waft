@@ -82,7 +82,7 @@ private struct SpeechModelPreview: View {
 
             Text(verbatim: name)
                 .font(.previewLabel)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
         }
         .accessibilityHidden(true)
     }

@@ -55,7 +55,7 @@ struct PermissionStep: View {
                 if showsDeviceControlHint {
                     Text("On macOS 27, it's under Device Control and Data Access.")
                         .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                 }
             }
         }

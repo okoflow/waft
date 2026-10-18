@@ -121,7 +121,7 @@ private struct HistoryRow: View {
 
                 Text(details)
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
             }
 
             Spacer(minLength: 0)
@@ -148,7 +148,7 @@ private struct PagerRow: View {
         HStack(spacing: Metrics.controlSpacing) {
             Text(range)
                 .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .monospacedDigit()
 
             Spacer(minLength: 0)

@@ -84,7 +84,7 @@ private struct TranscriptionHeader: View {
 
                 Text("Audio and video files, transcribed on this Mac.")
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
             }
         }
     }
@@ -108,7 +108,7 @@ private struct DropZone: View {
         VStack(spacing: Metrics.controlSpacing) {
             Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
                 .font(.dropZoneGlyph)
-                .foregroundStyle(isTargeted ? Palette.accent : .secondary)
+                .foregroundStyle(isTargeted ? Palette.accent : Palette.secondaryText)
                 .contentTransition(.symbolEffect(.replace))
                 .padding(.bottom, 4)
                 .accessibilityHidden(true)
@@ -118,7 +118,7 @@ private struct DropZone: View {
 
             Text(hint)
                 .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
 
             Button("Choose File…", action: chooseFile)
                 .disabled(model.notReadyMessage != nil)
@@ -209,7 +209,7 @@ private struct ProGateBanner: View {
 
                 Text("Recordings and videos become text and subtitles, right on your Mac.")
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)
             }
 

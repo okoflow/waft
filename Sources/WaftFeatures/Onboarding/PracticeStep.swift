@@ -49,7 +49,7 @@ struct PracticeStep: View {
                 HStack(spacing: Metrics.controlSpacing) {
                     Text(modelStatus)
                         .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
 
                     if model.speechModelController.state.canRetry {
                         Button("Retry") { model.speechModelController.retry() }

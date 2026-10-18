@@ -10,7 +10,7 @@ struct Badge: View {
     var body: some View {
         Text(text)
             .font(.badge)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Palette.secondaryText)
             .badgeChrome(fill: Palette.selection)
     }
 }

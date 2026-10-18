@@ -29,7 +29,7 @@ struct MenuPicker<Value: Hashable, Options: View>: View {
 
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.menuChevron)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .frame(width: 18, height: 18)
                     .background(Palette.control, in: Circle())
             }

@@ -39,7 +39,7 @@ struct ModeRow: View {
             Button(action: edit) {
                 Image(systemName: "chevron.forward")
                     .font(.glyph)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .frame(width: Metrics.controlHeight, height: Metrics.controlHeight)
                     .contentShape(Rectangle())
             }
@@ -106,7 +106,7 @@ private struct ModeLabel: View {
                 if mode.usesAI {
                     Image(systemName: provider.isCloud ? "cloud" : "cpu")
                         .font(.glyph)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .help(processingNote)
                         .accessibilityLabel(processingNote)
                 }
@@ -123,7 +123,7 @@ private struct ModeLabel: View {
 
             Text(settings.summary(of: mode))
                 .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .lineLimit(isBuiltIn ? nil : 1)
         }
         .motion(Motion.feedback, value: isEdited)

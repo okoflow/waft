@@ -108,7 +108,7 @@ private struct TryoutSection: View {
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text("You say")
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
 
                 InputField("You say", prompt: "Say something to try", text: $tryout.sample)
             }
@@ -120,7 +120,7 @@ private struct TryoutSection: View {
                 VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                     Text("Waft writes")
                         .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
 
                     result
                 }

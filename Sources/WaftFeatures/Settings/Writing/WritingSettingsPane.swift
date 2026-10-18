@@ -51,7 +51,7 @@ struct WritingSettingsPane: View {
             if let setupNote {
                 Text(setupNote)
                     .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
 
                 Button("Set Up…") { state.selection = .aiModels }
             }

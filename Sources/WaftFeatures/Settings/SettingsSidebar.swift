@@ -9,7 +9,7 @@ struct SettingsSidebar: View {
                 if let title = group.title {
                     Text(title)
                         .font(.sidebarGroup)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .padding(.leading, Metrics.sidebarRowInset)
                         .padding(.top, index == 0 ? 0 : Metrics.sidebarGroupSpacing)
                         .accessibilityAddTraits(.isHeader)

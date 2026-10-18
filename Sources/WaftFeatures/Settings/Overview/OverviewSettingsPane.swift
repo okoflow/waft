@@ -101,7 +101,7 @@ private struct Metric: View {
 
             Text(label)
                 .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, Metrics.metricPadding)

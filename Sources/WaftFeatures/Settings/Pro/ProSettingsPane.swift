@@ -11,7 +11,7 @@ struct ProSettingsPane: View {
             DividedForEach(ProBenefit.all, id: \.symbolName) { benefit in
                 TileRow(symbolName: benefit.symbolName, tint: benefit.tint, title: benefit.title, detail: benefit.detail) {
                     Image(systemName: pro.isUnlocked ? "checkmark.circle.fill" : "lock.fill")
-                        .foregroundStyle(pro.isUnlocked ? Palette.accent : .secondary)
+                        .foregroundStyle(pro.isUnlocked ? Palette.accent : Palette.secondaryText)
                         .accessibilityLabel(pro.isUnlocked ? Text("Included") : Text("Locked"))
                 }
             }

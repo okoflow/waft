@@ -34,18 +34,18 @@ struct KeyRecorderField: View {
             HStack(spacing: Metrics.inlineSpacing) {
                 Image(systemName: isRecording ? "record.circle" : "keyboard")
                     .font(.glyph)
-                    .foregroundStyle(isRecording ? Palette.accent : .secondary)
+                    .foregroundStyle(isRecording ? Palette.accent : Palette.secondaryText)
                     .contentTransition(.symbolEffect(.replace))
                     .accessibilityHidden(true)
 
                 ZStack {
                     if isRecording {
                         Text("Press a key…")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Palette.secondaryText)
                             .transition(.opacity)
                     } else {
                         Text(title)
-                            .foregroundStyle(key == nil ? .secondary : .primary)
+                            .foregroundStyle(key == nil ? Palette.secondaryText : Color.primary)
                             .transition(.opacity)
                     }
                 }
