@@ -17,16 +17,7 @@ package struct LocalServerBrowser: LocalServerBrowsing {
 
     package func models(at server: LocalServer) async throws(RewriteError) -> [String] {
         let request = try URLRequest(url: server.url(appending: "/models"), timeoutInterval: Self.timeout)
-        let data: Data
-        let response: URLResponse
-
-        do {
-            (data, response) = try await transport.data(for: request)
-        } catch {
-            throw .failedRequest(error, to: Self.service)
-        }
-
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw .unavailable }
+        let data = try await transport.body(for: request, from: Self.service)
 
         return try ResponseDecoder.decode(LocalModelList.self, from: data, sentBy: Self.service).data.map(\.id)
     }

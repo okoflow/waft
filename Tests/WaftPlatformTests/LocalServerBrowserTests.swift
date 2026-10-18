@@ -6,10 +6,10 @@ import WaftCore
 struct LocalServerBrowserTests {
     private static let server = LocalServer(baseURL: "http://localhost:1234/v1")
 
-    @Test
-    func `lists the models the server reports at its models path`() async throws {
+    @Test(arguments: [200, 203])
+    func `lists the models the server reports at its models path`(status: Int) async throws {
         let body = Data(#"{"object":"list","data":[{"id":"qwen3","object":"model"},{"id":"gemma3","object":"model"}]}"#.utf8)
-        let transport = FakeHTTPTransport(.status(200, body: body))
+        let transport = FakeHTTPTransport(.status(status, body: body))
 
         let models = try await LocalServerBrowser(transport: transport).models(at: Self.server)
 
@@ -18,9 +18,12 @@ struct LocalServerBrowserTests {
     }
 
     @Test(arguments: [
-        (FakeHTTPTransport.Reply.status(204), RewriteError.unavailable),
+        (FakeHTTPTransport.Reply.status(204), RewriteError.unreadableResponse),
+        (.status(300), .serviceUnavailable),
+        (.status(401), .rejectedKey),
         (.status(404), .unavailable),
-        (.notHTTP, .unavailable),
+        (.status(500), .serviceUnavailable),
+        (.notHTTP, .unreadableResponse),
         (.status(200, body: Data(#"{"models":[]}"#.utf8)), .unreadableResponse),
         (.failure(URLError(.timedOut)), .timeout),
     ])
