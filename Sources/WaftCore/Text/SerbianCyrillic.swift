@@ -1,3 +1,5 @@
+import Foundation
+
 enum SerbianCyrillic {
     private static let digraphs: [(latin: String, cyrillic: String)] = [
         ("dž", "џ"),
@@ -71,25 +73,69 @@ enum SerbianCyrillic {
     private static let separateLetterPrefixes = ["nadž", "podž", "injek", "konjug", "konjunk", "vanjez"]
 
     static func converting(_ text: String, keeping terms: [String]) -> String {
-        let kept = Set(terms.flatMap { $0.lowercased().split(separator: " ").map(String.init) })
+        var result = ""
+        var start = text.startIndex
+
+        for range in keptRanges(of: terms, in: text) {
+            result += convertingWords(in: text[start ..< range.lowerBound])
+            result += text[range]
+            start = range.upperBound
+        }
+
+        return result + convertingWords(in: text[start...])
+    }
+
+    private static func keptRanges(of terms: [String], in text: String) -> [Range<String.Index>] {
+        let ranges = terms.flatMap { wholeWordRanges(of: $0, in: text) }.sorted { $0.lowerBound < $1.lowerBound }
+        var kept: [Range<String.Index>] = []
+
+        for range in ranges where !kept.contains(where: { $0.overlaps(range) }) {
+            kept.append(range)
+        }
+
+        return kept
+    }
+
+    private static func wholeWordRanges(of term: String, in text: String) -> [Range<String.Index>] {
+        var ranges: [Range<String.Index>] = []
+        var searchStart = text.startIndex
+
+        while let range = text.range(of: term, options: .caseInsensitive, range: searchStart ..< text.endIndex) {
+            if !isWordCharacter(text[..<range.lowerBound].last), !isWordCharacter(text[range.upperBound...].first) {
+                ranges.append(range)
+            }
+
+            searchStart = range.upperBound
+        }
+
+        return ranges
+    }
+
+    private static func isWordCharacter(_ character: Character?) -> Bool {
+        guard let character else { return false }
+
+        return character.isLetter || character.isNumber
+    }
+
+    private static func convertingWords(in text: Substring) -> String {
         var result = ""
         var word = ""
 
         for character in text {
-            if character.isLetter || character.isNumber {
+            if isWordCharacter(character) {
                 word.append(character)
             } else {
-                result += converted(word, keeping: kept)
+                result += converted(word)
                 result.append(character)
                 word = ""
             }
         }
 
-        return result + converted(word, keeping: kept)
+        return result + converted(word)
     }
 
-    private static func converted(_ word: String, keeping kept: Set<String>) -> String {
-        guard isSerbianLatin(word), !kept.contains(word.lowercased()) else { return word }
+    private static func converted(_ word: String) -> String {
+        guard isSerbianLatin(word) else { return word }
 
         let lowercased = word.lowercased()
         let keepsLettersApart = separateLetterPrefixes.contains { lowercased.hasPrefix($0) }

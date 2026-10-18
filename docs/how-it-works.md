@@ -47,8 +47,9 @@ noise. The rest goes to the speech model you chose, run on Core ML by
   your dictionary terms.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into
   the script you chose. Latin to Cyrillic goes letter by letter and leaves
-  your dictionary terms and words with q, w, x, or y, digits, inner capitals,
-  or two to four capitals, such as GitHub or API, in Latin letters.
+  your dictionary terms, wherever the whole term appears, and words with q, w,
+  x, or y, digits, inner capitals, or two to four capitals, such as GitHub or
+  API, in Latin letters.
 - **Made-up text.** Waft drops segments with low confidence or heavy
   repetition, results made only of tags such as `[music]`, an echo of the
   prompt, and stock phrases such as "Thanks for watching" when they are the
