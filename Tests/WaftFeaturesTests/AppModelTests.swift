@@ -47,7 +47,14 @@ struct AppModelTests {
         #expect(settings.settings.historyLimit == 100)
     }
 
-    private func dependencies() -> AppDependencies {
+    @Test(arguments: [(PermissionStatus.granted, AppStatus.speechModel(SpeechModelState())), (.denied, .needsPermission)])
+    func `reports missing permissions before the speech model`(accessibility: PermissionStatus, status: AppStatus) {
+        let model = AppModel(dependencies: dependencies(permissions: [.microphone: .granted, .accessibility: accessibility]))
+
+        #expect(model.status == status)
+    }
+
+    private func dependencies(permissions: [Permission: PermissionStatus] = [:]) -> AppDependencies {
         AppDependencies(
             recorder: FakeAudioRecorder(),
             audioInputs: FakeAudioInputProvider(),
@@ -63,7 +70,7 @@ struct AppModelTests {
             urlOpener: FakeURLOpener(),
             inserter: FakeTextInserter(),
             clipboard: FakeClipboard(),
-            permissions: FakePermissionProvider([:]),
+            permissions: FakePermissionProvider(permissions),
             loginItem: FakeLoginItem(),
             sounds: FakeFeedbackSoundPlayer(),
             outputVolume: FakeOutputVolume(),
