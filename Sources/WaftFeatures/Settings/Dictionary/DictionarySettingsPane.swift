@@ -13,8 +13,8 @@ struct DictionarySettingsPane: View {
                 EntryRow(first: $term.term, firstPrompt: "Term", second: $term.spokenForms, secondPrompt: "Heard as") {
                     vocabulary.removeTerm(term.id)
                 }
-                .rowTransition()
             }
+            .rowTransition()
         } footer: {
             Button("Add Term") { vocabulary.addTerm() }
         }
@@ -34,8 +34,8 @@ struct DictionarySettingsPane: View {
                 ) {
                     vocabulary.removeSnippet(snippet.id)
                 }
-                .rowTransition()
             }
+            .rowTransition()
         } footer: {
             Button("Add Snippet") { vocabulary.addSnippet() }
         }

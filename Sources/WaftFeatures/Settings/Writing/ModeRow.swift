@@ -27,7 +27,7 @@ struct ModeRow: View {
             ZStack {
                 if isSelected {
                     Image(systemName: "checkmark")
-                        .font(.sectionTitle)
+                        .font(.glyph)
                         .foregroundStyle(Palette.accent)
                         .transition(.opacity)
                 }
@@ -122,8 +122,7 @@ private struct ModeLabel: View {
             }
 
             Text(settings.summary(of: mode))
-                .font(.rowDetail)
-                .foregroundStyle(Palette.secondaryText)
+                .detailText()
                 .lineLimit(isBuiltIn ? nil : 1)
         }
         .motion(Motion.feedback, value: isEdited)

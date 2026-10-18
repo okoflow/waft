@@ -120,8 +120,7 @@ private struct HistoryRow: View {
                     .contentDirection(of: entry.text)
 
                 Text(details)
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.secondaryText)
+                    .detailText()
             }
 
             Spacer(minLength: 0)
@@ -147,8 +146,7 @@ private struct PagerRow: View {
     var body: some View {
         HStack(spacing: Metrics.controlSpacing) {
             Text(range)
-                .font(.rowDetail)
-                .foregroundStyle(Palette.secondaryText)
+                .detailText()
                 .monospacedDigit()
 
             Spacer(minLength: 0)

@@ -15,7 +15,7 @@ struct WelcomeStep: View {
 
     var body: some View {
         OnboardingStep(title: "Welcome to Waft", message: "Dictate in any app instead of typing.") {
-            AppIcon(size: 96)
+            AppIcon(size: Metrics.pageIconSize)
         } content: {
             SettingsCard {
                 TileRow(symbolName: "keyboard", tint: .gray, title: pressTitle, detail: "Waft starts listening")

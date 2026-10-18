@@ -9,7 +9,7 @@ struct AboutSettingsPane: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            AppIcon(size: 112)
+            AppIcon(size: Metrics.pageIconSize)
 
             Text("Waft")
                 .font(.heroTitle)
@@ -36,8 +36,7 @@ struct AboutSettingsPane: View {
 
         if let copyright = Self.copyright {
             Text(verbatim: copyright)
-                .font(.rowDetail)
-                .foregroundStyle(Palette.secondaryText)
+                .detailText()
                 .frame(maxWidth: .infinity)
         }
     }

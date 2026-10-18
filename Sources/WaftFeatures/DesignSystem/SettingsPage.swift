@@ -53,12 +53,14 @@ struct SettingsPage<Content: View, Accessory: View>: View {
                 .accessibilityLabel(Text("Back"))
             }
 
-            Text(title)
-                .font(.pageTitle)
-                .accessibilityAddTraits(.isHeader)
+            HStack(spacing: Metrics.inlineSpacing) {
+                Text(title)
+                    .font(.pageTitle)
+                    .accessibilityAddTraits(.isHeader)
 
-            if needsWaftPlus {
-                ProBadge()
+                if needsWaftPlus {
+                    ProBadge()
+                }
             }
 
             Spacer(minLength: 0)

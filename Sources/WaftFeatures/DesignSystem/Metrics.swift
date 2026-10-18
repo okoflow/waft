@@ -32,6 +32,8 @@ enum Metrics {
     static let tileSize: CGFloat = 24
     static let rowTileSize: CGFloat = 28
     static let heroTileSize: CGFloat = 72
+    static let pageIconSize: CGFloat = 96
+    static let cardIconSize: CGFloat = 64
     static let cardRadius: CGFloat = 12
     static let controlRadius: CGFloat = 7
     static let largeControlRadius: CGFloat = 9

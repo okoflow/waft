@@ -70,7 +70,7 @@ struct TranscriptionView: View {
 
 private struct TranscriptionHeader: View {
     var body: some View {
-        HStack(spacing: Metrics.accessorySpacing) {
+        HStack(spacing: Metrics.iconLabelSpacing) {
             IconTile(symbolName: "waveform", tint: .red, size: Metrics.headerTileSize)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
@@ -83,8 +83,7 @@ private struct TranscriptionHeader: View {
                 }
 
                 Text("Audio and video files, transcribed on this Mac.")
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.secondaryText)
+                    .detailText()
             }
         }
     }
@@ -117,8 +116,7 @@ private struct DropZone: View {
                 .font(.rowTitle)
 
             Text(hint)
-                .font(.rowDetail)
-                .foregroundStyle(Palette.secondaryText)
+                .detailText()
 
             Button("Choose File…", action: chooseFile)
                 .disabled(model.notReadyMessage != nil)
@@ -201,15 +199,14 @@ private struct ProGateBanner: View {
         let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
-            WaftPlusMark(size: 20)
+            WaftPlusMark(size: Metrics.tileSize)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text("File transcription is part of Waft+")
                     .font(.cardTitle)
 
                 Text("Recordings and videos become text and subtitles, right on your Mac.")
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.secondaryText)
+                    .detailText()
                     .fixedSize(horizontal: false, vertical: true)
             }
 

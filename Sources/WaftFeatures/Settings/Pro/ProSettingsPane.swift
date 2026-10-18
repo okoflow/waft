@@ -50,7 +50,7 @@ private struct ProHero: View {
         let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
-            AppIcon(size: 64)
+            AppIcon(size: Metrics.cardIconSize)
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: Metrics.inlineSpacing) {

@@ -50,8 +50,7 @@ struct WritingSettingsPane: View {
         } footer: {
             if let setupNote {
                 Text(setupNote)
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.secondaryText)
+                    .detailText()
 
                 Button("Set Up…") { state.selection = .aiModels }
             }
@@ -171,14 +170,16 @@ private struct AppModeRow: View {
 
             Spacer(minLength: Metrics.rowSpacing)
 
-            MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
-                ForEach(settings.settings.modes, id: \.self) { mode in
-                    Text(settings.settings.title(of: mode)).tag(mode)
+            HStack(spacing: Metrics.controlSpacing) {
+                MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
+                    ForEach(settings.settings.modes, id: \.self) { mode in
+                        Text(settings.settings.title(of: mode)).tag(mode)
+                    }
                 }
-            }
 
-            RemoveButton(help: "Use the default mode in this app") {
-                settings.settings.appModes.set(nil, for: bundleIdentifier)
+                RemoveButton(help: "Use the default mode in this app") {
+                    settings.settings.appModes.set(nil, for: bundleIdentifier)
+                }
             }
         }
         .settingsRowPadding()

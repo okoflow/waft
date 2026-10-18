@@ -21,8 +21,7 @@ struct SectionHeader: View {
 
             if let subtitle {
                 Text(subtitle)
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.secondaryText)
+                    .detailText()
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
