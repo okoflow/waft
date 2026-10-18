@@ -29,6 +29,7 @@ package actor WhisperTranscriber: Transcriber {
 
     package func downloadModel(_ model: SpeechModel, progress: @escaping @Sendable (Double) -> Void) async throws {
         let files = SpeechModelFiles(model)
+
         try FileManager.default.createDirectory(at: files.baseDirectory, withIntermediateDirectories: true)
 
         _ = try await WhisperKit.download(
@@ -105,6 +106,7 @@ package actor WhisperTranscriber: Transcriber {
             maxChunkLength: Self.windowSampleCount,
             decodeOptions: nil,
         )
+
         var spoken = language
         var segments: [TimedSegment] = []
 
@@ -186,6 +188,7 @@ package actor WhisperTranscriber: Transcriber {
         let detection = try await loaded.whisper.detectLangauge(audioArray: samples)
         guard let detected = Language(rawValue: detection.language) else {
             let fallback = loaded.languages[0]
+
             Logger.speech.notice(
                 """
                 Detected \(detection.language, privacy: .public), which Waft doesn't know; \

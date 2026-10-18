@@ -10,6 +10,7 @@ enum APIKey {
             key = try store.load()
         } catch {
             let cause = error as NSError
+
             Logger.network.error("Couldn't read the API key: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             throw .missingKey

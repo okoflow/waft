@@ -111,6 +111,7 @@ package actor AudioEngineRecorder: AudioRecorder {
             engine.inputNode.removeTap(onBus: 0)
 
             let cause = error as NSError
+
             Logger.audio.error("The audio engine didn't start: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             throw .engineDidNotStart

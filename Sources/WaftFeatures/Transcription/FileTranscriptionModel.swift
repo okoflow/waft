@@ -99,6 +99,7 @@ final class FileTranscriptionModel {
         let current = run
 
         phase = .reading(file)
+
         let variants = settings.settings.writingVariants
 
         task = Task { [weak self, transcriber, decoder, language] in

@@ -28,6 +28,7 @@ enum LightModeRules {
 
     static func apply(_ text: String, language: Language) -> String {
         var remover = HesitationRemover(language: language, text: text)
+
         let tidy = tidiedSpacing(remover.run(), language: language)
         let cased = language.hasLetterCase ? tidy.capitalizingFirstLetter(in: language) : tidy
 

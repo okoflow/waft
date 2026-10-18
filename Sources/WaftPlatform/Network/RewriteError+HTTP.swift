@@ -15,6 +15,7 @@ extension RewriteError {
     static func failedRequest(_ error: any Error, to service: String) -> RewriteError {
         guard let error = error as? URLError else {
             let errorType = String(describing: type(of: error))
+
             Logger.network.error("The request to \(service, privacy: .public) failed: \(errorType, privacy: .public)")
 
             return .offline
@@ -22,6 +23,7 @@ extension RewriteError {
         guard error.code != .cancelled else { return .timeout }
 
         let code = error.code.rawValue
+
         Logger.network.error("The request to \(service, privacy: .public) failed: URLError \(code, privacy: .public)")
 
         return switch error.code {

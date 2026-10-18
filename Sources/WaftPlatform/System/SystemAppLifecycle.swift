@@ -17,6 +17,7 @@ package final class SystemAppLifecycle: AppLifecycle {
             try waiter.run()
         } catch {
             let cause = error as NSError
+
             Logger.system.error("Couldn't relaunch: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             return
