@@ -140,10 +140,6 @@ enum VoiceCommands {
             line.removeLast()
         }
 
-        if isParagraph, let last = line.last, last.isLetter || last.isNumber {
-            line += language.fullStop
-        }
-
-        return line
+        return isParagraph ? line.endingWithFullStop(in: language) : line
     }
 }
