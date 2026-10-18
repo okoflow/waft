@@ -46,13 +46,16 @@ code_keys() {
   sources=$(find Sources -name '*.swift')
 
   local file data source
+
   : >"${output}.unsorted"
 
   while IFS= read -r file; do
     data="${STRINGS_DIR}/$(basename "${file}" .swift).stringsdata"
+
     [[ -f ${data} ]] || die "${file} has no extracted strings: run make build"
 
     source=$(jq --raw-output '.source' "${data}")
+
     [[ ${source} == "${root}/${file}" ]] || die "${data} belongs to ${source}: run make build"
 
     jq '.tables.Localizable[]?.key | select(. != "%@")' "${data}" >>"${output}.unsorted"
@@ -71,6 +74,7 @@ table_keys() {
 
 check_keys() {
   local table=$1 expected=$2 hint=$3
+
   local actual="${WORK_DIR}/actual"
 
   plutil -lint -s "${table}" || die "${table} isn't a valid strings file"
@@ -86,6 +90,7 @@ check_keys() {
 
 check_specifiers() {
   local table=$1
+
   local json="${WORK_DIR}/table.json"
 
   plutil -convert json -o "${json}" "${table}"
@@ -112,6 +117,7 @@ check() {
   check_keys "${SOURCE_TABLE}" "${expected}" ' (run make strings-update)'
 
   local directory
+
   for directory in "${LOCALIZATIONS}"/*.lproj; do
     languages=$((languages + 1))
 
@@ -137,6 +143,7 @@ update() {
   mkdir -p "$(dirname "${SOURCE_TABLE}")"
 
   local key
+
   while IFS= read -r key; do
     printf '%s = %s;\n' "${key}" "${key}"
   done <"${keys}" >"${SOURCE_TABLE}"

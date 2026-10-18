@@ -88,6 +88,7 @@ notarize_app() {
 
 make_disk_image() {
   local image=$1
+
   local staging="${WORK_DIR}/image"
 
   mkdir -p "${staging}"
@@ -142,6 +143,7 @@ main() {
   cd "$(dirname "$0")/.."
 
   local notes=$1
+
   [[ -f ${notes} ]] || die "no release notes at \"${notes}\""
 
   local version commit
