@@ -1,9 +1,10 @@
 package struct RewriteSetup: Sendable {
     package let provider: ModelProvider
     package let instructions: String
-    package let cloudModels: PerProvider<CloudModel>
     package let translation: Translation
-    package let localServer: LocalServer
+
+    private let cloudModels: PerProvider<CloudModel>
+    private let localServer: LocalServer
 
     var serverInUse: LocalServer? {
         provider == .localServer ? localServer : nil

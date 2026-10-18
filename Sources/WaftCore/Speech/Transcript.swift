@@ -1,9 +1,10 @@
 package struct Transcript: Equatable, Sendable {
     package let text: String
     package let language: Language
-    package let variant: WritingVariant?
     package let detectionDuration: Duration
     package let decodingDuration: Duration
+
+    let variant: WritingVariant?
 
     package init(
         text: String,

@@ -1,8 +1,6 @@
 package struct ModeInstructions: Codable, Equatable, Sendable {
     private var custom: [String: String] = [:]
 
-    package init() {}
-
     package func editableText(for mode: Mode) -> String {
         guard let text = custom[mode.storageKey] else { return RewritePrompt.defaultInstructions(for: mode) }
 

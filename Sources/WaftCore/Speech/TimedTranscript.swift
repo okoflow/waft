@@ -4,7 +4,8 @@ package struct TimedTranscript: Equatable, Sendable {
     private static let paragraphPause: TimeInterval = 2
 
     package let language: Language
-    package let segments: [TimedSegment]
+
+    let segments: [TimedSegment]
 
     package var duration: TimeInterval {
         guard let last = segments.last else { return 0 }

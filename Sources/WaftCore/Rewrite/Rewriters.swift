@@ -1,6 +1,6 @@
 package struct Rewriters: Sendable {
-    package let cloud: PerProvider<any TextRewriter>
-    package let localServer: any TextRewriter
+    private let cloud: PerProvider<any TextRewriter>
+    private let localServer: any TextRewriter
 
     package init(cloud: PerProvider<any TextRewriter>, localServer: any TextRewriter) {
         self.cloud = cloud

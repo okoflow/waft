@@ -87,7 +87,19 @@ package struct PushToTalkKey: Hashable, Sendable {
         self.keyCode = keyCode
     }
 
-    package func event(for keyEvent: KeyEvent) -> PushToTalk.Event? {
+    package func isHeld(in flags: UInt64) -> Bool {
+        guard let modifierFlag else { return false }
+
+        return flags & modifierFlag != 0
+    }
+
+    package func isPressed(by keyEvent: KeyEvent) -> Bool {
+        guard modifierFlag == nil else { return isHeld(in: keyEvent.flags) }
+
+        return keyEvent.kind == .keyDown && keyEvent.keyCode == keyCode
+    }
+
+    func event(for keyEvent: KeyEvent) -> PushToTalk.Event? {
         guard !keyEvent.isRepeat else { return nil }
 
         return switch keyEvent.kind {
@@ -100,18 +112,6 @@ package struct PushToTalkKey: Hashable, Sendable {
         case .keyUp:
             isOwnFunctionKey(keyEvent) ? .keyUp : nil
         }
-    }
-
-    package func isHeld(in flags: UInt64) -> Bool {
-        guard let modifierFlag else { return false }
-
-        return flags & modifierFlag != 0
-    }
-
-    package func isPressed(by keyEvent: KeyEvent) -> Bool {
-        guard modifierFlag == nil else { return isHeld(in: keyEvent.flags) }
-
-        return keyEvent.kind == .keyDown && keyEvent.keyCode == keyCode
     }
 
     private func keyDownEvent(for keyEvent: KeyEvent) -> PushToTalk.Event {
