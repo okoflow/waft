@@ -156,7 +156,9 @@ To add anything else:
   `RewritePrompt`.
 - **An AI provider.** Describe its API in `WaftPlatform/Network` as a
   `RewriteAPI` with a model identifier for each `CloudModel`, add a
-  `CloudProvider` case, a `PerProvider` property, and the names of its models
-  in `CloudProvider+Display`, and wire it in `Rewriters.http`.
+  `CloudProvider` case, a `PerProvider` property, the names of its models in
+  `CloudProvider+Display`, and its keychain account in
+  `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its
+  account in [Removing everything](privacy.md#removing-everything).
 - **An adapter.** Implement the interface in `WaftPlatform` and pass it in
   `AppDependencies.live()`.
