@@ -14,6 +14,7 @@ final class SpeechModelController {
     private let transcriber: any Transcriber
     private let settings: SettingsModel
     private let pro: ProModel
+    private let urlOpener: any URLOpener
 
     var modelDirectory: URL {
         transcriber.modelDirectory(for: chosenModel)
@@ -23,14 +24,19 @@ final class SpeechModelController {
         settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
 
-    init(transcriber: any Transcriber, settings: SettingsModel, pro: ProModel) {
+    init(transcriber: any Transcriber, settings: SettingsModel, pro: ProModel, urlOpener: any URLOpener) {
         self.transcriber = transcriber
         self.settings = settings
         self.pro = pro
+        self.urlOpener = urlOpener
     }
 
     func retry() {
         apply(.retryRequested)
+    }
+
+    func revealInFinder() {
+        urlOpener.reveal(modelDirectory)
     }
 
     func start() {

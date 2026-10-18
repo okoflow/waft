@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 import WaftCore
 
@@ -37,9 +36,7 @@ struct SpeechModelSection: View {
                         Button("Retry") { controller.retry() }
                     }
 
-                    Button("Show in Finder") {
-                        NSWorkspace.shared.activateFileViewerSelecting([controller.modelDirectory])
-                    }
+                    Button("Show in Finder", action: controller.revealInFinder)
                 }
             }
         }

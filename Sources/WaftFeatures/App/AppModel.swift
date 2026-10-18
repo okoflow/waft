@@ -55,7 +55,7 @@ package final class AppModel {
         settings = Self.makeSettings(dependencies)
         permissions = PermissionMonitor(provider: dependencies.permissions)
         pro = Self.makePro(dependencies)
-        speechModelController = SpeechModelController(transcriber: dependencies.transcriber, settings: settings, pro: pro)
+        speechModelController = Self.makeSpeechModelController(dependencies, settings: settings, pro: pro)
         hud = HUDController(copy: dependencies.clipboard.copy)
         keyRecorder = KeyRecorder()
         statistics = StatisticsModel(store: dependencies.statisticsStore)
@@ -178,6 +178,19 @@ extension AppModel {
             keyStore: dependencies.licenseStore,
             trialStore: dependencies.trialStore,
             checker: dependencies.licenseChecker,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
+    private static func makeSpeechModelController(
+        _ dependencies: AppDependencies,
+        settings: SettingsModel,
+        pro: ProModel,
+    ) -> SpeechModelController {
+        SpeechModelController(
+            transcriber: dependencies.transcriber,
+            settings: settings,
+            pro: pro,
             urlOpener: dependencies.urlOpener,
         )
     }
