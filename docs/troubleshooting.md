@@ -18,7 +18,7 @@ text is what the HUD shows.
 | <kbd>🌐</kbd> opens emoji or dictation | Set **Press 🌐 key to** to **Do Nothing** in System Settings › Keyboard |
 | A function key acts as a media key | Turn on **Use F1, F2, etc. keys as standard function keys** in System Settings › Keyboard › Keyboard Shortcuts › Function Keys |
 | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> doesn't switch modes | Another app holds it; use the menu |
-| Permissions were lost after a rebuild | Run `make signing` once ([Development setup](../CONTRIBUTING.md#development-setup)), rebuild, remove the old Waft entries in System Settings › Privacy & Security, and allow them again |
+| Permissions were lost after a rebuild | Run `make signing` once ([Development setup](../CONTRIBUTING.md#development-setup)), rebuild, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security, and allow them again. On macOS 27 and later, Accessibility there is called Device Control and Data Access |
 | The menu bar icon is missing | Turn on **Show in menu bar** in Settings › General, and on macOS 26 and later allow Waft in System Settings › Menu Bar. A crowded menu bar can hide the icon behind the notch |
 
 ## The text isn't pasted
