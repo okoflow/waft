@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import WaftCore
 
@@ -14,6 +15,21 @@ struct TranscriptProcessorWritingSystemTests {
         let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
 
         #expect(processed == ProcessedText(text: answer, mode: .translate))
+    }
+
+    @Test(arguments: [
+        (Language.serbian, WritingVariant.latin, "Привет, как дела?"),
+        (.serbian, .cyrillic, "See you tomorrow."),
+        (.serbian, .cyrillic, "Novak Đoković played the match."),
+        (.chinese, .simplified, "報告書を忘れないでください。"),
+        (.serbian, .latin, "Сутра нећу доћи."),
+        (.chinese, .traditional, "我们明天开会。"),
+    ])
+    func `keeps a custom answer in the script the model wrote`(spoken: Language, variant: WritingVariant, answer: String) async {
+        let reply = Result<String, RewriteError>.success(answer)
+        let processed = await process("hello", mode: .custom(UUID()), language: spoken, variant: variant, answer: reply)
+
+        #expect(processed.text == answer)
     }
 
     @Test

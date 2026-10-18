@@ -65,7 +65,9 @@ The recognized text goes through five steps:
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
    modes ask the AI model you chose, unless nothing but hesitations was said.
 4. For Chinese and Serbian, Waft converts the result into your writing
-   system, unless Translate put it into another language.
+   system, unless Translate put it into another language. Your own modes may
+   answer in any language, so their result keeps the script the AI model
+   wrote.
 5. Dictionary terms apply again, and snippet phrases inside the text expand.
 
 ### Light

@@ -21,12 +21,16 @@ package struct TranscriptProcessor: Sendable {
         after processed: ProcessedText,
         setup: RewriteSetup,
     ) -> WritingVariant? {
-        let language = transcript.language
-        guard processed.mode == .translate, setup.translation.target(forSpoken: language) != language else {
-            return transcript.variant
-        }
+        switch processed.mode {
+        case .custom:
+            nil
 
-        return nil
+        case .translate:
+            setup.translation.target(forSpoken: transcript.language) == transcript.language ? transcript.variant : nil
+
+        case .raw, .light, .clean, .formal:
+            transcript.variant
+        }
     }
 
     package func process(
