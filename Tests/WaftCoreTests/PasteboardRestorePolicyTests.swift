@@ -4,8 +4,8 @@ import Testing
 struct PasteboardRestorePolicyTests {
     typealias Policy = PasteboardRestorePolicy
 
-    private static let privateItem = Policy.Plan.skip(reason: "the clipboard holds a concealed or transient item")
-    private static let tooLarge = Policy.Plan.skip(reason: "the clipboard holds more than 5 MB")
+    private static let privateItem = Policy.Plan.skip(reason: .privateItem)
+    private static let tooLarge = Policy.Plan.skip(reason: .tooLarge)
 
     @Test(arguments: [
         (["public.png", "public.tiff", "public.utf8-plain-text"], ["public.png", "public.utf8-plain-text"]),

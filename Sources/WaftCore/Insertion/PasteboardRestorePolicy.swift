@@ -1,7 +1,12 @@
 package enum PasteboardRestorePolicy {
     package enum Plan: Equatable, Sendable {
         case restore
-        case skip(reason: String)
+        case skip(reason: SkipReason)
+    }
+
+    package enum SkipReason: String, Sendable {
+        case privateItem
+        case tooLarge
     }
 
     package static let maximumSnapshotBytes = 5 * 1024 * 1024
@@ -41,11 +46,11 @@ package enum PasteboardRestorePolicy {
         let isPrivateItem = currentTypes.contains(concealedType) || currentTypes.contains(transientType)
 
         if isPrivateItem, !isWaftItem {
-            return .skip(reason: "the clipboard holds a concealed or transient item")
+            return .skip(reason: .privateItem)
         }
 
         if snapshotBytes > maximumSnapshotBytes {
-            return .skip(reason: "the clipboard holds more than 5 MB")
+            return .skip(reason: .tooLarge)
         }
 
         return .restore

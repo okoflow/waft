@@ -96,7 +96,7 @@ package actor AudioEngineRecorder: AudioRecorder {
         }
 
         guard let sink else {
-            Logger.audio.error("Can't convert the input format: \(format.description, privacy: .public)")
+            Logger.audio.error("Can't convert the input format of \(format.channelCount) channels at \(format.sampleRate) Hz")
 
             throw .unsupportedFormat
         }
