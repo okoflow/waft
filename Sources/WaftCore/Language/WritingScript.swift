@@ -47,6 +47,15 @@ package enum WritingScript: Sendable {
         }
     }
 
+    var isCompact: Bool {
+        switch self {
+        case .han, .hangul, .kana:
+            true
+        case .arabic, .cyrillic, .devanagari, .greek, .hebrew, .latin, .tamil, .thai:
+            false
+        }
+    }
+
     init?(_ scalar: Unicode.Scalar) {
         switch scalar.value {
         case 0x0041 ... 0x005A, 0x0061 ... 0x007A, 0x00C0 ... 0x02AF, 0x1E00 ... 0x1EFF:
@@ -77,18 +86,21 @@ package enum WritingScript: Sendable {
     }
 
     package static func dominant(in text: String) -> WritingScript? {
-        var counts: [WritingScript: Int] = [:]
-        var letters = 0
+        var weights: [WritingScript: Int] = [:]
+        var total = 0
 
         for scalar in text.unicodeScalars where scalar.properties.isAlphabetic {
-            letters += 1
+            let script = WritingScript(scalar)
+            let weight = script?.isCompact == true ? 3 : 1
 
-            if let script = WritingScript(scalar) {
-                counts[script, default: 0] += 1
+            total += weight
+
+            if let script {
+                weights[script, default: 0] += weight
             }
         }
 
-        guard let (script, count) = counts.max(by: { $0.value < $1.value }), count * 2 > letters else { return nil }
+        guard let (script, weight) = weights.max(by: { $0.value < $1.value }), weight * 2 > total else { return nil }
 
         return script
     }

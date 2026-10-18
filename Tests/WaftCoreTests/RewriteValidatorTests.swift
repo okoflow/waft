@@ -65,7 +65,14 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: .cleanup(transcript, language: language)) == answer)
     }
 
-    @Test(arguments: [(Language.russian, "Привет всем."), (.japanese, "皆さん、こんにちは。"), (.german, "Hallo zusammen.")])
+    @Test(arguments: [
+        (Language.russian, "Привет всем."),
+        (.japanese, "皆さん、こんにちは。"),
+        (.german, "Hallo zusammen."),
+        (.chinese, "我买了一台新的 MacBook Pro。"),
+        (.japanese, "Safariを開いて。"),
+        (.korean, "Safari를 열어 줘."),
+    ])
     func `expects the script of the translation target`(target: Language, answer: String) throws {
         #expect(try RewriteValidator.validated(answer, for: .cleanup("hello everyone", target: target)) == answer)
     }

@@ -97,8 +97,10 @@ dictation's answer that is:
 
 - Longer than three times what you said plus 60 characters, or five times plus
   60 for a translation from Chinese, Japanese, or Korean.
-- Written in another script than both the language you spoke and the
-  transcript, or, for Translate, than the target language.
+- Written mostly in another script than both the language you spoke and the
+  transcript, or, for Translate, than the target language. A Chinese,
+  Japanese, or Korean character counts as three letters here, so a brand name
+  in Latin letters doesn't outweigh the text around it.
 
 Your modes may answer in any script and at up to ten times what you said or
 600 characters, whichever is more. An edit has no other limit.

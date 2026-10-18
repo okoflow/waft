@@ -6,7 +6,6 @@ enum RewriteValidator {
     private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
     private static let cleanupWrappers: [Wrapper] = [("<transcript>", "</transcript>")] + quotes
     private static let editWrappers: [Wrapper] = [("<text>", "</text>")] + quotes
-    private static let compactScripts: Set<WritingScript> = [.han, .hangul, .kana]
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
         switch request.kind {
@@ -54,7 +53,7 @@ enum RewriteValidator {
     }
 
     private static func maximumLength(for input: String, language: Language, target: Language?) -> Int {
-        let translatesCompactScript = target != nil && !language.scripts.isDisjoint(with: compactScripts)
+        let translatesCompactScript = target != nil && language.scripts.contains(where: \.isCompact)
 
         return input.count * (translatesCompactScript ? 5 : 3) + 60
     }
