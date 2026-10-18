@@ -39,6 +39,27 @@ struct VocabularyModelTests {
     }
 
     @Test
+    func `splits spoken forms at Latin and Arabic commas`() {
+        let store = FakeValueStore<Vocabulary>()
+        let vocabulary = model(store)
+        vocabulary.addTerm()
+        vocabulary.terms[0].term = "Waft"
+        vocabulary.terms[0].spokenForms = "واف، وافت, waft"
+
+        #expect(store.value?.terms == [Vocabulary.Term(term: "Waft", spoken: ["واف", "وافت", "waft"])])
+    }
+
+    @Test
+    func `saves the dictionary without a removed term or snippet`() {
+        let store = FakeValueStore(Self.stored)
+        let vocabulary = model(store)
+        vocabulary.removeTerm(vocabulary.terms[0].id)
+        vocabulary.removeSnippet(vocabulary.snippets[0].id)
+
+        #expect(store.value == Vocabulary(terms: [], snippets: []))
+    }
+
+    @Test
     func `adds a blank term or snippet without saving it`() {
         let store = FakeValueStore<Vocabulary>()
         let vocabulary = model(store)
@@ -84,6 +105,15 @@ struct VocabularyModelTests {
 
         #expect(store.value == written)
         #expect(urlOpener.opened == [Self.fileURL])
+    }
+
+    @Test
+    func `reveals the dictionary file in Finder`() {
+        let urlOpener = FakeURLOpener()
+        let vocabulary = VocabularyModel(store: FakeValueStore(Self.stored), fileURL: Self.fileURL, urlOpener: urlOpener)
+        vocabulary.revealInFinder()
+
+        #expect(urlOpener.revealed == [Self.fileURL])
     }
 
     private func model(_ store: FakeValueStore<Vocabulary>) -> VocabularyModel {

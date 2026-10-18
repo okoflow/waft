@@ -20,6 +20,11 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `offers the five newest entries for the menu`() {
+        #expect(model(entries: 7).recentEntries.map(\.text) == ["Entry 7", "Entry 6", "Entry 5", "Entry 4", "Entry 3"])
+    }
+
+    @Test
     func `stops on the last page`() {
         let history = model(entries: 120)
 
