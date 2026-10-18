@@ -83,9 +83,12 @@ private struct IslandContentPhase: ViewModifier {
 
 extension AnyTransition {
     fileprivate static func islandContent(reducesMotion: Bool) -> AnyTransition {
-        .asymmetric(
-            insertion: .modifier(active: IslandContentPhase(progress: 0), identity: IslandContentPhase(progress: 1))
-                .animation(Motion.adapted(Motion.islandContent, reducesMotion: reducesMotion)),
+        let insertion: AnyTransition = reducesMotion
+            ? .opacity
+            : .modifier(active: IslandContentPhase(progress: 0), identity: IslandContentPhase(progress: 1))
+
+        return .asymmetric(
+            insertion: insertion.animation(Motion.adapted(Motion.islandContent, reducesMotion: reducesMotion)),
             removal: .opacity.animation(Motion.adapted(Motion.fade, reducesMotion: reducesMotion)),
         )
     }
