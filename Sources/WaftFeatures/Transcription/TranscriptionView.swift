@@ -16,8 +16,6 @@ struct TranscriptionView: View {
                     ProGateBanner(showPro: showPro)
 
                     DropZone(model: model)
-                        .disabled(true)
-                        .opacity(0.5)
                 }
             } else {
                 switch model.phase {
@@ -105,21 +103,24 @@ private struct DropZone: View {
         let isTargeted = model.isDropTargeted
 
         VStack(spacing: Metrics.controlSpacing) {
-            Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
-                .font(.dropZoneGlyph)
-                .foregroundStyle(isTargeted ? Palette.accent : Palette.secondaryText)
-                .contentTransition(.symbolEffect(.replace))
-                .padding(.bottom, 4)
-                .accessibilityHidden(true)
+            VStack(spacing: Metrics.controlSpacing) {
+                Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
+                    .font(.dropZoneGlyph)
+                    .foregroundStyle(isTargeted ? Palette.accent : Palette.secondaryText)
+                    .contentTransition(.symbolEffect(.replace))
+                    .padding(.bottom, 4)
+                    .accessibilityHidden(true)
 
-            Text("Drop an audio or video file here")
-                .font(.rowTitle)
+                Text("Drop an audio or video file here")
+                    .font(.rowTitle)
 
-            Text(hint)
-                .detailText()
+                Text(hint)
+                    .detailText()
+            }
+            .opacity(model.isLocked ? Palette.disabledOpacity : 1)
 
             Button("Choose File…", action: chooseFile)
-                .disabled(model.notReadyMessage != nil)
+                .disabled(model.isLocked || model.notReadyMessage != nil)
                 .padding(.top, Metrics.controlSpacing)
         }
         .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
