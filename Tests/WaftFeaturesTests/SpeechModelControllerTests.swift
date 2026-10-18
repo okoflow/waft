@@ -31,11 +31,19 @@ struct SpeechModelControllerTests {
             var iterator = releases.makeAsyncIterator()
             _ = await iterator.next()
         }
+
         let settings = SettingsModel.inMemory()
-        let controller = SpeechModelController(transcriber: transcriber, settings: settings, pro: .unlicensed())
+        let controller = SpeechModelController(
+            transcriber: transcriber,
+            settings: settings,
+            pro: .unlicensed(),
+            urlOpener: FakeURLOpener(),
+        )
+
         controller.start()
 
         var iterator = queries.makeAsyncIterator()
+
         #expect(await iterator.next() == .fast)
 
         settings.settings.speechModel = .accurate
@@ -118,6 +126,17 @@ struct SpeechModelControllerTests {
     }
 
     @Test
+    func `reveals the folder of the model it uses`() {
+        let transcriber = FakeTranscriber()
+        let urlOpener = FakeURLOpener()
+        let (controller, _) = make(transcriber, urlOpener: urlOpener)
+
+        controller.revealInFinder()
+
+        #expect(urlOpener.revealed == [transcriber.modelDirectory(for: controller.chosenModel)])
+    }
+
+    @Test
     func `retries a failed download`() async {
         let transcriber = FakeTranscriber(installed: [])
         transcriber.failsDownloads = true
@@ -133,9 +152,13 @@ struct SpeechModelControllerTests {
         #expect(transcriber.calls == [.download(.fast), .download(.fast), .load(.fast), .delete(.accurate)])
     }
 
-    private func make(_ transcriber: FakeTranscriber, pro: ProModel = .unlicensed()) -> (SpeechModelController, SettingsModel) {
+    private func make(
+        _ transcriber: FakeTranscriber,
+        pro: ProModel = .unlicensed(),
+        urlOpener: FakeURLOpener = FakeURLOpener(),
+    ) -> (SpeechModelController, SettingsModel) {
         let settings = SettingsModel.inMemory()
-        let controller = SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
+        let controller = SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: urlOpener)
         settings.onSpeechModelChange = { controller.modelDidChange() }
 
         return (controller, settings)

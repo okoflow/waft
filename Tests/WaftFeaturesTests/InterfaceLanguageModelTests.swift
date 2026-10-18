@@ -22,9 +22,3 @@ struct InterfaceLanguageModelTests {
         #expect(!interfaceLanguage.needsRelaunch)
     }
 }
-
-private final class FakeAppLifecycle: AppLifecycle {
-    func relaunch() {}
-
-    func quit() {}
-}

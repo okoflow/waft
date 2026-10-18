@@ -113,6 +113,18 @@ custom_rules:
       - keyword
     message: Separate a return, throw, break, or continue from the steps before it with a blank line.
 
+  no_bare_animation:
+    included:
+      - Sources/WaftFeatures/.*\.swift
+    excluded:
+      - .*/ReducedMotionPolicy\.swift
+    name: No Bare Animation
+    regex: '\.animation\([^\n]*\bvalue:|^\s*\.animation\((?!Motion\.adapted\()[^\n]*\)\s*\{'
+    excluded_match_kinds:
+      - comment
+      - string
+    message: Animate with .motion(_:value:) and a Motion token, or pass a scoped or transition animation through Motion.adapted(_:reducesMotion:), so Reduce Motion shortens it.
+
   no_comments:
     name: No Comments
     regex: '//(?!\s*(?:swift-tools-version|swiftlint|swiftformat):)|/\*'

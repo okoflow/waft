@@ -1,16 +1,7 @@
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct WritingVariantTests {
-    @Test(arguments: [
-        (Language.chinese, [WritingVariant.simplified, .traditional]),
-        (.serbian, [.latin, .cyrillic]),
-        (.english, []),
-    ])
-    func `offers a choice of script only for Chinese and Serbian`(language: Language, variants: [WritingVariant]) {
-        #expect(language.writingVariants == variants)
-    }
-
     @Test(arguments: [
         (WritingVariant.traditional, "这是简体中文，我们说话。", "這是簡體中文，我們說話。"),
         (.simplified, "這是繁體中文，我們說話。", "这是繁体中文，我们说话。"),
@@ -27,5 +18,10 @@ struct WritingVariantTests {
         let text = "Pusti GitHub, API i x264 na serveru Waft"
 
         #expect(WritingVariant.cyrillic.converting(text, keeping: ["Waft"]) == "Пусти GitHub, API и x264 на серверу Waft")
+    }
+
+    @Test
+    func `keeps every word of a dictionary term in Latin letters`() {
+        #expect(WritingVariant.cyrillic.converting("Novi Sad je lep grad", keeping: ["Novi Sad"]) == "Novi Sad је леп град")
     }
 }

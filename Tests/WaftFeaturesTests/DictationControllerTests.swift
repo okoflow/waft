@@ -89,7 +89,7 @@ struct DictationControllerTests {
         await send(Self.leftOption, flags: Self.leftOptionFlag, at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(kind: .information, title: "Editing by voice is part of Waft Pro."))
+            hud.content == .message(HUDMessage(kind: .information, title: "Editing by voice is part of Waft+."))
         })
         #expect(!controller.isRecording)
     }
@@ -179,7 +179,8 @@ struct DictationControllerTests {
     ) async -> DictationController {
         let speechModelController = isSpeechModelReady
             ? await SpeechModelController.ready(settings: settings)
-            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro)
+            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
+
         let recordings = RecordingController(
             recorder: recorder,
             focusTracker: FakeFocusTracker(),
@@ -191,6 +192,7 @@ struct DictationControllerTests {
             hudDelay: .zero,
             watchdogInterval: watchdogInterval,
         )
+
         let controller = DictationController(
             keyEventMonitor: monitor,
             recordings: recordings,

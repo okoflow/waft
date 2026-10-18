@@ -13,6 +13,7 @@ struct ReleaseWatchdogTests {
     @Test
     func `waits for several released polls before reporting a release`() {
         var watchdog = ReleaseWatchdog()
+
         let verdicts = (0 ..< ReleaseWatchdog.requiredReleasedPolls).map { poll in
             watchdog.poll(isHeld: false, at: 10 + Double(poll))
         }
@@ -38,6 +39,7 @@ struct ReleaseWatchdogTests {
     @Test
     func `forgets released polls on reset`() {
         var watchdog = watchdog(releasedAt: [1, 2, 3])
+
         watchdog.reset()
         let verdicts = [7.0, 8, 9, 10].map { watchdog.poll(isHeld: false, at: $0) }
 

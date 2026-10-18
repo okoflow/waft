@@ -46,8 +46,8 @@ text is what the HUD shows.
 
 Under the text, the HUD adds "Used Light mode:" and a reason, with your
 provider's name in place of *provider*. The next dictation tries the AI model
-again. The `network` log category records the details of a failed request, as
-[Logs](#logs) shows.
+again. The `network` log category records the HTTP status or the connection
+error of a failed request, as [Logs](#logs) shows.
 
 | The reason | Fix |
 | --- | --- |
@@ -57,7 +57,7 @@ again. The `network` log category records the details of a failed request, as
 | you're offline | Check your connection |
 | the local server isn't running | Start it, then click **Check** in Settings › AI Models |
 | *provider* didn't answer in time | Choose a quicker model if it keeps happening; [Choosing the AI model](usage.md#choosing-the-ai-model) lists each time limit |
-| *provider* is rate-limiting requests | Wait a moment; with OpenAI, the account may be out of credit, and the log says `insufficient_quota` |
+| *provider* is rate-limiting requests | Wait a moment; with OpenAI, the account may be out of credit |
 | *provider* rejected the API key | Create a new key as [Choosing the AI model](usage.md#choosing-the-ai-model) describes |
 | *provider* isn't available | The model doesn't exist, or the secure connection failed |
 | *provider* returned an error | With Claude, the usual cause is a key created outside a workspace |

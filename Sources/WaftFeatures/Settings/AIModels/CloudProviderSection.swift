@@ -31,7 +31,7 @@ struct CloudProviderSection: View {
             RowDivider()
             LinkRow(title: "Get an API key", url: provider.consoleURL)
         }
-        .animation(Motion.layout, value: apiKey.isSet)
+        .motion(Motion.layout, value: apiKey.isSet)
     }
 }
 

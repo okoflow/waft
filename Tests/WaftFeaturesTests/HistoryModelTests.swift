@@ -20,6 +20,11 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `offers the five newest entries for the menu`() {
+        #expect(model(entries: 7).recentEntries.map(\.text) == ["Entry 7", "Entry 6", "Entry 5", "Entry 4", "Entry 3"])
+    }
+
+    @Test
     func `stops on the last page`() {
         let history = model(entries: 120)
 
@@ -57,6 +62,7 @@ struct HistoryModelTests {
         let history = model(entries: 120)
         history.showNextPage()
         history.searchText = "  entry 11\n"
+
         let page = history.currentPage
 
         #expect(page.total == 11)
@@ -124,7 +130,7 @@ struct HistoryModelTests {
     }
 
     @Test
-    func `flags a saved history it couldn't read until it is cleared`() {
+    func `flags a saved history it could not read until it is cleared`() {
         let store = FakeValueStore(DictationHistory(), isBroken: true)
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
 
@@ -133,6 +139,11 @@ struct HistoryModelTests {
         history.removeAll()
 
         #expect(!history.hasUnreadableHistory)
+    }
+
+    @Test
+    func `does not flag a saved history that holds no entries`() {
+        #expect(!model(entries: 0).hasUnreadableHistory)
     }
 
     @Test

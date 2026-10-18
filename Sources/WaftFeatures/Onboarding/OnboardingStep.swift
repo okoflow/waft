@@ -12,6 +12,7 @@ struct OnboardingStep<Hero: View, Content: View>: View {
 
             Text(title)
                 .font(.heroTitle)
+                .accessibilityAddTraits(.isHeader)
                 .padding(.top, Metrics.windowSpacing)
 
             Text(message)

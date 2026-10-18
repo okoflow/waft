@@ -1,5 +1,3 @@
-import Foundation
-
 package enum SpeechGate {
     private static let minimumSpeechDuration = 0.15
     private static let marginAboveNoiseFloor: Float = 8

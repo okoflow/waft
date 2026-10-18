@@ -30,7 +30,7 @@ struct ProgressCard: View {
                     ProgressView(value: progress)
                         .progressViewStyle(.linear)
                         .opacity(progress == nil ? 0.4 : 1)
-                        .animation(Motion.meter, value: progress)
+                        .motion(Motion.meter, value: progress)
 
                     Text(status)
                         .font(.rowDetail)

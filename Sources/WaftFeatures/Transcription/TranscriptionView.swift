@@ -54,11 +54,8 @@ struct TranscriptionView: View {
             maxHeight: .infinity,
             alignment: .top,
         )
-        .background(Palette.window)
-        .ignoresSafeArea()
-        .buttonStyle(PushButtonStyle())
-        .animation(Motion.layout, value: model.phase)
-        .reducedMotionPolicy()
+        .windowChrome()
+        .motion(Motion.layout, value: model.phase)
         .dropDestination(for: URL.self) { urls, _ in
             guard let url = urls.first, model.acceptsFiles else { return false }
 
@@ -80,6 +77,7 @@ private struct TranscriptionHeader: View {
                 HStack(spacing: Metrics.inlineSpacing) {
                     Text("Transcribe File")
                         .font(.pageTitle)
+                        .accessibilityAddTraits(.isHeader)
 
                     ProBadge()
                 }
@@ -104,7 +102,7 @@ private struct DropZone: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
         let isTargeted = model.isDropTargeted
 
         VStack(spacing: Metrics.controlSpacing) {
@@ -134,7 +132,7 @@ private struct DropZone: View {
                 style: StrokeStyle(lineWidth: 1.5, dash: [6, 4]),
             )
         }
-        .animation(Motion.fade, value: isTargeted)
+        .motion(Motion.fade, value: isTargeted)
     }
 
     private func chooseFile() {
@@ -200,14 +198,14 @@ private struct ProGateBanner: View {
     let showPro: () -> Void
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
             WaftPlusMark(size: 20)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text("File transcription is part of Waft+")
-                    .font(.rowTitle.weight(.semibold))
+                    .font(.cardTitle)
 
                 Text("Recordings and videos become text and subtitles, right on your Mac.")
                     .font(.rowDetail)

@@ -19,7 +19,7 @@ struct CopyButton: View {
             }
             .frame(minWidth: 52)
         }
-        .animation(Motion.feedback, value: isCopied)
+        .motion(Motion.feedback, value: isCopied)
         .accessibilityLabel(isCopied ? Text("Copied") : Text("Copy"))
     }
 }

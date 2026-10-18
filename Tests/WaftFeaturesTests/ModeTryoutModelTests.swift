@@ -10,14 +10,16 @@ struct ModeTryoutModelTests {
 
     @Test
     func `runs the sample through a custom mode with its instructions`() async throws {
-        let emailReply = CustomMode(name: "Email reply", instructions: "Reply as a short email.")
-        settings.settings.customModes = [emailReply]
+        settings.settings.customModes = [.emailReply]
         let rewriter = FakeTextRewriter(.success("So I think we should meet on Friday."))
         let tryout = model(rewriter)
-        tryout.run(.custom(emailReply.id))
+        tryout.run(.custom(CustomMode.emailReply.id))
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            tryout.phase == .finished(ProcessedText(text: "So I think we should meet on Friday.", mode: .custom(emailReply.id)))
+            tryout.phase == .finished(ProcessedText(
+                text: "So I think we should meet on Friday.",
+                mode: .custom(CustomMode.emailReply.id),
+            ))
         })
 
         let request = try #require(rewriter.requests.first)

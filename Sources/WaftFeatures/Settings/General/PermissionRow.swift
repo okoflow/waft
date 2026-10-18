@@ -35,7 +35,7 @@ struct PermissionRow: View {
                 }
             }
             .font(.rowTitle)
-            .animation(Motion.feedback, value: isGranted)
+            .motion(Motion.feedback, value: isGranted)
         }
     }
 }

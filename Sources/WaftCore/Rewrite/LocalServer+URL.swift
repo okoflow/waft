@@ -1,8 +1,7 @@
-import Foundation
-import WaftCore
+package import Foundation
 
 extension LocalServer {
-    func url(appending path: String) throws(RewriteError) -> URL {
+    package func url(appending path: String) throws(RewriteError) -> URL {
         var base = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
 
         while base.hasSuffix("/") {

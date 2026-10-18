@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 import WaftCore
 
@@ -8,10 +7,6 @@ struct SpeechModelSection: View {
     let pro: ProModel
     let state: SettingsWindowState
 
-    private var chosenModel: SpeechModel {
-        settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
-    }
-
     var body: some View {
         SettingsGroup("Speech model", subtitle: "Whisper runs on this Mac, so audio never leaves it.") {
             HStack(alignment: .top, spacing: Metrics.controlSpacing) {
@@ -19,7 +14,7 @@ struct SpeechModelSection: View {
                     PickerCard(
                         .verbatim(model.title),
                         detail: .verbatim(model.summary),
-                        isSelected: chosenModel == model,
+                        isSelected: controller.chosenModel == model,
                         isPro: model.needsPro,
                     ) {
                         choose(model)
@@ -41,9 +36,7 @@ struct SpeechModelSection: View {
                         Button("Retry") { controller.retry() }
                     }
 
-                    Button("Show in Finder") {
-                        NSWorkspace.shared.activateFileViewerSelecting([controller.modelDirectory])
-                    }
+                    Button("Show in Finder", action: controller.revealInFinder)
                 }
             }
         }

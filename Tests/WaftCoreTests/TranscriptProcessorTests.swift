@@ -38,6 +38,7 @@ struct TranscriptProcessorTests {
             terms: [Vocabulary.Term(term: "Kubernetes", spoken: ["cube or netties", "kubernetis"])],
             snippets: [],
         )
+
         let processed = await process(
             "we use cube or netties",
             mode: .clean,
@@ -70,18 +71,19 @@ struct TranscriptProcessorTests {
         #expect(RewritePrompt.system(for: request).hasPrefix("Clean."))
     }
 
-    @Test
-    func `falls back to light when the cloud fails`() async {
-        let processed = await process("um, see you tomorrow", mode: .formal, answer: .failure(.timeout))
+    @Test(arguments: [
+        ("um, see you tomorrow", Mode.formal, Result<String, RewriteError>.failure(.timeout), RewriteFallback.timeout),
+        ("see you tomorrow", .clean, .success(""), .unusableAnswer),
+    ])
+    func `falls back to light when the cloud fails or its answer is unusable`(
+        text: String,
+        mode: Mode,
+        answer: Result<String, RewriteError>,
+        fallback: RewriteFallback,
+    ) async {
+        let processed = await process(text, mode: mode, answer: answer)
 
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .timeout))
-    }
-
-    @Test
-    func `falls back to light when the answer is unusable`() async {
-        let processed = await process("see you tomorrow", mode: .clean, answer: .success(""))
-
-        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .unusableAnswer))
+        #expect(processed == ProcessedText(text: "See you tomorrow.", mode: .light, fallback: fallback))
     }
 
     @Test(arguments: [Mode.clean, .translate, .custom(UUID())])
@@ -122,6 +124,7 @@ struct TranscriptProcessorTests {
             instructions: "Clean.",
             cloudModels: PerProvider(claude: .fastest, openAI: model),
         )
+
         let processed = await process("hello", mode: .clean, setup: setup, log: log)
         _ = try await edit("Text.", following: "shorter", answer: .success("Short."), setup: setup, log: log)
         let requests = await log.requests
@@ -158,6 +161,7 @@ struct TranscriptProcessorTests {
             answer: .success("Bis morgen."),
             log: log,
         )
+
         let request = try #require(await log.requests.first)
 
         #expect(processed == ProcessedText(text: "Bis morgen.", mode: .translate))
@@ -165,13 +169,15 @@ struct TranscriptProcessorTests {
     }
 
     @Test(arguments: [
-        (Language.english, "see you tomorrow", "Увидимся завтра."),
-        (.russian, "увидимся завтра", "See you tomorrow."),
+        (Language.english, WritingVariant?.none, "see you tomorrow", "Увидимся завтра."),
+        (.russian, nil, "увидимся завтра", "See you tomorrow."),
+        (.serbian, .cyrillic, "vidimo se sutra", "See you tomorrow."),
     ])
-    func `translates both ways between two languages`(spoken: Language, text: String, answer: String) async {
+    func `keeps each translation as answered`(spoken: Language, variant: WritingVariant?, text: String, answer: String) async {
         let translation = Translation(target: .english, twoWayLanguage: .russian)
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
-        let processed = await process(text, mode: .translate, language: spoken, setup: setup, answer: .success(answer))
+        let reply = Result<String, RewriteError>.success(answer)
+        let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
 
         #expect(processed == ProcessedText(text: answer, mode: .translate))
     }
@@ -195,6 +201,7 @@ struct TranscriptProcessorTests {
             answer: .success("<text>\nShort.\n</text>"),
             log: log,
         )
+
         let request = try #require(await log.requests.first)
 
         #expect(edited == "Short.")

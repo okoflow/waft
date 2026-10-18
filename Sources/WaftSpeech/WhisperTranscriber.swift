@@ -1,7 +1,7 @@
 package import Foundation
 package import WaftCore
-@preconcurrency internal import WhisperKit
 import os
+@preconcurrency import WhisperKit
 
 package actor WhisperTranscriber: Transcriber {
     private struct LoadedModel {
@@ -29,6 +29,7 @@ package actor WhisperTranscriber: Transcriber {
 
     package func downloadModel(_ model: SpeechModel, progress: @escaping @Sendable (Double) -> Void) async throws {
         let files = SpeechModelFiles(model)
+
         try FileManager.default.createDirectory(at: files.baseDirectory, withIntermediateDirectories: true)
 
         _ = try await WhisperKit.download(
@@ -43,7 +44,7 @@ package actor WhisperTranscriber: Transcriber {
 
     package func loadModel(_ model: SpeechModel, for languages: [Language]) async throws -> Duration {
         let files = SpeechModelFiles(model)
-        guard files.isInstalled else { throw TranscriberError.modelMissing(files.variant) }
+        guard files.isInstalled else { throw TranscriberError.modelMissing(model) }
 
         let start = ContinuousClock.now
         let whisper = try await WhisperKit(configuration(for: files))
@@ -84,7 +85,7 @@ package actor WhisperTranscriber: Transcriber {
         guard let text = Self.acceptedText(of: results, language: spoken, prompt: prompt) else { return nil }
 
         return Transcript(
-            text: Self.written(text, in: variant, keeping: vocabulary),
+            text: text.written(in: variant, keeping: vocabulary),
             language: spoken,
             detectionDuration: decodingStart - detectionStart,
             decodingDuration: ContinuousClock.now - decodingStart,
@@ -105,6 +106,7 @@ package actor WhisperTranscriber: Transcriber {
             maxChunkLength: Self.windowSampleCount,
             decodeOptions: nil,
         )
+
         var spoken = language
         var segments: [TimedSegment] = []
 
@@ -147,7 +149,7 @@ package actor WhisperTranscriber: Transcriber {
             let text = segment.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return nil }
 
-            let written = Self.written(text, in: variant, keeping: [])
+            let written = text.written(in: variant, keeping: [])
 
             return TimedSegment(start: offset + Double(segment.start), end: offset + Double(segment.end), text: written)
         }
@@ -186,6 +188,7 @@ package actor WhisperTranscriber: Transcriber {
         let detection = try await loaded.whisper.detectLangauge(audioArray: samples)
         guard let detected = Language(rawValue: detection.language) else {
             let fallback = loaded.languages[0]
+
             Logger.speech.notice(
                 """
                 Detected \(detection.language, privacy: .public), which Waft doesn't know; \
@@ -254,12 +257,6 @@ extension WhisperTranscriber {
         guard !text.isEmpty, !HallucinationFilter.isHallucination(text, in: language, prompt: prompt) else { return nil }
 
         return text.capitalizedIfUnstyled(in: language)
-    }
-
-    private static func written(_ text: String, in variant: WritingVariant?, keeping terms: [String]) -> String {
-        guard let variant else { return text }
-
-        return variant.converting(text, keeping: terms)
     }
 
     private static func isConfident(_ segment: TranscriptionSegment) -> Bool {

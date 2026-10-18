@@ -26,6 +26,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
             try FileManager.default.removeItem(at: file)
         } catch {
             let cause = error as NSError
+
             Logger.storage.error(
                 "Couldn't remove a temporary file: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
             )
@@ -87,6 +88,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
             try write(data, to: unreadableCopy)
         } catch {
             let cause = error as NSError
+
             Logger.storage.error(
                 "Couldn't keep a copy of an unreadable file: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
             )

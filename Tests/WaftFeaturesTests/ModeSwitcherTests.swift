@@ -29,14 +29,13 @@ struct ModeSwitcherTests {
 
     @Test
     func `switches through the custom modes and announces them by name`() {
-        let emailReply = CustomMode(name: "Email reply", instructions: "Reply.")
-        settings.settings.customModes = [emailReply]
+        settings.settings.customModes = [.emailReply]
         settings.settings.mode = .translate
         let switcher = ModeSwitcher(shortcut: shortcut, settings: settings, hud: hud, pro: .unlicensed())
         switcher.start()
         shortcut.fire()
 
-        #expect(settings.settings.mode == .custom(emailReply.id))
+        #expect(settings.settings.mode == .custom(CustomMode.emailReply.id))
         #expect(hud.content == .message(HUDMessage(kind: .information, title: "Mode: Email reply")))
 
         shortcut.fire()
@@ -57,22 +56,5 @@ struct ModeSwitcherTests {
         shortcut.fire()
 
         #expect(settings.settings.mode == .raw)
-    }
-}
-
-private final class FakeGlobalShortcut: GlobalShortcut {
-    let title = "⌃⌥M"
-    var registers = true
-
-    private var action: (@MainActor () -> Void)?
-
-    func register(_ action: @escaping @MainActor () -> Void) -> Bool {
-        self.action = action
-
-        return registers
-    }
-
-    func fire() {
-        action?()
     }
 }

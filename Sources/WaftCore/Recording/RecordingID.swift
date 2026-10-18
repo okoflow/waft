@@ -1,7 +1,7 @@
 package struct RecordingID: Comparable, Hashable, Sendable {
     package static let none = RecordingID(rawValue: 0)
 
-    package let rawValue: Int
+    private let rawValue: Int
 
     package var next: RecordingID {
         RecordingID(rawValue: rawValue + 1)

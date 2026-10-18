@@ -37,6 +37,7 @@ extension WritingVariants: Codable {
     package func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         let stored = Dictionary(uniqueKeysWithValues: chosen.map { ($0.key.rawValue, $0.value.rawValue) })
+
         try container.encode(stored)
     }
 }

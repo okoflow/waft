@@ -25,7 +25,7 @@ struct OtherSoundsLoweringTests {
     }
 
     @Test
-    func `restoring cancels a pending lowering and brings the volume back`() async throws {
+    func `cancels a pending lowering and brings the volume back on restore`() async throws {
         let pending = OtherSoundsLowering(outputVolume: outputVolume, delay: .seconds(60))
         pending.lower { true }
         pending.restore()

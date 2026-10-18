@@ -20,7 +20,7 @@ struct EditKeySection: View {
                     recorder
                 }
             }
-            .animation(Motion.feedback, value: settings.settings.editKey)
+            .motion(Motion.feedback, value: settings.settings.editKey)
         }
     }
 

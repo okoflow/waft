@@ -8,7 +8,6 @@ struct RecordingControllerTests {
     private static let second = first.next
     private nonisolated static let dictation = RecordingTrigger(purpose: .dictation, key: .function, action: .startRecording)
     private nonisolated static let edit = RecordingTrigger(purpose: .edit, key: .function, action: .startRecording)
-    private nonisolated static let emailReply = CustomMode(name: "Email reply", instructions: "Reply.")
 
     private let recorder = FakeAudioRecorder()
 
@@ -162,7 +161,7 @@ struct RecordingControllerTests {
     @Test(arguments: [
         (Self.dictation, Mode?.none, "Light"),
         (Self.dictation, .clean, "Clean"),
-        (Self.dictation, .custom(Self.emailReply.id), "Email reply"),
+        (Self.dictation, .custom(CustomMode.emailReply.id), "Email reply"),
         (Self.edit, .clean, "Edit"),
     ])
     func `shows the listening HUD with the target app's mode as its badge`(
@@ -170,7 +169,7 @@ struct RecordingControllerTests {
         appMode: Mode?,
         badge: String,
     ) async {
-        settings.settings.customModes = [Self.emailReply]
+        settings.settings.customModes = [.emailReply]
         settings.settings.appModes.set(appMode, for: "com.example.notes")
         let recordings = model()
         recordings.begin(trigger)

@@ -46,9 +46,11 @@ print_licenses() {
 
   local files
   files=$(find "${path}" -maxdepth 1 -type f \( -name 'LICENSE*' -o -name 'NOTICE*' \) | sort)
+
   [[ -n ${files} ]] || die "${path} has no license file"
 
   local file
+
   while IFS= read -r file; do
     echo
     cat "${file}"
@@ -65,6 +67,7 @@ print_acknowledgments() {
   echo "${PRODUCT} includes the following third-party software."
 
   local name version url path
+
   while IFS=$'\t' read -r name version url path; do
     printf '\n%s\n%s %s\n%s\n%s\n' "${RULE}" "${name}" "${version}" "${url}" "${RULE}"
     print_licenses "${path}"
@@ -98,6 +101,7 @@ sign() {
   shift
 
   local -a options=(--force --sign "${identity}")
+
   if [[ ${identity} == 'Developer ID Application'* ]]; then
     options+=(--options runtime --timestamp)
   fi
@@ -127,6 +131,7 @@ main() {
   [[ $# -le 1 ]] || usage
 
   local configuration=${1:-debug}
+
   [[ ${configuration} == debug || ${configuration} == release ]] || usage
 
   cd "$(dirname "$0")/.."

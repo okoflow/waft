@@ -8,6 +8,7 @@ enum ResponseDecoder {
             return try JSONDecoder().decode(Value.self, from: data)
         } catch {
             let reason = cause(of: error)
+
             Logger.network.error("Couldn't decode the answer of \(service, privacy: .public): \(reason, privacy: .public)")
 
             throw .unreadableResponse

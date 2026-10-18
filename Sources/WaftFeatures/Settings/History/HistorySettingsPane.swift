@@ -45,7 +45,7 @@ struct HistorySettingsPane: View {
                 .rowTransition()
             }
         }
-        .animation(Motion.layout, value: settings.settings.keepsHistory)
+        .motion(Motion.layout, value: settings.settings.keepsHistory)
 
         let page = history.currentPage
 
@@ -116,6 +116,8 @@ private struct HistoryRow: View {
                     .font(.rowTitle)
                     .lineLimit(3)
                     .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentDirection(of: entry.text)
 
                 Text(details)
                     .font(.rowDetail)

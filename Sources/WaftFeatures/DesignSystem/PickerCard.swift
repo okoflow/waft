@@ -25,7 +25,7 @@ struct PickerCard<Preview: View>: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
 
         Button(action: action) {
             VStack(alignment: .leading, spacing: Metrics.pickerCardSpacing) {
@@ -60,7 +60,7 @@ struct PickerCard<Preview: View>: View {
             .contentShape(shape)
         }
         .buttonStyle(.plain)
-        .animation(Motion.feedback, value: isSelected)
+        .motion(Motion.feedback, value: isSelected)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }

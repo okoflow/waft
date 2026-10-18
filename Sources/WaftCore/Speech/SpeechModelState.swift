@@ -84,7 +84,7 @@ package struct SpeechModelState: Equatable, Sendable {
         switch phase {
         case .ready: return nil
         case .notInstalled: return String(localized: "The speech model isn't ready yet")
-        case let .downloading(progress): return String(localized: "Downloading the speech model… \(Self.percent(progress))")
+        case .downloading: return statusText
         case .loading: return String(localized: "Preparing the speech model, about a minute the first time…")
         case .failed: return String(localized: "The speech model failed to load. Retry from the menu.")
         }

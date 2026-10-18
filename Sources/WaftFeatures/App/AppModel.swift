@@ -55,7 +55,7 @@ package final class AppModel {
         settings = Self.makeSettings(dependencies)
         permissions = PermissionMonitor(provider: dependencies.permissions)
         pro = Self.makePro(dependencies)
-        speechModelController = SpeechModelController(transcriber: dependencies.transcriber, settings: settings, pro: pro)
+        speechModelController = Self.makeSpeechModelController(dependencies, settings: settings, pro: pro)
         hud = HUDController(copy: dependencies.clipboard.copy)
         keyRecorder = KeyRecorder()
         statistics = StatisticsModel(store: dependencies.statisticsStore)
@@ -182,6 +182,19 @@ extension AppModel {
         )
     }
 
+    private static func makeSpeechModelController(
+        _ dependencies: AppDependencies,
+        settings: SettingsModel,
+        pro: ProModel,
+    ) -> SpeechModelController {
+        SpeechModelController(
+            transcriber: dependencies.transcriber,
+            settings: settings,
+            pro: pro,
+            urlOpener: dependencies.urlOpener,
+        )
+    }
+
     private static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
         VocabularyModel(
             store: dependencies.vocabularyStore,
@@ -224,10 +237,7 @@ extension AppModel {
     }
 
     private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
-        PerProvider(
-            claude: APIKeyModel(store: dependencies.apiKeyStores.claude),
-            openAI: APIKeyModel(store: dependencies.apiKeyStores.openAI),
-        )
+        PerProvider { APIKeyModel(store: dependencies.apiKeyStores[$0]) }
     }
 
     private static func makeTranscription(

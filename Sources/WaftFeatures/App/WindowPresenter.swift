@@ -1,7 +1,6 @@
 package import AppKit
 import SwiftUI
 
-@MainActor
 package final class WindowPresenter: NSObject, NSWindowDelegate {
     weak var model: AppModel?
 
@@ -96,9 +95,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         guard clickMonitor == nil else { return }
 
         clickMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
-            MainActor.assumeIsolated {
-                self?.releaseFocus(for: event)
-            }
+            self?.releaseFocus(for: event)
 
             return event
         }

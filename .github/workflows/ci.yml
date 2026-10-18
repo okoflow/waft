@@ -6,22 +6,21 @@ on:
     branches:
       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-
 permissions: {}
 
 env:
   DEVELOPER_DIR: /Library/Developer/CommandLineTools
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   check:
     name: Check
-    runs-on: xcode-27
-    timeout-minutes: 30
     permissions:
       contents: read
+    runs-on: xcode-27
 
     steps:
       - name: Check out
@@ -41,12 +40,13 @@ jobs:
       - name: Bundle
         run: make bundle
 
+    timeout-minutes: 30
+
   compat:
     name: Command Line Tools 26
-    runs-on: macos-26
-    timeout-minutes: 30
     permissions:
       contents: read
+    runs-on: macos-26
 
     steps:
       - name: Check out
@@ -59,3 +59,5 @@ jobs:
 
       - name: Test
         run: make test
+
+    timeout-minutes: 30

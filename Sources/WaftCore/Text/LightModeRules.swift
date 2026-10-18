@@ -28,10 +28,11 @@ enum LightModeRules {
 
     static func apply(_ text: String, language: Language) -> String {
         var remover = HesitationRemover(language: language, text: text)
+
         let tidy = tidiedSpacing(remover.run(), language: language)
         let cased = language.hasLetterCase ? tidy.capitalizingFirstLetter(in: language) : tidy
 
-        return withFullStop(cased, language: language)
+        return cased.endingWithFullStop(in: language)
     }
 
     static func isHesitation(_ word: String, in language: Language) -> Bool {
@@ -66,11 +67,5 @@ enum LightModeRules {
         }
 
         return result.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    private static func withFullStop(_ text: String, language: Language) -> String {
-        guard let last = text.last, last.isLetter || last.isNumber else { return text }
-
-        return text + language.fullStop
     }
 }

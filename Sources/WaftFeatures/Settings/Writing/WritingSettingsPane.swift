@@ -69,7 +69,7 @@ struct WritingSettingsPane: View {
         } footer: {
             Button("New Mode", action: addMode)
         }
-        .animation(Motion.layout, value: settings.settings.customModes)
+        .motion(Motion.layout, value: settings.settings.customModes)
 
         SettingsSection("Translation", subtitle: translationNote, isPro: true) {
             PickerRow(
@@ -107,7 +107,7 @@ struct WritingSettingsPane: View {
         } footer: {
             Button("Add App…", action: addApp)
         }
-        .animation(Motion.layout, value: appIdentifiers)
+        .motion(Motion.layout, value: appIdentifiers)
 
         SettingsSection("Output") {
             ToggleRow(

@@ -31,4 +31,9 @@ struct TextSegmentTests {
     func `separates a joiner at the edge of a word`(text: String, segments: [TextSegment]) {
         #expect(TextSegment.split(text) == segments)
     }
+
+    @Test
+    func `lists the words of a text in their compared form`() {
+        #expect(TextSegment.words(of: "Ёлка, NEW-line!", in: .russian) == ["елка", "new-line"])
+    }
 }

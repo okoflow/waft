@@ -6,4 +6,11 @@ package struct RunningApp: Equatable, Sendable {
         self.bundleIdentifier = bundleIdentifier
         self.name = name
     }
+
+    package static func trackable(bundleIdentifier: String?, name: String?) -> RunningApp? {
+        guard let bundleIdentifier, bundleIdentifier != AppIdentity.bundleIdentifier else { return nil }
+        guard let name else { return RunningApp(bundleIdentifier: bundleIdentifier, name: bundleIdentifier) }
+
+        return RunningApp(bundleIdentifier: bundleIdentifier, name: name)
+    }
 }

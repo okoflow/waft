@@ -10,4 +10,10 @@ enum Motion {
     static let islandClose = Animation.spring(response: 0.45, dampingFraction: 1)
     static let islandContent = Animation.smooth(duration: 0.32)
     static let reduced = Animation.easeInOut(duration: 0.15)
+
+    static func adapted(_ animation: Animation?, reducesMotion: Bool) -> Animation? {
+        guard reducesMotion, animation != nil else { return animation }
+
+        return reduced
+    }
 }

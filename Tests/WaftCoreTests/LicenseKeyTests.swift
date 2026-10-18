@@ -25,7 +25,9 @@ struct LicenseKeyTests {
     @Test
     func `ignores whitespace and line breaks pasted into a key`() throws {
         let key = "WFT1.\(base64URL(Self.payload)).\(base64URL(Self.signature))"
+
         let pasted = "  " + key.prefix(20) + "\n " + key.dropFirst(20).prefix(30) + "\t" + key.dropFirst(50) + "\n"
+
         let license = try #require(LicenseKey(pasted)).license
 
         #expect(license.email == "ann@example.com")

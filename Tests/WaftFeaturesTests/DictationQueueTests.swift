@@ -141,6 +141,7 @@ struct DictationQueueTests {
             settings.mode = mode
             settings.modelProvider = provider
         }
+
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), rewriter: rewriter)
         queue.submit(job)
 
@@ -155,6 +156,7 @@ struct DictationQueueTests {
         let transcriber = FakeTranscriber(.success(.spoken("One")), .success(.spoken("Two")), holdsRequests: true)
         let inserter = FakeTextInserter()
         let hud = HUDController.offscreen { _ in .zero }
+
         let queue = DictationQueue(
             transcriber: transcriber,
             rewriters: .all(FakeTextRewriter()),

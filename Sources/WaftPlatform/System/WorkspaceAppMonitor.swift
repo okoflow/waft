@@ -18,17 +18,10 @@ package final class WorkspaceAppMonitor: FrontmostAppMonitor {
         continuation = stream.continuation
     }
 
-    nonisolated static func app(bundleIdentifier: String?, name: String?) -> RunningApp? {
-        guard let bundleIdentifier, bundleIdentifier != AppIdentity.bundleIdentifier else { return nil }
-        guard let name else { return RunningApp(bundleIdentifier: bundleIdentifier, name: bundleIdentifier) }
-
-        return RunningApp(bundleIdentifier: bundleIdentifier, name: name)
-    }
-
     private nonisolated static func app(from running: NSRunningApplication?) -> RunningApp? {
         guard let running else { return nil }
 
-        return app(bundleIdentifier: running.bundleIdentifier, name: running.localizedName)
+        return RunningApp.trackable(bundleIdentifier: running.bundleIdentifier, name: running.localizedName)
     }
 
     package func start() {

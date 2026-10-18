@@ -46,6 +46,7 @@ struct ModeInstructionsTests {
     func `resets a mode to the default`() {
         var instructions = ModeInstructions()
         instructions.set("Custom.", for: .clean)
+
         instructions.reset(.clean)
 
         #expect(!instructions.isCustomized(.clean))
@@ -55,6 +56,7 @@ struct ModeInstructionsTests {
     @Test
     func `decodes the stored format`() throws {
         let json = #"{"custom":{"formal":"Write like a pirate."}}"#
+
         let instructions = try JSONDecoder().decode(ModeInstructions.self, from: Data(json.utf8))
 
         #expect(instructions.text(for: .formal) == "Write like a pirate.")

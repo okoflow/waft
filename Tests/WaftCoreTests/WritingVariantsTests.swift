@@ -9,7 +9,7 @@ struct WritingVariantsTests {
     }
 
     @Test
-    func `remembers the chosen script and ignores one the language doesn't have`() {
+    func `remembers the chosen script and ignores one the language does not have`() {
         let variants = WritingVariants()
             .choosing(.traditional, for: .chinese)
             .choosing(.cyrillic, for: .chinese)
@@ -20,6 +20,7 @@ struct WritingVariantsTests {
     @Test
     func `survives an encoding round trip and drops unknown entries`() throws {
         let variants = WritingVariants().choosing(.cyrillic, for: .serbian)
+
         let data = try JSONEncoder().encode(variants)
         let stored = Data(#"{"sr":"cyrillic","zh":"klingon","xx":"latin"}"#.utf8)
 

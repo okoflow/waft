@@ -85,7 +85,7 @@ struct HesitationRemover {
         let left = String(trimmedBefore.reversed().drop(while: isFraming).reversed())
         let right = String(trimmedAfter.drop(while: isFraming))
         let core = left.isEmpty ? right : left
-        let gap = (before + after).contains("\n") ? "\n" : (language.separatesWordsWithSpaces ? " " : "")
+        let gap = (before + after).contains("\n") ? "\n" : language.wordSeparator
 
         return isAtEnd ? core : core + gap
     }

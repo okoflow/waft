@@ -89,6 +89,7 @@ struct PushToTalkKeyTests {
     @Test(arguments: [PushToTalkKey.rightOption, .function, PushToTalkKey(keyCode: 122)])
     func `survives an encoding round trip`(key: PushToTalkKey?) throws {
         let key = try #require(key)
+
         let data = try JSONEncoder().encode(key)
 
         #expect(String(bytes: data, encoding: .utf8) == "\(key.keyCode)")

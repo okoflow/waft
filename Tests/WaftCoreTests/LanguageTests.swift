@@ -49,4 +49,18 @@ struct LanguageTests {
         #expect(language.separatesWordsWithSpaces == spaced)
         #expect(language.hasLetterCase == hasCase)
     }
+
+    @Test(arguments: [(Language.english, " "), (.japanese, ""), (.chinese, ""), (.thai, ""), (.korean, " ")])
+    func `puts a space between words only where the script does`(language: Language, separator: String) {
+        #expect(language.wordSeparator == separator)
+    }
+
+    @Test(arguments: [
+        (Language.chinese, [WritingVariant.simplified, .traditional]),
+        (.serbian, [.latin, .cyrillic]),
+        (.english, []),
+    ])
+    func `offers a choice of script only for Chinese and Serbian`(language: Language, variants: [WritingVariant]) {
+        #expect(language.writingVariants == variants)
+    }
 }

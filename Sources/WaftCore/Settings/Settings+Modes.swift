@@ -1,5 +1,3 @@
-import Foundation
-
 extension Settings {
     package var modes: [Mode] {
         Mode.builtIn + customModeChoices
@@ -52,6 +50,7 @@ extension Settings {
 
     package mutating func addCustomMode(named name: String) -> CustomMode {
         let custom = CustomMode(name: name, instructions: "")
+
         customModes.append(custom)
 
         return custom

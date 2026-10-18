@@ -1,5 +1,5 @@
 import Testing
-@testable import WaftCore
+import WaftCore
 
 struct WritingScriptTests {
     @Test(arguments: [
@@ -11,5 +11,12 @@ struct WritingScriptTests {
     ])
     func `finds the script of more than half of the letters`(text: String, expected: WritingScript?) {
         #expect(WritingScript.dominant(in: text) == expected)
+    }
+
+    @Test(arguments: [("مرحبا بكم", true), ("שלום עולם", true), ("Привет, world", false)])
+    func `writes Arabic and Hebrew from right to left`(text: String, isRightToLeft: Bool) throws {
+        let script = try #require(WritingScript.dominant(in: text))
+
+        #expect(script.isRightToLeft == isRightToLeft)
     }
 }

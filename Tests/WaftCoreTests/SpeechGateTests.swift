@@ -32,6 +32,7 @@ struct SpeechGateTests {
     @Test
     func `hears speech over a steady background noise`() {
         let burst = silence(0.5) + tone(0.3, amplitude: 0.5) + silence(0.5)
+
         let samples = zip(tone(1.3, amplitude: 0.01), burst).map(+)
 
         #expect(SpeechGate.containsSpeech(samples))
@@ -48,6 +49,7 @@ struct SpeechGateTests {
     @Test
     func `ignores clicks shorter than a syllable`() {
         let click = tone(0.04, amplitude: 0.8) + silence(0.2)
+
         let samples = silence(0.5) + Array(Array(repeating: click, count: 10).joined())
 
         #expect(SpeechGate.loudDuration(of: samples) == 0)

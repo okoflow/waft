@@ -93,6 +93,7 @@ final class HUDPanel: NSPanel, HUDWindow {
             width: island.width,
             height: island.height,
         )
+
         ignoresMouseEvents = !onScreen.contains(NSEvent.mouseLocation)
     }
 }

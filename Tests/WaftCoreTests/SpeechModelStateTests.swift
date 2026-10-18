@@ -28,6 +28,7 @@ struct SpeechModelStateTests {
             .downloaded(.accurate),
             .loaded(.accurate),
         ]
+
         let effects = events.map { state.handle($0) }
 
         #expect(effects == [[.download(.accurate)], [], [.load(.accurate)], [.deleteModel(.fast)]])
@@ -210,15 +211,24 @@ struct SpeechModelStateTests {
     }
 
     @Test(arguments: [
-        ([SpeechModelState.Event](), "Preparing the speech model…", true),
-        ([.started(.fast, isInstalled: true)], "Preparing the speech model…", true),
-        ([.started(.fast, isInstalled: true), .loaded(.fast)], "Ready", false),
+        ([SpeechModelState.Event](), "Preparing the speech model…", String?.some("The speech model isn't ready yet")),
+        (
+            [.started(.fast, isInstalled: true)],
+            "Preparing the speech model…",
+            "Preparing the speech model, about a minute the first time…",
+        ),
+        ([.started(.fast, isInstalled: true), .loaded(.fast)], "Ready", nil),
+        (
+            [.started(.fast, isInstalled: false), .failed(.fast, "network lost")],
+            "Speech model failed: network lost",
+            "The speech model failed to load. Retry from the menu.",
+        ),
     ])
-    func `reports the status and whether a press must wait`(events: [SpeechModelState.Event], status: String, waits: Bool) {
+    func `reports the status and why a press must wait`(events: [SpeechModelState.Event], status: String, message: String?) {
         let state = state(after: events)
 
         #expect(state.statusText == status)
-        #expect((state.notReadyMessage != nil) == waits)
+        #expect(state.notReadyMessage == message)
     }
 
     private func state(after events: [SpeechModelState.Event]) -> SpeechModelState {

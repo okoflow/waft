@@ -46,7 +46,9 @@ struct SpeechModelFilesTests {
     func `counts a complete model with finished download metadata as installed`() throws {
         try withTemporaryDirectory { directory in
             let accurate = try installed(.accurate, in: directory)
+
             let cache = downloadCache(for: accurate)
+
             try FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
             try Data().write(to: cache.appending(path: "config.json.metadata"))
 
@@ -107,6 +109,7 @@ struct SpeechModelFilesTests {
     private func installed(_ model: SpeechModel, in directory: URL) throws -> SpeechModelFiles {
         let files = SpeechModelFiles(model, baseDirectory: directory)
         let tokenizer = tokenizerFile(in: directory)
+
         try FileManager.default.createDirectory(at: files.folder, withIntermediateDirectories: true)
         try FileManager.default.createDirectory(at: tokenizer.deletingLastPathComponent(), withIntermediateDirectories: true)
 

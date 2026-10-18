@@ -60,9 +60,8 @@ check_tree() {
 check_prerequisites() {
   swift package resolve >&2
 
-  if [[ ${SIGNING_IDENTITY:-} != 'Developer ID Application'* ]]; then
-    die 'set SIGNING_IDENTITY to your Developer ID Application identity'
-  fi
+  [[ ${SIGNING_IDENTITY:-} == 'Developer ID Application'* ]] \
+    || die 'set SIGNING_IDENTITY to your Developer ID Application identity'
 
   if ! xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null; then
     die "no notarytool profile \"${NOTARY_PROFILE}\": run xcrun notarytool store-credentials ${NOTARY_PROFILE}"
@@ -89,6 +88,7 @@ notarize_app() {
 
 make_disk_image() {
   local image=$1
+
   local staging="${WORK_DIR}/image"
 
   mkdir -p "${staging}"
@@ -143,6 +143,7 @@ main() {
   cd "$(dirname "$0")/.."
 
   local notes=$1
+
   [[ -f ${notes} ]] || die "no release notes at \"${notes}\""
 
   local version commit

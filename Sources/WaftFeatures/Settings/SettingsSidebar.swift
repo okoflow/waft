@@ -60,6 +60,8 @@ private struct SidebarBackground: View {
 }
 
 private struct SidebarRow: View {
+    @Environment(\.accessibilityReduceMotion) private var reducesMotion
+
     let pane: SettingsPane
     let state: SettingsWindowState
 
@@ -99,7 +101,7 @@ private struct SidebarRow: View {
                 ZStack {
                     shape
                         .fill(Palette.hover)
-                        .animation(Motion.fade) { fill in
+                        .animation(Motion.adapted(Motion.fade, reducesMotion: reducesMotion)) { fill in
                             fill.opacity(showsHover ? 1 : 0)
                         }
 

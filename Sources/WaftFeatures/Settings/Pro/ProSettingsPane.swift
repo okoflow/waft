@@ -47,13 +47,13 @@ private struct ProHero: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+        let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
             AppIcon(size: 64)
 
             VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 6) {
+                HStack(spacing: Metrics.inlineSpacing) {
                     Text(verbatim: "Waft")
                         .font(.proTitle)
 

@@ -8,6 +8,7 @@ extension AVAudioPCMBuffer {
         let format = try #require(AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: channelCount))
         let buffer = try #require(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount))
         let channels = try #require(buffer.floatChannelData)
+
         buffer.frameLength = frameCount
 
         for (channel, level) in levels.enumerated() {

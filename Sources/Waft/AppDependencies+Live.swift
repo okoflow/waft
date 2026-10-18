@@ -48,9 +48,6 @@ extension AppDependencies {
     }
 
     private static func apiKeyStores() -> PerProvider<any ValueStore<String>> {
-        PerProvider(
-            claude: KeychainStore.apiKey(for: .claude),
-            openAI: KeychainStore.apiKey(for: .openAI),
-        )
+        PerProvider { KeychainStore.apiKey(for: $0) }
     }
 }

@@ -18,7 +18,7 @@ struct DictionarySettingsPane: View {
         } footer: {
             Button("Add Term") { vocabulary.addTerm() }
         }
-        .animation(Motion.layout, value: vocabulary.terms.count)
+        .motion(Motion.layout, value: vocabulary.terms.count)
 
         SettingsSection("Snippets", subtitle: "Say the phrase on its own to paste the text.") {
             if vocabulary.snippets.isEmpty {
@@ -39,7 +39,7 @@ struct DictionarySettingsPane: View {
         } footer: {
             Button("Add Snippet") { vocabulary.addSnippet() }
         }
-        .animation(Motion.layout, value: vocabulary.snippets.count)
+        .motion(Motion.layout, value: vocabulary.snippets.count)
 
         SettingsSection("File", subtitle: "Both lists are saved as a JSON file you can edit.") {
             SettingsRow("Dictionary file") {

@@ -47,14 +47,21 @@ struct AppModelTests {
         #expect(settings.settings.historyLimit == 100)
     }
 
-    private func dependencies() -> AppDependencies {
+    @Test(arguments: [(PermissionStatus.granted, AppStatus.speechModel(SpeechModelState())), (.denied, .needsPermission)])
+    func `reports missing permissions before the speech model`(accessibility: PermissionStatus, status: AppStatus) {
+        let model = AppModel(dependencies: dependencies(permissions: [.microphone: .granted, .accessibility: accessibility]))
+
+        #expect(model.status == status)
+    }
+
+    private func dependencies(permissions: [Permission: PermissionStatus] = [:]) -> AppDependencies {
         AppDependencies(
             recorder: FakeAudioRecorder(),
             audioInputs: FakeAudioInputProvider(),
             transcriber: FakeTranscriber(),
             mediaDecoder: FakeMediaDecoder(),
             rewriters: .all(FakeTextRewriter()),
-            localServers: FakeLocalServerBrowser(),
+            localServers: FakeLocalServerBrowser([:]),
             keyEventMonitor: FakeKeyEventMonitor(),
             keyboardState: FakeKeyboardState(holdsKeys: false),
             modeShortcut: FakeGlobalShortcut(),
@@ -63,7 +70,7 @@ struct AppModelTests {
             urlOpener: FakeURLOpener(),
             inserter: FakeTextInserter(),
             clipboard: FakeClipboard(),
-            permissions: FakePermissionProvider([:]),
+            permissions: FakePermissionProvider(permissions),
             loginItem: FakeLoginItem(),
             sounds: FakeFeedbackSoundPlayer(),
             outputVolume: FakeOutputVolume(),
@@ -83,47 +90,9 @@ struct AppModelTests {
     }
 }
 
-private nonisolated struct FakeMediaDecoder: MediaDecoder {
-    func samples(of _: URL) -> [Float] {
-        []
-    }
-}
-
-private nonisolated struct FakeLocalServerBrowser: LocalServerBrowsing {
-    func models(at _: LocalServer) -> [String] {
-        []
-    }
-}
-
-private final class FakeGlobalShortcut: GlobalShortcut {
-    let title = ""
-
-    func register(_: @MainActor () -> Void) -> Bool {
-        false
-    }
-}
-
 private final class FakeFrontmostAppMonitor: FrontmostAppMonitor {
     let frontmostApp: RunningApp? = nil
     let activations = AsyncStream<RunningApp> { $0.finish() }
 
     func start() {}
-}
-
-private final class FakeAppUpdater: AppUpdater {
-    let isAvailable = false
-    var checksAutomatically = false
-
-    func start(
-        onPendingUpdateChange _: @MainActor (Bool) -> Void,
-        onSessionChange _: @MainActor (Bool) -> Void,
-    ) {}
-
-    func checkForUpdates() {}
-}
-
-private final class FakeAppLifecycle: AppLifecycle {
-    func relaunch() {}
-
-    func quit() {}
 }

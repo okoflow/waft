@@ -12,11 +12,12 @@ package struct KeyEvent: Sendable {
 
     package let kind: Kind
     package let keyCode: Int64
-    package let flags: UInt64
-    package let isRepeat: Bool
     package let timestamp: TimeInterval
 
-    package var isEscape: Bool {
+    let flags: UInt64
+    let isRepeat: Bool
+
+    var isEscape: Bool {
         keyCode == Self.escapeKeyCode
     }
 

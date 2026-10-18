@@ -24,9 +24,9 @@ final class RecordingController {
     private let watchdogInterval: TimeInterval
 
     var isRecording: Bool {
-        guard let recording, !recording.isRejected, !recording.hasFailed else { return false }
+        guard let recording else { return false }
 
-        return true
+        return recording.isLive
     }
 
     init(
@@ -103,7 +103,7 @@ final class RecordingController {
         hud.hideListening()
         Logger.dictation.info("Discarded the recording: \(reason.rawValue, privacy: .public)")
 
-        Task { _ = await recorder.stop(ended.id, releasedAt: nil) }
+        stopRecorder(ended.id)
     }
 
     func resetWatchdog(on keyEvent: KeyEvent) {
@@ -133,7 +133,7 @@ final class RecordingController {
         ended.hudTask?.cancel()
         ended.watchdogTimer?.invalidate()
 
-        guard !ended.isRejected, !ended.hasFailed else {
+        guard ended.isLive else {
             hud.hideListening()
 
             return nil
@@ -145,7 +145,7 @@ final class RecordingController {
     private func handle(_ event: RecordingEvent) {
         switch event {
         case let .started(id, deviceName) where id == recording?.id:
-            Logger.dictation.info("Recording from \(deviceName, privacy: .public)")
+            Logger.dictation.info("Recording from \(deviceName)")
 
             if settings.settings.playsSounds {
                 sounds.play(.recordingStarted)
@@ -173,8 +173,10 @@ final class RecordingController {
         hud.hideListening()
         hud.show(.recordingFailed(failure.message))
 
-        let id = failed.id
+        stopRecorder(failed.id)
+    }
 
+    private func stopRecorder(_ id: RecordingID) {
         Task { _ = await recorder.stop(id, releasedAt: nil) }
     }
 
@@ -187,7 +189,7 @@ final class RecordingController {
     }
 
     private func showListeningHUD(for id: RecordingID) {
-        guard let recording, recording.id == id, !recording.isRejected, !recording.hasFailed else { return }
+        guard let recording, recording.id == id, recording.isLive else { return }
 
         let recorder = recorder
 
@@ -223,9 +225,7 @@ final class RecordingController {
         hud.hideListening()
         hud.show(HUDMessage(kind: .information, title: reason))
 
-        let id = rejected.id
-
-        Task { _ = await recorder.stop(id, releasedAt: nil) }
+        stopRecorder(rejected.id)
     }
 
     private func deliver(_ ended: ActiveRecording, releasedAt time: TimeInterval) async {

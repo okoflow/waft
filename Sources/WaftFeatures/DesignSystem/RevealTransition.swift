@@ -14,11 +14,19 @@ extension Transition where Self == RevealTransition {
     }
 }
 
+private struct RowTransition: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reducesMotion
+
+    func body(content: Content) -> some View {
+        content.transition(AsymmetricTransition(
+            insertion: .reveal.animation(Motion.adapted(Motion.layout.delay(0.05), reducesMotion: reducesMotion)),
+            removal: .reveal.animation(Motion.adapted(Motion.fade, reducesMotion: reducesMotion)),
+        ))
+    }
+}
+
 extension View {
     func rowTransition() -> some View {
-        transition(AsymmetricTransition(
-            insertion: .reveal.animation(Motion.layout.delay(0.05)),
-            removal: .reveal.animation(Motion.fade),
-        ))
+        modifier(RowTransition())
     }
 }

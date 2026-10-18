@@ -37,6 +37,7 @@ final class ModeSwitcher {
         settings.settings.mode = settings.settings.mode(after: settings.settings.mode, includingAI: pro.isUnlocked)
 
         let title = settings.settings.title(of: settings.settings.mode)
+
         hud.show(HUDMessage(kind: .information, title: String(localized: "Mode: \(title)")))
     }
 }

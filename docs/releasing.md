@@ -113,8 +113,9 @@ With the first notarized release:
    mkdir homebrew-tap/Casks
    ```
 
-2. Switch [Install](getting-started.md#1-install) and the README's Install
-   section from building from source to `brew install --cask okoflow/tap/waft`
-   and the disk image on GitHub Releases, and add
+2. Switch [Install](getting-started.md#1-install), which the README's Install
+   link opens, from building from source to
+   `brew install --cask okoflow/tap/waft` and the disk image on GitHub
+   Releases, and add
    `brew uninstall --zap --cask waft` to
    [Removing everything](privacy.md#removing-everything).

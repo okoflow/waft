@@ -6,6 +6,7 @@ struct ProAccessTests {
     @Test
     func `unlocks everything for a license holder`() {
         let license = License(email: "ann@example.com", name: nil)
+
         let access = ProAccess(license: license, trialStarted: .distantPast, now: .now)
 
         #expect(access.status == .licensed(license))
@@ -36,12 +37,20 @@ struct ProAccessTests {
         let start = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: day, hour: hour)))
         let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: day + ProAccess.trialLength)))
 
-        #expect(ProAccess.trialEnd(startedOn: start, calendar: .gmt) == end)
+        #expect(ProAccess.trialEnd(startedOn: start, now: start, calendar: .gmt) == end)
+    }
+
+    @Test
+    func `ends a trial that starts in the future three days after today`() throws {
+        let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2027, month: 1, day: 18)))
+
+        #expect(ProAccess.trialEnd(startedOn: Date.fixed.addingTimeInterval(30 * 86400), now: .fixed, calendar: .gmt) == end)
     }
 
     @Test(arguments: [(1, ProAccess.Status.trial), (56, .trial), (57, .expired), (-240, .trial)])
     func `runs the trial until the end of its third day`(hoursSinceStart: Int, expected: ProAccess.Status) throws {
         let start = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: 10, hour: 15)))
+
         let now = start.addingTimeInterval(Double(hoursSinceStart) * 3600)
 
         #expect(ProAccess.trialStatus(startedOn: start, now: now, calendar: .gmt) == expected)

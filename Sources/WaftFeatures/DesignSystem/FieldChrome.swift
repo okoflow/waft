@@ -9,7 +9,7 @@ struct FieldChrome: ViewModifier {
         let ringOffset = Metrics.focusRingWidth / 2
 
         content
-            .background(isFocused ? Palette.fieldFocused : Palette.field, in: shape)
+            .background(Palette.field, in: shape)
             .overlay {
                 shape.strokeBorder(isFocused ? Palette.accent : Palette.fieldBorder, lineWidth: isFocused ? 1 : 0.5)
             }
@@ -18,6 +18,6 @@ struct FieldChrome: ViewModifier {
                     .stroke(Palette.accent.opacity(isFocused ? 0.25 : 0), lineWidth: Metrics.focusRingWidth)
                     .padding(-ringOffset)
             }
-            .animation(Motion.fade, value: isFocused)
+            .motion(Motion.fade, value: isFocused)
     }
 }

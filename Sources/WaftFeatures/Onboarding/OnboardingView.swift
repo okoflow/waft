@@ -19,12 +19,9 @@ struct OnboardingView: View {
 
             OnboardingFooter(onboarding: model.onboarding)
         }
-        .animation(Motion.page, value: model.onboarding.step)
-        .buttonStyle(PushButtonStyle())
-        .reducedMotionPolicy()
+        .motion(Motion.page, value: model.onboarding.step)
         .frame(width: 640, height: 540)
-        .background(Palette.window)
-        .ignoresSafeArea()
+        .windowChrome()
     }
 
     @ViewBuilder

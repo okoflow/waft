@@ -14,23 +14,29 @@ final class SpeechModelController {
     private let transcriber: any Transcriber
     private let settings: SettingsModel
     private let pro: ProModel
+    private let urlOpener: any URLOpener
 
     var modelDirectory: URL {
         transcriber.modelDirectory(for: chosenModel)
     }
 
-    private var chosenModel: SpeechModel {
+    var chosenModel: SpeechModel {
         settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
 
-    init(transcriber: any Transcriber, settings: SettingsModel, pro: ProModel) {
+    init(transcriber: any Transcriber, settings: SettingsModel, pro: ProModel, urlOpener: any URLOpener) {
         self.transcriber = transcriber
         self.settings = settings
         self.pro = pro
+        self.urlOpener = urlOpener
     }
 
     func retry() {
         apply(.retryRequested)
+    }
+
+    func revealInFinder() {
+        urlOpener.reveal(modelDirectory)
     }
 
     func start() {
@@ -95,6 +101,7 @@ final class SpeechModelController {
             try await transcriber.deleteModel(model)
         } catch {
             let cause = error as NSError
+
             Logger.speechModel
                 .error("Couldn't delete the speech model: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
         }
@@ -118,6 +125,7 @@ final class SpeechModelController {
             guard !Task.isCancelled else { return }
 
             let cause = error as NSError
+
             Logger.speechModel.error("Download failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))
@@ -138,6 +146,7 @@ final class SpeechModelController {
             }
         } catch {
             let cause = error as NSError
+
             Logger.speechModel.error("Load failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))

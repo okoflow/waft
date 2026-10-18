@@ -38,6 +38,10 @@ extension Language {
         scripts.allSatisfy(\.separatesWordsWithSpaces)
     }
 
+    var wordSeparator: String {
+        separatesWordsWithSpaces ? " " : ""
+    }
+
     var hasLooseWordSpacing: Bool {
         scripts.contains(where: \.hasLooseWordSpacing)
     }

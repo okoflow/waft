@@ -14,6 +14,9 @@ struct LightModeRulesTests {
         ("э-э, привет", .russian, "Привет."),
         ("это, мм, хорошо", .russian, "Это хорошо."),
         ("äh, ich weiß nicht, ähm, vielleicht", .german, "Ich weiß nicht vielleicht."),
+        ("我们，嗯，走吧", .chinese, "我们走吧。"),
+        ("今日は、えーと、晴れです", .japanese, "今日は晴れです。"),
+        ("um, macOS crashed", .english, "macOS crashed."),
     ])
     func `removes hesitations`(text: String, language: Language, expected: String) {
         #expect(LightModeRules.apply(text, language: language) == expected)

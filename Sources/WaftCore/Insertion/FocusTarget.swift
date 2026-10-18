@@ -1,7 +1,8 @@
 package struct FocusTarget: Sendable {
-    package let processID: Int32?
     package let bundleIdentifier: String?
     package let element: (any FocusedElement)?
+
+    private let processID: Int32?
 
     package var appDescription: String {
         guard let bundleIdentifier else { return "an unknown app" }

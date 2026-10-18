@@ -12,4 +12,10 @@ struct ActiveRecording {
     var isHandsFree = false
     var hudTask: Task<Void, Never>?
     var watchdogTimer: Timer?
+
+    var isLive: Bool {
+        guard !isRejected, !hasFailed else { return false }
+
+        return true
+    }
 }
