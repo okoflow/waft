@@ -1,7 +1,10 @@
+import Foundation
 import Testing
 import WaftCore
 
 struct SpeechModelStateTests {
+    private static let fortyPercent = 0.4.formatted(.percent.precision(.fractionLength(0)))
+
     @Test(arguments: [
         (false, SpeechModelState.Effect.download(.fast), SpeechModelState.Phase.downloading(progress: 0)),
         (true, .load(.fast), .loading),
@@ -144,6 +147,11 @@ struct SpeechModelStateTests {
 
     @Test(arguments: [
         ([SpeechModelState.Event](), "Preparing the speech model…", String?.some("The speech model isn't ready yet")),
+        (
+            [.started(.fast, isInstalled: false), .downloadProgressed(.fast, 0.4)],
+            "Downloading the speech model… \(fortyPercent)",
+            "Downloading the speech model… \(fortyPercent)",
+        ),
         (
             [.started(.fast, isInstalled: true)],
             "Preparing the speech model…",
