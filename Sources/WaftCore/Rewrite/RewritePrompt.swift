@@ -110,23 +110,30 @@ package enum RewritePrompt {
         case let .cleanup(_, target):
             let translation = target.map { "Translate into: \(targetName(for: $0))." }
 
-            return [spokenLanguage, translation, "<transcript>", request.text, "</transcript>", finishedTextReminder]
-                .compactMap(\.self)
-                .joined(separator: "\n")
+            return [
+                spokenLanguage,
+                translation,
+                PromptTag.transcript.open,
+                request.text,
+                PromptTag.transcript.close,
+                finishedTextReminder,
+            ]
+            .compactMap(\.self)
+            .joined(separator: "\n")
 
         case .custom:
-            return [spokenLanguage, "<transcript>", request.text, "</transcript>", finishedTextReminder]
+            return [spokenLanguage, PromptTag.transcript.open, request.text, PromptTag.transcript.close, finishedTextReminder]
                 .joined(separator: "\n")
 
         case let .edit(selection):
             return [
                 spokenLanguage,
-                "<instruction>",
+                PromptTag.instruction.open,
                 request.text,
-                "</instruction>",
-                "<text>",
+                PromptTag.instruction.close,
+                PromptTag.text.open,
                 selection,
-                "</text>",
+                PromptTag.text.close,
                 editedTextReminder,
             ]
             .joined(separator: "\n")
@@ -142,7 +149,7 @@ package enum RewritePrompt {
     }
 
     static func customInstructions(_ instructions: String) -> String {
-        [customPreamble, "<instructions>", instructions, "</instructions>"].joined(separator: "\n")
+        [customPreamble, PromptTag.instructions.open, instructions, PromptTag.instructions.close].joined(separator: "\n")
     }
 
     private static func targetName(for language: Language) -> String {

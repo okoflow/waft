@@ -4,8 +4,8 @@ enum RewriteValidator {
     private typealias Wrapper = (open: String, close: String)
 
     private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
-    private static let cleanupWrappers: [Wrapper] = [("<transcript>", "</transcript>")] + quotes
-    private static let editWrappers: [Wrapper] = [("<text>", "</text>")] + quotes
+    private static let cleanupWrappers: [Wrapper] = [(PromptTag.transcript.open, PromptTag.transcript.close)] + quotes
+    private static let editWrappers: [Wrapper] = [(PromptTag.text.open, PromptTag.text.close)] + quotes
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
         switch request.kind {
