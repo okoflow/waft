@@ -72,7 +72,8 @@ The recognized text goes through five steps:
 Light makes these changes and no others:
 
 - It removes hesitation sounds, such as "um" or "uh", with the commas around
-  them, but keeps one after a number, as in "5 мм".
+  them, but keeps one after a number, as in "5 мм", or written in capitals,
+  as in "ER".
 - It tidies the spaces around punctuation, with French spacing before `!`,
   `?`, `;`, and `:`; capitalizes the first letter, with a dotted "İ" in
   Turkish and Azerbaijani, but leaves a first word such as "iPhone" as written;

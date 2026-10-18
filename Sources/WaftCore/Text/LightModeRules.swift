@@ -36,6 +36,9 @@ enum LightModeRules {
     }
 
     static func isHesitation(_ word: String, in language: Language) -> Bool {
+        let isAbbreviation = word.count(where: \.isUppercase) > 1 && !word.contains(where: \.isLowercase)
+        guard !isAbbreviation else { return false }
+
         let letters = word.folded(in: language).filter { $0 != "-" && $0 != "‐" }
         let runs = HesitationPattern.runs(of: letters)
 
