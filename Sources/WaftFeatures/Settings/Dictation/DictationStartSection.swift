@@ -72,7 +72,7 @@ private struct Press: View {
     var height: CGFloat = 22
 
     var body: some View {
-        RoundedRectangle(cornerRadius: min(height, 22) / 4, style: .continuous)
+        RoundedRectangle(cornerRadius: height / 4, style: .continuous)
             .fill(Palette.accent)
             .frame(width: width, height: height)
     }
