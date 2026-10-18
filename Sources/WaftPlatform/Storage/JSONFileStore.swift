@@ -7,16 +7,14 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     package let name: String
 
     private let url: URL
-    private let isPrivate: Bool
 
     private var unreadableCopy: URL {
         url.deletingPathExtension().appendingPathExtension("unreadable.json")
     }
 
-    package init(name: String, url: URL, isPrivate: Bool = false) {
+    package init(name: String, url: URL) {
         self.name = name
         self.url = url
-        self.isPrivate = isPrivate
     }
 
     private static func removeTemporary(_ file: URL) {
@@ -41,6 +39,8 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
 
     package func load() throws -> Value? {
         guard exists() else { return nil }
+
+        restrictToOwner()
 
         let data = try Data(contentsOf: url)
 
@@ -83,6 +83,16 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         }
     }
 
+    private func restrictToOwner() {
+        guard chmod(url.path, 0o600) != 0 else { return }
+
+        let cause = Self.lastPOSIXError() as NSError
+
+        Logger.storage.error(
+            "Couldn't restrict a file to its owner: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
+        )
+    }
+
     private func keepUnreadableCopy(of data: Data) {
         do {
             try write(data, to: unreadableCopy)
@@ -96,12 +106,6 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     private func write(_ data: Data, to file: URL) throws {
-        guard isPrivate else {
-            try data.write(to: file, options: .atomic)
-
-            return
-        }
-
         let temporary = file.deletingLastPathComponent().appending(path: ".\(UUID().uuidString).tmp")
         let descriptor = open(temporary.path, O_WRONLY | O_CREAT | O_EXCL, 0o600)
         guard descriptor >= 0 else { throw Self.lastPOSIXError() }

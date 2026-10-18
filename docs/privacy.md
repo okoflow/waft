@@ -35,14 +35,15 @@ describe how each handles the text.
 | Settings | The `com.okoflow.waft` preferences domain |
 | Dictionary and snippets | `~/Library/Application Support/Waft/dictionary.json` |
 | Daily word, dictation, and time counts for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
-| History, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json`, readable only by you |
+| History, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
-If Waft can't read a saved JSON file, it keeps an `*.unreadable.json` copy
-beside it, which **Clear History…** in Settings › History also deletes for the
-history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared)
+Only you can read the dictionary, statistics, and history files. If Waft can't
+read one of them, it keeps an `*.unreadable.json` copy beside it, which
+**Clear History…** in Settings › History also deletes for the history.
+[Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared)
 says how to recover it.
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk.

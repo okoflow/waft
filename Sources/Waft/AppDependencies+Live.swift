@@ -37,7 +37,7 @@ extension AppDependencies {
             settingsStore: UserDefaultsStore<Settings>(name: "settings", key: "settings"),
             vocabularyStore: JSONFileStore<Vocabulary>(name: "dictionary", url: vocabularyFile),
             vocabularyFile: vocabularyFile,
-            historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile, isPrivate: true),
+            historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile),
             statisticsStore: JSONFileStore<DictationStatistics>(name: "statistics", url: statisticsFile),
             apiKeyStores: apiKeyStores,
             licenseStore: KeychainStore.license(),
