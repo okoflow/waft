@@ -10,6 +10,9 @@ extension String {
     func capitalizingFirstLetter(in language: Language) -> String {
         guard let index = firstIndex(where: \.isLetter), self[index].isLowercase else { return self }
 
+        let firstWord = self[index...].prefix(while: \.isLetter)
+        guard !firstWord.contains(where: \.isUppercase) else { return self }
+
         let capital = language.hasDottedCapitalI && self[index] == "i" ? "İ" : self[index].uppercased()
 
         return replacingCharacters(in: index ... index, with: capital)

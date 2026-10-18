@@ -16,6 +16,11 @@ struct StringCapitalizationTests {
         #expect(text.capitalizingFirstLetter(in: .english) == expected)
     }
 
+    @Test(arguments: ["iPhone 15 is out", "macOS crashed", "eBay sells it"])
+    func `leaves a first word with an inner capital as written`(text: String) {
+        #expect(text.capitalizingFirstLetter(in: .english) == text)
+    }
+
     @Test(arguments: [(Language.turkish, "İzmir"), (.azerbaijani, "İzmir"), (.english, "Izmir"), (.german, "Izmir")])
     func `capitalizes a dotted i only where the language has one`(language: Language, expected: String) {
         #expect("izmir".capitalizingFirstLetter(in: language) == expected)
