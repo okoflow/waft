@@ -127,7 +127,7 @@
 "Follows your instructions." = "Follows your instructions.";
 "Forever" = "Forever";
 "Formal" = "Formal";
-"Free trial ends %@" = "Free trial ends %@";
+"Free trial ends %@." = "Free trial ends %@.";
 "Free while Waft is in beta." = "Free while Waft is in beta.";
 "General" = "General";
 "Get Started" = "Get Started";
@@ -240,7 +240,8 @@
 "Remove License…" = "Remove License…";
 "Remove the API key?" = "Remove the API key?";
 "Remove the license from this Mac?" = "Remove the license from this Mac?";
-"Remove" = "Remove";
+"Remove the snippet" = "Remove the snippet";
+"Remove the term" = "Remove the term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Removes fillers and false starts, and fixes grammar and tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Removes fillers and false starts, fixes grammar, keeps your language.";
 "Remove…" = "Remove…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "The quickest and cheapest.";
 "The speech model %@ isn't downloaded." = "The speech model %@ isn't downloaded.";
 "The speech model doesn't know one of the chosen languages." = "The speech model doesn't know one of the chosen languages.";
-"The speech model failed to load. Retry from the menu." = "The speech model failed to load. Retry from the menu.";
 "The speech model has no tokenizer." = "The speech model has no tokenizer.";
+"The speech model isn't available. Retry from the menu." = "The speech model isn't available. Retry from the menu.";
 "The speech model isn't loaded." = "The speech model isn't loaded.";
 "The speech model isn't ready yet" = "The speech model isn't ready yet";
-"The text appears at the cursor" = "The text appears at the cursor";
+"The text appears at the cursor." = "The text appears at the cursor.";
 "There's no speech in this file." = "There's no speech in this file.";
 "These apps get their own mode." = "These apps get their own mode.";
 "This deletes every saved dictation. It can't be undone." = "This deletes every saved dictation. It can't be undone.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Turns the Mac's volume down to a quarter while you speak, then back up.";
 "Two-way with" = "Two-way with";
 "Unlock Waft+…" = "Unlock Waft+…";
-"Unlock…" = "Unlock…";
 "Updates" = "Updates";
 "Use the default mode in this app" = "Use the default mode in this app";
 "Used Light mode: %@" = "Used Light mode: %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waft lives in the menu bar.";
 "Waft needs both to type for you." = "Waft needs both to type for you.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens.";
-"Waft starts listening" = "Waft starts listening";
+"Waft starts listening." = "Waft starts listening.";
 "Waft writes" = "Waft writes";
 "Waft" = "Waft";
 "Waft+ feature" = "Waft+ feature";
@@ -398,7 +398,7 @@
 "Your mode" = "Your mode";
 "Your modes" = "Your modes";
 "Your own modes" = "Your own modes";
-"Your speech is recognized on this Mac" = "Your speech is recognized on this Mac";
+"Your speech is recognized on this Mac." = "Your speech is recognized on this Mac.";
 "Your words appear here" = "Your words appear here";
 "add your %@ API key in Settings › AI Models" = "add your %@ API key in Settings › AI Models";
 "choose a local server and model in Settings › AI Models" = "choose a local server and model in Settings › AI Models";

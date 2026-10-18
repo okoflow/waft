@@ -33,7 +33,7 @@ private struct ProHero: View {
         case .beta:
             String(localized: "Free while Waft is in beta.")
         case .trial:
-            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named)))")
+            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named))).")
         case .expired:
             String(localized: "Your free trial has ended.")
         }

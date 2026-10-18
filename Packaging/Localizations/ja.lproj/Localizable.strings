@@ -127,7 +127,7 @@
 "Follows your instructions." = "自分の指示に従います。";
 "Forever" = "無期限";
 "Formal" = "フォーマル";
-"Free trial ends %@" = "無料トライアルは%@に終了します";
+"Free trial ends %@." = "無料トライアルは%@に終了します。";
 "Free while Waft is in beta." = "Waftのベータ期間中は無料です。";
 "General" = "一般";
 "Get Started" = "始める";
@@ -240,7 +240,8 @@
 "Remove License…" = "ライセンスを削除…";
 "Remove the API key?" = "APIキーを削除しますか？";
 "Remove the license from this Mac?" = "このMacからライセンスを削除しますか？";
-"Remove" = "削除";
+"Remove the snippet" = "定型文を削除";
+"Remove the term" = "用語を削除";
 "Removes fillers and false starts, and fixes grammar and tone." = "つなぎ言葉や言い直しを取り除き、文法とトーンを整えます。";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "つなぎ言葉や言い直しを取り除いて文法を整えます。言語はそのままです。";
 "Remove…" = "削除…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "最速で、最も安価です。";
 "The speech model %@ isn't downloaded." = "音声認識モデル「%@」がダウンロードされていません。";
 "The speech model doesn't know one of the chosen languages." = "選択した言語のいずれかに、音声認識モデルが対応していません。";
-"The speech model failed to load. Retry from the menu." = "音声認識モデルを読み込めませんでした。メニューから再試行してください。";
 "The speech model has no tokenizer." = "音声認識モデルにトークナイザがありません。";
+"The speech model isn't available. Retry from the menu." = "音声認識モデルを利用できません。メニューから再試行してください。";
 "The speech model isn't loaded." = "音声認識モデルが読み込まれていません。";
 "The speech model isn't ready yet" = "音声認識モデルの準備がまだできていません";
-"The text appears at the cursor" = "カーソル位置にテキストが入力されます";
+"The text appears at the cursor." = "カーソル位置にテキストが入力されます。";
 "There's no speech in this file." = "このファイルには話し声が含まれていません。";
 "These apps get their own mode." = "これらのアプリには個別のモードが適用されます。";
 "This deletes every saved dictation. It can't be undone." = "保存されているすべての音声入力が削除されます。この操作は取り消せません。";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "話している間はMacの音量を4分の1にし、終わったら元に戻します。";
 "Two-way with" = "双方向翻訳";
 "Unlock Waft+…" = "Waft+のロックを解除…";
-"Unlock…" = "ロックを解除…";
 "Updates" = "アップデート";
 "Use the default mode in this app" = "このアプリでデフォルトのモードを使用";
 "Used Light mode: %@" = "「簡易」モードで処理：%@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waftはメニューバーに常駐します。";
 "Waft needs both to type for you." = "Waftが代わりに入力するには、両方の許可が必要です。";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waftがキーを検知してテキストをペーストするために必要です。開いたリストでWaftをオンにしてください。";
-"Waft starts listening" = "Waftが聞き取りを開始します";
+"Waft starts listening." = "Waftが聞き取りを開始します。";
 "Waft writes" = "Waftの出力";
 "Waft" = "Waft";
 "Waft+ feature" = "Waft+の機能";
@@ -398,7 +398,7 @@
 "Your mode" = "自分のモード";
 "Your modes" = "自分のモード";
 "Your own modes" = "自分だけのモード";
-"Your speech is recognized on this Mac" = "音声はこのMac上で認識されます";
+"Your speech is recognized on this Mac." = "音声はこのMac上で認識されます。";
 "Your words appear here" = "話した言葉がここに表示されます";
 "add your %@ API key in Settings › AI Models" = "「設定」›「AIモデル」で%@のAPIキーを追加してください";
 "choose a local server and model in Settings › AI Models" = "「設定」›「AIモデル」でローカルサーバとモデルを選択してください";

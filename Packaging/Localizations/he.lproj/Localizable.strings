@@ -127,7 +127,7 @@
 "Follows your instructions." = "פועל לפי ההוראות שלך.";
 "Forever" = "לצמיתות";
 "Formal" = "רשמי";
-"Free trial ends %@" = "תקופת הניסיון ללא תשלום תסתיים %@";
+"Free trial ends %@." = "תקופת הניסיון ללא תשלום תסתיים %@.";
 "Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגירסת בטא.";
 "General" = "כללי";
 "Get Started" = "התחלה";
@@ -240,7 +240,8 @@
 "Remove License…" = "הסרת הרישיון…";
 "Remove the API key?" = "להסיר את מפתח ה-API?";
 "Remove the license from this Mac?" = "להסיר את הרישיון מ-Mac זה?";
-"Remove" = "הסרה";
+"Remove the snippet" = "הסרת קטע המלל";
+"Remove the term" = "הסרת המונח";
 "Removes fillers and false starts, and fixes grammar and tone." = "מסיר מילות מילוי והתחלות שגויות, ומתקן דקדוק וטון.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "מסיר מילות מילוי והתחלות שגויות, מתקן דקדוק ושומר על שפת הדיבור.";
 "Remove…" = "הסרה…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "המהיר והזול ביותר.";
 "The speech model %@ isn't downloaded." = "מודל זיהוי הדיבור %@ לא הורד.";
 "The speech model doesn't know one of the chosen languages." = "מודל זיהוי הדיבור לא מכיר את אחת השפות שנבחרו.";
-"The speech model failed to load. Retry from the menu." = "טעינת מודל זיהוי הדיבור נכשלה. ניתן לנסות שוב מהתפריט.";
 "The speech model has no tokenizer." = "למודל זיהוי הדיבור חסר רכיב ה-tokenizer.";
+"The speech model isn't available. Retry from the menu." = "מודל זיהוי הדיבור אינו זמין. ניתן לנסות שוב מהתפריט.";
 "The speech model isn't loaded." = "מודל זיהוי הדיבור לא נטען.";
 "The speech model isn't ready yet" = "מודל זיהוי הדיבור עדיין לא מוכן";
-"The text appears at the cursor" = "המלל מופיע במיקום הסמן";
+"The text appears at the cursor." = "המלל מופיע במיקום הסמן.";
 "There's no speech in this file." = "אין דיבור בקובץ זה.";
 "These apps get their own mode." = "ליישומים אלה יש מצב משלהם.";
 "This deletes every saved dictation. It can't be undone." = "כל ההכתבות השמורות יימחקו. לא ניתן לבטל פעולה זו.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "מוריד את עוצמת השמע של ה-Mac לרבע בזמן הדיבור, ואחר כך מחזיר אותה.";
 "Two-way with" = "דו-כיווני עם";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
-"Unlock…" = "שדרוג…";
 "Updates" = "עדכונים";
 "Use the default mode in this app" = "שימוש במצב ברירת המחדל ביישום זה";
 "Used Light mode: %@" = "הופעל מצב ״בסיסי״: %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "ניתן למצוא את Waft בשורת התפריטים.";
 "Waft needs both to type for you." = "שתי ההרשאות נחוצות ל-Waft כדי להקליד בשבילך.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "ההרשאה נחוצה ל-Waft כדי לזהות את המקש ולהדביק את המלל. יש להפעיל את Waft ברשימה שתיפתח.";
-"Waft starts listening" = "ההאזנה מתחילה";
+"Waft starts listening." = "ההאזנה מתחילה.";
 "Waft writes" = "מה ש-Waft כותב";
 "Waft" = "Waft";
 "Waft+ feature" = "מאפיין של Waft+‎";
@@ -398,7 +398,7 @@
 "Your mode" = "המצב שלך";
 "Your modes" = "המצבים שלך";
 "Your own modes" = "מצבים משלך";
-"Your speech is recognized on this Mac" = "הדיבור שלך מזוהה ב-Mac זה";
+"Your speech is recognized on this Mac." = "הדיבור שלך מזוהה ב-Mac זה.";
 "Your words appear here" = "המילים שלך יופיעו כאן";
 "add your %@ API key in Settings › AI Models" = "יש להוסיף את מפתח ה-API של %@ ב״הגדרות״ › ״מודלי בינה מלאכותית״";
 "choose a local server and model in Settings › AI Models" = "יש לבחור שרת מקומי ומודל ב״הגדרות״ › ״מודלי בינה מלאכותית״";

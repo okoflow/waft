@@ -127,7 +127,7 @@
 "Follows your instructions." = "按你的指令处理。";
 "Forever" = "永久";
 "Formal" = "正式";
-"Free trial ends %@" = "免费试用将于%@结束";
+"Free trial ends %@." = "免费试用将于%@结束。";
 "Free while Waft is in beta." = "Waft测试版期间免费。";
 "General" = "通用";
 "Get Started" = "开始使用";
@@ -240,7 +240,8 @@
 "Remove License…" = "移除许可证…";
 "Remove the API key?" = "要移除API密钥吗？";
 "Remove the license from this Mac?" = "要从此Mac上移除许可证吗？";
-"Remove" = "移除";
+"Remove the snippet" = "移除片段";
+"Remove the term" = "移除术语";
 "Removes fillers and false starts, and fixes grammar and tone." = "去掉赘词和改口，修正语法和语气。";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "去掉赘词和改口，修正语法，保留原语言。";
 "Remove…" = "移除…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "最快、最便宜。";
 "The speech model %@ isn't downloaded." = "尚未下载语音识别模型“%@”。";
 "The speech model doesn't know one of the chosen languages." = "语音识别模型不支持所选语言中的一种。";
-"The speech model failed to load. Retry from the menu." = "语音识别模型载入失败。请从菜单中重试。";
 "The speech model has no tokenizer." = "语音识别模型缺少分词器。";
+"The speech model isn't available. Retry from the menu." = "语音识别模型不可用。请从菜单中重试。";
 "The speech model isn't loaded." = "语音识别模型未载入。";
 "The speech model isn't ready yet" = "语音识别模型尚未就绪";
-"The text appears at the cursor" = "文本会出现在光标处";
+"The text appears at the cursor." = "文本会出现在光标处。";
 "There's no speech in this file." = "此文件中没有语音。";
 "These apps get their own mode." = "这些App使用各自的模式。";
 "This deletes every saved dictation. It can't be undone." = "所有已保存的听写都将被删除。此操作无法撤销。";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "说话时将Mac的音量降到四分之一，说完后恢复。";
 "Two-way with" = "双向翻译";
 "Unlock Waft+…" = "解锁Waft+…";
-"Unlock…" = "解锁…";
 "Updates" = "更新";
 "Use the default mode in this app" = "在此App中使用默认模式";
 "Used Light mode: %@" = "已改用“轻度”模式：%@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waft常驻在菜单栏中。";
 "Waft needs both to type for you." = "Waft需要这两项权限才能替你输入。";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此权限来检测按键并粘贴你的文本。请在打开的列表中打开Waft。";
-"Waft starts listening" = "Waft开始聆听";
+"Waft starts listening." = "Waft开始聆听。";
 "Waft writes" = "Waft写出";
 "Waft" = "Waft";
 "Waft+ feature" = "Waft+功能";
@@ -398,7 +398,7 @@
 "Your mode" = "自定义模式";
 "Your modes" = "自定义模式";
 "Your own modes" = "自定义模式";
-"Your speech is recognized on this Mac" = "语音在此Mac上识别";
+"Your speech is recognized on this Mac." = "语音在此Mac上识别。";
 "Your words appear here" = "你说的话会显示在这里";
 "add your %@ API key in Settings › AI Models" = "请在“设置”›“AI模型”中添加%@ API密钥";
 "choose a local server and model in Settings › AI Models" = "请在“设置”›“AI模型”中选择本地服务器和模型";

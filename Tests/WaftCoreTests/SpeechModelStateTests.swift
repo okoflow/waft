@@ -161,7 +161,7 @@ struct SpeechModelStateTests {
         (
             [.started(.fast, isInstalled: false), .failed(.fast, "network lost")],
             "Speech model failed: network lost",
-            "The speech model failed to load. Retry from the menu.",
+            "The speech model isn't available. Retry from the menu.",
         ),
     ])
     func `reports the status and why a press must wait`(events: [SpeechModelState.Event], status: String, message: String?) {

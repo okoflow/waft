@@ -127,7 +127,7 @@
 "Follows your instructions." = "Volgt je instructies.";
 "Forever" = "Altijd";
 "Formal" = "Formeel";
-"Free trial ends %@" = "Gratis proefperiode eindigt %@";
+"Free trial ends %@." = "Gratis proefperiode eindigt %@.";
 "Free while Waft is in beta." = "Gratis zolang Waft in bèta is.";
 "General" = "Algemeen";
 "Get Started" = "Aan de slag";
@@ -240,7 +240,8 @@
 "Remove License…" = "Verwijder licentie…";
 "Remove the API key?" = "API-sleutel verwijderen?";
 "Remove the license from this Mac?" = "Licentie van deze Mac verwijderen?";
-"Remove" = "Verwijder";
+"Remove the snippet" = "Verwijder tekstblok";
+"Remove the term" = "Verwijder term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Verwijdert stopwoorden en haperingen en verbetert grammatica en toon.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Verwijdert stopwoorden en haperingen, verbetert de grammatica en behoudt je taal.";
 "Remove…" = "Verwijder…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "Het snelst en het goedkoopst.";
 "The speech model %@ isn't downloaded." = "Het spraakmodel %@ is niet gedownload.";
 "The speech model doesn't know one of the chosen languages." = "Het spraakmodel kent een van de gekozen talen niet.";
-"The speech model failed to load. Retry from the menu." = "Het spraakmodel kon niet worden geladen. Probeer het opnieuw via het menu.";
 "The speech model has no tokenizer." = "Het spraakmodel heeft geen tokenizer.";
+"The speech model isn't available. Retry from the menu." = "Het spraakmodel is niet beschikbaar. Probeer het opnieuw via het menu.";
 "The speech model isn't loaded." = "Het spraakmodel is niet geladen.";
 "The speech model isn't ready yet" = "Het spraakmodel is nog niet gereed";
-"The text appears at the cursor" = "De tekst verschijnt bij de cursor";
+"The text appears at the cursor." = "De tekst verschijnt bij de cursor.";
 "There's no speech in this file." = "Dit bestand bevat geen spraak.";
 "These apps get their own mode." = "Deze apps krijgen een eigen modus.";
 "This deletes every saved dictation. It can't be undone." = "Hiermee worden alle bewaarde dictaten verwijderd. Dit kan niet ongedaan worden gemaakt.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Zet het volume van de Mac op een kwart terwijl je spreekt en daarna weer terug.";
 "Two-way with" = "In beide richtingen met";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
-"Unlock…" = "Ontgrendel…";
 "Updates" = "Updates";
 "Use the default mode in this app" = "Gebruik de standaardmodus in deze app";
 "Used Light mode: %@" = "Modus ‘Licht’ gebruikt: %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waft staat in de menubalk.";
 "Waft needs both to type for you." = "Waft heeft beide nodig om voor je te typen.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft heeft dit nodig om de toets te herkennen en je tekst te plakken. Zet Waft aan in de lijst die verschijnt.";
-"Waft starts listening" = "Waft begint te luisteren";
+"Waft starts listening." = "Waft begint te luisteren.";
 "Waft writes" = "Waft schrijft";
 "Waft" = "Waft";
 "Waft+ feature" = "Functie van Waft+";
@@ -398,7 +398,7 @@
 "Your mode" = "Eigen modus";
 "Your modes" = "Eigen modi";
 "Your own modes" = "Eigen modi";
-"Your speech is recognized on this Mac" = "Je spraak wordt op deze Mac herkend";
+"Your speech is recognized on this Mac." = "Je spraak wordt op deze Mac herkend.";
 "Your words appear here" = "Je woorden verschijnen hier";
 "add your %@ API key in Settings › AI Models" = "voeg je API-sleutel van %@ toe in Instellingen › AI-modellen";
 "choose a local server and model in Settings › AI Models" = "kies een lokale server en een model in Instellingen › AI-modellen";

@@ -127,7 +127,7 @@
 "Follows your instructions." = "يتبع تعليماتك.";
 "Forever" = "للأبد";
 "Formal" = "رسمي";
-"Free trial ends %@" = "تنتهي التجربة المجانية %@";
+"Free trial ends %@." = "تنتهي التجربة المجانية %@.";
 "Free while Waft is in beta." = "مجاني ما دام Waft في المرحلة التجريبية.";
 "General" = "عام";
 "Get Started" = "البدء";
@@ -240,7 +240,8 @@
 "Remove License…" = "إزالة الترخيص…";
 "Remove the API key?" = "هل تريد إزالة مفتاح API؟";
 "Remove the license from this Mac?" = "هل تريد إزالة الترخيص من هذا الـ Mac؟";
-"Remove" = "إزالة";
+"Remove the snippet" = "إزالة النص الجاهز";
+"Remove the term" = "إزالة المصطلح";
 "Removes fillers and false starts, and fixes grammar and tone." = "يحذفان كلمات الحشو والبدايات المتعثرة، ويصححان القواعد والنبرة.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "يحذف كلمات الحشو والبدايات المتعثرة، ويصحح القواعد، ويحافظ على لغتك.";
 "Remove…" = "إزالة…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "الأسرع والأرخص.";
 "The speech model %@ isn't downloaded." = "لم يتم تنزيل نموذج الكلام %@.";
 "The speech model doesn't know one of the chosen languages." = "لا يدعم نموذج الكلام إحدى اللغات المختارة.";
-"The speech model failed to load. Retry from the menu." = "تعذر تحميل نموذج الكلام. أعد المحاولة من القائمة.";
 "The speech model has no tokenizer." = "لا يحتوي نموذج الكلام على أداة ترميز.";
+"The speech model isn't available. Retry from the menu." = "نموذج الكلام غير متاح. أعد المحاولة من القائمة.";
 "The speech model isn't loaded." = "لم يتم تحميل نموذج الكلام.";
 "The speech model isn't ready yet" = "نموذج الكلام ليس جاهزًا بعد";
-"The text appears at the cursor" = "يظهر النص عند المؤشر";
+"The text appears at the cursor." = "يظهر النص عند المؤشر.";
 "There's no speech in this file." = "لا يوجد كلام في هذا الملف.";
 "These apps get their own mode." = "لهذه التطبيقات نمط خاص بها.";
 "This deletes every saved dictation. It can't be undone." = "سيؤدي هذا إلى حذف كل عمليات الإملاء المحفوظة. لا يمكن التراجع عن هذا الإجراء.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "يخفض مستوى صوت Mac إلى الربع أثناء حديثك، ثم يعيده كما كان.";
 "Two-way with" = "في الاتجاهين مع";
 "Unlock Waft+…" = "فتح قفل Waft+‎…";
-"Unlock…" = "فتح القفل…";
 "Updates" = "التحديثات";
 "Use the default mode in this app" = "استخدام النمط الافتراضي في هذا التطبيق";
 "Used Light mode: %@" = "تم استخدام النمط \"خفيف\": %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "يوجد Waft في شريط القوائم.";
 "Waft needs both to type for you." = "يحتاج Waft إلى كليهما ليكتب نيابةً عنك.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "يحتاج Waft إلى هذا الإذن لرصد المفتاح ولصق النص. شغّل Waft في القائمة التي ستُفتح.";
-"Waft starts listening" = "يبدأ Waft في الاستماع";
+"Waft starts listening." = "يبدأ Waft في الاستماع.";
 "Waft writes" = "ما يكتبه Waft";
 "Waft" = "Waft";
 "Waft+ feature" = "ميزة Waft+‎";
@@ -398,7 +398,7 @@
 "Your mode" = "نمطك";
 "Your modes" = "أنماطك";
 "Your own modes" = "أنماطك الخاصة";
-"Your speech is recognized on this Mac" = "يتعرف هذا الـ Mac على كلامك";
+"Your speech is recognized on this Mac." = "يتعرف هذا الـ Mac على كلامك.";
 "Your words appear here" = "ستظهر كلماتك هنا";
 "add your %@ API key in Settings › AI Models" = "أضف مفتاح API من %@ في الإعدادات › نماذج الذكاء الاصطناعي";
 "choose a local server and model in Settings › AI Models" = "اختر خادمًا محليًا ونموذجًا في الإعدادات › نماذج الذكاء الاصطناعي";

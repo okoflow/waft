@@ -127,7 +127,7 @@
 "Follows your instructions." = "Следует вашим инструкциям.";
 "Forever" = "Бессрочно";
 "Formal" = "Деловой";
-"Free trial ends %@" = "Пробный период закончится %@";
+"Free trial ends %@." = "Пробный период закончится %@.";
 "Free while Waft is in beta." = "Бесплатно на время бета-тестирования.";
 "General" = "Основные";
 "Get Started" = "Начать";
@@ -240,7 +240,8 @@
 "Remove License…" = "Удалить лицензию…";
 "Remove the API key?" = "Удалить ключ API?";
 "Remove the license from this Mac?" = "Удалить лицензию с этого Mac?";
-"Remove" = "Удалить";
+"Remove the snippet" = "Удалить фрагмент";
+"Remove the term" = "Удалить термин";
 "Removes fillers and false starts, and fixes grammar and tone." = "Убирает слова-паразиты и оговорки, исправляет грамматику и тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Убирает слова-паразиты и оговорки, исправляет грамматику, сохраняет ваш язык.";
 "Remove…" = "Удалить…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "Самая быстрая и дешёвая.";
 "The speech model %@ isn't downloaded." = "Модель речи %@ не загружена.";
 "The speech model doesn't know one of the chosen languages." = "Модель речи не поддерживает один из выбранных языков.";
-"The speech model failed to load. Retry from the menu." = "Модель речи не загрузилась. Повторите попытку в меню.";
 "The speech model has no tokenizer." = "У модели речи нет токенизатора.";
+"The speech model isn't available. Retry from the menu." = "Модель речи недоступна. Повторите попытку в меню.";
 "The speech model isn't loaded." = "Модель речи не загружена в память.";
 "The speech model isn't ready yet" = "Модель речи ещё не готова";
-"The text appears at the cursor" = "Текст появится у курсора";
+"The text appears at the cursor." = "Текст появится у курсора.";
 "There's no speech in this file." = "В этом файле нет речи.";
 "These apps get their own mode." = "У этих приложений свой режим.";
 "This deletes every saved dictation. It can't be undone." = "Все сохранённые диктовки будут удалены. Это действие нельзя отменить.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Убавляет громкость Mac до четверти, пока вы говорите, а потом возвращает её.";
 "Two-way with" = "Двусторонний перевод";
 "Unlock Waft+…" = "Разблокировать Waft+…";
-"Unlock…" = "Разблокировать…";
 "Updates" = "Обновления";
 "Use the default mode in this app" = "Использовать режим по умолчанию в этом приложении";
 "Used Light mode: %@" = "Применён режим «Лёгкий»: %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waft находится в строке меню.";
 "Waft needs both to type for you." = "Без них Waft не сможет печатать за вас.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Он нужен Waft, чтобы следить за клавишей и вставлять текст. Включите Waft в открывшемся списке.";
-"Waft starts listening" = "Waft начинает слушать";
+"Waft starts listening." = "Waft начинает слушать.";
 "Waft writes" = "Waft напишет";
 "Waft" = "Waft";
 "Waft+ feature" = "Функция Waft+";
@@ -398,7 +398,7 @@
 "Your mode" = "Ваш режим";
 "Your modes" = "Ваши режимы";
 "Your own modes" = "Свои режимы";
-"Your speech is recognized on this Mac" = "Речь распознаётся на этом Mac";
+"Your speech is recognized on this Mac." = "Речь распознаётся на этом Mac.";
 "Your words appear here" = "Здесь появятся ваши слова";
 "add your %@ API key in Settings › AI Models" = "добавьте ключ API %@ в Настройках › ИИ-модели";
 "choose a local server and model in Settings › AI Models" = "выберите локальный сервер и модель в Настройках › ИИ-модели";

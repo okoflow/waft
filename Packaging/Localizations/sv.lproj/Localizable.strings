@@ -127,7 +127,7 @@
 "Follows your instructions." = "Följer dina instruktioner.";
 "Forever" = "För alltid";
 "Formal" = "Formellt";
-"Free trial ends %@" = "Provperioden slutar %@";
+"Free trial ends %@." = "Provperioden slutar %@.";
 "Free while Waft is in beta." = "Gratis så länge Waft är i beta.";
 "General" = "Allmänt";
 "Get Started" = "Kom igång";
@@ -240,7 +240,8 @@
 "Remove License…" = "Ta bort licens…";
 "Remove the API key?" = "Vill du ta bort API-nyckeln?";
 "Remove the license from this Mac?" = "Vill du ta bort licensen från den här datorn?";
-"Remove" = "Ta bort";
+"Remove the snippet" = "Ta bort textsnutten";
+"Remove the term" = "Ta bort termen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Tar bort utfyllnadsord och felstarter och rättar grammatik och ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Tar bort utfyllnadsord och felstarter, rättar grammatik och behåller ditt språk.";
 "Remove…" = "Ta bort…";
@@ -324,11 +325,11 @@
 "The quickest and cheapest." = "Snabbast och billigast.";
 "The speech model %@ isn't downloaded." = "Talmodellen %@ har inte hämtats.";
 "The speech model doesn't know one of the chosen languages." = "Talmodellen stöder inte ett av de valda språken.";
-"The speech model failed to load. Retry from the menu." = "Talmodellen kunde inte läsas in. Försök igen från menyn.";
 "The speech model has no tokenizer." = "Talmodellen saknar tokeniserare.";
+"The speech model isn't available. Retry from the menu." = "Talmodellen är inte tillgänglig. Försök igen från menyn.";
 "The speech model isn't loaded." = "Talmodellen är inte inläst.";
 "The speech model isn't ready yet" = "Talmodellen är inte redo än";
-"The text appears at the cursor" = "Texten visas vid markören";
+"The text appears at the cursor." = "Texten visas vid markören.";
 "There's no speech in this file." = "Det finns inget tal i filen.";
 "These apps get their own mode." = "De här apparna får ett eget läge.";
 "This deletes every saved dictation. It can't be undone." = "Alla sparade dikteringar raderas. Det går inte att ångra.";
@@ -353,7 +354,6 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Sänker Macens volym till en fjärdedel medan du talar och återställer den sedan.";
 "Two-way with" = "Åt båda hållen med";
 "Unlock Waft+…" = "Lås upp Waft+…";
-"Unlock…" = "Lås upp…";
 "Updates" = "Uppdateringar";
 "Use the default mode in this app" = "Använd standardläget i den här appen";
 "Used Light mode: %@" = "Läget ”Lätt” användes: %@";
@@ -373,7 +373,7 @@
 "Waft lives in the menu bar." = "Waft finns i menyraden.";
 "Waft needs both to type for you." = "Waft behöver båda för att kunna skriva åt dig.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft behöver den för att känna av tangenten och klistra in din text. Slå på Waft i listan som öppnas.";
-"Waft starts listening" = "Waft börjar lyssna";
+"Waft starts listening." = "Waft börjar lyssna.";
 "Waft writes" = "Waft skriver";
 "Waft" = "Waft";
 "Waft+ feature" = "Waft+-funktion";
@@ -398,7 +398,7 @@
 "Your mode" = "Ditt läge";
 "Your modes" = "Dina lägen";
 "Your own modes" = "Egna lägen";
-"Your speech is recognized on this Mac" = "Ditt tal känns igen på den här datorn";
+"Your speech is recognized on this Mac." = "Ditt tal känns igen på den här datorn.";
 "Your words appear here" = "Dina ord visas här";
 "add your %@ API key in Settings › AI Models" = "lägg till din API-nyckel för %@ i Inställningar › AI-modeller";
 "choose a local server and model in Settings › AI Models" = "välj en lokal server och modell i Inställningar › AI-modeller";
