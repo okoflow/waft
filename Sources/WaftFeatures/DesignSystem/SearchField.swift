@@ -29,6 +29,7 @@ struct SearchField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.tertiary)
+                        .widenedHitTarget()
                 }
                 .buttonStyle(.plain)
                 .help("Clear")

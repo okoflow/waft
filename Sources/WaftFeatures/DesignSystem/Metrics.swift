@@ -27,6 +27,7 @@ enum Metrics {
     static let largeControlPadding: CGFloat = 16
     static let fieldPadding: CGFloat = 8
     static let focusRingWidth: CGFloat = 3
+    static let hitTargetOutset: CGFloat = 4
     static let metricPadding: CGFloat = 14
     static let tileSize: CGFloat = 24
     static let rowTileSize: CGFloat = 28

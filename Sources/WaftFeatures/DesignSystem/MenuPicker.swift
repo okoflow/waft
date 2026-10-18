@@ -33,7 +33,7 @@ struct MenuPicker<Value: Hashable, Options: View>: View {
                     .frame(width: 18, height: 18)
                     .background(Palette.control, in: Circle())
             }
-            .contentShape(Rectangle())
+            .widenedHitTarget()
         }
         .menuStyle(.button)
         .buttonStyle(.plain)
