@@ -26,7 +26,7 @@ package struct TranscriptProcessor: Sendable {
             nil
 
         case .translate:
-            setup.translation.target(forSpoken: transcript.language) == transcript.language ? transcript.variant : nil
+            setup.writingVariants.variant(for: setup.translation.target(forSpoken: transcript.language))
 
         case .raw, .light, .clean, .formal:
             transcript.variant

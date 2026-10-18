@@ -18,6 +18,32 @@ struct TranscriptProcessorWritingSystemTests {
     }
 
     @Test(arguments: [
+        (Language.english, Language.chinese, WritingVariants(), "我們明天開會。", "我们明天开会。"),
+        (.english, .chinese, WritingVariants([.chinese: .traditional]), "我们明天开会。", "我們明天開會。"),
+        (.english, .serbian, WritingVariants(), "Видимо се сутра.", "Vidimo se sutra."),
+        (.english, .serbian, WritingVariants([.serbian: .cyrillic]), "Vidimo se sutra.", "Видимо се сутра."),
+        (.serbian, .serbian, WritingVariants([.serbian: .cyrillic]), "Vidimo se sutra.", "Видимо се сутра."),
+    ])
+    func `writes a translation in the script chosen for the target language`(
+        spoken: Language,
+        target: Language,
+        variants: WritingVariants,
+        answer: String,
+        expected: String,
+    ) async {
+        var settings = Settings(languages: .preferred(by: []))
+        settings.translation = Translation(target: target)
+        settings.writingVariants = variants
+
+        let setup = settings.rewriteSetup(for: .translate)
+        let reply = Result<String, RewriteError>.success(answer)
+        let variant = variants.variant(for: spoken)
+        let processed = await process("hello", mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
+
+        #expect(processed == ProcessedText(text: expected, mode: .translate))
+    }
+
+    @Test(arguments: [
         (Language.serbian, WritingVariant.latin, "Привет, как дела?"),
         (.serbian, .cyrillic, "See you tomorrow."),
         (.serbian, .cyrillic, "Novak Đoković played the match."),

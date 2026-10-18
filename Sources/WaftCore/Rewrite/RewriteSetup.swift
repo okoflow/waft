@@ -3,6 +3,8 @@ package struct RewriteSetup: Sendable {
     package let instructions: String
     package let translation: Translation
 
+    let writingVariants: WritingVariants
+
     private let cloudModels: PerProvider<CloudModel>
     private let localServer: LocalServer
 
@@ -35,12 +37,14 @@ package struct RewriteSetup: Sendable {
         instructions: String,
         cloudModels: PerProvider<CloudModel> = CloudModel.defaultChoices,
         translation: Translation = Translation(),
+        writingVariants: WritingVariants = WritingVariants(),
         localServer: LocalServer = LocalServer(),
     ) {
         self.provider = provider
         self.instructions = instructions
         self.cloudModels = cloudModels
         self.translation = translation
+        self.writingVariants = writingVariants
         self.localServer = localServer
     }
 }

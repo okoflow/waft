@@ -37,6 +37,7 @@ extension Settings {
             instructions: rewriteInstructions(for: mode),
             cloudModels: cloudModels,
             translation: translation,
+            writingVariants: writingVariants,
             localServer: localServer,
         )
     }
