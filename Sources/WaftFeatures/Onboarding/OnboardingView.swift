@@ -20,10 +20,8 @@ struct OnboardingView: View {
             OnboardingFooter(onboarding: model.onboarding)
         }
         .motion(Motion.page, value: model.onboarding.step)
-        .buttonStyle(PushButtonStyle())
         .frame(width: 640, height: 540)
-        .background(Palette.window)
-        .ignoresSafeArea()
+        .windowChrome()
     }
 
     @ViewBuilder

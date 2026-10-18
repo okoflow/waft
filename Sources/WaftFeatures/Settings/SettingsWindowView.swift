@@ -17,8 +17,6 @@ struct SettingsWindowView: View {
 
             SettingsPaneView(model: model, state: state)
         }
-        .buttonStyle(PushButtonStyle())
-        .background(Palette.window)
-        .ignoresSafeArea()
+        .windowChrome()
     }
 }

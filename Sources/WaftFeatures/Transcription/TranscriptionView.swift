@@ -54,9 +54,7 @@ struct TranscriptionView: View {
             maxHeight: .infinity,
             alignment: .top,
         )
-        .background(Palette.window)
-        .ignoresSafeArea()
-        .buttonStyle(PushButtonStyle())
+        .windowChrome()
         .motion(Motion.layout, value: model.phase)
         .dropDestination(for: URL.self) { urls, _ in
             guard let url = urls.first, model.acceptsFiles else { return false }
