@@ -36,6 +36,15 @@ struct SubtitleFormatterTests {
     }
 
     @Test
+    func `splits a line after an Arabic comma`() throws {
+        let text = "نلتقي عند المحطة القديمة ظهرا، ثم نمشي معا إلى النهر لنتناول الغداء"
+        let output = SubtitleFormatter.srt(TimedTranscript(language: .arabic, segments: [segment(0, 4, text)]))
+        let cue = try #require(cues(of: output).first)
+
+        #expect(cue.lines.first?.last == "،")
+    }
+
+    @Test
     func `prefers a split where both lines fit`() throws {
         let text = "We will meet at the old station, then walk to the river and have lunch by the bridge"
         let cue = try #require(cues(of: srt(segment(0, 5, text))).first)
