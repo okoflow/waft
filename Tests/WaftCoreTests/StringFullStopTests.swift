@@ -10,6 +10,8 @@ struct StringFullStopTests {
         ("", .english, ""),
         ("你好", .chinese, "你好。"),
         ("नमस्ते", .hindi, "नमस्ते।"),
+        ("سلام", .urdu, "سلام۔"),
+        ("مرحبا", .arabic, "مرحبا."),
         ("สวัสดี", .thai, "สวัสดี"),
     ])
     func `ends text that stops on a letter or digit with the full stop of its language`(

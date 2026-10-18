@@ -19,4 +19,9 @@ struct WritingVariantTests {
 
         #expect(WritingVariant.cyrillic.converting(text, keeping: ["Waft"]) == "Пусти GitHub, API и x264 на серверу Waft")
     }
+
+    @Test
+    func `keeps every word of a dictionary term in Latin letters`() {
+        #expect(WritingVariant.cyrillic.converting("Novi Sad je lep grad", keeping: ["Novi Sad"]) == "Novi Sad је леп град")
+    }
 }
