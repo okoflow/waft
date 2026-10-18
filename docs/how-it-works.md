@@ -123,9 +123,11 @@ Waft pastes through the clipboard rather than typing key by key:
    manager's. If the app doesn't read the text within 1.5 seconds, the text
    stays on the clipboard.
 
-Waft puts a space before the text unless the character before the cursor is a
-space, a line break, an opening bracket, a quote, or a slash, or the text on
-either side of the cursor is Chinese or Japanese.
+Waft trims the spaces at both ends of the text but keeps a line break that
+"new line" or "new paragraph" put there. It puts a space before the text
+unless the character before the cursor is a space, a line break, an opening
+bracket, a quote, or a slash, the text starts with a line break, or the text
+on either side of the cursor is Chinese or Japanese.
 
 ## The speech model
 

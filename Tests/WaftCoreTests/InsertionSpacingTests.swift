@@ -13,11 +13,16 @@ struct InsertionSpacingTests {
     }
 
     @Test(arguments: [(Character?.none, "hello"), ("a", " hello")])
-    func `trims the text`(previous: Character?, expected: String) {
-        #expect(InsertionSpacing.prepared("  hello \n", after: previous) == expected)
+    func `trims the spaces around the text`(previous: Character?, expected: String) {
+        #expect(InsertionSpacing.prepared(" \thello  ", after: previous) == expected)
     }
 
-    @Test(arguments: ["", "   ", "\n"])
+    @Test(arguments: [("Dear John.\n\n", " Dear John.\n\n"), ("\nHello", "\nHello"), ("\n", "\n")])
+    func `keeps the line breaks that voice commands add at either end`(text: String, expected: String) {
+        #expect(InsertionSpacing.prepared(text, after: "a") == expected)
+    }
+
+    @Test(arguments: ["", "   "])
     func `inserts nothing for blank text`(text: String) {
         #expect(InsertionSpacing.prepared(text, after: "a").isEmpty)
     }
