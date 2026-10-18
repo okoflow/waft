@@ -61,9 +61,9 @@ The tables list the folders whose names don't say enough.
 
 | Folder | What lives there |
 | --- | --- |
-| `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which gives Waft a Dock icon while Sparkle shows an update |
+| `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, and file transcription, and gives Waft a Dock icon while one of them is open or Sparkle shows an update |
 | `Models` | The observable state that several features share, including `PermissionMonitor`; a model that one screen uses lives with that screen |
-| `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) |
+| `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
 | `Support` | Logging, timers, and display helpers that several features share |
