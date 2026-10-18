@@ -28,14 +28,14 @@ package struct ProAccess: Equatable, Sendable {
         }
     }
 
-    package static func trialEnd(startedOn start: Date, calendar: Calendar = .current) -> Date {
-        let firstDay = calendar.startOfDay(for: start)
+    package static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
+        let firstDay = calendar.startOfDay(for: min(start, now))
         guard let end = calendar.date(byAdding: .day, value: trialLength, to: firstDay) else { return firstDay }
 
         return end
     }
 
     static func trialStatus(startedOn start: Date, now: Date, calendar: Calendar) -> Status {
-        now < trialEnd(startedOn: min(start, now), calendar: calendar) ? .trial : .expired
+        now < trialEnd(startedOn: start, now: now, calendar: calendar) ? .trial : .expired
     }
 }

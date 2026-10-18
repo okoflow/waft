@@ -31,7 +31,7 @@ final class ProModel {
     private let trialStarted: Date
 
     var trialEnds: Date {
-        ProAccess.trialEnd(startedOn: min(trialStarted, Date()))
+        ProAccess.trialEnd(startedOn: trialStarted, now: Date())
     }
 
     var access: ProAccess {
