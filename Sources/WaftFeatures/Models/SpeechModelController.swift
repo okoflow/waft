@@ -9,6 +9,7 @@ final class SpeechModelController {
 
     @ObservationIgnored var onReady: (() -> Void)?
 
+    @ObservationIgnored private var effectsTask: Task<Void, Never>?
     @ObservationIgnored private var downloadTask: Task<Void, Never>?
 
     private let transcriber: any Transcriber
@@ -73,7 +74,11 @@ final class SpeechModelController {
         let effects = state.handle(event)
         guard !effects.isEmpty else { return }
 
-        Task {
+        let previous = effectsTask
+
+        effectsTask = Task {
+            await previous?.value
+
             for effect in effects {
                 await perform(effect)
             }
@@ -84,7 +89,7 @@ final class SpeechModelController {
         switch effect {
         case .cancelDownload: await cancelDownload()
         case let .deleteModel(model): await deleteModel(model)
-        case let .download(model): await download(model)
+        case let .download(model): download(model)
         case let .load(model): await load(model)
         }
     }
@@ -107,11 +112,8 @@ final class SpeechModelController {
         }
     }
 
-    private func download(_ model: SpeechModel) async {
-        let task = Task { await fetch(model) }
-        downloadTask = task
-
-        await task.value
+    private func download(_ model: SpeechModel) {
+        downloadTask = Task { await fetch(model) }
     }
 
     private func fetch(_ model: SpeechModel) async {
