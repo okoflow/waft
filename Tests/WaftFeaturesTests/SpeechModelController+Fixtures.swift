@@ -9,6 +9,7 @@ extension SpeechModelController {
             pro: .unlicensed(),
             urlOpener: FakeURLOpener(),
         )
+
         speechModelController.start()
 
         await Poll.until(timeout: .seconds(5)) { speechModelController.state.isReady }

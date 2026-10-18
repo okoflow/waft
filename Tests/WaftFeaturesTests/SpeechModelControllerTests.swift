@@ -31,6 +31,7 @@ struct SpeechModelControllerTests {
             var iterator = releases.makeAsyncIterator()
             _ = await iterator.next()
         }
+
         let settings = SettingsModel.inMemory()
         let controller = SpeechModelController(
             transcriber: transcriber,
@@ -38,9 +39,11 @@ struct SpeechModelControllerTests {
             pro: .unlicensed(),
             urlOpener: FakeURLOpener(),
         )
+
         controller.start()
 
         var iterator = queries.makeAsyncIterator()
+
         #expect(await iterator.next() == .fast)
 
         settings.settings.speechModel = .accurate

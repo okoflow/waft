@@ -75,6 +75,7 @@ struct SettingsTests {
         {"languages":{"languages":["ru","de"],"pinned":"de"},"localServer":{"model":"qwen"},"historyRetention":"never",
          "translation":{"target":"fr"},"editKey":122,"mode":"translate"}
         """#
+
         let settings = try decode(json)
 
         #expect(settings.languages.languages == [.german, .russian])
@@ -131,6 +132,7 @@ struct SettingsTests {
     @Test
     func `decodes the stored custom modes and keeps the modes that point to them`() throws {
         let id = Self.emailReply.id.uuidString
+
         let settings = try decode(#"""
         {"customModes":[{"id":"\#(id)","name":"Email reply","instructions":"Reply as a short email."},{"name":"Broken"}],
          "mode":"custom:\#(id)","appModes":{"modes":{"com.apple.mail":"custom:\#(id)"}}}
@@ -144,6 +146,7 @@ struct SettingsTests {
     @Test
     func `drops modes that point to a missing custom mode`() throws {
         let missing = "custom:\(UUID().uuidString)"
+
         let settings = try decode(#"{"mode":"\#(missing)","appModes":{"modes":{"com.apple.mail":"\#(missing)","x":"raw"}}}"#)
 
         #expect(settings.mode == .light)

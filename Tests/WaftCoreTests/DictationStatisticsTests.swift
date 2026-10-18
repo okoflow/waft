@@ -7,6 +7,7 @@ struct DictationStatisticsTests {
     func `records a dictation on its date in the calendar's time zone`() throws {
         var tokyo = Calendar.gmt
         tokyo.timeZone = try #require(TimeZone(identifier: "Asia/Tokyo"))
+
         var statistics = DictationStatistics()
         try statistics.record(words: 1, seconds: 1, on: date(2026, 10, 12, hour: 23), calendar: tokyo)
 
@@ -18,6 +19,7 @@ struct DictationStatisticsTests {
         var statistics = DictationStatistics()
         try statistics.record(words: 10, seconds: 4, on: date(2026, 10, 12, hour: 9), calendar: .gmt)
         try statistics.record(words: 5, seconds: 2.5, on: date(2026, 10, 12, hour: 18), calendar: .gmt)
+
         let day = try #require(statistics.days["2026-10-12"])
 
         #expect(day.words == 15)
@@ -30,6 +32,7 @@ struct DictationStatisticsTests {
         var statistics = DictationStatistics()
         try statistics.record(words: 7, seconds: 3, on: date(2026, 10, 10, hour: 12), calendar: .gmt)
         try statistics.record(words: 2, seconds: 1, on: date(2026, 10, 12, hour: 8), calendar: .gmt)
+
         let daily = try statistics.daily(last: 3, endingOn: date(2026, 10, 12, hour: 20), calendar: .gmt)
         let dates = try [date(2026, 10, 10), date(2026, 10, 11), date(2026, 10, 12)]
 
@@ -44,6 +47,7 @@ struct DictationStatisticsTests {
         try statistics.record(words: 100, seconds: 60, on: date(2026, 9, 1), calendar: .gmt)
         try statistics.record(words: 7, seconds: 3, on: date(2026, 10, 10), calendar: .gmt)
         try statistics.record(words: 4, seconds: 2, on: date(2026, 10, 12), calendar: .gmt)
+
         let total = try statistics.total(last: days, endingOn: date(2026, 10, 12, hour: 23), calendar: .gmt)
 
         #expect(total.words == words)
@@ -93,7 +97,9 @@ struct DictationStatisticsTests {
     @Test
     func `decodes the stored format`() throws {
         let json = #"{"days":{"2026-10-12":{"words":15,"dictations":2,"seconds":6.5}}}"#
+
         let statistics = try JSONDecoder().decode(DictationStatistics.self, from: Data(json.utf8))
+
         let day = try #require(statistics.days["2026-10-12"])
 
         #expect(day.words == 15)

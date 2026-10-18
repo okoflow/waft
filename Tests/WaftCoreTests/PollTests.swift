@@ -31,6 +31,7 @@ struct PollTests {
         let clock = ContinuousClock()
         let start = clock.now
         let task = Task { await Poll.until(timeout: .seconds(10)) { false } }
+
         task.cancel()
 
         #expect(await !task.value)

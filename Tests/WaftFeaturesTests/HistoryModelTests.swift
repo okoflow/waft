@@ -62,6 +62,7 @@ struct HistoryModelTests {
         let history = model(entries: 120)
         history.showNextPage()
         history.searchText = "  entry 11\n"
+
         let page = history.currentPage
 
         #expect(page.total == 11)

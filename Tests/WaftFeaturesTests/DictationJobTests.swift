@@ -12,6 +12,7 @@ struct DictationJobTests {
         settings.customModes = [.emailReply]
         settings.instructions.set("Write like a lawyer.", for: .formal)
         settings.appModes.set(mode, for: "com.example.mail")
+
         let job = DictationJob(
             samples: [],
             recording: ActiveRecording(id: RecordingID.none.next, purpose: .dictation, key: .function),

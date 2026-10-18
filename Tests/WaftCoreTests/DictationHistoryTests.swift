@@ -35,6 +35,7 @@ struct DictationHistoryTests {
         history.add(entry("Three weeks ago.", minutesAgo: 60 * 24 * 21))
         history.add(entry("Three days ago.", minutesAgo: 60 * 24 * 3))
         history.add(entry("Today.", minutesAgo: 5))
+
         history.prune(keeping: retention, limit: 100, now: .fixed)
 
         #expect(history.entries.map(\.text) == kept)
@@ -57,6 +58,7 @@ struct DictationHistoryTests {
     func `clears every entry`() {
         var history = DictationHistory()
         history.add(entry("Hello.", minutesAgo: 1))
+
         history.removeAll()
 
         #expect(history.entries.isEmpty)
@@ -77,6 +79,7 @@ struct DictationHistoryTests {
         var history = DictationHistory()
         history.add(DictationHistory.Entry(date: .fixed, text: "Hello.", mode: .clean, app: "com.apple.mail"))
         history.add(DictationHistory.Entry(date: .fixed, text: "Bye.", mode: .raw, app: nil))
+
         let data = try JSONEncoder().encode(history)
 
         #expect(try JSONDecoder().decode(DictationHistory.self, from: data) == history)

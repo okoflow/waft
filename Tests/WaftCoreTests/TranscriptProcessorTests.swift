@@ -38,6 +38,7 @@ struct TranscriptProcessorTests {
             terms: [Vocabulary.Term(term: "Kubernetes", spoken: ["cube or netties", "kubernetis"])],
             snippets: [],
         )
+
         let processed = await process(
             "we use cube or netties",
             mode: .clean,
@@ -123,6 +124,7 @@ struct TranscriptProcessorTests {
             instructions: "Clean.",
             cloudModels: PerProvider(claude: .fastest, openAI: model),
         )
+
         let processed = await process("hello", mode: .clean, setup: setup, log: log)
         _ = try await edit("Text.", following: "shorter", answer: .success("Short."), setup: setup, log: log)
         let requests = await log.requests
@@ -159,6 +161,7 @@ struct TranscriptProcessorTests {
             answer: .success("Bis morgen."),
             log: log,
         )
+
         let request = try #require(await log.requests.first)
 
         #expect(processed == ProcessedText(text: "Bis morgen.", mode: .translate))
@@ -198,6 +201,7 @@ struct TranscriptProcessorTests {
             answer: .success("<text>\nShort.\n</text>"),
             log: log,
         )
+
         let request = try #require(await log.requests.first)
 
         #expect(edited == "Short.")

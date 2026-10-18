@@ -28,6 +28,7 @@ struct SpeechModelStateTests {
             .downloaded(.accurate),
             .loaded(.accurate),
         ]
+
         let effects = events.map { state.handle($0) }
 
         #expect(effects == [[.download(.accurate)], [], [.load(.accurate)], [.deleteModel(.fast)]])

@@ -27,6 +27,7 @@ struct SubtitleFormatterTests {
     @Test
     func `splits a long cue into two balanced lines`() throws {
         let text = "Meet me at the station at noon, and bring the tickets for both of us"
+
         let cue = try #require(cues(of: srt(segment(0, 4, text))).first)
 
         #expect(cue.lines.count == 2)
@@ -38,7 +39,9 @@ struct SubtitleFormatterTests {
     @Test
     func `splits a line after an Arabic comma`() throws {
         let text = "نلتقي عند المحطة القديمة ظهرا، ثم نمشي معا إلى النهر لنتناول الغداء"
+
         let output = SubtitleFormatter.srt(TimedTranscript(language: .arabic, segments: [segment(0, 4, text)]))
+
         let cue = try #require(cues(of: output).first)
 
         #expect(cue.lines.first?.last == "،")
@@ -47,6 +50,7 @@ struct SubtitleFormatterTests {
     @Test
     func `prefers a split where both lines fit`() throws {
         let text = "We will meet at the old station, then walk to the river and have lunch by the bridge"
+
         let cue = try #require(cues(of: srt(segment(0, 5, text))).first)
 
         #expect(cue.lines == ["We will meet at the old station, then walk", "to the river and have lunch by the bridge"])
@@ -56,6 +60,7 @@ struct SubtitleFormatterTests {
     func `splits a long segment into cues with rising times`() {
         let text = Array(repeating: "Every word here is short, and the sentence keeps going on and on.", count: 4)
             .joined(separator: " ")
+
         let cues = cues(of: srt(segment(10, 30, text)))
 
         #expect(cues.count > 1)
@@ -79,7 +84,9 @@ struct SubtitleFormatterTests {
     @Test
     func `breaks compact scripts into short lines without spaces`() throws {
         let text = "今日はとても良い天気ですね、散歩に行きましょう"
+
         let output = SubtitleFormatter.srt(TimedTranscript(language: .japanese, segments: [segment(0, 3, text)]))
+
         let cue = try #require(cues(of: output).first)
 
         #expect(cue.lines.count == 2)
@@ -127,6 +134,7 @@ private struct SubtitleCue {
 
     init?(_ block: String) {
         let rows = block.split(separator: "\n").map(String.init)
+
         let times = rows.dropFirst().first?.components(separatedBy: " --> ").compactMap(Self.seconds)
         guard rows.count >= 3, let index = Int(rows[0]), let times, times.count == 2 else { return nil }
 

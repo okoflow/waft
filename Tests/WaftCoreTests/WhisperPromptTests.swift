@@ -36,6 +36,7 @@ struct WhisperPromptTests {
     @Test
     func `stops the glossary at the length limit`() throws {
         let term = String(repeating: "a", count: 60)
+
         let text = try #require(WhisperPrompt.text(for: .japanese, variant: nil, vocabulary: [term, term, term, term, "short"]))
 
         #expect(text == [term, term, term].joined(separator: ", ") + ".")

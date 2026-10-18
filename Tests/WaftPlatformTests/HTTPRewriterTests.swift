@@ -63,6 +63,7 @@ struct HTTPRewriterTests {
         await #expect(throws: RewriteError.missingKey) {
             try await rewriter.rewrite(.cleanup("hello"))
         }
+
         #expect(transport.requests.isEmpty)
     }
 }
