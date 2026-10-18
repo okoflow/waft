@@ -181,8 +181,8 @@
 "Name" = "이름";
 "Names and words that come out wrong." = "잘못 인식되는 이름과 단어를 등록합니다.";
 "New Mode" = "새 모드";
-"Next Page" = "다음 페이지";
 "Next mode: %@" = "다음 모드: %@";
+"Next page" = "다음 페이지";
 "No apps yet" = "아직 앱이 없습니다";
 "No audio was captured." = "녹음된 오디오가 없습니다.";
 "No dictations in the last 7 days" = "최근 7일 동안 받아쓰기가 없습니다";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Option, Command, Shift, Control 키(좌우 모두 가능), Fn 키 또는 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
 "Press a key…" = "키를 누르세요…";
 "Press the key to use, or Esc to cancel" = "사용할 키를 누르거나 Esc를 눌러 취소하세요";
-"Previous Page" = "이전 페이지";
+"Previous page" = "이전 페이지";
 "Provider" = "제공업체";
 "Quit Waft" = "Waft 종료";
 "Raw" = "원문";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft가 저장된 기록을 읽지 못해 사본을 보관했습니다. ‘기록 지우기’를 누르면 둘 다 삭제됩니다.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft가 키체인에서 키를 삭제합니다. 키를 추가할 때까지 AI 모드는 ‘가벼운 정리’ 모드로 처리됩니다.";
 "Waft is listening" = "Waft가 듣는 중";
+"Waft keeps no dictations while Keep history is off." = "‘기록 보관’이 꺼져 있는 동안에는 Waft가 받아쓰기를 보관하지 않습니다.";
 "Waft listens for these languages." = "Waft는 다음 언어를 인식합니다.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft는 받아쓰는 동안에만 들으며, 오디오는 Mac 밖으로 나가지 않습니다.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft는 메뉴 막대에 있습니다. %@ 키를 누르면 다음 모드로 전환됩니다.";

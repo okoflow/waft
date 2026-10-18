@@ -181,8 +181,8 @@
 "Name" = "Nazwa";
 "Names and words that come out wrong." = "Nazwy i słowa, które są źle rozpoznawane.";
 "New Mode" = "Nowy tryb";
-"Next Page" = "Następna strona";
 "Next mode: %@" = "Następny tryb: %@";
+"Next page" = "Następna strona";
 "No apps yet" = "Nie ma jeszcze aplikacji";
 "No audio was captured." = "Nie nagrano żadnego dźwięku.";
 "No dictations in the last 7 days" = "Brak dyktowań w ciągu ostatnich 7 dni";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Naciśnij Option, Command, Shift lub Control po dowolnej stronie, Fn albo klawisz funkcyjny. Esc anuluje.";
 "Press a key…" = "Naciśnij klawisz…";
 "Press the key to use, or Esc to cancel" = "Naciśnij wybrany klawisz lub Esc, aby anulować";
-"Previous Page" = "Poprzednia strona";
+"Previous page" = "Poprzednia strona";
 "Provider" = "Dostawca";
 "Quit Waft" = "Zakończ Waft";
 "Raw" = "Dosłowny";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft nie mógł odczytać zapisanej historii i zachował jej kopię. Wymaż historię usuwa obie.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft usunie go z pęku kluczy. Dopóki nie dodasz klucza, tryby AI będą używać trybu „Lekki”.";
 "Waft is listening" = "Waft słucha";
+"Waft keeps no dictations while Keep history is off." = "Waft nie zachowuje dyktowań, gdy opcja „Zachowuj historię” jest wyłączona.";
 "Waft listens for these languages." = "Waft rozpoznaje te języki.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft słucha tylko wtedy, gdy dyktujesz, a dźwięk zostaje na Twoim Macu.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft znajdziesz na pasku menu. %@ przełącza na następny tryb.";

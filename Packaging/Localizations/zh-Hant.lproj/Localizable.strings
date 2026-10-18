@@ -181,8 +181,8 @@
 "Name" = "名稱";
 "Names and words that come out wrong." = "常被辨識錯誤的名稱和字詞。";
 "New Mode" = "新模式";
-"Next Page" = "下一頁";
 "Next mode: %@" = "下一個模式：%@";
+"Next page" = "下一頁";
 "No apps yet" = "尚無App";
 "No audio was captured." = "未錄到任何音訊。";
 "No dictations in the last 7 days" = "過去7天沒有聽寫";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "請按下任一側的Option、Command、Shift或Control鍵、Fn鍵或功能鍵。按Esc鍵可取消。";
 "Press a key…" = "請按下按鍵⋯";
 "Press the key to use, or Esc to cancel" = "按下要使用的按鍵，或按Esc鍵取消";
-"Previous Page" = "上一頁";
+"Previous page" = "上一頁";
 "Provider" = "供應商";
 "Quit Waft" = "結束Waft";
 "Raw" = "逐字";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft無法讀取已儲存的記錄，已保留一份副本。「清除記錄」會同時刪除兩者。";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft會將其從鑰匙圈中刪除。在你加入密鑰之前，AI模式會使用「輕度」模式。";
 "Waft is listening" = "Waft正在聆聽";
+"Waft keeps no dictations while Keep history is off." = "「保留記錄」關閉時，Waft不會保留任何聽寫。";
 "Waft listens for these languages." = "Waft會辨識這些語言。";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft只會在你聽寫時聆聽，音訊也只會留在你的Mac上。";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft常駐在選單列中。按%@可切換到下一個模式。";

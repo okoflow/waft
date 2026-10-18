@@ -181,8 +181,8 @@
 "Name" = "Nombre";
 "Names and words that come out wrong." = "Nombres y palabras que se transcriben mal.";
 "New Mode" = "Nuevo modo";
-"Next Page" = "Siguiente página";
 "Next mode: %@" = "Siguiente modo: %@";
+"Next page" = "Siguiente página";
 "No apps yet" = "Aún no hay apps";
 "No audio was captured." = "No se grabó audio.";
 "No dictations in the last 7 days" = "No hay dictados en los últimos 7 días";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Presiona Opción, Comando, Mayúsculas o Control de cualquier lado, Fn o una tecla de función. Esc cancela.";
 "Press a key…" = "Presiona una tecla…";
 "Press the key to use, or Esc to cancel" = "Presiona la tecla que quieras usar o Esc para cancelar";
-"Previous Page" = "Página anterior";
+"Previous page" = "Página anterior";
 "Provider" = "Proveedor";
 "Quit Waft" = "Salir de Waft";
 "Raw" = "Literal";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft no pudo leer el historial guardado y conservó una copia. «Borrar historial» elimina ambos.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft la elimina del llavero. Los modos de IA usarán el modo “Ligero” hasta que agregues una clave.";
 "Waft is listening" = "Waft está escuchando";
+"Waft keeps no dictations while Keep history is off." = "Waft no guarda dictados mientras “Guardar historial” esté desactivado.";
 "Waft listens for these languages." = "Waft reconoce estos idiomas.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft solo escucha mientras dictas, y el audio no sale de tu Mac.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft está en la barra de menús. %@ cambia al siguiente modo.";

@@ -181,8 +181,8 @@
 "Name" = "Name";
 "Names and words that come out wrong." = "Names and words that come out wrong.";
 "New Mode" = "New Mode";
-"Next Page" = "Next Page";
 "Next mode: %@" = "Next mode: %@";
+"Next page" = "Next page";
 "No apps yet" = "No apps yet";
 "No audio was captured." = "No audio was captured.";
 "No dictations in the last 7 days" = "No dictations in the last 7 days";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels.";
 "Press a key…" = "Press a key…";
 "Press the key to use, or Esc to cancel" = "Press the key to use, or Esc to cancel";
-"Previous Page" = "Previous Page";
+"Previous page" = "Previous page";
 "Provider" = "Provider";
 "Quit Waft" = "Quit Waft";
 "Raw" = "Raw";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft deletes it from the Keychain. The AI modes use Light until you add a key.";
 "Waft is listening" = "Waft is listening";
+"Waft keeps no dictations while Keep history is off." = "Waft keeps no dictations while Keep history is off.";
 "Waft listens for these languages." = "Waft listens for these languages.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft listens only while you dictate, and the audio stays on your Mac.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft lives in the menu bar. %@ switches to the next mode.";

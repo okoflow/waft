@@ -181,8 +181,8 @@
 "Name" = "שם";
 "Names and words that come out wrong." = "שמות ומילים שמזוהים באופן שגוי.";
 "New Mode" = "מצב חדש";
-"Next Page" = "העמוד הבא";
 "Next mode: %@" = "מעבר למצב הבא: %@";
+"Next page" = "העמוד הבא";
 "No apps yet" = "אין עדיין יישומים";
 "No audio was captured." = "לא הוקלט שמע.";
 "No dictations in the last 7 days" = "אין הכתבות ב-7 הימים האחרונים";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "יש ללחוץ על Option, Command, Shift או Control מכל צד, על Fn או על מקש פונקציה. לביטול יש ללחוץ על Esc.";
 "Press a key…" = "יש ללחוץ על מקש…";
 "Press the key to use, or Esc to cancel" = "יש ללחוץ על המקש הרצוי, או על Esc לביטול";
-"Previous Page" = "העמוד הקודם";
+"Previous page" = "העמוד הקודם";
 "Provider" = "ספק";
 "Quit Waft" = "סיום Waft";
 "Raw" = "גולמי";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft ימחק אותו מצרור המפתחות. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
+"Waft keeps no dictations while Keep history is off." = "Waft לא שומר הכתבות כל עוד ״שמירת היסטוריה״ כבויה.";
 "Waft listens for these languages." = "אלה השפות ש-Waft מזהה.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "ההאזנה פעילה רק בזמן ההכתבה, והשמע נשאר ב-Mac שלך.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "ניתן למצוא את Waft בשורת התפריטים. הקיצור %@ מעביר למצב הבא.";

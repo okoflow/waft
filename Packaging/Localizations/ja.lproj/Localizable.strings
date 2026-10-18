@@ -181,8 +181,8 @@
 "Name" = "名前";
 "Names and words that come out wrong." = "正しく認識されない名前や単語を登録します。";
 "New Mode" = "新規モード";
-"Next Page" = "次のページ";
 "Next mode: %@" = "次のモード：%@";
+"Next page" = "次のページ";
 "No apps yet" = "アプリはまだありません";
 "No audio was captured." = "音声が録音されませんでした。";
 "No dictations in the last 7 days" = "過去7日間の音声入力はありません";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Option、Command、Shift、Control（左右どちらでも可）、Fnキー、またはファンクションキーを押してください。Escでキャンセルします。";
 "Press a key…" = "キーを押してください…";
 "Press the key to use, or Esc to cancel" = "使用するキーを押すか、Escでキャンセルします";
-"Previous Page" = "前のページ";
+"Previous page" = "前のページ";
 "Provider" = "プロバイダ";
 "Quit Waft" = "Waftを終了";
 "Raw" = "そのまま";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waftは保存済みの履歴を読み込めなかったため、そのコピーを残しました。「履歴を消去」で両方を削除します。";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waftはキーチェーンからキーを削除します。キーを追加するまで、AIモードでは「簡易」モードが使われます。";
 "Waft is listening" = "Waftが聞き取り中";
+"Waft keeps no dictations while Keep history is off." = "「履歴を保存」がオフのあいだ、Waftは音声入力を保存しません。";
 "Waft listens for these languages." = "Waftはこれらの言語を聞き取ります。";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waftは音声入力の間だけ聞き取ります。音声がお使いのMacの外に出ることはありません。";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waftはメニューバーに常駐します。%@で次のモードに切り替わります。";

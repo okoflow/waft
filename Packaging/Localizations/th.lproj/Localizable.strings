@@ -181,8 +181,8 @@
 "Name" = "ชื่อ";
 "Names and words that come out wrong." = "ชื่อและคำที่มักออกมาผิด";
 "New Mode" = "โหมดใหม่";
-"Next Page" = "หน้าถัดไป";
 "Next mode: %@" = "โหมดถัดไป: %@";
+"Next page" = "หน้าถัดไป";
 "No apps yet" = "ยังไม่มีแอป";
 "No audio was captured." = "ไม่ได้บันทึกเสียงใดๆ";
 "No dictations in the last 7 days" = "ไม่มีการป้อนตามคำบอกใน 7 วันที่ผ่านมา";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
 "Press a key…" = "กดปุ่ม…";
 "Press the key to use, or Esc to cancel" = "กดปุ่มที่จะใช้ หรือกด Esc เพื่อยกเลิก";
-"Previous Page" = "หน้าก่อนนี้";
+"Previous page" = "หน้าก่อนนี้";
 "Provider" = "ผู้ให้บริการ";
 "Quit Waft" = "ออกจาก Waft";
 "Raw" = "ต้นฉบับ";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจากพวงกุญแจ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
 "Waft is listening" = "Waft กำลังฟัง";
+"Waft keeps no dictations while Keep history is off." = "Waft จะไม่เก็บการป้อนตามคำบอกไว้ขณะที่ “เก็บประวัติ” ปิดอยู่";
 "Waft listens for these languages." = "Waft จะฟังภาษาเหล่านี้";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft จะฟังเฉพาะขณะที่คุณป้อนตามคำบอก และเสียงจะอยู่บน Mac ของคุณเท่านั้น";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft อยู่ในแถบเมนู กด %@ เพื่อสลับไปยังโหมดถัดไป";

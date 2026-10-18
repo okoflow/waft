@@ -9,9 +9,12 @@ struct HistorySettingsPane: View {
 
     private var emptyText: LocalizedStringKey {
         guard history.searchText.isEmpty else { return "No matches" }
-        guard history.hasUnreadableHistory else { return "No dictations yet" }
+        guard !history.hasUnreadableHistory else {
+            return "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both."
+        }
+        guard settings.settings.keepsHistory else { return "Waft keeps no dictations while Keep history is off." }
 
-        return "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both."
+        return "No dictations yet"
     }
 
     var body: some View {
@@ -155,15 +158,15 @@ private struct PagerRow: View {
                 Image(systemName: "chevron.backward")
             }
             .disabled(!page.hasPrevious)
-            .help("Previous Page")
-            .accessibilityLabel("Previous Page")
+            .help("Previous page")
+            .accessibilityLabel("Previous page")
 
             Button(action: next) {
                 Image(systemName: "chevron.forward")
             }
             .disabled(!page.hasNext)
-            .help("Next Page")
-            .accessibilityLabel("Next Page")
+            .help("Next page")
+            .accessibilityLabel("Next page")
         }
         .settingsRowPadding()
     }

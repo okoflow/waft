@@ -181,8 +181,8 @@
 "Name" = "Namn";
 "Names and words that come out wrong." = "Namn och ord som blir fel.";
 "New Mode" = "Nytt läge";
-"Next Page" = "Nästa sida";
 "Next mode: %@" = "Nästa läge: %@";
+"Next page" = "Nästa sida";
 "No apps yet" = "Inga appar än";
 "No audio was captured." = "Inget ljud spelades in.";
 "No dictations in the last 7 days" = "Inga dikteringar de senaste 7 dagarna";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Tryck på alternativ-, kommando-, skift- eller kontrolltangenten (vänster eller höger), Fn eller en funktionstangent. Esc avbryter.";
 "Press a key…" = "Tryck på en tangent…";
 "Press the key to use, or Esc to cancel" = "Tryck på önskad tangent eller på Esc för att avbryta";
-"Previous Page" = "Föregående sida";
+"Previous page" = "Föregående sida";
 "Provider" = "Leverantör";
 "Quit Waft" = "Avsluta Waft";
 "Raw" = "Ordagrant";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunde inte läsa den sparade historiken och har behållit en kopia av den. Rensa historik raderar båda.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft raderar den från nyckelringen. AI-lägena använder ”Lätt” tills du lägger till en nyckel.";
 "Waft is listening" = "Waft lyssnar";
+"Waft keeps no dictations while Keep history is off." = "Waft sparar inga dikteringar medan ”Spara historik” är avstängt.";
 "Waft listens for these languages." = "Waft lyssnar efter de här språken.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft lyssnar bara medan du dikterar, och ljudet stannar på din Mac.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft finns i menyraden. %@ växlar till nästa läge.";

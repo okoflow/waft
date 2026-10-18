@@ -181,8 +181,8 @@
 "Name" = "Naam";
 "Names and words that come out wrong." = "Namen en woorden die verkeerd worden herkend.";
 "New Mode" = "Nieuwe modus";
-"Next Page" = "Volgende pagina";
 "Next mode: %@" = "Volgende modus: %@";
+"Next page" = "Volgende pagina";
 "No apps yet" = "Nog geen apps";
 "No audio was captured." = "Er is geen audio opgenomen.";
 "No dictations in the last 7 days" = "Geen dictaten in de afgelopen 7 dagen";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Druk op Option, Command, Shift of Control (links of rechts), Fn of een functietoets. Esc annuleert.";
 "Press a key…" = "Druk op een toets…";
 "Press the key to use, or Esc to cancel" = "Druk op de gewenste toets of op Esc om te annuleren";
-"Previous Page" = "Vorige pagina";
+"Previous page" = "Vorige pagina";
 "Provider" = "Aanbieder";
 "Quit Waft" = "Stop Waft";
 "Raw" = "Letterlijk";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kon de bewaarde geschiedenis niet lezen en heeft er een kopie van bewaard. Wis geschiedenis verwijdert beide.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft verwijdert hem uit de sleutelhanger. De AI-modi gebruiken ‘Licht’ totdat je een sleutel toevoegt.";
 "Waft is listening" = "Waft luistert";
+"Waft keeps no dictations while Keep history is off." = "Waft bewaart geen dictaten zolang ‘Bewaar geschiedenis’ uit staat.";
 "Waft listens for these languages." = "Waft herkent deze talen.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft luistert alleen terwijl je dicteert, en de audio blijft op je Mac.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft staat in de menubalk. %@ schakelt naar de volgende modus.";

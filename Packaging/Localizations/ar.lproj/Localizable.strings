@@ -181,8 +181,8 @@
 "Name" = "الاسم";
 "Names and words that come out wrong." = "أسماء وكلمات تُكتب بشكل خاطئ.";
 "New Mode" = "نمط جديد";
-"Next Page" = "الصفحة التالية";
 "Next mode: %@" = "النمط التالي: %@";
+"Next page" = "الصفحة التالية";
 "No apps yet" = "لا توجد تطبيقات بعد";
 "No audio was captured." = "لم يُسجَّل أي صوت.";
 "No dictations in the last 7 days" = "لا توجد عمليات إملاء في آخر ٧ أيام";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "اضغط على option أو command أو shift أو control من أي جانب، أو على fn أو أحد مفاتيح الوظائف. للإلغاء، اضغط على esc.";
 "Press a key…" = "اضغط على مفتاح…";
 "Press the key to use, or Esc to cancel" = "اضغط على المفتاح المراد استخدامه، أو على esc للإلغاء";
-"Previous Page" = "الصفحة السابقة";
+"Previous page" = "الصفحة السابقة";
 "Provider" = "المزود";
 "Quit Waft" = "إنهاء Waft";
 "Raw" = "حرفي";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "تعذّرت على Waft قراءة السجل المحفوظ، فاحتفظ بنسخة منه. يحذف «مسح سجل التاريخ» الاثنين معًا.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "سيحذفه Waft من سلسلة المفاتيح. ستستخدم أنماط الذكاء الاصطناعي النمط \"خفيف\" إلى أن تضيف مفتاحًا.";
 "Waft is listening" = "يستمع Waft";
+"Waft keeps no dictations while Keep history is off." = "لا يحتفظ Waft بأي عمليات إملاء ما دام \"الاحتفاظ بسجل التاريخ\" متوقفًا.";
 "Waft listens for these languages." = "يتعرف Waft على هذه اللغات.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "لا يستمع Waft إلا أثناء الإملاء، ويبقى الصوت على الـ Mac الخاص بك.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "يوجد Waft في شريط القوائم. اضغط على %@ للانتقال إلى النمط التالي.";

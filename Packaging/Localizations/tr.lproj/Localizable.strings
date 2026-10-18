@@ -181,8 +181,8 @@
 "Name" = "Ad";
 "Names and words that come out wrong." = "Yanlış tanınan adlar ve sözcükler.";
 "New Mode" = "Yeni Mod";
-"Next Page" = "Sonraki Sayfa";
 "Next mode: %@" = "Sonraki mod: %@";
+"Next page" = "Sonraki sayfa";
 "No apps yet" = "Henüz uygulama yok";
 "No audio was captured." = "Ses kaydedilmedi.";
 "No dictations in the last 7 days" = "Son 7 günde dikte yok";
@@ -217,7 +217,7 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Sağ veya sol Option, Komut, Shift ya da Kontrol tuşuna, Fn tuşuna veya bir işlev tuşuna basın. Esc ile vazgeçebilirsiniz.";
 "Press a key…" = "Bir tuşa basın…";
 "Press the key to use, or Esc to cancel" = "Kullanılacak tuşa ya da vazgeçmek için Esc tuşuna basın";
-"Previous Page" = "Önceki Sayfa";
+"Previous page" = "Önceki sayfa";
 "Provider" = "Sağlayıcı";
 "Quit Waft" = "Waft’tan Çık";
 "Raw" = "Ham";
@@ -366,6 +366,7 @@
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. Geçmişi Sil ikisini de siler.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft onu Anahtar Zinciri’nden siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";
+"Waft keeps no dictations while Keep history is off." = "“Geçmişi sakla” kapalıyken Waft dikte saklamaz.";
 "Waft listens for these languages." = "Waft bu dilleri tanır.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "Waft yalnızca siz dikte ederken dinler ve ses Mac’inizde kalır.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft menü çubuğunda bulunur. %@ ile sonraki moda geçersiniz.";
