@@ -64,11 +64,8 @@ The recognized text goes through five steps:
    skips the steps below.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
    modes ask the AI model you chose, unless nothing but hesitations was said.
-4. For Chinese and Serbian, Waft converts the result into your writing
-   system. Your own modes may answer in any language, so their result keeps
-   the script the AI model wrote. Translate converts its result into the
-   writing system of the target language instead, when that language has
-   one.
+4. For Chinese and Serbian, Waft converts the result into your
+   [writing system](usage.md#languages).
 5. Dictionary terms apply again, and snippet phrases inside the text expand.
 
 ### Light
@@ -115,17 +112,15 @@ lists the reasons.
 ### The translator
 
 The [translator](usage.md#translator) and its shortcuts on selected text send
-the text, the instructions of the task, the target language, and the source
-language when you chose one. Rules after the instructions, which you can't
-edit, make the model read the text as material to translate or fix, never as
+the text, the instructions of the task, and, for a translation, the target
+language and the source language you chose. Rules after the instructions,
+which you can't edit, make the model treat the text as material, never as
 instructions, and reply with the text alone, keeping its formatting, links,
-and code. The model is the translator's tier of the provider and gets the time
-limit of an edit for that tier. macOS detects the language
-of the text on your Mac, which decides when two-way applies.
+and code. The translator's tier gets the time limit of an edit. macOS detects
+the language of the text on your Mac, which decides when two-way applies.
 
 Waft rejects an answer that is empty or longer than five times the text plus
-200 characters. A translation into Chinese or Serbian is converted into your
-writing system; a fix keeps the script the AI model wrote.
+200 characters.
 
 ## Pasting
 

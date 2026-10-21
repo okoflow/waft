@@ -22,7 +22,7 @@ flowchart TD
 | --- | --- | --- |
 | `WaftCore` | Nonisolated | Domain types, text and recognition rules, state machines, and every interface between modules |
 | `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the model files, and the language-restricted tokenizer |
-| `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, the AI APIs, license signatures, updates, and the system |
+| `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, language detection, the AI APIs, license signatures, updates, and the system |
 | `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, file transcription, and the translator |
 | `Waft` | Main actor | The app, its delegate, and `AppDependencies.live()` |
 
@@ -34,13 +34,13 @@ The tables list the folders whose names don't say enough.
 
 | Folder | What lives there |
 | --- | --- |
-| `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up; `KeyCombination` and `ShortcutSettings`, the global shortcuts with their defaults |
+| `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up; `ShortcutAction`, `KeyCombination`, and `ShortcutSettings`, the global shortcuts and their defaults |
 | `Speech` | The `Transcriber` interface, `SpeechModelState` (its transitions return the effects a controller runs), `SpeechGate`, `WhisperPrompt`, and `SubtitleFormatter` |
 | `Language` | `Language` with its names, writing systems, and sound-alike languages, and the `WritingVariants` for Chinese and Serbian |
 | `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
 | `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; and `Settings+Translator`, which does the same for a `TextTask` |
 | `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
-| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, its model tier, and `TranslatorInstructions`, the edited instructions of each `TextTask` |
+| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, its model tier, and the edited instructions of each `TextTask` |
 | `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 
@@ -67,7 +67,7 @@ The tables list the folders whose names don't say enough.
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
-| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which handles the three shortcuts; `CopyableText`, the translation that copies itself on a click |
+| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
 
 **`Tests`** has a Swift Testing target for every module but `Waft`; see

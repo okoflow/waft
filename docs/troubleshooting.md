@@ -17,7 +17,7 @@ text is what the HUD shows.
 | Another key is set | The first line of the menu and **Dictation key** in Settings › Dictation show which one |
 | <kbd>🌐</kbd> opens emoji or dictation | Set **Press 🌐 key to** to **Do Nothing** in System Settings › Keyboard |
 | A function key acts as a media key | Turn on **Use F1, F2, etc. keys as standard function keys** in System Settings › Keyboard › Keyboard Shortcuts › Function Keys |
-| A shortcut does nothing | Another app holds it, and Settings › Writing or Settings › Translator says "Unavailable" under it; choose another one as [Shortcuts](usage.md#shortcuts) describes, or use the menu. A shortcut set to "None" is off |
+| A shortcut does nothing | It shows "None" and is off, or Settings says "Unavailable: another app uses this shortcut. Choose another one." under it; [Shortcuts](usage.md#shortcuts) says how to change it |
 | Permissions were lost after a rebuild | Run `make signing` once ([Development setup](../CONTRIBUTING.md#development-setup)), rebuild, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security, and allow them again. On macOS 27 and later, Accessibility there is called Device Control and Data Access |
 | The menu bar icon is missing | Turn on **Show in menu bar** in Settings › General, and on macOS 26 and later allow Waft in System Settings › Menu Bar. A crowded menu bar can hide the icon behind the notch |
 
@@ -29,9 +29,8 @@ text is what the HUD shows.
 | "Not pasted into a password field" | A password field, or an app that holds secure keyboard input so Waft can't see the field; **Copy Last Dictation** in the menu gets the text back |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
-| "Couldn't edit the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
+| "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
 | "Select the text to edit, then hold the key and say what to change." or "Select the text first, then press the shortcut." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
-| "Couldn't translate the text" or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
 | The text has no leading space | The app, such as an Electron app, a game, or a remote desktop, exposes little to Accessibility, so Waft can't see the text before the cursor |
 
 ## Recognition is poor or picks the wrong language

@@ -19,13 +19,13 @@ Waft connects to these services, and only for these reasons:
 | --- | --- | --- |
 | Hugging Face | Downloading the speech model you choose | Requests for the model files and the Whisper tokenizer |
 | GitHub | Checking for updates, unless you turn it off, and downloading them | A request for the update feed that names the Waft version |
-| The AI provider you chose: Claude, OpenAI, or your local server | Clean, Formal, Translate, your modes, **Try it**, edits by voice, and the translator | The recognized text, the mode's instructions, the spoken language, the target language when translating, the selected text for an edit, the text you translate or fix with the translator's instructions, and the Claude or OpenAI API key |
+| The AI provider you chose: Claude, OpenAI, or your local server | Clean, Formal, Translate, your modes, **Try it**, edits by voice, and the translator | The recognized text, the selected text for an edit, or the text you translate or fix; the instructions; the spoken, source, and target languages that apply; and the Claude or OpenAI API key |
 | Your local server | Settings › AI Models lists its models, and **Detect** looks for one on ports 11434, 1234, 8080, and 1337 of this Mac | Requests for its list of models, sent only to the address you set or those ports |
 
-Raw and Light never use the network, and the translator detects languages
-on your Mac. Waft asks OpenAI not to store the
-response (`store: false`). Anthropic's
-[privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's
+Raw and Light never use the network, and the translator detects languages on
+your Mac. Waft asks OpenAI not to store the response (`store: false`).
+Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and
+OpenAI's
 [API data controls](https://developers.openai.com/api/docs/guides/your-data)
 describe how each handles the text.
 
@@ -48,8 +48,8 @@ read one of them, it keeps an `*.unreadable.json` copy beside it, which
 says how to recover it.
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk.
-Edits by voice, and text that Waft kept out of a password field, stay out of
-the history and the statistics.
+Edits by voice, what the translator translates or fixes, and text that Waft
+kept out of a password field stay out of the history and the statistics.
 
 Waft marks the text it puts on the clipboard as transient and concealed, so
 clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org)
