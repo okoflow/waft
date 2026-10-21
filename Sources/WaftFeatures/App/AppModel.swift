@@ -14,7 +14,7 @@ package final class AppModel {
     let apiKeys: PerProvider<APIKeyModel>
     let localModels: LocalModelsModel
     let frontmostApp: FrontmostAppTracker
-    let keyRecorder: KeyRecorder
+    let keyRecorder = KeyRecorder()
     let shortcuts: GlobalShortcutController
     let shortcutRecorder: ShortcutRecorder
     let onboarding: OnboardingModel
@@ -23,8 +23,9 @@ package final class AppModel {
     let updates: UpdatesModel
     let interfaceLanguage: InterfaceLanguageModel
     let queue: DictationQueue
-    let modeTryout: ModeTryoutModel
+    let modeTryout: TryoutModel
     let translator: TranslatorModel
+    let translatorTryout: TryoutModel
     let translatorShortcuts: TranslatorShortcuts
 
     private let hud: HUDController
@@ -61,14 +62,13 @@ package final class AppModel {
         pro = Self.makePro(dependencies)
         speechModelController = Self.makeSpeechModelController(dependencies, settings: settings, pro: pro)
         hud = HUDController(copy: dependencies.clipboard.copy)
-        keyRecorder = KeyRecorder()
         shortcuts = GlobalShortcutController(shortcuts: dependencies.shortcuts, settings: settings)
         shortcutRecorder = ShortcutRecorder(settings: settings, shortcuts: shortcuts)
         statistics = StatisticsModel(store: dependencies.statisticsStore)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
         queue = Self.makeQueue(dependencies, history: history, statistics: statistics, hud: hud)
-        modeTryout = ModeTryoutModel(rewriters: dependencies.rewriters, settings: settings, pro: pro)
+        modeTryout = Self.makeModeTryout(dependencies, settings: settings, pro: pro)
         keyMonitor = KeyMonitorController(monitor: dependencies.keyEventMonitor)
         dictation = DictationController(
             keyEventMonitor: dependencies.keyEventMonitor,
@@ -87,6 +87,7 @@ package final class AppModel {
         localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
         frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
         translator = Self.makeTranslator(dependencies, settings: settings, pro: pro)
+        translatorTryout = Self.makeTranslatorTryout(dependencies, settings: settings, pro: pro)
         translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, shortcuts, settings: settings, pro: pro, hud: hud)
         onboarding = OnboardingModel(permissions: permissions)
         transcription = Self.makeTranscription(dependencies, controller: speechModelController, settings: settings, pro: pro)
@@ -240,6 +241,16 @@ extension AppModel {
             otherSounds: OtherSoundsLowering(outputVolume: dependencies.outputVolume),
             settings: settings,
             hud: hud,
+        )
+    }
+
+    private static func makeModeTryout(_ dependencies: AppDependencies, settings: SettingsModel, pro: ProModel) -> TryoutModel {
+        TryoutModel(
+            rewriters: dependencies.rewriters,
+            detector: dependencies.languageDetector,
+            settings: settings,
+            pro: pro,
+            defaultSample: String(localized: "um so I think we should uh meet on Friday"),
         )
     }
 

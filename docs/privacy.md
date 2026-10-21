@@ -19,7 +19,7 @@ Waft connects to these services, and only for these reasons:
 | --- | --- | --- |
 | Hugging Face | Downloading the speech model you choose | Requests for the model files and the Whisper tokenizer |
 | GitHub | Checking for updates, unless you turn it off, and downloading them | A request for the update feed that names the Waft version |
-| The AI provider you chose: Claude, OpenAI, or your local server | Clean, Formal, Translate, your modes, **Try it**, edits by voice, and the translator | The recognized text, the mode's instructions, the spoken language, the target language when translating, the selected text for an edit, the text you translate or fix, and the Claude or OpenAI API key |
+| The AI provider you chose: Claude, OpenAI, or your local server | Clean, Formal, Translate, your modes, **Try it**, edits by voice, and the translator | The recognized text, the mode's instructions, the spoken language, the target language when translating, the selected text for an edit, the text you translate or fix with the translator's instructions, and the Claude or OpenAI API key |
 | Your local server | Settings › AI Models lists its models, and **Detect** looks for one on ports 11434, 1234, 8080, and 1337 of this Mac | Requests for its list of models, sent only to the address you set or those ports |
 
 Raw and Light never use the network, and the translator detects languages

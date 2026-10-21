@@ -20,6 +20,7 @@
 "AI Models" = "מודלי בינה מלאכותית";
 "AI model" = "מודל בינה מלאכותית";
 "AI modes and editing by voice use this model." = "מצבי בינה מלאכותית ועריכה קולית משתמשים במודל זה.";
+"AI modes keep the model chosen in AI Models." = "מצבי בינה מלאכותית ממשיכים להשתמש במודל שנבחר ב״מודלי בינה מלאכותית״.";
 "AI modes need Waft+" = "מצבי בינה מלאכותית דורשים Waft+‎";
 "AI modes need a %@ API key." = "מצבי בינה מלאכותית דורשים מפתח API של %@.";
 "AI modes need a local server and model." = "מצבי בינה מלאכותית דורשים שרת מקומי ומודל.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "השלמת ההגדרה…";
 "Fix selected text" = "תיקון המלל שנבחר";
 "Fixing the text…" = "מתקן את המלל…";
+"Fixing" = "תיקון";
 "Fn" = "מקש Fn";
 "Follows your instructions." = "פועל לפי ההוראות שלך.";
 "Forever" = "לצמיתות";
@@ -179,7 +181,6 @@
 "Locked" = "נעול";
 "Lower other sounds while recording" = "הנמכת צלילים אחרים בזמן ההקלטה";
 "MP3, M4A, WAV, MP4, MOV, and more" = "קבצים מסוג MP3, M4A, WAV, MP4, MOV ועוד";
-"Make it clearer" = "הפיכת המלל לברור יותר";
 "Make modes with your own instructions, or tune the built-in ones." = "באפשרותך ליצור מצבים עם הוראות משלך או לכוונן את המצבים המובנים.";
 "Makes fewer mistakes and is still quick." = "טועה פחות ועדיין מהיר.";
 "Makes the fewest mistakes, but is slower and pricier." = "המדויק ביותר, אך איטי ויקר יותר.";
@@ -280,6 +281,7 @@
 "Right Option" = "מקש Option הימני";
 "Right Shift" = "מקש Shift הימני";
 "Run Again" = "הפעלה חוזרת";
+"Run it to see what Waft writes." = "יש להפעיל כדי לראות מה Waft כותב.";
 "Run the mode to see what it writes." = "יש להפעיל את המצב כדי לראות מה הוא כותב.";
 "Run" = "הפעלה";
 "Running" = "פועל";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "לא ניתן להשתמש במיקרופון שנבחר.";
 "The file has no sound to transcribe." = "אין בקובץ שמע לתמלול.";
 "The languages you chose in Settings › Dictation." = "השפות שנבחרו ב״הגדרות״ › ״הכתבה״.";
+"The local server's model, chosen in AI Models." = "המודל של השרת המקומי, שנבחר ב״מודלי בינה מלאכותית״.";
 "The microphone didn't start." = "המיקרופון לא הופעל.";
 "The microphone has no input channels." = "למיקרופון אין ערוצי קלט.";
 "The microphone stopped after an audio device changed." = "המיקרופון הפסיק לפעול לאחר החלפה של התקן שמע.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "פורמט השמע של המיקרופון השתנה במהלך ההקלטה.";
 "The microphone's audio format isn't supported." = "פורמט השמע של המיקרופון אינו נתמך.";
 "The quickest and cheapest." = "המהיר והזול ביותר.";
+"The shortcut that fixes selected text." = "הקיצור שמתקן את המלל שנבחר.";
 "The speech model %@ isn't downloaded." = "מודל זיהוי הדיבור %@ לא הורד.";
 "The speech model doesn't know one of the chosen languages." = "מודל זיהוי הדיבור לא מכיר את אחת השפות שנבחרו.";
 "The speech model has no tokenizer." = "למודל זיהוי הדיבור חסר רכיב ה-tokenizer.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "מודל זיהוי הדיבור לא נטען.";
 "The speech model isn't ready yet" = "מודל זיהוי הדיבור עדיין לא מוכן";
 "The text appears at the cursor." = "המלל מופיע במיקום הסמן.";
+"The translator and the shortcut that translates selected text." = "המתרגם והקיצור שמתרגם את המלל שנבחר.";
 "The translator is part of Waft+" = "המתרגם כלול ב-Waft+‎";
 "There's no speech in this file." = "אין דיבור בקובץ זה.";
 "These apps get their own mode." = "ליישומים אלה יש מצב משלהם.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "מתרגם ל%@…";
 "Translating…" = "מתרגם…";
 "Translation" = "תרגום";
-"Translations and fixes also untangle long sentences and put the points in order." = "התרגומים והתיקונים גם מפשטים משפטים ארוכים ומסדרים את הנקודות לפי הסדר.";
 "Translator (Waft+)…" = "מתרגם (Waft+‎)…";
 "Translator" = "מתרגם";
 "Translator…" = "מתרגם…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "מוריד את עוצמת השמע של ה-Mac לרבע בזמן הדיבור, ואחר כך מחזיר אותה.";
 "Two-way with" = "דו-כיווני עם";
 "Two-way" = "דו-כיווני";
+"Type something to try" = "יש להקליד משהו לניסיון";
 "Type, paste, or hold %@ and speak" = "יש להקליד, להדביק או להחזיק את %@ ולדבר";
 "Unavailable: another app uses this shortcut. Choose another one." = "לא זמין: יישום אחר משתמש בקיצור הזה. יש לבחור קיצור אחר.";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
@@ -430,17 +435,18 @@
 "Website" = "אתר אינטרנט";
 "Welcome to Waft" = "ברוכים הבאים אל Waft";
 "What Waft+ adds" = "מה Waft+‎ מוסיף";
+"What the AI model is told to do with your text." = "מה מודל הבינה המלאכותית מתבקש לעשות עם המלל שלך.";
 "When off, Waft copies the text and you paste it yourself." = "כשהאפשרות כבויה, Waft מעתיק את המלל ויש להדביק אותו ידנית.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
 "Whisper runs on this Mac, so audio never leaves it." = "המודל Whisper פועל ב-Mac זה, כך שהשמע אף פעם לא יוצא ממנו.";
-"Wording" = "ניסוח";
 "Words dictated each day for the last 7 days" = "מילים שהוכתבו בכל יום ב-7 הימים האחרונים";
 "Words" = "מילים";
 "Write instructions once and dictate in your own style." = "די לכתוב הוראות פעם אחת כדי להכתיב בסגנון שלך.";
 "Writing system" = "סוג כתב";
 "Writing" = "כתיבה";
 "You say" = "מה שנאמר";
+"You write" = "המלל שלך";
 "You're all set" = "הכול מוכן";
 "Your changes to these instructions are deleted." = "השינויים שלך בהוראות אלה יימחקו.";
 "Your free trial has ended." = "תקופת הניסיון ללא תשלום הסתיימה.";
@@ -454,6 +460,7 @@
 "days in a row" = "ימים ברצף";
 "detected" = "זוהתה";
 "dictations" = "הכתבות";
+"hey can u send me the report by friday? thanks" = "היי אפשר לשלוח לי את הדוח עד שישי? תודה";
 "left ⇧" = "⇧ השמאלי";
 "left ⌃" = "⌃ השמאלי";
 "left ⌘" = "⌘ השמאלי";

@@ -20,6 +20,7 @@
 "AI Models" = "نماذج الذكاء الاصطناعي";
 "AI model" = "نموذج الذكاء الاصطناعي";
 "AI modes and editing by voice use this model." = "تستخدم أنماط الذكاء الاصطناعي والتعديل بالصوت هذا النموذج.";
+"AI modes keep the model chosen in AI Models." = "تواصل أنماط الذكاء الاصطناعي استخدام النموذج المختار في نماذج الذكاء الاصطناعي.";
 "AI modes need Waft+" = "تحتاج أنماط الذكاء الاصطناعي إلى Waft+‎";
 "AI modes need a %@ API key." = "تحتاج أنماط الذكاء الاصطناعي إلى مفتاح API من %@.";
 "AI modes need a local server and model." = "تحتاج أنماط الذكاء الاصطناعي إلى خادم محلي ونموذج.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "إكمال الإعداد…";
 "Fix selected text" = "تصحيح النص المحدد";
 "Fixing the text…" = "يجري تصحيح النص…";
+"Fixing" = "التصحيح";
 "Fn" = "مفتاح fn";
 "Follows your instructions." = "يتبع تعليماتك.";
 "Forever" = "للأبد";
@@ -179,7 +181,6 @@
 "Locked" = "مقفل";
 "Lower other sounds while recording" = "خفض الأصوات الأخرى أثناء التسجيل";
 "MP3, M4A, WAV, MP4, MOV, and more" = "ملفات MP3 و M4A و WAV و MP4 و MOV وغيرها";
-"Make it clearer" = "جعل النص أوضح";
 "Make modes with your own instructions, or tune the built-in ones." = "أنشئ أنماطًا بتعليماتك الخاصة، أو عدّل الأنماط المضمّنة.";
 "Makes fewer mistakes and is still quick." = "أخطاؤه أقل ويبقى سريعًا.";
 "Makes the fewest mistakes, but is slower and pricier." = "الأقل أخطاءً، لكنه أبطأ وأغلى.";
@@ -280,6 +281,7 @@
 "Right Option" = "مفتاح option الأيمن";
 "Right Shift" = "مفتاح shift الأيمن";
 "Run Again" = "التشغيل مرة أخرى";
+"Run it to see what Waft writes." = "شغّله لترى ما يكتبه Waft.";
 "Run the mode to see what it writes." = "شغّل النمط لترى ما يكتبه.";
 "Run" = "تشغيل";
 "Running" = "قيد التشغيل";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "يتعذر استخدام الميكروفون المختار.";
 "The file has no sound to transcribe." = "لا يحتوي الملف على صوت لتحويله إلى نص.";
 "The languages you chose in Settings › Dictation." = "اللغات التي اخترتها في الإعدادات › الإملاء.";
+"The local server's model, chosen in AI Models." = "نموذج الخادم المحلي، المختار في نماذج الذكاء الاصطناعي.";
 "The microphone didn't start." = "لم يبدأ الميكروفون العمل.";
 "The microphone has no input channels." = "لا توجد قنوات إدخال في الميكروفون.";
 "The microphone stopped after an audio device changed." = "توقف الميكروفون بعد تغيّر أحد أجهزة الصوت.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "تغيّر تنسيق صوت الميكروفون أثناء التسجيل.";
 "The microphone's audio format isn't supported." = "تنسيق صوت الميكروفون غير مدعوم.";
 "The quickest and cheapest." = "الأسرع والأرخص.";
+"The shortcut that fixes selected text." = "الاختصار الذي يصحح النص المحدد.";
 "The speech model %@ isn't downloaded." = "لم يتم تنزيل نموذج الكلام %@.";
 "The speech model doesn't know one of the chosen languages." = "لا يدعم نموذج الكلام إحدى اللغات المختارة.";
 "The speech model has no tokenizer." = "لا يحتوي نموذج الكلام على أداة ترميز.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "لم يتم تحميل نموذج الكلام.";
 "The speech model isn't ready yet" = "نموذج الكلام ليس جاهزًا بعد";
 "The text appears at the cursor." = "يظهر النص عند المؤشر.";
+"The translator and the shortcut that translates selected text." = "المترجم والاختصار الذي يترجم النص المحدد.";
 "The translator is part of Waft+" = "المترجم جزء من Waft+‎";
 "There's no speech in this file." = "لا يوجد كلام في هذا الملف.";
 "These apps get their own mode." = "لهذه التطبيقات نمط خاص بها.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "تجري الترجمة إلى %@…";
 "Translating…" = "تجري الترجمة…";
 "Translation" = "الترجمة";
-"Translations and fixes also untangle long sentences and put the points in order." = "تبسّط الترجمات والتصحيحات أيضًا الجمل الطويلة وترتّب الأفكار.";
 "Translator (Waft+)…" = "المترجم (Waft+‎)…";
 "Translator" = "المترجم";
 "Translator…" = "المترجم…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "يخفض مستوى صوت Mac إلى الربع أثناء حديثك، ثم يعيده كما كان.";
 "Two-way with" = "في الاتجاهين مع";
 "Two-way" = "في الاتجاهين";
+"Type something to try" = "اكتب شيئًا للتجربة";
 "Type, paste, or hold %@ and speak" = "اكتب أو الصق أو اضغط مطولًا على %@ وتحدّث";
 "Unavailable: another app uses this shortcut. Choose another one." = "غير متاح: هناك تطبيق آخر يستخدم هذا الاختصار. اختر اختصارًا آخر.";
 "Unlock Waft+…" = "فتح قفل Waft+‎…";
@@ -430,17 +435,18 @@
 "Website" = "موقع الويب";
 "Welcome to Waft" = "مرحبًا بك في Waft";
 "What Waft+ adds" = "ما يضيفه Waft+‎";
+"What the AI model is told to do with your text." = "ما يُطلب من نموذج الذكاء الاصطناعي فعله بنصك.";
 "When off, Waft copies the text and you paste it yourself." = "عند الإيقاف، ينسخ Waft النص لتلصقه بنفسك.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "عندما يصبح نموذج الكلام جاهزًا، انقر على الحقل، واضغط مطولًا على %@، وقل \"مرحبًا يا Waft\".";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "عندما يصبح نموذج الكلام جاهزًا، انقر على الحقل، واضغط على %@، وقل \"مرحبًا يا Waft\"، ثم اضغط عليه مرة أخرى.";
 "Whisper runs on this Mac, so audio never leaves it." = "يعمل Whisper على هذا الـ Mac، لذا لا يغادره الصوت أبدًا.";
-"Wording" = "الصياغة";
 "Words dictated each day for the last 7 days" = "الكلمات المملاة يوميًا خلال آخر ٧ أيام";
 "Words" = "الكلمات";
 "Write instructions once and dictate in your own style." = "اكتب التعليمات مرة واحدة ليأتي إملاؤك بأسلوبك الخاص.";
 "Writing system" = "نظام الكتابة";
 "Writing" = "الكتابة";
 "You say" = "ما تقوله";
+"You write" = "أنت تكتب";
 "You're all set" = "كل شيء جاهز";
 "Your changes to these instructions are deleted." = "سيتم حذف التغييرات التي أجريتها على هذه التعليمات.";
 "Your free trial has ended." = "انتهت تجربتك المجانية.";
@@ -454,6 +460,7 @@
 "days in a row" = "الأيام المتتالية";
 "detected" = "تم اكتشافها";
 "dictations" = "عمليات الإملاء";
+"hey can u send me the report by friday? thanks" = "هلا ممكن تبعتلي التقرير قبل الجمعه؟ شكرا";
 "left ⇧" = "⇧ الأيسر";
 "left ⌃" = "⌃ الأيسر";
 "left ⌘" = "⌘ الأيسر";

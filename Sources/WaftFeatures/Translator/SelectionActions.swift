@@ -83,10 +83,8 @@ final class SelectionActions {
     }
 
     private func rework(_ selection: String, by action: Action, in target: FocusTarget) async {
-        let translator = settings.settings.translator
-        let setup = settings.settings.rewriteSetup(for: .translate)
         let detected = detector.language(of: selection)
-        let into = translator.target(forSource: detected)
+        let into = settings.settings.translator.target(forSource: detected)
         let language =
             if let detected {
                 detected
@@ -94,6 +92,7 @@ final class SelectionActions {
                 into
             }
         let textTask: TextTask = action == .fix ? .fix : .translate(from: nil, into: into)
+        let setup = settings.settings.translatorSetup(for: textTask.kind)
 
         hud.setWorking(Self.workingLabel(for: action, into: into))
 
@@ -104,7 +103,6 @@ final class SelectionActions {
                 selection,
                 in: language,
                 as: textTask,
-                rephrases: translator.rephrases,
                 setup: setup,
             )
             let keys = Self.shortcutKeys

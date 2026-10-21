@@ -38,9 +38,9 @@ The tables list the folders whose names don't say enough.
 | `Speech` | The `Transcriber` interface, `SpeechModelState` (its transitions return the effects a controller runs), `SpeechGate`, `WhisperPrompt`, and `SubtitleFormatter` |
 | `Language` | `Language` with its names, writing systems, and sound-alike languages, and the `WritingVariants` for Chinese and Serbian |
 | `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
-| `Settings` | `Settings`, and `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup` |
+| `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; and `Settings+Translator`, which does the same for a `TextTask` |
 | `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
-| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, and **Make it clearer** |
+| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, its model tier, and `TranslatorInstructions`, the edited instructions of each `TextTask` |
 | `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 

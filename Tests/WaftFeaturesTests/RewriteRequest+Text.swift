@@ -7,9 +7,9 @@ extension RewriteRequest {
         return task
     }
 
-    var rephrases: Bool {
-        guard case let .text(_, rephrases) = kind else { return false }
+    var textInstructions: String? {
+        guard case let .text(_, instructions) = kind else { return nil }
 
-        return rephrases
+        return instructions
     }
 }

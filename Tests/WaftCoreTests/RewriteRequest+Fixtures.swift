@@ -39,11 +39,11 @@ extension RewriteRequest {
         )
     }
 
-    static func text(_ text: String, task: TextTask, rephrases: Bool = false) -> RewriteRequest {
+    static func text(_ text: String, task: TextTask, instructions: String = "Work on the text.") -> RewriteRequest {
         RewriteRequest(
             text: text,
             language: .english,
-            kind: .text(task, rephrases: rephrases),
+            kind: .text(task, instructions: instructions),
             localServer: nil,
             cloudModel: .balanced,
             deadline: .seconds(20),

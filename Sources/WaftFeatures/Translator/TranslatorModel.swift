@@ -178,7 +178,7 @@ final class TranslatorModel {
             } else {
                 into
             }
-        let setup = settings.settings.rewriteSetup(for: .translate)
+        let setup = settings.settings.translatorSetup(for: .translate)
 
         isTranslating = true
 
@@ -187,7 +187,6 @@ final class TranslatorModel {
                 text,
                 in: language,
                 as: .translate(from: source, into: into),
-                rephrases: settings.settings.translator.rephrases,
                 setup: setup,
             )
 

@@ -20,6 +20,7 @@
 "AI Models" = "Modelli di IA";
 "AI model" = "Modello di IA";
 "AI modes and editing by voice use this model." = "Le modalità IA e la modifica a voce usano questo modello.";
+"AI modes keep the model chosen in AI Models." = "Le modalità IA mantengono il modello scelto in Modelli di IA.";
 "AI modes need Waft+" = "le modalità IA richiedono Waft+";
 "AI modes need a %@ API key." = "Le modalità IA richiedono una chiave API di %@.";
 "AI modes need a local server and model." = "Le modalità IA richiedono un server locale e un modello.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Completa la configurazione…";
 "Fix selected text" = "Correggi il testo selezionato";
 "Fixing the text…" = "Correzione del testo…";
+"Fixing" = "Correzione";
 "Fn" = "Fn";
 "Follows your instructions." = "Segue le tue istruzioni.";
 "Forever" = "Per sempre";
@@ -179,7 +181,6 @@
 "Locked" = "Bloccato";
 "Lower other sounds while recording" = "Abbassa gli altri suoni durante la registrazione";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV e altri";
-"Make it clearer" = "Rendi il testo più chiaro";
 "Make modes with your own instructions, or tune the built-in ones." = "Crea modalità con le tue istruzioni o adatta quelle incluse.";
 "Makes fewer mistakes and is still quick." = "Commette meno errori ed è comunque rapido.";
 "Makes the fewest mistakes, but is slower and pricier." = "Commette meno errori di tutti, ma è più lento e costoso.";
@@ -280,6 +281,7 @@
 "Right Option" = "Opzione a destra";
 "Right Shift" = "Maiuscole a destra";
 "Run Again" = "Esegui di nuovo";
+"Run it to see what Waft writes." = "Eseguilo per vedere cosa scrive Waft.";
 "Run the mode to see what it writes." = "Esegui la modalità per vedere cosa scrive.";
 "Run" = "Esegui";
 "Running" = "In esecuzione";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "Non è possibile usare il microfono scelto.";
 "The file has no sound to transcribe." = "Il file non contiene audio da trascrivere.";
 "The languages you chose in Settings › Dictation." = "Le lingue scelte in Impostazioni › Dettatura.";
+"The local server's model, chosen in AI Models." = "Il modello del server locale, scelto in Modelli di IA.";
 "The microphone didn't start." = "Il microfono non si è avviato.";
 "The microphone has no input channels." = "Il microfono non ha canali di ingresso.";
 "The microphone stopped after an audio device changed." = "Il microfono si è fermato dopo un cambio di dispositivo audio.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Il formato audio del microfono è cambiato durante la registrazione.";
 "The microphone's audio format isn't supported." = "Il formato audio del microfono non è supportato.";
 "The quickest and cheapest." = "Il più rapido ed economico.";
+"The shortcut that fixes selected text." = "La scorciatoia che corregge il testo selezionato.";
 "The speech model %@ isn't downloaded." = "Il modello vocale %@ non è stato scaricato.";
 "The speech model doesn't know one of the chosen languages." = "Il modello vocale non conosce una delle lingue scelte.";
 "The speech model has no tokenizer." = "Il modello vocale non ha un tokenizer.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Il modello vocale non è caricato.";
 "The speech model isn't ready yet" = "Il modello vocale non è ancora pronto";
 "The text appears at the cursor." = "Il testo appare nel punto di inserimento.";
+"The translator and the shortcut that translates selected text." = "Il traduttore e la scorciatoia che traduce il testo selezionato.";
 "The translator is part of Waft+" = "Il traduttore fa parte di Waft+";
 "There's no speech in this file." = "Questo file non contiene parlato.";
 "These apps get their own mode." = "Queste app hanno una modalità propria.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Traduzione in %@…";
 "Translating…" = "Traduzione…";
 "Translation" = "Traduzione";
-"Translations and fixes also untangle long sentences and put the points in order." = "Traduzioni e correzioni sbrogliano anche le frasi lunghe e mettono in ordine i punti.";
 "Translator (Waft+)…" = "Traduttore (Waft+)…";
 "Translator" = "Traduttore";
 "Translator…" = "Traduttore…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Riduce il volume del Mac a un quarto mentre parli, poi lo ripristina.";
 "Two-way with" = "Bidirezionale con";
 "Two-way" = "Bidirezionale";
+"Type something to try" = "Scrivi qualcosa per provare";
 "Type, paste, or hold %@ and speak" = "Scrivi, incolla o tieni premuto %@ e parla";
 "Unavailable: another app uses this shortcut. Choose another one." = "Non disponibile: un’altra app usa questa scorciatoia. Scegline un’altra.";
 "Unlock Waft+…" = "Sblocca Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "Sito web";
 "Welcome to Waft" = "Ti diamo il benvenuto in Waft";
 "What Waft+ adds" = "Cosa offre Waft+";
+"What the AI model is told to do with your text." = "Cosa deve fare il modello di IA con il tuo testo.";
 "When off, Waft copies the text and you paste it yourself." = "Se disattivata, Waft copia il testo e lo incolli tu.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Quando il modello vocale sarà pronto, fai clic nel campo, tieni premuto %@ e di’ “Ciao, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Quando il modello vocale sarà pronto, fai clic nel campo, premi %@, di’ “Ciao, Waft” e premilo di nuovo.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper funziona su questo Mac, quindi l’audio non ne esce mai.";
-"Wording" = "Formulazione";
 "Words dictated each day for the last 7 days" = "Parole dettate ogni giorno negli ultimi 7 giorni";
 "Words" = "Parole";
 "Write instructions once and dictate in your own style." = "Scrivi le istruzioni una volta e detta con il tuo stile.";
 "Writing system" = "Sistema di scrittura";
 "Writing" = "Scrittura";
 "You say" = "Tu dici";
+"You write" = "Scrivi tu";
 "You're all set" = "Tutto pronto";
 "Your changes to these instructions are deleted." = "Le modifiche a queste istruzioni verranno eliminate.";
 "Your free trial has ended." = "La prova gratuita è terminata.";
@@ -454,6 +460,7 @@
 "days in a row" = "giorni di fila";
 "detected" = "rilevata";
 "dictations" = "dettature";
+"hey can u send me the report by friday? thanks" = "ciao puoi mandarmi il repport entro venerdi? grazie";
 "left ⇧" = "⇧ a sinistra";
 "left ⌃" = "⌃ a sinistra";
 "left ⌘" = "⌘ a sinistra";

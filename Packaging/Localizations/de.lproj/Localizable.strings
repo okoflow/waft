@@ -20,6 +20,7 @@
 "AI Models" = "KI-Modelle";
 "AI model" = "KI-Modell";
 "AI modes and editing by voice use this model." = "KI-Modi und das Bearbeiten per Stimme nutzen dieses Modell.";
+"AI modes keep the model chosen in AI Models." = "KI-Modi behalten das Modell, das unter KI-Modelle ausgewählt ist.";
 "AI modes need Waft+" = "KI-Modi benötigen Waft+";
 "AI modes need a %@ API key." = "KI-Modi benötigen einen %@-API-Schlüssel.";
 "AI modes need a local server and model." = "KI-Modi benötigen einen lokalen Server und ein Modell.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Einrichtung abschließen …";
 "Fix selected text" = "Ausgewählten Text korrigieren";
 "Fixing the text…" = "Text wird korrigiert …";
+"Fixing" = "Korrektur";
 "Fn" = "Fn";
 "Follows your instructions." = "Folgt deinen Anweisungen.";
 "Forever" = "Unbegrenzt";
@@ -179,7 +181,6 @@
 "Locked" = "Gesperrt";
 "Lower other sounds while recording" = "Andere Töne während der Aufnahme leiser stellen";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV und mehr";
-"Make it clearer" = "Klarer formulieren";
 "Make modes with your own instructions, or tune the built-in ones." = "Erstelle Modi mit eigenen Anweisungen oder passe die integrierten an.";
 "Makes fewer mistakes and is still quick." = "Macht weniger Fehler und ist trotzdem schnell.";
 "Makes the fewest mistakes, but is slower and pricier." = "Macht die wenigsten Fehler, ist aber langsamer und teurer.";
@@ -280,6 +281,7 @@
 "Right Option" = "Wahltaste rechts";
 "Right Shift" = "Umschalttaste rechts";
 "Run Again" = "Erneut ausführen";
+"Run it to see what Waft writes." = "Führe es aus, um zu sehen, was Waft schreibt.";
 "Run the mode to see what it writes." = "Führe den Modus aus, um zu sehen, was er schreibt.";
 "Run" = "Ausführen";
 "Running" = "Läuft";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "Das gewählte Mikrofon kann nicht verwendet werden.";
 "The file has no sound to transcribe." = "Die Datei enthält keinen Ton zum Transkribieren.";
 "The languages you chose in Settings › Dictation." = "Die Sprachen, die du unter Einstellungen › Diktieren gewählt hast.";
+"The local server's model, chosen in AI Models." = "Das Modell des lokalen Servers, ausgewählt unter KI-Modelle.";
 "The microphone didn't start." = "Das Mikrofon ließ sich nicht starten.";
 "The microphone has no input channels." = "Das Mikrofon hat keine Eingangskanäle.";
 "The microphone stopped after an audio device changed." = "Das Mikrofon wurde angehalten, weil sich ein Audiogerät geändert hat.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Das Audioformat des Mikrofons hat sich während der Aufnahme geändert.";
 "The microphone's audio format isn't supported." = "Das Audioformat des Mikrofons wird nicht unterstützt.";
 "The quickest and cheapest." = "Am schnellsten und günstigsten.";
+"The shortcut that fixes selected text." = "Der Tastaturkurzbefehl, der ausgewählten Text korrigiert.";
 "The speech model %@ isn't downloaded." = "Das Spracherkennungsmodell %@ wurde nicht heruntergeladen.";
 "The speech model doesn't know one of the chosen languages." = "Das Spracherkennungsmodell kennt eine der gewählten Sprachen nicht.";
 "The speech model has no tokenizer." = "Das Spracherkennungsmodell hat keinen Tokenizer.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Das Spracherkennungsmodell ist nicht geladen.";
 "The speech model isn't ready yet" = "Das Spracherkennungsmodell ist noch nicht bereit";
 "The text appears at the cursor." = "Der Text erscheint an der Einfügemarke.";
+"The translator and the shortcut that translates selected text." = "Der Übersetzer und der Tastaturkurzbefehl, der ausgewählten Text übersetzt.";
 "The translator is part of Waft+" = "Der Übersetzer ist Teil von Waft+";
 "There's no speech in this file." = "In dieser Datei wird nicht gesprochen.";
 "These apps get their own mode." = "Diese Apps haben einen eigenen Modus.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Wird in %@ übersetzt …";
 "Translating…" = "Wird übersetzt …";
 "Translation" = "Übersetzung";
-"Translations and fixes also untangle long sentences and put the points in order." = "Übersetzungen und Korrekturen entwirren außerdem lange Sätze und bringen die Punkte in die richtige Reihenfolge.";
 "Translator (Waft+)…" = "Übersetzer (Waft+) …";
 "Translator" = "Übersetzer";
 "Translator…" = "Übersetzer …";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Senkt die Lautstärke deines Mac auf ein Viertel, während du sprichst, und stellt sie danach wieder her.";
 "Two-way with" = "In beide Richtungen mit";
 "Two-way" = "In beide Richtungen";
+"Type something to try" = "Tippe etwas zum Ausprobieren";
 "Type, paste, or hold %@ and speak" = "Tippe, setze Text ein oder halte %@ gedrückt und sprich";
 "Unavailable: another app uses this shortcut. Choose another one." = "Nicht verfügbar: Eine andere App verwendet diesen Tastaturkurzbefehl. Wähle einen anderen.";
 "Unlock Waft+…" = "Waft+ freischalten …";
@@ -430,17 +435,18 @@
 "Website" = "Website";
 "Welcome to Waft" = "Willkommen bei Waft";
 "What Waft+ adds" = "Das bietet Waft+";
+"What the AI model is told to do with your text." = "Was das KI-Modell mit deinem Text tun soll.";
 "When off, Waft copies the text and you paste it yourself." = "Wenn deaktiviert, kopiert Waft den Text und du setzt ihn selbst ein.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Sobald das Spracherkennungsmodell bereit ist, klicke in das Feld, halte %@ gedrückt und sag „Hallo, Waft“.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Sobald das Spracherkennungsmodell bereit ist, klicke in das Feld, tippe %@ an, sag „Hallo, Waft“ und tippe die Taste noch einmal an.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper läuft auf diesem Mac, daher verlässt das Audio ihn nie.";
-"Wording" = "Formulierung";
 "Words dictated each day for the last 7 days" = "Diktierte Wörter pro Tag in den letzten 7 Tagen";
 "Words" = "Wörter";
 "Write instructions once and dictate in your own style." = "Schreib Anweisungen einmal und diktiere in deinem eigenen Stil.";
 "Writing system" = "Schrift";
 "Writing" = "Text";
 "You say" = "Du sagst";
+"You write" = "Du schreibst";
 "You're all set" = "Alles bereit";
 "Your changes to these instructions are deleted." = "Deine Änderungen an diesen Anweisungen werden gelöscht.";
 "Your free trial has ended." = "Deine kostenlose Testphase ist abgelaufen.";
@@ -454,6 +460,7 @@
 "days in a row" = "Tage in Folge";
 "detected" = "erkannt";
 "dictations" = "Diktate";
+"hey can u send me the report by friday? thanks" = "hey kannste mir den bericht bis freitag schiken? danke";
 "left ⇧" = "⇧ links";
 "left ⌃" = "⌃ links";
 "left ⌘" = "⌘ links";

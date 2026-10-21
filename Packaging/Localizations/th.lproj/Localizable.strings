@@ -20,6 +20,7 @@
 "AI Models" = "โมเดล AI";
 "AI model" = "โมเดล AI";
 "AI modes and editing by voice use this model." = "โหมด AI และการแก้ไขด้วยเสียงจะใช้โมเดลนี้";
+"AI modes keep the model chosen in AI Models." = "โหมด AI ยังคงใช้โมเดลที่เลือกไว้ใน “โมเดล AI”";
 "AI modes need Waft+" = "โหมด AI ต้องใช้ Waft+";
 "AI modes need a %@ API key." = "โหมด AI ต้องใช้คีย์ API ของ %@";
 "AI modes need a local server and model." = "โหมด AI ต้องใช้เซิร์ฟเวอร์ในเครื่องและโมเดล";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "ตั้งค่าต่อให้เสร็จ…";
 "Fix selected text" = "ตรวจแก้ข้อความที่เลือก";
 "Fixing the text…" = "กำลังตรวจแก้ข้อความ…";
+"Fixing" = "การตรวจแก้";
 "Fn" = "Fn";
 "Follows your instructions." = "ทำตามคำสั่งของคุณ";
 "Forever" = "ตลอดไป";
@@ -179,7 +181,6 @@
 "Locked" = "ล็อคอยู่";
 "Lower other sounds while recording" = "ลดเสียงอื่นขณะบันทึก";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV และอื่นๆ";
-"Make it clearer" = "ทำให้ชัดเจนขึ้น";
 "Make modes with your own instructions, or tune the built-in ones." = "สร้างโหมดด้วยคำสั่งของคุณเอง หรือปรับแต่งโหมดในตัว";
 "Makes fewer mistakes and is still quick." = "ผิดพลาดน้อยกว่าและยังเร็วอยู่";
 "Makes the fewest mistakes, but is slower and pricier." = "ผิดพลาดน้อยที่สุด แต่ช้ากว่าและแพงกว่า";
@@ -280,6 +281,7 @@
 "Right Option" = "Option ขวา";
 "Right Shift" = "Shift ขวา";
 "Run Again" = "สั่งทำงานอีกครั้ง";
+"Run it to see what Waft writes." = "สั่งทำงานเพื่อดูว่า Waft จะเขียนออกมาอย่างไร";
 "Run the mode to see what it writes." = "สั่งให้โหมดทำงานเพื่อดูว่าจะเขียนออกมาอย่างไร";
 "Run" = "สั่งทำงาน";
 "Running" = "กำลังทำงาน";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "ไม่สามารถใช้ไมโครโฟนที่เลือกได้";
 "The file has no sound to transcribe." = "ไฟล์นี้ไม่มีเสียงให้ถอด";
 "The languages you chose in Settings › Dictation." = "ภาษาที่คุณเลือกไว้ในการตั้งค่า › การป้อนตามคำบอก";
+"The local server's model, chosen in AI Models." = "โมเดลของเซิร์ฟเวอร์ในเครื่อง ซึ่งเลือกไว้ใน “โมเดล AI”";
 "The microphone didn't start." = "ไมโครโฟนไม่เริ่มทำงาน";
 "The microphone has no input channels." = "ไมโครโฟนไม่มีช่องสัญญาณเข้า";
 "The microphone stopped after an audio device changed." = "ไมโครโฟนหยุดทำงานหลังจากอุปกรณ์เสียงมีการเปลี่ยนแปลง";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "รูปแบบเสียงของไมโครโฟนเปลี่ยนไประหว่างการบันทึก";
 "The microphone's audio format isn't supported." = "ไม่รองรับรูปแบบเสียงของไมโครโฟน";
 "The quickest and cheapest." = "เร็วที่สุดและถูกที่สุด";
+"The shortcut that fixes selected text." = "ปุ่มลัดที่ตรวจแก้ข้อความที่เลือก";
 "The speech model %@ isn't downloaded." = "ยังไม่ได้ดาวน์โหลดโมเดลจำเสียงพูด %@";
 "The speech model doesn't know one of the chosen languages." = "โมเดลจำเสียงพูดไม่รองรับภาษาใดภาษาหนึ่งที่เลือกไว้";
 "The speech model has no tokenizer." = "โมเดลจำเสียงพูดไม่มีตัวแบ่งโทเค็น";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "ยังไม่ได้โหลดโมเดลจำเสียงพูด";
 "The speech model isn't ready yet" = "โมเดลจำเสียงพูดยังไม่พร้อม";
 "The text appears at the cursor." = "ข้อความจะปรากฏที่เคอร์เซอร์";
+"The translator and the shortcut that translates selected text." = "ตัวแปลภาษาและปุ่มลัดที่แปลข้อความที่เลือก";
 "The translator is part of Waft+" = "ตัวแปลภาษาเป็นส่วนหนึ่งของ Waft+";
 "There's no speech in this file." = "ไม่มีเสียงพูดในไฟล์นี้";
 "These apps get their own mode." = "แอปเหล่านี้จะใช้โหมดของตัวเอง";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "กำลังแปลเป็นภาษา%@…";
 "Translating…" = "กำลังแปล…";
 "Translation" = "การแปล";
-"Translations and fixes also untangle long sentences and put the points in order." = "การแปลและการตรวจแก้จะช่วยเกลาประโยคยาวให้อ่านง่ายและเรียงลำดับประเด็นให้ด้วย";
 "Translator (Waft+)…" = "ตัวแปลภาษา (Waft+)…";
 "Translator" = "ตัวแปลภาษา";
 "Translator…" = "ตัวแปลภาษา…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "ลดระดับเสียงของ Mac เหลือหนึ่งในสี่ขณะที่คุณพูด แล้วคืนค่าเดิมเมื่อพูดจบ";
 "Two-way with" = "แปลสองทางกับ";
 "Two-way" = "สองทาง";
+"Type something to try" = "ลองพิมพ์อะไรสักอย่าง";
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "เว็บไซต์";
 "Welcome to Waft" = "ยินดีต้อนรับสู่ Waft";
 "What Waft+ adds" = "สิ่งที่ Waft+ เพิ่มให้";
+"What the AI model is told to do with your text." = "สิ่งที่โมเดล AI ได้รับคำสั่งให้ทำกับข้อความของคุณ";
 "When off, Waft copies the text and you paste it yourself." = "ถ้าปิดตัวเลือกนี้ Waft จะคัดลอกข้อความไว้ให้คุณวางเอง";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ พูดว่า “สวัสดี Waft” แล้วกดอีกครั้ง";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper ทำงานบน Mac เครื่องนี้ เสียงจึงไม่ออกไปนอกเครื่อง";
-"Wording" = "ถ้อยคำ";
 "Words dictated each day for the last 7 days" = "จำนวนคำที่ป้อนตามคำบอกในแต่ละวันตลอด 7 วันที่ผ่านมา";
 "Words" = "จำนวนคำ";
 "Write instructions once and dictate in your own style." = "เขียนคำสั่งครั้งเดียว แล้วป้อนตามคำบอกในสไตล์ของคุณเอง";
 "Writing system" = "ระบบการเขียน";
 "Writing" = "การเขียน";
 "You say" = "คุณพูดว่า";
+"You write" = "คุณเขียนว่า";
 "You're all set" = "พร้อมใช้งานแล้ว";
 "Your changes to these instructions are deleted." = "การเปลี่ยนแปลงที่คุณทำกับคำสั่งเหล่านี้จะถูกลบ";
 "Your free trial has ended." = "ช่วงทดลองใช้ฟรีของคุณสิ้นสุดแล้ว";
@@ -454,6 +460,7 @@
 "days in a row" = "วันติดต่อกัน";
 "detected" = "ตรวจพบ";
 "dictations" = "ครั้งที่ป้อนตามคำบอก";
+"hey can u send me the report by friday? thanks" = "ส่งรายงานให้หน่อยได้มั้ย ก่อนศุกร์นะ ขอบใจ";
 "left ⇧" = "⇧ ซ้าย";
 "left ⌃" = "⌃ ซ้าย";
 "left ⌘" = "⌘ ซ้าย";

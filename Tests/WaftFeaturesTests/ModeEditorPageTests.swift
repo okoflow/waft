@@ -63,7 +63,13 @@ struct ModeEditorPageTests {
         return ModeEditorPage(
             mode: .custom(custom.id),
             settings: settings,
-            tryout: ModeTryoutModel(rewriters: .all(FakeTextRewriter()), settings: settings, pro: .unlicensed()),
+            tryout: TryoutModel(
+                rewriters: .all(FakeTextRewriter()),
+                detector: FakeLanguageDetector(),
+                settings: settings,
+                pro: .unlicensed(),
+                defaultSample: "Sample",
+            ),
             state: SettingsWindowState(),
         )
     }

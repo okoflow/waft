@@ -20,6 +20,7 @@
 "AI Models" = "AI-modeller";
 "AI model" = "AI-modell";
 "AI modes and editing by voice use this model." = "AI-lägen och röstredigering använder den här modellen.";
+"AI modes keep the model chosen in AI Models." = "AI-lägen använder modellen som valts i ”AI-modeller”.";
 "AI modes need Waft+" = "AI-lägen kräver Waft+";
 "AI modes need a %@ API key." = "AI-lägen kräver en API-nyckel för %@.";
 "AI modes need a local server and model." = "AI-lägen kräver en lokal server och en modell.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Slutför inställningen…";
 "Fix selected text" = "Rätta markerad text";
 "Fixing the text…" = "Rättar texten…";
+"Fixing" = "Rättning";
 "Fn" = "Fn";
 "Follows your instructions." = "Följer dina instruktioner.";
 "Forever" = "För alltid";
@@ -179,7 +181,6 @@
 "Locked" = "Låst";
 "Lower other sounds while recording" = "Sänk andra ljud under inspelning";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV med flera";
-"Make it clearer" = "Gör det tydligare";
 "Make modes with your own instructions, or tune the built-in ones." = "Skapa lägen med egna instruktioner eller finjustera de inbyggda.";
 "Makes fewer mistakes and is still quick." = "Gör färre fel och är ändå snabb.";
 "Makes the fewest mistakes, but is slower and pricier." = "Gör minst fel, men är långsammare och dyrare.";
@@ -280,6 +281,7 @@
 "Right Option" = "Höger alternativtangent";
 "Right Shift" = "Höger skifttangent";
 "Run Again" = "Kör igen";
+"Run it to see what Waft writes." = "Kör det för att se vad Waft skriver.";
 "Run the mode to see what it writes." = "Kör läget för att se vad det skriver.";
 "Run" = "Kör";
 "Running" = "Körs";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "Den valda mikrofonen kan inte användas.";
 "The file has no sound to transcribe." = "Filen har inget ljud att transkribera.";
 "The languages you chose in Settings › Dictation." = "Språken du valde i Inställningar › Diktering.";
+"The local server's model, chosen in AI Models." = "Den lokala serverns modell, vald i ”AI-modeller”.";
 "The microphone didn't start." = "Mikrofonen startade inte.";
 "The microphone has no input channels." = "Mikrofonen har inga ingångskanaler.";
 "The microphone stopped after an audio device changed." = "Mikrofonen stoppades när en ljudenhet ändrades.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Mikrofonens ljudformat ändrades under inspelningen.";
 "The microphone's audio format isn't supported." = "Mikrofonens ljudformat stöds inte.";
 "The quickest and cheapest." = "Snabbast och billigast.";
+"The shortcut that fixes selected text." = "Kortkommandot som rättar markerad text.";
 "The speech model %@ isn't downloaded." = "Talmodellen %@ har inte hämtats.";
 "The speech model doesn't know one of the chosen languages." = "Talmodellen stöder inte ett av de valda språken.";
 "The speech model has no tokenizer." = "Talmodellen saknar tokeniserare.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Talmodellen är inte inläst.";
 "The speech model isn't ready yet" = "Talmodellen är inte redo än";
 "The text appears at the cursor." = "Texten visas vid markören.";
+"The translator and the shortcut that translates selected text." = "Översättaren och kortkommandot som översätter markerad text.";
 "The translator is part of Waft+" = "Översättaren ingår i Waft+";
 "There's no speech in this file." = "Det finns inget tal i filen.";
 "These apps get their own mode." = "De här apparna får ett eget läge.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Översätter till %@…";
 "Translating…" = "Översätter…";
 "Translation" = "Översättning";
-"Translations and fixes also untangle long sentences and put the points in order." = "Översättningar och rättningar reder också ut långa meningar och sätter punkterna i ordning.";
 "Translator (Waft+)…" = "Översättare (Waft+)…";
 "Translator" = "Översättare";
 "Translator…" = "Översättare…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Sänker Macens volym till en fjärdedel medan du talar och återställer den sedan.";
 "Two-way with" = "Åt båda hållen med";
 "Two-way" = "Åt båda hållen";
+"Type something to try" = "Skriv något för att testa";
 "Type, paste, or hold %@ and speak" = "Skriv, klistra in eller håll ned %@ och tala";
 "Unavailable: another app uses this shortcut. Choose another one." = "Inte tillgängligt: en annan app använder det här kortkommandot. Välj ett annat.";
 "Unlock Waft+…" = "Lås upp Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "Webbplats";
 "Welcome to Waft" = "Välkommen till Waft";
 "What Waft+ adds" = "Det här ger Waft+";
+"What the AI model is told to do with your text." = "Vad AI-modellen ska göra med din text.";
 "When off, Waft copies the text and you paste it yourself." = "När det är avstängt kopierar Waft texten och du klistrar in den själv.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "När talmodellen är redo klickar du i fältet, håller ned %@ och säger ”Hej, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "När talmodellen är redo klickar du i fältet, trycker på %@, säger ”Hej, Waft” och trycker på den igen.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper körs på den här datorn, så ljudet lämnar den aldrig.";
-"Wording" = "Formulering";
 "Words dictated each day for the last 7 days" = "Dikterade ord per dag de senaste 7 dagarna";
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner en gång och diktera i din egen stil.";
 "Writing system" = "Skriftsystem";
 "Writing" = "Text";
 "You say" = "Du säger";
+"You write" = "Du skriver";
 "You're all set" = "Allt är klart";
 "Your changes to these instructions are deleted." = "Dina ändringar i de här instruktionerna raderas.";
 "Your free trial has ended." = "Din gratis provperiod har tagit slut.";
@@ -454,6 +460,7 @@
 "days in a row" = "dagar i rad";
 "detected" = "identifierat";
 "dictations" = "dikteringar";
+"hey can u send me the report by friday? thanks" = "tja kan du skicka mej rapporten innan fredag? tack";
 "left ⇧" = "vänster ⇧";
 "left ⌃" = "vänster ⌃";
 "left ⌘" = "vänster ⌘";

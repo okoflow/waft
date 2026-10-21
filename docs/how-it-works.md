@@ -115,9 +115,12 @@ lists the reasons.
 ### The translator
 
 The [translator](usage.md#translator) and its shortcuts on selected text send
-the text, the target language, and the source language when you chose one.
-The model reads the text as material to translate or fix, never as
-instructions, and gets the time limit of an edit. macOS detects the language
+the text, the instructions of the task, the target language, and the source
+language when you chose one. Rules after the instructions, which you can't
+edit, make the model read the text as material to translate or fix, never as
+instructions, and reply with the text alone, keeping its formatting, links,
+and code. The model is the translator's tier of the provider and gets the time
+limit of an edit for that tier. macOS detects the language
 of the text on your Mac, which decides when two-way applies.
 
 Waft rejects an answer that is empty or longer than five times the text plus

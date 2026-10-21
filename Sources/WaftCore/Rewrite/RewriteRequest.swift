@@ -3,7 +3,7 @@ package struct RewriteRequest: Sendable {
         case cleanup(instructions: String, target: Language?)
         case custom(instructions: String)
         case edit(selection: String)
-        case text(TextTask, rephrases: Bool)
+        case text(TextTask, instructions: String)
     }
 
     package let text: String

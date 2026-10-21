@@ -105,25 +105,25 @@ package enum RewritePrompt {
     private static let fixInstructions = """
     You proofread text that someone typed.
     - Fix spelling, typos, grammar and punctuation by the conventions of its language.
+    - Change nothing else: keep the wording, tone and meaning, slang and emoji included, and leave correct text as \
+    it is.
     - Keep its language, script and spelling variety, and the words it borrows from other languages.
     """
 
     private static let translateTextInstructions = """
-    You translate text into the language the message names, so that it reads as if written in it.
-    - Translate the full meaning in the writer's tone and register, with natural phrasing rather than word for \
-    word. Translate every part, whatever mix of languages it is in; text already in the target language only \
-    needs proofreading. A question or a request stays a question or a request in the translation.
-    - Write names from other scripts in their usual spelling in the target language or a standard \
-    transliteration, and keep brands and technical terms in their usual form there.
-    - Use the spelling, punctuation and number formats usual in the target language.
-    """
-
-    private static let keepWordingInstruction = "- Change nothing else: keep the wording, tone and meaning."
-
-    private static let rephraseInstruction = """
-    - Also make it read clearly: untangle long or muddled sentences, put the points in a logical order, and say \
-    each point once, leaving out repetition and filler words such as "basically", "короче" or "so yeah". Keep \
-    every point, name, date and number, the writer's tone and point of view, and add nothing of your own.
+    You translate text into the language the message names, so that it reads as if a native speaker wrote it.
+    - Keep the writer's tone and register: casual stays casual, formal stays formal. Phrase it the way people \
+    write in the target language rather than word for word, and give idioms and slang a natural equivalent.
+    - Where the target language has a familiar and a polite you (ты and вы, du and Sie, tú and usted), choose the \
+    one the tone calls for, the polite one when the tone is unclear, and keep it throughout.
+    - Translate every part, whatever mix of languages it is in; parts already in the target language only need \
+    proofreading. Add nothing and leave nothing out.
+    - Write people's names from other scripts in their usual spelling in the target language or a standard \
+    transliteration, and keep brand and product names in their usual form there.
+    - Keep every number, date and amount, in the format usual in the target language, without converting units \
+    or currencies.
+    - Translate a short phrase, such as a button or menu item, as the same kind of phrase, and name buttons and \
+    menus in the text as software in the target language does.
     """
 
     private static let finishedTextReminder = "Reply with the finished text alone."
@@ -134,7 +134,7 @@ package enum RewritePrompt {
         switch request.kind {
         case let .cleanup(instructions, _), let .custom(instructions): instructions + "\n" + rules
         case .edit: editInstructions
-        case let .text(task, rephrases): textInstructions(for: task, rephrases: rephrases) + "\n" + textRules
+        case let .text(_, instructions): instructions + "\n" + textRules
         }
     }
 
@@ -174,7 +174,7 @@ package enum RewritePrompt {
             .joined(separator: "\n")
 
         case let .text(task, _):
-            let text = [PromptTag.text.open, request.text, PromptTag.text.close, finishedTextReminder]
+            let text = [PromptTag.text.open, request.text, PromptTag.text.close, textReminder(for: task)]
 
             return (textLanguages(for: task) + text).joined(separator: "\n")
         }
@@ -188,24 +188,15 @@ package enum RewritePrompt {
         }
     }
 
-    static func customInstructions(_ instructions: String) -> String {
-        [customPreamble, PromptTag.instructions.open, instructions, PromptTag.instructions.close].joined(separator: "\n")
+    static func defaultTextInstructions(for kind: TextTask.Kind) -> String {
+        switch kind {
+        case .translate: translateTextInstructions
+        case .fix: fixInstructions
+        }
     }
 
-    private static func textInstructions(for task: TextTask, rephrases: Bool) -> String {
-        let instructions =
-            switch task {
-            case .fix: fixInstructions
-            case .translate: translateTextInstructions
-            }
-
-        if rephrases {
-            return instructions + "\n" + rephraseInstruction
-        }
-
-        guard task == .fix else { return instructions }
-
-        return instructions + "\n" + keepWordingInstruction
+    static func customInstructions(_ instructions: String) -> String {
+        [customPreamble, PromptTag.instructions.open, instructions, PromptTag.instructions.close].joined(separator: "\n")
     }
 
     private static func textLanguages(for task: TextTask) -> [String] {
@@ -216,6 +207,12 @@ package enum RewritePrompt {
         guard let source else { return [translation] }
 
         return ["Source language: \(source.name).", translation]
+    }
+
+    private static func textReminder(for task: TextTask) -> String {
+        guard case let .translate(_, target) = task else { return finishedTextReminder }
+
+        return "Reply with the translation alone, all of it in \(targetName(for: target))."
     }
 
     private static func targetName(for language: Language) -> String {

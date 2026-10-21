@@ -20,6 +20,7 @@
 "AI Models" = "AI-modellen";
 "AI model" = "AI-model";
 "AI modes and editing by voice use this model." = "AI-modi en bewerken met spraak gebruiken dit model.";
+"AI modes keep the model chosen in AI Models." = "AI-modi gebruiken het model dat je hebt gekozen bij ‘AI-modellen’.";
 "AI modes need Waft+" = "AI-modi vereisen Waft+";
 "AI modes need a %@ API key." = "AI-modi hebben een API-sleutel van %@ nodig.";
 "AI modes need a local server and model." = "AI-modi hebben een lokale server en een model nodig.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Voltooi configuratie…";
 "Fix selected text" = "Verbeter geselecteerde tekst";
 "Fixing the text…" = "Tekst verbeteren…";
+"Fixing" = "Verbetering";
 "Fn" = "Fn";
 "Follows your instructions." = "Volgt je instructies.";
 "Forever" = "Altijd";
@@ -179,7 +181,6 @@
 "Locked" = "Vergrendeld";
 "Lower other sounds while recording" = "Andere geluiden zachter zetten tijdens opnemen";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV en meer";
-"Make it clearer" = "Maak het duidelijker";
 "Make modes with your own instructions, or tune the built-in ones." = "Maak modi met je eigen instructies of pas de ingebouwde aan.";
 "Makes fewer mistakes and is still quick." = "Maakt minder fouten en is toch snel.";
 "Makes the fewest mistakes, but is slower and pricier." = "Maakt de minste fouten, maar is trager en duurder.";
@@ -280,6 +281,7 @@
 "Right Option" = "Option-rechts";
 "Right Shift" = "Shift-rechts";
 "Run Again" = "Voer opnieuw uit";
+"Run it to see what Waft writes." = "Voer het uit om te zien wat Waft schrijft.";
 "Run the mode to see what it writes." = "Voer de modus uit om te zien wat hij schrijft.";
 "Run" = "Voer uit";
 "Running" = "Actief";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "De gekozen microfoon kan niet worden gebruikt.";
 "The file has no sound to transcribe." = "Het bestand bevat geen geluid om te transcriberen.";
 "The languages you chose in Settings › Dictation." = "De talen die je hebt gekozen in Instellingen › Dicteren.";
+"The local server's model, chosen in AI Models." = "Het model van de lokale server, gekozen bij ‘AI-modellen’.";
 "The microphone didn't start." = "De microfoon is niet gestart.";
 "The microphone has no input channels." = "De microfoon heeft geen invoerkanalen.";
 "The microphone stopped after an audio device changed." = "De microfoon is gestopt nadat een audioapparaat is gewijzigd.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Het audioformaat van de microfoon is tijdens de opname gewijzigd.";
 "The microphone's audio format isn't supported." = "Het audioformaat van de microfoon wordt niet ondersteund.";
 "The quickest and cheapest." = "Het snelst en het goedkoopst.";
+"The shortcut that fixes selected text." = "De sneltoets die geselecteerde tekst verbetert.";
 "The speech model %@ isn't downloaded." = "Het spraakmodel %@ is niet gedownload.";
 "The speech model doesn't know one of the chosen languages." = "Het spraakmodel kent een van de gekozen talen niet.";
 "The speech model has no tokenizer." = "Het spraakmodel heeft geen tokenizer.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Het spraakmodel is niet geladen.";
 "The speech model isn't ready yet" = "Het spraakmodel is nog niet gereed";
 "The text appears at the cursor." = "De tekst verschijnt bij de cursor.";
+"The translator and the shortcut that translates selected text." = "De vertaler en de sneltoets die geselecteerde tekst vertaalt.";
 "The translator is part of Waft+" = "De vertaler hoort bij Waft+";
 "There's no speech in this file." = "Dit bestand bevat geen spraak.";
 "These apps get their own mode." = "Deze apps krijgen een eigen modus.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Vertalen naar het %@…";
 "Translating…" = "Vertalen…";
 "Translation" = "Vertaling";
-"Translations and fixes also untangle long sentences and put the points in order." = "Bij vertalen en verbeteren worden lange zinnen ook ontward en komen de punten in de juiste volgorde.";
 "Translator (Waft+)…" = "Vertaler (Waft+)…";
 "Translator" = "Vertaler";
 "Translator…" = "Vertaler…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Zet het volume van de Mac op een kwart terwijl je spreekt en daarna weer terug.";
 "Two-way with" = "In beide richtingen met";
 "Two-way" = "In beide richtingen";
+"Type something to try" = "Typ iets om te proberen";
 "Type, paste, or hold %@ and speak" = "Typ, plak of houd %@ ingedrukt en spreek";
 "Unavailable: another app uses this shortcut. Choose another one." = "Niet beschikbaar: een andere app gebruikt deze sneltoets. Kies een andere.";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "Website";
 "Welcome to Waft" = "Welkom bij Waft";
 "What Waft+ adds" = "Wat Waft+ toevoegt";
+"What the AI model is told to do with your text." = "Wat het AI-model met je tekst moet doen.";
 "When off, Waft copies the text and you paste it yourself." = "Als dit uit staat, kopieert Waft de tekst en plak je hem zelf.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Zodra het spraakmodel gereed is, klik je in het veld, houd je %@ ingedrukt en zeg je ‘Hallo, Waft’.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Zodra het spraakmodel gereed is, klik je in het veld, druk je op %@, zeg je ‘Hallo, Waft’ en druk je er nogmaals op.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper draait op deze Mac, dus de audio verlaat je Mac nooit.";
-"Wording" = "Formulering";
 "Words dictated each day for the last 7 days" = "Gedicteerde woorden per dag in de afgelopen 7 dagen";
 "Words" = "Woorden";
 "Write instructions once and dictate in your own style." = "Schrijf eenmalig instructies en dicteer in je eigen stijl.";
 "Writing system" = "Schrift";
 "Writing" = "Schrijven";
 "You say" = "Jij zegt";
+"You write" = "Jij schrijft";
 "You're all set" = "Alles is klaar";
 "Your changes to these instructions are deleted." = "Je wijzigingen in deze instructies worden verwijderd.";
 "Your free trial has ended." = "Je gratis proefperiode is afgelopen.";
@@ -454,6 +460,7 @@
 "days in a row" = "dagen op rij";
 "detected" = "gedetecteerd";
 "dictations" = "dictaten";
+"hey can u send me the report by friday? thanks" = "hey kun je me het rapport voor vrijdag sturen? thx";
 "left ⇧" = "linker ⇧";
 "left ⌃" = "linker ⌃";
 "left ⌘" = "linker ⌘";

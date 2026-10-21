@@ -5,14 +5,20 @@ import WaftCore
 @Observable
 final class SettingsWindowState {
     var selection = SettingsPane.overview {
-        didSet { editedMode = nil }
+        didSet { closeEditor() }
     }
 
     var editedMode: Mode?
+    var editedTextTask: TextTask.Kind?
 
     let copiedEntries = CopyFeedback<Date>()
 
     var hoveredPane: SettingsPane?
+
+    func closeEditor() {
+        editedMode = nil
+        editedTextTask = nil
+    }
 
     func move(by offset: Int) {
         let panes = SettingsPane.allCases

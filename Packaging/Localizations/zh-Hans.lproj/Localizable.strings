@@ -20,6 +20,7 @@
 "AI Models" = "AI模型";
 "AI model" = "AI模型";
 "AI modes and editing by voice use this model." = "AI模式和语音编辑都使用此模型。";
+"AI modes keep the model chosen in AI Models." = "AI模式会继续使用在“AI模型”中选择的模型。";
 "AI modes need Waft+" = "AI模式需要Waft+";
 "AI modes need a %@ API key." = "AI模式需要%@ API密钥。";
 "AI modes need a local server and model." = "AI模式需要本地服务器和模型。";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "完成设置…";
 "Fix selected text" = "修正所选文本";
 "Fixing the text…" = "正在修正文本…";
+"Fixing" = "修正";
 "Fn" = "Fn键";
 "Follows your instructions." = "按你的指令处理。";
 "Forever" = "永久";
@@ -179,7 +181,6 @@
 "Locked" = "已锁定";
 "Lower other sounds while recording" = "录音时降低其他声音";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOV等";
-"Make it clearer" = "让表达更清晰";
 "Make modes with your own instructions, or tune the built-in ones." = "用你自己的指令创建模式，或调整内置模式。";
 "Makes fewer mistakes and is still quick." = "错误更少，速度依然快。";
 "Makes the fewest mistakes, but is slower and pricier." = "错误最少，但更慢、更贵。";
@@ -280,6 +281,7 @@
 "Right Option" = "右Option键";
 "Right Shift" = "右Shift键";
 "Run Again" = "再次运行";
+"Run it to see what Waft writes." = "运行后即可看到Waft写出的内容。";
 "Run the mode to see what it writes." = "运行此模式，看看它会写出什么。";
 "Run" = "运行";
 "Running" = "正在运行";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "无法使用所选的麦克风。";
 "The file has no sound to transcribe." = "此文件没有可转写的音频。";
 "The languages you chose in Settings › Dictation." = "你在“设置”›“听写”中选择的语言。";
+"The local server's model, chosen in AI Models." = "本地服务器的模型，在“AI模型”中选择。";
 "The microphone didn't start." = "麦克风未能启动。";
 "The microphone has no input channels." = "麦克风没有输入声道。";
 "The microphone stopped after an audio device changed." = "音频设备更改后，麦克风已停止。";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "录音期间麦克风的音频格式发生了变化。";
 "The microphone's audio format isn't supported." = "不支持麦克风的音频格式。";
 "The quickest and cheapest." = "最快、最便宜。";
+"The shortcut that fixes selected text." = "用于修正所选文本的快捷键。";
 "The speech model %@ isn't downloaded." = "尚未下载语音识别模型“%@”。";
 "The speech model doesn't know one of the chosen languages." = "语音识别模型不支持所选语言中的一种。";
 "The speech model has no tokenizer." = "语音识别模型缺少分词器。";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "语音识别模型未载入。";
 "The speech model isn't ready yet" = "语音识别模型尚未就绪";
 "The text appears at the cursor." = "文本会出现在光标处。";
+"The translator and the shortcut that translates selected text." = "翻译工具，以及翻译所选文本的快捷键。";
 "The translator is part of Waft+" = "翻译工具是Waft+的功能";
 "There's no speech in this file." = "此文件中没有语音。";
 "These apps get their own mode." = "这些App使用各自的模式。";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "正在翻译成%@…";
 "Translating…" = "正在翻译…";
 "Translation" = "翻译";
-"Translations and fixes also untangle long sentences and put the points in order." = "翻译和修正时，还会理顺长句，并让要点井然有序。";
 "Translator (Waft+)…" = "翻译工具（Waft+）…";
 "Translator" = "翻译工具";
 "Translator…" = "翻译工具…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "说话时将Mac的音量降到四分之一，说完后恢复。";
 "Two-way with" = "双向翻译";
 "Two-way" = "双向";
+"Type something to try" = "输入点什么来试试";
 "Type, paste, or hold %@ and speak" = "输入、粘贴，或按住%@键说话";
 "Unavailable: another app uses this shortcut. Choose another one." = "不可用：其他App正在使用此快捷键。请选择其他快捷键。";
 "Unlock Waft+…" = "解锁Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "网站";
 "Welcome to Waft" = "欢迎使用Waft";
 "What Waft+ adds" = "Waft+新增功能";
+"What the AI model is told to do with your text." = "告诉AI模型如何处理你的文本。";
 "When off, Waft copies the text and you paste it yourself." = "关闭后，Waft只会拷贝文本，需要你自行粘贴。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "语音识别模型就绪后，点按输入框，按住%@，然后说“你好，Waft”。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "语音识别模型就绪后，点按输入框，按一下%@，说“你好，Waft”，然后再按一下。";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper在此Mac上运行，因此音频不会离开此Mac。";
-"Wording" = "措辞";
 "Words dictated each day for the last 7 days" = "最近7天每天听写的字词数";
 "Words" = "字词";
 "Write instructions once and dictate in your own style." = "指令只需写一次，即可按你的风格听写。";
 "Writing system" = "书写系统";
 "Writing" = "文本";
 "You say" = "你说";
+"You write" = "你写";
 "You're all set" = "一切就绪";
 "Your changes to these instructions are deleted." = "你对这些指令所做的更改将被删除。";
 "Your free trial has ended." = "免费试用已结束。";
@@ -454,6 +460,7 @@
 "days in a row" = "连续天数";
 "detected" = "已检测";
 "dictations" = "听写次数";
+"hey can u send me the report by friday? thanks" = "嗨 周五前能把报告发我一下吗 谢啦";
 "left ⇧" = "左⇧";
 "left ⌃" = "左⌃";
 "left ⌘" = "左⌘";

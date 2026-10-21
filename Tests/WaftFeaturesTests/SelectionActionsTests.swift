@@ -40,9 +40,13 @@ struct SelectionActionsTests {
         #expect(request.textTask == .translate(from: nil, into: .ukrainian))
     }
 
-    @Test(arguments: [false, true])
-    func `fixes the selection with clearer wording when it is on`(rephrases: Bool) async throws {
-        settings.settings.translator.rephrases = rephrases
+    @Test(arguments: [nil, "Fix only the typos."])
+    func `fixes the selection by the fix instructions`(custom: String?) async throws {
+        if let custom {
+            settings.settings.translator.instructions.set(custom, for: .fix)
+        }
+
+        let expected = settings.settings.translator.instructions.editableText(for: .fix)
         let rewriter = FakeTextRewriter(.success("We meet on Friday."))
         let inserter = FakeTextInserter()
         let actions = actions(rewriter, selecting: "we meat on friday", detects: .english, inserter: inserter)
@@ -53,7 +57,7 @@ struct SelectionActionsTests {
         let request = try #require(rewriter.requests.first)
 
         #expect(request.textTask == .fix)
-        #expect(request.rephrases == rephrases)
+        #expect(request.textInstructions == expected)
         #expect(inserter.insertions.map(\.text) == ["We meet on Friday."])
     }
 

@@ -20,6 +20,7 @@
 "AI Models" = "YZ Modelleri";
 "AI model" = "YZ modeli";
 "AI modes and editing by voice use this model." = "YZ modları ve sesle düzenleme bu modeli kullanır.";
+"AI modes keep the model chosen in AI Models." = "YZ modları, “YZ Modelleri” bölümünde seçilen modeli kullanmaya devam eder.";
 "AI modes need Waft+" = "YZ modları için Waft+ gerekir";
 "AI modes need a %@ API key." = "YZ modları için %@ API anahtarı gerekir.";
 "AI modes need a local server and model." = "YZ modları için yerel sunucu ve model gerekir.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Kurulumu Tamamla…";
 "Fix selected text" = "Seçili metni düzelt";
 "Fixing the text…" = "Metin düzeltiliyor…";
+"Fixing" = "Düzeltme";
 "Fn" = "Fn";
 "Follows your instructions." = "Talimatlarınıza uyar.";
 "Forever" = "Süresiz";
@@ -179,7 +181,6 @@
 "Locked" = "Kilitli";
 "Lower other sounds while recording" = "Kayıt sırasında diğer sesleri kıs";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV ve diğerleri";
-"Make it clearer" = "Daha net yap";
 "Make modes with your own instructions, or tune the built-in ones." = "Kendi talimatlarınızla modlar oluşturun ya da yerleşik modları ayarlayın.";
 "Makes fewer mistakes and is still quick." = "Daha az hata yapar ve yine de hızlıdır.";
 "Makes the fewest mistakes, but is slower and pricier." = "En az hatayı yapar ama daha yavaş ve daha pahalıdır.";
@@ -280,6 +281,7 @@
 "Right Option" = "Sağ Option";
 "Right Shift" = "Sağ Shift";
 "Run Again" = "Tekrar Çalıştır";
+"Run it to see what Waft writes." = "Waft’ın ne yazdığını görmek için çalıştırın.";
 "Run the mode to see what it writes." = "Ne yazdığını görmek için modu çalıştırın.";
 "Run" = "Çalıştır";
 "Running" = "Çalışıyor";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "Seçilen mikrofon kullanılamıyor.";
 "The file has no sound to transcribe." = "Dosyada yazıya çevrilecek ses yok.";
 "The languages you chose in Settings › Dictation." = "Ayarlar › Dikte bölümünde seçtiğiniz diller.";
+"The local server's model, chosen in AI Models." = "“YZ Modelleri” bölümünde seçilen yerel sunucu modeli.";
 "The microphone didn't start." = "Mikrofon başlatılamadı.";
 "The microphone has no input channels." = "Mikrofonda giriş kanalı yok.";
 "The microphone stopped after an audio device changed." = "Bir ses aygıtı değiştiği için mikrofon durdu.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Kayıt sırasında mikrofonun ses biçimi değişti.";
 "The microphone's audio format isn't supported." = "Mikrofonun ses biçimi desteklenmiyor.";
 "The quickest and cheapest." = "En hızlı ve en ucuz.";
+"The shortcut that fixes selected text." = "Seçili metni düzelten kısayol.";
 "The speech model %@ isn't downloaded." = "%@ konuşma modeli indirilmemiş.";
 "The speech model doesn't know one of the chosen languages." = "Konuşma modeli seçilen dillerden birini desteklemiyor.";
 "The speech model has no tokenizer." = "Konuşma modelinde belirteçleyici yok.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Konuşma modeli yüklü değil.";
 "The speech model isn't ready yet" = "Konuşma modeli henüz hazır değil";
 "The text appears at the cursor." = "Metin imlecin olduğu yerde görünür.";
+"The translator and the shortcut that translates selected text." = "Çevirmen ve seçili metni çeviren kısayol.";
 "The translator is part of Waft+" = "Çevirmen bir Waft+ özelliğidir";
 "There's no speech in this file." = "Bu dosyada konuşma yok.";
 "These apps get their own mode." = "Bu uygulamaların kendi modu var.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "%@ diline çevriliyor…";
 "Translating…" = "Çevriliyor…";
 "Translation" = "Çeviri";
-"Translations and fixes also untangle long sentences and put the points in order." = "Çeviriler ve düzeltmeler uzun cümleleri de sadeleştirir, düşünceleri sıraya koyar.";
 "Translator (Waft+)…" = "Çevirmen (Waft+)…";
 "Translator" = "Çevirmen";
 "Translator…" = "Çevirmen…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Siz konuşurken Mac’in ses düzeyini dörtte bire indirir, ardından eski haline getirir.";
 "Two-way with" = "İki yönlü çeviri";
 "Two-way" = "İki yönlü";
+"Type something to try" = "Denemek için bir şey yazın";
 "Type, paste, or hold %@ and speak" = "Yazın, yapıştırın ya da %@ tuşunu basılı tutup konuşun";
 "Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kısayolu kullanıyor. Başka bir kısayol seçin.";
 "Unlock Waft+…" = "Waft+’ın Kilidini Aç…";
@@ -430,17 +435,18 @@
 "Website" = "Web sitesi";
 "Welcome to Waft" = "Waft’a hoş geldiniz";
 "What Waft+ adds" = "Waft+ ile gelenler";
+"What the AI model is told to do with your text." = "YZ modeline metninizle ne yapacağı söylenir.";
 "When off, Waft copies the text and you paste it yourself." = "Kapalıyken Waft metni kopyalar, siz de kendiniz yapıştırırsınız.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper bu Mac’te çalışır, bu yüzden ses Mac’ten hiç çıkmaz.";
-"Wording" = "Anlatım";
 "Words dictated each day for the last 7 days" = "Son 7 günde her gün dikte edilen sözcükler";
 "Words" = "Sözcük";
 "Write instructions once and dictate in your own style." = "Talimatları bir kez yazın, kendi tarzınızda dikte edin.";
 "Writing system" = "Yazı sistemi";
 "Writing" = "Yazma";
 "You say" = "Söylediğiniz";
+"You write" = "Yazdığınız";
 "You're all set" = "Her şey hazır";
 "Your changes to these instructions are deleted." = "Bu talimatlarda yaptığınız değişiklikler silinir.";
 "Your free trial has ended." = "Ücretsiz deneme süreniz sona erdi.";
@@ -454,6 +460,7 @@
 "days in a row" = "gün üst üste";
 "detected" = "algılandı";
 "dictations" = "dikte";
+"hey can u send me the report by friday? thanks" = "selam raporu cumaya kadar yollayabilirmisin? sağol";
 "left ⇧" = "sol ⇧";
 "left ⌃" = "sol ⌃";
 "left ⌘" = "sol ⌘";

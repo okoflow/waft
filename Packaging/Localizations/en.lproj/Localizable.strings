@@ -20,6 +20,7 @@
 "AI Models" = "AI Models";
 "AI model" = "AI model";
 "AI modes and editing by voice use this model." = "AI modes and editing by voice use this model.";
+"AI modes keep the model chosen in AI Models." = "AI modes keep the model chosen in AI Models.";
 "AI modes need Waft+" = "AI modes need Waft+";
 "AI modes need a %@ API key." = "AI modes need a %@ API key.";
 "AI modes need a local server and model." = "AI modes need a local server and model.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Finish Setup…";
 "Fix selected text" = "Fix selected text";
 "Fixing the text…" = "Fixing the text…";
+"Fixing" = "Fixing";
 "Fn" = "Fn";
 "Follows your instructions." = "Follows your instructions.";
 "Forever" = "Forever";
@@ -179,7 +181,6 @@
 "Locked" = "Locked";
 "Lower other sounds while recording" = "Lower other sounds while recording";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV, and more";
-"Make it clearer" = "Make it clearer";
 "Make modes with your own instructions, or tune the built-in ones." = "Make modes with your own instructions, or tune the built-in ones.";
 "Makes fewer mistakes and is still quick." = "Makes fewer mistakes and is still quick.";
 "Makes the fewest mistakes, but is slower and pricier." = "Makes the fewest mistakes, but is slower and pricier.";
@@ -280,6 +281,7 @@
 "Right Option" = "Right Option";
 "Right Shift" = "Right Shift";
 "Run Again" = "Run Again";
+"Run it to see what Waft writes." = "Run it to see what Waft writes.";
 "Run the mode to see what it writes." = "Run the mode to see what it writes.";
 "Run" = "Run";
 "Running" = "Running";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "The chosen microphone can't be used.";
 "The file has no sound to transcribe." = "The file has no sound to transcribe.";
 "The languages you chose in Settings › Dictation." = "The languages you chose in Settings › Dictation.";
+"The local server's model, chosen in AI Models." = "The local server's model, chosen in AI Models.";
 "The microphone didn't start." = "The microphone didn't start.";
 "The microphone has no input channels." = "The microphone has no input channels.";
 "The microphone stopped after an audio device changed." = "The microphone stopped after an audio device changed.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "The microphone's audio format changed during the recording.";
 "The microphone's audio format isn't supported." = "The microphone's audio format isn't supported.";
 "The quickest and cheapest." = "The quickest and cheapest.";
+"The shortcut that fixes selected text." = "The shortcut that fixes selected text.";
 "The speech model %@ isn't downloaded." = "The speech model %@ isn't downloaded.";
 "The speech model doesn't know one of the chosen languages." = "The speech model doesn't know one of the chosen languages.";
 "The speech model has no tokenizer." = "The speech model has no tokenizer.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "The speech model isn't loaded.";
 "The speech model isn't ready yet" = "The speech model isn't ready yet";
 "The text appears at the cursor." = "The text appears at the cursor.";
+"The translator and the shortcut that translates selected text." = "The translator and the shortcut that translates selected text.";
 "The translator is part of Waft+" = "The translator is part of Waft+";
 "There's no speech in this file." = "There's no speech in this file.";
 "These apps get their own mode." = "These apps get their own mode.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Translating into %@…";
 "Translating…" = "Translating…";
 "Translation" = "Translation";
-"Translations and fixes also untangle long sentences and put the points in order." = "Translations and fixes also untangle long sentences and put the points in order.";
 "Translator (Waft+)…" = "Translator (Waft+)…";
 "Translator" = "Translator";
 "Translator…" = "Translator…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Turns the Mac's volume down to a quarter while you speak, then back up.";
 "Two-way with" = "Two-way with";
 "Two-way" = "Two-way";
+"Type something to try" = "Type something to try";
 "Type, paste, or hold %@ and speak" = "Type, paste, or hold %@ and speak";
 "Unavailable: another app uses this shortcut. Choose another one." = "Unavailable: another app uses this shortcut. Choose another one.";
 "Unlock Waft+…" = "Unlock Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "Website";
 "Welcome to Waft" = "Welcome to Waft";
 "What Waft+ adds" = "What Waft+ adds";
+"What the AI model is told to do with your text." = "What the AI model is told to do with your text.";
 "When off, Waft copies the text and you paste it yourself." = "When off, Waft copies the text and you paste it yourself.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper runs on this Mac, so audio never leaves it.";
-"Wording" = "Wording";
 "Words dictated each day for the last 7 days" = "Words dictated each day for the last 7 days";
 "Words" = "Words";
 "Write instructions once and dictate in your own style." = "Write instructions once and dictate in your own style.";
 "Writing system" = "Writing system";
 "Writing" = "Writing";
 "You say" = "You say";
+"You write" = "You write";
 "You're all set" = "You're all set";
 "Your changes to these instructions are deleted." = "Your changes to these instructions are deleted.";
 "Your free trial has ended." = "Your free trial has ended.";
@@ -454,6 +460,7 @@
 "days in a row" = "days in a row";
 "detected" = "detected";
 "dictations" = "dictations";
+"hey can u send me the report by friday? thanks" = "hey can u send me the report by friday? thanks";
 "left ⇧" = "left ⇧";
 "left ⌃" = "left ⌃";
 "left ⌘" = "left ⌘";

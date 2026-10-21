@@ -1,3 +1,4 @@
+import Foundation
 import WaftCore
 
 extension AppModel {
@@ -8,6 +9,16 @@ extension AppModel {
             settings: settings,
             pro: pro,
             clipboard: dependencies.clipboard,
+        )
+    }
+
+    static func makeTranslatorTryout(_ dependencies: AppDependencies, settings: SettingsModel, pro: ProModel) -> TryoutModel {
+        TryoutModel(
+            rewriters: dependencies.rewriters,
+            detector: dependencies.languageDetector,
+            settings: settings,
+            pro: pro,
+            defaultSample: String(localized: "hey can u send me the report by friday? thanks"),
         )
     }
 

@@ -107,7 +107,8 @@ struct SettingsTests {
         settings.translation = Translation(target: .german, twoWayLanguage: .english)
         settings.translator.translation = Translation(target: .english, twoWayLanguage: .hebrew)
         settings.translator.source = .hebrew
-        settings.translator.rephrases = true
+        settings.translator.instructions.set("Keep it short.", for: .translate)
+        settings.translator.cloudModel = .smartest
         settings.translator.remember(.hebrew)
         settings.pushToTalkKey = .function
         settings.dictationStart = .tap

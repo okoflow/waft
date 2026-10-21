@@ -4,25 +4,13 @@ import WaftCore
 struct ModeEditorPage: View {
     let mode: Mode
     let settings: SettingsModel
-    let tryout: ModeTryoutModel
+    let tryout: TryoutModel
     let state: SettingsWindowState
 
     private var custom: CustomMode? {
         guard case let .custom(id) = mode else { return nil }
 
         return settings.settings.customMode(id)
-    }
-
-    private var provider: ModelProvider {
-        settings.settings.modelProvider
-    }
-
-    private var instructionsNote: LocalizedStringKey {
-        guard !provider.isCloud, settings.settings.localServer.isOnThisMac else {
-            return "Sent to \(provider.title) with your text."
-        }
-
-        return "Used by \(provider.title) on this Mac."
     }
 
     private var instructions: Binding<String> {
@@ -41,8 +29,12 @@ struct ModeEditorPage: View {
             if let custom {
                 Button("Delete Mode…", role: .destructive) { delete(custom) }
             } else {
-                Button("Reset to Default…", role: .destructive, action: reset)
-                    .disabled(!settings.settings.instructions.isCustomized(mode))
+                ResetInstructionsButton(
+                    title: settings.settings.title(of: mode),
+                    isCustomized: settings.settings.instructions.isCustomized(mode),
+                ) {
+                    settings.settings.instructions.reset(mode)
+                }
             }
         } content: {
             if let custom {
@@ -52,12 +44,16 @@ struct ModeEditorPage: View {
                 }
             }
 
-            SettingsGroup("Instructions", subtitle: instructionsNote) {
-                InputEditor(text: instructions)
-                    .frame(height: Metrics.instructionsHeight)
-            }
+            InstructionsSection(settings: settings, instructions: instructions)
 
-            TryoutSection(mode: mode, tryout: tryout, provider: provider)
+            TryoutSection(
+                tryout: tryout,
+                sampleTitle: "You say",
+                samplePrompt: "Say something to try",
+                idleNote: "Run the mode to see what it writes.",
+            ) {
+                tryout.run(mode)
+            }
         }
         .onAppear(perform: tryout.reset)
     }
@@ -94,80 +90,5 @@ struct ModeEditorPage: View {
 
         close()
         settings.settings.removeCustomMode(custom.id)
-    }
-
-    private func reset() {
-        let confirmation = Confirmation(
-            message: String(localized: "Reset the instructions of “\(settings.settings.title(of: mode))”?"),
-            detail: String(localized: "Your changes to these instructions are deleted."),
-            action: String(localized: "Reset to Default"),
-        )
-
-        if confirmation.ask() {
-            settings.settings.instructions.reset(mode)
-        }
-    }
-}
-
-private struct TryoutSection: View {
-    let mode: Mode
-    @Bindable var tryout: ModeTryoutModel
-
-    let provider: ModelProvider
-
-    var body: some View {
-        SettingsSection("Try it") {
-            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                Text("You say")
-                    .detailText()
-
-                InputField("You say", prompt: "Say something to try", text: $tryout.sample)
-            }
-            .settingsRowPadding()
-
-            RowDivider()
-
-            HStack(spacing: Metrics.rowSpacing) {
-                VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                    Text("Waft writes")
-                        .detailText()
-
-                    result
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                Button(tryout.phase == .idle ? "Run" : "Run Again") { tryout.run(mode) }
-                    .disabled(tryout.phase == .running || tryout.sample.isBlank)
-            }
-            .settingsRowPadding()
-        }
-    }
-
-    @ViewBuilder
-    private var result: some View {
-        switch tryout.phase {
-        case .idle:
-            Text("Run the mode to see what it writes.")
-                .font(.rowTitle)
-                .foregroundStyle(.tertiary)
-
-        case .running:
-            ProgressView()
-                .controlSize(.small)
-
-        case let .finished(processed):
-            Text(processed.text)
-                .font(.rowTitle)
-                .textSelection(.enabled)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentDirection(of: processed.text)
-                .fixedSize(horizontal: false, vertical: true)
-
-            if let fallback = processed.fallback {
-                Text(fallback.message(for: provider))
-                    .font(.rowDetail)
-                    .foregroundStyle(Palette.warning)
-            }
-        }
     }
 }

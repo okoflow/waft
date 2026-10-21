@@ -6,6 +6,8 @@ struct TranslatorSettingsPane: View {
 
     let shortcuts: GlobalShortcutController
     let shortcutRecorder: ShortcutRecorder
+    let pro: ProModel
+    let state: SettingsWindowState
     let openTranslator: () -> Void
 
     private var translation: WaftCore.Translation {
@@ -53,13 +55,9 @@ struct TranslatorSettingsPane: View {
             }
         }
 
-        SettingsSection("Wording", isPro: true) {
-            ToggleRow(
-                "Make it clearer",
-                isOn: $settings.settings.translator.rephrases,
-                description: "Translations and fixes also untangle long sentences and put the points in order.",
-            )
-        }
+        TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
+
+        TranslatorModelSection(settings: settings, state: state)
 
         SettingsSection("Shortcuts", subtitle: "They work in any app.") {
             shortcutRow(.translator)

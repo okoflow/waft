@@ -3,7 +3,8 @@ package struct TranslatorSettings: Codable, Equatable, Sendable {
 
     package var source: Language?
     package var translation: Translation
-    package var rephrases = false
+    package var instructions = TranslatorInstructions()
+    package var cloudModel = CloudModel.balanced
     package private(set) var recentLanguages: [Language] = []
 
     package init(translation: Translation = Translation()) {
@@ -15,7 +16,8 @@ package struct TranslatorSettings: Codable, Equatable, Sendable {
 
         source = container.decodeIfValid(.source)
         translation = container.decode(.translation, default: Translation())
-        rephrases = container.decode(.rephrases, default: rephrases)
+        instructions = container.decode(.instructions, default: instructions)
+        cloudModel = container.decode(.cloudModel, default: cloudModel)
         recentLanguages = Array(container.decodeValidElements(.recentLanguages).prefix(Self.maximumRecentCount))
     }
 

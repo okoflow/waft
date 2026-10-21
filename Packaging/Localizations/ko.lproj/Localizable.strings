@@ -20,6 +20,7 @@
 "AI Models" = "AI 모델";
 "AI model" = "AI 모델";
 "AI modes and editing by voice use this model." = "AI 모드와 ‘음성으로 편집’에 이 모델을 사용합니다.";
+"AI modes keep the model chosen in AI Models." = "AI 모드는 ‘AI 모델’에서 선택한 모델을 그대로 사용합니다.";
 "AI modes need Waft+" = "AI 모드에는 Waft+가 필요함";
 "AI modes need a %@ API key." = "AI 모드에는 %@ API 키가 필요합니다.";
 "AI modes need a local server and model." = "AI 모드에는 로컬 서버와 모델이 필요합니다.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "설정 마치기…";
 "Fix selected text" = "선택한 텍스트 교정";
 "Fixing the text…" = "텍스트 교정 중…";
+"Fixing" = "교정";
 "Fn" = "Fn";
 "Follows your instructions." = "지시문을 따릅니다.";
 "Forever" = "영구";
@@ -179,7 +181,6 @@
 "Locked" = "잠김";
 "Lower other sounds while recording" = "녹음 중 다른 소리 줄이기";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV 등";
-"Make it clearer" = "더 명확하게 다듬기";
 "Make modes with your own instructions, or tune the built-in ones." = "나만의 지시문으로 모드를 만들거나 기본 제공 모드를 조정할 수 있습니다.";
 "Makes fewer mistakes and is still quick." = "오류가 적고 여전히 빠릅니다.";
 "Makes the fewest mistakes, but is slower and pricier." = "오류가 가장 적지만 더 느리고 비쌉니다.";
@@ -280,6 +281,7 @@
 "Right Option" = "오른쪽 Option";
 "Right Shift" = "오른쪽 Shift";
 "Run Again" = "다시 실행";
+"Run it to see what Waft writes." = "실행하면 Waft가 쓴 결과를 볼 수 있습니다.";
 "Run the mode to see what it writes." = "모드를 실행하면 결과를 볼 수 있습니다.";
 "Run" = "실행";
 "Running" = "실행 중";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "선택한 마이크를 사용할 수 없습니다.";
 "The file has no sound to transcribe." = "이 파일에는 전사할 오디오가 없습니다.";
 "The languages you chose in Settings › Dictation." = "설정 › 받아쓰기에서 선택한 언어입니다.";
+"The local server's model, chosen in AI Models." = "‘AI 모델’에서 선택한 로컬 서버의 모델입니다.";
 "The microphone didn't start." = "마이크를 시작하지 못했습니다.";
 "The microphone has no input channels." = "마이크에 입력 채널이 없습니다.";
 "The microphone stopped after an audio device changed." = "오디오 기기가 바뀐 후 마이크가 멈췄습니다.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "녹음 중에 마이크의 오디오 형식이 바뀌었습니다.";
 "The microphone's audio format isn't supported." = "마이크의 오디오 형식을 지원하지 않습니다.";
 "The quickest and cheapest." = "가장 빠르고 저렴합니다.";
+"The shortcut that fixes selected text." = "선택한 텍스트를 교정하는 단축키입니다.";
 "The speech model %@ isn't downloaded." = "%@ 음성 인식 모델이 다운로드되지 않았습니다.";
 "The speech model doesn't know one of the chosen languages." = "음성 인식 모델이 선택한 언어 중 하나를 지원하지 않습니다.";
 "The speech model has no tokenizer." = "음성 인식 모델에 토크나이저가 없습니다.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "음성 인식 모델이 로드되지 않았습니다.";
 "The speech model isn't ready yet" = "음성 인식 모델이 아직 준비되지 않았습니다";
 "The text appears at the cursor." = "커서 위치에 텍스트가 입력됩니다.";
+"The translator and the shortcut that translates selected text." = "번역기와 선택한 텍스트를 번역하는 단축키입니다.";
 "The translator is part of Waft+" = "번역기는 Waft+ 기능입니다";
 "There's no speech in this file." = "이 파일에는 말소리가 없습니다.";
 "These apps get their own mode." = "다음 앱에는 각각의 모드가 적용됩니다.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "%@로 번역 중…";
 "Translating…" = "번역 중…";
 "Translation" = "번역";
-"Translations and fixes also untangle long sentences and put the points in order." = "번역과 교정 시 긴 문장을 풀어 쓰고 요점을 순서대로 정리합니다.";
 "Translator (Waft+)…" = "번역기(Waft+)…";
 "Translator" = "번역기";
 "Translator…" = "번역기…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "말하는 동안 Mac의 음량을 4분의 1로 줄였다가 다시 되돌립니다.";
 "Two-way with" = "양방향 번역";
 "Two-way" = "양방향";
+"Type something to try" = "시험해 볼 내용을 입력하세요";
 "Type, paste, or hold %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 길게 누른 채 말하세요";
 "Unavailable: another app uses this shortcut. Choose another one." = "사용할 수 없음: 다른 앱에서 이 단축키를 사용하고 있습니다. 다른 단축키를 선택하세요.";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
@@ -430,17 +435,18 @@
 "Website" = "웹사이트";
 "Welcome to Waft" = "Waft에 오신 것을 환영합니다";
 "What Waft+ adds" = "Waft+로 추가되는 기능";
+"What the AI model is told to do with your text." = "AI 모델이 텍스트로 무엇을 할지 알려 주는 지시문입니다.";
 "When off, Waft copies the text and you paste it yourself." = "끄면 Waft가 텍스트를 복사만 하며, 붙여넣기는 직접 해야 합니다.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "음성 인식 모델이 준비되면 입력란을 클릭하고 %@ 키를 길게 누른 채 “안녕하세요, Waft”라고 말하세요.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "음성 인식 모델이 준비되면 입력란을 클릭하고 %@ 키를 누른 뒤 “안녕하세요, Waft”라고 말하고 다시 누르세요.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper가 이 Mac에서 실행되므로 오디오가 Mac 밖으로 나가지 않습니다.";
-"Wording" = "표현";
 "Words dictated each day for the last 7 days" = "최근 7일 동안 매일 받아쓴 단어 수";
 "Words" = "단어 수";
 "Write instructions once and dictate in your own style." = "지시문을 한 번 써 두면 나만의 스타일로 받아쓸 수 있습니다.";
 "Writing system" = "문자 체계";
 "Writing" = "글쓰기";
 "You say" = "말한 내용";
+"You write" = "입력한 내용";
 "You're all set" = "모든 준비가 끝났습니다";
 "Your changes to these instructions are deleted." = "이 지시문에 대한 변경 사항이 삭제됩니다.";
 "Your free trial has ended." = "무료 체험이 종료되었습니다.";
@@ -454,6 +460,7 @@
 "days in a row" = "연속 일수";
 "detected" = "감지됨";
 "dictations" = "받아쓰기 수";
+"hey can u send me the report by friday? thanks" = "저기 금욜까지 보고서 보내줄수 있어? 고마워";
 "left ⇧" = "왼쪽 ⇧";
 "left ⌃" = "왼쪽 ⌃";
 "left ⌘" = "왼쪽 ⌘";

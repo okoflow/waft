@@ -18,12 +18,14 @@ struct SettingsWindowStateTests {
     }
 
     @Test
-    func `closes the mode editor when the selection changes`() {
+    func `closes the editors when the selection changes`() {
         let state = SettingsWindowState()
         state.editedMode = .clean
+        state.editedTextTask = .fix
         state.selection = .writing
 
         #expect(state.editedMode == nil)
+        #expect(state.editedTextTask == nil)
     }
 
     @Test

@@ -4,23 +4,17 @@ import WaftCore
 
 struct TranscriptProcessorTextTests {
     @Test
-    func `reworks text with the edit time limit and the clearer wording`() async throws {
+    func `reworks text with the edit time limit and the instructions of the setup`() async throws {
         let log = RewriteLog()
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Unused.")
+        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Fix only the typos.")
         let processor = TranscriptProcessor.answering(.success("We meet on Friday."), log: log)
 
-        let fixed = try await processor.rework(
-            "we meat on friday",
-            in: .english,
-            as: .fix,
-            rephrases: true,
-            setup: setup,
-        )
+        let fixed = try await processor.rework("we meat on friday", in: .english, as: .fix, setup: setup)
         let request = try #require(await log.requests.first)
 
         #expect(fixed == "We meet on Friday.")
         #expect(request.deadline == .seconds(30))
-        #expect(RewritePrompt.system(for: request).contains("make it read clearly"))
+        #expect(RewritePrompt.system(for: request).hasPrefix("Fix only the typos.\n"))
     }
 
     @Test(arguments: [
@@ -41,8 +35,7 @@ struct TranscriptProcessorTextTests {
             "see you tomorrow",
             in: .english,
             as: task,
-            rephrases: false,
-            setup: settings.rewriteSetup(for: .translate),
+            setup: settings.translatorSetup(for: task.kind),
         )
 
         #expect(reworked == expected)
@@ -54,7 +47,7 @@ struct TranscriptProcessorTextTests {
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Unused.")
 
         await #expect(throws: RewriteError.timeout) {
-            try await processor.rework("hi", in: .english, as: .fix, rephrases: false, setup: setup)
+            try await processor.rework("hi", in: .english, as: .fix, setup: setup)
         }
     }
 }

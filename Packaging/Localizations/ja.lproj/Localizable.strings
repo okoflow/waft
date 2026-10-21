@@ -20,6 +20,7 @@
 "AI Models" = "AIモデル";
 "AI model" = "AIモデル";
 "AI modes and editing by voice use this model." = "AIモードと「音声で編集」はこのモデルを使用します。";
+"AI modes keep the model chosen in AI Models." = "AIモードは、「AIモデル」で選択したモデルをそのまま使用します。";
 "AI modes need Waft+" = "AIモードにはWaft+が必要です";
 "AI modes need a %@ API key." = "AIモードには%@のAPIキーが必要です。";
 "AI modes need a local server and model." = "AIモードにはローカルサーバとモデルが必要です。";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "セットアップを完了…";
 "Fix selected text" = "選択したテキストを修正";
 "Fixing the text…" = "テキストを修正中…";
+"Fixing" = "修正";
 "Fn" = "Fn";
 "Follows your instructions." = "自分の指示に従います。";
 "Forever" = "無期限";
@@ -179,7 +181,6 @@
 "Locked" = "ロック中";
 "Lower other sounds while recording" = "録音中はほかのサウンドを小さくする";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3、M4A、WAV、MP4、MOVなど";
-"Make it clearer" = "わかりやすく言い換える";
 "Make modes with your own instructions, or tune the built-in ones." = "自分の指示でモードを作ったり、標準のモードを調整したりできます。";
 "Makes fewer mistakes and is still quick." = "誤りが少なく、十分に高速です。";
 "Makes the fewest mistakes, but is slower and pricier." = "誤りが最も少ないですが、遅く、高価です。";
@@ -280,6 +281,7 @@
 "Right Option" = "右Option";
 "Right Shift" = "右Shift";
 "Run Again" = "もう一度実行";
+"Run it to see what Waft writes." = "実行すると、Waftの出力結果を確認できます。";
 "Run the mode to see what it writes." = "モードを実行すると、出力結果を確認できます。";
 "Run" = "実行";
 "Running" = "実行中";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "選択したマイクを使用できません。";
 "The file has no sound to transcribe." = "このファイルには文字起こしできるオーディオがありません。";
 "The languages you chose in Settings › Dictation." = "「設定」›「音声入力」で選択した言語です。";
+"The local server's model, chosen in AI Models." = "「AIモデル」で選択した、ローカルサーバのモデルです。";
 "The microphone didn't start." = "マイクを起動できませんでした。";
 "The microphone has no input channels." = "マイクに入力チャンネルがありません。";
 "The microphone stopped after an audio device changed." = "オーディオデバイスが変わったため、マイクが停止しました。";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "録音中にマイクのオーディオフォーマットが変わりました。";
 "The microphone's audio format isn't supported." = "マイクのオーディオフォーマットに対応していません。";
 "The quickest and cheapest." = "最速で、最も安価です。";
+"The shortcut that fixes selected text." = "選択したテキストを修正するショートカットです。";
 "The speech model %@ isn't downloaded." = "音声認識モデル「%@」がダウンロードされていません。";
 "The speech model doesn't know one of the chosen languages." = "選択した言語のいずれかに、音声認識モデルが対応していません。";
 "The speech model has no tokenizer." = "音声認識モデルにトークナイザがありません。";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "音声認識モデルが読み込まれていません。";
 "The speech model isn't ready yet" = "音声認識モデルの準備がまだできていません";
 "The text appears at the cursor." = "カーソル位置にテキストが入力されます。";
+"The translator and the shortcut that translates selected text." = "翻訳ツールと、選択したテキストを翻訳するショートカットです。";
 "The translator is part of Waft+" = "翻訳ツールはWaft+の機能です";
 "There's no speech in this file." = "このファイルには話し声が含まれていません。";
 "These apps get their own mode." = "これらのアプリには個別のモードが適用されます。";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "%@に翻訳中…";
 "Translating…" = "翻訳中…";
 "Translation" = "翻訳";
-"Translations and fixes also untangle long sentences and put the points in order." = "翻訳や修正の際に、長い文をほぐして要点を順序立てて整理します。";
 "Translator (Waft+)…" = "翻訳ツール（Waft+）…";
 "Translator" = "翻訳ツール";
 "Translator…" = "翻訳ツール…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "話している間はMacの音量を4分の1にし、終わったら元に戻します。";
 "Two-way with" = "双方向翻訳";
 "Two-way" = "双方向";
+"Type something to try" = "試しに何かタイプしてください";
 "Type, paste, or hold %@ and speak" = "入力・ペーストするか、%@キーを押したまま話してください";
 "Unavailable: another app uses this shortcut. Choose another one." = "使用できません：ほかのアプリがこのショートカットを使用しています。別のショートカットを選択してください。";
 "Unlock Waft+…" = "Waft+のロックを解除…";
@@ -430,17 +435,18 @@
 "Website" = "Webサイト";
 "Welcome to Waft" = "Waftへようこそ";
 "What Waft+ adds" = "Waft+で追加される機能";
+"What the AI model is told to do with your text." = "テキストをどう扱うかをAIモデルに伝える指示です。";
 "When off, Waft copies the text and you paste it yourself." = "オフにすると、Waftはテキストをコピーするだけになり、ペーストは手動で行います。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押して「こんにちは、Waft」と話してから、もう一度押してください。";
 "Whisper runs on this Mac, so audio never leaves it." = "WhisperはこのMac上で動作するため、音声がMacの外に出ることはありません。";
-"Wording" = "表現";
 "Words dictated each day for the last 7 days" = "過去7日間に音声入力した日ごとの単語数";
 "Words" = "単語数";
 "Write instructions once and dictate in your own style." = "指示を一度書けば、自分のスタイルで音声入力できます。";
 "Writing system" = "文字体系";
 "Writing" = "テキスト";
 "You say" = "話した内容";
+"You write" = "入力した内容";
 "You're all set" = "準備ができました";
 "Your changes to these instructions are deleted." = "この指示への変更は削除されます。";
 "Your free trial has ended." = "無料トライアルは終了しました。";
@@ -454,6 +460,7 @@
 "days in a row" = "連続日数";
 "detected" = "検出済み";
 "dictations" = "音声入力の回数";
+"hey can u send me the report by friday? thanks" = "ねぇ金曜までにレポートおくってくれる？ありがと";
 "left ⇧" = "左⇧";
 "left ⌃" = "左⌃";
 "left ⌘" = "左⌘";

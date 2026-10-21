@@ -20,7 +20,6 @@ struct TranslatorModelTests {
         #expect(rewriter.requests.count == 1)
         #expect(request.text == "Привет")
         #expect(request.textTask == .translate(from: nil, into: .english))
-        #expect(!request.rephrases)
         #expect(translator.detected == .russian)
         #expect(!translator.isTranslating)
     }
@@ -58,17 +57,19 @@ struct TranslatorModelTests {
     }
 
     @Test
-    func `asks for clearer wording when it is on`() async throws {
-        let rewriter = FakeTextRewriter(.success("Hello."))
+    func `translates by the instructions and the model of the translator`() async throws {
+        settings.settings.translator.instructions.set("Translate like a pirate.", for: .translate)
+        settings.settings.translator.cloudModel = .smartest
+        let rewriter = FakeTextRewriter(.success("Ahoy."))
         let translator = model(rewriter, detects: .russian)
-        settings.settings.translator.rephrases = true
         translator.input = "Привет"
 
-        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
+        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Ahoy." })
 
         let request = try #require(rewriter.requests.first)
 
-        #expect(request.rephrases)
+        #expect(request.textInstructions == "Translate like a pirate.")
+        #expect(request.cloudModel == .smartest)
     }
 
     @Test

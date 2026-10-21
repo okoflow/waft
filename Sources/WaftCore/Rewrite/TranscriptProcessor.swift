@@ -77,13 +77,12 @@ package struct TranscriptProcessor: Sendable {
         _ text: String,
         in language: Language,
         as task: TextTask,
-        rephrases: Bool,
         setup: RewriteSetup,
     ) async throws(RewriteError) -> String {
         let request = RewriteRequest(
             text: text,
             language: language,
-            kind: .text(task, rephrases: rephrases),
+            kind: .text(task, instructions: setup.instructions),
             localServer: setup.serverInUse,
             cloudModel: setup.cloudModelInUse,
             deadline: setup.editDeadline,

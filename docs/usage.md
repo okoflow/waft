@@ -142,9 +142,12 @@ speak; the AI model translates half a second after you stop typing.
 - A click on the translation copies all of it; select a part to copy only
   that.
 - The arrows between the halves swap the languages and the texts.
-- **Make it clearer** in Settings › Translator also untangles long sentences
-  and puts the points in order, in the window and in the shortcuts on
-  selected text.
+- The arrow next to **Translation** or **Fixing** in Settings › Translator
+  opens its **Instructions**, which you can rewrite and try, as for a mode.
+  **Reset to Default…** restores them after you confirm.
+- **Model** in Settings › Translator picks the tier for Claude or OpenAI,
+  Sonnet 5.5 or GPT-6.1 Sol by default, apart from the one the AI modes use. A
+  local server translates with its own model.
 
 ### Selected text
 

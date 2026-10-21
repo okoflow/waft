@@ -20,6 +20,7 @@
 "AI Models" = "Моделі ШІ";
 "AI model" = "Модель ШІ";
 "AI modes and editing by voice use this model." = "Режими ШІ й редагування голосом використовують цю модель.";
+"AI modes keep the model chosen in AI Models." = "Режими ШІ використовують модель, вибрану в розділі «Моделі ШІ».";
 "AI modes need Waft+" = "для режимів ШІ потрібен Waft+";
 "AI modes need a %@ API key." = "Для режимів ШІ потрібен ключ API %@.";
 "AI modes need a local server and model." = "Для режимів ШІ потрібні локальний сервер і модель.";
@@ -133,6 +134,7 @@
 "Finish Setup…" = "Завершити налаштування…";
 "Fix selected text" = "Виправити виділений текст";
 "Fixing the text…" = "Виправлення тексту…";
+"Fixing" = "Виправлення";
 "Fn" = "Fn";
 "Follows your instructions." = "Виконує ваші інструкції.";
 "Forever" = "Завжди";
@@ -179,7 +181,6 @@
 "Locked" = "Заблоковано";
 "Lower other sounds while recording" = "Приглушувати інші звуки під час запису";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV та інші";
-"Make it clearer" = "Робити текст чіткішим";
 "Make modes with your own instructions, or tune the built-in ones." = "Створюйте режими з власними інструкціями або налаштовуйте вбудовані.";
 "Makes fewer mistakes and is still quick." = "Помиляється рідше й усе ще швидка.";
 "Makes the fewest mistakes, but is slower and pricier." = "Помиляється найрідше, але повільніша й дорожча.";
@@ -280,6 +281,7 @@
 "Right Option" = "Option справа";
 "Right Shift" = "Shift справа";
 "Run Again" = "Ще раз";
+"Run it to see what Waft writes." = "Запустіть, щоб побачити, що напише Waft.";
 "Run the mode to see what it writes." = "Запустіть режим, щоб побачити результат.";
 "Run" = "Запустити";
 "Running" = "Працює";
@@ -348,6 +350,7 @@
 "The chosen microphone can't be used." = "Не вдається використати вибраний мікрофон.";
 "The file has no sound to transcribe." = "У файлі немає звуку для розпізнавання.";
 "The languages you chose in Settings › Dictation." = "Мови, вибрані в Параметрах › Диктування.";
+"The local server's model, chosen in AI Models." = "Модель локального сервера, вибрана в розділі «Моделі ШІ».";
 "The microphone didn't start." = "Мікрофон не запустився.";
 "The microphone has no input channels." = "Мікрофон не має вхідних каналів.";
 "The microphone stopped after an audio device changed." = "Мікрофон зупинився після зміни аудіопристрою.";
@@ -355,6 +358,7 @@
 "The microphone's audio format changed during the recording." = "Формат звуку мікрофона змінився під час запису.";
 "The microphone's audio format isn't supported." = "Формат звуку мікрофона не підтримується.";
 "The quickest and cheapest." = "Найшвидша й найдешевша.";
+"The shortcut that fixes selected text." = "Комбінація клавіш, яка виправляє виділений текст.";
 "The speech model %@ isn't downloaded." = "Модель мовлення %@ не викачано.";
 "The speech model doesn't know one of the chosen languages." = "Модель мовлення не підтримує одну з вибраних мов.";
 "The speech model has no tokenizer." = "Модель мовлення не має токенізатора.";
@@ -362,6 +366,7 @@
 "The speech model isn't loaded." = "Модель мовлення не завантажено.";
 "The speech model isn't ready yet" = "Модель мовлення ще не готова";
 "The text appears at the cursor." = "Текст зʼявиться там, де курсор.";
+"The translator and the shortcut that translates selected text." = "Перекладач і комбінація клавіш, яка перекладає виділений текст.";
 "The translator is part of Waft+" = "Перекладач входить до Waft+";
 "There's no speech in this file." = "У цьому файлі немає мовлення.";
 "These apps get their own mode." = "Ці програми мають власний режим.";
@@ -388,7 +393,6 @@
 "Translating into %@…" = "Переклад: %@…";
 "Translating…" = "Переклад…";
 "Translation" = "Переклад";
-"Translations and fixes also untangle long sentences and put the points in order." = "Переклади й виправлення заодно розплутують довгі речення та впорядковують думки.";
 "Translator (Waft+)…" = "Перекладач (Waft+)…";
 "Translator" = "Перекладач";
 "Translator…" = "Перекладач…";
@@ -398,6 +402,7 @@
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Зменшує гучність Mac до чверті, поки ви говорите, а потім повертає її.";
 "Two-way with" = "Двосторонній переклад";
 "Two-way" = "Двосторонній";
+"Type something to try" = "Введіть щось для перевірки";
 "Type, paste, or hold %@ and speak" = "Введіть, вставте або утримуйте %@ і говоріть";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: цю комбінацію використовує інша програма. Виберіть іншу.";
 "Unlock Waft+…" = "Розблокувати Waft+…";
@@ -430,17 +435,18 @@
 "Website" = "Вебсайт";
 "Welcome to Waft" = "Вітаємо в Waft";
 "What Waft+ adds" = "Що дає Waft+";
+"What the AI model is told to do with your text." = "Що модель ШІ має робити з вашим текстом.";
 "When off, Waft copies the text and you paste it yourself." = "Якщо вимкнено, Waft копіює текст, а вставляєте його ви.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Коли модель мовлення буде готова, клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Коли модель мовлення буде готова, клацніть у полі, натисніть %@, скажіть «Привіт, Waft» і натисніть клавішу ще раз.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper працює на цьому Mac, тож звук нікуди не передається.";
-"Wording" = "Формулювання";
 "Words dictated each day for the last 7 days" = "Слова, продиктовані за кожен з останніх 7 днів";
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишіть інструкції один раз і диктуйте у своєму стилі.";
 "Writing system" = "Писемність";
 "Writing" = "Текст";
 "You say" = "Ви кажете";
+"You write" = "Ви пишете";
 "You're all set" = "Усе готово";
 "Your changes to these instructions are deleted." = "Ваші зміни в цих інструкціях буде видалено.";
 "Your free trial has ended." = "Безкоштовний пробний період закінчився.";
@@ -454,6 +460,7 @@
 "days in a row" = "днів поспіль";
 "detected" = "визначено";
 "dictations" = "усього диктувань";
+"hey can u send me the report by friday? thanks" = "привіт скинь плз звіт до пʼятниці? дяки";
 "left ⇧" = "⇧ зліва";
 "left ⌃" = "⌃ зліва";
 "left ⌘" = "⌘ зліва";
