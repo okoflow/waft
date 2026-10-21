@@ -28,6 +28,7 @@ struct TranslatorSettingsTests {
     @Test
     func `decodes leniently and keeps at most three recent languages`() throws {
         let json = #"{"source":"xx","cloudModel":"huge","recentLanguages":["de","xx","fr","ja","ko"]}"#
+
         let settings = try JSONDecoder().decode(TranslatorSettings.self, from: Data(json.utf8))
 
         #expect(settings.source == nil)
@@ -40,6 +41,7 @@ struct TranslatorSettingsTests {
     @Test
     func `drops the old clearer wording flag and keeps the other settings`() throws {
         let json = #"{"source":"de","translation":{"target":"fr"},"rephrases":true,"recentLanguages":["de"]}"#
+
         let settings = try JSONDecoder().decode(TranslatorSettings.self, from: Data(json.utf8))
         var expected = TranslatorSettings(translation: Translation(target: .french))
         expected.source = .german

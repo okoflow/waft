@@ -8,6 +8,7 @@ struct TranscriptProcessorTests {
     @Test
     func `pastes the raw transcript in raw mode`() async {
         let log = RewriteLog()
+
         let processed = await process("um hello there", mode: .raw, log: log)
 
         #expect(processed == ProcessedText(text: "um hello there", mode: .raw))
@@ -25,6 +26,7 @@ struct TranscriptProcessorTests {
     func `pastes a snippet spoken on its own without rewriting`(mode: Mode) async {
         let log = RewriteLog()
         let vocabulary = Vocabulary(terms: [], snippets: [Vocabulary.Snippet(trigger: "my address", text: "1 Infinite Loop")])
+
         let processed = await process("My address.", mode: mode, vocabulary: vocabulary, log: log)
 
         #expect(processed == ProcessedText(text: "1 Infinite Loop", mode: .raw))
@@ -54,6 +56,7 @@ struct TranscriptProcessorTests {
     @Test
     func `expands snippets inside the processed text`() async {
         let vocabulary = Vocabulary(terms: [], snippets: [Vocabulary.Snippet(trigger: "brb", text: "be right back")])
+
         let processed = await process("ok brb", mode: .light, vocabulary: vocabulary)
 
         #expect(processed.text == "Ok be right back.")
@@ -62,6 +65,7 @@ struct TranscriptProcessorTests {
     @Test(arguments: [(Mode.clean, "So the meeting is on Friday."), (.custom(UUID()), "Итак, встреча в пятницу.")])
     func `uses the cloud answer for an AI mode, in any script for a custom one`(mode: Mode, answer: String) async throws {
         let log = RewriteLog()
+
         let processed = await process("um so the meeting is on friday", mode: mode, answer: .success(answer), log: log)
         let request = try #require(await log.requests.first)
 
@@ -89,6 +93,7 @@ struct TranscriptProcessorTests {
     @Test(arguments: [Mode.clean, .translate, .custom(UUID())])
     func `skips the AI model when nothing but hesitations was said`(mode: Mode) async {
         let log = RewriteLog()
+
         let processed = await process("um, uh", mode: mode, log: log)
 
         #expect(processed == ProcessedText(text: "", mode: .light))
@@ -102,6 +107,7 @@ struct TranscriptProcessorTests {
     ])
     func `asks for Pro only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
         let log = RewriteLog()
+
         let processed = await process("see you tomorrow", mode: mode, allowsAI: false, log: log)
 
         #expect(processed == expected)
@@ -138,7 +144,9 @@ struct TranscriptProcessorTests {
     func `sends the rewrite with the server to the local server and gives an edit more time`() async throws {
         let log = RewriteLog()
         let server = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")
+
         let setup = RewriteSetup(provider: .localServer, instructions: "Clean.", localServer: server)
+
         let processed = await process("hello", mode: .formal, setup: setup, answer: .success("From Claude."), log: log)
         let edited = try await edit("Text.", following: "shorter", answer: .failure(.offline), setup: setup, log: log)
         let requests = await log.requests
@@ -154,6 +162,7 @@ struct TranscriptProcessorTests {
     func `asks for the translation target`() async throws {
         let log = RewriteLog()
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: Translation(target: .german))
+
         let processed = await process(
             "see you tomorrow",
             mode: .translate,
@@ -173,6 +182,7 @@ struct TranscriptProcessorTests {
         let log = RewriteLog()
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean.", translation: Translation(target: .german))
         _ = await process("hello", mode: mode, setup: setup, answer: .success("Hello."), log: log)
+
         let request = try #require(await log.requests.first)
 
         #expect(!RewritePrompt.userMessage(for: request).contains("Translate into"))
@@ -181,6 +191,7 @@ struct TranscriptProcessorTests {
     @Test
     func `returns the edited text`() async throws {
         let log = RewriteLog()
+
         let edited = try await edit(
             "A rather long sentence.",
             following: "make it shorter",

@@ -12,6 +12,7 @@ struct RewriteDeadlineTests {
     @Test
     func `times out a slow rewrite without waiting for it`() async {
         let clock = ContinuousClock()
+
         let start = clock.now
 
         await #expect(throws: RewriteError.timeout) {

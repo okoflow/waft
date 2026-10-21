@@ -145,7 +145,7 @@ private struct SubtitleCue {
     }
 
     private static func seconds(_ timestamp: String) -> TimeInterval? {
-        let parts = timestamp.split(whereSeparator: { $0 == ":" || $0 == "," }).compactMap { Double($0) }
+        let parts = timestamp.split(whereSeparator: { [":", ","].contains($0) }).compactMap { Double($0) }
         guard parts.count == 4 else { return nil }
 
         return parts[0] * 3600 + parts[1] * 60 + parts[2] + parts[3] / 1000

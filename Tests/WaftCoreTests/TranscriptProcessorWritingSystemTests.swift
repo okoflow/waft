@@ -10,8 +10,10 @@ struct TranscriptProcessorWritingSystemTests {
     ])
     func `keeps each translation as answered`(spoken: Language, variant: WritingVariant?, text: String, answer: String) async {
         let translation = Translation(target: .english, twoWayLanguage: .russian)
+
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
         let reply = Result<String, RewriteError>.success(answer)
+
         let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
 
         #expect(processed == ProcessedText(text: answer, mode: .translate))
@@ -38,6 +40,7 @@ struct TranscriptProcessorWritingSystemTests {
         let setup = settings.rewriteSetup(for: .translate)
         let reply = Result<String, RewriteError>.success(answer)
         let variant = variants.variant(for: spoken)
+
         let processed = await process("hello", mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
 
         #expect(processed == ProcessedText(text: expected, mode: .translate))
@@ -69,6 +72,7 @@ struct TranscriptProcessorWritingSystemTests {
     ])
     func `keeps a custom answer in the script the model wrote`(spoken: Language, variant: WritingVariant, answer: String) async {
         let reply = Result<String, RewriteError>.success(answer)
+
         let processed = await process("hello", mode: .custom(UUID()), language: spoken, variant: variant, answer: reply)
 
         #expect(processed.text == answer)
@@ -77,6 +81,7 @@ struct TranscriptProcessorWritingSystemTests {
     @Test
     func `writes the text in the chosen script and keeps a snippet as written`() async {
         let vocabulary = Vocabulary(terms: [], snippets: [Vocabulary.Snippet(trigger: "brb", text: "马上回来")])
+
         let processed = await process("这是测试 brb", mode: .light, language: .chinese, variant: .traditional, vocabulary: vocabulary)
 
         #expect(processed.text == "這是測試 马上回来。")

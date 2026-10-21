@@ -67,6 +67,7 @@ struct HallucinationFilterTests {
     @Test
     func `drops an echo of several dictionary terms`() {
         let vocabulary = ["Waft", "Kubernetes"]
+
         let prompt = WhisperPrompt.text(for: .japanese, variant: nil, vocabulary: vocabulary)
 
         #expect(HallucinationFilter.isHallucination("Waft, Kubernetes.", in: .japanese, prompt: prompt, vocabulary: vocabulary))
