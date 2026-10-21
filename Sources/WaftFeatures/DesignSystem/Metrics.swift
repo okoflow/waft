@@ -21,6 +21,7 @@ enum Metrics {
     static let controlSpacing: CGFloat = 8
     static let inlineSpacing: CGFloat = 6
     static let labelSpacing: CGFloat = 2
+    static let heroSpacing: CGFloat = 4
     static let controlHeight: CGFloat = 24
     static let largeControlHeight: CGFloat = 32
     static let controlPadding: CGFloat = 12

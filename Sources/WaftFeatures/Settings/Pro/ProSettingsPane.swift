@@ -52,7 +52,7 @@ private struct ProHero: View {
         HStack(spacing: Metrics.rowSpacing) {
             AppIcon(size: Metrics.cardIconSize)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: Metrics.heroSpacing) {
                 HStack(spacing: Metrics.inlineSpacing) {
                     Text(verbatim: "Waft")
                         .font(.proTitle)
