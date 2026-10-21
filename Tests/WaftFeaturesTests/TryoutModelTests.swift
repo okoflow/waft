@@ -24,6 +24,29 @@ struct TryoutModelTests {
         #expect(RewritePrompt.system(for: request).contains("<instructions>\nReply as a short email.\n</instructions>"))
     }
 
+    @Test(arguments: [
+        (Language?.some(.russian), Language?.none, Language.russian),
+        (.german, nil, .english),
+        (nil, nil, .english),
+        (.english, .russian, .russian),
+    ])
+    func `runs the sample in the language it is written in among the chosen ones`(
+        detected: Language?,
+        pinned: Language?,
+        expected: Language,
+    ) async throws {
+        settings.settings.languages = LanguageSelection.preferred(by: ["ru", "en"]).pinning(pinned)
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let tryout = model(rewriter, detects: detected)
+        tryout.run(.clean)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !rewriter.requests.isEmpty })
+
+        let request = try #require(rewriter.requests.first)
+
+        #expect(request.language == expected)
+    }
+
     @Test(arguments: ["", " \n"])
     func `ignores a blank sample`(sample: String) {
         let rewriter = FakeTextRewriter(.success("Hello."))

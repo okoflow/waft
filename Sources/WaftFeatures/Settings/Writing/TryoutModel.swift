@@ -38,7 +38,7 @@ final class TryoutModel {
     }
 
     func run(_ mode: Mode) {
-        guard let language = settings.settings.languages.languages.first, !sample.isBlank else { return }
+        guard let language = spokenLanguage(of: sample), !sample.isBlank else { return }
 
         let transcript = Transcript(text: sample, language: language, detectionDuration: .zero, decodingDuration: .zero)
         let setup = settings.settings.rewriteSetup(for: mode)
@@ -98,6 +98,20 @@ final class TryoutModel {
         if sample.isBlank {
             sample = defaultSample
         }
+    }
+
+    private func spokenLanguage(of text: String) -> Language? {
+        let selection = settings.settings.languages
+
+        if let forced = selection.forcedLanguage {
+            return forced
+        }
+
+        if let detected = detector.language(of: text), selection.languages.contains(detected) {
+            return detected
+        }
+
+        return selection.languages.first
     }
 
     private func sourceLanguage(of text: String) -> Language? {
