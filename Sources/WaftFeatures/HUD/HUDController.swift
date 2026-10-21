@@ -109,7 +109,6 @@ final class HUDController {
         copy(message.title)
         hasCopied = true
 
-        messageTask?.cancel()
         expireMessage(after: copiedPause)
     }
 
@@ -155,6 +154,7 @@ final class HUDController {
     }
 
     private func expireMessage(after duration: Duration) {
+        messageTask?.cancel()
         messageTask = Task { [weak self] in
             guard await Task.slept(for: duration) else { return }
 
