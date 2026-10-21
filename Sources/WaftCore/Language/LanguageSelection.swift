@@ -9,7 +9,9 @@ package struct LanguageSelection: Codable, Equatable, Sendable {
             return pinned
         }
 
-        return languages.count == 1 ? languages.first : nil
+        guard languages.count == 1 else { return nil }
+
+        return languages.first
     }
 
     package init(from decoder: any Decoder) throws {
@@ -20,6 +22,7 @@ package struct LanguageSelection: Codable, Equatable, Sendable {
 
     init(languages: [Language], pinned: Language? = nil) {
         let ordered = Language.allCases.filter(languages.contains)
+
         let enabled = ordered.isEmpty ? [Language.english] : ordered
 
         self.languages = enabled
@@ -29,7 +32,7 @@ package struct LanguageSelection: Codable, Equatable, Sendable {
     package static func preferred(by localeIdentifiers: [String]) -> LanguageSelection {
         let preferred = Array(distinctLanguages(in: localeIdentifiers, excluding: []).prefix(maximumPreferredCount))
 
-        return LanguageSelection(languages: preferred.contains(.english) ? preferred : preferred + [.english])
+        return LanguageSelection(languages: preferred + [.english])
     }
 
     private static func distinctLanguages(in localeIdentifiers: [String], excluding excluded: [Language]) -> [Language] {

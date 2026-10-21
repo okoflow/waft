@@ -20,6 +20,7 @@ package enum SubtitleFormatter {
                 }
 
                 cue.end = max(cue.end, cue.start)
+
                 timeline.append(cue)
             }
         }
@@ -32,11 +33,15 @@ package enum SubtitleFormatter {
 
     private static func cues(for segment: TimedSegment, language: Language) -> [Cue] {
         let isSpaced = language.separatesWordsWithSpaces
-        let limit = isSpaced ? lineLength : compactLineLength
         let joiner = language.wordSeparator
-        let units = isSpaced ? segment.text.split(separator: " ").map(String.init) : segment.text.map(String.init)
+
+        let limit = isSpaced ? lineLength : compactLineLength
+        let units = units(of: segment.text, isSpaced: isSpaced)
+
         let total = units.joined(separator: joiner).count
+
         let count = max(1, Int((Double(total) / Double(limit * 2)).rounded(.up)))
+
         var start = segment.start
         var consumed = -joiner.count
 
@@ -44,11 +49,19 @@ package enum SubtitleFormatter {
             consumed += joiner.count + group.joined(separator: joiner).count
 
             let end = segment.start + (segment.end - segment.start) * Double(consumed) / Double(max(1, total))
+
             let cue = Cue(start: start, end: end, lines: lines(of: group, limit: limit, joiner: joiner))
+
             start = end
 
             return cue
         }
+    }
+
+    private static func units(of text: String, isSpaced: Bool) -> [String] {
+        guard isSpaced else { return text.map(String.init) }
+
+        return text.split(separator: " ").map(String.init)
     }
 
     private static func groups(of units: [String], count: Int, joiner: String) -> [[String]] {
@@ -84,17 +97,23 @@ package enum SubtitleFormatter {
 
         let ends = endPositions(of: units, joiner: joiner)
         let splits = Array(1 ..< units.count)
-        let fitting = splits.filter { ends[$0 - 1] <= limit && text.count - ends[$0 - 1] - joiner.count <= limit }
-        let split = bestBreak(in: fitting.isEmpty ? splits : fitting, ends: ends, units: units, target: Double(text.count) / 2)
+
+        let fitting = splits
+            .filter { ends[$0 - 1] <= limit }
+            .filter { text.count - ends[$0 - 1] - joiner.count <= limit }
+
+        let candidates = fitting.isEmpty ? splits : fitting
+
+        let split = bestBreak(in: candidates, ends: ends, units: units, target: Double(text.count) / 2)
 
         return [units[..<split].joined(separator: joiner), units[split...].joined(separator: joiner)]
     }
 
     private static func endPositions(of units: [String], joiner: String) -> [Int] {
-        var length = 0
+        var length = -joiner.count
 
-        return units.enumerated().map { index, unit in
-            length += (index == 0 ? 0 : joiner.count) + unit.count
+        return units.map { unit in
+            length += joiner.count + unit.count
 
             return length
         }
@@ -112,12 +131,14 @@ package enum SubtitleFormatter {
 
     private static func score(_ index: Int, ends: [Int], units: [String], target: Double) -> Double {
         let distance = abs(Double(ends[index - 1]) - target)
+        guard units[index - 1].last?.isPauseMark == true else { return distance }
 
-        return units[index - 1].last?.isPauseMark == true ? distance - 10 : distance
+        return distance - 10
     }
 
     private static func timestamp(_ time: TimeInterval) -> String {
         let total = Int((max(0, time) * 1000).rounded())
+
         let clock = [total / 3_600_000, total / 60000 % 60, total / 1000 % 60].map { padded($0, to: 2) }
 
         return clock.joined(separator: ":") + "," + padded(total % 1000, to: 3)

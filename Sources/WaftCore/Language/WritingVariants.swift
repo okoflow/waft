@@ -15,6 +15,7 @@ package struct WritingVariants: Equatable, Sendable {
         guard language.writingVariants.contains(variant) else { return self }
 
         var chosen = chosen
+
         chosen[language] = variant
 
         return WritingVariants(chosen)
@@ -24,7 +25,9 @@ package struct WritingVariants: Equatable, Sendable {
 extension WritingVariants: Codable {
     package init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
+
         let stored = try container.decode([String: String].self)
+
         let pairs = stored.compactMap { key, value -> (Language, WritingVariant)? in
             guard let language = Language(rawValue: key), let variant = WritingVariant(rawValue: value) else { return nil }
 
@@ -36,6 +39,7 @@ extension WritingVariants: Codable {
 
     package func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
+
         let stored = Dictionary(uniqueKeysWithValues: chosen.map { ($0.key.rawValue, $0.value.rawValue) })
 
         try container.encode(stored)

@@ -87,6 +87,7 @@ enum SerbianCyrillic {
 
     private static func keptRanges(of terms: [String], in text: String) -> [Range<String.Index>] {
         let ranges = terms.flatMap { wholeWordRanges(of: $0, in: text) }.sorted { $0.lowerBound < $1.lowerBound }
+
         var kept: [Range<String.Index>] = []
 
         for range in ranges where !kept.contains(where: { $0.overlaps(range) }) {
@@ -114,7 +115,7 @@ enum SerbianCyrillic {
     private static func isWordCharacter(_ character: Character?) -> Bool {
         guard let character else { return false }
 
-        return character.isLetter || character.isNumber
+        return character.isLetterOrNumber
     }
 
     private static func convertingWords(in text: Substring) -> String {
@@ -122,13 +123,15 @@ enum SerbianCyrillic {
         var word = ""
 
         for character in text {
-            if isWordCharacter(character) {
+            guard !isWordCharacter(character) else {
                 word.append(character)
-            } else {
-                result += converted(word)
-                result.append(character)
-                word = ""
+
+                continue
             }
+
+            result += converted(word)
+            result.append(character)
+            word = ""
         }
 
         return result + converted(word)
@@ -138,20 +141,22 @@ enum SerbianCyrillic {
         guard isSerbianLatin(word) else { return word }
 
         let lowercased = word.lowercased()
+
         let keepsLettersApart = separateLetterPrefixes.contains { lowercased.hasPrefix($0) }
+
         var remaining = Substring(word)
         var result = ""
 
         while let first = remaining.first {
-            let digraph = keepsLettersApart ? nil : digraphs.first { remaining.hasPrefix($0.latin) }
-
-            if let digraph {
+            if !keepsLettersApart, let digraph = digraphs.first(where: { remaining.hasPrefix($0.latin) }) {
                 result += digraph.cyrillic
                 remaining = remaining.dropFirst(digraph.latin.count)
-            } else {
-                result.append(letters[first, default: first])
-                remaining = remaining.dropFirst()
+
+                continue
             }
+
+            result.append(letters[first, default: first])
+            remaining = remaining.dropFirst()
         }
 
         return result
@@ -159,11 +164,8 @@ enum SerbianCyrillic {
 
     private static func isSerbianLatin(_ word: String) -> Bool {
         guard !word.isEmpty, word.allSatisfy({ letters[$0] != nil }) else { return false }
+        guard word.allSatisfy(\.isUppercase) else { return !word.dropFirst().contains(where: \.isUppercase) }
 
-        let isAllCapitals = word.allSatisfy(\.isUppercase)
-        let isAcronym = isAllCapitals && (2 ... 4).contains(word.count)
-        let hasInnerCapital = !isAllCapitals && word.dropFirst().contains(where: \.isUppercase)
-
-        return !isAcronym && !hasInnerCapital
+        return !(2 ... 4).contains(word.count)
     }
 }

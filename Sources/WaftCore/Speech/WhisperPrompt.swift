@@ -5,8 +5,9 @@ package enum WhisperPrompt {
 
     package static func text(for language: Language, variant: WritingVariant?, vocabulary: [String]) -> String? {
         let parts = [styleSentence(for: language, variant: variant), glossary(from: vocabulary)].compactMap(\.self)
+        guard !parts.isEmpty else { return nil }
 
-        return parts.isEmpty ? nil : parts.joined(separator: " ")
+        return parts.joined(separator: " ")
     }
 
     private static func styleSentence(for language: Language, variant: WritingVariant?) -> String? {
@@ -25,7 +26,9 @@ package enum WhisperPrompt {
             glossary = extended
         }
 
-        return glossary.isEmpty ? nil : glossary + "."
+        guard !glossary.isEmpty else { return nil }
+
+        return glossary + "."
     }
 }
 

@@ -16,6 +16,7 @@ package enum SpeechGate {
         guard !levels.isEmpty else { return 0 }
 
         let noiseFloor = levels.sorted()[levels.count / 10]
+
         let threshold = max(absoluteFloorDecibels, noiseFloor + marginAboveNoiseFloor)
         let minimumRun = Int((minimumSyllableDuration / windowDuration).rounded())
 

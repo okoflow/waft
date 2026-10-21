@@ -6,6 +6,7 @@ struct TextSegment: Equatable {
 
     static func split(_ text: String) -> [TextSegment] {
         let characters = Array(text)
+
         var segments: [TextSegment] = []
 
         for index in characters.indices {
@@ -27,17 +28,18 @@ struct TextSegment: Equatable {
 
     private static func isWordCharacter(at index: Int, in characters: [Character]) -> Bool {
         let character = characters[index]
-        let isMark = character.unicodeScalars.allSatisfy { $0.properties.generalCategory == .nonspacingMark }
+        guard !character.isLetterOrNumber else { return true }
 
-        return character.isLetter || character.isNumber || isMark || isInnerJoiner(at: index, in: characters)
+        let isMark = character.unicodeScalars.allSatisfy { $0.properties.generalCategory == .nonspacingMark }
+        guard !isMark else { return true }
+
+        return isInnerJoiner(at: index, in: characters)
     }
 
     private static func isInnerJoiner(at index: Int, in characters: [Character]) -> Bool {
-        guard innerJoiners.contains(characters[index]), index > 0, index + 1 < characters.count else { return false }
+        guard innerJoiners.contains(characters[index]), index > 0, index + 1 < characters.count,
+              characters[index - 1].isLetterOrNumber else { return false }
 
-        let before = characters[index - 1]
-        let after = characters[index + 1]
-
-        return (before.isLetter || before.isNumber) && after.isLetter
+        return characters[index + 1].isLetter
     }
 }

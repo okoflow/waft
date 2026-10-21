@@ -50,11 +50,14 @@ enum VoiceCommands {
 
     private static let joiningMarks: Set<Character> = [",", "，", "、", ";", "；", ":", "：", "-", "–", "—"]
 
+    private static let droppedBeforeLineBreak = joiningMarks.union([" "])
+
     static func apply(_ text: String, language: Language) -> String {
         let commands = commands(for: language)
         guard !commands.isEmpty else { return text }
 
         let segments = TextSegment.split(text)
+
         var result = ""
         var index = 0
         var capitalizesNext = false
@@ -67,18 +70,34 @@ enum VoiceCommands {
                 result += command.isParagraph ? "\n\n" : "\n"
                 index = end + 1
                 capitalizesNext = true
-            } else if capitalizesNext, !segment.isWord {
-                result += String(segment.text.filter { !$0.isPauseMark && $0 != " " })
-                index += 1
-            } else {
-                let capitalizes = capitalizesNext && language.hasLetterCase
-                result += capitalizes ? segment.text.capitalizingFirstLetter(in: language) : segment.text
-                capitalizesNext = false
-                index += 1
+
+                continue
             }
+
+            index += 1
+
+            guard capitalizesNext else {
+                result += segment.text
+
+                continue
+            }
+            guard segment.isWord else {
+                result += String(segment.text.filter(isKeptAfterLineBreak))
+
+                continue
+            }
+
+            result += segment.text.capitalizingFirstLetter(in: language)
+            capitalizesNext = false
         }
 
         return result
+    }
+
+    private static func isKeptAfterLineBreak(_ character: Character) -> Bool {
+        guard !character.isPauseMark else { return false }
+
+        return character != " "
     }
 
     private static func commands(for language: Language) -> [Command] {
@@ -124,16 +143,23 @@ enum VoiceCommands {
     }
 
     private static func isPause(at index: Int, in segments: [TextSegment]) -> Bool {
-        !segments.indices.contains(index) || segments[index].text.contains { $0.isPauseMark || $0 == "\n" }
+        guard segments.indices.contains(index) else { return true }
+
+        let text = segments[index].text
+        guard !text.contains(where: \.isPauseMark) else { return true }
+
+        return text.contains("\n")
     }
 
     private static func endingLine(_ text: String, language: Language, isParagraph: Bool) -> String {
         var line = text
 
-        while let last = line.last, last == " " || joiningMarks.contains(last) {
+        while let last = line.last, droppedBeforeLineBreak.contains(last) {
             line.removeLast()
         }
 
-        return isParagraph ? line.endingWithFullStop(in: language) : line
+        guard isParagraph else { return line }
+
+        return line.endingWithFullStop(in: language)
     }
 }
