@@ -7,6 +7,7 @@ final class HUDPanel: NSPanel, HUDWindow {
 
     private static var screenUnderMouse: NSScreen? {
         let mouse = NSEvent.mouseLocation
+
         guard let screen = NSScreen.screens.first(where: { NSMouseInRect(mouse, $0.frame, false) }) else { return NSScreen.main }
 
         return screen

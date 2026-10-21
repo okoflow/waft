@@ -12,9 +12,10 @@ nonisolated struct IslandShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         let ear = min(Self.ear, rect.height)
-        let corner = max(0, min(radius, rect.height - ear))
-        var path = Path()
 
+        let corner = max(0, min(radius, rect.height - ear))
+
+        var path = Path()
         path.move(to: CGPoint(x: rect.minX, y: rect.minY))
         path.addQuadCurve(to: CGPoint(x: rect.minX + ear, y: rect.minY + ear), control: CGPoint(x: rect.minX + ear, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX + ear, y: rect.maxY - corner))

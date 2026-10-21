@@ -13,6 +13,7 @@ struct HUDControllerTests {
     @Test
     func `shows queued messages one at a time in order`() async {
         let hud = model(expiring: [Self.first])
+
         hud.show(Self.first)
         hud.show(Self.second)
         hud.show(Self.third)
@@ -24,6 +25,7 @@ struct HUDControllerTests {
     @Test
     func `holds messages back while listening and shows them after listening ends`() {
         let hud = model()
+
         hud.showListening(badge: "Light", isHandsFree: false) { 0 }
         hud.show(Self.first)
 
@@ -37,6 +39,7 @@ struct HUDControllerTests {
     @Test
     func `hands the listening island over to a working label`() {
         let hud = model()
+
         hud.showListening(badge: "Light", isHandsFree: false) { 0 }
         hud.hideListening(handingOverTo: "Transcribing…")
 
@@ -46,6 +49,7 @@ struct HUDControllerTests {
     @Test
     func `returns to the working label after a message expires`() async {
         let hud = model(expiring: [Self.first])
+
         hud.setWorking("Transcribing…")
         hud.show(Self.first)
 
@@ -56,6 +60,7 @@ struct HUDControllerTests {
     @Test
     func `hides the window once the working label clears`() async {
         let hud = model()
+
         hud.setWorking("Transcribing…")
 
         #expect(window.isShown)
@@ -69,6 +74,7 @@ struct HUDControllerTests {
     @Test
     func `locks only a listening island hands-free, keeping its badge`() {
         let hud = model()
+
         hud.setWorking("Transcribing…")
         hud.lockHandsFree()
 
@@ -83,6 +89,7 @@ struct HUDControllerTests {
     @Test
     func `ignores hiding the listening island when it is not shown`() {
         let hud = model()
+
         hud.show(Self.first)
         hud.hideListening(handingOverTo: "Transcribing…")
 
@@ -92,6 +99,7 @@ struct HUDControllerTests {
     @Test
     func `copies the text of a delivered message when it is clicked`() {
         let hud = model()
+
         hud.show(HUDMessage(kind: .pasted, title: "Hi."))
 
         #expect(hud.canCopyMessage)
@@ -105,6 +113,7 @@ struct HUDControllerTests {
     @Test
     func `closes a copied message after a pause and resets it for the next one`() async {
         let hud = model()
+
         hud.show(HUDMessage(kind: .pasted, title: "Hi."))
         hud.copyMessage()
 
@@ -118,6 +127,7 @@ struct HUDControllerTests {
     @Test(arguments: [HUDMessage.Kind.copied, .information, .warning])
     func `ignores a click on a message with nothing to copy`(kind: HUDMessage.Kind) {
         let hud = model()
+
         hud.show(HUDMessage(kind: kind, title: "Hi."))
         hud.copyMessage()
 
@@ -130,6 +140,7 @@ struct HUDControllerTests {
     func `shows the mode and the raw transcript only while the text is cleaned up`() {
         let hud = model()
         let cleanup = HUDCleanup(mode: "Clean", transcript: "um hi")
+
         hud.setWorking("Cleaning up with Claude…", cleanup: cleanup)
 
         #expect(hud.content == .working("Cleaning up with Claude…"))

@@ -64,6 +64,7 @@ final class HUDController {
 
     func showListening(badge: String, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
         messageTask?.cancel()
+
         levels = [Float](repeating: 0, count: Self.barCount)
         listeningSince = .now
 
@@ -114,6 +115,7 @@ final class HUDController {
 
     func show(_ message: HUDMessage) {
         queuedMessages.append(message)
+
         showNext()
     }
 
@@ -125,14 +127,18 @@ final class HUDController {
 
     private func showNext() {
         guard !isListening, !isShowingMessage else { return }
-
-        if !queuedMessages.isEmpty {
+        guard queuedMessages.isEmpty else {
             showMessage(queuedMessages.removeFirst())
-        } else if let workingLabel {
-            present(.working(workingLabel))
-        } else {
-            hide()
+
+            return
         }
+        guard let workingLabel else {
+            hide()
+
+            return
+        }
+
+        present(.working(workingLabel))
     }
 
     private func hide() {

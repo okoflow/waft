@@ -171,6 +171,12 @@ private struct MessageCard: View {
         return lines
     }
 
+    private var detailStyle: AnyShapeStyle {
+        guard message.kind == .pasted else { return AnyShapeStyle(.secondary) }
+
+        return AnyShapeStyle(Palette.warning)
+    }
+
     private var fade: LinearGradient {
         let end = isLong ? 0.25 : 1
 
@@ -215,7 +221,7 @@ private struct MessageCard: View {
                 if let detail = message.detail {
                     Text(detail)
                         .font(Font(HUDIsland.detailFont))
-                        .foregroundStyle(message.kind == .pasted ? AnyShapeStyle(Palette.warning) : AnyShapeStyle(.secondary))
+                        .foregroundStyle(detailStyle)
                         .lineLimit(3)
                 }
 
