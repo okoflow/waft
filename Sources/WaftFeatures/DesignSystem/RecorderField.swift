@@ -3,14 +3,19 @@ import SwiftUI
 struct RecorderField: View {
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
-    let title: String
-    let isEmpty: Bool
+    let title: String?
     let isRecording: Bool
     let prompt: LocalizedStringKey
     let rejections: Int
     let help: Text
     let label: Text
     let toggle: () -> Void
+
+    private var shownTitle: String {
+        guard let title else { return String(localized: "None") }
+
+        return title
+    }
 
     var body: some View {
         let shakes = !reducesMotion
@@ -29,8 +34,8 @@ struct RecorderField: View {
                             .foregroundStyle(Palette.secondaryText)
                             .transition(.opacity)
                     } else {
-                        Text(title)
-                            .foregroundStyle(isEmpty ? Palette.secondaryText : Color.primary)
+                        Text(shownTitle)
+                            .foregroundStyle(title == nil ? Palette.secondaryText : Color.primary)
                             .transition(.opacity)
                     }
                 }
@@ -53,9 +58,9 @@ struct RecorderField: View {
         }
         .buttonStyle(.plain)
         .motion(Motion.feedback, value: isRecording)
-        .motion(Motion.feedback, value: title)
+        .motion(Motion.feedback, value: shownTitle)
         .help(help)
         .accessibilityLabel(label)
-        .accessibilityValue(title)
+        .accessibilityValue(shownTitle)
     }
 }

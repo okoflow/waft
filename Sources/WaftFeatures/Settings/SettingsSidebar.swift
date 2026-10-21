@@ -33,7 +33,13 @@ struct SettingsSidebar: View {
         .padding(.bottom, Metrics.rowPadding)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
-            SidebarBackground()
+            let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
+
+            shape
+                .fill(Palette.sidebar)
+                .overlay {
+                    shape.stroke(Palette.sidebarBorder, lineWidth: 1)
+                }
         }
         .focusable()
         .focusEffectDisabled()
@@ -44,18 +50,6 @@ struct SettingsSidebar: View {
             default: break
             }
         }
-    }
-}
-
-private struct SidebarBackground: View {
-    var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
-
-        shape
-            .fill(Palette.sidebar)
-            .overlay {
-                shape.stroke(Palette.sidebarBorder, lineWidth: 1)
-            }
     }
 }
 

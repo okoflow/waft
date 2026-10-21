@@ -6,24 +6,11 @@ struct TranslatorModelSection: View {
 
     let state: SettingsWindowState
 
-    private var model: CloudModel {
-        settings.settings.translator.cloudModel
-    }
-
     var body: some View {
         switch settings.settings.modelProvider {
         case let .cloud(provider):
             SettingsSection("AI model", subtitle: "AI modes keep the model chosen in AI Models.", isPro: true) {
-                PickerRow(
-                    "Model",
-                    selection: $settings.settings.translator.cloudModel,
-                    current: provider.name(of: model),
-                    description: .verbatim(model.summary),
-                ) {
-                    ForEach(CloudModel.allCases, id: \.self) { model in
-                        Text(verbatim: provider.name(of: model)).tag(model)
-                    }
-                }
+                CloudModelRow(model: $settings.settings.translator.cloudModel, provider: provider)
             }
 
         case .localServer:

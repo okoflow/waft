@@ -27,12 +27,6 @@ struct WritingSettingsPane: View {
         AIModelSetup.missingSetup(in: settings, apiKeys: apiKeys)
     }
 
-    private var twoWayTitle: String {
-        guard let language = settings.settings.translation.twoWayLanguage else { return String(localized: "Off") }
-
-        return language.displayName
-    }
-
     private var appIdentifiers: [String] {
         settings.settings.appModes.bundleIdentifiers
     }
@@ -70,29 +64,7 @@ struct WritingSettingsPane: View {
         }
         .onDisappear { shortcutRecorder.stop() }
 
-        SettingsSection("Translation", subtitle: translationNote, isPro: true) {
-            PickerRow(
-                "Translate into",
-                selection: $settings.settings.translation.target,
-                current: settings.settings.translation.target.displayName,
-            ) {
-                ForEach(Language.allByDisplayName, id: \.self) { language in
-                    Text(language.displayName).tag(language)
-                }
-            }
-            RowDivider()
-            PickerRow(
-                "Two-way with",
-                selection: $settings.settings.translation.twoWayLanguage,
-                current: twoWayTitle,
-            ) {
-                Text("Off").tag(Language?.none)
-                Divider()
-                ForEach(Language.allByDisplayName.filter { $0 != settings.settings.translation.target }, id: \.self) { language in
-                    Text(language.displayName).tag(Language?.some(language))
-                }
-            }
-        }
+        TranslationSection(title: "Translation", subtitle: translationNote, translation: $settings.settings.translation)
 
         SettingsSection("Apps", subtitle: "These apps get their own mode.") {
             if appIdentifiers.isEmpty {
@@ -118,11 +90,7 @@ struct WritingSettingsPane: View {
     }
 
     private func addMode() {
-        guard pro.isUnlocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
         let custom = settings.settings.addCustomMode(named: String(localized: "New Mode"))
 

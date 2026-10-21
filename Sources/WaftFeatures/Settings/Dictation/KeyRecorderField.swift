@@ -12,16 +12,9 @@ struct KeyRecorderField: View {
         recorder.isRecording(purpose)
     }
 
-    private var title: String {
-        guard let key else { return String(localized: "None") }
-
-        return key.title
-    }
-
     var body: some View {
         RecorderField(
-            title: title,
-            isEmpty: key == nil,
+            title: key?.title,
             isRecording: isRecording,
             prompt: "Press a key…",
             rejections: recorder.rejections[purpose, default: 0],

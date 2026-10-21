@@ -24,36 +24,12 @@ struct TranslatorSettingsPane: View {
         return .verbatim(String(localized: "Text in \(other) becomes \(target), and \(target) becomes \(other).").sentenceCased())
     }
 
-    private var twoWayTitle: String {
-        guard let language = translation.twoWayLanguage else { return String(localized: "Off") }
-
-        return language.displayName
-    }
-
     var body: some View {
-        SettingsSection("Languages", subtitle: languagesNote, isPro: true) {
-            PickerRow(
-                "Translate into",
-                selection: $settings.settings.translator.translation.target,
-                current: translation.target.displayName,
-            ) {
-                ForEach(Language.allByDisplayName, id: \.self) { language in
-                    Text(language.displayName).tag(language)
-                }
-            }
-            RowDivider()
-            PickerRow(
-                "Two-way with",
-                selection: $settings.settings.translator.translation.twoWayLanguage,
-                current: twoWayTitle,
-            ) {
-                Text("Off").tag(Language?.none)
-                Divider()
-                ForEach(Language.allByDisplayName.filter { $0 != translation.target }, id: \.self) { language in
-                    Text(language.displayName).tag(Language?.some(language))
-                }
-            }
-        }
+        TranslationSection(
+            title: "Languages",
+            subtitle: languagesNote,
+            translation: $settings.settings.translator.translation,
+        )
 
         TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
 

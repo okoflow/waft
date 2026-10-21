@@ -20,6 +20,14 @@ final class SettingsWindowState {
         editedTextTask = nil
     }
 
+    func passesWaftPlusGate(isUnlocked: Bool) -> Bool {
+        if !isUnlocked {
+            selection = .pro
+        }
+
+        return isUnlocked
+    }
+
     func move(by offset: Int) {
         let panes = SettingsPane.allCases
         guard let index = panes.firstIndex(of: selection) else { return }

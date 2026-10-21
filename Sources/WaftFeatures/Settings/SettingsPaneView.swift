@@ -1,13 +1,8 @@
 import SwiftUI
 
 struct SettingsPaneView: View {
-    private let model: AppModel
-    private let state: SettingsWindowState
-
-    init(model: AppModel, state: SettingsWindowState) {
-        self.model = model
-        self.state = state
-    }
+    let model: AppModel
+    let state: SettingsWindowState
 
     var body: some View {
         if let mode = state.editedMode, state.selection == .writing {

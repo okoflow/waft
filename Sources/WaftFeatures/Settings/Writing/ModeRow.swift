@@ -55,21 +55,13 @@ struct ModeRow: View {
     }
 
     private func select() {
-        guard !isLocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: !isLocked) else { return }
 
         settings.settings.mode = mode
     }
 
     private func edit() {
-        guard !isLocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: !isLocked) else { return }
 
         state.editedMode = mode
     }

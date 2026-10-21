@@ -28,6 +28,15 @@ struct SettingsWindowStateTests {
         #expect(state.editedTextTask == nil)
     }
 
+    @Test(arguments: [false, true])
+    func `shows Waft+ only when the feature is locked`(isUnlocked: Bool) {
+        let state = SettingsWindowState()
+        state.selection = .writing
+
+        #expect(state.passesWaftPlusGate(isUnlocked: isUnlocked) == isUnlocked)
+        #expect(state.selection == (isUnlocked ? .writing : .pro))
+    }
+
     @Test
     func `clears the hover only for the pane that is hovered`() {
         let state = SettingsWindowState()

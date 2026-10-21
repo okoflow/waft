@@ -16,12 +16,6 @@ struct ShortcutRow: View {
         recorder.isRecording(action)
     }
 
-    private var title: String {
-        guard let combination else { return String(localized: "None") }
-
-        return combination.title(in: shortcuts.layout)
-    }
-
     private var note: LocalizedStringKey? {
         if let note = recorder.note(for: action) {
             return note
@@ -35,8 +29,7 @@ struct ShortcutRow: View {
     var body: some View {
         SettingsRow(.verbatim(action.title), description: note) {
             RecorderField(
-                title: title,
-                isEmpty: combination == nil,
+                title: combination?.title(in: shortcuts.layout),
                 isRecording: isRecording,
                 prompt: "Press a shortcut…",
                 rejections: recorder.rejections[action, default: 0],

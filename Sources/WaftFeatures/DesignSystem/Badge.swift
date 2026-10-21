@@ -11,14 +11,8 @@ struct Badge: View {
         Text(text)
             .font(.badge)
             .foregroundStyle(Palette.secondaryText)
-            .badgeChrome(fill: Palette.selection)
-    }
-}
-
-extension View {
-    func badgeChrome(fill: some ShapeStyle) -> some View {
-        padding(.horizontal, Metrics.badgeHorizontalPadding)
+            .padding(.horizontal, Metrics.badgeHorizontalPadding)
             .padding(.vertical, Metrics.badgeVerticalPadding)
-            .background(fill, in: Capsule())
+            .background(Palette.selection, in: Capsule())
     }
 }

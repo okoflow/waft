@@ -20,11 +20,7 @@ struct TranslatorInstructionsSection: View {
     }
 
     func edit(_ kind: TextTask.Kind) {
-        guard pro.isUnlocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
         state.editedTextTask = kind
     }
