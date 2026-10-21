@@ -35,6 +35,7 @@ enum Metrics {
     static let pageIconSize: CGFloat = 96
     static let cardIconSize: CGFloat = 64
     static let cardRadius: CGFloat = 12
+    static let recorderWidth: CGFloat = 160
     static let controlRadius: CGFloat = 7
     static let largeControlRadius: CGFloat = 9
     static let rowRadius: CGFloat = 9
