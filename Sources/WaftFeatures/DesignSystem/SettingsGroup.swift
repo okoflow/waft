@@ -8,7 +8,9 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
     private let content: Content
 
     private var hasHeader: Bool {
-        title != nil || subtitle != nil || accessory != nil
+        guard title == nil, subtitle == nil else { return true }
+
+        return accessory != nil
     }
 
     init(

@@ -4,6 +4,10 @@ struct CopyButton: View {
     let isCopied: Bool
     let action: () -> Void
 
+    private var title: Text {
+        isCopied ? Text("Copied") : Text("Copy")
+    }
+
     var body: some View {
         Button(action: action) {
             HStack(spacing: Metrics.inlineSpacing) {
@@ -14,12 +18,12 @@ struct CopyButton: View {
                         .modifier(CheckmarkAppear())
                 }
 
-                (isCopied ? Text("Copied") : Text("Copy"))
+                title
                     .contentTransition(.opacity)
             }
             .frame(minWidth: 52)
         }
         .motion(Motion.feedback, value: isCopied)
-        .accessibilityLabel(isCopied ? Text("Copied") : Text("Copy"))
+        .accessibilityLabel(title)
     }
 }
