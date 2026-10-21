@@ -31,7 +31,9 @@ struct PermissionStep: View {
     }
 
     private var showsDeviceControlHint: Bool {
-        permission == .accessibility && Self.groupsUnderDeviceControl
+        guard permission == .accessibility else { return false }
+
+        return Self.groupsUnderDeviceControl
     }
 
     private var message: LocalizedStringKey {

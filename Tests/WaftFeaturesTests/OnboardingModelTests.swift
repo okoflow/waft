@@ -14,6 +14,7 @@ struct OnboardingModelTests {
     @Test
     func `skips the permission steps that are already granted`() async {
         let onboarding = model(FakePermissionProvider([.microphone: .granted, .accessibility: .granted]))
+
         await onboarding.proceed()
 
         #expect(onboarding.step == .practice)
@@ -28,6 +29,7 @@ struct OnboardingModelTests {
     func `asks for a missing permission`() async {
         let permissions = FakePermissionProvider([.accessibility: .granted])
         let onboarding = model(permissions)
+
         await onboarding.proceed()
 
         #expect(onboarding.step == .microphone)
@@ -42,6 +44,7 @@ struct OnboardingModelTests {
     func `stays on a denied microphone and asks again`() async {
         let permissions = FakePermissionProvider([.accessibility: .granted], answers: [.microphone: .denied])
         let onboarding = model(permissions)
+
         await onboarding.proceed()
         await onboarding.proceed()
         onboarding.permissionsDidChange()
@@ -64,6 +67,7 @@ struct OnboardingModelTests {
         next: OnboardingModel.Step,
     ) async {
         let onboarding = model(FakePermissionProvider(statuses, answers: [permission: .granted]))
+
         await onboarding.proceed()
         await onboarding.proceed()
 
@@ -93,6 +97,7 @@ struct OnboardingModelTests {
         var finishCount = 0
         let onboarding = model(FakePermissionProvider([.accessibility: .granted], answers: [.microphone: .granted]))
         onboarding.onFinish = { finishCount += 1 }
+
         onboarding.resume()
 
         #expect(onboarding.step == .microphone)
@@ -107,6 +112,7 @@ struct OnboardingModelTests {
     @Test
     func `starts over from the welcome step`() async {
         let onboarding = model(FakePermissionProvider([.microphone: .granted, .accessibility: .granted]))
+
         await onboarding.proceed()
         onboarding.practiceText = "Hello."
         onboarding.reset()
@@ -118,6 +124,7 @@ struct OnboardingModelTests {
     @Test(arguments: [(Permission.microphone, false), (.microphone, true), (.accessibility, false), (.accessibility, true)])
     func `stays on a permission revoked during the success pause`(permission: Permission, refreshesMonitor: Bool) async throws {
         let setup = OnboardingSetup(permission)
+
         await setup.model.proceed()
         let advance = try await setup.grant(permission)
 
@@ -134,6 +141,7 @@ struct OnboardingModelTests {
         let setup = OnboardingSetup(.microphone)
         var finishCount = 0
         setup.model.onFinish = { finishCount += 1 }
+
         await setup.model.proceed()
         let advance = try await setup.grant(.microphone)
 
@@ -155,6 +163,7 @@ struct OnboardingModelTests {
     @Test(arguments: [false, true])
     func `advances only for the latest permission notification`(refreshesPermissions: Bool) async throws {
         let setup = OnboardingSetup(.microphone)
+
         await setup.model.proceed()
         let previous = try await setup.grant(.microphone)
 
@@ -185,6 +194,7 @@ struct OnboardingModelTests {
         let setup = OnboardingSetup(.microphone)
         var finishCount = 0
         setup.model.onFinish = { finishCount += 1 }
+
         setup.model.resume()
         let advance = try await setup.grant(.microphone)
 
@@ -220,6 +230,7 @@ private struct OnboardingSetup {
     init(_ permission: Permission) {
         let provider = FakePermissionProvider([.microphone: .granted, .accessibility: .granted])
         provider.setStatus(.denied, for: permission)
+
         let permissions = PermissionMonitor(provider: provider)
         let pause = FakePause()
 
@@ -240,6 +251,7 @@ private struct OnboardingSetup {
     func grant(_ permission: Permission) async throws -> Task<Void, Never> {
         setStatus(.granted, for: permission)
         model.permissionsDidChange()
+
         let advance = try #require(model.advanceTask)
         await pause.waitUntilPaused()
 
