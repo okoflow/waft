@@ -21,6 +21,7 @@ final class TranslatorModel {
 
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var hasDroppedTranslation = false
+    @ObservationIgnored private var translatedInput = ""
 
     private let processor: TranscriptProcessor
     private let detector: any LanguageDetector
@@ -113,7 +114,7 @@ final class TranslatorModel {
             settings.settings.translator.translation.target = from
         }
 
-        guard !output.isEmpty else {
+        guard !output.isEmpty, translatedInput == input else {
             translateNow()
 
             return
@@ -211,6 +212,7 @@ final class TranslatorModel {
             guard !Task.isCancelled else { return }
 
             output = translated
+            translatedInput = text
             failure = nil
         } catch {
             guard !Task.isCancelled else { return }

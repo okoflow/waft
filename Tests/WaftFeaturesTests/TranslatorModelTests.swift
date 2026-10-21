@@ -90,6 +90,24 @@ struct TranslatorModelTests {
     }
 
     @Test
+    func `swaps the languages and keeps the text typed after the last translation`() async {
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let translator = model(rewriter, detects: .russian, typingPause: .seconds(60))
+        translator.input = "Привет"
+        translator.source = .russian
+
+        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
+
+        translator.input = "Привет, мир"
+        translator.swapLanguages()
+
+        #expect(translator.input == "Привет, мир")
+        #expect(await Poll.until(timeout: .seconds(5)) { rewriter.requests.count == 2 })
+        #expect(rewriter.requests.last?.text == "Привет, мир")
+        #expect(rewriter.requests.last?.textTask == .translate(from: .english, into: .russian))
+    }
+
+    @Test
     func `keeps the two-way pair when swapping`() async {
         settings.settings.translator.translation = Translation(target: .english, twoWayLanguage: .russian)
         let translator = model(FakeTextRewriter(.success("Hello.")), detects: .russian)
@@ -240,11 +258,14 @@ struct TranslatorModelTests {
         #expect(!translated)
         #expect(translator.isLocked)
     }
+}
 
+extension TranslatorModelTests {
     private func model(
         _ rewriter: FakeTextRewriter,
         detects language: Language? = nil,
         pro: ProModel = .unlicensed(),
+        typingPause: Duration = .zero,
     ) -> TranslatorModel {
         TranslatorModel(
             rewriters: .all(rewriter),
@@ -252,7 +273,7 @@ struct TranslatorModelTests {
             settings: settings,
             pro: pro,
             clipboard: clipboard,
-            typingPause: .zero,
+            typingPause: typingPause,
         )
     }
 }
