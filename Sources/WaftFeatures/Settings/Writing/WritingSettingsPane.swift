@@ -24,7 +24,7 @@ struct WritingSettingsPane: View {
     }
 
     private var setupNote: LocalizedStringKey? {
-        AIModelSetup.missingSetup(in: settings, apiKeys: apiKeys)
+        AIModelSetup.modes.missingSetup(in: settings, apiKeys: apiKeys)
     }
 
     private var appIdentifiers: [String] {

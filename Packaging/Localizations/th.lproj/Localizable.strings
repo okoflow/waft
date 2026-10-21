@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "เสียงคลิกเบาๆ เมื่อเริ่มและหยุดบันทึกเสียง";
 "AI Models" = "โมเดล AI";
 "AI model" = "โมเดล AI";
-"AI modes and editing by voice use this model." = "โหมด AI และการแก้ไขด้วยเสียงจะใช้โมเดลนี้";
 "AI modes keep the model chosen in AI Models." = "โหมด AI ยังคงใช้โมเดลที่เลือกไว้ใน “โมเดล AI”";
 "AI modes need Waft+" = "โหมด AI ต้องใช้ Waft+";
 "AI modes need a %@ API key." = "โหมด AI ต้องใช้คีย์ API ของ %@";
 "AI modes need a local server and model." = "โหมด AI ต้องใช้เซิร์ฟเวอร์ในเครื่องและโมเดล";
 "AI modes" = "โหมด AI";
+"AI modes, editing by voice, and the translator use this model." = "โหมด AI การแก้ไขด้วยเสียง และตัวแปลภาษาจะใช้โมเดลนี้";
 "API key" = "คีย์ API";
 "About" = "เกี่ยวกับ";
 "Accessibility" = "การช่วยการเข้าถึง";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "โมเดลจำเสียงพูดไม่มีตัวแบ่งโทเค็น";
 "The speech model isn't available. Retry from the menu." = "โมเดลจำเสียงพูดไม่พร้อมใช้งาน ลองอีกครั้งจากเมนู";
 "The speech model isn't loaded." = "ยังไม่ได้โหลดโมเดลจำเสียงพูด";
-"The speech model isn't ready yet" = "โมเดลจำเสียงพูดยังไม่พร้อม";
+"The speech model isn't ready yet." = "โมเดลจำเสียงพูดยังไม่พร้อม";
 "The text appears at the cursor." = "ข้อความจะปรากฏที่เคอร์เซอร์";
 "The translator and the shortcut that translates selected text." = "ตัวแปลภาษาและปุ่มลัดที่แปลข้อความที่เลือก";
 "The translator is part of Waft+" = "ตัวแปลภาษาเป็นส่วนหนึ่งของ Waft+";
+"The translator needs a %@ API key." = "ตัวแปลภาษาต้องใช้คีย์ API ของ %@";
+"The translator needs a local server and model." = "ตัวแปลภาษาต้องใช้เซิร์ฟเวอร์ในเครื่องและโมเดล";
 "There's no speech in this file." = "ไม่มีเสียงพูดในไฟล์นี้";
 "These apps get their own mode." = "แอปเหล่านี้จะใช้โหมดของตัวเอง";
 "They work in any app." = "ใช้ได้ในทุกแอป";
@@ -387,6 +389,7 @@
 "Translate selected text" = "แปลข้อความที่เลือก";
 "Translate turns anything you say into %@." = "“แปลภาษา” จะแปลทุกสิ่งที่คุณพูดเป็นภาษา%@";
 "Translate" = "แปลภาษา";
+"Translates in its own window, and translates or fixes selected text in any app." = "แปลในหน้าต่างของตัวเอง และแปลหรือตรวจแก้ข้อความที่เลือกในแอปใดก็ได้";
 "Translates what you said into another language." = "แปลสิ่งที่คุณพูดเป็นภาษาอื่น";
 "Translating and fixing text is part of Waft+." = "การแปลและการตรวจแก้ข้อความเป็นส่วนหนึ่งของ Waft+";
 "Translating into %@…" = "กำลังแปลเป็นภาษา%@…";

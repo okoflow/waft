@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "Тихе клацання на початку й наприкінці запису.";
 "AI Models" = "Моделі ШІ";
 "AI model" = "Модель ШІ";
-"AI modes and editing by voice use this model." = "Режими ШІ й редагування голосом використовують цю модель.";
 "AI modes keep the model chosen in AI Models." = "Режими ШІ використовують модель, вибрану в розділі «Моделі ШІ».";
 "AI modes need Waft+" = "для режимів ШІ потрібен Waft+";
 "AI modes need a %@ API key." = "Для режимів ШІ потрібен ключ API %@.";
 "AI modes need a local server and model." = "Для режимів ШІ потрібні локальний сервер і модель.";
 "AI modes" = "Режими ШІ";
+"AI modes, editing by voice, and the translator use this model." = "Режими ШІ, редагування голосом і перекладач використовують цю модель.";
 "API key" = "Ключ API";
 "About" = "Про програму";
 "Accessibility" = "Доступність";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "Модель мовлення не має токенізатора.";
 "The speech model isn't available. Retry from the menu." = "Модель мовлення недоступна. Повторіть спробу з меню.";
 "The speech model isn't loaded." = "Модель мовлення не завантажено.";
-"The speech model isn't ready yet" = "Модель мовлення ще не готова";
+"The speech model isn't ready yet." = "Модель мовлення ще не готова.";
 "The text appears at the cursor." = "Текст зʼявиться там, де курсор.";
 "The translator and the shortcut that translates selected text." = "Перекладач і комбінація клавіш, яка перекладає виділений текст.";
 "The translator is part of Waft+" = "Перекладач входить до Waft+";
+"The translator needs a %@ API key." = "Для перекладача потрібен ключ API %@.";
+"The translator needs a local server and model." = "Для перекладача потрібні локальний сервер і модель.";
 "There's no speech in this file." = "У цьому файлі немає мовлення.";
 "These apps get their own mode." = "Ці програми мають власний режим.";
 "They work in any app." = "Працюють у будь-якій програмі.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "Перекласти виділений текст";
 "Translate turns anything you say into %@." = "«Переклад» перекладає все сказане. Мова перекладу: %@.";
 "Translate" = "Переклад";
+"Translates in its own window, and translates or fixes selected text in any app." = "Перекладає у власному вікні, а також перекладає або виправляє виділений текст у будь-якій програмі.";
 "Translates what you said into another language." = "Перекладає сказане на іншу мову.";
 "Translating and fixing text is part of Waft+." = "Переклад і виправлення тексту входять до Waft+.";
 "Translating into %@…" = "Переклад: %@…";

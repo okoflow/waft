@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "נקישה עדינה בתחילת ההקלטה ובסופה.";
 "AI Models" = "מודלי בינה מלאכותית";
 "AI model" = "מודל בינה מלאכותית";
-"AI modes and editing by voice use this model." = "מצבי בינה מלאכותית ועריכה קולית משתמשים במודל זה.";
 "AI modes keep the model chosen in AI Models." = "מצבי בינה מלאכותית ממשיכים להשתמש במודל שנבחר ב״מודלי בינה מלאכותית״.";
 "AI modes need Waft+" = "מצבי בינה מלאכותית דורשים Waft+‎";
 "AI modes need a %@ API key." = "מצבי בינה מלאכותית דורשים מפתח API של %@.";
 "AI modes need a local server and model." = "מצבי בינה מלאכותית דורשים שרת מקומי ומודל.";
 "AI modes" = "מצבי בינה מלאכותית";
+"AI modes, editing by voice, and the translator use this model." = "מצבי בינה מלאכותית, עריכה קולית והמתרגם משתמשים במודל זה.";
 "API key" = "מפתח API";
 "About" = "מידע";
 "Accessibility" = "נגישות";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "למודל זיהוי הדיבור חסר רכיב ה-tokenizer.";
 "The speech model isn't available. Retry from the menu." = "מודל זיהוי הדיבור אינו זמין. ניתן לנסות שוב מהתפריט.";
 "The speech model isn't loaded." = "מודל זיהוי הדיבור לא נטען.";
-"The speech model isn't ready yet" = "מודל זיהוי הדיבור עדיין לא מוכן";
+"The speech model isn't ready yet." = "מודל זיהוי הדיבור עדיין לא מוכן.";
 "The text appears at the cursor." = "המלל מופיע במיקום הסמן.";
 "The translator and the shortcut that translates selected text." = "המתרגם והקיצור שמתרגם את המלל שנבחר.";
 "The translator is part of Waft+" = "המתרגם כלול ב-Waft+‎";
+"The translator needs a %@ API key." = "המתרגם דורש מפתח API של %@.";
+"The translator needs a local server and model." = "המתרגם דורש שרת מקומי ומודל.";
 "There's no speech in this file." = "אין דיבור בקובץ זה.";
 "These apps get their own mode." = "ליישומים אלה יש מצב משלהם.";
 "They work in any app." = "הם פועלים בכל יישום.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "תרגום המלל שנבחר";
 "Translate turns anything you say into %@." = "במצב ״תרגום״, כל מה שנאמר מתורגם ל%@.";
 "Translate" = "תרגום";
+"Translates in its own window, and translates or fixes selected text in any app." = "מתרגם בחלון משלו, ומתרגם או מתקן מלל שנבחר בכל יישום.";
 "Translates what you said into another language." = "מתרגם את מה שנאמר לשפה אחרת.";
 "Translating and fixing text is part of Waft+." = "תרגום ותיקון מלל כלולים ב-Waft+‎.";
 "Translating into %@…" = "מתרגם ל%@…";

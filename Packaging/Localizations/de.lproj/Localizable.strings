@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "Ein leises Klicken zu Beginn und am Ende der Aufnahme.";
 "AI Models" = "KI-Modelle";
 "AI model" = "KI-Modell";
-"AI modes and editing by voice use this model." = "KI-Modi und das Bearbeiten per Stimme nutzen dieses Modell.";
 "AI modes keep the model chosen in AI Models." = "KI-Modi behalten das Modell, das unter KI-Modelle ausgewählt ist.";
 "AI modes need Waft+" = "KI-Modi benötigen Waft+";
 "AI modes need a %@ API key." = "KI-Modi benötigen einen %@-API-Schlüssel.";
 "AI modes need a local server and model." = "KI-Modi benötigen einen lokalen Server und ein Modell.";
 "AI modes" = "KI-Modi";
+"AI modes, editing by voice, and the translator use this model." = "KI-Modi, das Bearbeiten per Stimme und der Übersetzer nutzen dieses Modell.";
 "API key" = "API-Schlüssel";
 "About" = "Info";
 "Accessibility" = "Bedienungshilfen";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "Das Spracherkennungsmodell hat keinen Tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Das Spracherkennungsmodell ist nicht verfügbar. Versuche es über das Menü erneut.";
 "The speech model isn't loaded." = "Das Spracherkennungsmodell ist nicht geladen.";
-"The speech model isn't ready yet" = "Das Spracherkennungsmodell ist noch nicht bereit";
+"The speech model isn't ready yet." = "Das Spracherkennungsmodell ist noch nicht bereit.";
 "The text appears at the cursor." = "Der Text erscheint an der Einfügemarke.";
 "The translator and the shortcut that translates selected text." = "Der Übersetzer und der Tastaturkurzbefehl, der ausgewählten Text übersetzt.";
 "The translator is part of Waft+" = "Der Übersetzer ist Teil von Waft+";
+"The translator needs a %@ API key." = "Der Übersetzer benötigt einen %@-API-Schlüssel.";
+"The translator needs a local server and model." = "Der Übersetzer benötigt einen lokalen Server und ein Modell.";
 "There's no speech in this file." = "In dieser Datei wird nicht gesprochen.";
 "These apps get their own mode." = "Diese Apps haben einen eigenen Modus.";
 "They work in any app." = "Sie funktionieren in jeder App.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "Ausgewählten Text übersetzen";
 "Translate turns anything you say into %@." = "„Übersetzung“ gibt alles Gesagte auf %@ aus.";
 "Translate" = "Übersetzung";
+"Translates in its own window, and translates or fixes selected text in any app." = "Übersetzt in einem eigenen Fenster und übersetzt oder korrigiert ausgewählten Text in jeder App.";
 "Translates what you said into another language." = "Übersetzt das Gesagte in eine andere Sprache.";
 "Translating and fixing text is part of Waft+." = "Das Übersetzen und Korrigieren von Text ist Teil von Waft+.";
 "Translating into %@…" = "Wird in %@ übersetzt …";

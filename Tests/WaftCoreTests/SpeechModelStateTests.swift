@@ -146,7 +146,7 @@ struct SpeechModelStateTests {
     }
 
     @Test(arguments: [
-        ([SpeechModelState.Event](), "Preparing the speech model…", String?.some("The speech model isn't ready yet")),
+        ([SpeechModelState.Event](), "Preparing the speech model…", String?.some("The speech model isn't ready yet.")),
         (
             [.started(.fast, isInstalled: false), .downloadProgressed(.fast, 0.4)],
             "Downloading the speech model… \(fortyPercent)",

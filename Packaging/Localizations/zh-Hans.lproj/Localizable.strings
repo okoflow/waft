@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "开始和停止录音时发出轻微的咔嗒声。";
 "AI Models" = "AI模型";
 "AI model" = "AI模型";
-"AI modes and editing by voice use this model." = "AI模式和语音编辑都使用此模型。";
 "AI modes keep the model chosen in AI Models." = "AI模式会继续使用在“AI模型”中选择的模型。";
 "AI modes need Waft+" = "AI模式需要Waft+";
 "AI modes need a %@ API key." = "AI模式需要%@ API密钥。";
 "AI modes need a local server and model." = "AI模式需要本地服务器和模型。";
 "AI modes" = "AI模式";
+"AI modes, editing by voice, and the translator use this model." = "AI模式、语音编辑和翻译工具都使用此模型。";
 "API key" = "API密钥";
 "About" = "关于";
 "Accessibility" = "辅助功能";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "语音识别模型缺少分词器。";
 "The speech model isn't available. Retry from the menu." = "语音识别模型不可用。请从菜单中重试。";
 "The speech model isn't loaded." = "语音识别模型未载入。";
-"The speech model isn't ready yet" = "语音识别模型尚未就绪";
+"The speech model isn't ready yet." = "语音识别模型尚未就绪。";
 "The text appears at the cursor." = "文本会出现在光标处。";
 "The translator and the shortcut that translates selected text." = "翻译工具，以及翻译所选文本的快捷键。";
 "The translator is part of Waft+" = "翻译工具是Waft+的功能";
+"The translator needs a %@ API key." = "翻译工具需要%@ API密钥。";
+"The translator needs a local server and model." = "翻译工具需要本地服务器和模型。";
 "There's no speech in this file." = "此文件中没有语音。";
 "These apps get their own mode." = "这些App使用各自的模式。";
 "They work in any app." = "在任何App中都能使用。";
@@ -387,6 +389,7 @@
 "Translate selected text" = "翻译所选文本";
 "Translate turns anything you say into %@." = "“翻译”模式会将你说的所有内容译成%@。";
 "Translate" = "翻译";
+"Translates in its own window, and translates or fixes selected text in any app." = "在独立窗口中翻译，也能在任何App中翻译或修正所选文本。";
 "Translates what you said into another language." = "将你说的内容翻译成另一种语言。";
 "Translating and fixing text is part of Waft+." = "翻译和修正文本是Waft+的功能。";
 "Translating into %@…" = "正在翻译成%@…";

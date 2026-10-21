@@ -11,7 +11,7 @@ struct DoneStep: View {
     }
 
     private var needsAIModel: Bool {
-        AIModelSetup.missingSetup(in: model.settings, apiKeys: model.apiKeys) != nil
+        AIModelSetup.modes.missingSetup(in: model.settings, apiKeys: model.apiKeys) != nil
     }
 
     var body: some View {

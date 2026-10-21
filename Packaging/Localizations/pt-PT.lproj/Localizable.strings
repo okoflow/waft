@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "Um clique suave quando a gravação começa e termina.";
 "AI Models" = "Modelos de IA";
 "AI model" = "Modelo de IA";
-"AI modes and editing by voice use this model." = "Os modos de IA e a edição por voz usam este modelo.";
 "AI modes keep the model chosen in AI Models." = "Os modos de IA continuam a usar o modelo escolhido em “Modelos de IA”.";
 "AI modes need Waft+" = "os modos de IA precisam do Waft+";
 "AI modes need a %@ API key." = "Os modos de IA precisam de uma chave de API de %@.";
 "AI modes need a local server and model." = "Os modos de IA precisam de um servidor local e de um modelo.";
 "AI modes" = "Modos de IA";
+"AI modes, editing by voice, and the translator use this model." = "Os modos de IA, a edição por voz e o tradutor usam este modelo.";
 "API key" = "Chave de API";
 "About" = "Informações";
 "Accessibility" = "Acessibilidade";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "O modelo de fala não tem tokenizador.";
 "The speech model isn't available. Retry from the menu." = "O modelo de fala não está disponível. Volte a tentar a partir do menu.";
 "The speech model isn't loaded." = "O modelo de fala não está carregado.";
-"The speech model isn't ready yet" = "O modelo de fala ainda não está pronto";
+"The speech model isn't ready yet." = "O modelo de fala ainda não está pronto.";
 "The text appears at the cursor." = "O texto aparece onde está o cursor.";
 "The translator and the shortcut that translates selected text." = "O tradutor e o atalho que traduz o texto selecionado.";
 "The translator is part of Waft+" = "O tradutor faz parte do Waft+";
+"The translator needs a %@ API key." = "O tradutor precisa de uma chave de API de %@.";
+"The translator needs a local server and model." = "O tradutor precisa de um servidor local e de um modelo.";
 "There's no speech in this file." = "Não há fala neste ficheiro.";
 "These apps get their own mode." = "Estas aplicações têm um modo próprio.";
 "They work in any app." = "Funcionam em qualquer aplicação.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "Traduzir texto selecionado";
 "Translate turns anything you say into %@." = "O modo “Tradução” escreve em %@ tudo o que diz.";
 "Translate" = "Tradução";
+"Translates in its own window, and translates or fixes selected text in any app." = "Traduz numa janela própria e traduz ou corrige texto selecionado em qualquer aplicação.";
 "Translates what you said into another language." = "Traduz o que disse para outro idioma.";
 "Translating and fixing text is part of Waft+." = "Traduzir e corrigir texto faz parte do Waft+.";
 "Translating into %@…" = "A traduzir para %@…";

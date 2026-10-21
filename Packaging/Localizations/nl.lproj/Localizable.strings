@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "Een zachte klik bij het begin en einde van de opname.";
 "AI Models" = "AI-modellen";
 "AI model" = "AI-model";
-"AI modes and editing by voice use this model." = "AI-modi en bewerken met spraak gebruiken dit model.";
 "AI modes keep the model chosen in AI Models." = "AI-modi gebruiken het model dat je hebt gekozen bij ‘AI-modellen’.";
 "AI modes need Waft+" = "AI-modi vereisen Waft+";
 "AI modes need a %@ API key." = "AI-modi hebben een API-sleutel van %@ nodig.";
 "AI modes need a local server and model." = "AI-modi hebben een lokale server en een model nodig.";
 "AI modes" = "AI-modi";
+"AI modes, editing by voice, and the translator use this model." = "AI-modi, bewerken met spraak en de vertaler gebruiken dit model.";
 "API key" = "API-sleutel";
 "About" = "Info";
 "Accessibility" = "Toegankelijkheid";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "Het spraakmodel heeft geen tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Het spraakmodel is niet beschikbaar. Probeer het opnieuw via het menu.";
 "The speech model isn't loaded." = "Het spraakmodel is niet geladen.";
-"The speech model isn't ready yet" = "Het spraakmodel is nog niet gereed";
+"The speech model isn't ready yet." = "Het spraakmodel is nog niet gereed.";
 "The text appears at the cursor." = "De tekst verschijnt bij de cursor.";
 "The translator and the shortcut that translates selected text." = "De vertaler en de sneltoets die geselecteerde tekst vertaalt.";
 "The translator is part of Waft+" = "De vertaler hoort bij Waft+";
+"The translator needs a %@ API key." = "De vertaler heeft een API-sleutel van %@ nodig.";
+"The translator needs a local server and model." = "De vertaler heeft een lokale server en een model nodig.";
 "There's no speech in this file." = "Dit bestand bevat geen spraak.";
 "These apps get their own mode." = "Deze apps krijgen een eigen modus.";
 "They work in any app." = "Ze werken in elke app.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "Vertaal geselecteerde tekst";
 "Translate turns anything you say into %@." = "‘Vertalen’ zet alles wat je zegt om in het %@.";
 "Translate" = "Vertalen";
+"Translates in its own window, and translates or fixes selected text in any app." = "Vertaalt in een eigen venster en vertaalt of verbetert geselecteerde tekst in elke app.";
 "Translates what you said into another language." = "Vertaalt wat je zei naar een andere taal.";
 "Translating and fixing text is part of Waft+." = "Tekst vertalen en verbeteren hoort bij Waft+.";
 "Translating into %@…" = "Vertalen naar het %@…";

@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "Et blødt klik, når optagelsen starter og stopper.";
 "AI Models" = "AI-modeller";
 "AI model" = "AI-model";
-"AI modes and editing by voice use this model." = "AI-tilstande og redigering med stemmen bruger denne model.";
 "AI modes keep the model chosen in AI Models." = "AI-tilstande bruger fortsat den model, der er valgt i AI-modeller.";
 "AI modes need Waft+" = "AI-tilstande kræver Waft+";
 "AI modes need a %@ API key." = "AI-tilstande kræver en API-nøgle til %@.";
 "AI modes need a local server and model." = "AI-tilstande kræver en lokal server og en model.";
 "AI modes" = "AI-tilstande";
+"AI modes, editing by voice, and the translator use this model." = "AI-tilstande, redigering med stemmen og oversætteren bruger denne model.";
 "API key" = "API-nøgle";
 "About" = "Om";
 "Accessibility" = "Tilgængelighed";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "Talemodellen har ingen tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Talemodellen er ikke tilgængelig. Prøv igen fra menuen.";
 "The speech model isn't loaded." = "Talemodellen er ikke indlæst.";
-"The speech model isn't ready yet" = "Talemodellen er ikke klar endnu";
+"The speech model isn't ready yet." = "Talemodellen er ikke klar endnu.";
 "The text appears at the cursor." = "Teksten vises ved markøren.";
 "The translator and the shortcut that translates selected text." = "Oversætteren og genvejen, der oversætter markeret tekst.";
 "The translator is part of Waft+" = "Oversætteren er en del af Waft+";
+"The translator needs a %@ API key." = "Oversætteren kræver en API-nøgle til %@.";
+"The translator needs a local server and model." = "Oversætteren kræver en lokal server og en model.";
 "There's no speech in this file." = "Der er ingen tale i dette arkiv.";
 "These apps get their own mode." = "Disse apps får deres egen tilstand.";
 "They work in any app." = "De virker i alle apps.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "Oversæt markeret tekst";
 "Translate turns anything you say into %@." = "“Oversættelse” oversætter alt, hvad du siger, til %@.";
 "Translate" = "Oversættelse";
+"Translates in its own window, and translates or fixes selected text in any app." = "Oversætter i sit eget vindue og oversætter eller retter markeret tekst i alle apps.";
 "Translates what you said into another language." = "Oversætter det, du har sagt, til et andet sprog.";
 "Translating and fixing text is part of Waft+." = "Oversættelse og rettelse af tekst er en del af Waft+.";
 "Translating into %@…" = "Oversætter til %@…";

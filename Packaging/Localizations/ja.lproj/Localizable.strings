@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "録音の開始時と終了時に小さなクリック音が鳴ります。";
 "AI Models" = "AIモデル";
 "AI model" = "AIモデル";
-"AI modes and editing by voice use this model." = "AIモードと「音声で編集」はこのモデルを使用します。";
 "AI modes keep the model chosen in AI Models." = "AIモードは、「AIモデル」で選択したモデルをそのまま使用します。";
 "AI modes need Waft+" = "AIモードにはWaft+が必要です";
 "AI modes need a %@ API key." = "AIモードには%@のAPIキーが必要です。";
 "AI modes need a local server and model." = "AIモードにはローカルサーバとモデルが必要です。";
 "AI modes" = "AIモード";
+"AI modes, editing by voice, and the translator use this model." = "AIモード、「音声で編集」、翻訳ツールはこのモデルを使用します。";
 "API key" = "APIキー";
 "About" = "情報";
 "Accessibility" = "アクセシビリティ";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "音声認識モデルにトークナイザがありません。";
 "The speech model isn't available. Retry from the menu." = "音声認識モデルを利用できません。メニューから再試行してください。";
 "The speech model isn't loaded." = "音声認識モデルが読み込まれていません。";
-"The speech model isn't ready yet" = "音声認識モデルの準備がまだできていません";
+"The speech model isn't ready yet." = "音声認識モデルの準備がまだできていません。";
 "The text appears at the cursor." = "カーソル位置にテキストが入力されます。";
 "The translator and the shortcut that translates selected text." = "翻訳ツールと、選択したテキストを翻訳するショートカットです。";
 "The translator is part of Waft+" = "翻訳ツールはWaft+の機能です";
+"The translator needs a %@ API key." = "翻訳ツールには%@のAPIキーが必要です。";
+"The translator needs a local server and model." = "翻訳ツールにはローカルサーバとモデルが必要です。";
 "There's no speech in this file." = "このファイルには話し声が含まれていません。";
 "These apps get their own mode." = "これらのアプリには個別のモードが適用されます。";
 "They work in any app." = "どのアプリでも使えます。";
@@ -387,6 +389,7 @@
 "Translate selected text" = "選択したテキストを翻訳";
 "Translate turns anything you say into %@." = "「翻訳」モードでは、話した内容がすべて%@に翻訳されます。";
 "Translate" = "翻訳";
+"Translates in its own window, and translates or fixes selected text in any app." = "専用のウィンドウで翻訳し、どのアプリでも選択したテキストを翻訳または修正します。";
 "Translates what you said into another language." = "話した内容を別の言語に翻訳します。";
 "Translating and fixing text is part of Waft+." = "テキストの翻訳と修正はWaft+の機能です。";
 "Translating into %@…" = "%@に翻訳中…";

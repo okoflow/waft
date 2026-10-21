@@ -55,6 +55,7 @@ struct SettingsPaneView: View {
         case .translator:
             TranslatorSettingsPane(
                 settings: model.settings,
+                apiKeys: model.apiKeys,
                 shortcuts: model.shortcuts,
                 shortcutRecorder: model.shortcutRecorder,
                 pro: model.pro,

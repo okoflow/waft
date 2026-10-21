@@ -114,8 +114,8 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private func makeSettingsWindow(model: AppModel) -> NSWindow {
         let window = makeWindow(
             SettingsWindowView(model: model, state: settingsState),
-            size: NSSize(width: 820, height: 660),
-            minimumSize: NSSize(width: 760, height: 520),
+            size: Metrics.settingsSize,
+            minimumSize: Metrics.settingsMinimumSize,
             hasToolbar: true,
         )
 
@@ -131,7 +131,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
         return makeWindow(
             view,
-            size: NSSize(width: 600, height: 580),
+            size: Metrics.transcriptionSize,
             minimumSize: Metrics.transcriptionMinimumSize,
             title: String(localized: "Transcribe File"),
         )

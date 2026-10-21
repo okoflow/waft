@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "녹음을 시작하고 멈출 때 작은 클릭음이 납니다.";
 "AI Models" = "AI 모델";
 "AI model" = "AI 모델";
-"AI modes and editing by voice use this model." = "AI 모드와 ‘음성으로 편집’에 이 모델을 사용합니다.";
 "AI modes keep the model chosen in AI Models." = "AI 모드는 ‘AI 모델’에서 선택한 모델을 그대로 사용합니다.";
 "AI modes need Waft+" = "AI 모드에는 Waft+가 필요함";
 "AI modes need a %@ API key." = "AI 모드에는 %@ API 키가 필요합니다.";
 "AI modes need a local server and model." = "AI 모드에는 로컬 서버와 모델이 필요합니다.";
 "AI modes" = "AI 모드";
+"AI modes, editing by voice, and the translator use this model." = "AI 모드, ‘음성으로 편집’, 번역기에 이 모델을 사용합니다.";
 "API key" = "API 키";
 "About" = "정보";
 "Accessibility" = "손쉬운 사용";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "음성 인식 모델에 토크나이저가 없습니다.";
 "The speech model isn't available. Retry from the menu." = "음성 인식 모델을 사용할 수 없습니다. 메뉴에서 다시 시도하세요.";
 "The speech model isn't loaded." = "음성 인식 모델이 로드되지 않았습니다.";
-"The speech model isn't ready yet" = "음성 인식 모델이 아직 준비되지 않았습니다";
+"The speech model isn't ready yet." = "음성 인식 모델이 아직 준비되지 않았습니다.";
 "The text appears at the cursor." = "커서 위치에 텍스트가 입력됩니다.";
 "The translator and the shortcut that translates selected text." = "번역기와 선택한 텍스트를 번역하는 단축키입니다.";
 "The translator is part of Waft+" = "번역기는 Waft+ 기능입니다";
+"The translator needs a %@ API key." = "번역기에는 %@ API 키가 필요합니다.";
+"The translator needs a local server and model." = "번역기에는 로컬 서버와 모델이 필요합니다.";
 "There's no speech in this file." = "이 파일에는 말소리가 없습니다.";
 "These apps get their own mode." = "다음 앱에는 각각의 모드가 적용됩니다.";
 "They work in any app." = "어떤 앱에서든 작동합니다.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "선택한 텍스트 번역";
 "Translate turns anything you say into %@." = "‘번역’ 모드는 말한 내용을 모두 %@로 번역합니다.";
 "Translate" = "번역";
+"Translates in its own window, and translates or fixes selected text in any app." = "별도 창에서 번역하고, 어떤 앱에서든 선택한 텍스트를 번역하거나 교정합니다.";
 "Translates what you said into another language." = "말한 내용을 다른 언어로 번역합니다.";
 "Translating and fixing text is part of Waft+." = "텍스트 번역과 교정은 Waft+ 기능입니다.";
 "Translating into %@…" = "%@로 번역 중…";

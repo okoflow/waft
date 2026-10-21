@@ -144,7 +144,8 @@ speak; the AI model translates half a second after you stop typing.
   opens its **Instructions**, which you can rewrite and try as for a mode.
 - **Model** in Settings › Translator sets the translator's own
   [tier](#choosing-the-ai-model), the default one unless you change it. A
-  local server translates with its own model.
+  local server translates with its own model. Until the AI model is set up,
+  **Set Up…** there opens Settings › AI Models.
 
 ### Selected text
 

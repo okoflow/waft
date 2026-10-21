@@ -10,13 +10,13 @@ struct AIModelsSettingsPane: View {
     var body: some View {
         SettingsSection(
             "AI model",
-            subtitle: "AI modes and editing by voice use this model.",
+            subtitle: "AI modes, editing by voice, and the translator use this model.",
         ) {
             PickerRow(
                 "Provider",
                 selection: $settings.settings.modelProvider,
                 current: settings.settings.modelProvider.title,
-                description: AIModelSetup.missingSetup(in: settings, apiKeys: apiKeys),
+                description: AIModelSetup.modes.missingSetup(in: settings, apiKeys: apiKeys),
             ) {
                 Text(ModelProvider.localServer.title).tag(ModelProvider.localServer)
                 Divider()

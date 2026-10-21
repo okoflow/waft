@@ -19,12 +19,12 @@
 "A soft click when recording starts and stops." = "نقرة خفيفة عند بدء التسجيل وإيقافه.";
 "AI Models" = "نماذج الذكاء الاصطناعي";
 "AI model" = "نموذج الذكاء الاصطناعي";
-"AI modes and editing by voice use this model." = "تستخدم أنماط الذكاء الاصطناعي والتعديل بالصوت هذا النموذج.";
 "AI modes keep the model chosen in AI Models." = "تواصل أنماط الذكاء الاصطناعي استخدام النموذج المختار في نماذج الذكاء الاصطناعي.";
 "AI modes need Waft+" = "تحتاج أنماط الذكاء الاصطناعي إلى Waft+‎";
 "AI modes need a %@ API key." = "تحتاج أنماط الذكاء الاصطناعي إلى مفتاح API من %@.";
 "AI modes need a local server and model." = "تحتاج أنماط الذكاء الاصطناعي إلى خادم محلي ونموذج.";
 "AI modes" = "أنماط الذكاء الاصطناعي";
+"AI modes, editing by voice, and the translator use this model." = "تستخدم أنماط الذكاء الاصطناعي والتعديل بالصوت والمترجم هذا النموذج.";
 "API key" = "مفتاح API";
 "About" = "حول";
 "Accessibility" = "تسهيلات الاستخدام";
@@ -363,10 +363,12 @@
 "The speech model has no tokenizer." = "لا يحتوي نموذج الكلام على أداة ترميز.";
 "The speech model isn't available. Retry from the menu." = "نموذج الكلام غير متاح. أعد المحاولة من القائمة.";
 "The speech model isn't loaded." = "لم يتم تحميل نموذج الكلام.";
-"The speech model isn't ready yet" = "نموذج الكلام ليس جاهزًا بعد";
+"The speech model isn't ready yet." = "نموذج الكلام ليس جاهزًا بعد.";
 "The text appears at the cursor." = "يظهر النص عند المؤشر.";
 "The translator and the shortcut that translates selected text." = "المترجم والاختصار الذي يترجم النص المحدد.";
 "The translator is part of Waft+" = "المترجم جزء من Waft+‎";
+"The translator needs a %@ API key." = "يحتاج المترجم إلى مفتاح API من %@.";
+"The translator needs a local server and model." = "يحتاج المترجم إلى خادم محلي ونموذج.";
 "There's no speech in this file." = "لا يوجد كلام في هذا الملف.";
 "These apps get their own mode." = "لهذه التطبيقات نمط خاص بها.";
 "They work in any app." = "تعمل في أي تطبيق.";
@@ -387,6 +389,7 @@
 "Translate selected text" = "ترجمة النص المحدد";
 "Translate turns anything you say into %@." = "يترجم النمط \"ترجمة\" كل ما تقوله إلى %@.";
 "Translate" = "ترجمة";
+"Translates in its own window, and translates or fixes selected text in any app." = "يترجم في نافذته الخاصة، ويترجم النص المحدد أو يصححه في أي تطبيق.";
 "Translates what you said into another language." = "يترجم ما قلته إلى لغة أخرى.";
 "Translating and fixing text is part of Waft+." = "ترجمة النصوص وتصحيحها جزء من Waft+‎.";
 "Translating into %@…" = "تجري الترجمة إلى %@…";
