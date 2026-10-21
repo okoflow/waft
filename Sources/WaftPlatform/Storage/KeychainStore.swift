@@ -90,7 +90,7 @@ package struct KeychainStore: ValueStore {
 
     package func delete() throws {
         let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else { throw KeychainError.unexpectedStatus(status) }
+        guard [errSecSuccess, errSecItemNotFound].contains(status) else { throw KeychainError.unexpectedStatus(status) }
     }
 
     private func add(_ data: Data) throws {

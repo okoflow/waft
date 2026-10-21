@@ -62,21 +62,19 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     package func delete() throws {
-        var firstFailure: (any Error)?
+        var failures: [any Error] = []
 
         for file in [url, unreadableCopy] where FileManager.default.fileExists(atPath: file.path) {
             do {
                 try FileManager.default.removeItem(at: file)
             } catch {
-                if firstFailure == nil {
-                    firstFailure = error
-                }
+                failures.append(error)
             }
         }
 
-        if let firstFailure {
-            throw firstFailure
-        }
+        guard let firstFailure = failures.first else { return }
+
+        throw firstFailure
     }
 
     private func restrictToOwner() {
