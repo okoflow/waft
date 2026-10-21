@@ -131,6 +131,7 @@ package enum SubtitleFormatter {
 
     private static func score(_ index: Int, ends: [Int], units: [String], target: Double) -> Double {
         let distance = abs(Double(ends[index - 1]) - target)
+
         guard units[index - 1].last?.isPauseMark == true else { return distance }
 
         return distance - 10

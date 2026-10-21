@@ -8,7 +8,6 @@ nonisolated struct IslandRow: Layout {
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout Void) -> CGSize {
         let width = max(2 * wingWidth(of: subviews) + gap, finite(proposal.width))
         let height = subviews.map { $0.sizeThatFits(.unspecified).height }.max()
-
         guard let height else { return CGSize(width: width, height: 0) }
 
         return CGSize(width: width, height: height)
@@ -34,7 +33,6 @@ nonisolated struct IslandRow: Layout {
 
     private func wingWidth(of subviews: Subviews) -> CGFloat {
         let widest = subviews.map { $0.sizeThatFits(.unspecified).width }.max()
-
         guard let widest else { return HUDLayout.wing }
 
         return max(HUDLayout.wing, ceil(widest) + Self.notchSpacing)

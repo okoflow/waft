@@ -76,7 +76,6 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
     private func needsDockIcon(closing: NSWindow?) -> Bool {
         let otherWindows = allWindows.filter { $0 != closing }
-
         guard !otherWindows.contains(where: \.isOpen) else { return true }
 
         return isShowingUpdate

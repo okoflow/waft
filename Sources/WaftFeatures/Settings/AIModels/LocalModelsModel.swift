@@ -113,7 +113,6 @@ final class LocalModelsModel {
 
     private func preferredModel(at baseURL: String, among models: [String]) -> String? {
         let configured = settings.settings.localServer
-
         guard configured.baseURL == baseURL, models.contains(configured.model) else { return models.first }
 
         return configured.model
@@ -121,7 +120,6 @@ final class LocalModelsModel {
 
     private func reportNoKnownServer() async {
         let configured = settings.settings.localServer
-
         guard LocalServer.knownServers.contains(where: { $0.baseURL == configured.baseURL }) else {
             checkedAddress = configured.baseURL
             await checkServer(at: configured)

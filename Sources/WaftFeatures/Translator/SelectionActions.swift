@@ -67,7 +67,6 @@ final class SelectionActions {
         }
 
         let target = focusTracker.currentFocus()
-
         guard let selection = target.element?.selectedText, !selection.isBlank else {
             hud.show(HUDMessage(kind: .information, title: String(localized: "Select the text first, then press the shortcut.")))
 

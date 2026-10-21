@@ -230,7 +230,6 @@ final class RecordingController {
 
     private func deliver(_ ended: ActiveRecording, releasedAt time: TimeInterval) async {
         let samples = await recorder.stop(ended.id, releasedAt: time)
-
         guard !samples.isEmpty else {
             await reportMissingAudio(for: ended)
 

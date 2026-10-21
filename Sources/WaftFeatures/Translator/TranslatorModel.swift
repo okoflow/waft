@@ -170,7 +170,6 @@ final class TranslatorModel {
         hasDroppedTranslation = false
 
         let text = input
-
         guard !text.isBlank, !isLocked else {
             output = ""
             detected = nil

@@ -62,7 +62,6 @@ final class HistoryModel {
 
     private var matchingEntries: [DictationHistory.Entry] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-
         guard !query.isEmpty else { return history.newestFirst }
 
         return history.newestFirst.filter { $0.text.localizedCaseInsensitiveContains(query) }

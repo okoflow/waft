@@ -72,6 +72,7 @@ package enum HallucinationFilter {
             guard normalized.hasPrefix(known) else { return false }
 
             let rest = normalized.dropFirst(known.count)
+
             guard language.hasLooseWordSpacing else { return rest.split(separator: " ").count <= phrase.trailingWords }
 
             return rest.count <= phrase.trailingWords * 3

@@ -51,7 +51,6 @@ private struct LanguageList: View {
 
     private var matches: [Language] {
         let query = state.query
-
         guard !query.isBlank else { return Language.allByDisplayName }
 
         return Language.allByDisplayName.filter { language in

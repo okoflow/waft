@@ -112,7 +112,6 @@ final class VocabularyModel {
         guard !isLoadingDrafts else { return }
 
         let edited = Self.vocabulary(from: terms, snippets)
-
         guard edited != current else { return }
 
         current = edited

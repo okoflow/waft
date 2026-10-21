@@ -146,6 +146,7 @@ struct HesitationRemover {
         let movesOpening = Self.movesOpening(openingBefore, across: closingAfter)
 
         let opening = movesOpening ? openingBefore + openingAfter : openingAfter
+
         guard !isAtStart else { return opening }
 
         let markBefore = closingBefore.trimmingCharacters(in: .whitespacesAndNewlines)

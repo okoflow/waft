@@ -103,7 +103,6 @@ extension KeyCombination: Codable {
         let modifiers = try Modifiers(rawValue: container.decode(Int.self, forKey: .modifiers))
 
         let combination = KeyCombination(keyCode: keyCode, modifiers: modifiers)
-
         guard (0 ... Self.highestKeyCode).contains(keyCode),
               Modifiers.all.isSuperset(of: modifiers),
               combination.hasRequiredModifier

@@ -120,7 +120,6 @@ final nonisolated class FakeTranscriber: Transcriber {
         vocabulary: [String],
     ) async throws -> Transcript? {
         let number = await answer(Request(language: language, vocabulary: vocabulary))
-
         guard let reply = replies.dropFirst(number - 1).first else { return nil }
 
         return try reply.get()

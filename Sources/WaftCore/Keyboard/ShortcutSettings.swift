@@ -44,7 +44,6 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
 
     package func canReset(_ action: ShortcutAction) -> Bool {
         let fallback = action.defaultCombination
-
         guard combinations[action] != fallback else { return false }
 
         return self.action(using: fallback) == nil

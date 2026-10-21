@@ -74,7 +74,6 @@ final class SpeechModelController {
 
     private func apply(_ event: SpeechModelState.Event) {
         let effects = state.handle(event)
-
         guard !effects.isEmpty else { return }
 
         let previous = effectsTask

@@ -66,7 +66,6 @@ final class GlobalShortcutController {
         guard let handler = handlers[action] else { return }
 
         let wanted = wantedCombination(for: action)
-
         guard wanted != attempted[action] else { return }
 
         let shortcut = shortcuts[action]
