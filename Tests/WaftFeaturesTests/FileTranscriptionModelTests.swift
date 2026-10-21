@@ -19,6 +19,7 @@ struct FileTranscriptionModelTests {
     func `transcribes a file and reports progress until it finishes`() async {
         let transcriber = FakeTranscriber(file: .success(Self.transcript), holdsRequests: true)
         let transcription = await model(transcriber)
+
         transcription.transcribe(Self.file)
 
         #expect(transcription.phase == .reading(Self.file))
@@ -32,6 +33,7 @@ struct FileTranscriptionModelTests {
     @Test
     func `reports a file without speech`() async {
         let transcription = await model(FakeTranscriber(file: .success(nil)))
+
         transcription.transcribe(Self.file)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -48,6 +50,7 @@ struct FileTranscriptionModelTests {
         reply: Result<TimedTranscript?, any Error>,
     ) async {
         let transcription = await model(FakeTranscriber(file: reply), decoder: FakeMediaDecoder(decoded: samples))
+
         transcription.transcribe(Self.file)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -60,6 +63,7 @@ struct FileTranscriptionModelTests {
         let message = try #require(SpeechModelState().notReadyMessage)
         let transcriber = FakeTranscriber(file: .success(Self.transcript))
         let transcription = await model(transcriber, isSpeechModelReady: false)
+
         transcription.transcribe(Self.file)
 
         #expect(transcription.phase == .failed(Self.file, message))
@@ -71,6 +75,7 @@ struct FileTranscriptionModelTests {
         let decoder = FakeMediaDecoder(holding: beginsDecoding ? Self.file : nil)
         let transcriber = FakeTranscriber(file: .success(Self.transcript))
         let transcription = await model(transcriber, decoder: decoder)
+
         transcription.transcribe(Self.file)
         let canceled = try #require(transcription.task)
 
@@ -98,6 +103,7 @@ struct FileTranscriptionModelTests {
         let decoder = FakeMediaDecoder(holding: Self.file)
         let transcriber = FakeTranscriber(file: .success(Self.transcript))
         let transcription = await model(transcriber, decoder: decoder)
+
         transcription.transcribe(Self.file)
         let canceled = try #require(transcription.task)
         await decoder.waitUntilReading()
@@ -123,6 +129,7 @@ struct FileTranscriptionModelTests {
         let transcriber = FakeTranscriber(file: .success(Self.transcript))
         let transcription = await model(transcriber)
         transcription.language = chosen
+
         transcription.transcribe(Self.file)
 
         #expect(transcription.language == language)
@@ -133,6 +140,7 @@ struct FileTranscriptionModelTests {
     @Test
     func `copies a finished transcript and marks its file as copied`() async {
         let transcription = await model(FakeTranscriber(file: .success(Self.transcript)))
+
         transcription.copyText()
 
         #expect(clipboard.copied.isEmpty)
@@ -182,17 +190,25 @@ struct FileTranscriptionModelTests {
         isSpeechModelReady: Bool = true,
         pro: ProModel = .unlicensed(),
     ) async -> FileTranscriptionModel {
-        let speechModelController = isSpeechModelReady
-            ? await SpeechModelController.ready(settings: settings)
-            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
-
-        return FileTranscriptionModel(
+        await FileTranscriptionModel(
             transcriber: transcriber,
             decoder: decoder,
-            speechModelController: speechModelController,
+            speechModelController: speechModelController(transcriber, isReady: isSpeechModelReady, pro: pro),
             settings: settings,
             pro: pro,
             clipboard: clipboard,
         )
+    }
+
+    private func speechModelController(
+        _ transcriber: FakeTranscriber,
+        isReady: Bool,
+        pro: ProModel,
+    ) async -> SpeechModelController {
+        guard isReady else {
+            return SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
+        }
+
+        return await .ready(settings: settings)
     }
 }

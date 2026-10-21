@@ -98,6 +98,12 @@ private struct DropZone: View {
         return .verbatim(message)
     }
 
+    private var canChooseFile: Bool {
+        guard !model.isLocked else { return false }
+
+        return model.notReadyMessage == nil
+    }
+
     var body: some View {
         let shape = RoundedRectangle.card
         let isTargeted = model.isDropTargeted
@@ -120,7 +126,7 @@ private struct DropZone: View {
             .opacity(model.isLocked ? Palette.disabledOpacity : 1)
 
             Button("Choose File…", action: chooseFile)
-                .disabled(model.isLocked || model.notReadyMessage != nil)
+                .disabled(!canChooseFile)
                 .padding(.top, Metrics.controlSpacing)
         }
         .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)

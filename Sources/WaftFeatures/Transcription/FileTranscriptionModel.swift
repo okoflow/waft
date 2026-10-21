@@ -45,7 +45,9 @@ final class FileTranscriptionModel {
     }
 
     var acceptsFiles: Bool {
-        !isLocked && !isWorking
+        guard !isLocked else { return false }
+
+        return !isWorking
     }
 
     var languages: [Language] {
