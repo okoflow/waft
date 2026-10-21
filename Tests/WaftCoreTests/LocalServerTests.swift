@@ -36,10 +36,10 @@ struct LocalServerTests {
         #expect(url.absoluteString == "http://localhost:11434/v1/models")
     }
 
-    @Test
-    func `rejects a base URL that is not a URL`() {
+    @Test(arguments: ["http://local host:1234/v1", "localhost:1234/v1", "", " "])
+    func `rejects a base URL that names no server`(baseURL: String) {
         #expect(throws: RewriteError.unavailable) {
-            try LocalServer(baseURL: "http://local host:1234/v1").url(appending: "/models")
+            try LocalServer(baseURL: baseURL).url(appending: "/models")
         }
     }
 }
