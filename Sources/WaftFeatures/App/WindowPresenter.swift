@@ -11,7 +11,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private var translatorWindow: NSWindow?
     private var clickMonitor: Any?
 
-    private var openWindows: [NSWindow] {
+    private var allWindows: [NSWindow] {
         [settingsWindow, onboardingWindow, transcriptionWindow, translatorWindow].compactMap(\.self)
     }
 
@@ -71,8 +71,8 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     func updateActivationPolicy(closing: NSWindow? = nil) {
-        let hasVisibleWindow = openWindows.contains { $0 != closing && $0.isVisible }
-        let needsDockIcon = hasVisibleWindow || isShowingUpdate
+        let hasOpenWindow = allWindows.contains { $0 != closing && ($0.isVisible || $0.isMiniaturized) }
+        let needsDockIcon = hasOpenWindow || isShowingUpdate
 
         NSApp.setActivationPolicy(needsDockIcon ? .regular : .accessory)
     }
