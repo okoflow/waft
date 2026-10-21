@@ -11,8 +11,8 @@ package final class SystemSoundPlayer: FeedbackSoundPlayer {
     package func play(_ sound: FeedbackSound) {
         let name =
             switch sound {
-            case .recordingStarted: "Tink"
-            case .recordingFinished: "Pop"
+            case .recordingStarted: "RecordingStarted"
+            case .recordingFinished: "RecordingFinished"
             }
 
         if let soundID = soundID(named: name) {
@@ -25,8 +25,9 @@ package final class SystemSoundPlayer: FeedbackSoundPlayer {
             return soundID
         }
 
+        guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else { return nil }
+
         var soundID: SystemSoundID = 0
-        let url = URL(filePath: "/System/Library/Sounds/\(name).aiff")
         guard AudioServicesCreateSystemSoundID(url as CFURL, &soundID) == kAudioServicesNoError else { return nil }
 
         soundIDs[name] = soundID
