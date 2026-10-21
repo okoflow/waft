@@ -244,6 +244,8 @@ Settings.
 - **App language** in Settings › General switches Waft's interface between 23
   languages, or **Same as macOS**. Arabic and Hebrew lay it out from right to
   left.
+- **Play sounds**, on by default, plays a short chime when recording starts
+  and another when it stops.
 - **Lower other sounds while recording**, on by default, turns the Mac's volume
   down to a quarter once recording starts and restores it afterward, unless you
   changed it meanwhile.
