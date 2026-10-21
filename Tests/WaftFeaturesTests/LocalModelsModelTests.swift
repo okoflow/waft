@@ -114,10 +114,12 @@ struct LocalModelsModelTests {
         }
 
         let canceled = try #require(localModels.check)
+
         await browser.waitUntilAsked()
 
         settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
         localModels.refresh()
+
         let current = try #require(localModels.check)
         await current.value
 
@@ -142,8 +144,10 @@ struct LocalModelsModelTests {
         }
 
         let canceled = try #require(localModels.check)
+
         settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
         localModels.refresh()
+
         let current = try #require(localModels.check)
 
         await canceled.value

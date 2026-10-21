@@ -19,6 +19,7 @@ private struct RecentSection: View {
 
     var body: some View {
         let today = Date()
+
         let days = statistics.daily(last: Self.dayCount, endingOn: today)
         let recent = statistics.total(last: Self.dayCount, endingOn: today)
 
