@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct SettingsSidebar: View {
-    @FocusState private var isFocused: Bool
-
     let state: SettingsWindowState
 
     var body: some View {
@@ -21,14 +19,14 @@ struct SettingsSidebar: View {
                 }
 
                 ForEach(group.panes, id: \.self) { pane in
-                    SidebarRow(pane: pane, state: state, isFocused: isFocused)
+                    SidebarRow(pane: pane, state: state)
                 }
             }
 
             Spacer(minLength: 0)
 
-            SidebarRow(pane: .pro, state: state, isFocused: isFocused)
-            SidebarRow(pane: .about, state: state, isFocused: isFocused)
+            SidebarRow(pane: .pro, state: state)
+            SidebarRow(pane: .about, state: state)
         }
         .padding(.horizontal, Metrics.rowPadding)
         .padding(.top, Metrics.sidebarTop)
@@ -38,7 +36,6 @@ struct SettingsSidebar: View {
             SidebarBackground()
         }
         .focusable()
-        .focused($isFocused)
         .focusEffectDisabled()
         .onMoveCommand { direction in
             switch direction {
@@ -67,7 +64,6 @@ private struct SidebarRow: View {
 
     let pane: SettingsPane
     let state: SettingsWindowState
-    let isFocused: Bool
 
     private var isSelected: Bool {
         state.selection == pane
@@ -111,9 +107,6 @@ private struct SidebarRow: View {
 
                     if isSelected {
                         shape.fill(Palette.selection)
-                            .overlay {
-                                shape.strokeBorder(Palette.accent, lineWidth: isFocused ? 2 : 0)
-                            }
                     }
                 }
             }
