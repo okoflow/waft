@@ -1,8 +1,3 @@
-package enum ShortcutConflict: Equatable, Sendable {
-    case shortcut(ShortcutAction)
-    case key(RecordingPurpose)
-}
-
 extension Settings {
     package func conflict(with combination: KeyCombination, recording action: ShortcutAction) -> ShortcutConflict? {
         if let other = shortcuts.action(using: combination), other != action {
