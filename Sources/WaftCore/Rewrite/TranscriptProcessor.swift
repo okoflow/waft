@@ -41,6 +41,7 @@ package struct TranscriptProcessor: Sendable {
         allowsAI: Bool,
     ) async -> ProcessedText {
         let language = transcript.language
+
         let corrected = vocabulary.correcting(transcript.text, language: language)
 
         if let snippet = vocabulary.snippet(matchingWhole: corrected, language: language) {
@@ -48,9 +49,13 @@ package struct TranscriptProcessor: Sendable {
         }
 
         let processed = await apply(mode, to: corrected, language: language, setup: setup, allowsAI: allowsAI)
+
         let variant = Self.writingVariant(of: transcript, after: processed, setup: setup)
+
         let written = processed.text.written(in: variant, keeping: vocabulary.promptTerms)
+
         let recorrected = vocabulary.correcting(written, language: language)
+
         let finished = vocabulary.expandingSnippets(in: recorrected, language: language)
 
         return ProcessedText(text: finished, mode: processed.mode, fallback: processed.fallback)
@@ -77,6 +82,7 @@ package struct TranscriptProcessor: Sendable {
         setup: RewriteSetup,
     ) async throws(RewriteError) -> String {
         let kind = RewriteRequest.Kind.text(task, instructions: setup.instructions)
+
         let reworked = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.editDeadline)
 
         guard case let .translate(_, target) = task else { return reworked }
@@ -105,6 +111,7 @@ package struct TranscriptProcessor: Sendable {
 
             do throws(RewriteError) {
                 let kind = Self.kind(for: mode, language: language, setup: setup)
+
                 let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
 
                 return ProcessedText(text: rewritten, mode: mode)
@@ -133,7 +140,9 @@ package struct TranscriptProcessor: Sendable {
             cloudModel: setup.cloudModelInUse,
             deadline: deadline,
         )
+
         let rewriter = rewriters[setup.provider]
+
         let answer = try await RewriteDeadline.run(request.deadline) { () async throws(RewriteError) -> String in
             try await rewriter.rewrite(request)
         }

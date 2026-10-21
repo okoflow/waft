@@ -23,9 +23,9 @@ enum RewriteValidator {
 
         switch request.kind {
         case let .cleanup(_, target):
-            let translatesCompactScript = target != nil && request.language.scripts.contains(where: \.isCompact)
+            let lengthFactor = cleanupLengthFactor(target: target, language: request.language)
 
-            return (unwrapped(answer, input: input, from: cleanupWrappers), input.count * (translatesCompactScript ? 5 : 3) + 60)
+            return (unwrapped(answer, input: input, from: cleanupWrappers), input.count * lengthFactor + 60)
 
         case .custom:
             return (unwrapped(answer, input: input, from: cleanupWrappers), max(input.count * 10, 600))
@@ -36,6 +36,12 @@ enum RewriteValidator {
         case .text:
             return (unwrapped(answer, input: input, from: editWrappers), input.count * 5 + 200)
         }
+    }
+
+    private static func cleanupLengthFactor(target: Language?, language: Language) -> Int {
+        guard target != nil, language.scripts.contains(where: \.isCompact) else { return 3 }
+
+        return 5
     }
 
     private static func expectedScripts(for input: String, language: Language, target: Language?) -> Set<WritingScript> {
@@ -50,6 +56,7 @@ enum RewriteValidator {
 
     private static func unwrapped(_ answer: String, input: String, from wrappers: [Wrapper]) -> String {
         let applicable = wrappers.filter { !input.hasPrefix($0.open) }
+
         var text = answer.trimmingCharacters(in: .whitespacesAndNewlines)
 
         for wrapper in applicable where isWrapped(text, in: wrapper) {

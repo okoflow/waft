@@ -12,10 +12,9 @@ package enum ModelProvider: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     package var isCloud: Bool {
-        if case .cloud = self {
-            true
-        } else {
-            false
+        switch self {
+        case .localServer: false
+        case .cloud: true
         }
     }
 
