@@ -62,6 +62,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     func showTranslator() {
+        model?.translator.resume()
         show(\.translatorWindow, make: makeTranslatorWindow)
     }
 

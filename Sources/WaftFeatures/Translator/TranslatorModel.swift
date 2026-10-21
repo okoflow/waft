@@ -20,6 +20,7 @@ final class TranslatorModel {
     private(set) var failure: String?
 
     @ObservationIgnored private var task: Task<Void, Never>?
+    @ObservationIgnored private var hasDroppedTranslation = false
 
     private let processor: TranscriptProcessor
     private let detector: any LanguageDetector
@@ -133,8 +134,19 @@ final class TranslatorModel {
     }
 
     func stop() {
-        task?.cancel()
+        guard let task else { return }
+
+        task.cancel()
+        self.task = nil
         isTranslating = false
+        hasDroppedTranslation = true
+    }
+
+    func resume() {
+        guard hasDroppedTranslation else { return }
+
+        hasDroppedTranslation = false
+        translateNow()
     }
 
     private func inputDidChange(from oldValue: String) {
@@ -153,6 +165,8 @@ final class TranslatorModel {
 
     private func schedule(after pause: Duration) {
         task?.cancel()
+        task = nil
+        hasDroppedTranslation = false
 
         let text = input
 
@@ -204,6 +218,7 @@ final class TranslatorModel {
             failure = RewriteFallback(error).reason(for: setup.provider).sentenceCased()
         }
 
+        task = nil
         isTranslating = false
     }
 }

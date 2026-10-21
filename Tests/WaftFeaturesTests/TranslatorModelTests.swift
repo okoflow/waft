@@ -187,6 +187,37 @@ struct TranslatorModelTests {
     }
 
     @Test
+    func `translates the text again on resuming after a dropped translation`() async {
+        let rewriter = FakeTextRewriter(.success("Hello."), holdsRequests: true)
+        let translator = model(rewriter, detects: .russian)
+        translator.input = "Привет"
+
+        #expect(await Poll.until(timeout: .seconds(5)) { translator.isTranslating })
+
+        translator.stop()
+        rewriter.release()
+        translator.resume()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
+        #expect(rewriter.requests.count == 2)
+    }
+
+    @Test
+    func `asks the model nothing on resuming after a finished translation`() async {
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let translator = model(rewriter, detects: .russian)
+        translator.input = "Привет"
+
+        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
+
+        translator.stop()
+        translator.resume()
+
+        #expect(!translator.isTranslating)
+        #expect(rewriter.requests.count == 1)
+    }
+
+    @Test
     func `swaps nothing until it knows the source language`() {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter)
