@@ -5,12 +5,11 @@ package enum InsertionSpacing {
 
     package static func prepared(_ text: String, after characterBeforeCaret: Character?) -> String {
         let trimmed = text.trimmingCharacters(in: .whitespaces)
-        guard let first = trimmed.first, let previous = characterBeforeCaret else { return trimmed }
+        guard let first = trimmed.first, let previous = characterBeforeCaret, !previous.isWhitespace, !first.isNewline,
+              !openingCharacters.contains(previous), !isWrittenWithoutSpaces(previous),
+              !isWrittenWithoutSpaces(first) else { return trimmed }
 
-        let continuesWithoutSpace = previous.isWhitespace || first.isNewline || openingCharacters.contains(previous)
-        let isUnspacedScript = isWrittenWithoutSpaces(previous) || isWrittenWithoutSpaces(first)
-
-        return continuesWithoutSpace || isUnspacedScript ? trimmed : " " + trimmed
+        return " " + trimmed
     }
 
     private static func isWrittenWithoutSpaces(_ character: Character) -> Bool {
@@ -24,7 +23,7 @@ package enum InsertionSpacing {
         default:
             guard let script = WritingScript(scalar) else { return false }
 
-            return script == .han || script == .kana
+            return [WritingScript.han, .kana].contains(script)
         }
     }
 }

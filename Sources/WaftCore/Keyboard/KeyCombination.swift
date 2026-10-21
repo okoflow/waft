@@ -98,12 +98,16 @@ extension KeyCombination: Codable {
 
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+
         let keyCode = try container.decode(Int64.self, forKey: .keyCode)
         let modifiers = try Modifiers(rawValue: container.decode(Int.self, forKey: .modifiers))
-        let combination = KeyCombination(keyCode: keyCode, modifiers: modifiers)
-        let isValid = (0 ... Self.highestKeyCode).contains(keyCode) && Modifiers.all.isSuperset(of: modifiers)
 
-        guard isValid, combination.hasRequiredModifier else {
+        let combination = KeyCombination(keyCode: keyCode, modifiers: modifiers)
+
+        guard (0 ... Self.highestKeyCode).contains(keyCode),
+              Modifiers.all.isSuperset(of: modifiers),
+              combination.hasRequiredModifier
+        else {
             throw DecodingError.dataCorruptedError(forKey: .keyCode, in: container, debugDescription: "Unsupported shortcut")
         }
 

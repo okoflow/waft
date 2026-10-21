@@ -59,7 +59,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     package init?(keyCode: Int64) {
-        guard Self.modifiers[keyCode] != nil || FunctionKeys.numbers[keyCode] != nil else { return nil }
+        guard Self.isKnown(keyCode) else { return nil }
 
         self.keyCode = keyCode
     }
@@ -72,6 +72,12 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
         self.keyCode = keyCode
     }
 
+    private static func isKnown(_ keyCode: Int64) -> Bool {
+        guard modifiers[keyCode] == nil else { return true }
+
+        return FunctionKeys.numbers[keyCode] != nil
+    }
+
     package func isHeld(in flags: UInt64) -> Bool {
         guard let modifierFlag else { return false }
 
@@ -80,8 +86,9 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
 
     package func isPressed(by keyEvent: KeyEvent) -> Bool {
         guard modifierFlag == nil else { return isHeld(in: keyEvent.flags) }
+        guard keyEvent.kind == .keyDown else { return false }
 
-        return keyEvent.kind == .keyDown && keyEvent.keyCode == keyCode
+        return keyEvent.keyCode == keyCode
     }
 
     func event(for keyEvent: KeyEvent) -> PushToTalk.Event? {
@@ -100,9 +107,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     private func keyDownEvent(for keyEvent: KeyEvent) -> PushToTalk.Event {
-        if isOwnFunctionKey(keyEvent) {
-            return .keyDown
-        }
+        guard !isOwnFunctionKey(keyEvent) else { return .keyDown }
 
         return keyEvent.isEscape ? .escapeDown : .otherKeyDown
     }
@@ -114,6 +119,8 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     private func isOwnFunctionKey(_ keyEvent: KeyEvent) -> Bool {
-        modifierFlag == nil && keyEvent.keyCode == keyCode
+        guard modifierFlag == nil else { return false }
+
+        return keyEvent.keyCode == keyCode
     }
 }

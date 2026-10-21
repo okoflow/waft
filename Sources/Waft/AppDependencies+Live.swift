@@ -9,6 +9,7 @@ extension AppDependencies {
         let focusTracker = AccessibilityFocusTracker()
         let keyboardState = SystemKeyboardState()
         let apiKeyStores = PerProvider<any ValueStore<String>> { KeychainStore.apiKey(for: $0) }
+
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
         let statisticsFile = AppIdentity.supportDirectory.appending(path: "stats.json")

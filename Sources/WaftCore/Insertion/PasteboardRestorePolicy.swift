@@ -36,14 +36,16 @@ package enum PasteboardRestorePolicy {
     ]
 
     package static func typesToSave(from types: [String]) -> [String] {
-        let saved = types.contains("public.png") ? restorableTypes.subtracting(["public.tiff"]) : restorableTypes
+        guard types.contains("public.png") else { return types.filter(restorableTypes.contains) }
+
+        let saved = restorableTypes.subtracting(["public.tiff"])
 
         return types.filter(saved.contains)
     }
 
     package static func plan(currentTypes: [String], snapshotBytes: Int) -> Plan {
         let isWaftItem = currentTypes.contains(waftType)
-        let isPrivateItem = currentTypes.contains(concealedType) || currentTypes.contains(transientType)
+        let isPrivateItem = [concealedType, transientType].contains(where: currentTypes.contains)
 
         if isPrivateItem, !isWaftItem {
             return .skip(reason: .privateItem)
