@@ -16,7 +16,7 @@
 "1 month" = "1个月";
 "1 week" = "1周";
 "1 year" = "1年";
-"A soft click when recording starts and stops." = "开始和停止录音时发出轻微的咔嗒声。";
+"A soft chime when recording starts and stops." = "开始和停止录音时发出柔和的提示音。";
 "AI Models" = "AI模型";
 "AI model" = "AI模型";
 "AI modes keep the model chosen in AI Models." = "AI模式会继续使用在“AI模型”中选择的模型。";

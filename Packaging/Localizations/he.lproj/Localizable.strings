@@ -16,7 +16,7 @@
 "1 month" = "חודש אחד";
 "1 week" = "שבוע אחד";
 "1 year" = "שנה אחת";
-"A soft click when recording starts and stops." = "נקישה עדינה בתחילת ההקלטה ובסופה.";
+"A soft chime when recording starts and stops." = "צליל עדין בתחילת ההקלטה ובסופה.";
 "AI Models" = "מודלי בינה מלאכותית";
 "AI model" = "מודל בינה מלאכותית";
 "AI modes keep the model chosen in AI Models." = "מצבי בינה מלאכותית ממשיכים להשתמש במודל שנבחר ב״מודלי בינה מלאכותית״.";

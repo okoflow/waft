@@ -26,7 +26,7 @@ struct GeneralSettingsPane: View {
             ToggleRow(
                 "Play sounds",
                 isOn: $settings.settings.playsSounds,
-                description: "A soft click when recording starts and stops.",
+                description: "A soft chime when recording starts and stops.",
             )
             RowDivider()
             ToggleRow(

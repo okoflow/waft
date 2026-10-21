@@ -16,7 +16,7 @@
 "1 month" = "1개월";
 "1 week" = "1주";
 "1 year" = "1년";
-"A soft click when recording starts and stops." = "녹음을 시작하고 멈출 때 작은 클릭음이 납니다.";
+"A soft chime when recording starts and stops." = "녹음을 시작하고 멈출 때 부드러운 알림음이 납니다.";
 "AI Models" = "AI 모델";
 "AI model" = "AI 모델";
 "AI modes keep the model chosen in AI Models." = "AI 모드는 ‘AI 모델’에서 선택한 모델을 그대로 사용합니다.";

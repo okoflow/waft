@@ -16,7 +16,7 @@
 "1 month" = "1か月";
 "1 week" = "1週間";
 "1 year" = "1年";
-"A soft click when recording starts and stops." = "録音の開始時と終了時に小さなクリック音が鳴ります。";
+"A soft chime when recording starts and stops." = "録音の開始時と終了時にやわらかなチャイムが鳴ります。";
 "AI Models" = "AIモデル";
 "AI model" = "AIモデル";
 "AI modes keep the model chosen in AI Models." = "AIモードは、「AIモデル」で選択したモデルをそのまま使用します。";
