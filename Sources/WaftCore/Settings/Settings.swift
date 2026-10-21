@@ -40,7 +40,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var modelProvider = ModelProvider.cloud(.claude)
     package var cloudModels = CloudModel.defaultChoices
     package var localServer = LocalServer()
-    package var instructions = ModeInstructions()
+    package var instructions = EditableInstructions<Mode>()
     package var translation = Translation()
     package var translator = TranslatorSettings()
     package var pushToTalkKey = PushToTalkKey.rightOption

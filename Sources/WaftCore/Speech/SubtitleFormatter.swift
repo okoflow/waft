@@ -113,13 +113,7 @@ package enum SubtitleFormatter {
     private static func score(_ index: Int, ends: [Int], units: [String], target: Double) -> Double {
         let distance = abs(Double(ends[index - 1]) - target)
 
-        return endsWithPause(units[index - 1]) ? distance - 10 : distance
-    }
-
-    private static func endsWithPause(_ unit: String) -> Bool {
-        guard let last = unit.last else { return false }
-
-        return last.isPauseMark
+        return units[index - 1].last?.isPauseMark == true ? distance - 10 : distance
     }
 
     private static func timestamp(_ time: TimeInterval) -> String {

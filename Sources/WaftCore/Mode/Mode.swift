@@ -1,6 +1,6 @@
 import Foundation
 
-package enum Mode: Hashable, Sendable {
+package enum Mode: Hashable, Codable, InstructionsSubject {
     case raw
     case light
     case clean
@@ -44,6 +44,10 @@ package enum Mode: Hashable, Sendable {
     }
 
     package var storageKey: String {
+        rawValue
+    }
+
+    package var rawValue: String {
         switch self {
         case .raw: "raw"
         case .light: "light"
@@ -54,7 +58,11 @@ package enum Mode: Hashable, Sendable {
         }
     }
 
-    package init?(storageKey: String) {
+    package var defaultInstructions: String {
+        RewritePrompt.defaultInstructions(for: self)
+    }
+
+    package init?(rawValue storageKey: String) {
         if let builtIn = Self.builtIn.first(where: { $0.storageKey == storageKey }) {
             self = builtIn
 
@@ -66,23 +74,5 @@ package enum Mode: Hashable, Sendable {
         else { return nil }
 
         self = .custom(id)
-    }
-}
-
-extension Mode: Codable {
-    package init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let storageKey = try container.decode(String.self)
-        guard let mode = Mode(storageKey: storageKey) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown mode \(storageKey)")
-        }
-
-        self = mode
-    }
-
-    package func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-
-        try container.encode(storageKey)
     }
 }

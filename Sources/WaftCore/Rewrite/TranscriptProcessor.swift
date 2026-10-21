@@ -61,16 +61,13 @@ package struct TranscriptProcessor: Sendable {
         following instruction: Transcript,
         setup: RewriteSetup,
     ) async throws(RewriteError) -> String {
-        let request = RewriteRequest(
-            text: instruction.text,
-            language: instruction.language,
-            kind: .edit(selection: selection),
-            localServer: setup.serverInUse,
-            cloudModel: setup.cloudModelInUse,
+        try await rewrite(
+            instruction.text,
+            in: instruction.language,
+            as: .edit(selection: selection),
+            setup: setup,
             deadline: setup.editDeadline,
         )
-
-        return try await rewrite(request, with: setup.provider)
     }
 
     package func rework(
@@ -79,15 +76,8 @@ package struct TranscriptProcessor: Sendable {
         as task: TextTask,
         setup: RewriteSetup,
     ) async throws(RewriteError) -> String {
-        let request = RewriteRequest(
-            text: text,
-            language: language,
-            kind: .text(task, instructions: setup.instructions),
-            localServer: setup.serverInUse,
-            cloudModel: setup.cloudModelInUse,
-            deadline: setup.editDeadline,
-        )
-        let reworked = try await rewrite(request, with: setup.provider)
+        let kind = RewriteRequest.Kind.text(task, instructions: setup.instructions)
+        let reworked = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.editDeadline)
 
         guard case let .translate(_, target) = task else { return reworked }
 
@@ -118,17 +108,10 @@ package struct TranscriptProcessor: Sendable {
     }
 
     private func cleanUp(_ text: String, mode: Mode, language: Language, setup: RewriteSetup) async -> ProcessedText {
-        let request = RewriteRequest(
-            text: text,
-            language: language,
-            kind: Self.kind(for: mode, language: language, setup: setup),
-            localServer: setup.serverInUse,
-            cloudModel: setup.cloudModelInUse,
-            deadline: setup.deadline,
-        )
+        let kind = Self.kind(for: mode, language: language, setup: setup)
 
         do throws(RewriteError) {
-            let rewritten = try await rewrite(request, with: setup.provider)
+            let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
 
             return ProcessedText(text: rewritten, mode: mode)
         } catch {
@@ -142,8 +125,22 @@ package struct TranscriptProcessor: Sendable {
         return ProcessedText(text: cleaned, mode: .light, fallback: fallback)
     }
 
-    private func rewrite(_ request: RewriteRequest, with provider: ModelProvider) async throws(RewriteError) -> String {
-        let rewriter = rewriters[provider]
+    private func rewrite(
+        _ text: String,
+        in language: Language,
+        as kind: RewriteRequest.Kind,
+        setup: RewriteSetup,
+        deadline: Duration,
+    ) async throws(RewriteError) -> String {
+        let request = RewriteRequest(
+            text: text,
+            language: language,
+            kind: kind,
+            localServer: setup.serverInUse,
+            cloudModel: setup.cloudModelInUse,
+            deadline: deadline,
+        )
+        let rewriter = rewriters[setup.provider]
         let answer = try await RewriteDeadline.run(request.deadline) { () async throws(RewriteError) -> String in
             try await rewriter.rewrite(request)
         }

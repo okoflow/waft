@@ -62,7 +62,7 @@ package actor AudioEngineRecorder: AudioRecorder {
         guard let current = session, current.recording == recording else { return [] }
 
         if let releasedAt {
-            await waitForTail(of: current.sink, after: releasedAt)
+            await Poll.until(timeout: Self.tailGrace, every: .milliseconds(10)) { current.sink.coveredUntil >= releasedAt }
         }
 
         if session?.recording == recording {
@@ -110,9 +110,7 @@ package actor AudioEngineRecorder: AudioRecorder {
             NotificationCenter.default.removeObserver(observer)
             engine.inputNode.removeTap(onBus: 0)
 
-            let cause = error as NSError
-
-            Logger.audio.error("The audio engine didn't start: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.audio.error("The audio engine didn't start", cause: error)
 
             throw .engineDidNotStart
         }
@@ -193,10 +191,6 @@ package actor AudioEngineRecorder: AudioRecorder {
         if !resumed, session?.recording == current.recording {
             report(.stoppedWhileStarting, for: current.recording)
         }
-    }
-
-    private func waitForTail(of sink: AudioSampleSink, after releasedAt: TimeInterval) async {
-        await Poll.until(timeout: Self.tailGrace, every: .milliseconds(10)) { sink.coveredUntil >= releasedAt }
     }
 
     private func report(_ failure: RecordingFailure, for recording: RecordingID) {

@@ -1,6 +1,6 @@
 import Foundation
 
-package struct PushToTalkKey: Hashable, Sendable {
+package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     private struct Modifier {
         let name: String
         let shortName: String
@@ -31,6 +31,10 @@ package struct PushToTalkKey: Hashable, Sendable {
 
     package let keyCode: Int64
 
+    package var rawValue: Int64 {
+        keyCode
+    }
+
     package var modifierFlag: UInt64? {
         Self.modifiers[keyCode]?.flag
     }
@@ -58,6 +62,10 @@ package struct PushToTalkKey: Hashable, Sendable {
         guard Self.modifiers[keyCode] != nil || FunctionKeys.numbers[keyCode] != nil else { return nil }
 
         self.keyCode = keyCode
+    }
+
+    package init?(rawValue keyCode: Int64) {
+        self.init(keyCode: keyCode)
     }
 
     private init(known keyCode: Int64) {
@@ -107,23 +115,5 @@ package struct PushToTalkKey: Hashable, Sendable {
 
     private func isOwnFunctionKey(_ keyEvent: KeyEvent) -> Bool {
         modifierFlag == nil && keyEvent.keyCode == keyCode
-    }
-}
-
-extension PushToTalkKey: Codable {
-    package init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let keyCode = try container.decode(Int64.self)
-        guard let key = PushToTalkKey(keyCode: keyCode) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported key code \(keyCode)")
-        }
-
-        self = key
-    }
-
-    package func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-
-        try container.encode(keyCode)
     }
 }

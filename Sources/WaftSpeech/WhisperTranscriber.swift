@@ -47,7 +47,16 @@ package actor WhisperTranscriber: Transcriber {
         guard files.isInstalled else { throw TranscriberError.modelMissing(model) }
 
         let start = ContinuousClock.now
-        let whisper = try await WhisperKit(configuration(for: files))
+        let whisper = try await WhisperKit(WhisperKitConfig(
+            model: files.variant,
+            downloadBase: files.baseDirectory,
+            modelFolder: files.folder.path,
+            tokenizerFolder: files.baseDirectory,
+            verbose: false,
+            logLevel: .none,
+            load: true,
+            download: false,
+        ))
         whisper.tokenizer = try restrictedTokenizer(of: whisper, to: languages)
         loaded = LoadedModel(model: model, whisper: whisper, languages: languages)
 
@@ -157,19 +166,6 @@ package actor WhisperTranscriber: Transcriber {
         let text = segments.map(\.text).joined(separator: " ")
 
         return HallucinationFilter.isHallucination(text, in: language, prompt: prompt) ? [] : segments
-    }
-
-    private func configuration(for files: SpeechModelFiles) -> WhisperKitConfig {
-        WhisperKitConfig(
-            model: files.variant,
-            downloadBase: files.baseDirectory,
-            modelFolder: files.folder.path,
-            tokenizerFolder: files.baseDirectory,
-            verbose: false,
-            logLevel: .none,
-            load: true,
-            download: false,
-        )
     }
 
     private func restrictedTokenizer(of whisper: WhisperKit, to languages: [Language]) throws -> any WhisperTokenizer {

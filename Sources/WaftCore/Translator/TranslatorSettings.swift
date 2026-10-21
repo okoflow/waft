@@ -3,7 +3,7 @@ package struct TranslatorSettings: Codable, Equatable, Sendable {
 
     package var source: Language?
     package var translation: Translation
-    package var instructions = TranslatorInstructions()
+    package var instructions = EditableInstructions<TextTask.Kind>()
     package var cloudModel = CloudModel.balanced
     package private(set) var recentLanguages: [Language] = []
 

@@ -140,44 +140,24 @@ package enum RewritePrompt {
 
     package static func userMessage(for request: RewriteRequest) -> String {
         let spokenLanguage = "Spoken language: \(request.language.name)."
+        let lines =
+            switch request.kind {
+            case let .cleanup(_, target):
+                [spokenLanguage] + translation(into: target) + PromptTag.transcript.wrapping(request.text)
+                    + [finishedTextReminder]
 
-        switch request.kind {
-        case let .cleanup(_, target):
-            let translation = target.map { "Translate into: \(targetName(for: $0))." }
+            case .custom:
+                [spokenLanguage] + PromptTag.transcript.wrapping(request.text) + [finishedTextReminder]
 
-            return [
-                spokenLanguage,
-                translation,
-                PromptTag.transcript.open,
-                request.text,
-                PromptTag.transcript.close,
-                finishedTextReminder,
-            ]
-            .compactMap(\.self)
-            .joined(separator: "\n")
+            case let .edit(selection):
+                [spokenLanguage] + PromptTag.instruction.wrapping(request.text) + PromptTag.text.wrapping(selection)
+                    + [editedTextReminder]
 
-        case .custom:
-            return [spokenLanguage, PromptTag.transcript.open, request.text, PromptTag.transcript.close, finishedTextReminder]
-                .joined(separator: "\n")
+            case let .text(task, _):
+                textLanguages(for: task) + PromptTag.text.wrapping(request.text) + [textReminder(for: task)]
+            }
 
-        case let .edit(selection):
-            return [
-                spokenLanguage,
-                PromptTag.instruction.open,
-                request.text,
-                PromptTag.instruction.close,
-                PromptTag.text.open,
-                selection,
-                PromptTag.text.close,
-                editedTextReminder,
-            ]
-            .joined(separator: "\n")
-
-        case let .text(task, _):
-            let text = [PromptTag.text.open, request.text, PromptTag.text.close, textReminder(for: task)]
-
-            return (textLanguages(for: task) + text).joined(separator: "\n")
-        }
+        return lines.joined(separator: "\n")
     }
 
     static func defaultInstructions(for mode: Mode) -> String {
@@ -196,17 +176,20 @@ package enum RewritePrompt {
     }
 
     static func customInstructions(_ instructions: String) -> String {
-        [customPreamble, PromptTag.instructions.open, instructions, PromptTag.instructions.close].joined(separator: "\n")
+        ([customPreamble] + PromptTag.instructions.wrapping(instructions)).joined(separator: "\n")
     }
 
     private static func textLanguages(for task: TextTask) -> [String] {
         guard case let .translate(source, target) = task else { return [] }
+        guard let source else { return translation(into: target) }
 
-        let translation = "Translate into: \(targetName(for: target))."
+        return ["Source language: \(source.name)."] + translation(into: target)
+    }
 
-        guard let source else { return [translation] }
+    private static func translation(into target: Language?) -> [String] {
+        guard let target else { return [] }
 
-        return ["Source language: \(source.name).", translation]
+        return ["Translate into: \(targetName(for: target))."]
     }
 
     private static func textReminder(for task: TextTask) -> String {

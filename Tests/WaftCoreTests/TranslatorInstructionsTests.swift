@@ -5,7 +5,7 @@ import Testing
 struct TranslatorInstructionsTests {
     @Test(arguments: TextTask.Kind.allCases)
     func `falls back to the default instructions`(kind: TextTask.Kind) {
-        let instructions = TranslatorInstructions()
+        let instructions = EditableInstructions<TextTask.Kind>()
 
         #expect(instructions.text(for: kind) == RewritePrompt.defaultTextInstructions(for: kind))
         #expect(instructions.editableText(for: kind) == RewritePrompt.defaultTextInstructions(for: kind))
@@ -14,7 +14,7 @@ struct TranslatorInstructionsTests {
 
     @Test
     func `uses custom instructions for their task only`() {
-        var instructions = TranslatorInstructions()
+        var instructions = EditableInstructions<TextTask.Kind>()
         instructions.set("Translate like a pirate.", for: .translate)
 
         #expect(instructions.text(for: .translate) == "Translate like a pirate.")
@@ -24,17 +24,17 @@ struct TranslatorInstructionsTests {
 
     @Test
     func `treats the default text as no customization`() {
-        var instructions = TranslatorInstructions()
+        var instructions = EditableInstructions<TextTask.Kind>()
         instructions.set("Custom.", for: .fix)
         instructions.set(RewritePrompt.defaultTextInstructions(for: .fix), for: .fix)
 
         #expect(!instructions.isCustomized(.fix))
-        #expect(instructions == TranslatorInstructions())
+        #expect(instructions == EditableInstructions<TextTask.Kind>())
     }
 
     @Test
     func `keeps blank custom text editable but prompts with the default`() {
-        var instructions = TranslatorInstructions()
+        var instructions = EditableInstructions<TextTask.Kind>()
         instructions.set("  \n", for: .translate)
 
         #expect(instructions.isCustomized(.translate))
@@ -44,7 +44,7 @@ struct TranslatorInstructionsTests {
 
     @Test
     func `resets a task to the default`() {
-        var instructions = TranslatorInstructions()
+        var instructions = EditableInstructions<TextTask.Kind>()
         instructions.set("Custom.", for: .translate)
 
         instructions.reset(.translate)
@@ -57,7 +57,7 @@ struct TranslatorInstructionsTests {
     func `decodes the stored format`() throws {
         let json = #"{"custom":{"fix":"Fix only the typos."}}"#
 
-        let instructions = try JSONDecoder().decode(TranslatorInstructions.self, from: Data(json.utf8))
+        let instructions = try JSONDecoder().decode(EditableInstructions<TextTask.Kind>.self, from: Data(json.utf8))
 
         #expect(instructions.text(for: .fix) == "Fix only the typos.")
     }

@@ -11,4 +11,8 @@ enum PromptTag: String {
     var close: String {
         "</\(rawValue)>"
     }
+
+    func wrapping(_ text: String) -> [String] {
+        [open, text, close]
+    }
 }
