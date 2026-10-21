@@ -22,6 +22,7 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
 
         fileprivate static func + (left: Day, right: Day) -> Day {
             var sum = left
+
             sum.words += right.words
             sum.dictations += right.dictations
             sum.seconds += right.seconds
@@ -44,11 +45,13 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
 
     package mutating func record(words: Int, seconds: Double, on date: Date, calendar: Calendar = .current) {
         let key = Self.key(for: date, calendar: calendar)
+
         var day = days[key, default: Day()]
 
         day.words += words
         day.dictations += 1
         day.seconds += seconds
+
         days[key] = day
     }
 
@@ -67,7 +70,8 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
 
     package func streak(endingOn date: Date, calendar: Calendar = .current) -> Int {
         let today = calendar.startOfDay(for: date)
-        var day = hasDictated(on: today, calendar: calendar) ? today : calendar.date(byAdding: .day, value: -1, to: today)
+
+        var day = streakEnd(onOrBefore: today, calendar: calendar)
         var count = 0
 
         while let current = day, hasDictated(on: current, calendar: calendar) {
@@ -76,6 +80,12 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
         }
 
         return count
+    }
+
+    private func streakEnd(onOrBefore today: Date, calendar: Calendar) -> Date? {
+        guard !hasDictated(on: today, calendar: calendar) else { return today }
+
+        return calendar.date(byAdding: .day, value: -1, to: today)
     }
 
     private func hasDictated(on date: Date, calendar: Calendar) -> Bool {
