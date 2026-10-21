@@ -31,30 +31,18 @@ package enum RewriteFallback: String, Sendable {
     package func reason(for provider: ModelProvider) -> String {
         let name = provider.title
 
-        return switch self {
-        case .missingKey: String(localized: "add your \(name) API key in Settings › AI Models")
-        case .unavailable: unavailableReason(for: provider)
-        case .rejectedKey: String(localized: "\(name) rejected the API key")
-        case .offline: offlineReason(for: provider)
-        case .timeout: String(localized: "\(name) didn't answer in time")
-        case .rateLimited: String(localized: "\(name) is rate-limiting requests")
-        case .serviceError: String(localized: "\(name) returned an error")
-        case .unusableAnswer: String(localized: "\(name)'s answer couldn't be used")
-        case .needsPro: String(localized: "AI modes need Waft+")
-        }
-    }
-
-    private func offlineReason(for provider: ModelProvider) -> String {
-        switch provider {
-        case .localServer: String(localized: "the local server isn't running")
-        case .cloud: String(localized: "you're offline")
-        }
-    }
-
-    private func unavailableReason(for provider: ModelProvider) -> String {
-        switch provider {
-        case .localServer: String(localized: "choose a local server and model in Settings › AI Models")
-        case let .cloud(provider): String(localized: "\(provider.title) isn't available")
+        return switch (self, provider) {
+        case (.missingKey, _): String(localized: "add your \(name) API key in Settings › AI Models")
+        case (.unavailable, .localServer): String(localized: "choose a local server and model in Settings › AI Models")
+        case (.unavailable, .cloud): String(localized: "\(name) isn't available")
+        case (.rejectedKey, _): String(localized: "\(name) rejected the API key")
+        case (.offline, .localServer): String(localized: "the local server isn't running")
+        case (.offline, .cloud): String(localized: "you're offline")
+        case (.timeout, _): String(localized: "\(name) didn't answer in time")
+        case (.rateLimited, _): String(localized: "\(name) is rate-limiting requests")
+        case (.serviceError, _): String(localized: "\(name) returned an error")
+        case (.unusableAnswer, _): String(localized: "\(name)'s answer couldn't be used")
+        case (.needsPro, _): String(localized: "AI modes need Waft+")
         }
     }
 }

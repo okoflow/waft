@@ -8,7 +8,8 @@ struct WritingSettingsPane: View {
     @Bindable var settings: SettingsModel
 
     let apiKeys: PerProvider<APIKeyModel>
-    let shortcutTitle: String?
+    let shortcuts: GlobalShortcutController
+    let shortcutRecorder: ShortcutRecorder
     let pro: ProModel
     let state: SettingsWindowState
 
@@ -22,20 +23,8 @@ struct WritingSettingsPane: View {
         return .verbatim(String(localized: "Speak \(other) to get \(target), and \(target) to get \(other).").sentenceCased())
     }
 
-    private var modeNote: LocalizedStringKey? {
-        guard let shortcutTitle else { return nil }
-
-        return "\(shortcutTitle) switches to the next mode."
-    }
-
     private var setupNote: LocalizedStringKey? {
         AIModelSetup.missingSetup(in: settings, apiKeys: apiKeys)
-    }
-
-    private var twoWayTitle: String {
-        guard let language = settings.settings.translation.twoWayLanguage else { return String(localized: "Off") }
-
-        return language.displayName
     }
 
     private var appIdentifiers: [String] {
@@ -43,15 +32,14 @@ struct WritingSettingsPane: View {
     }
 
     var body: some View {
-        SettingsSection("Modes", subtitle: modeNote) {
+        SettingsSection("Modes") {
             DividedForEach(Mode.builtIn, id: \.self) { mode in
                 ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
             }
         } footer: {
             if let setupNote {
                 Text(setupNote)
-                    .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .detailText()
 
                 Button("Set Up…") { state.selection = .aiModels }
             }
@@ -71,29 +59,12 @@ struct WritingSettingsPane: View {
         }
         .motion(Motion.layout, value: settings.settings.customModes)
 
-        SettingsSection("Translation", subtitle: translationNote, isPro: true) {
-            PickerRow(
-                "Translate into",
-                selection: $settings.settings.translation.target,
-                current: settings.settings.translation.target.displayName,
-            ) {
-                ForEach(Language.allByDisplayName, id: \.self) { language in
-                    Text(language.displayName).tag(language)
-                }
-            }
-            RowDivider()
-            PickerRow(
-                "Two-way with",
-                selection: $settings.settings.translation.twoWayLanguage,
-                current: twoWayTitle,
-            ) {
-                Text("Off").tag(Language?.none)
-                Divider()
-                ForEach(Language.allByDisplayName.filter { $0 != settings.settings.translation.target }, id: \.self) { language in
-                    Text(language.displayName).tag(Language?.some(language))
-                }
-            }
+        SettingsSection("Shortcut", subtitle: "It works in any app.") {
+            ShortcutRow(action: .modeCycle, settings: settings, shortcuts: shortcuts, recorder: shortcutRecorder)
         }
+        .onDisappear { shortcutRecorder.stop() }
+
+        TranslationSection(title: "Translation", subtitle: translationNote, translation: $settings.settings.translation)
 
         SettingsSection("Apps", subtitle: "These apps get their own mode.") {
             if appIdentifiers.isEmpty {
@@ -119,11 +90,7 @@ struct WritingSettingsPane: View {
     }
 
     private func addMode() {
-        guard pro.isUnlocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
         let custom = settings.settings.addCustomMode(named: String(localized: "New Mode"))
 
@@ -171,14 +138,16 @@ private struct AppModeRow: View {
 
             Spacer(minLength: Metrics.rowSpacing)
 
-            MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
-                ForEach(settings.settings.modes, id: \.self) { mode in
-                    Text(settings.settings.title(of: mode)).tag(mode)
+            HStack(spacing: Metrics.controlSpacing) {
+                MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
+                    ForEach(settings.settings.modes, id: \.self) { mode in
+                        Text(settings.settings.title(of: mode)).tag(mode)
+                    }
                 }
-            }
 
-            RemoveButton(help: "Use the default mode in this app") {
-                settings.settings.appModes.set(nil, for: bundleIdentifier)
+                RemoveButton(help: "Use the default mode in this app") {
+                    settings.settings.appModes.set(nil, for: bundleIdentifier)
+                }
             }
         }
         .settingsRowPadding()

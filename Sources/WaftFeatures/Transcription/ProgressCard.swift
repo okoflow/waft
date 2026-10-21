@@ -18,7 +18,7 @@ struct ProgressCard: View {
 
     var body: some View {
         SettingsCard {
-            HStack(spacing: Metrics.accessorySpacing) {
+            HStack(spacing: Metrics.iconLabelSpacing) {
                 FileIcon(url: file)
 
                 VStack(alignment: .leading, spacing: Metrics.inlineSpacing) {
@@ -33,8 +33,7 @@ struct ProgressCard: View {
                         .motion(Motion.meter, value: progress)
 
                     Text(status)
-                        .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .detailText()
                         .monospacedDigit()
                 }
 

@@ -15,12 +15,12 @@ struct LinkRow: View {
 
                 if let detail {
                     Text(detail)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                 }
 
                 Image(systemName: "arrow.up.forward")
                     .font(.glyph)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .accessibilityHidden(true)
             }
             .font(.rowTitle)

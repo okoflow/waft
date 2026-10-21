@@ -1,6 +1,6 @@
 import Foundation
 
-package enum ModelProvider: Hashable, Sendable {
+package enum ModelProvider: Hashable, Codable, RawRepresentable, Sendable {
     case localServer
     case cloud(CloudProvider)
 
@@ -19,14 +19,14 @@ package enum ModelProvider: Hashable, Sendable {
         }
     }
 
-    private var storedName: String {
+    package var rawValue: String {
         switch self {
         case .localServer: "local"
         case let .cloud(provider): provider.rawValue
         }
     }
 
-    private init?(storedName: String) {
+    package init?(rawValue storedName: String) {
         if storedName == "local" {
             self = .localServer
 
@@ -36,23 +36,5 @@ package enum ModelProvider: Hashable, Sendable {
         guard let provider = CloudProvider(rawValue: storedName) else { return nil }
 
         self = .cloud(provider)
-    }
-}
-
-extension ModelProvider: Codable {
-    package init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let storedName = try container.decode(String.self)
-        guard let provider = ModelProvider(storedName: storedName) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown model provider \(storedName)")
-        }
-
-        self = provider
-    }
-
-    package func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-
-        try container.encode(storedName)
     }
 }

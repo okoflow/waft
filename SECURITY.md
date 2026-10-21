@@ -37,7 +37,8 @@ In scope: everything in this repository, including the app, the scripts, and
 the build configuration, and the license service at `api.waft.okoflow.com`,
 which issues Waft+ license keys. Of particular interest:
 
-- Audio leaving the Mac, or text leaving it outside the AI modes.
+- Audio leaving the Mac, or text leaving it other than for the AI provider
+  you chose.
 - Text pasted into a password field, or into another app than the one you
   dictated into.
 - An API key leaving the keychain for anything other than its provider's API.

@@ -35,11 +35,13 @@ opt_in_rules:
   - async_without_await
   - contains_over_filter_count
   - contains_over_filter_is_empty
+  - convenience_type
   - discarded_notification_center_observer
   - discouraged_optional_boolean
   - discouraged_optional_collection
   - empty_collection_literal
   - empty_string
+  - fallthrough
   - fatal_error_message
   - file_name
   - file_types_order
@@ -49,9 +51,11 @@ opt_in_rules:
   - function_default_parameter_at_end
   - identical_operands
   - implicitly_unwrapped_optional
+  - incompatible_concurrency_annotation
   - joined_default_parameter
   - last_where
   - legacy_multiple
+  - lower_acl_than_parent
   - optional_enum_case_matching
   - override_in_extension
   - prefer_key_path
@@ -59,6 +63,7 @@ opt_in_rules:
   - prefer_zero_over_explicit_init
   - reduce_into
   - return_value_from_void_function
+  - self_binding
   - sorted_first_last
   - static_operator
   - superfluous_else
@@ -69,6 +74,7 @@ opt_in_rules:
   - unneeded_throws_rethrows
   - unowned_variable_capture
   - untyped_error_in_catch
+  - unused_parameter
   - weak_delegate
 
 included:

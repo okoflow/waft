@@ -35,28 +35,8 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
             urlRequest.setValue(value, forHTTPHeaderField: field)
         }
 
-        let (data, status) = try await send(urlRequest)
-        guard (200 ..< 300).contains(status) else {
-            Logger.network.error("\(api.service, privacy: .public) answered HTTP \(status, privacy: .public)")
-
-            throw RewriteError(httpStatus: status)
-        }
+        let data = try await transport.body(for: urlRequest, from: api.service)
 
         return try api.answer(from: data)
-    }
-
-    private func send(_ request: URLRequest) async throws(RewriteError) -> (data: Data, status: Int) {
-        let data: Data
-        let response: URLResponse
-
-        do {
-            (data, response) = try await transport.data(for: request)
-        } catch {
-            throw .failedRequest(error, to: api.service)
-        }
-
-        guard let http = response as? HTTPURLResponse else { throw .unreadableResponse }
-
-        return (data, http.statusCode)
     }
 }

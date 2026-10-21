@@ -4,59 +4,38 @@ enum RewriteValidator {
     private typealias Wrapper = (open: String, close: String)
 
     private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
-    private static let cleanupWrappers: [Wrapper] = [("<transcript>", "</transcript>")] + quotes
-    private static let editWrappers: [Wrapper] = [("<text>", "</text>")] + quotes
-    private static let compactScripts: Set<WritingScript> = [.han, .hangul, .kana]
+    private static let cleanupWrappers: [Wrapper] = [(PromptTag.transcript.open, PromptTag.transcript.close)] + quotes
+    private static let editWrappers: [Wrapper] = [(PromptTag.text.open, PromptTag.text.close)] + quotes
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
+        let (text, maximumLength) = unwrapped(answer, for: request)
+        guard !text.isEmpty, text.count <= maximumLength else { throw .unreadableResponse }
+        guard case let .cleanup(_, target) = request.kind, let script = WritingScript.dominant(in: text) else { return text }
+        guard expectedScripts(for: request.text, language: request.language, target: target).contains(script) else {
+            throw .unreadableResponse
+        }
+
+        return text
+    }
+
+    private static func unwrapped(_ answer: String, for request: RewriteRequest) -> (text: String, maximumLength: Int) {
+        let input = request.text
+
         switch request.kind {
         case let .cleanup(_, target):
-            try validatedCleanup(answer, of: request.text, language: request.language, target: target)
+            let translatesCompactScript = target != nil && request.language.scripts.contains(where: \.isCompact)
+
+            return (unwrapped(answer, input: input, from: cleanupWrappers), input.count * (translatesCompactScript ? 5 : 3) + 60)
+
         case .custom:
-            try validatedCustom(answer, of: request.text)
+            return (unwrapped(answer, input: input, from: cleanupWrappers), max(input.count * 10, 600))
+
         case let .edit(selection):
-            try validatedEdit(answer, of: selection)
+            return (unwrapped(answer, input: selection, from: editWrappers), .max)
+
+        case .text:
+            return (unwrapped(answer, input: input, from: editWrappers), input.count * 5 + 200)
         }
-    }
-
-    private static func validatedCleanup(
-        _ answer: String,
-        of transcript: String,
-        language: Language,
-        target: Language?,
-    ) throws(RewriteError) -> String {
-        let text = unwrapped(answer, input: transcript, from: cleanupWrappers)
-        guard !text.isEmpty, text.count <= maximumLength(for: transcript, language: language, target: target) else {
-            throw .unreadableResponse
-        }
-
-        let scripts = expectedScripts(for: transcript, language: language, target: target)
-
-        if let script = WritingScript.dominant(in: text), !scripts.contains(script) {
-            throw .unreadableResponse
-        }
-
-        return text
-    }
-
-    private static func validatedCustom(_ answer: String, of transcript: String) throws(RewriteError) -> String {
-        let text = unwrapped(answer, input: transcript, from: cleanupWrappers)
-        guard !text.isEmpty, text.count <= max(transcript.count * 10, 600) else { throw .unreadableResponse }
-
-        return text
-    }
-
-    private static func validatedEdit(_ answer: String, of selection: String) throws(RewriteError) -> String {
-        let text = unwrapped(answer, input: selection, from: editWrappers)
-        guard !text.isEmpty else { throw .unreadableResponse }
-
-        return text
-    }
-
-    private static func maximumLength(for input: String, language: Language, target: Language?) -> Int {
-        let translatesCompactScript = target != nil && !language.scripts.isDisjoint(with: compactScripts)
-
-        return input.count * (translatesCompactScript ? 5 : 3) + 60
     }
 
     private static func expectedScripts(for input: String, language: Language, target: Language?) -> Set<WritingScript> {

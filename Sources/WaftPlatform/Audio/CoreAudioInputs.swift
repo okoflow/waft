@@ -13,11 +13,7 @@ package struct CoreAudioInputs: AudioInputProvider {
     }
 
     static func defaultInputName() -> String {
-        var address = AudioObjectPropertyAddress(kAudioHardwarePropertyDefaultInputDevice, scope: kAudioObjectPropertyScopeGlobal)
-        var deviceID = AudioDeviceID(kAudioObjectUnknown)
-        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
-        let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &size, &deviceID)
-        guard status == noErr, deviceID != kAudioObjectUnknown, let name = name(of: deviceID) else { return "the default input" }
+        guard let deviceID = DefaultAudioDevice.input.deviceID, let name = name(of: deviceID) else { return "the default input" }
 
         return name
     }

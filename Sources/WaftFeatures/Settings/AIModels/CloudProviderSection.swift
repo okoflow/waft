@@ -7,25 +7,12 @@ struct CloudProviderSection: View {
     let provider: CloudProvider
     let apiKey: APIKeyModel
 
-    private var model: CloudModel {
-        settings.settings.cloudModels[provider]
-    }
-
     var body: some View {
         SettingsSection(
             .verbatim(provider.title),
             subtitle: "Uses your own API key. Only the text goes to \(provider.company), never the audio.",
         ) {
-            PickerRow(
-                "Model",
-                selection: $settings.settings.cloudModels[provider],
-                current: provider.name(of: model),
-                description: .verbatim(model.summary),
-            ) {
-                ForEach(CloudModel.allCases, id: \.self) { model in
-                    Text(verbatim: provider.name(of: model)).tag(model)
-                }
-            }
+            CloudModelRow(model: $settings.settings.cloudModels[provider], provider: provider)
             RowDivider()
             APIKeyRows(apiKey: apiKey, provider: provider)
             RowDivider()
@@ -47,7 +34,7 @@ private struct APIKeyRows: View {
     var body: some View {
         if apiKey.isSet {
             SettingsRow("Key saved", description: "Kept in the Keychain.") {
-                Button("Remove", role: .destructive) { apiKey.remove() }
+                Button("Remove…", role: .destructive, action: confirmRemoval)
             }
             .rowTransition()
             RowDivider()
@@ -61,5 +48,17 @@ private struct APIKeyRows: View {
                 .disabled(!apiKey.canSaveDraft)
         }
         .settingsRowPadding()
+    }
+
+    private func confirmRemoval() {
+        let confirmation = Confirmation(
+            message: String(localized: "Remove the API key?"),
+            detail: String(localized: "Waft deletes it from the Keychain. The AI modes use Light until you add a key."),
+            action: String(localized: "Remove Key"),
+        )
+
+        if confirmation.ask() {
+            apiKey.remove()
+        }
     }
 }

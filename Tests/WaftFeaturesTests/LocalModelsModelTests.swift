@@ -75,31 +75,17 @@ struct LocalModelsModelTests {
         #expect(localModels.serverModels == ["qwen3"])
     }
 
-    @Test
-    func `ignores the result of a check that a newer one replaced`() async throws {
+    @Test(arguments: [false, true])
+    func `ignores the result of a check that a newer one replaced`(detects: Bool) async throws {
         let browser = FakeLocalServerBrowser([Self.ollama: ["stale"], Self.lmStudio: ["qwen3"]], holding: Self.ollama)
         let localModels = LocalModelsModel(browser: browser, settings: settings)
-        localModels.refresh()
-        let canceled = try #require(localModels.check)
-        await browser.waitUntilAsked()
 
-        settings.settings.localServer = LocalServer(baseURL: Self.lmStudio)
-        localModels.refresh()
-        let current = try #require(localModels.check)
-        await current.value
+        if detects {
+            localModels.detect()
+        } else {
+            localModels.refresh()
+        }
 
-        browser.release()
-        await canceled.value
-
-        #expect(browser.answered == [Self.lmStudio, Self.ollama])
-        #expect(localModels.serverModels == ["qwen3"])
-    }
-
-    @Test
-    func `stops detecting servers after a superseded probe fails`() async throws {
-        let browser = FakeLocalServerBrowser([Self.lmStudio: ["qwen3"]], holding: Self.ollama)
-        let localModels = LocalModelsModel(browser: browser, settings: settings)
-        localModels.detect()
         let canceled = try #require(localModels.check)
         await browser.waitUntilAsked()
 

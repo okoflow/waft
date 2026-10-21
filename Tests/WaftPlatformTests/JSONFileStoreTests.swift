@@ -32,10 +32,10 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `keeps a private file restricted to its owner after an overwrite`() async throws {
+    func `keeps a file restricted to its owner after an overwrite`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "sample.json")
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url, isPrivate: true)
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
             try store.save(Self.sample)
 
             try store.save(Self.sample)
@@ -46,10 +46,38 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `writes a new private file restricted to its owner and leaves no temporary file`() async throws {
+    func `restricts a file that others could read to its owner when it saves over it`() async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "dictionary.json")
+            try Data("{}".utf8).write(to: url)
+            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
+            let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
+
+            try store.save(Self.sample)
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+
+            #expect(attributes[.posixPermissions] as? Int == 0o600)
+        }
+    }
+
+    @Test
+    func `restricts a file that others could read to its owner when it loads it`() async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let url = directory.appending(path: "dictionary.json")
+            let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
+            try store.save(Self.sample)
+            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
+
+            #expect(try store.load() == Self.sample)
+            #expect(try FileManager.default.attributesOfItem(atPath: url.path)[.posixPermissions] as? Int == 0o600)
+        }
+    }
+
+    @Test
+    func `writes a new file restricted to its owner and leaves no temporary file`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "nested/history.json")
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url, isPrivate: true)
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
             try store.save(Self.sample)
 
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
@@ -62,11 +90,11 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `restricts the copy of an unreadable private file to its owner`() async throws {
+    func `restricts the copy of an unreadable file to its owner`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
             try Data(#"{"name": "#.utf8).write(to: url)
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url, isPrivate: true)
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -105,7 +133,7 @@ struct JSONFileStoreTests {
             let url = directory.appending(path: "history.json")
             let recoveryCopy = directory.appending(path: "history.unreadable.json")
             try Data(#"{"name": "#.utf8).write(to: url)
-            let store = JSONFileStore<StoredSample>(name: "history", url: url, isPrivate: true)
+            let store = JSONFileStore<StoredSample>(name: "history", url: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -133,7 +161,7 @@ struct JSONFileStoreTests {
             let url = directory.appending(path: "history.json")
             let recoveryCopy = directory.appending(path: "history.unreadable.json")
             try Data(#"{"name": "#.utf8).write(to: url)
-            let store = JSONFileStore<StoredSample>(name: "history", url: url, isPrivate: true)
+            let store = JSONFileStore<StoredSample>(name: "history", url: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()

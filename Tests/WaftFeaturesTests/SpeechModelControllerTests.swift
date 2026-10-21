@@ -114,6 +114,40 @@ struct SpeechModelControllerTests {
         #expect(controller.state.canTranscribe)
     }
 
+    @Test
+    func `finishes a reload of the serving model before it loads the chosen one`() async {
+        let (releases, releaseContinuation) = AsyncStream.makeStream(of: Void.self)
+        defer { releaseContinuation.finish() }
+
+        let transcriber = FakeTranscriber(installed: [.fast], beforeLoad: { model in
+            guard model == .fast else { return }
+
+            var iterator = releases.makeAsyncIterator()
+            _ = await iterator.next()
+        })
+        let (controller, settings) = make(transcriber)
+        releaseContinuation.yield(())
+        controller.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
+
+        transcriber.failsDownloads = true
+        settings.settings.speechModel = .accurate
+
+        #expect(await Poll.until(timeout: .seconds(5)) { controller.state.canRetry })
+
+        controller.reload()
+        transcriber.failsDownloads = false
+        controller.retry()
+        #expect(await !Poll.until(timeout: .milliseconds(300)) { controller.state.isReady })
+        releaseContinuation.yield(())
+
+        #expect(await Poll.until(timeout: .seconds(5)) {
+            transcriber.calls.suffix(4) == [.load(.fast), .download(.accurate), .load(.accurate), .delete(.fast)]
+        })
+        #expect(controller.state.isReady)
+    }
+
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
     func `loads the fast model when Pro locks the accurate one`() async {
         let transcriber = FakeTranscriber()

@@ -28,6 +28,7 @@ final nonisolated class FakeTranscriber: Transcriber {
     private let holdsRequests: Bool
     private let holdsDownloads: Bool
     private let beforeInstallationCheck: @Sendable (SpeechModel) async -> Void
+    private let beforeLoad: @Sendable (SpeechModel) async -> Void
     private let state: OSAllocatedUnfairLock<State>
 
     var requests: [Request] {
@@ -50,12 +51,14 @@ final nonisolated class FakeTranscriber: Transcriber {
         installed: Set<SpeechModel> = Set(SpeechModel.allCases),
         holdsDownloads: Bool = false,
         beforeInstallationCheck: @escaping @Sendable (SpeechModel) async -> Void = { _ in },
+        beforeLoad: @escaping @Sendable (SpeechModel) async -> Void = { _ in },
     ) {
         self.replies = replies
         self.fileReply = fileReply
         self.holdsRequests = holdsRequests
         self.holdsDownloads = holdsDownloads
         self.beforeInstallationCheck = beforeInstallationCheck
+        self.beforeLoad = beforeLoad
         state = OSAllocatedUnfairLock(initialState: State(installed: installed))
     }
 
@@ -95,7 +98,9 @@ final nonisolated class FakeTranscriber: Transcriber {
         state.withLock { _ = $0.installed.insert(model) }
     }
 
-    func loadModel(_ model: SpeechModel, for _: [Language]) -> Duration {
+    func loadModel(_ model: SpeechModel, for _: [Language]) async -> Duration {
+        await beforeLoad(model)
+
         state.withLock { $0.calls.append(.load(model)) }
 
         return .zero

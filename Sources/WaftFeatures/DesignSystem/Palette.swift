@@ -16,12 +16,14 @@ enum Palette {
     static let fieldBorder = Color(nsColor: dynamic(light: (0, 0.12), dark: (1, 0.14)))
     static let dropZoneBorder = Color(nsColor: dynamic(light: (0, 0.18), dark: (1, 0.2)))
     static let separator = Color(nsColor: .separatorColor)
+    static let secondaryText = Color(nsColor: dynamic(light: (0, 0.56), dark: (1, 0.55)))
     static let success = Color.green
     static let warning = Color.orange
     static let danger = Color.red
     static let accent = Color(nsColor: hex(light: 0x7C3AED, dark: 0x8B5CF6))
     static let plusTint = Color(nsColor: hex(light: 0xF1EDFD, dark: 0x241F38))
     static let pressedOpacity = 0.82
+    static let disabledOpacity = 0.4
 
     private nonisolated static func hex(light: UInt32, dark: UInt32) -> NSColor {
         NSColor(name: nil) { appearance in

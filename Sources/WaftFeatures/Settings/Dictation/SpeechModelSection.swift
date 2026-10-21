@@ -43,11 +43,7 @@ struct SpeechModelSection: View {
     }
 
     private func choose(_ model: SpeechModel) {
-        guard !pro.locks(model) else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: !pro.locks(model)) else { return }
 
         settings.settings.speechModel = model
     }
@@ -82,7 +78,7 @@ private struct SpeechModelPreview: View {
 
             Text(verbatim: name)
                 .font(.previewLabel)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
         }
         .accessibilityHidden(true)
     }

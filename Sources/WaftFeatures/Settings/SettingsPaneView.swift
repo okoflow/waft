@@ -1,18 +1,16 @@
 import SwiftUI
 
 struct SettingsPaneView: View {
-    private let model: AppModel
-    private let state: SettingsWindowState
-
-    init(model: AppModel, state: SettingsWindowState) {
-        self.model = model
-        self.state = state
-    }
+    let model: AppModel
+    let state: SettingsWindowState
 
     var body: some View {
         if let mode = state.editedMode, state.selection == .writing {
             ModeEditorPage(mode: mode, settings: model.settings, tryout: model.modeTryout, state: state)
                 .id(mode)
+        } else if let kind = state.editedTextTask, state.selection == .translator {
+            TextTaskEditorPage(kind: kind, settings: model.settings, tryout: model.translatorTryout, state: state)
+                .id(kind)
         } else {
             SettingsPage(.verbatim(state.selection.title), needsWaftPlus: state.selection.needsWaftPlus) {
                 content
@@ -48,10 +46,22 @@ struct SettingsPaneView: View {
             WritingSettingsPane(
                 settings: model.settings,
                 apiKeys: model.apiKeys,
-                shortcutTitle: model.modeSwitcher.shortcutTitle,
+                shortcuts: model.shortcuts,
+                shortcutRecorder: model.shortcutRecorder,
                 pro: model.pro,
                 state: state,
             )
+
+        case .translator:
+            TranslatorSettingsPane(
+                settings: model.settings,
+                shortcuts: model.shortcuts,
+                shortcutRecorder: model.shortcutRecorder,
+                pro: model.pro,
+                state: state,
+            ) {
+                model.windows.showTranslator()
+            }
 
         case .aiModels:
             AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)

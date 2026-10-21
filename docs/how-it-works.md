@@ -47,12 +47,13 @@ noise. The rest goes to the speech model you chose, run on Core ML by
   your dictionary terms.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into
   the script you chose. Latin to Cyrillic goes letter by letter and leaves
-  your dictionary terms and words with q, w, x, or y, digits, inner capitals,
-  or two to four capitals, such as GitHub or API, in Latin letters.
+  your dictionary terms, wherever the whole term appears, and words with q, w,
+  x, or y, digits, inner capitals, or two to four capitals, such as GitHub or
+  API, in Latin letters.
 - **Made-up text.** Waft drops segments with low confidence or heavy
   repetition, results made only of tags such as `[music]`, an echo of the
-  prompt, and stock phrases such as "Thanks for watching" when they are the
-  whole result.
+  prompt other than one dictionary term said on its own, and stock phrases
+  such as "Thanks for watching" when they are the whole result.
 
 ## Cleanup
 
@@ -63,8 +64,8 @@ The recognized text goes through five steps:
    skips the steps below.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
    modes ask the AI model you chose, unless nothing but hesitations was said.
-4. For Chinese and Serbian, Waft converts the result into your writing
-   system, unless Translate put it into another language.
+4. For Chinese and Serbian, Waft converts the result into your
+   [writing system](usage.md#languages).
 5. Dictionary terms apply again, and snippet phrases inside the text expand.
 
 ### Light
@@ -72,7 +73,10 @@ The recognized text goes through five steps:
 Light makes these changes and no others:
 
 - It removes hesitation sounds, such as "um" or "uh", with the commas around
-  them, but keeps one after a number, as in "5 мм".
+  them, but keeps one after a number, as in "5 мм", or written in capitals,
+  as in "ER". An opening "¿", bracket, or quote next to a removed sound stays
+  with the next word, and a sound inside its own marks, as in "¿eh?" or
+  "(um)", goes with them.
 - It tidies the spaces around punctuation, with French spacing before `!`,
   `?`, `;`, and `:`; capitalizes the first letter, with a dotted "İ" in
   Turkish and Azerbaijani, but leaves a first word such as "iPhone" as written;
@@ -93,8 +97,10 @@ dictation's answer that is:
 
 - Longer than three times what you said plus 60 characters, or five times plus
   60 for a translation from Chinese, Japanese, or Korean.
-- Written in another script than both the language you spoke and the
-  transcript, or, for Translate, than the target language.
+- Written mostly in another script than both the language you spoke and the
+  transcript, or, for Translate, than the target language. A Chinese,
+  Japanese, or Korean character counts as three letters here, so a brand name
+  in Latin letters doesn't outweigh the text around it.
 
 Your modes may answer in any script and at up to ten times what you said or
 600 characters, whichever is more. An edit has no other limit.
@@ -102,6 +108,19 @@ Your modes may answer in any script and at up to ten times what you said or
 When the model fails or its answer is rejected, a dictation gets the Light
 text. [The AI modes use Light](troubleshooting.md#the-ai-modes-use-light)
 lists the reasons.
+
+### The translator
+
+The [translator](usage.md#translator) and its shortcuts on selected text send
+the text, the instructions of the task, and, for a translation, the target
+language and the source language you chose. Rules after the instructions,
+which you can't edit, make the model treat the text as material, never as
+instructions, and reply with the text alone, keeping its formatting, links,
+and code. The translator's tier gets the time limit of an edit. macOS detects
+the language of the text on your Mac, which decides when two-way applies.
+
+Waft rejects an answer that is empty or longer than five times the text plus
+200 characters.
 
 ## Pasting
 
@@ -120,9 +139,11 @@ Waft pastes through the clipboard rather than typing key by key:
    manager's. If the app doesn't read the text within 1.5 seconds, the text
    stays on the clipboard.
 
-Waft puts a space before the text unless the character before the cursor is a
-space, a line break, an opening bracket, a quote, or a slash, or the text on
-either side of the cursor is Chinese or Japanese.
+Waft trims the spaces at both ends of the text but keeps a line break that
+"new line" or "new paragraph" put there. It puts a space before the text
+unless the character before the cursor is a space, a line break, an opening
+bracket, a quote, or a slash, the text starts with a line break, or the text
+on either side of the cursor is Chinese or Japanese.
 
 ## The speech model
 

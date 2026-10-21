@@ -1,6 +1,6 @@
 import Foundation
 
-package struct PushToTalkKey: Hashable, Sendable {
+package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     private struct Modifier {
         let name: String
         let shortName: String
@@ -29,30 +29,11 @@ package struct PushToTalkKey: Hashable, Sendable {
         63: Modifier(name: String(localized: "Fn"), shortName: "Fn", symbol: "🌐", flag: 0x800000),
     ]
 
-    private static let functionKeys: [Int64: Int] = [
-        122: 1,
-        120: 2,
-        99: 3,
-        118: 4,
-        96: 5,
-        97: 6,
-        98: 7,
-        100: 8,
-        101: 9,
-        109: 10,
-        103: 11,
-        111: 12,
-        105: 13,
-        107: 14,
-        113: 15,
-        106: 16,
-        64: 17,
-        79: 18,
-        80: 19,
-        90: 20,
-    ]
-
     package let keyCode: Int64
+
+    package var rawValue: Int64 {
+        keyCode
+    }
 
     package var modifierFlag: UInt64? {
         Self.modifiers[keyCode]?.flag
@@ -74,13 +55,17 @@ package struct PushToTalkKey: Hashable, Sendable {
     }
 
     private var functionKeyTitle: String {
-        "F\(Self.functionKeys[keyCode, default: 0])"
+        "F\(FunctionKeys.numbers[keyCode, default: 0])"
     }
 
     package init?(keyCode: Int64) {
-        guard Self.modifiers[keyCode] != nil || Self.functionKeys[keyCode] != nil else { return nil }
+        guard Self.modifiers[keyCode] != nil || FunctionKeys.numbers[keyCode] != nil else { return nil }
 
         self.keyCode = keyCode
+    }
+
+    package init?(rawValue keyCode: Int64) {
+        self.init(keyCode: keyCode)
     }
 
     private init(known keyCode: Int64) {
@@ -130,23 +115,5 @@ package struct PushToTalkKey: Hashable, Sendable {
 
     private func isOwnFunctionKey(_ keyEvent: KeyEvent) -> Bool {
         modifierFlag == nil && keyEvent.keyCode == keyCode
-    }
-}
-
-extension PushToTalkKey: Codable {
-    package init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let keyCode = try container.decode(Int64.self)
-        guard let key = PushToTalkKey(keyCode: keyCode) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported key code \(keyCode)")
-        }
-
-        self = key
-    }
-
-    package func encode(to encoder: any Encoder) throws {
-        var container = encoder.singleValueContainer()
-
-        try container.encode(keyCode)
     }
 }

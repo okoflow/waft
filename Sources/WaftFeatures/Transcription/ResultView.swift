@@ -18,7 +18,7 @@ struct ResultView: View {
     var body: some View {
         VStack(spacing: Metrics.accessorySpacing) {
             SettingsCard {
-                HStack(spacing: Metrics.accessorySpacing) {
+                HStack(spacing: Metrics.iconLabelSpacing) {
                     FileIcon(url: file)
 
                     RowLabel(title: .verbatim(file.lastPathComponent), description: .verbatim(details))

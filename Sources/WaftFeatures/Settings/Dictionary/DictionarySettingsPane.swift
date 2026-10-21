@@ -10,11 +10,17 @@ struct DictionarySettingsPane: View {
             }
 
             DividedForEach($vocabulary.terms, id: \.wrappedValue.id) { $term in
-                EntryRow(first: $term.term, firstPrompt: "Term", second: $term.spokenForms, secondPrompt: "Heard as") {
+                EntryRow(
+                    first: $term.term,
+                    firstPrompt: "Term",
+                    second: $term.spokenForms,
+                    secondPrompt: "Heard as",
+                    removeHelp: "Remove the term",
+                ) {
                     vocabulary.removeTerm(term.id)
                 }
-                .rowTransition()
             }
+            .rowTransition()
         } footer: {
             Button("Add Term") { vocabulary.addTerm() }
         }
@@ -31,11 +37,12 @@ struct DictionarySettingsPane: View {
                     firstPrompt: "Phrase to say",
                     second: $snippet.text,
                     secondPrompt: "Text to paste",
+                    removeHelp: "Remove the snippet",
                 ) {
                     vocabulary.removeSnippet(snippet.id)
                 }
-                .rowTransition()
             }
+            .rowTransition()
         } footer: {
             Button("Add Snippet") { vocabulary.addSnippet() }
         }
@@ -58,6 +65,7 @@ private struct EntryRow: View {
     @Binding var second: String
 
     let secondPrompt: LocalizedStringKey
+    let removeHelp: LocalizedStringKey
     let remove: () -> Void
 
     var body: some View {
@@ -71,7 +79,7 @@ private struct EntryRow: View {
 
             InputField(secondPrompt, prompt: secondPrompt, text: $second)
 
-            RemoveButton(help: "Remove", action: remove)
+            RemoveButton(help: removeHelp, action: remove)
         }
         .settingsRowPadding()
     }

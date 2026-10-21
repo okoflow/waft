@@ -15,14 +15,14 @@ struct WelcomeStep: View {
 
     var body: some View {
         OnboardingStep(title: "Welcome to Waft", message: "Dictate in any app instead of typing.") {
-            AppIcon(size: 96)
+            AppIcon(size: Metrics.pageIconSize)
         } content: {
             SettingsCard {
-                TileRow(symbolName: "keyboard", tint: .gray, title: pressTitle, detail: "Waft starts listening")
+                TileRow(symbolName: "keyboard", tint: .gray, title: pressTitle, detail: "Waft starts listening.")
                 RowDivider()
-                TileRow(symbolName: "waveform", tint: .red, title: "Speak", detail: "Your speech is recognized on this Mac")
+                TileRow(symbolName: "waveform", tint: .red, title: "Speak", detail: "Your speech is recognized on this Mac.")
                 RowDivider()
-                TileRow(symbolName: "text.cursor", tint: .blue, title: releaseTitle, detail: "The text appears at the cursor")
+                TileRow(symbolName: "text.cursor", tint: .blue, title: releaseTitle, detail: "The text appears at the cursor.")
             }
         }
     }

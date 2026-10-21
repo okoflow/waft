@@ -82,14 +82,12 @@ enum VoiceCommands {
     }
 
     private static func commands(for language: Language) -> [Command] {
-        let lineCommands = commands(lines[language, default: []], isParagraph: false, in: language)
-        let paragraphCommands = commands(paragraphs[language, default: []], isParagraph: true, in: language)
+        let commands = [(lines, false), (paragraphs, true)].flatMap { phrases, isParagraph in
+            phrases[language, default: []]
+                .map { Command(words: TextSegment.words(of: $0, in: language), isParagraph: isParagraph) }
+        }
 
-        return (lineCommands + paragraphCommands).sorted { $0.words.count > $1.words.count }
-    }
-
-    private static func commands(_ phrases: [String], isParagraph: Bool, in language: Language) -> [Command] {
-        phrases.map { Command(words: TextSegment.words(of: $0, in: language), isParagraph: isParagraph) }
+        return commands.sorted { $0.words.count > $1.words.count }
     }
 
     private static func match(
@@ -98,10 +96,10 @@ enum VoiceCommands {
         in segments: [TextSegment],
         language: Language,
     ) -> (Command, Int)? {
-        guard isPause(before: start, in: segments) else { return nil }
+        guard isPause(at: start - 1, in: segments) else { return nil }
 
         for command in commands {
-            if let end = end(of: command, at: start, in: segments, language: language), isPause(after: end, in: segments) {
+            if let end = end(of: command, at: start, in: segments, language: language), isPause(at: end + 1, in: segments) {
                 return (command, end)
             }
         }
@@ -125,12 +123,8 @@ enum VoiceCommands {
         return index
     }
 
-    private static func isPause(before index: Int, in segments: [TextSegment]) -> Bool {
-        index == 0 || segments[index - 1].text.contains { $0.isPauseMark || $0 == "\n" }
-    }
-
-    private static func isPause(after index: Int, in segments: [TextSegment]) -> Bool {
-        index + 1 >= segments.count || segments[index + 1].text.contains { $0.isPauseMark || $0 == "\n" }
+    private static func isPause(at index: Int, in segments: [TextSegment]) -> Bool {
+        !segments.indices.contains(index) || segments[index].text.contains { $0.isPauseMark || $0 == "\n" }
     }
 
     private static func endingLine(_ text: String, language: Language, isParagraph: Bool) -> String {

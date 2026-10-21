@@ -15,7 +15,7 @@ struct EditKeySection: View {
         ) {
             SettingsRow("Editing key", description: keyRecorder.note(for: .edit)) {
                 if isLocked {
-                    Button("Unlock…", action: showPro)
+                    Button("Unlock Waft+…", action: showPro)
                 } else {
                     recorder
                 }

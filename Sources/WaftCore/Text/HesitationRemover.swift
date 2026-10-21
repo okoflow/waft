@@ -19,6 +19,22 @@ struct HesitationRemover {
         segments = TextSegment.split(text.replacingOccurrences(of: "...", with: "…"))
     }
 
+    private static func keptMark(_ before: String, _ after: String) -> String {
+        let isFraming = LightModeRules.framingMarks.contains
+        let trimmedBefore = before.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedAfter = after.trimmingCharacters(in: .whitespacesAndNewlines)
+        let left = String(trimmedBefore.reversed().drop(while: isFraming).reversed())
+        let right = String(trimmedAfter.drop(while: isFraming))
+
+        return left.isEmpty ? right : left
+    }
+
+    private static func splittingOpeningMarks(off separator: String) -> (closing: String, opening: String) {
+        let opening = String(separator.reversed().prefix(while: LightModeRules.openingMarks.contains).reversed())
+
+        return (String(separator.dropLast(opening.count)), opening)
+    }
+
     mutating func run() -> String {
         while index < segments.count {
             let segment = segments[index]
@@ -26,7 +42,7 @@ struct HesitationRemover {
 
             if !segment.isWord {
                 kept.append(segment)
-            } else if isRemovable(segment) {
+            } else if !followsNumber, LightModeRules.isHesitation(segment.text, in: language) {
                 removeHesitation()
             } else {
                 keep(segment)
@@ -34,12 +50,6 @@ struct HesitationRemover {
         }
 
         return kept.map(\.text).joined()
-    }
-
-    private func isRemovable(_ word: TextSegment) -> Bool {
-        guard !followsNumber else { return false }
-
-        return LightModeRules.isHesitation(word.text, in: language)
     }
 
     private mutating func keep(_ word: TextSegment) {
@@ -77,16 +87,27 @@ struct HesitationRemover {
     }
 
     private func joinedSeparator(_ before: String, _ after: String, isAtStart: Bool, isAtEnd: Bool) -> String {
-        guard !isAtStart else { return "" }
+        let (closingBefore, openingBefore) = Self.splittingOpeningMarks(off: before)
+        let marksAfter = after.drop(while: \.isWhitespace)
+        let closesGroup = marksAfter.first.map(LightModeRules.groupClosingMarks.contains) == true
+        guard openingBefore.isEmpty || !closesGroup else {
+            return joinedSeparator(closingBefore, String(marksAfter.dropFirst()), isAtStart: isAtStart, isAtEnd: isAtEnd)
+        }
+        guard !isAtEnd else { return isAtStart ? "" : Self.keptMark(before, after) }
 
-        let isFraming = LightModeRules.framingMarks.contains
-        let trimmedBefore = before.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedAfter = after.trimmingCharacters(in: .whitespacesAndNewlines)
-        let left = String(trimmedBefore.reversed().drop(while: isFraming).reversed())
-        let right = String(trimmedAfter.drop(while: isFraming))
-        let core = left.isEmpty ? right : left
+        let (closingAfter, openingAfter) = Self.splittingOpeningMarks(off: after)
+
+        let trimmedAfter = closingAfter.trimmingCharacters(in: .whitespacesAndNewlines)
+        let movesOpening = !openingBefore.isEmpty && trimmedAfter.allSatisfy(LightModeRules.framingMarks.contains)
+        let opening = movesOpening ? openingBefore + openingAfter : openingAfter
+
+        guard !isAtStart else { return opening }
+
+        let markBefore = closingBefore.trimmingCharacters(in: .whitespacesAndNewlines)
+        let keepsMarkBefore = movesOpening || (!openingAfter.isEmpty && !markBefore.isEmpty)
+        let mark = keepsMarkBefore ? markBefore : Self.keptMark(before, closingAfter)
         let gap = (before + after).contains("\n") ? "\n" : language.wordSeparator
 
-        return isAtEnd ? core : core + gap
+        return mark + gap + opening
     }
 }

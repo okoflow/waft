@@ -1,31 +1,40 @@
+package import WaftCore
 import Carbon.HIToolbox
 import os
-import WaftCore
 
 @MainActor
 package final class CarbonHotKey: GlobalShortcut {
     private static let signature = OSType(0x5761_6674)
-    private static let identifier: UInt32 = 1
-    private static let keyCode = UInt32(kVK_ANSI_M)
-    private static let modifiers = UInt32(controlKey | optionKey)
+    private static var lastIdentifier: UInt32 = 0
+
+    private let identifier: UInt32
 
     private var hotKey: EventHotKeyRef?
     private var handler: EventHandlerRef?
     private var action: (@MainActor () -> Void)?
 
-    package var title: String {
-        "⌃⌥M"
+    package init() {
+        Self.lastIdentifier += 1
+        identifier = Self.lastIdentifier
     }
 
-    private init() {}
+    private static func carbonModifiers(of modifiers: KeyCombination.Modifiers) -> UInt32 {
+        let flags: [(KeyCombination.Modifiers, Int)] = [
+            (.control, controlKey),
+            (.option, optionKey),
+            (.shift, shiftKey),
+            (.command, cmdKey),
+        ]
 
-    package static func modeCycle() -> CarbonHotKey {
-        CarbonHotKey()
+        return flags.reduce(0) { result, flag in
+            modifiers.contains(flag.0) ? result | UInt32(flag.1) : result
+        }
     }
 
-    package func register(_ action: @escaping @MainActor () -> Void) -> Bool {
-        guard hotKey == nil else { return true }
+    package func register(_ combination: KeyCombination, action: @escaping @MainActor () -> Void) -> Bool {
+        unregister()
 
+        let shortcut = identifier
         var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
         let context = Unmanaged.passUnretained(self).toOpaque()
         let installStatus = InstallEventHandler(
@@ -38,18 +47,29 @@ package final class CarbonHotKey: GlobalShortcut {
         )
 
         guard installStatus == noErr else {
-            Logger.keyboard.error("Couldn't install the mode shortcut handler: OSStatus \(installStatus, privacy: .public)")
+            Logger.keyboard.error(
+                "Couldn't install shortcut \(shortcut, privacy: .public): OSStatus \(installStatus, privacy: .public)",
+            )
 
             return false
         }
 
-        let hotKeyID = EventHotKeyID(signature: Self.signature, id: Self.identifier)
-        let registerStatus = RegisterEventHotKey(Self.keyCode, Self.modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKey)
-        guard registerStatus == noErr else {
-            Logger.keyboard.error("Couldn't register the mode shortcut: OSStatus \(registerStatus, privacy: .public)")
+        let hotKeyID = EventHotKeyID(signature: Self.signature, id: identifier)
+        let registerStatus = RegisterEventHotKey(
+            UInt32(combination.keyCode),
+            Self.carbonModifiers(of: combination.modifiers),
+            hotKeyID,
+            GetApplicationEventTarget(),
+            0,
+            &hotKey,
+        )
 
-            RemoveEventHandler(handler)
-            handler = nil
+        guard registerStatus == noErr else {
+            Logger.keyboard.error(
+                "Couldn't register shortcut \(shortcut, privacy: .public): OSStatus \(registerStatus, privacy: .public)",
+            )
+
+            unregister()
 
             return false
         }
@@ -59,8 +79,22 @@ package final class CarbonHotKey: GlobalShortcut {
         return true
     }
 
+    package func unregister() {
+        if let hotKey {
+            UnregisterEventHotKey(hotKey)
+        }
+
+        if let handler {
+            RemoveEventHandler(handler)
+        }
+
+        hotKey = nil
+        handler = nil
+        action = nil
+    }
+
     fileprivate func handle(_ pressed: EventHotKeyID) -> OSStatus {
-        guard pressed.signature == Self.signature, pressed.id == Self.identifier else { return OSStatus(eventNotHandledErr) }
+        guard pressed.signature == Self.signature, pressed.id == identifier else { return OSStatus(eventNotHandledErr) }
 
         action?()
 

@@ -43,13 +43,13 @@ struct PracticeStep: View {
                     .font(.practice)
                     .lineLimit(4, reservesSpace: true)
                     .focused($isTyping)
+                    .contentDirection(of: onboarding.practiceText)
                     .padding(14)
                     .modifier(FieldChrome(isFocused: isTyping, cornerRadius: Metrics.cardRadius))
 
                 HStack(spacing: Metrics.controlSpacing) {
                     Text(modelStatus)
-                        .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .detailText()
 
                     if model.speechModelController.state.canRetry {
                         Button("Retry") { model.speechModelController.retry() }

@@ -12,6 +12,7 @@ final class DictationController {
     private let speechModelController: SpeechModelController
     private let vocabulary: VocabularyModel
     private let keyRecorder: KeyRecorder
+    private let shortcutRecorder: ShortcutRecorder
     private let pro: ProModel
     private let queue: DictationQueue
 
@@ -27,6 +28,7 @@ final class DictationController {
         speechModelController: SpeechModelController,
         vocabulary: VocabularyModel,
         keyRecorder: KeyRecorder,
+        shortcutRecorder: ShortcutRecorder,
         pro: ProModel,
         queue: DictationQueue,
     ) {
@@ -37,6 +39,7 @@ final class DictationController {
         self.speechModelController = speechModelController
         self.vocabulary = vocabulary
         self.keyRecorder = keyRecorder
+        self.shortcutRecorder = shortcutRecorder
         self.pro = pro
         self.queue = queue
 
@@ -64,7 +67,7 @@ final class DictationController {
     }
 
     private func handle(_ keyEvent: KeyEvent) {
-        guard !keyRecorder.isRecording else { return }
+        guard !keyRecorder.isRecording, !shortcutRecorder.isRecording else { return }
 
         recordings.resetWatchdog(on: keyEvent)
 

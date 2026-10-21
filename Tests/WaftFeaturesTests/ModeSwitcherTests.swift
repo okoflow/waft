@@ -8,18 +8,21 @@ struct ModeSwitcherTests {
     private let settings = SettingsModel.inMemory()
     private let hud = HUDController.offscreen()
 
-    @Test(arguments: [(true, "⌃⌥M"), (false, nil)] as [(Bool, String?)])
-    func `shows the shortcut title only once the shortcut registers`(registers: Bool, title: String?) {
-        shortcut.registers = registers
-        let switcher = ModeSwitcher(shortcut: shortcut, settings: settings, hud: hud, pro: .unlicensed())
+    private var shortcuts: GlobalShortcutController {
+        .fake([.modeCycle: shortcut], settings: settings)
+    }
+
+    @Test
+    func `registers the mode shortcut when it starts`() {
+        let switcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: .unlicensed())
         switcher.start()
 
-        #expect(switcher.shortcutTitle == title)
+        #expect(shortcut.registered == ShortcutAction.modeCycle.defaultCombination)
     }
 
     @Test
     func `switches to the next mode and announces it when the shortcut fires`() {
-        let switcher = ModeSwitcher(shortcut: shortcut, settings: settings, hud: hud, pro: .unlicensed())
+        let switcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: .unlicensed())
         switcher.start()
         shortcut.fire()
 
@@ -31,7 +34,7 @@ struct ModeSwitcherTests {
     func `switches through the custom modes and announces them by name`() {
         settings.settings.customModes = [.emailReply]
         settings.settings.mode = .translate
-        let switcher = ModeSwitcher(shortcut: shortcut, settings: settings, hud: hud, pro: .unlicensed())
+        let switcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: .unlicensed())
         switcher.start()
         shortcut.fire()
 
@@ -46,7 +49,7 @@ struct ModeSwitcherTests {
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
     func `skips the AI modes without Pro`() {
         let switcher = ModeSwitcher(
-            shortcut: shortcut,
+            shortcuts: shortcuts,
             settings: settings,
             hud: hud,
             pro: .unlicensed(trialStarted: .distantPast),

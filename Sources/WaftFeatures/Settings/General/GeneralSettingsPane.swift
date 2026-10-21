@@ -62,7 +62,7 @@ private struct InterfaceLanguageRow: View {
     }
 
     var body: some View {
-        SettingsRow("App language", description: note) {
+        SettingsRow("App language", description: note, labelsAccessory: true) {
             if model.needsRelaunch {
                 Button("Relaunch", action: model.relaunch)
                     .transition(.opacity)

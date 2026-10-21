@@ -3,6 +3,10 @@ import Foundation
 enum LightModeRules {
     static let framingMarks: Set<Character> = [",", "，", "、", "،", "…", "-", "–", "—"]
 
+    static let openingMarks: Set<Character> = ["¿", "¡", "(", "[", "«", "„", "“", "\"", "「", "『", "（", "《"]
+
+    static let groupClosingMarks: Set<Character> = ["?", "!", ")", "]", "»", "“", "”", "\"", "」", "』", "）", "》"]
+
     private static let sentenceEnds: Set<Character> = [".", "!", "?", "。", "！", "？", "؟", "۔", "।", "॥"]
 
     private static let closingMarks: Set<Character> = [
@@ -36,6 +40,9 @@ enum LightModeRules {
     }
 
     static func isHesitation(_ word: String, in language: Language) -> Bool {
+        let isAbbreviation = word.count(where: \.isUppercase) > 1 && !word.contains(where: \.isLowercase)
+        guard !isAbbreviation else { return false }
+
         let letters = word.folded(in: language).filter { $0 != "-" && $0 != "‐" }
         let runs = HesitationPattern.runs(of: letters)
 

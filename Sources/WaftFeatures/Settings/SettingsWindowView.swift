@@ -1,13 +1,8 @@
 import SwiftUI
 
 struct SettingsWindowView: View {
-    private let model: AppModel
-    private let state: SettingsWindowState
-
-    init(model: AppModel, state: SettingsWindowState) {
-        self.model = model
-        self.state = state
-    }
+    let model: AppModel
+    let state: SettingsWindowState
 
     var body: some View {
         HStack(spacing: 0) {

@@ -1,10 +1,11 @@
 import SwiftUI
+import WaftCore
 
 struct DoneStep: View {
     let model: AppModel
 
     private var message: LocalizedStringKey {
-        guard let shortcutTitle = model.modeSwitcher.shortcutTitle else { return "Waft lives in the menu bar." }
+        guard let shortcutTitle = model.shortcuts.title(for: .modeCycle) else { return "Waft lives in the menu bar." }
 
         return "Waft lives in the menu bar. \(shortcutTitle) switches to the next mode."
     }

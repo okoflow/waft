@@ -101,6 +101,6 @@ private struct StepTransition: Transition {
     func body(content: Content, phase: TransitionPhase) -> some View {
         content
             .opacity(phase.isIdentity ? 1 : 0)
-            .offset(y: phase.value * -8)
+            .motionOffset(y: phase.value * -8)
     }
 }

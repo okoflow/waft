@@ -50,10 +50,6 @@ final class ProModel {
         !draft.isBlank
     }
 
-    private var trimmedDraft: String {
-        draft.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     init(
         keyStore: any ValueStore<String>,
         trialStore: any ValueStore<Date>,
@@ -106,7 +102,7 @@ final class ProModel {
             return
         }
 
-        keyStore.write(trimmedDraft)
+        keyStore.write(draft.trimmingCharacters(in: .whitespacesAndNewlines))
         license = key.license
         draft = ""
 

@@ -21,7 +21,7 @@ struct PermissionRow: View {
                         .accessibilityHidden(true)
 
                     Text("Allowed")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .transition(.opacity)
                 } else if offersRequest {
                     Button("Allow…") {
@@ -30,7 +30,7 @@ struct PermissionRow: View {
                     .transition(.opacity)
                 } else {
                     Text("Not allowed yet")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .transition(.opacity)
                 }
             }

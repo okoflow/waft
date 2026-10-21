@@ -39,9 +39,8 @@ back.
 1. Click into a text field: a message, a document, a prompt for an AI. In the
    guide, click the box in **Try it**; while the speech model downloads, the
    line under it shows its progress.
-2. Hold <kbd>right ⌥</kbd> and say "Hello, Waft". The HUD grows out of the
-   notch, or drops from the top edge of a screen without one, to show that
-   Waft is listening.
+2. Hold <kbd>right ⌥</kbd> and say "Hello, Waft". The HUD at the top of the
+   screen shows that Waft is listening.
 3. Let go. The text appears at the cursor.
 
 If the first word goes missing,

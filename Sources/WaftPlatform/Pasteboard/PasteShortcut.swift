@@ -36,39 +36,23 @@ enum PasteShortcut {
     }
 
     private static func keyCodeTypingV() -> CGKeyCode {
-        guard let inputSource = TISCopyCurrentASCIICapableKeyboardLayoutInputSource()?.takeRetainedValue(),
-              let property = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData),
-              let eventSource = CGEventSource(stateID: .combinedSessionState)
-        else { return fallbackKeyCode }
+        guard let eventSource = CGEventSource(stateID: .combinedSessionState) else { return fallbackKeyCode }
 
-        let layout = unsafeBitCast(property, to: CFData.self)
         let keyboardType = UInt32(eventSource.keyboardType)
-        let keyCode = (0 ..< 128).first { character(for: UInt16($0), layout: layout, keyboardType: keyboardType) == "v" }
+        let keyCode = CurrentKeyboardLayout.withCurrentLayout { layout in
+            (UInt16(0) ..< 128).first { keyCode in
+                let character = CurrentKeyboardLayout.translate(
+                    keyCode,
+                    with: layout,
+                    modifierState: commandModifierState,
+                    keyboardType: keyboardType,
+                )
+
+                return character == "v"
+            }
+        }
         guard let keyCode else { return fallbackKeyCode }
 
-        return CGKeyCode(keyCode)
-    }
-
-    private static func character(for keyCode: UInt16, layout: CFData, keyboardType: UInt32) -> Character? {
-        var deadKeyState: UInt32 = 0
-        var length = 0
-        var characters = [UniChar](repeating: 0, count: 4)
-        let layoutBytes = UnsafeRawPointer(CFDataGetBytePtr(layout)).assumingMemoryBound(to: UCKeyboardLayout.self)
-        let status = UCKeyTranslate(
-            layoutBytes,
-            keyCode,
-            UInt16(kUCKeyActionDisplay),
-            commandModifierState,
-            keyboardType,
-            OptionBits(kUCKeyTranslateNoDeadKeysBit),
-            &deadKeyState,
-            characters.count,
-            &length,
-            &characters,
-        )
-
-        guard status == noErr, length == 1 else { return nil }
-
-        return String(utf16CodeUnits: characters, count: length).first
+        return keyCode
     }
 }

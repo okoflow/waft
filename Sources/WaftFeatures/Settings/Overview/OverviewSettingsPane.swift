@@ -100,8 +100,7 @@ private struct Metric: View {
                 .contentTransition(.numericText())
 
             Text(label)
-                .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .detailText()
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, Metrics.metricPadding)

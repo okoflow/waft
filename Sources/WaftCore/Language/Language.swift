@@ -60,7 +60,7 @@ package enum Language: String, CaseIterable, Codable, Sendable {
         Locale(identifier: rawValue)
     }
 
-    init?(localeIdentifier: String) {
+    package init?(localeIdentifier: String) {
         guard let code = Locale.Language(identifier: localeIdentifier).languageCode?.identifier else { return nil }
 
         self.init(rawValue: Self.localeAliases[code, default: code])

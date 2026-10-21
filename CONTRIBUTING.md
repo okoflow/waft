@@ -181,7 +181,9 @@ Every test file follows one pattern:
 - A suite tests one type: `struct <Type>Tests` in `<Type>Tests.swift`,
   without `@Suite`. A suite for an extension that a module adds to another
   module's type is named after the extension's file, such as
-  `StringCapitalizationTests` for `String+Capitalization.swift`.
+  `StringCapitalizationTests` for `String+Capitalization.swift`. A suite that
+  outgrows SwiftLint's limits splits by topic into `<Type><Topic>Tests`, such
+  as `TranscriptProcessorWritingSystemTests`.
 - A test's name is a sentence about the type in the present tense, written
   as a raw identifier that starts with a verb, such as
   `` `drops entries older than the retention` ``. Names use American spelling
@@ -286,6 +288,7 @@ Commits follow
 | `modes` | Raw, Light, Clean, Formal, Translate, your modes, and their instructions |
 | `models` | The AI models and their providers |
 | `edit` | Editing by voice |
+| `translator` | The translator window and the shortcuts on selected text |
 | `files` | File transcription |
 | `dictionary` | The dictionary and snippets |
 | `history` | History and the statistics |

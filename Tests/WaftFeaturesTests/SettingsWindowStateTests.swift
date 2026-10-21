@@ -18,12 +18,23 @@ struct SettingsWindowStateTests {
     }
 
     @Test
-    func `closes the mode editor when the selection changes`() {
+    func `closes the editors when the selection changes`() {
         let state = SettingsWindowState()
         state.editedMode = .clean
+        state.editedTextTask = .fix
         state.selection = .writing
 
         #expect(state.editedMode == nil)
+        #expect(state.editedTextTask == nil)
+    }
+
+    @Test(arguments: [false, true])
+    func `shows Waft+ only when the feature is locked`(isUnlocked: Bool) {
+        let state = SettingsWindowState()
+        state.selection = .writing
+
+        #expect(state.passesWaftPlusGate(isUnlocked: isUnlocked) == isUnlocked)
+        #expect(state.selection == (isUnlocked ? .writing : .pro))
     }
 
     @Test

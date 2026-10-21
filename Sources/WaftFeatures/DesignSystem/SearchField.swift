@@ -15,10 +15,11 @@ struct SearchField: View {
         HStack(spacing: Metrics.inlineSpacing) {
             Image(systemName: "magnifyingglass")
                 .font(.glyph)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .accessibilityHidden(true)
 
             TextField(prompt, text: $text, prompt: Text(prompt))
+                .contentDirection(of: text)
                 .textFieldStyle(.plain)
                 .font(.control)
                 .focused($isFocused)
@@ -29,6 +30,7 @@ struct SearchField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.tertiary)
+                        .widenedHitTarget()
                 }
                 .buttonStyle(.plain)
                 .help("Clear")

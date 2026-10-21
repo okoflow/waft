@@ -4,7 +4,7 @@ struct SidebarGroup {
     static let all = [
         SidebarGroup(title: nil, panes: [.overview]),
         SidebarGroup(title: "Voice", panes: [.dictation, .dictionary]),
-        SidebarGroup(title: "Text", panes: [.writing, .aiModels]),
+        SidebarGroup(title: "Text", panes: [.writing, .translator, .aiModels]),
         SidebarGroup(title: "App", panes: [.history, .general]),
     ]
 

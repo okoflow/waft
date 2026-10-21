@@ -22,6 +22,30 @@ struct LightModeRulesTests {
         #expect(LightModeRules.apply(text, language: language) == expected)
     }
 
+    @Test(arguments: [
+        ("eh, ¿me puedes ayudar?", Language.spanish, "¿Me puedes ayudar?"),
+        ("bueno, eh, ¿vienes?", .spanish, "Bueno, ¿vienes?"),
+        ("pues, ¡eh, qué bien!", .spanish, "Pues, ¡qué bien!"),
+        ("(um, see above)", .english, "(See above)"),
+        (#"he said, "um, okay""#, .english, #"He said, "okay""#),
+        ("(um) see above", .english, "See above."),
+        ("えーと、「こんにちは」", .japanese, "「こんにちは」"),
+    ])
+    func `keeps an opening mark next to a hesitation with the next word`(text: String, language: Language, expected: String) {
+        #expect(LightModeRules.apply(text, language: language) == expected)
+    }
+
+    @Test(arguments: [
+        ("está bien, ¿eh?", Language.spanish, "Está bien."),
+        ("vale, ¿eh?, nos vemos", .spanish, "Vale nos vemos."),
+        ("hola, (eh) bien", .spanish, "Hola bien."),
+        ("hola «eh» adiós", .spanish, "Hola adiós."),
+        (#"he said "um" twice"#, .english, "He said twice."),
+    ])
+    func `removes a hesitation with the marks that enclose it`(text: String, language: Language, expected: String) {
+        #expect(LightModeRules.apply(text, language: language) == expected)
+    }
+
     @Test
     func `keeps a unit after a number that is spelled like a hesitation`() {
         #expect(LightModeRules.apply("длина 5 мм", language: .russian) == "Длина 5 мм.")
@@ -75,6 +99,8 @@ struct LightModeRulesTests {
         ("umbrella, um, open", Language.english, "Umbrella open."),
         ("uh-uh, no", .english, "Uh-uh, no."),
         ("Эммм, да", .russian, "Да."),
+        ("Ε, καλά", .greek, "Καλά."),
+        ("I went to the ER", .english, "I went to the ER."),
         ("um, hello", .japanese, "um, hello。"),
     ])
     func `recognizes hesitations by the rules of the language`(text: String, language: Language, expected: String) {

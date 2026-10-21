@@ -91,7 +91,7 @@ package final class PasteboardInserter: TextInserter {
     private func restore(_ snapshot: PasteboardSnapshot, expecting changeCount: Int) {
         switch snapshot.plan {
         case let .skip(reason):
-            Logger.insertion.notice("Left the clipboard as it is: \(reason, privacy: .public)")
+            Logger.insertion.notice("Left the clipboard as it is: \(reason.rawValue, privacy: .public)")
         case .restore where NSPasteboard.general.changeCount != changeCount:
             Logger.insertion.notice("Left the clipboard as it is: it changed during the paste")
         case .restore:

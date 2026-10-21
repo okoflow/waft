@@ -45,8 +45,7 @@ struct PickerCard<Preview: View>: View {
                     }
 
                     Text(detail)
-                        .font(.rowDetail)
-                        .foregroundStyle(.secondary)
+                        .detailText()
                         .lineLimit(2, reservesSpace: true)
                 }
                 .padding(.horizontal, 2)

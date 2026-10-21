@@ -13,17 +13,13 @@ final class APIKeyModel {
         !draft.isBlank
     }
 
-    private var trimmedDraft: String {
-        draft.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     init(store: any ValueStore<String>) {
         self.store = store
         isSet = store.exists()
     }
 
     func saveDraft() {
-        guard canSaveDraft, store.write(trimmedDraft) else { return }
+        guard canSaveDraft, store.write(draft.trimmingCharacters(in: .whitespacesAndNewlines)) else { return }
 
         draft = ""
         isSet = store.exists()

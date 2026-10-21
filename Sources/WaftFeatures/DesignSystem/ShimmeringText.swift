@@ -4,6 +4,7 @@ struct ShimmeringText: View {
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
     let text: String
+    var color = Color.white
 
     var body: some View {
         TimelineView(.animation(paused: reducesMotion)) { context in
@@ -14,9 +15,9 @@ struct ShimmeringText: View {
                 .foregroundStyle(
                     LinearGradient(
                         stops: [
-                            .init(color: .white.opacity(0.35), location: max(0, center - 0.2)),
-                            .init(color: .white.opacity(0.95), location: min(1, max(0, center))),
-                            .init(color: .white.opacity(0.35), location: min(1, center + 0.2)),
+                            .init(color: color.opacity(0.35), location: max(0, center - 0.2)),
+                            .init(color: color.opacity(0.95), location: min(1, max(0, center))),
+                            .init(color: color.opacity(0.35), location: min(1, center + 0.2)),
                         ],
                         startPoint: .leading,
                         endPoint: .trailing,

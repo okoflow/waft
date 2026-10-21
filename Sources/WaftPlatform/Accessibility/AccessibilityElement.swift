@@ -49,11 +49,15 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
         return attribute(kAXFocusedUIElementAttribute, of: systemWide).map(AccessibilityElement.init)
     }
 
-    private static func attribute(_ name: String, of element: AXUIElement) -> AXUIElement? {
+    private static func value(_ name: String, of element: AXUIElement) -> CFTypeRef? {
         var value: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(element, name as CFString, &value) == .success, let value,
-              CFGetTypeID(value) == AXUIElementGetTypeID()
-        else { return nil }
+        guard AXUIElementCopyAttributeValue(element, name as CFString, &value) == .success else { return nil }
+
+        return value
+    }
+
+    private static func attribute(_ name: String, of element: AXUIElement) -> AXUIElement? {
+        guard let value = value(name, of: element), CFGetTypeID(value) == AXUIElementGetTypeID() else { return nil }
 
         return unsafeDowncast(value, to: AXUIElement.self)
     }
@@ -73,16 +77,11 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
     }
 
     private func string(_ name: String) -> String? {
-        var value: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(element, name as CFString, &value) == .success else { return nil }
-
-        return value as? String
+        Self.value(name, of: element) as? String
     }
 
     private func selectedRange() -> CFRange? {
-        var value: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(element, kAXSelectedTextRangeAttribute as CFString, &value) == .success, let value,
-              CFGetTypeID(value) == AXValueGetTypeID()
+        guard let value = Self.value(kAXSelectedTextRangeAttribute, of: element), CFGetTypeID(value) == AXValueGetTypeID()
         else { return nil }
 
         var range = CFRange()

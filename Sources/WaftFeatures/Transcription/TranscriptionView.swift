@@ -13,11 +13,13 @@ struct TranscriptionView: View {
 
             if model.isLocked {
                 VStack(spacing: Metrics.accessorySpacing) {
-                    ProGateBanner(showPro: showPro)
+                    ProGateBanner(
+                        title: "File transcription is part of Waft+",
+                        detail: "Recordings and videos become text and subtitles, right on your Mac.",
+                        showPro: showPro,
+                    )
 
                     DropZone(model: model)
-                        .disabled(true)
-                        .opacity(0.5)
                 }
             } else {
                 switch model.phase {
@@ -70,7 +72,7 @@ struct TranscriptionView: View {
 
 private struct TranscriptionHeader: View {
     var body: some View {
-        HStack(spacing: Metrics.accessorySpacing) {
+        HStack(spacing: Metrics.iconLabelSpacing) {
             IconTile(symbolName: "waveform", tint: .red, size: Metrics.headerTileSize)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
@@ -83,8 +85,7 @@ private struct TranscriptionHeader: View {
                 }
 
                 Text("Audio and video files, transcribed on this Mac.")
-                    .font(.rowDetail)
-                    .foregroundStyle(.secondary)
+                    .detailText()
             }
         }
     }
@@ -106,22 +107,24 @@ private struct DropZone: View {
         let isTargeted = model.isDropTargeted
 
         VStack(spacing: Metrics.controlSpacing) {
-            Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
-                .font(.dropZoneGlyph)
-                .foregroundStyle(isTargeted ? Palette.accent : .secondary)
-                .contentTransition(.symbolEffect(.replace))
-                .padding(.bottom, 4)
-                .accessibilityHidden(true)
+            VStack(spacing: Metrics.controlSpacing) {
+                Image(systemName: isTargeted ? "arrow.down.doc.fill" : "arrow.down.doc")
+                    .font(.dropZoneGlyph)
+                    .foregroundStyle(isTargeted ? Palette.accent : Palette.secondaryText)
+                    .contentTransition(.symbolEffect(.replace))
+                    .padding(.bottom, 4)
+                    .accessibilityHidden(true)
 
-            Text("Drop an audio or video file here")
-                .font(.rowTitle)
+                Text("Drop an audio or video file here")
+                    .font(.rowTitle)
 
-            Text(hint)
-                .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                Text(hint)
+                    .detailText()
+            }
+            .opacity(model.isLocked ? Palette.disabledOpacity : 1)
 
             Button("Choose File…", action: chooseFile)
-                .disabled(model.notReadyMessage != nil)
+                .disabled(model.isLocked || model.notReadyMessage != nil)
                 .padding(.top, Metrics.controlSpacing)
         }
         .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
@@ -191,34 +194,5 @@ private struct FailureCard: View {
             }
             .settingsRowPadding()
         }
-    }
-}
-
-private struct ProGateBanner: View {
-    let showPro: () -> Void
-
-    var body: some View {
-        let shape = RoundedRectangle.card
-
-        HStack(spacing: Metrics.rowSpacing) {
-            WaftPlusMark(size: 20)
-
-            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                Text("File transcription is part of Waft+")
-                    .font(.cardTitle)
-
-                Text("Recordings and videos become text and subtitles, right on your Mac.")
-                    .font(.rowDetail)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            Spacer(minLength: 0)
-
-            Button("Unlock Waft+…", action: showPro)
-                .buttonStyle(PushButtonStyle(isProminent: true))
-        }
-        .padding(Metrics.rowPadding)
-        .background(Palette.plusTint, in: shape)
     }
 }

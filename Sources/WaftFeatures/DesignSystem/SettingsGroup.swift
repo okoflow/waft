@@ -37,7 +37,25 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
 
     private var header: some View {
         HStack(spacing: Metrics.rowSpacing) {
-            SectionHeader(title: title, subtitle: subtitle, isPro: isPro)
+            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
+                if let title {
+                    HStack(spacing: Metrics.inlineSpacing) {
+                        Text(title)
+                            .font(.sectionTitle)
+                            .accessibilityAddTraits(.isHeader)
+
+                        if isPro {
+                            ProBadge()
+                        }
+                    }
+                }
+
+                if let subtitle {
+                    Text(subtitle)
+                        .detailText()
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
 
             Spacer(minLength: 0)
 

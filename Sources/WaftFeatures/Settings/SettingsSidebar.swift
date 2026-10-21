@@ -9,7 +9,7 @@ struct SettingsSidebar: View {
                 if let title = group.title {
                     Text(title)
                         .font(.sidebarGroup)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .padding(.leading, Metrics.sidebarRowInset)
                         .padding(.top, index == 0 ? 0 : Metrics.sidebarGroupSpacing)
                         .accessibilityAddTraits(.isHeader)
@@ -33,7 +33,13 @@ struct SettingsSidebar: View {
         .padding(.bottom, Metrics.rowPadding)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
-            SidebarBackground()
+            let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
+
+            shape
+                .fill(Palette.sidebar)
+                .overlay {
+                    shape.stroke(Palette.sidebarBorder, lineWidth: 1)
+                }
         }
         .focusable()
         .focusEffectDisabled()
@@ -44,18 +50,6 @@ struct SettingsSidebar: View {
             default: break
             }
         }
-    }
-}
-
-private struct SidebarBackground: View {
-    var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
-
-        shape
-            .fill(Palette.sidebar)
-            .overlay {
-                shape.stroke(Palette.sidebarBorder, lineWidth: 1)
-            }
     }
 }
 

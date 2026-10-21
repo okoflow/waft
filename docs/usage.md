@@ -50,14 +50,15 @@ languages detect faster and more accurately. To skip detection, choose a
   language**.
 - Chinese and Serbian have a **Writing system** in Settings › Dictation:
   Simplified or Traditional characters, and Latin or Cyrillic letters. Waft
-  converts what you dictate or transcribe in that language into it, including
-  what your own modes return; a Translate result in another language and an
-  edit by voice keep the script the AI model wrote.
+  converts what you dictate, transcribe, or translate into that language into
+  it. What your own modes return, an edit by voice, and a fix of selected text
+  keep the script the AI model wrote.
 
 ## Modes
 
 Light is the default. Choose a mode under **Mode** in the menu or in Settings ›
 Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> for the next one.
+[Shortcuts](#shortcuts) says how to change it.
 
 | Mode | What it does | AI model |
 | --- | --- | --- |
@@ -77,8 +78,8 @@ the reasons.
 Choose the **Provider** in Settings › AI Models, Claude by default.
 
 - **Claude** and **OpenAI** need an API key: paste it under **API key** and
-  click **Save**, and **Remove** deletes it. Create the Claude key inside a
-  workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
+  click **Save**, and **Remove…** deletes it after you confirm. Create the
+  Claude key inside a workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
   and the OpenAI key in the
   [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
 - **Local server** calls Ollama, LM Studio, llama.cpp, MLX, Jan, or any server
@@ -99,7 +100,8 @@ dictation and 45 for an edit.
 ### Custom and per-app modes
 
 - The arrow next to Clean, Formal, or Translate in Settings › Writing opens its
-  **Instructions**, which you can rewrite. **Reset to Default** restores them.
+  **Instructions**, which you can rewrite. **Reset to Default…** restores them
+  after you confirm.
 - **New Mode** under **Your modes** adds a mode from a name and instructions,
   such as "reply as a short, friendly email and sign with my name". Where they
   say nothing, Waft removes hesitations, fixes grammar and punctuation, and
@@ -120,6 +122,39 @@ it always works by holding. Select text in any app, hold the key, say what to
 change, such as "make it shorter" or "translate into German", and let go. The
 AI model rewrites the selection and Waft pastes the result over it. A failed
 edit changes nothing;
+[The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the
+HUD says then.
+
+## Translator
+
+**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
+in any app, opens a window with your text on the left and its translation on
+the right. Type or paste up to 5,000 characters, or hold the dictation key and
+speak; the AI model translates half a second after you stop typing.
+
+- The left half detects the language unless you choose one. The right half
+  translates into **Translate into**, English by default, and text already in
+  that language into **Two-way with**, as Translate does. Change them in the
+  window or in Settings › Translator; they start as Translate's and stay
+  separate afterward.
+- A click on the translation copies all of it; select a part to copy only
+  that. The arrows between the halves swap the languages and the texts.
+- The arrow next to **Translation** or **Fixing** in Settings › Translator
+  opens its **Instructions**, which you can rewrite and try as for a mode.
+- **Model** in Settings › Translator sets the translator's own
+  [tier](#choosing-the-ai-model), the default one unless you change it. A
+  local server translates with its own model.
+
+### Selected text
+
+Two [shortcuts](#shortcuts) work on text selected in any app:
+
+- **Translate selected text** replaces the selection with its translation
+  into the translator's languages.
+- **Fix selected text** corrects its spelling, grammar, and punctuation.
+
+If focus moved while the AI model worked, Waft copies the result instead. A
+failure changes nothing;
 [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the
 HUD says then.
 
@@ -170,6 +205,19 @@ next dictation.
   **Keep at most**. Turn off **Keep history** to stop saving;
   **Clear History…** deletes them all.
 
+## Shortcuts
+
+Four shortcuts work in any app. To change one, click it and press a key with
+Command, Control, or Option, or a function key, that no other Waft shortcut or
+key uses. The minus button next to it turns it off.
+
+| Shortcut | Default | Where |
+| --- | --- | --- |
+| **Switch to the next mode** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> | Settings › Writing |
+| **Open the translator** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> | Settings › Translator |
+| **Translate selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd> | Settings › Translator |
+| **Fix selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd> | Settings › Translator |
+
 ## The menu
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
@@ -182,11 +230,12 @@ while one of its windows is open.
 | The first line | Says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed" |
 | Finish Setup…, Retry Speech Model, Install Update… | Appear only when needed: setup is unfinished or a permission is missing, the speech model failed, or an update is waiting |
 | Copy Last Dictation, Recent Dictations | Copy the latest text, pasted or not, within 10 minutes of the dictation, or one of your last five dictations; **Show History** opens the full list |
+| Transcribe File…, Translator… | Open the windows for [files](#transcribing-files) and [the translator](#translator) |
 | Unlock Waft+… | Appears while you have no license once Waft+ is on sale |
 
 To hide the icon, turn off **Show in menu bar** in Settings › General.
-Dictation and <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> keep working, and opening
-Waft again brings up Settings.
+Dictation and the shortcuts keep working, and opening Waft again brings up
+Settings.
 
 ## General settings
 
@@ -211,9 +260,9 @@ build again.
 
 Dictation, the Raw and Light modes, the dictionary, and history are free.
 Waft+ adds Clean, Formal, Translate, rewritten instructions, your modes,
-editing by voice, file transcription, and the Accurate speech model for a
-single payment of $13.99. **Speech model** in Settings › Dictation switches
-between Fast and Accurate;
+editing by voice, the translator, file transcription, and the Accurate speech
+model for a single payment of $13.99. **Speech model** in Settings › Dictation
+switches between Fast and Accurate;
 [The speech model](how-it-works.md#the-speech-model) compares them.
 
 While Waft is in beta, every Waft+ feature is free and needs no license. Once
@@ -223,10 +272,11 @@ license in Settings › Waft+:
 
 | Feature | Without a license |
 | --- | --- |
-| The AI modes | Fall back to Light, and the HUD says so; <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches only between Raw and Light |
+| The AI modes | Fall back to Light, and the HUD says so; the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
+| The translator | The window translates nothing, and the shortcuts on selected text show that they need Waft+ |
 | The speech model | Waft recognizes speech with Fast |
-| The menu | Marks the AI modes and file transcription "(Waft+)" |
+| The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |
 
 The license key arrives with your receipt: paste it into **License key** and
 click **Activate**, or open the activation link in the email. Waft checks the

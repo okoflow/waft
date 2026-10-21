@@ -11,7 +11,7 @@ struct ProSettingsPane: View {
             DividedForEach(ProBenefit.all, id: \.symbolName) { benefit in
                 TileRow(symbolName: benefit.symbolName, tint: benefit.tint, title: benefit.title, detail: benefit.detail) {
                     Image(systemName: pro.isUnlocked ? "checkmark.circle.fill" : "lock.fill")
-                        .foregroundStyle(pro.isUnlocked ? Palette.accent : .secondary)
+                        .foregroundStyle(pro.isUnlocked ? Palette.accent : Palette.secondaryText)
                         .accessibilityLabel(pro.isUnlocked ? Text("Included") : Text("Locked"))
                 }
             }
@@ -33,7 +33,7 @@ private struct ProHero: View {
         case .beta:
             String(localized: "Free while Waft is in beta.")
         case .trial:
-            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named)))")
+            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named))).")
         case .expired:
             String(localized: "Your free trial has ended.")
         }
@@ -50,7 +50,7 @@ private struct ProHero: View {
         let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
-            AppIcon(size: 64)
+            AppIcon(size: Metrics.cardIconSize)
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: Metrics.inlineSpacing) {

@@ -13,6 +13,16 @@ struct WritingScriptTests {
         #expect(WritingScript.dominant(in: text) == expected)
     }
 
+    @Test(arguments: [
+        ("我买了一台新的 MacBook Pro。", WritingScript?.some(.han)),
+        ("Safari를 열어 줘", .hangul),
+        ("Safariを開いて", nil),
+        ("我用 Visual Studio Code", .latin),
+    ])
+    func `counts a Chinese, Japanese, or Korean character as three letters`(text: String, expected: WritingScript?) {
+        #expect(WritingScript.dominant(in: text) == expected)
+    }
+
     @Test(arguments: [("مرحبا بكم", true), ("שלום עולם", true), ("Привет, world", false)])
     func `writes Arabic and Hebrew from right to left`(text: String, isRightToLeft: Bool) throws {
         let script = try #require(WritingScript.dominant(in: text))

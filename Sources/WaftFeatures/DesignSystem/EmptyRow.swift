@@ -10,7 +10,7 @@ struct EmptyRow: View {
     var body: some View {
         Text(text)
             .font(.rowTitle)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Palette.secondaryText)
             .frame(maxWidth: .infinity, alignment: .leading)
             .settingsRowPadding()
     }

@@ -8,6 +8,8 @@ struct HUDMessage: Equatable, Sendable {
         case warning
     }
 
+    private static let pasteShortcut = "⌘V"
+
     let kind: Kind
     let title: String
     let detail: String?
@@ -28,6 +30,12 @@ struct HUDMessage: Equatable, Sendable {
         self.kind = kind
         self.title = title
         self.detail = detail
+    }
+
+    static func copied(_ text: String, note: String? = nil) -> HUDMessage {
+        let hint = String(localized: "Copied: press \(pasteShortcut) to paste")
+
+        return HUDMessage(kind: .copied, title: text, detail: [hint, note].compactMap(\.self).joined(separator: "\n"))
     }
 
     static func recordingFailed(_ detail: String) -> HUDMessage {

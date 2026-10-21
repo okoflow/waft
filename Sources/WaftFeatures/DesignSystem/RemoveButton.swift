@@ -9,6 +9,7 @@ struct RemoveButton: View {
             Image(systemName: "minus.circle.fill")
                 .font(.removeGlyph)
                 .foregroundStyle(.secondary)
+                .widenedHitTarget()
         }
         .buttonStyle(.borderless)
         .help(help)

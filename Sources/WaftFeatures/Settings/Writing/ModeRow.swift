@@ -27,7 +27,7 @@ struct ModeRow: View {
             ZStack {
                 if isSelected {
                     Image(systemName: "checkmark")
-                        .font(.sectionTitle)
+                        .font(.glyph)
                         .foregroundStyle(Palette.accent)
                         .transition(.opacity)
                 }
@@ -39,7 +39,7 @@ struct ModeRow: View {
             Button(action: edit) {
                 Image(systemName: "chevron.forward")
                     .font(.glyph)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Palette.secondaryText)
                     .frame(width: Metrics.controlHeight, height: Metrics.controlHeight)
                     .contentShape(Rectangle())
             }
@@ -55,21 +55,13 @@ struct ModeRow: View {
     }
 
     private func select() {
-        guard !isLocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: !isLocked) else { return }
 
         settings.settings.mode = mode
     }
 
     private func edit() {
-        guard !isLocked else {
-            state.selection = .pro
-
-            return
-        }
+        guard state.passesWaftPlusGate(isUnlocked: !isLocked) else { return }
 
         state.editedMode = mode
     }
@@ -106,7 +98,7 @@ private struct ModeLabel: View {
                 if mode.usesAI {
                     Image(systemName: provider.isCloud ? "cloud" : "cpu")
                         .font(.glyph)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Palette.secondaryText)
                         .help(processingNote)
                         .accessibilityLabel(processingNote)
                 }
@@ -122,8 +114,7 @@ private struct ModeLabel: View {
             }
 
             Text(settings.summary(of: mode))
-                .font(.rowDetail)
-                .foregroundStyle(.secondary)
+                .detailText()
                 .lineLimit(isBuiltIn ? nil : 1)
         }
         .motion(Motion.feedback, value: isEdited)

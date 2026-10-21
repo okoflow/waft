@@ -7,10 +7,11 @@ package struct AppDependencies {
     let transcriber: any Transcriber
     let mediaDecoder: any MediaDecoder
     let rewriters: Rewriters
+    let languageDetector: any LanguageDetector
     let localServers: any LocalServerBrowsing
     let keyEventMonitor: any KeyEventMonitor
     let keyboardState: any KeyboardState
-    let modeShortcut: any GlobalShortcut
+    let shortcuts: GlobalShortcuts
     let focusTracker: any FocusTracker
     let frontmostAppMonitor: any FrontmostAppMonitor
     let urlOpener: any URLOpener
@@ -39,10 +40,11 @@ package struct AppDependencies {
         transcriber: any Transcriber,
         mediaDecoder: any MediaDecoder,
         rewriters: Rewriters,
+        languageDetector: any LanguageDetector,
         localServers: any LocalServerBrowsing,
         keyEventMonitor: any KeyEventMonitor,
         keyboardState: any KeyboardState,
-        modeShortcut: any GlobalShortcut,
+        shortcuts: GlobalShortcuts,
         focusTracker: any FocusTracker,
         frontmostAppMonitor: any FrontmostAppMonitor,
         urlOpener: any URLOpener,
@@ -70,10 +72,11 @@ package struct AppDependencies {
         self.transcriber = transcriber
         self.mediaDecoder = mediaDecoder
         self.rewriters = rewriters
+        self.languageDetector = languageDetector
         self.localServers = localServers
         self.keyEventMonitor = keyEventMonitor
         self.keyboardState = keyboardState
-        self.modeShortcut = modeShortcut
+        self.shortcuts = shortcuts
         self.focusTracker = focusTracker
         self.frontmostAppMonitor = frontmostAppMonitor
         self.urlOpener = urlOpener

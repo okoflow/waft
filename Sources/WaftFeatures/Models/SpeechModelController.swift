@@ -9,6 +9,7 @@ final class SpeechModelController {
 
     @ObservationIgnored var onReady: (() -> Void)?
 
+    @ObservationIgnored private var effectsTask: Task<Void, Never>?
     @ObservationIgnored private var downloadTask: Task<Void, Never>?
 
     private let transcriber: any Transcriber
@@ -73,7 +74,11 @@ final class SpeechModelController {
         let effects = state.handle(event)
         guard !effects.isEmpty else { return }
 
-        Task {
+        let previous = effectsTask
+
+        effectsTask = Task {
+            await previous?.value
+
             for effect in effects {
                 await perform(effect)
             }
@@ -84,7 +89,7 @@ final class SpeechModelController {
         switch effect {
         case .cancelDownload: await cancelDownload()
         case let .deleteModel(model): await deleteModel(model)
-        case let .download(model): await download(model)
+        case let .download(model): download(model)
         case let .load(model): await load(model)
         }
     }
@@ -100,18 +105,12 @@ final class SpeechModelController {
         do {
             try await transcriber.deleteModel(model)
         } catch {
-            let cause = error as NSError
-
-            Logger.speechModel
-                .error("Couldn't delete the speech model: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Couldn't delete the speech model: \(error.logDescription, privacy: .public)")
         }
     }
 
-    private func download(_ model: SpeechModel) async {
-        let task = Task { await fetch(model) }
-        downloadTask = task
-
-        await task.value
+    private func download(_ model: SpeechModel) {
+        downloadTask = Task { await fetch(model) }
     }
 
     private func fetch(_ model: SpeechModel) async {
@@ -124,9 +123,7 @@ final class SpeechModelController {
         } catch {
             guard !Task.isCancelled else { return }
 
-            let cause = error as NSError
-
-            Logger.speechModel.error("Download failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Download failed: \(error.logDescription, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))
         }
@@ -145,9 +142,7 @@ final class SpeechModelController {
                 onReady?()
             }
         } catch {
-            let cause = error as NSError
-
-            Logger.speechModel.error("Load failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Load failed: \(error.logDescription, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))
         }

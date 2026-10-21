@@ -1,4 +1,3 @@
-import Foundation
 import os
 import WaftCore
 
@@ -46,13 +45,8 @@ extension ValueStore {
     }
 
     private func logFailure(to action: String, _ error: any Error) {
-        let cause = error as NSError
-
         Logger.storage.error(
-            """
-            Couldn't \(action, privacy: .public) the \(name, privacy: .public): \
-            \(cause.domain, privacy: .public) \(cause.code, privacy: .public)
-            """,
+            "Couldn't \(action, privacy: .public) the \(name, privacy: .public): \(error.logDescription, privacy: .public)",
         )
     }
 }

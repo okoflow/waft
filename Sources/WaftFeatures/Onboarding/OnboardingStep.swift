@@ -17,7 +17,7 @@ struct OnboardingStep<Hero: View, Content: View>: View {
 
             Text(message)
                 .font(.rowTitle)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Palette.secondaryText)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Metrics.controlSpacing)
