@@ -85,7 +85,8 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
         else { return nil }
 
         var range = CFRange()
+        guard AXValueGetValue(unsafeDowncast(value, to: AXValue.self), .cfRange, &range) else { return nil }
 
-        return AXValueGetValue(unsafeDowncast(value, to: AXValue.self), .cfRange, &range) ? range : nil
+        return range
     }
 }

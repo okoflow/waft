@@ -26,9 +26,7 @@ package final class CarbonHotKey: GlobalShortcut {
             (.command, cmdKey),
         ]
 
-        return flags.reduce(0) { result, flag in
-            modifiers.contains(flag.0) ? result | UInt32(flag.1) : result
-        }
+        return flags.filter { modifiers.contains($0.0) }.reduce(0) { $0 | UInt32($1.1) }
     }
 
     package func register(_ combination: KeyCombination, action: @escaping @MainActor () -> Void) -> Bool {
