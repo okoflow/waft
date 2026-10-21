@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ не принимает ключ API";
 "%@ returned an error" = "%@ сообщает об ошибке";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ звучат похоже. Если Waft их путает, выберите один из них как язык речи.";
-"%@ switches to the next mode." = "%@ переключает на следующий режим.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · меньше ошибок, в %lld–%lld раза медленнее";
 "%@ · quickest" = "%@ · самая быстрая";
 "%@'s answer couldn't be used" = "не удалось использовать ответ (%@)";
@@ -32,6 +31,7 @@
 "Accurate" = "Точная";
 "Activate" = "Активировать";
 "Add App…" = "Добавить приложение…";
+"Add Command, Control, or Option, or press a function key." = "Добавьте Command, Control или Option либо нажмите функциональную клавишу.";
 "Add Language" = "Добавить язык";
 "Add Snippet" = "Добавить фрагмент";
 "Add Term" = "Добавить термин";
@@ -83,6 +83,7 @@
 "Click to copy" = "Нажмите, чтобы скопировать";
 "Click to copy, or select a part" = "Нажмите, чтобы скопировать, или выделите часть";
 "Click, then press the key to use" = "Нажмите здесь, а затем нужную клавишу";
+"Click, then press the shortcut to use" = "Нажмите здесь, а затем нужное сочетание клавиш";
 "Continue" = "Продолжить";
 "Copied" = "Скопировано";
 "Copied: press %@ to paste" = "Скопировано: нажмите %@, чтобы вставить";
@@ -152,10 +153,12 @@
 "Included" = "Доступно";
 "Install Update…" = "Установить обновление…";
 "Instructions" = "Инструкции";
+"It works in any app." = "Работает в любом приложении.";
 "Keep at most" = "Хранить не больше";
 "Keep dictations for" = "Срок хранения";
 "Keep history" = "Сохранять историю";
 "Kept in the Keychain." = "Хранится в связке ключей.";
+"Key %lld" = "Клавиша %lld";
 "Key saved" = "Ключ сохранён";
 "Language" = "Язык";
 "Language: %@" = "Язык: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Подготовка модели речи, в первый раз — около минуты…";
 "Preparing the speech model…" = "Подготовка модели речи…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Нажмите Option, Command, Shift или Control с любой стороны, Fn или функциональную клавишу. Esc — отмена.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Нажмите клавишу с Command, Control или Option либо функциональную клавишу. Esc — отмена.";
 "Press a key…" = "Нажмите клавишу…";
+"Press a shortcut…" = "Нажмите сочетание клавиш…";
 "Press the key to use, or Esc to cancel" = "Нажмите нужную клавишу или Esc для отмены";
+"Press the shortcut to use, or Esc to cancel" = "Нажмите нужное сочетание клавиш или Esc для отмены";
 "Previous page" = "Предыдущая страница";
 "Provider" = "Провайдер";
 "Quit Waft" = "Завершить Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "В Системных настройках › Клавиатура для «Нажатие клавиши 🌐» выберите «действие не требуется».";
 "Settings…" = "Настройки…";
 "Setup needed" = "Нужна настройка";
+"Shortcut" = "Сочетание клавиш";
 "Shortcuts" = "Сочетания клавиш";
 "Show History" = "Показать историю";
 "Show in Finder" = "Показать в Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Фрагменты";
 "Sounds" = "Звуки";
 "Source code" = "Исходный код";
+"Space" = "Пробел";
 "Speak %@ to get %@, and %@ to get %@." = "%1$@ переводится на %2$@, а %3$@ — на %4$@.";
 "Speak any of %lld languages and get another, one way or both." = "Говорите на любом из %lld языков и получайте текст на другом — в одну сторону или в обе.";
 "Speak" = "Говорите";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Шаг %lld из %lld";
 "Suggested" = "Рекомендуемые";
 "Swap languages" = "Поменять языки местами";
+"Switch to the next mode" = "Переключить на следующий режим";
 "System default" = "Как в системе";
 "Talk while holding the key" = "Говорите, пока держите клавишу";
 "Tap %@ to dictate" = "Нажмите %@ для диктовки";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Это не похоже на лицензионный ключ Waft.";
 "That key is already in use. Choose another one." = "Эта клавиша уже занята. Выберите другую.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Эта клавиша вводит текст. Нажмите Option, Command, Shift, Control, Fn или функциональную клавишу.";
+"That shortcut is already used for “%@”. Choose another one." = "Это сочетание уже назначено для действия «%@». Выберите другое.";
 "The chosen microphone can't be used." = "Не удаётся использовать выбранный микрофон.";
 "The file has no sound to transcribe." = "В файле нет звука для расшифровки.";
 "The languages you chose in Settings › Dictation." = "Языки, выбранные в Настройках › Диктовка.";
@@ -384,14 +394,16 @@
 "Translator…" = "Переводчик…";
 "Try it" = "Попробуйте";
 "Turn off editing by voice" = "Выключить правку голосом";
+"Turn off this shortcut" = "Выключить это сочетание клавиш";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Убавляет громкость Mac до четверти, пока вы говорите, а потом возвращает её.";
 "Two-way with" = "Двусторонний перевод";
 "Two-way" = "Двусторонний";
 "Type, paste, or hold %@ and speak" = "Введите, вставьте или удерживайте %@ и говорите";
-"Unavailable" = "Недоступно";
+"Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: это сочетание использует другое приложение. Выберите другое.";
 "Unlock Waft+…" = "Разблокировать Waft+…";
 "Updates" = "Обновления";
 "Use the default mode in this app" = "Использовать режим по умолчанию в этом приложении";
+"Use the default shortcut" = "Использовать сочетание по умолчанию";
 "Used Light mode: %@" = "Применён режим «Лёгкий»: %@";
 "Used by %@ on this Mac." = "Используются на этом Mac: %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Работает с вашим ключом API. В %@ отправляется только текст, звук — никогда.";

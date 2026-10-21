@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@拒绝了API密钥";
 "%@ returned an error" = "%@返回了错误";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@发音相近。如果Waft分不清，请将其中一种设为识别语言。";
-"%@ switches to the next mode." = "按%@可切换到下一个模式。";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · 错误更少，慢%lld–%lld倍";
 "%@ · quickest" = "%@ · 最快";
 "%@'s answer couldn't be used" = "无法使用%@的回答";
@@ -32,6 +31,7 @@
 "Accurate" = "精确";
 "Activate" = "激活";
 "Add App…" = "添加App…";
+"Add Command, Control, or Option, or press a function key." = "请加上Command、Control或Option键，或按功能键。";
 "Add Language" = "添加语言";
 "Add Snippet" = "添加片段";
 "Add Term" = "添加术语";
@@ -83,6 +83,7 @@
 "Click to copy" = "点按以拷贝";
 "Click to copy, or select a part" = "点按以拷贝，或选择一部分";
 "Click, then press the key to use" = "点按后，按下要使用的键";
+"Click, then press the shortcut to use" = "点按后，按下要使用的快捷键";
 "Continue" = "继续";
 "Copied" = "已拷贝";
 "Copied: press %@ to paste" = "已拷贝：按%@粘贴";
@@ -152,10 +153,12 @@
 "Included" = "已包含";
 "Install Update…" = "安装更新…";
 "Instructions" = "指令";
+"It works in any app." = "在任何App中都能使用。";
 "Keep at most" = "最多保留";
 "Keep dictations for" = "听写保留时长";
 "Keep history" = "保留历史记录";
 "Kept in the Keychain." = "保存在钥匙串中。";
+"Key %lld" = "按键%lld";
 "Key saved" = "密钥已保存";
 "Language" = "语言";
 "Language: %@" = "语言：%@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "正在准备语音识别模型，首次约需一分钟…";
 "Preparing the speech model…" = "正在准备语音识别模型…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "请按Option、Command、Shift或Control键（左右均可）、Fn键或功能键。按Esc键取消。";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "请按下带有Command、Control或Option键的组合，或功能键。按Esc键取消。";
 "Press a key…" = "请按下按键…";
+"Press a shortcut…" = "请按下快捷键…";
 "Press the key to use, or Esc to cancel" = "按下要使用的键，或按Esc键取消";
+"Press the shortcut to use, or Esc to cancel" = "按下要使用的快捷键，或按Esc键取消";
 "Previous page" = "上一页";
 "Provider" = "提供商";
 "Quit Waft" = "退出Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "在“系统设置”›“键盘”中将“按下🌐键时”设为“不执行任何操作”。";
 "Settings…" = "设置…";
 "Setup needed" = "需要设置";
+"Shortcut" = "快捷键";
 "Shortcuts" = "快捷键";
 "Show History" = "显示历史记录";
 "Show in Finder" = "在访达中显示";
@@ -307,6 +314,7 @@
 "Snippets" = "片段";
 "Sounds" = "声音";
 "Source code" = "源代码";
+"Space" = "空格键";
 "Speak %@ to get %@, and %@ to get %@." = "说%1$@会译成%2$@，说%3$@会译成%4$@。";
 "Speak any of %lld languages and get another, one way or both." = "说%lld种语言中的任意一种，即可译成另一种语言，单向或双向均可。";
 "Speak" = "说话";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "第%lld步，共%lld步";
 "Suggested" = "建议";
 "Swap languages" = "交换语言";
+"Switch to the next mode" = "切换到下一个模式";
 "System default" = "系统默认";
 "Talk while holding the key" = "按住按键时说话";
 "Tap %@ to dictate" = "按一下%@键进行听写";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "这似乎不是Waft许可证密钥。";
 "That key is already in use. Choose another one." = "该键已被使用。请选择其他键。";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "该键会输入文字。请按Option、Command、Shift、Control、Fn或功能键。";
+"That shortcut is already used for “%@”. Choose another one." = "该快捷键已用于“%@”。请选择其他快捷键。";
 "The chosen microphone can't be used." = "无法使用所选的麦克风。";
 "The file has no sound to transcribe." = "此文件没有可转写的音频。";
 "The languages you chose in Settings › Dictation." = "你在“设置”›“听写”中选择的语言。";
@@ -384,14 +394,16 @@
 "Translator…" = "翻译工具…";
 "Try it" = "试一试";
 "Turn off editing by voice" = "关闭语音编辑";
+"Turn off this shortcut" = "关闭此快捷键";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "说话时将Mac的音量降到四分之一，说完后恢复。";
 "Two-way with" = "双向翻译";
 "Two-way" = "双向";
 "Type, paste, or hold %@ and speak" = "输入、粘贴，或按住%@键说话";
-"Unavailable" = "不可用";
+"Unavailable: another app uses this shortcut. Choose another one." = "不可用：其他App正在使用此快捷键。请选择其他快捷键。";
 "Unlock Waft+…" = "解锁Waft+…";
 "Updates" = "更新";
 "Use the default mode in this app" = "在此App中使用默认模式";
+"Use the default shortcut" = "使用默认快捷键";
 "Used Light mode: %@" = "已改用“轻度”模式：%@";
 "Used by %@ on this Mac." = "由此Mac上的%@使用。";
 "Uses your own API key. Only the text goes to %@, never the audio." = "使用你自己的API密钥。只会将文本发送给%@，不会发送音频。";

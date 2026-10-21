@@ -1,6 +1,5 @@
 @MainActor
 package protocol GlobalShortcut: AnyObject {
-    var title: String { get }
-
-    func register(_ action: @escaping @MainActor () -> Void) -> Bool
+    func register(_ combination: KeyCombination, action: @escaping @MainActor () -> Void) -> Bool
+    func unregister()
 }

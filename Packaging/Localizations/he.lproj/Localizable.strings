@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "מפתח ה-API נדחה על ידי %@";
 "%@ returned an error" = "התקבלה שגיאה מ-%@";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "השפות %@ נשמעות דומות. אם Waft מתבלבל ביניהן, יש לבחור באחת מהן כשפת הדיבור.";
-"%@ switches to the next mode." = "הקיצור %@ מעביר למצב הבא.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · פחות שגיאות, איטי פי %lld–%lld";
 "%@ · quickest" = "%@ · המהיר ביותר";
 "%@'s answer couldn't be used" = "לא ניתן היה להשתמש בתשובה של %@";
@@ -32,6 +31,7 @@
 "Accurate" = "מדויק";
 "Activate" = "הפעלה";
 "Add App…" = "הוספת יישום…";
+"Add Command, Control, or Option, or press a function key." = "יש להוסיף Command, Control או Option, או ללחוץ על מקש פונקציה.";
 "Add Language" = "הוספת שפה";
 "Add Snippet" = "הוספת קטע מלל";
 "Add Term" = "הוספת מונח";
@@ -83,6 +83,7 @@
 "Click to copy" = "לחצו להעתקה";
 "Click to copy, or select a part" = "לחצו להעתקה, או בחרו חלק";
 "Click, then press the key to use" = "יש ללחוץ כאן ואז על המקש הרצוי";
+"Click, then press the shortcut to use" = "יש ללחוץ כאן ואז על הקיצור הרצוי";
 "Continue" = "המשך";
 "Copied" = "הועתק";
 "Copied: press %@ to paste" = "הועתק: יש ללחוץ על %@ כדי להדביק";
@@ -152,10 +153,12 @@
 "Included" = "כלול";
 "Install Update…" = "התקנת העדכון…";
 "Instructions" = "הוראות";
+"It works in any app." = "פועל בכל יישום.";
 "Keep at most" = "שמירה של עד";
 "Keep dictations for" = "משך שמירת ההכתבות";
 "Keep history" = "שמירת היסטוריה";
 "Kept in the Keychain." = "נשמר בצרור המפתחות.";
+"Key %lld" = "מקש %lld";
 "Key saved" = "המפתח נשמר";
 "Language" = "שפה";
 "Language: %@" = "שפה: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "מכין את מודל זיהוי הדיבור, כדקה בפעם הראשונה…";
 "Preparing the speech model…" = "מכין את מודל זיהוי הדיבור…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "יש ללחוץ על Option, Command, Shift או Control מכל צד, על Fn או על מקש פונקציה. לביטול יש ללחוץ על Esc.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "יש ללחוץ על מקש יחד עם Command, Control או Option, או על מקש פונקציה. לביטול יש ללחוץ על Esc.";
 "Press a key…" = "יש ללחוץ על מקש…";
+"Press a shortcut…" = "יש ללחוץ על קיצור…";
 "Press the key to use, or Esc to cancel" = "יש ללחוץ על המקש הרצוי, או על Esc לביטול";
+"Press the shortcut to use, or Esc to cancel" = "יש ללחוץ על הקיצור הרצוי, או על Esc לביטול";
 "Previous page" = "העמוד הקודם";
 "Provider" = "ספק";
 "Quit Waft" = "סיום Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ב״הגדרות המערכת״ › ״מקלדת״ יש להגדיר את ״לחיצה על המקש 🌐״ לאפשרות ״לא לבצע כל פעולה״.";
 "Settings…" = "הגדרות…";
 "Setup needed" = "נדרשת הגדרה";
+"Shortcut" = "קיצור";
 "Shortcuts" = "קיצורים";
 "Show History" = "הצגת ההיסטוריה";
 "Show in Finder" = "הצגה ב-Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "קטעי מלל";
 "Sounds" = "צלילים";
 "Source code" = "קוד מקור";
+"Space" = "רווח";
 "Speak %@ to get %@, and %@ to get %@." = "דיבור ב%@ מתורגם ל%@, ודיבור ב%@ מתורגם ל%@.";
 "Speak any of %lld languages and get another, one way or both." = "ניתן לדבר בכל אחת מ-%lld שפות ולקבל מלל בשפה אחרת, בכיוון אחד או בשניהם.";
 "Speak" = "דיבור";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "שלב %lld מתוך %lld";
 "Suggested" = "הצעות";
 "Swap languages" = "החלפת שפות";
+"Switch to the next mode" = "מעבר למצב הבא";
 "System default" = "ברירת המחדל של המערכת";
 "Talk while holding the key" = "דיבור בזמן החזקת המקש";
 "Tap %@ to dictate" = "יש ללחוץ על %@ כדי להכתיב";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "זה לא נראה כמו מפתח רישיון של Waft.";
 "That key is already in use. Choose another one." = "מקש זה כבר בשימוש. יש לבחור מקש אחר.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "מקש זה מקליד מלל. יש ללחוץ על Option, Command, Shift, Control, Fn או על מקש פונקציה.";
+"That shortcut is already used for “%@”. Choose another one." = "קיצור זה כבר בשימוש עבור ״%@״. יש לבחור קיצור אחר.";
 "The chosen microphone can't be used." = "לא ניתן להשתמש במיקרופון שנבחר.";
 "The file has no sound to transcribe." = "אין בקובץ שמע לתמלול.";
 "The languages you chose in Settings › Dictation." = "השפות שנבחרו ב״הגדרות״ › ״הכתבה״.";
@@ -384,14 +394,16 @@
 "Translator…" = "מתרגם…";
 "Try it" = "התנסות";
 "Turn off editing by voice" = "כיבוי העריכה הקולית";
+"Turn off this shortcut" = "כיבוי הקיצור הזה";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "מוריד את עוצמת השמע של ה-Mac לרבע בזמן הדיבור, ואחר כך מחזיר אותה.";
 "Two-way with" = "דו-כיווני עם";
 "Two-way" = "דו-כיווני";
 "Type, paste, or hold %@ and speak" = "יש להקליד, להדביק או להחזיק את %@ ולדבר";
-"Unavailable" = "לא זמין";
+"Unavailable: another app uses this shortcut. Choose another one." = "לא זמין: יישום אחר משתמש בקיצור הזה. יש לבחור קיצור אחר.";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
 "Updates" = "עדכונים";
 "Use the default mode in this app" = "שימוש במצב ברירת המחדל ביישום זה";
+"Use the default shortcut" = "שימוש בקיצור ברירת המחדל";
 "Used Light mode: %@" = "הופעל מצב ״בסיסי״: %@";
 "Used by %@ on this Mac." = "מועברות אל %@ ב-Mac זה.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "נעשה שימוש במפתח API משלך. רק המלל נשלח אל %@, אף פעם לא השמע.";

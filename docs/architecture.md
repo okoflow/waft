@@ -34,7 +34,7 @@ The tables list the folders whose names don't say enough.
 
 | Folder | What lives there |
 | --- | --- |
-| `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up |
+| `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up; `KeyCombination` and `ShortcutSettings`, the global shortcuts with their defaults |
 | `Speech` | The `Transcriber` interface, `SpeechModelState` (its transitions return the effects a controller runs), `SpeechGate`, `WhisperPrompt`, and `SubtitleFormatter` |
 | `Language` | `Language` with its names, writing systems, and sound-alike languages, and the `WritingVariants` for Chinese and Serbian |
 | `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
@@ -63,11 +63,11 @@ The tables list the folders whose names don't say enough.
 | Folder | What lives there |
 | --- | --- |
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of them is open or Sparkle shows an update |
-| `Models` | The observable state that several features share, including `PermissionMonitor`; a model that one screen uses lives with that screen |
+| `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
-| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which registers the three shortcuts; `CopyableText`, the translation that copies itself on a click |
+| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which handles the three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
 
 **`Tests`** has a Swift Testing target for every module but `Waft`; see

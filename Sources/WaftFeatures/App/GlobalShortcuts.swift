@@ -1,20 +1,27 @@
 package import WaftCore
 
 package struct GlobalShortcuts {
-    let modeCycle: any GlobalShortcut
-    let translator: any GlobalShortcut
-    let translateSelection: any GlobalShortcut
-    let fixSelection: any GlobalShortcut
+    let layout: any KeyboardLayout
 
-    package init(
-        modeCycle: any GlobalShortcut,
-        translator: any GlobalShortcut,
-        translateSelection: any GlobalShortcut,
-        fixSelection: any GlobalShortcut,
-    ) {
-        self.modeCycle = modeCycle
-        self.translator = translator
-        self.translateSelection = translateSelection
-        self.fixSelection = fixSelection
+    private let modeCycle: any GlobalShortcut
+    private let translator: any GlobalShortcut
+    private let translateSelection: any GlobalShortcut
+    private let fixSelection: any GlobalShortcut
+
+    package init(layout: any KeyboardLayout, _ shortcut: (ShortcutAction) -> any GlobalShortcut) {
+        self.layout = layout
+        modeCycle = shortcut(.modeCycle)
+        translator = shortcut(.translator)
+        translateSelection = shortcut(.translateSelection)
+        fixSelection = shortcut(.fixSelection)
+    }
+
+    subscript(_ action: ShortcutAction) -> any GlobalShortcut {
+        switch action {
+        case .modeCycle: modeCycle
+        case .translator: translator
+        case .translateSelection: translateSelection
+        case .fixSelection: fixSelection
+        }
     }
 }

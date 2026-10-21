@@ -201,6 +201,7 @@ struct DictationControllerTests {
             speechModelController: speechModelController,
             vocabulary: VocabularyModel(store: vocabularyStore, fileURL: URL(filePath: "/dev/null"), urlOpener: FakeURLOpener()),
             keyRecorder: keyRecorder,
+            shortcutRecorder: ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings)),
             pro: pro,
             queue: queue(),
         )

@@ -59,6 +59,7 @@ languages detect faster and more accurately. To skip detection, choose a
 
 Light is the default. Choose a mode under **Mode** in the menu or in Settings ›
 Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> for the next one.
+[Shortcuts](#shortcuts) says how to change it.
 
 | Mode | What it does | AI model |
 | --- | --- | --- |
@@ -127,9 +128,9 @@ HUD says then.
 
 ## Translator
 
-**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> in any
-app, opens a window with your text on the left and its translation on the
-right. Type or paste up to 5,000 characters, or hold the dictation key and
+**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
+in any app, opens a window with your text on the left and its translation on
+the right. Type or paste up to 5,000 characters, or hold the dictation key and
 speak; the AI model translates half a second after you stop typing.
 
 - The left half detects the language until you choose one with the arrows
@@ -149,7 +150,7 @@ speak; the AI model translates half a second after you stop typing.
 
 Two shortcuts work on text selected in any app, without speaking:
 
-| Shortcut | What it does |
+| Default shortcut | What it does |
 | --- | --- |
 | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd> | Replaces the selection with its translation into **Translate into**, or into **Two-way with** when the selection is already in the first |
 | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd> | Fixes spelling, grammar, and punctuation in the selection |
@@ -204,6 +205,21 @@ next dictation.
   **Keep at most**. Turn off **Keep history** to stop saving;
   **Clear History…** deletes them all.
 
+## Shortcuts
+
+Four shortcuts work in any app. To change one, click it in Settings and press
+the new combination: a key with Command, Control, or Option, or a function key.
+Esc cancels, and Waft refuses a combination that another of its shortcuts or
+keys uses. The arrow next to a shortcut brings back its default, and the minus
+button turns it off. The menu shows the current ones.
+
+| Shortcut | Default | Where |
+| --- | --- | --- |
+| **Switch to the next mode** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> | Settings › Writing |
+| **Open the translator** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> | Settings › Translator |
+| **Translate selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd> | Settings › Translator |
+| **Fix selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd> | Settings › Translator |
+
 ## The menu
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
@@ -220,8 +236,8 @@ while one of its windows is open.
 | Unlock Waft+… | Appears while you have no license once Waft+ is on sale |
 
 To hide the icon, turn off **Show in menu bar** in Settings › General.
-Dictation and <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> keep working, and opening
-Waft again brings up Settings.
+Dictation and the shortcuts keep working, and opening Waft again brings up
+Settings.
 
 ## General settings
 
@@ -258,7 +274,7 @@ license in Settings › Waft+:
 
 | Feature | Without a license |
 | --- | --- |
-| The AI modes | Fall back to Light, and the HUD says so; <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches only between Raw and Light |
+| The AI modes | Fall back to Light, and the HUD says so; the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
 | The translator | The window translates nothing, and the shortcuts on selected text show that they need Waft+ |
 | The speech model | Waft recognizes speech with Fast |

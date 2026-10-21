@@ -4,7 +4,8 @@ import WaftCore
 struct TranslatorSettingsPane: View {
     @Bindable var settings: SettingsModel
 
-    let shortcuts: TranslatorShortcuts
+    let shortcuts: GlobalShortcutController
+    let shortcutRecorder: ShortcutRecorder
     let openTranslator: () -> Void
 
     private var translation: WaftCore.Translation {
@@ -61,49 +62,24 @@ struct TranslatorSettingsPane: View {
         }
 
         SettingsSection("Shortcuts", subtitle: "They work in any app.") {
-            ShortcutRow("Open the translator", keys: shortcuts.translatorTitle)
+            shortcutRow(.translator)
             RowDivider()
-            ShortcutRow(
-                "Translate selected text",
-                keys: shortcuts.translateSelectionTitle,
-                description: "Replaces the selection with its translation.",
-            )
+            shortcutRow(.translateSelection, description: "Replaces the selection with its translation.")
             RowDivider()
-            ShortcutRow(
-                "Fix selected text",
-                keys: shortcuts.fixSelectionTitle,
-                description: "Corrects spelling, grammar, and punctuation in the selection.",
-            )
+            shortcutRow(.fixSelection, description: "Corrects spelling, grammar, and punctuation in the selection.")
         } footer: {
             Button("Open Translator", action: openTranslator)
         }
-    }
-}
-
-private struct ShortcutRow: View {
-    private let title: LocalizedStringKey
-    private let keys: String?
-    private let description: LocalizedStringKey?
-
-    init(_ title: LocalizedStringKey, keys: String?, description: LocalizedStringKey? = nil) {
-        self.title = title
-        self.keys = keys
-        self.description = description
+        .onDisappear { shortcutRecorder.stop() }
     }
 
-    var body: some View {
-        SettingsRow(title, description: description) {
-            if let keys {
-                Text(verbatim: keys)
-                    .font(.control)
-                    .padding(.horizontal, Metrics.controlSpacing)
-                    .frame(height: Metrics.controlHeight)
-                    .background(Palette.control, in: RoundedRectangle(cornerRadius: Metrics.controlRadius, style: .continuous))
-                    .accessibilityLabel(Text(verbatim: keys))
-            } else {
-                Text("Unavailable")
-                    .detailText()
-            }
-        }
+    private func shortcutRow(_ action: ShortcutAction, description: LocalizedStringKey? = nil) -> some View {
+        ShortcutRow(
+            action: action,
+            settings: settings,
+            shortcuts: shortcuts,
+            recorder: shortcutRecorder,
+            description: description,
+        )
     }
 }

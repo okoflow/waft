@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ rejeitou a chave de API";
 "%@ returned an error" = "%@ devolveu um erro";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ soam parecidos. Se o Waft os confundir, escolha um como idioma falado.";
-"%@ switches to the next mode." = "%@ muda para o modo seguinte.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · menos erros, %lld–%lld× mais lento";
 "%@ · quickest" = "%@ · o mais rápido";
 "%@'s answer couldn't be used" = "%@ devolveu uma resposta inutilizável";
@@ -32,6 +31,7 @@
 "Accurate" = "Preciso";
 "Activate" = "Ativar";
 "Add App…" = "Adicionar aplicação…";
+"Add Command, Control, or Option, or press a function key." = "Adicione Comando, Controlo ou Opção, ou prima uma tecla de função.";
 "Add Language" = "Adicionar idioma";
 "Add Snippet" = "Adicionar excerto";
 "Add Term" = "Adicionar termo";
@@ -83,6 +83,7 @@
 "Click to copy" = "Clique para copiar";
 "Click to copy, or select a part" = "Clique para copiar ou selecione uma parte";
 "Click, then press the key to use" = "Clique e prima a tecla a usar";
+"Click, then press the shortcut to use" = "Clique e prima o atalho a usar";
 "Continue" = "Continuar";
 "Copied" = "Copiado";
 "Copied: press %@ to paste" = "Copiado: prima %@ para colar";
@@ -152,10 +153,12 @@
 "Included" = "Incluído";
 "Install Update…" = "Instalar atualização…";
 "Instructions" = "Instruções";
+"It works in any app." = "Funciona em qualquer aplicação.";
 "Keep at most" = "Manter no máximo";
 "Keep dictations for" = "Manter ditados";
 "Keep history" = "Manter histórico";
 "Kept in the Keychain." = "Guardada no porta-chaves.";
+"Key %lld" = "Tecla %lld";
 "Key saved" = "Chave guardada";
 "Language" = "Idioma";
 "Language: %@" = "Idioma: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "A preparar o modelo de fala; da primeira vez demora cerca de um minuto…";
 "Preparing the speech model…" = "A preparar o modelo de fala…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Prima Opção, Comando, Shift ou Controlo de qualquer um dos lados, Fn ou uma tecla de função. Esc cancela.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Prima uma tecla com Comando, Controlo ou Opção, ou uma tecla de função. Esc cancela.";
 "Press a key…" = "Prima uma tecla…";
+"Press a shortcut…" = "Prima um atalho…";
 "Press the key to use, or Esc to cancel" = "Prima a tecla a usar ou Esc para cancelar";
+"Press the shortcut to use, or Esc to cancel" = "Prima o atalho a usar ou Esc para cancelar";
 "Previous page" = "Página anterior";
 "Provider" = "Fornecedor";
 "Quit Waft" = "Sair do Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Em Definições do Sistema › Teclado, defina “Premir tecla 🌐 para” como “Não fazer nada”.";
 "Settings…" = "Definições…";
 "Setup needed" = "Configuração necessária";
+"Shortcut" = "Atalho";
 "Shortcuts" = "Atalhos";
 "Show History" = "Mostrar histórico";
 "Show in Finder" = "Mostrar no Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Excertos";
 "Sounds" = "Sons";
 "Source code" = "Código-fonte";
+"Space" = "Espaço";
 "Speak %@ to get %@, and %@ to get %@." = "O que diz em %@ é escrito em %@, e o que diz em %@, em %@.";
 "Speak any of %lld languages and get another, one way or both." = "Fale em qualquer um dos %lld idiomas e obtenha o texto noutro, num sentido ou nos dois.";
 "Speak" = "Fale";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Passo %lld de %lld";
 "Suggested" = "Sugeridos";
 "Swap languages" = "Trocar idiomas";
+"Switch to the next mode" = "Mudar para o modo seguinte";
 "System default" = "Predefinição do sistema";
 "Talk while holding the key" = "Fale enquanto mantém a tecla premida";
 "Tap %@ to dictate" = "Prima a tecla %@ para ditar";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Isso não parece uma chave de licença do Waft.";
 "That key is already in use. Choose another one." = "Essa tecla já está a ser usada. Escolha outra.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Essa tecla escreve texto. Prima Opção, Comando, Shift, Controlo, Fn ou uma tecla de função.";
+"That shortcut is already used for “%@”. Choose another one." = "Esse atalho já está a ser usado para “%@”. Escolha outro.";
 "The chosen microphone can't be used." = "Não é possível usar o microfone escolhido.";
 "The file has no sound to transcribe." = "O ficheiro não tem som para transcrever.";
 "The languages you chose in Settings › Dictation." = "Os idiomas que escolheu em Definições › Ditado.";
@@ -384,14 +394,16 @@
 "Translator…" = "Tradutor…";
 "Try it" = "Experimente";
 "Turn off editing by voice" = "Desativar a edição por voz";
+"Turn off this shortcut" = "Desativar este atalho";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Reduz o volume do Mac para um quarto enquanto fala e depois repõe-no.";
 "Two-way with" = "Bidirecional com";
 "Two-way" = "Bidirecional";
 "Type, paste, or hold %@ and speak" = "Escreva, cole ou mantenha premida a tecla %@ e fale";
-"Unavailable" = "Indisponível";
+"Unavailable: another app uses this shortcut. Choose another one." = "Indisponível: outra aplicação usa esse atalho. Escolha outro.";
 "Unlock Waft+…" = "Desbloquear Waft+…";
 "Updates" = "Atualizações";
 "Use the default mode in this app" = "Usar o modo predefinido nesta aplicação";
+"Use the default shortcut" = "Usar o atalho predefinido";
 "Used Light mode: %@" = "Foi usado o modo “Leve”: %@";
 "Used by %@ on this Mac." = "Usadas neste Mac (%@).";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Usa a sua própria chave de API. Só o texto é enviado para %@, nunca o áudio.";

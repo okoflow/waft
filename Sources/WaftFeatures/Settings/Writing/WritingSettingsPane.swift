@@ -8,7 +8,8 @@ struct WritingSettingsPane: View {
     @Bindable var settings: SettingsModel
 
     let apiKeys: PerProvider<APIKeyModel>
-    let shortcutTitle: String?
+    let shortcuts: GlobalShortcutController
+    let shortcutRecorder: ShortcutRecorder
     let pro: ProModel
     let state: SettingsWindowState
 
@@ -20,12 +21,6 @@ struct WritingSettingsPane: View {
         }
 
         return .verbatim(String(localized: "Speak \(other) to get \(target), and \(target) to get \(other).").sentenceCased())
-    }
-
-    private var modeNote: LocalizedStringKey? {
-        guard let shortcutTitle else { return nil }
-
-        return "\(shortcutTitle) switches to the next mode."
     }
 
     private var setupNote: LocalizedStringKey? {
@@ -43,7 +38,7 @@ struct WritingSettingsPane: View {
     }
 
     var body: some View {
-        SettingsSection("Modes", subtitle: modeNote) {
+        SettingsSection("Modes") {
             DividedForEach(Mode.builtIn, id: \.self) { mode in
                 ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
             }
@@ -69,6 +64,11 @@ struct WritingSettingsPane: View {
             Button("New Mode", action: addMode)
         }
         .motion(Motion.layout, value: settings.settings.customModes)
+
+        SettingsSection("Shortcut", subtitle: "It works in any app.") {
+            ShortcutRow(action: .modeCycle, settings: settings, shortcuts: shortcuts, recorder: shortcutRecorder)
+        }
+        .onDisappear { shortcutRecorder.stop() }
 
         SettingsSection("Translation", subtitle: translationNote, isPro: true) {
             PickerRow(

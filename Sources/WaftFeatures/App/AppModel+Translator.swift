@@ -13,6 +13,7 @@ extension AppModel {
 
     static func makeTranslatorShortcuts(
         _ dependencies: AppDependencies,
+        _ shortcuts: GlobalShortcutController,
         settings: SettingsModel,
         pro: ProModel,
         hud: HUDController,
@@ -29,6 +30,6 @@ extension AppModel {
             hud: hud,
         )
 
-        return TranslatorShortcuts(shortcuts: dependencies.shortcuts, selectionActions: actions)
+        return TranslatorShortcuts(shortcuts: shortcuts, selectionActions: actions)
     }
 }

@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ ปฏิเสธคีย์ API";
 "%@ returned an error" = "%@ ส่งข้อผิดพลาดกลับมา";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "ภาษา%@ ฟังดูคล้ายกัน ถ้า Waft สับสน ให้เลือกภาษาใดภาษาหนึ่งเป็นภาษาที่พูด";
-"%@ switches to the next mode." = "กด %@ เพื่อสลับไปยังโหมดถัดไป";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · ผิดพลาดน้อยกว่า ช้ากว่า %lld–%lld เท่า";
 "%@ · quickest" = "%@ · เร็วที่สุด";
 "%@'s answer couldn't be used" = "ไม่สามารถใช้คำตอบจาก %@ ได้";
@@ -32,6 +31,7 @@
 "Accurate" = "แม่นยำ";
 "Activate" = "เปิดใช้งาน";
 "Add App…" = "เพิ่มแอป…";
+"Add Command, Control, or Option, or press a function key." = "เพิ่มปุ่ม Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น";
 "Add Language" = "เพิ่มภาษา";
 "Add Snippet" = "เพิ่มข้อความสำเร็จรูป";
 "Add Term" = "เพิ่มคำศัพท์";
@@ -83,6 +83,7 @@
 "Click to copy" = "คลิกเพื่อคัดลอก";
 "Click to copy, or select a part" = "คลิกเพื่อคัดลอก หรือเลือกบางส่วน";
 "Click, then press the key to use" = "คลิก แล้วกดปุ่มที่จะใช้";
+"Click, then press the shortcut to use" = "คลิก แล้วกดปุ่มลัดที่จะใช้";
 "Continue" = "ดำเนินการต่อ";
 "Copied" = "คัดลอกแล้ว";
 "Copied: press %@ to paste" = "คัดลอกแล้ว: กด %@ เพื่อวาง";
@@ -152,10 +153,12 @@
 "Included" = "รวมอยู่แล้ว";
 "Install Update…" = "ติดตั้งรายการอัปเดต…";
 "Instructions" = "คำสั่ง";
+"It works in any app." = "ใช้ได้ในทุกแอป";
 "Keep at most" = "เก็บไว้ไม่เกิน";
 "Keep dictations for" = "เก็บไว้นาน";
 "Keep history" = "เก็บประวัติ";
 "Kept in the Keychain." = "เก็บไว้ในพวงกุญแจ";
+"Key %lld" = "ปุ่ม %lld";
 "Key saved" = "บันทึกคีย์แล้ว";
 "Language" = "ภาษา";
 "Language: %@" = "ภาษา: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "กำลังเตรียมโมเดลจำเสียงพูด ครั้งแรกจะใช้เวลาประมาณหนึ่งนาที…";
 "Preparing the speech model…" = "กำลังเตรียมโมเดลจำเสียงพูด…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "กดปุ่มพร้อมกับ Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
 "Press a key…" = "กดปุ่ม…";
+"Press a shortcut…" = "กดปุ่มลัด…";
 "Press the key to use, or Esc to cancel" = "กดปุ่มที่จะใช้ หรือกด Esc เพื่อยกเลิก";
+"Press the shortcut to use, or Esc to cancel" = "กดปุ่มลัดที่จะใช้ หรือกด Esc เพื่อยกเลิก";
 "Previous page" = "หน้าก่อนนี้";
 "Provider" = "ผู้ให้บริการ";
 "Quit Waft" = "ออกจาก Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ในการตั้งค่าระบบ › แป้นพิมพ์ ให้ตั้ง “กดปุ่ม 🌐 เพื่อ” เป็น “ไม่ดำเนินการใดๆ”";
 "Settings…" = "การตั้งค่า…";
 "Setup needed" = "ต้องตั้งค่า";
+"Shortcut" = "ปุ่มลัด";
 "Shortcuts" = "ปุ่มลัด";
 "Show History" = "แสดงประวัติ";
 "Show in Finder" = "แสดงใน Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "ข้อความสำเร็จรูป";
 "Sounds" = "เสียง";
 "Source code" = "ซอร์สโค้ด";
+"Space" = "เว้นวรรค";
 "Speak %@ to get %@, and %@ to get %@." = "พูดภาษา%@ จะได้ภาษา%@ และพูดภาษา%@ จะได้ภาษา%@";
 "Speak any of %lld languages and get another, one way or both." = "พูดภาษาใดก็ได้จาก %lld ภาษาแล้วได้อีกภาษาหนึ่ง แปลทางเดียวหรือสองทาง";
 "Speak" = "พูด";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "ขั้นตอนที่ %lld จาก %lld";
 "Suggested" = "แนะนำ";
 "Swap languages" = "สลับภาษา";
+"Switch to the next mode" = "สลับไปยังโหมดถัดไป";
 "System default" = "ค่าเริ่มต้นของระบบ";
 "Talk while holding the key" = "พูดขณะกดปุ่มค้างไว้";
 "Tap %@ to dictate" = "กด %@ เพื่อป้อนตามคำบอก";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "ดูเหมือนว่านี่ไม่ใช่คีย์ใบอนุญาตของ Waft";
 "That key is already in use. Choose another one." = "ปุ่มนั้นถูกใช้อยู่แล้ว เลือกปุ่มอื่น";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชั่น";
+"That shortcut is already used for “%@”. Choose another one." = "ปุ่มลัดนี้ถูกใช้กับ “%@” อยู่แล้ว เลือกปุ่มลัดอื่น";
 "The chosen microphone can't be used." = "ไม่สามารถใช้ไมโครโฟนที่เลือกได้";
 "The file has no sound to transcribe." = "ไฟล์นี้ไม่มีเสียงให้ถอด";
 "The languages you chose in Settings › Dictation." = "ภาษาที่คุณเลือกไว้ในการตั้งค่า › การป้อนตามคำบอก";
@@ -384,14 +394,16 @@
 "Translator…" = "ตัวแปลภาษา…";
 "Try it" = "ลองใช้";
 "Turn off editing by voice" = "ปิดการแก้ไขด้วยเสียง";
+"Turn off this shortcut" = "ปิดปุ่มลัดนี้";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "ลดระดับเสียงของ Mac เหลือหนึ่งในสี่ขณะที่คุณพูด แล้วคืนค่าเดิมเมื่อพูดจบ";
 "Two-way with" = "แปลสองทางกับ";
 "Two-way" = "สองทาง";
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
-"Unavailable" = "ไม่พร้อมใช้งาน";
+"Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
 "Updates" = "รายการอัปเดต";
 "Use the default mode in this app" = "ใช้โหมดเริ่มต้นในแอปนี้";
+"Use the default shortcut" = "ใช้ปุ่มลัดเริ่มต้น";
 "Used Light mode: %@" = "ใช้โหมด “ปรับเล็กน้อย” แทน: %@";
 "Used by %@ on this Mac." = "ใช้โดย %@ บน Mac เครื่องนี้";
 "Uses your own API key. Only the text goes to %@, never the audio." = "ใช้คีย์ API ของคุณเอง ส่งเฉพาะข้อความไปยัง %@ ไม่ส่งเสียง";

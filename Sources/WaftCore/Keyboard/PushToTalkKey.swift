@@ -29,29 +29,6 @@ package struct PushToTalkKey: Hashable, Sendable {
         63: Modifier(name: String(localized: "Fn"), shortName: "Fn", symbol: "🌐", flag: 0x800000),
     ]
 
-    private static let functionKeys: [Int64: Int] = [
-        122: 1,
-        120: 2,
-        99: 3,
-        118: 4,
-        96: 5,
-        97: 6,
-        98: 7,
-        100: 8,
-        101: 9,
-        109: 10,
-        103: 11,
-        111: 12,
-        105: 13,
-        107: 14,
-        113: 15,
-        106: 16,
-        64: 17,
-        79: 18,
-        80: 19,
-        90: 20,
-    ]
-
     package let keyCode: Int64
 
     package var modifierFlag: UInt64? {
@@ -74,11 +51,11 @@ package struct PushToTalkKey: Hashable, Sendable {
     }
 
     private var functionKeyTitle: String {
-        "F\(Self.functionKeys[keyCode, default: 0])"
+        "F\(FunctionKeys.numbers[keyCode, default: 0])"
     }
 
     package init?(keyCode: Int64) {
-        guard Self.modifiers[keyCode] != nil || Self.functionKeys[keyCode] != nil else { return nil }
+        guard Self.modifiers[keyCode] != nil || FunctionKeys.numbers[keyCode] != nil else { return nil }
 
         self.keyCode = keyCode
     }

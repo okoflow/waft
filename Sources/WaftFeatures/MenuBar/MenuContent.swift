@@ -4,6 +4,12 @@ import WaftCore
 package struct MenuContent: View {
     private let model: AppModel
 
+    private var translatorShortcut: KeyboardShortcut? {
+        guard let combination = model.shortcuts.combination(for: .translator) else { return nil }
+
+        return combination.keyboardShortcut(in: model.shortcuts.layout)
+    }
+
     package init(model: AppModel) {
         self.model = model
     }
@@ -25,7 +31,7 @@ package struct MenuContent: View {
 
         Divider()
 
-        ModeMenu(settings: model.settings, pro: model.pro, shortcutTitle: model.modeSwitcher.shortcutTitle)
+        ModeMenu(settings: model.settings, pro: model.pro, shortcutTitle: model.shortcuts.title(for: .modeCycle))
 
         if let app = model.frontmostApp.app {
             AppModeMenu(app: app, settings: model.settings, pro: model.pro)
@@ -47,7 +53,7 @@ package struct MenuContent: View {
         Button(model.translator.isLocked ? "Translator (Waft+)…" : "Translator…") {
             model.windows.showTranslator()
         }
-        .keyboardShortcut("t", modifiers: [.control, .option])
+        .keyboardShortcut(translatorShortcut)
 
         Divider()
 

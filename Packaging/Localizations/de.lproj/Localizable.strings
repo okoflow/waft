@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ hat den API-Schlüssel abgelehnt";
 "%@ returned an error" = "%@ hat einen Fehler gemeldet";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ klingen ähnlich. Wenn Waft sie verwechselt, wähle eine davon als gesprochene Sprache.";
-"%@ switches to the next mode." = "%@ wechselt zum nächsten Modus.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · weniger Fehler, %lld–%lld× langsamer";
 "%@ · quickest" = "%@ · am schnellsten";
 "%@'s answer couldn't be used" = "%@ hat eine unbrauchbare Antwort geliefert";
@@ -32,6 +31,7 @@
 "Accurate" = "Genau";
 "Activate" = "Aktivieren";
 "Add App…" = "App hinzufügen …";
+"Add Command, Control, or Option, or press a function key." = "Füge die Befehls-, Control- oder Wahltaste hinzu oder drücke eine Funktionstaste.";
 "Add Language" = "Sprache hinzufügen";
 "Add Snippet" = "Textbaustein hinzufügen";
 "Add Term" = "Begriff hinzufügen";
@@ -83,6 +83,7 @@
 "Click to copy" = "Zum Kopieren klicken";
 "Click to copy, or select a part" = "Zum Kopieren klicken oder einen Teil auswählen";
 "Click, then press the key to use" = "Klicke und drücke dann die gewünschte Taste";
+"Click, then press the shortcut to use" = "Klicke und drücke dann den gewünschten Tastaturkurzbefehl";
 "Continue" = "Fortfahren";
 "Copied" = "Kopiert";
 "Copied: press %@ to paste" = "Kopiert: Drücke %@ zum Einsetzen";
@@ -152,10 +153,12 @@
 "Included" = "Enthalten";
 "Install Update…" = "Update installieren …";
 "Instructions" = "Anweisungen";
+"It works in any app." = "Er funktioniert in jeder App.";
 "Keep at most" = "Höchstens behalten";
 "Keep dictations for" = "Diktate behalten";
 "Keep history" = "Verlauf speichern";
 "Kept in the Keychain." = "Im Schlüsselbund aufbewahrt.";
+"Key %lld" = "Taste %lld";
 "Key saved" = "Schlüssel gesichert";
 "Language" = "Sprache";
 "Language: %@" = "Sprache: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Das Spracherkennungsmodell wird vorbereitet, beim ersten Mal etwa eine Minute …";
 "Preparing the speech model…" = "Das Spracherkennungsmodell wird vorbereitet …";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Drücke die Wahl-, Befehls-, Umschalt- oder Control-Taste (links oder rechts), Fn oder eine Funktionstaste. Esc bricht ab.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Drücke eine Taste zusammen mit der Befehls-, Control- oder Wahltaste oder eine Funktionstaste. Esc bricht ab.";
 "Press a key…" = "Taste drücken …";
+"Press a shortcut…" = "Tastaturkurzbefehl drücken …";
 "Press the key to use, or Esc to cancel" = "Drücke die gewünschte Taste oder Esc zum Abbrechen";
+"Press the shortcut to use, or Esc to cancel" = "Drücke den gewünschten Tastaturkurzbefehl oder Esc zum Abbrechen";
 "Previous page" = "Vorherige Seite";
 "Provider" = "Anbieter";
 "Quit Waft" = "Waft beenden";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Setze unter Systemeinstellungen › Tastatur „Beim Drücken der 🌐-Taste“ auf „Keine Aktion“.";
 "Settings…" = "Einstellungen …";
 "Setup needed" = "Einrichtung erforderlich";
+"Shortcut" = "Tastaturkurzbefehl";
 "Shortcuts" = "Tastaturkurzbefehle";
 "Show History" = "Verlauf anzeigen";
 "Show in Finder" = "Im Finder zeigen";
@@ -307,6 +314,7 @@
 "Snippets" = "Textbausteine";
 "Sounds" = "Töne";
 "Source code" = "Quellcode";
+"Space" = "Leertaste";
 "Speak %@ to get %@, and %@ to get %@." = "Gesprochenes %@ wird zu %@, gesprochenes %@ zu %@.";
 "Speak any of %lld languages and get another, one way or both." = "Sprich eine von %lld Sprachen und erhalte eine andere – in eine oder beide Richtungen.";
 "Speak" = "Sprich";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Schritt %lld von %lld";
 "Suggested" = "Vorschläge";
 "Swap languages" = "Sprachen tauschen";
+"Switch to the next mode" = "Zum nächsten Modus wechseln";
 "System default" = "Systemstandard";
 "Talk while holding the key" = "Sprechen, solange die Taste gedrückt ist";
 "Tap %@ to dictate" = "Zum Diktieren %@ antippen";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Das sieht nicht nach einem Lizenzschlüssel für Waft aus.";
 "That key is already in use. Choose another one." = "Diese Taste wird bereits verwendet. Wähle eine andere.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Diese Taste gibt Text ein. Drücke die Wahl-, Befehls-, Umschalt- oder Control-Taste, Fn oder eine Funktionstaste.";
+"That shortcut is already used for “%@”. Choose another one." = "Dieser Tastaturkurzbefehl wird bereits für „%@“ verwendet. Wähle einen anderen.";
 "The chosen microphone can't be used." = "Das gewählte Mikrofon kann nicht verwendet werden.";
 "The file has no sound to transcribe." = "Die Datei enthält keinen Ton zum Transkribieren.";
 "The languages you chose in Settings › Dictation." = "Die Sprachen, die du unter Einstellungen › Diktieren gewählt hast.";
@@ -384,14 +394,16 @@
 "Translator…" = "Übersetzer …";
 "Try it" = "Ausprobieren";
 "Turn off editing by voice" = "Bearbeiten per Stimme deaktivieren";
+"Turn off this shortcut" = "Diesen Tastaturkurzbefehl deaktivieren";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Senkt die Lautstärke deines Mac auf ein Viertel, während du sprichst, und stellt sie danach wieder her.";
 "Two-way with" = "In beide Richtungen mit";
 "Two-way" = "In beide Richtungen";
 "Type, paste, or hold %@ and speak" = "Tippe, setze Text ein oder halte %@ gedrückt und sprich";
-"Unavailable" = "Nicht verfügbar";
+"Unavailable: another app uses this shortcut. Choose another one." = "Nicht verfügbar: Eine andere App verwendet diesen Tastaturkurzbefehl. Wähle einen anderen.";
 "Unlock Waft+…" = "Waft+ freischalten …";
 "Updates" = "Updates";
 "Use the default mode in this app" = "In dieser App den Standardmodus verwenden";
+"Use the default shortcut" = "Standard-Tastaturkurzbefehl verwenden";
 "Used Light mode: %@" = "Modus „Leicht“ verwendet: %@";
 "Used by %@ on this Mac." = "Werden auf diesem Mac verwendet: %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Nutzt deinen eigenen API-Schlüssel. An %@ geht nur der Text, nie das Audio.";

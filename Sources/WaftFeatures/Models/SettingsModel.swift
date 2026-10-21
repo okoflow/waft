@@ -14,6 +14,7 @@ package final class SettingsModel {
     @ObservationIgnored var onLanguagesChange: (() -> Void)?
     @ObservationIgnored var onSpeechModelChange: (() -> Void)?
     @ObservationIgnored var onHistoryLimitsChange: (() -> Void)?
+    @ObservationIgnored var onShortcutsChange: (() -> Void)?
 
     private var isLoginItemEnabled: Bool
 
@@ -69,6 +70,10 @@ package final class SettingsModel {
 
         if changesHistoryLimits {
             onHistoryLimitsChange?()
+        }
+
+        if settings.shortcuts != oldValue.shortcuts {
+            onShortcutsChange?()
         }
     }
 }

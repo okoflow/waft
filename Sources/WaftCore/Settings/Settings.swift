@@ -19,6 +19,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case pushToTalkKey
         case dictationStart
         case editKey
+        case shortcuts
         case pastesIntoFocusedField
         case keepsHistory
         case historyRetention
@@ -45,6 +46,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var pushToTalkKey = PushToTalkKey.rightOption
     package var dictationStart = DictationStart.holdOrDoubleTap
     package var editKey: PushToTalkKey?
+    package var shortcuts = ShortcutSettings()
     package var pastesIntoFocusedField = true
     package var keepsHistory = true
     package var historyRetention = HistoryRetention.month
@@ -80,6 +82,7 @@ package struct Settings: Codable, Equatable, Sendable {
         pushToTalkKey = container.decode(.pushToTalkKey, default: pushToTalkKey)
         dictationStart = container.decode(.dictationStart, default: allowedHandsFree ? .holdOrDoubleTap : .hold)
         editKey = container.decodeIfValid(.editKey)
+        shortcuts = container.decode(.shortcuts, default: shortcuts)
         pastesIntoFocusedField = container.decode(.pastesIntoFocusedField, default: pastesIntoFocusedField)
         keepsHistory = container.decode(.keepsHistory, default: keepsHistory)
         historyRetention = container.decode(.historyRetention, default: historyRetention)

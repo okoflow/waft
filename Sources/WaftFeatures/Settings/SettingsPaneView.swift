@@ -48,13 +48,18 @@ struct SettingsPaneView: View {
             WritingSettingsPane(
                 settings: model.settings,
                 apiKeys: model.apiKeys,
-                shortcutTitle: model.modeSwitcher.shortcutTitle,
+                shortcuts: model.shortcuts,
+                shortcutRecorder: model.shortcutRecorder,
                 pro: model.pro,
                 state: state,
             )
 
         case .translator:
-            TranslatorSettingsPane(settings: model.settings, shortcuts: model.translatorShortcuts) {
+            TranslatorSettingsPane(
+                settings: model.settings,
+                shortcuts: model.shortcuts,
+                shortcutRecorder: model.shortcutRecorder,
+            ) {
                 model.windows.showTranslator()
             }
 

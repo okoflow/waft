@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@가 API 키를 거부함";
 "%@ returned an error" = "%@에서 오류를 반환함";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@는 발음이 비슷합니다. Waft가 혼동하면 그중 하나를 ‘말하는 언어’로 선택하세요.";
-"%@ switches to the next mode." = "%@ 키를 누르면 다음 모드로 전환됩니다.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · 오류가 적음, %lld~%lld배 느림";
 "%@ · quickest" = "%@ · 가장 빠름";
 "%@'s answer couldn't be used" = "%@의 응답을 사용할 수 없음";
@@ -32,6 +31,7 @@
 "Accurate" = "정확함";
 "Activate" = "활성화";
 "Add App…" = "앱 추가…";
+"Add Command, Control, or Option, or press a function key." = "Command, Control, Option 키를 함께 누르거나 기능 키를 누르세요.";
 "Add Language" = "언어 추가";
 "Add Snippet" = "상용구 추가";
 "Add Term" = "용어 추가";
@@ -83,6 +83,7 @@
 "Click to copy" = "클릭하여 복사";
 "Click to copy, or select a part" = "클릭하여 복사하거나 일부를 선택하세요";
 "Click, then press the key to use" = "클릭한 다음 사용할 키를 누르세요";
+"Click, then press the shortcut to use" = "클릭한 다음 사용할 단축키를 누르세요";
 "Continue" = "계속";
 "Copied" = "복사됨";
 "Copied: press %@ to paste" = "복사됨: %@를 눌러 붙여넣으세요";
@@ -152,10 +153,12 @@
 "Included" = "사용 가능";
 "Install Update…" = "업데이트 설치…";
 "Instructions" = "지시문";
+"It works in any app." = "어떤 앱에서든 작동합니다.";
 "Keep at most" = "최대 보관 개수";
 "Keep dictations for" = "보관 기간";
 "Keep history" = "기록 보관";
 "Kept in the Keychain." = "키체인에 보관됩니다.";
+"Key %lld" = "키 %lld";
 "Key saved" = "키 저장됨";
 "Language" = "언어";
 "Language: %@" = "언어: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "음성 인식 모델을 준비하는 중(처음에는 1분 정도)…";
 "Preparing the speech model…" = "음성 인식 모델을 준비하는 중…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Option, Command, Shift, Control 키(좌우 모두 가능), Fn 키 또는 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Command, Control, Option 키와 함께 다른 키를 누르거나 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
 "Press a key…" = "키를 누르세요…";
+"Press a shortcut…" = "단축키를 누르세요…";
 "Press the key to use, or Esc to cancel" = "사용할 키를 누르거나 Esc를 눌러 취소하세요";
+"Press the shortcut to use, or Esc to cancel" = "사용할 단축키를 누르거나 Esc를 눌러 취소하세요";
 "Previous page" = "이전 페이지";
 "Provider" = "제공업체";
 "Quit Waft" = "Waft 종료";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "시스템 설정 › 키보드에서 ‘🌐 키를 누를 때 실행할 동작’을 ‘안 함’으로 설정하세요.";
 "Settings…" = "설정…";
 "Setup needed" = "설정 필요";
+"Shortcut" = "단축키";
 "Shortcuts" = "단축키";
 "Show History" = "기록 보기";
 "Show in Finder" = "Finder에서 보기";
@@ -307,6 +314,7 @@
 "Snippets" = "상용구";
 "Sounds" = "사운드";
 "Source code" = "소스 코드";
+"Space" = "스페이스";
 "Speak %@ to get %@, and %@ to get %@." = "%1$@로 말하면 %2$@로, %3$@로 말하면 %4$@로 번역됩니다.";
 "Speak any of %lld languages and get another, one way or both." = "%lld개 언어 중 어느 언어로 말해도 다른 언어로 번역되며, 단방향과 양방향 모두 가능합니다.";
 "Speak" = "말하기";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "%lld단계(총 %lld단계)";
 "Suggested" = "제안된 언어";
 "Swap languages" = "언어 바꾸기";
+"Switch to the next mode" = "다음 모드로 전환";
 "System default" = "시스템 기본";
 "Talk while holding the key" = "키를 누르고 있는 동안 말하기";
 "Tap %@ to dictate" = "%@ 키를 눌러 받아쓰기";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Waft 라이선스 키가 아닌 것 같습니다.";
 "That key is already in use. Choose another one." = "이미 사용 중인 키입니다. 다른 키를 선택하세요.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "이 키는 문자를 입력합니다. Option, Command, Shift, Control, Fn 키 또는 기능 키를 누르세요.";
+"That shortcut is already used for “%@”. Choose another one." = "이 단축키는 이미 ‘%@’에 사용 중입니다. 다른 단축키를 선택하세요.";
 "The chosen microphone can't be used." = "선택한 마이크를 사용할 수 없습니다.";
 "The file has no sound to transcribe." = "이 파일에는 전사할 오디오가 없습니다.";
 "The languages you chose in Settings › Dictation." = "설정 › 받아쓰기에서 선택한 언어입니다.";
@@ -384,14 +394,16 @@
 "Translator…" = "번역기…";
 "Try it" = "사용해 보기";
 "Turn off editing by voice" = "음성으로 편집 끄기";
+"Turn off this shortcut" = "이 단축키 끄기";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "말하는 동안 Mac의 음량을 4분의 1로 줄였다가 다시 되돌립니다.";
 "Two-way with" = "양방향 번역";
 "Two-way" = "양방향";
 "Type, paste, or hold %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 길게 누른 채 말하세요";
-"Unavailable" = "사용할 수 없음";
+"Unavailable: another app uses this shortcut. Choose another one." = "사용할 수 없음: 다른 앱에서 이 단축키를 사용하고 있습니다. 다른 단축키를 선택하세요.";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
 "Updates" = "업데이트";
 "Use the default mode in this app" = "이 앱에서 기본 모드 사용";
+"Use the default shortcut" = "기본 단축키 사용";
 "Used Light mode: %@" = "‘가벼운 정리’ 모드로 처리: %@";
 "Used by %@ on this Mac." = "이 Mac의 %@에서 사용됩니다.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "본인의 API 키를 사용합니다. %@에는 오디오가 아닌 텍스트만 전송됩니다.";

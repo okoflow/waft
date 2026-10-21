@@ -15,6 +15,7 @@ struct SettingsTests {
         #expect(settings.pushToTalkKey == .rightOption)
         #expect(settings.historyLimit == DictationHistory.defaultLimit)
         #expect(settings.editKey == nil)
+        #expect(settings.shortcuts == ShortcutSettings())
     }
 
     @Test
@@ -113,6 +114,8 @@ struct SettingsTests {
         settings.customModes = [CustomMode.emailReply]
         settings.appModes.set(.custom(CustomMode.emailReply.id), for: "com.apple.mail")
         settings.editKey = PushToTalkKey(keyCode: 96)
+        settings.shortcuts[.translator] = nil
+        settings.shortcuts[.modeCycle] = KeyCombination(keyCode: 46, modifiers: [.command, .shift])
         settings.pastesIntoFocusedField = false
         settings.keepsHistory = false
         settings.historyRetention = .forever

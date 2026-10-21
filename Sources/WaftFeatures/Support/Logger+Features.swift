@@ -6,5 +6,4 @@ extension Logger {
     static let speechModel = Logger(subsystem: AppIdentity.bundleIdentifier, category: "speech-model")
     static let settings = Logger(subsystem: AppIdentity.bundleIdentifier, category: "settings")
     static let storage = Logger(subsystem: AppIdentity.bundleIdentifier, category: "storage")
-    static let translator = Logger(subsystem: AppIdentity.bundleIdentifier, category: "translator")
 }

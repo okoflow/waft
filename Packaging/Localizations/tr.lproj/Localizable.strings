@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ API anahtarını reddetti";
 "%@ returned an error" = "%@ bir hata döndürdü";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ birbirine benziyor. Waft bunları karıştırırsa birini konuşulan dil olarak seçin.";
-"%@ switches to the next mode." = "%@ ile sonraki moda geçersiniz.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · daha az hata, %lld–%lld kat daha yavaş";
 "%@ · quickest" = "%@ · en hızlı";
 "%@'s answer couldn't be used" = "%@ kullanılamayan bir yanıt döndürdü";
@@ -32,6 +31,7 @@
 "Accurate" = "Hassas";
 "Activate" = "Etkinleştir";
 "Add App…" = "Uygulama Ekle…";
+"Add Command, Control, or Option, or press a function key." = "Komut, Kontrol ya da Option tuşunu ekleyin veya bir işlev tuşuna basın.";
 "Add Language" = "Dil Ekle";
 "Add Snippet" = "Hazır Metin Ekle";
 "Add Term" = "Terim Ekle";
@@ -83,6 +83,7 @@
 "Click to copy" = "Kopyalamak için tıklayın";
 "Click to copy, or select a part" = "Kopyalamak için tıklayın veya bir bölüm seçin";
 "Click, then press the key to use" = "Tıklayın, ardından kullanılacak tuşa basın";
+"Click, then press the shortcut to use" = "Tıklayın, ardından kullanılacak kısayola basın";
 "Continue" = "Sürdür";
 "Copied" = "Kopyalandı";
 "Copied: press %@ to paste" = "Kopyalandı: %@ ile yapıştırın";
@@ -152,10 +153,12 @@
 "Included" = "Dahil";
 "Install Update…" = "Güncellemeyi Yükle…";
 "Instructions" = "Talimatlar";
+"It works in any app." = "Her uygulamada çalışır.";
 "Keep at most" = "Saklama sınırı";
 "Keep dictations for" = "Saklama süresi";
 "Keep history" = "Geçmişi sakla";
 "Kept in the Keychain." = "Anahtar Zinciri’nde saklanır.";
+"Key %lld" = "Tuş %lld";
 "Key saved" = "Anahtar kaydedildi";
 "Language" = "Dil";
 "Language: %@" = "Dil: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Konuşma modeli hazırlanıyor, ilk seferde yaklaşık bir dakika sürer…";
 "Preparing the speech model…" = "Konuşma modeli hazırlanıyor…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Sağ veya sol Option, Komut, Shift ya da Kontrol tuşuna, Fn tuşuna veya bir işlev tuşuna basın. Esc ile vazgeçebilirsiniz.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Komut, Kontrol ya da Option ile birlikte bir tuşa veya bir işlev tuşuna basın. Esc ile vazgeçebilirsiniz.";
 "Press a key…" = "Bir tuşa basın…";
+"Press a shortcut…" = "Bir kısayola basın…";
 "Press the key to use, or Esc to cancel" = "Kullanılacak tuşa ya da vazgeçmek için Esc tuşuna basın";
+"Press the shortcut to use, or Esc to cancel" = "Kullanılacak kısayola ya da vazgeçmek için Esc tuşuna basın";
 "Previous page" = "Önceki sayfa";
 "Provider" = "Sağlayıcı";
 "Quit Waft" = "Waft’tan Çık";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sistem Ayarları › Klavye bölümünde “🌐 tuşuna basıldığında” ayarını “Hiçbir Şey Yapma” olarak belirleyin.";
 "Settings…" = "Ayarlar…";
 "Setup needed" = "Kurulum gerekli";
+"Shortcut" = "Kısayol";
 "Shortcuts" = "Kısayollar";
 "Show History" = "Geçmişi Göster";
 "Show in Finder" = "Finder’da Göster";
@@ -307,6 +314,7 @@
 "Snippets" = "Hazır metinler";
 "Sounds" = "Sesler";
 "Source code" = "Kaynak kodu";
+"Space" = "Boşluk";
 "Speak %@ to get %@, and %@ to get %@." = "%@ konuşursanız %@, %@ konuşursanız %@ yazılır.";
 "Speak any of %lld languages and get another, one way or both." = "%lld dilden birini konuşun, metni başka bir dilde alın; tek yönlü ya da iki yönlü.";
 "Speak" = "Konuşun";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Adım %lld / %lld";
 "Suggested" = "Önerilen";
 "Swap languages" = "Dillerin yerini değiştir";
+"Switch to the next mode" = "Sonraki moda geç";
 "System default" = "Sistem saptanmışı";
 "Talk while holding the key" = "Tuşu basılı tutarken konuşun";
 "Tap %@ to dictate" = "Dikte için %@ tuşuna basın";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Bu bir Waft lisans anahtarına benzemiyor.";
 "That key is already in use. Choose another one." = "Bu tuş zaten kullanılıyor. Başka bir tuş seçin.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Bu tuş metin yazar. Option, Komut, Shift, Kontrol, Fn ya da bir işlev tuşuna basın.";
+"That shortcut is already used for “%@”. Choose another one." = "Bu kısayol zaten “%@” için kullanılıyor. Başka bir kısayol seçin.";
 "The chosen microphone can't be used." = "Seçilen mikrofon kullanılamıyor.";
 "The file has no sound to transcribe." = "Dosyada yazıya çevrilecek ses yok.";
 "The languages you chose in Settings › Dictation." = "Ayarlar › Dikte bölümünde seçtiğiniz diller.";
@@ -384,14 +394,16 @@
 "Translator…" = "Çevirmen…";
 "Try it" = "Deneyin";
 "Turn off editing by voice" = "Sesle düzenlemeyi kapat";
+"Turn off this shortcut" = "Bu kısayolu kapat";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Siz konuşurken Mac’in ses düzeyini dörtte bire indirir, ardından eski haline getirir.";
 "Two-way with" = "İki yönlü çeviri";
 "Two-way" = "İki yönlü";
 "Type, paste, or hold %@ and speak" = "Yazın, yapıştırın ya da %@ tuşunu basılı tutup konuşun";
-"Unavailable" = "Kullanılamıyor";
+"Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kısayolu kullanıyor. Başka bir kısayol seçin.";
 "Unlock Waft+…" = "Waft+’ın Kilidini Aç…";
 "Updates" = "Güncellemeler";
 "Use the default mode in this app" = "Bu uygulamada saptanmış modu kullan";
+"Use the default shortcut" = "Saptanmış kısayolu kullan";
 "Used Light mode: %@" = "“Hafif” modu kullanıldı: %@";
 "Used by %@ on this Mac." = "Bu Mac’te %@ tarafından kullanılır.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Kendi API anahtarınızı kullanır. %@ hizmetine yalnızca metin gider, ses asla gitmez.";

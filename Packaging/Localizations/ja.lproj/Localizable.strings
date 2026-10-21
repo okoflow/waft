@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@がAPIキーを拒否しました";
 "%@ returned an error" = "%@がエラーを返しました";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@は発音が似ています。Waftが混同する場合は、いずれかを話す言語として選択してください。";
-"%@ switches to the next mode." = "%@で次のモードに切り替わります。";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · 誤りが少なく、%lld〜%lld倍遅い";
 "%@ · quickest" = "%@ · 最速";
 "%@'s answer couldn't be used" = "%@の応答を使用できませんでした";
@@ -32,6 +31,7 @@
 "Accurate" = "高精度";
 "Activate" = "有効にする";
 "Add App…" = "アプリを追加…";
+"Add Command, Control, or Option, or press a function key." = "Command、Control、Optionのいずれかを加えるか、ファンクションキーを押してください。";
 "Add Language" = "言語を追加";
 "Add Snippet" = "定型文を追加";
 "Add Term" = "用語を追加";
@@ -83,6 +83,7 @@
 "Click to copy" = "クリックしてコピー";
 "Click to copy, or select a part" = "クリックしてコピー、または一部を選択";
 "Click, then press the key to use" = "クリックしてから、使用するキーを押してください";
+"Click, then press the shortcut to use" = "クリックしてから、使用するショートカットを押してください";
 "Continue" = "続ける";
 "Copied" = "コピー済み";
 "Copied: press %@ to paste" = "コピーしました：%@でペーストできます";
@@ -152,10 +153,12 @@
 "Included" = "利用可能";
 "Install Update…" = "アップデートをインストール…";
 "Instructions" = "指示";
+"It works in any app." = "どのアプリでも使えます。";
 "Keep at most" = "最大保存件数";
 "Keep dictations for" = "保存期間";
 "Keep history" = "履歴を保存";
 "Kept in the Keychain." = "キーチェーンに保管されています。";
+"Key %lld" = "キー%lld";
 "Key saved" = "キーを保存済み";
 "Language" = "言語";
 "Language: %@" = "言語：%@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "音声認識モデルを準備しています。初回は1分ほどかかります…";
 "Preparing the speech model…" = "音声認識モデルを準備中…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Option、Command、Shift、Control（左右どちらでも可）、Fnキー、またはファンクションキーを押してください。Escでキャンセルします。";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Command、Control、Optionのいずれかを押しながらキーを押すか、ファンクションキーを押してください。Escでキャンセルします。";
 "Press a key…" = "キーを押してください…";
+"Press a shortcut…" = "ショートカットを押してください…";
 "Press the key to use, or Esc to cancel" = "使用するキーを押すか、Escでキャンセルします";
+"Press the shortcut to use, or Esc to cancel" = "使用するショートカットを押すか、Escでキャンセルします";
 "Previous page" = "前のページ";
 "Provider" = "プロバイダ";
 "Quit Waft" = "Waftを終了";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "「システム設定」›「キーボード」で「🌐キーを押して」を「何もしない」に設定してください。";
 "Settings…" = "設定…";
 "Setup needed" = "セットアップが必要です";
+"Shortcut" = "ショートカット";
 "Shortcuts" = "ショートカット";
 "Show History" = "履歴を表示";
 "Show in Finder" = "Finderに表示";
@@ -307,6 +314,7 @@
 "Snippets" = "定型文";
 "Sounds" = "サウンド";
 "Source code" = "ソースコード";
+"Space" = "スペース";
 "Speak %@ to get %@, and %@ to get %@." = "%1$@で話すと%2$@に、%3$@で話すと%4$@に翻訳されます。";
 "Speak any of %lld languages and get another, one way or both." = "%lld言語のいずれかで話すと別の言語に翻訳されます。一方向にも双方向にも対応します。";
 "Speak" = "話す";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "ステップ%lld（全%lldステップ）";
 "Suggested" = "候補";
 "Swap languages" = "言語を入れ替え";
+"Switch to the next mode" = "次のモードに切り替え";
 "System default" = "システムデフォルト";
 "Talk while holding the key" = "キーを押している間だけ話す";
 "Tap %@ to dictate" = "%@キーを押して音声入力";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Waftのライセンスキーではないようです。";
 "That key is already in use. Choose another one." = "そのキーはすでに使用されています。別のキーを選択してください。";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "そのキーは文字を入力します。Option、Command、Shift、Control、Fnキー、またはファンクションキーを押してください。";
+"That shortcut is already used for “%@”. Choose another one." = "そのショートカットはすでに「%@」に使用されています。別のショートカットを選択してください。";
 "The chosen microphone can't be used." = "選択したマイクを使用できません。";
 "The file has no sound to transcribe." = "このファイルには文字起こしできるオーディオがありません。";
 "The languages you chose in Settings › Dictation." = "「設定」›「音声入力」で選択した言語です。";
@@ -384,14 +394,16 @@
 "Translator…" = "翻訳ツール…";
 "Try it" = "試してみましょう";
 "Turn off editing by voice" = "「音声で編集」をオフにする";
+"Turn off this shortcut" = "このショートカットをオフにする";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "話している間はMacの音量を4分の1にし、終わったら元に戻します。";
 "Two-way with" = "双方向翻訳";
 "Two-way" = "双方向";
 "Type, paste, or hold %@ and speak" = "入力・ペーストするか、%@キーを押したまま話してください";
-"Unavailable" = "利用できません";
+"Unavailable: another app uses this shortcut. Choose another one." = "使用できません：ほかのアプリがこのショートカットを使用しています。別のショートカットを選択してください。";
 "Unlock Waft+…" = "Waft+のロックを解除…";
 "Updates" = "アップデート";
 "Use the default mode in this app" = "このアプリでデフォルトのモードを使用";
+"Use the default shortcut" = "デフォルトのショートカットを使用";
 "Used Light mode: %@" = "「簡易」モードで処理：%@";
 "Used by %@ on this Mac." = "このMac上の%@が使用します。";
 "Uses your own API key. Only the text goes to %@, never the audio." = "自分のAPIキーを使用します。%@に送信されるのはテキストのみで、音声は送信されません。";

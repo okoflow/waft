@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ afviste API-nøglen";
 "%@ returned an error" = "%@ svarede med en fejl";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ lyder ens. Hvis Waft forveksler dem, skal du vælge ét af dem som talesprog.";
-"%@ switches to the next mode." = "%@ skifter til næste tilstand.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · færre fejl, %lld–%lld× langsommere";
 "%@ · quickest" = "%@ · hurtigst";
 "%@'s answer couldn't be used" = "svaret fra %@ kunne ikke bruges";
@@ -32,6 +31,7 @@
 "Accurate" = "Præcis";
 "Activate" = "Aktiver";
 "Add App…" = "Tilføj app…";
+"Add Command, Control, or Option, or press a function key." = "Tilføj Kommando, ctrl eller Alternativ, eller tryk på en funktionstast.";
 "Add Language" = "Tilføj sprog";
 "Add Snippet" = "Tilføj tekststykke";
 "Add Term" = "Tilføj udtryk";
@@ -83,6 +83,7 @@
 "Click to copy" = "Klik for at kopiere";
 "Click to copy, or select a part" = "Klik for at kopiere, eller vælg en del";
 "Click, then press the key to use" = "Klik, og tryk derefter på den ønskede tast";
+"Click, then press the shortcut to use" = "Klik, og tryk derefter på den ønskede genvej";
 "Continue" = "Fortsæt";
 "Copied" = "Kopieret";
 "Copied: press %@ to paste" = "Kopieret: tryk på %@ for at sætte ind";
@@ -152,10 +153,12 @@
 "Included" = "Inkluderet";
 "Install Update…" = "Installer opdatering…";
 "Instructions" = "Instruktioner";
+"It works in any app." = "Den virker i alle apps.";
 "Keep at most" = "Behold højst";
 "Keep dictations for" = "Behold dikteringer";
 "Keep history" = "Gem historik";
 "Kept in the Keychain." = "Opbevares i nøgleringen.";
+"Key %lld" = "Tast %lld";
 "Key saved" = "Nøgle gemt";
 "Language" = "Sprog";
 "Language: %@" = "Sprog: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Klargør talemodellen – cirka et minut første gang…";
 "Preparing the speech model…" = "Klargør talemodellen…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Tryk på Alternativ, Kommando, Skift eller ctrl (venstre eller højre), Fn eller en funktionstast. Tryk på esc for at annullere.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Tryk på en tast sammen med Kommando, ctrl eller Alternativ, eller på en funktionstast. Tryk på esc for at annullere.";
 "Press a key…" = "Tryk på en tast…";
+"Press a shortcut…" = "Tryk på en genvej…";
 "Press the key to use, or Esc to cancel" = "Tryk på den ønskede tast eller på esc for at annullere";
+"Press the shortcut to use, or Esc to cancel" = "Tryk på den ønskede genvej eller på esc for at annullere";
 "Previous page" = "Forrige side";
 "Provider" = "Udbyder";
 "Quit Waft" = "Slut Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Indstil “Tryk på 🌐-tasten for at” til “Gøre ingenting” i Systemindstillinger › Tastatur.";
 "Settings…" = "Indstillinger…";
 "Setup needed" = "Skal indstilles";
+"Shortcut" = "Genvej";
 "Shortcuts" = "Genveje";
 "Show History" = "Vis historik";
 "Show in Finder" = "Vis i Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Tekststykker";
 "Sounds" = "Lyde";
 "Source code" = "Kildekode";
+"Space" = "Mellemrum";
 "Speak %@ to get %@, and %@ to get %@." = "Tal %@ for at få %@, og %@ for at få %@.";
 "Speak any of %lld languages and get another, one way or both." = "Tal et af %lld sprog, og få et andet – i én retning eller begge.";
 "Speak" = "Tal";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Trin %lld af %lld";
 "Suggested" = "Forslag";
 "Swap languages" = "Byt sprog";
+"Switch to the next mode" = "Skift til næste tilstand";
 "System default" = "Systemstandard";
 "Talk while holding the key" = "Tal, mens du holder tasten nede";
 "Tap %@ to dictate" = "Tryk på %@ for at diktere";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Det ligner ikke en licensnøgle til Waft.";
 "That key is already in use. Choose another one." = "Tasten er allerede i brug. Vælg en anden.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Tasten skriver tekst. Tryk på Alternativ, Kommando, Skift, ctrl, Fn eller en funktionstast.";
+"That shortcut is already used for “%@”. Choose another one." = "Genvejen bruges allerede til “%@”. Vælg en anden.";
 "The chosen microphone can't be used." = "Den valgte mikrofon kan ikke bruges.";
 "The file has no sound to transcribe." = "Arkivet indeholder ingen lyd at transskribere.";
 "The languages you chose in Settings › Dictation." = "De sprog, du har valgt i Indstillinger › Diktering.";
@@ -384,14 +394,16 @@
 "Translator…" = "Oversætter…";
 "Try it" = "Prøv det";
 "Turn off editing by voice" = "Slå redigering med stemmen fra";
+"Turn off this shortcut" = "Slå denne genvej fra";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Skruer lydstyrken på din Mac ned til en fjerdedel, mens du taler, og op igen bagefter.";
 "Two-way with" = "Tovejs med";
 "Two-way" = "Tovejs";
 "Type, paste, or hold %@ and speak" = "Skriv, sæt ind, eller hold %@ nede, og tal";
-"Unavailable" = "Ikke tilgængelig";
+"Unavailable: another app uses this shortcut. Choose another one." = "Ikke tilgængelig: en anden app bruger denne genvej. Vælg en anden.";
 "Unlock Waft+…" = "Lås Waft+ op…";
 "Updates" = "Opdateringer";
 "Use the default mode in this app" = "Brug standardtilstanden i denne app";
+"Use the default shortcut" = "Brug standardgenvejen";
 "Used Light mode: %@" = "Tilstanden “Let” blev brugt: %@";
 "Used by %@ on this Mac." = "Bruges af %@ på denne Mac.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Bruger din egen API-nøgle. Kun teksten sendes til %@, aldrig lyden.";

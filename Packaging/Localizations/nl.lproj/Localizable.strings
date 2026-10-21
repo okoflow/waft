@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ heeft de API-sleutel geweigerd";
 "%@ returned an error" = "%@ heeft een fout gemeld";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ lijken qua klank op elkaar. Als Waft ze verwart, kies er dan één als gesproken taal.";
-"%@ switches to the next mode." = "%@ schakelt naar de volgende modus.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · minder fouten, %lld–%lld× trager";
 "%@ · quickest" = "%@ · het snelst";
 "%@'s answer couldn't be used" = "het antwoord van %@ was onbruikbaar";
@@ -32,6 +31,7 @@
 "Accurate" = "Nauwkeurig";
 "Activate" = "Activeer";
 "Add App…" = "Voeg app toe…";
+"Add Command, Control, or Option, or press a function key." = "Voeg Command, Control of Option toe, of druk op een functietoets.";
 "Add Language" = "Voeg taal toe";
 "Add Snippet" = "Voeg tekstblok toe";
 "Add Term" = "Voeg term toe";
@@ -83,6 +83,7 @@
 "Click to copy" = "Klik om te kopiëren";
 "Click to copy, or select a part" = "Klik om te kopiëren, of selecteer een deel";
 "Click, then press the key to use" = "Klik en druk dan op de gewenste toets";
+"Click, then press the shortcut to use" = "Klik en druk dan op de gewenste sneltoets";
 "Continue" = "Ga door";
 "Copied" = "Gekopieerd";
 "Copied: press %@ to paste" = "Gekopieerd: druk op %@ om te plakken";
@@ -152,10 +153,12 @@
 "Included" = "Inbegrepen";
 "Install Update…" = "Installeer update…";
 "Instructions" = "Instructies";
+"It works in any app." = "Het werkt in elke app.";
 "Keep at most" = "Bewaar maximaal";
 "Keep dictations for" = "Bewaar dictaten";
 "Keep history" = "Bewaar geschiedenis";
 "Kept in the Keychain." = "Bewaard in de sleutelhanger.";
+"Key %lld" = "Toets %lld";
 "Key saved" = "Sleutel bewaard";
 "Language" = "Taal";
 "Language: %@" = "Taal: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Spraakmodel voorbereiden, de eerste keer ongeveer een minuut…";
 "Preparing the speech model…" = "Spraakmodel voorbereiden…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Druk op Option, Command, Shift of Control (links of rechts), Fn of een functietoets. Esc annuleert.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Druk op een toets samen met Command, Control of Option, of op een functietoets. Esc annuleert.";
 "Press a key…" = "Druk op een toets…";
+"Press a shortcut…" = "Druk op een sneltoets…";
 "Press the key to use, or Esc to cancel" = "Druk op de gewenste toets of op Esc om te annuleren";
+"Press the shortcut to use, or Esc to cancel" = "Druk op de gewenste sneltoets of op Esc om te annuleren";
 "Previous page" = "Vorige pagina";
 "Provider" = "Aanbieder";
 "Quit Waft" = "Stop Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Zet in Systeeminstellingen › Toetsenbord ‘Druk op 🌐-toets’ op ‘Doe niets’.";
 "Settings…" = "Instellingen…";
 "Setup needed" = "Configuratie vereist";
+"Shortcut" = "Sneltoets";
 "Shortcuts" = "Sneltoetsen";
 "Show History" = "Toon geschiedenis";
 "Show in Finder" = "Toon in Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Tekstblokken";
 "Sounds" = "Geluiden";
 "Source code" = "Broncode";
+"Space" = "Spatie";
 "Speak %@ to get %@, and %@ to get %@." = "Spreek %@ voor tekst in het %@ en %@ voor tekst in het %@.";
 "Speak any of %lld languages and get another, one way or both." = "Spreek een van de %lld talen en krijg een andere, in één of beide richtingen.";
 "Speak" = "Spreek";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Stap %lld van %lld";
 "Suggested" = "Suggesties";
 "Swap languages" = "Wissel talen om";
+"Switch to the next mode" = "Schakel naar de volgende modus";
 "System default" = "Systeemstandaard";
 "Talk while holding the key" = "Spreek terwijl je de toets ingedrukt houdt";
 "Tap %@ to dictate" = "Druk op %@ om te dicteren";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Dit lijkt geen licentiesleutel van Waft te zijn.";
 "That key is already in use. Choose another one." = "Die toets is al in gebruik. Kies een andere.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Die toets typt tekst. Druk op Option, Command, Shift, Control, Fn of een functietoets.";
+"That shortcut is already used for “%@”. Choose another one." = "Die sneltoets wordt al gebruikt voor ‘%@’. Kies een andere.";
 "The chosen microphone can't be used." = "De gekozen microfoon kan niet worden gebruikt.";
 "The file has no sound to transcribe." = "Het bestand bevat geen geluid om te transcriberen.";
 "The languages you chose in Settings › Dictation." = "De talen die je hebt gekozen in Instellingen › Dicteren.";
@@ -384,14 +394,16 @@
 "Translator…" = "Vertaler…";
 "Try it" = "Probeer het uit";
 "Turn off editing by voice" = "Schakel bewerken met spraak uit";
+"Turn off this shortcut" = "Schakel deze sneltoets uit";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Zet het volume van de Mac op een kwart terwijl je spreekt en daarna weer terug.";
 "Two-way with" = "In beide richtingen met";
 "Two-way" = "In beide richtingen";
 "Type, paste, or hold %@ and speak" = "Typ, plak of houd %@ ingedrukt en spreek";
-"Unavailable" = "Niet beschikbaar";
+"Unavailable: another app uses this shortcut. Choose another one." = "Niet beschikbaar: een andere app gebruikt deze sneltoets. Kies een andere.";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
 "Updates" = "Updates";
 "Use the default mode in this app" = "Gebruik de standaardmodus in deze app";
+"Use the default shortcut" = "Gebruik de standaardsneltoets";
 "Used Light mode: %@" = "Modus ‘Licht’ gebruikt: %@";
 "Used by %@ on this Mac." = "Worden op deze Mac gebruikt door %@.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Gebruikt je eigen API-sleutel. Alleen de tekst gaat naar %@, nooit de audio.";

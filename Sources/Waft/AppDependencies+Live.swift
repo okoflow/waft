@@ -49,12 +49,7 @@ extension AppDependencies {
     }
 
     private static func shortcuts() -> GlobalShortcuts {
-        GlobalShortcuts(
-            modeCycle: CarbonHotKey.modeCycle(),
-            translator: CarbonHotKey.translator(),
-            translateSelection: CarbonHotKey.translateSelection(),
-            fixSelection: CarbonHotKey.fixSelection(),
-        )
+        GlobalShortcuts(layout: CurrentKeyboardLayout()) { _ in CarbonHotKey() }
     }
 
     private static func apiKeyStores() -> PerProvider<any ValueStore<String>> {

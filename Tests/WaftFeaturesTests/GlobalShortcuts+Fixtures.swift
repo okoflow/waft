@@ -1,16 +1,10 @@
+import WaftCore
 @testable import WaftFeatures
 
 extension GlobalShortcuts {
-    static func fake(
-        translator: FakeGlobalShortcut = FakeGlobalShortcut(),
-        translateSelection: FakeGlobalShortcut = FakeGlobalShortcut(),
-        fixSelection: FakeGlobalShortcut = FakeGlobalShortcut(),
-    ) -> GlobalShortcuts {
-        GlobalShortcuts(
-            modeCycle: FakeGlobalShortcut(),
-            translator: translator,
-            translateSelection: translateSelection,
-            fixSelection: fixSelection,
-        )
+    static func fake(_ shortcuts: [ShortcutAction: FakeGlobalShortcut] = [:]) -> GlobalShortcuts {
+        GlobalShortcuts(layout: FakeKeyboardLayout()) { action in
+            shortcuts[action, default: FakeGlobalShortcut()]
+        }
     }
 }

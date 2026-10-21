@@ -41,6 +41,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         if closing == settingsWindow {
             settingsState.editedMode = nil
             model?.keyRecorder.stop()
+            model?.shortcutRecorder.stop()
         }
 
         if closing == transcriptionWindow {

@@ -1,49 +1,40 @@
+package import WaftCore
 import Carbon.HIToolbox
 import os
-import WaftCore
 
 @MainActor
 package final class CarbonHotKey: GlobalShortcut {
     private static let signature = OSType(0x5761_6674)
-    private static let controlOption = controlKey | optionKey
-
-    package let title: String
+    private static var lastIdentifier: UInt32 = 0
 
     private let identifier: UInt32
-    private let keyCode: UInt32
-    private let modifiers: UInt32
 
     private var hotKey: EventHotKeyRef?
     private var handler: EventHandlerRef?
     private var action: (@MainActor () -> Void)?
 
-    private init(identifier: UInt32, keyCode: Int, modifiers: Int, title: String) {
-        self.identifier = identifier
-        self.keyCode = UInt32(keyCode)
-        self.modifiers = UInt32(modifiers)
-        self.title = title
+    package init() {
+        Self.lastIdentifier += 1
+        identifier = Self.lastIdentifier
     }
 
-    package static func modeCycle() -> CarbonHotKey {
-        CarbonHotKey(identifier: 1, keyCode: kVK_ANSI_M, modifiers: controlOption, title: "⌃⌥M")
+    private static func carbonModifiers(of modifiers: KeyCombination.Modifiers) -> UInt32 {
+        let flags: [(KeyCombination.Modifiers, Int)] = [
+            (.control, controlKey),
+            (.option, optionKey),
+            (.shift, shiftKey),
+            (.command, cmdKey),
+        ]
+
+        return flags.reduce(0) { result, flag in
+            modifiers.contains(flag.0) ? result | UInt32(flag.1) : result
+        }
     }
 
-    package static func translator() -> CarbonHotKey {
-        CarbonHotKey(identifier: 2, keyCode: kVK_ANSI_T, modifiers: controlOption, title: "⌃⌥T")
-    }
+    package func register(_ combination: KeyCombination, action: @escaping @MainActor () -> Void) -> Bool {
+        unregister()
 
-    package static func translateSelection() -> CarbonHotKey {
-        CarbonHotKey(identifier: 3, keyCode: kVK_ANSI_T, modifiers: controlOption | shiftKey, title: "⌃⌥⇧T")
-    }
-
-    package static func fixSelection() -> CarbonHotKey {
-        CarbonHotKey(identifier: 4, keyCode: kVK_ANSI_F, modifiers: controlOption, title: "⌃⌥F")
-    }
-
-    package func register(_ action: @escaping @MainActor () -> Void) -> Bool {
-        guard hotKey == nil else { return true }
-
-        let shortcut = title
+        let shortcut = identifier
         var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
         let context = Unmanaged.passUnretained(self).toOpaque()
         let installStatus = InstallEventHandler(
@@ -57,21 +48,28 @@ package final class CarbonHotKey: GlobalShortcut {
 
         guard installStatus == noErr else {
             Logger.keyboard.error(
-                "Couldn't install the \(shortcut, privacy: .public) handler: OSStatus \(installStatus, privacy: .public)",
+                "Couldn't install shortcut \(shortcut, privacy: .public): OSStatus \(installStatus, privacy: .public)",
             )
 
             return false
         }
 
         let hotKeyID = EventHotKeyID(signature: Self.signature, id: identifier)
-        let registerStatus = RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKey)
+        let registerStatus = RegisterEventHotKey(
+            UInt32(combination.keyCode),
+            Self.carbonModifiers(of: combination.modifiers),
+            hotKeyID,
+            GetApplicationEventTarget(),
+            0,
+            &hotKey,
+        )
+
         guard registerStatus == noErr else {
             Logger.keyboard.error(
-                "Couldn't register the \(shortcut, privacy: .public) shortcut: OSStatus \(registerStatus, privacy: .public)",
+                "Couldn't register shortcut \(shortcut, privacy: .public): OSStatus \(registerStatus, privacy: .public)",
             )
 
-            RemoveEventHandler(handler)
-            handler = nil
+            unregister()
 
             return false
         }
@@ -79,6 +77,20 @@ package final class CarbonHotKey: GlobalShortcut {
         self.action = action
 
         return true
+    }
+
+    package func unregister() {
+        if let hotKey {
+            UnregisterEventHotKey(hotKey)
+        }
+
+        if let handler {
+            RemoveEventHandler(handler)
+        }
+
+        hotKey = nil
+        handler = nil
+        action = nil
     }
 
     fileprivate func handle(_ pressed: EventHotKeyID) -> OSStatus {

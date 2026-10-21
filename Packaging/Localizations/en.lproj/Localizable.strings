@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ rejected the API key";
 "%@ returned an error" = "%@ returned an error";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@ sound alike. If Waft mixes them up, choose one as the spoken language.";
-"%@ switches to the next mode." = "%@ switches to the next mode.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · fewer mistakes, %lld–%lld× slower";
 "%@ · quickest" = "%@ · quickest";
 "%@'s answer couldn't be used" = "%@'s answer couldn't be used";
@@ -32,6 +31,7 @@
 "Accurate" = "Accurate";
 "Activate" = "Activate";
 "Add App…" = "Add App…";
+"Add Command, Control, or Option, or press a function key." = "Add Command, Control, or Option, or press a function key.";
 "Add Language" = "Add Language";
 "Add Snippet" = "Add Snippet";
 "Add Term" = "Add Term";
@@ -83,6 +83,7 @@
 "Click to copy" = "Click to copy";
 "Click to copy, or select a part" = "Click to copy, or select a part";
 "Click, then press the key to use" = "Click, then press the key to use";
+"Click, then press the shortcut to use" = "Click, then press the shortcut to use";
 "Continue" = "Continue";
 "Copied" = "Copied";
 "Copied: press %@ to paste" = "Copied: press %@ to paste";
@@ -152,10 +153,12 @@
 "Included" = "Included";
 "Install Update…" = "Install Update…";
 "Instructions" = "Instructions";
+"It works in any app." = "It works in any app.";
 "Keep at most" = "Keep at most";
 "Keep dictations for" = "Keep dictations for";
 "Keep history" = "Keep history";
 "Kept in the Keychain." = "Kept in the Keychain.";
+"Key %lld" = "Key %lld";
 "Key saved" = "Key saved";
 "Language" = "Language";
 "Language: %@" = "Language: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Preparing the speech model, about a minute the first time…";
 "Preparing the speech model…" = "Preparing the speech model…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Press a key with Command, Control, or Option, or a function key. Esc cancels.";
 "Press a key…" = "Press a key…";
+"Press a shortcut…" = "Press a shortcut…";
 "Press the key to use, or Esc to cancel" = "Press the key to use, or Esc to cancel";
+"Press the shortcut to use, or Esc to cancel" = "Press the shortcut to use, or Esc to cancel";
 "Previous page" = "Previous page";
 "Provider" = "Provider";
 "Quit Waft" = "Quit Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard.";
 "Settings…" = "Settings…";
 "Setup needed" = "Setup needed";
+"Shortcut" = "Shortcut";
 "Shortcuts" = "Shortcuts";
 "Show History" = "Show History";
 "Show in Finder" = "Show in Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Snippets";
 "Sounds" = "Sounds";
 "Source code" = "Source code";
+"Space" = "Space";
 "Speak %@ to get %@, and %@ to get %@." = "Speak %@ to get %@, and %@ to get %@.";
 "Speak any of %lld languages and get another, one way or both." = "Speak any of %lld languages and get another, one way or both.";
 "Speak" = "Speak";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Step %lld of %lld";
 "Suggested" = "Suggested";
 "Swap languages" = "Swap languages";
+"Switch to the next mode" = "Switch to the next mode";
 "System default" = "System default";
 "Talk while holding the key" = "Talk while holding the key";
 "Tap %@ to dictate" = "Tap %@ to dictate";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "That doesn't look like a Waft license key.";
 "That key is already in use. Choose another one." = "That key is already in use. Choose another one.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "That key types text. Press Option, Command, Shift, Control, Fn, or a function key.";
+"That shortcut is already used for “%@”. Choose another one." = "That shortcut is already used for “%@”. Choose another one.";
 "The chosen microphone can't be used." = "The chosen microphone can't be used.";
 "The file has no sound to transcribe." = "The file has no sound to transcribe.";
 "The languages you chose in Settings › Dictation." = "The languages you chose in Settings › Dictation.";
@@ -384,14 +394,16 @@
 "Translator…" = "Translator…";
 "Try it" = "Try it";
 "Turn off editing by voice" = "Turn off editing by voice";
+"Turn off this shortcut" = "Turn off this shortcut";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Turns the Mac's volume down to a quarter while you speak, then back up.";
 "Two-way with" = "Two-way with";
 "Two-way" = "Two-way";
 "Type, paste, or hold %@ and speak" = "Type, paste, or hold %@ and speak";
-"Unavailable" = "Unavailable";
+"Unavailable: another app uses this shortcut. Choose another one." = "Unavailable: another app uses this shortcut. Choose another one.";
 "Unlock Waft+…" = "Unlock Waft+…";
 "Updates" = "Updates";
 "Use the default mode in this app" = "Use the default mode in this app";
+"Use the default shortcut" = "Use the default shortcut";
 "Used Light mode: %@" = "Used Light mode: %@";
 "Used by %@ on this Mac." = "Used by %@ on this Mac.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Uses your own API key. Only the text goes to %@, never the audio.";

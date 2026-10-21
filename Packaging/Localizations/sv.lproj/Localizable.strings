@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@ avvisade API-nyckeln";
 "%@ returned an error" = "%@ svarade med ett fel";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "Språken %@ låter lika. Om Waft blandar ihop dem väljer du ett av dem som talat språk.";
-"%@ switches to the next mode." = "%@ växlar till nästa läge.";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · färre fel, %lld–%lld× långsammare";
 "%@ · quickest" = "%@ · snabbast";
 "%@'s answer couldn't be used" = "svaret från %@ kunde inte användas";
@@ -32,6 +31,7 @@
 "Accurate" = "Noggrann";
 "Activate" = "Aktivera";
 "Add App…" = "Lägg till app…";
+"Add Command, Control, or Option, or press a function key." = "Lägg till kommando-, kontroll- eller alternativtangenten, eller tryck på en funktionstangent.";
 "Add Language" = "Lägg till språk";
 "Add Snippet" = "Lägg till textsnutt";
 "Add Term" = "Lägg till term";
@@ -83,6 +83,7 @@
 "Click to copy" = "Klicka för att kopiera";
 "Click to copy, or select a part" = "Klicka för att kopiera, eller markera en del";
 "Click, then press the key to use" = "Klicka och tryck sedan på önskad tangent";
+"Click, then press the shortcut to use" = "Klicka och tryck sedan på önskat kortkommando";
 "Continue" = "Fortsätt";
 "Copied" = "Kopierad";
 "Copied: press %@ to paste" = "Kopierad: tryck på %@ för att klistra in";
@@ -152,10 +153,12 @@
 "Included" = "Ingår";
 "Install Update…" = "Installera uppdatering…";
 "Instructions" = "Instruktioner";
+"It works in any app." = "Det fungerar i alla appar.";
 "Keep at most" = "Behåll högst";
 "Keep dictations for" = "Behåll dikteringar";
 "Keep history" = "Spara historik";
 "Kept in the Keychain." = "Sparas i nyckelringen.";
+"Key %lld" = "Tangent %lld";
 "Key saved" = "Nyckeln har sparats";
 "Language" = "Språk";
 "Language: %@" = "Språk: %@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "Förbereder talmodellen, cirka en minut första gången…";
 "Preparing the speech model…" = "Förbereder talmodellen…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Tryck på alternativ-, kommando-, skift- eller kontrolltangenten (vänster eller höger), Fn eller en funktionstangent. Esc avbryter.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Tryck på en tangent tillsammans med kommando-, kontroll- eller alternativtangenten, eller på en funktionstangent. Esc avbryter.";
 "Press a key…" = "Tryck på en tangent…";
+"Press a shortcut…" = "Tryck på ett kortkommando…";
 "Press the key to use, or Esc to cancel" = "Tryck på önskad tangent eller på Esc för att avbryta";
+"Press the shortcut to use, or Esc to cancel" = "Tryck på önskat kortkommando eller på Esc för att avbryta";
 "Previous page" = "Föregående sida";
 "Provider" = "Leverantör";
 "Quit Waft" = "Avsluta Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”göra ingenting” i Systeminställningar › Tangentbord.";
 "Settings…" = "Inställningar…";
 "Setup needed" = "Inställning krävs";
+"Shortcut" = "Kortkommando";
 "Shortcuts" = "Kortkommandon";
 "Show History" = "Visa historik";
 "Show in Finder" = "Visa i Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "Textsnuttar";
 "Sounds" = "Ljud";
 "Source code" = "Källkod";
+"Space" = "Blanksteg";
 "Speak %@ to get %@, and %@ to get %@." = "Tala %@ för att få %@ och %@ för att få %@.";
 "Speak any of %lld languages and get another, one way or both." = "Tala något av %lld språk och få ett annat, åt ena hållet eller båda.";
 "Speak" = "Tala";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "Steg %lld av %lld";
 "Suggested" = "Föreslagna";
 "Swap languages" = "Byt plats på språken";
+"Switch to the next mode" = "Växla till nästa läge";
 "System default" = "Systemförval";
 "Talk while holding the key" = "Tala medan du håller ned tangenten";
 "Tap %@ to dictate" = "Tryck på %@ för att diktera";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "Det ser inte ut som en licensnyckel för Waft.";
 "That key is already in use. Choose another one." = "Den tangenten används redan. Välj en annan.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Den tangenten skriver text. Tryck på alternativ-, kommando-, skift- eller kontrolltangenten, Fn eller en funktionstangent.";
+"That shortcut is already used for “%@”. Choose another one." = "Det kortkommandot används redan för ”%@”. Välj ett annat.";
 "The chosen microphone can't be used." = "Den valda mikrofonen kan inte användas.";
 "The file has no sound to transcribe." = "Filen har inget ljud att transkribera.";
 "The languages you chose in Settings › Dictation." = "Språken du valde i Inställningar › Diktering.";
@@ -384,14 +394,16 @@
 "Translator…" = "Översättare…";
 "Try it" = "Testa";
 "Turn off editing by voice" = "Stäng av röstredigering";
+"Turn off this shortcut" = "Stäng av det här kortkommandot";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Sänker Macens volym till en fjärdedel medan du talar och återställer den sedan.";
 "Two-way with" = "Åt båda hållen med";
 "Two-way" = "Åt båda hållen";
 "Type, paste, or hold %@ and speak" = "Skriv, klistra in eller håll ned %@ och tala";
-"Unavailable" = "Inte tillgänglig";
+"Unavailable: another app uses this shortcut. Choose another one." = "Inte tillgängligt: en annan app använder det här kortkommandot. Välj ett annat.";
 "Unlock Waft+…" = "Lås upp Waft+…";
 "Updates" = "Uppdateringar";
 "Use the default mode in this app" = "Använd standardläget i den här appen";
+"Use the default shortcut" = "Använd standardkortkommandot";
 "Used Light mode: %@" = "Läget ”Lätt” användes: %@";
 "Used by %@ on this Mac." = "Används av %@ på den här datorn.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Använder din egen API-nyckel. Bara texten skickas till %@, aldrig ljudet.";

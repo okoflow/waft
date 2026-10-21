@@ -7,7 +7,6 @@
 "%@ rejected the API key" = "%@拒絕了API密鑰";
 "%@ returned an error" = "%@傳回了錯誤";
 "%@ sound alike. If Waft mixes them up, choose one as the spoken language." = "%@的發音相近。若Waft將它們混淆，請將其中一種設為辨識語言。";
-"%@ switches to the next mode." = "按%@可切換到下一個模式。";
 "%@ · fewer mistakes, %lld–%lld× slower" = "%@ · 錯誤較少，慢%lld–%lld倍";
 "%@ · quickest" = "%@ · 最快";
 "%@'s answer couldn't be used" = "無法使用%@的回應";
@@ -32,6 +31,7 @@
 "Accurate" = "精準";
 "Activate" = "啟用";
 "Add App…" = "加入App⋯";
+"Add Command, Control, or Option, or press a function key." = "請加上Command、Control或Option鍵，或按下功能鍵。";
 "Add Language" = "加入語言";
 "Add Snippet" = "加入常用語";
 "Add Term" = "加入詞彙";
@@ -83,6 +83,7 @@
 "Click to copy" = "按一下以拷貝";
 "Click to copy, or select a part" = "按一下以拷貝，或選取一部分";
 "Click, then press the key to use" = "按一下，然後按下要使用的按鍵";
+"Click, then press the shortcut to use" = "按一下，然後按下要使用的快速鍵";
 "Continue" = "繼續";
 "Copied" = "已拷貝";
 "Copied: press %@ to paste" = "已拷貝：按%@來貼上";
@@ -152,10 +153,12 @@
 "Included" = "已包含";
 "Install Update…" = "安裝更新項目⋯";
 "Instructions" = "指示";
+"It works in any app." = "在任何App中都能使用。";
 "Keep at most" = "最多保留";
 "Keep dictations for" = "聽寫保留期限";
 "Keep history" = "保留記錄";
 "Kept in the Keychain." = "儲存在鑰匙圈中。";
+"Key %lld" = "按鍵%lld";
 "Key saved" = "密鑰已儲存";
 "Language" = "語言";
 "Language: %@" = "語言：%@";
@@ -228,8 +231,11 @@
 "Preparing the speech model, about a minute the first time…" = "正在準備語音辨識模型，第一次約需一分鐘⋯";
 "Preparing the speech model…" = "正在準備語音辨識模型⋯";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "請按下任一側的Option、Command、Shift或Control鍵、Fn鍵或功能鍵。按Esc鍵可取消。";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "請按下搭配Command、Control或Option鍵的按鍵組合，或按下功能鍵。按Esc鍵可取消。";
 "Press a key…" = "請按下按鍵⋯";
+"Press a shortcut…" = "請按下快速鍵⋯";
 "Press the key to use, or Esc to cancel" = "按下要使用的按鍵，或按Esc鍵取消";
+"Press the shortcut to use, or Esc to cancel" = "按下要使用的快速鍵，或按Esc鍵取消";
 "Previous page" = "上一頁";
 "Provider" = "供應商";
 "Quit Waft" = "結束Waft";
@@ -300,6 +306,7 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "在「系統設定」›「鍵盤」中，將「按下🌐鍵來」設為「不執行任何動作」。";
 "Settings…" = "設定⋯";
 "Setup needed" = "需要設定";
+"Shortcut" = "快速鍵";
 "Shortcuts" = "快速鍵";
 "Show History" = "顯示記錄";
 "Show in Finder" = "顯示於Finder";
@@ -307,6 +314,7 @@
 "Snippets" = "常用語";
 "Sounds" = "音效";
 "Source code" = "原始碼";
+"Space" = "空白鍵";
 "Speak %@ to get %@, and %@ to get %@." = "說%1$@會翻譯成%2$@，說%3$@會翻譯成%4$@。";
 "Speak any of %lld languages and get another, one way or both." = "說出%lld種語言中的任一種，即可翻譯成另一種，支援單向或雙向。";
 "Speak" = "說話";
@@ -318,6 +326,7 @@
 "Step %lld of %lld" = "第%lld步（共%lld步）";
 "Suggested" = "建議";
 "Swap languages" = "對調語言";
+"Switch to the next mode" = "切換到下一個模式";
 "System default" = "系統預設值";
 "Talk while holding the key" = "按住按鍵時說話";
 "Tap %@ to dictate" = "按一下%@來聽寫";
@@ -335,6 +344,7 @@
 "That doesn't look like a Waft license key." = "這看起來不像是Waft授權碼。";
 "That key is already in use. Choose another one." = "該按鍵已在使用中。請選擇其他按鍵。";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "該按鍵會輸入文字。請按下Option、Command、Shift、Control、Fn鍵或功能鍵。";
+"That shortcut is already used for “%@”. Choose another one." = "該快速鍵已用於「%@」。請選擇其他快速鍵。";
 "The chosen microphone can't be used." = "無法使用所選的麥克風。";
 "The file has no sound to transcribe." = "此檔案沒有可轉錄的聲音。";
 "The languages you chose in Settings › Dictation." = "你在「設定」›「聽寫」中選擇的語言。";
@@ -384,14 +394,16 @@
 "Translator…" = "翻譯工具⋯";
 "Try it" = "試試看";
 "Turn off editing by voice" = "關閉語音編輯";
+"Turn off this shortcut" = "關閉此快速鍵";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "說話時將Mac的音量降到四分之一，說完後恢復。";
 "Two-way with" = "雙向互譯";
 "Two-way" = "雙向";
 "Type, paste, or hold %@ and speak" = "輸入、貼上，或按住%@並說話";
-"Unavailable" = "無法使用";
+"Unavailable: another app uses this shortcut. Choose another one." = "無法使用：其他App正在使用此快速鍵。請選擇其他快速鍵。";
 "Unlock Waft+…" = "解鎖Waft+⋯";
 "Updates" = "更新項目";
 "Use the default mode in this app" = "在此App中使用預設模式";
+"Use the default shortcut" = "使用預設快速鍵";
 "Used Light mode: %@" = "已改用「輕度」模式：%@";
 "Used by %@ on this Mac." = "此Mac上的%@會使用這些指示。";
 "Uses your own API key. Only the text goes to %@, never the audio." = "使用你自己的API密鑰。只會將文字傳送給%@，絕不傳送音訊。";

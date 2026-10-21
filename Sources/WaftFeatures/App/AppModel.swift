@@ -15,6 +15,8 @@ package final class AppModel {
     let localModels: LocalModelsModel
     let frontmostApp: FrontmostAppTracker
     let keyRecorder: KeyRecorder
+    let shortcuts: GlobalShortcutController
+    let shortcutRecorder: ShortcutRecorder
     let onboarding: OnboardingModel
     let transcription: FileTranscriptionModel
     let pro: ProModel
@@ -60,6 +62,8 @@ package final class AppModel {
         speechModelController = Self.makeSpeechModelController(dependencies, settings: settings, pro: pro)
         hud = HUDController(copy: dependencies.clipboard.copy)
         keyRecorder = KeyRecorder()
+        shortcuts = GlobalShortcutController(shortcuts: dependencies.shortcuts, settings: settings)
+        shortcutRecorder = ShortcutRecorder(settings: settings, shortcuts: shortcuts)
         statistics = StatisticsModel(store: dependencies.statisticsStore)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
@@ -74,15 +78,16 @@ package final class AppModel {
             speechModelController: speechModelController,
             vocabulary: vocabulary,
             keyRecorder: keyRecorder,
+            shortcutRecorder: shortcutRecorder,
             pro: pro,
             queue: queue,
         )
-        modeSwitcher = ModeSwitcher(shortcut: dependencies.shortcuts.modeCycle, settings: settings, hud: hud, pro: pro)
+        modeSwitcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: pro)
         apiKeys = Self.makeAPIKeys(dependencies)
         localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
         frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
         translator = Self.makeTranslator(dependencies, settings: settings, pro: pro)
-        translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, settings: settings, pro: pro, hud: hud)
+        translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, shortcuts, settings: settings, pro: pro, hud: hud)
         onboarding = OnboardingModel(permissions: permissions)
         transcription = Self.makeTranscription(dependencies, controller: speechModelController, settings: settings, pro: pro)
         updates = UpdatesModel(updater: dependencies.updater)
@@ -142,6 +147,7 @@ package final class AppModel {
         settings.onSpeechModelChange = { [weak speechModelController] in speechModelController?.modelDidChange() }
         pro.onAccessChange = { [weak speechModelController] in speechModelController?.modelDidChange() }
         settings.onHistoryLimitsChange = { [weak history] in history?.keepWithinLimits() }
+        settings.onShortcutsChange = { [weak shortcuts] in shortcuts?.settingsDidChange() }
         permissions.onChange = { [weak self] in self?.permissionsDidChange() }
         speechModelController.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
