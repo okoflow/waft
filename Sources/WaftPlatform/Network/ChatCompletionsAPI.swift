@@ -2,7 +2,7 @@ import Foundation
 import WaftCore
 
 struct ChatCompletionsAPI: RewriteAPI {
-    private static let reasoningPattern = #"<think>[\s\S]*?</think>"#
+    private static let reasoningPattern = #"<think>[\s\S]*?</think>|^(?:(?!<think>)[\s\S])*?</think>"#
 
     let service = "The local server"
 

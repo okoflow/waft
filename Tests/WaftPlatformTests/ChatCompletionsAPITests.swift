@@ -42,6 +42,7 @@ struct ChatCompletionsAPITests {
         (#"{"choices":[{"message":{"content":"  Hello.\n"},"finish_reason":"stop"}]}"#, "Hello."),
         (#"{"choices":[{"message":{"content":"<think>The user wants...</think>\nHello."}}]}"#, "Hello."),
         (#"{"choices":[{"message":{"content":"<think>\nline one\nline two\n</think>Hi <think>x</think>there."}}]}"#, "Hi there."),
+        (#"{"choices":[{"message":{"content":"The user wants a clean version.\n</think>\n\nHello."}}]}"#, "Hello."),
         (#"{"choices":[{"message":{"content":"Keep <thinking> tags."}}]}"#, "Keep <thinking> tags."),
     ])
     func `reads the message and drops reasoning`(json: String, expected: String) throws {
