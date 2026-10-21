@@ -26,6 +26,7 @@ package final class PasteboardInserter: TextInserter {
 
         let wasReleased = await Poll.until(timeout: Self.keyReleaseTimeout) { !keyboardState.isHeld(key) }
         let current = focusTracker.currentFocus()
+
         let decision = InsertionDecision.decide(
             isSecureField: isSecureField(current),
             canPostKeys: AXIsProcessTrusted(),
@@ -40,6 +41,7 @@ package final class PasteboardInserter: TextInserter {
         }
 
         let prepared = InsertionSpacing.prepared(text, after: current.element?.characterBeforeCaret)
+
         let outcome = await paste(prepared, releasing: key)
         guard outcome == .pasted else { return outcome }
 
@@ -60,6 +62,7 @@ package final class PasteboardInserter: TextInserter {
 
     private func paste(_ text: String, releasing key: PushToTalkKey) async -> InsertionOutcome {
         let snapshot = await Task.detached { PasteboardSnapshot.take(from: .general) }.value
+
         let lazyText = LazyPasteboardText(text)
         let item = NSPasteboardItem()
         item.setDataProvider(lazyText, forTypes: [.string])

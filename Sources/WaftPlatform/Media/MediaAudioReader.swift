@@ -64,6 +64,7 @@ package struct MediaAudioReader: MediaDecoder {
             AVLinearPCMIsNonInterleaved: false,
             AVLinearPCMIsBigEndianKey: false,
         ])
+
         output.alwaysCopiesSampleData = false
         reader.add(output)
 

@@ -28,6 +28,7 @@ struct AudioSampleSinkTests {
         let buffer = try AVAudioPCMBuffer.constant(levels: [0.4], seconds: 0.1, sampleRate: SpeechAudio.sampleRate)
         let empty = try AVAudioPCMBuffer.constant(levels: [0.4], seconds: 0.1, sampleRate: SpeechAudio.sampleRate)
         let sink = try #require(AudioSampleSink(inputFormat: buffer.format, meter: LevelMeter()) { starts.withLock { $0 += 1 } })
+
         empty.frameLength = 0
 
         sink.consume(empty, at: Self.time)
@@ -62,7 +63,9 @@ struct AudioSampleSinkTests {
         let sink = try #require(AudioSampleSink(inputFormat: loud.format, meter: meter) {})
 
         sink.consume(loud, at: Self.time)
+
         let loudLevel = meter.value
+
         sink.consume(silent, at: Self.time)
 
         #expect(loudLevel == AudioLevel.meterValue(rootMeanSquare: 0.5))

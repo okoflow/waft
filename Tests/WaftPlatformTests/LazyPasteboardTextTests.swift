@@ -15,6 +15,7 @@ struct LazyPasteboardTextTests {
     @Test
     func `counts a read only after it is armed`() {
         let text = LazyPasteboardText("Hello.")
+
         text.pasteboard(nil, item: NSPasteboardItem(), provideDataForType: .string)
 
         #expect(!text.wasReadAfterArming)
