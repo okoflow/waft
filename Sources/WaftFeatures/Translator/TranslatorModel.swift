@@ -188,9 +188,10 @@ final class TranslatorModel {
     }
 
     private func translate(_ text: String) async {
-        detected = source == nil ? detector.language(of: text) : nil
+        detected = detectedLanguage(of: text)
 
         let into = effectiveTarget
+
         let language =
             if let knownSource {
                 knownSource
@@ -222,5 +223,11 @@ final class TranslatorModel {
 
         task = nil
         isTranslating = false
+    }
+
+    private func detectedLanguage(of text: String) -> Language? {
+        guard source == nil else { return nil }
+
+        return detector.language(of: text)
     }
 }

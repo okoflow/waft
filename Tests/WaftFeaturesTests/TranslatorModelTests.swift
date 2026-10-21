@@ -11,6 +11,7 @@ struct TranslatorModelTests {
     func `translates the text after a pause in typing into the chosen language`() async throws {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
@@ -29,6 +30,7 @@ struct TranslatorModelTests {
         settings.settings.translator.translation = Translation(target: .english, twoWayLanguage: .russian)
         let rewriter = FakeTextRewriter(.success("Привет."))
         let translator = model(rewriter, detects: .english)
+
         translator.input = "Hello"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Привет." })
@@ -44,6 +46,7 @@ struct TranslatorModelTests {
     func `names a chosen source language to the model and remembers it`() async throws {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .dutch)
+
         translator.source = .german
         translator.input = "Hallo"
 
@@ -62,6 +65,7 @@ struct TranslatorModelTests {
         settings.settings.translator.cloudModel = .smartest
         let rewriter = FakeTextRewriter(.success("Ahoy."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Ahoy." })
@@ -76,6 +80,7 @@ struct TranslatorModelTests {
     func `swaps the languages and translates the translation back`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
@@ -93,6 +98,7 @@ struct TranslatorModelTests {
     func `swaps the languages and keeps the text typed after the last translation`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian, typingPause: .seconds(60))
+
         translator.input = "Привет"
         translator.source = .russian
 
@@ -111,6 +117,7 @@ struct TranslatorModelTests {
     func `keeps the two-way pair when swapping`() async {
         settings.settings.translator.translation = Translation(target: .english, twoWayLanguage: .russian)
         let translator = model(FakeTextRewriter(.success("Hello.")), detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
@@ -125,6 +132,7 @@ struct TranslatorModelTests {
     @Test
     func `says why a translation failed`() async {
         let translator = model(FakeTextRewriter(.failure(.timeout)), detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.failure == "Claude didn't answer in time" })
@@ -136,6 +144,7 @@ struct TranslatorModelTests {
     func `clears the translation with the text without asking the model`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
@@ -151,6 +160,7 @@ struct TranslatorModelTests {
     func `cuts the text at the character limit and translates the rest`() async throws {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = String(repeating: "a", count: TranslatorModel.characterLimit + 10)
 
         #expect(translator.input.count == TranslatorModel.characterLimit)
@@ -164,6 +174,7 @@ struct TranslatorModelTests {
     @Test
     func `copies the translation or the part of it that was selected`() async {
         let translator = model(FakeTextRewriter(.success("Hello there.")), detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello there." })
@@ -178,6 +189,7 @@ struct TranslatorModelTests {
     @Test(arguments: ["", " \n"])
     func `ignores a blank selection when copying`(selection: String) async {
         let translator = model(FakeTextRewriter(.success("Hello there.")), detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello there." })
@@ -192,12 +204,14 @@ struct TranslatorModelTests {
     func `drops a running translation when it stops`() async {
         let rewriter = FakeTextRewriter(.success("Hello."), holdsRequests: true)
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.isTranslating })
 
         translator.stop()
         rewriter.release()
+
         let translated = await Poll.until(timeout: .milliseconds(300)) { !translator.output.isEmpty }
 
         #expect(!translated)
@@ -208,6 +222,7 @@ struct TranslatorModelTests {
     func `translates the text again on resuming after a dropped translation`() async {
         let rewriter = FakeTextRewriter(.success("Hello."), holdsRequests: true)
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.isTranslating })
@@ -224,6 +239,7 @@ struct TranslatorModelTests {
     func `asks the model nothing on resuming after a finished translation`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
@@ -239,6 +255,7 @@ struct TranslatorModelTests {
     func `swaps nothing until it knows the source language`() {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter)
+
         translator.swapLanguages()
 
         #expect(!translator.canSwap)
@@ -251,6 +268,7 @@ struct TranslatorModelTests {
     func `translates nothing without Waft+`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian, pro: .unlicensed(trialStarted: .distantPast))
+
         translator.input = "Привет"
 
         let translated = await Poll.until(timeout: .milliseconds(800)) { !rewriter.requests.isEmpty }

@@ -11,11 +11,14 @@ final class LanguagePickerState {
     private(set) var hoveredRow: String?
 
     func hover(_ row: String, _ isHovered: Bool) {
-        if isHovered {
+        guard !isHovered else {
             hoveredRow = row
-        } else if hoveredRow == row {
-            hoveredRow = nil
+
+            return
         }
+        guard hoveredRow == row else { return }
+
+        hoveredRow = nil
     }
 
     private func reset() {

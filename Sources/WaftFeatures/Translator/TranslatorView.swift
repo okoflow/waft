@@ -161,7 +161,26 @@ private struct TranslationPane: View {
 }
 
 private struct TranslationText: View {
+    private enum Phase {
+        case translating
+        case empty
+        case translated
+    }
+
     let model: TranslatorModel
+
+    private var phase: Phase {
+        guard !model.isTranslating else { return .translating }
+        guard !model.output.isEmpty else { return .empty }
+
+        return .translated
+    }
+
+    private var shimmeringText: String {
+        guard !model.output.isEmpty else { return String(localized: "Translating…") }
+
+        return model.output
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: Metrics.controlSpacing) {
@@ -172,17 +191,20 @@ private struct TranslationText: View {
                     .transition(.opacity)
             }
 
-            if model.isTranslating {
-                ShimmeringText(text: model.output.isEmpty ? String(localized: "Translating…") : model.output, color: .primary)
+            switch phase {
+            case .translating:
+                ShimmeringText(text: shimmeringText, color: .primary)
                     .font(.translatorText)
                     .lineSpacing(Metrics.translatorLineSpacing)
                     .contentDirection(of: model.output)
                     .transition(.opacity)
-            } else if model.output.isEmpty {
+
+            case .empty:
                 Text("Translation")
                     .font(.translatorText)
                     .foregroundStyle(.tertiary)
-            } else {
+
+            case .translated:
                 CopyableText(text: model.output, onCopy: model.copy)
                     .accessibilityLabel("Translation")
             }
@@ -194,17 +216,34 @@ private struct TranslationText: View {
 }
 
 private struct CopyHint: View {
+    private enum Hint {
+        case copied
+        case copy
+    }
+
     let model: TranslatorModel
 
+    private var hint: Hint? {
+        guard !model.copyFeedback.isShowing(model.output) else { return .copied }
+        guard !model.output.isEmpty else { return nil }
+
+        return .copy
+    }
+
     var body: some View {
-        if model.copyFeedback.isShowing(model.output) {
+        switch hint {
+        case .copied:
             Label("Copied", systemImage: "checkmark")
                 .detailText()
                 .transition(.opacity)
-        } else if !model.output.isEmpty {
+
+        case .copy:
             Text("Click to copy, or select a part")
                 .detailText()
                 .transition(.opacity)
+
+        case nil:
+            EmptyView()
         }
     }
 }
