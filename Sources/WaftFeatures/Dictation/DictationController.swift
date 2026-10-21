@@ -77,9 +77,14 @@ final class DictationController {
     }
 
     private func tick(_ event: PushToTalk.Event, at time: TimeInterval) {
-        guard let recording = recordings.recording,
-              let action = triggers.handle(event, for: recording.purpose, at: time, settings: settings.settings)
-        else { return }
+        guard let recording = recordings.recording else { return }
+        guard recording.isLive || !recording.isHandsFree else {
+            triggers.reset(recording.purpose)
+            recordings.discard(because: .interrupted)
+
+            return
+        }
+        guard let action = triggers.handle(event, for: recording.purpose, at: time, settings: settings.settings) else { return }
 
         perform(RecordingTrigger(purpose: recording.purpose, key: recording.key, action: action), at: time)
     }
