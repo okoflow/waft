@@ -16,6 +16,7 @@ struct KeyRecorderTests {
     func `records a pressed modifier or function key and stops`(type: NSEvent.EventType, keyCode: UInt16, flags: UInt) throws {
         var recorded: [PushToTalkKey] = []
         recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+
         try recorder.handle(event(type, keyCode: keyCode, flags: flags))
 
         #expect(recorded.map(\.keyCode) == [Int64(keyCode)])
@@ -25,6 +26,7 @@ struct KeyRecorderTests {
     @Test
     func `rejects a key that types text and counts the rejection for its purpose`() throws {
         recorder.start(.edit, excluding: nil) { _ in }
+
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
 
@@ -36,6 +38,7 @@ struct KeyRecorderTests {
     @Test
     func `rejects the key already used for the other purpose`() throws {
         recorder.start(.edit, excluding: PushToTalkKey(keyCode: Int64(Self.functionKey))) { _ in }
+
         try recorder.handle(event(.keyDown, keyCode: Self.functionKey))
 
         #expect(recorder.rejection == KeyRecorder.Rejection(purpose: .edit, isTaken: true))
@@ -46,6 +49,7 @@ struct KeyRecorderTests {
     func `cancels on Escape`() throws {
         var recorded: [PushToTalkKey] = []
         recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+
         try recorder.handle(event(.keyDown, keyCode: Self.escape))
 
         #expect(!recorder.isRecording)
@@ -57,6 +61,7 @@ struct KeyRecorderTests {
     func `ignores a modifier being released`() throws {
         var recorded: [PushToTalkKey] = []
         recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+
         try recorder.handle(event(.flagsChanged, keyCode: 61))
 
         #expect(recorder.isRecording(.dictation))
@@ -68,6 +73,7 @@ struct KeyRecorderTests {
     func `clears the previous rejection when it starts again`() throws {
         recorder.start(.dictation, excluding: nil) { _ in }
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
+
         recorder.start(.dictation, excluding: nil) { _ in }
 
         #expect(recorder.rejection == nil)

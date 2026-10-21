@@ -7,6 +7,7 @@ struct StatisticsModelTests {
     func `records the words of a dictation without punctuation and saves the statistics`(text: String, words: Int) {
         let store = FakeValueStore<DictationStatistics>()
         let statistics = StatisticsModel(store: store)
+
         statistics.record(text, seconds: 2)
 
         #expect(statistics.statistics.allTime.words == words)
@@ -19,6 +20,7 @@ struct StatisticsModelTests {
         let store = FakeValueStore<DictationStatistics>()
         let statistics = StatisticsModel(store: store)
         statistics.record("Hello world", seconds: 2)
+
         statistics.reset()
 
         #expect(statistics.statistics == DictationStatistics())

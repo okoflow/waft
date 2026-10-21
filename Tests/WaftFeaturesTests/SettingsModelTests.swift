@@ -9,6 +9,7 @@ struct SettingsModelTests {
         let store = FakeValueStore(Settings(languages: .preferred(by: [])))
         let settings = SettingsModel(store: store, loginItem: FakeLoginItem(), audioInputs: FakeAudioInputProvider())
         settings.onHistoryLimitsChange = { changeCount += 1 }
+
         settings.settings.historyRetention = .week
         settings.settings.historyLimit = 100
         settings.settings.playsSounds = false
@@ -22,6 +23,7 @@ struct SettingsModelTests {
         var changeCount = 0
         let settings = SettingsModel.inMemory()
         settings.onLanguagesChange = { changeCount += 1 }
+
         settings.settings.languages = settings.settings.languages.adding(.german)
         settings.settings.languages = settings.settings.languages.pinning(.german)
 

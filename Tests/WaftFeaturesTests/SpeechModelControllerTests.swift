@@ -8,6 +8,7 @@ struct SpeechModelControllerTests {
     func `loads the installed model and deletes the other one`() async {
         let transcriber = FakeTranscriber(installed: [.fast])
         let (controller, _) = make(transcriber)
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.fast), .delete(.accurate)] })
@@ -28,6 +29,7 @@ struct SpeechModelControllerTests {
             guard model == .fast else { return }
 
             queryContinuation.yield(model)
+
             var iterator = releases.makeAsyncIterator()
             _ = await iterator.next()
         }
@@ -49,9 +51,12 @@ struct SpeechModelControllerTests {
         settings.settings.speechModel = .accurate
         releaseContinuation.yield(())
 
-        let expected: [FakeTranscriber.Call] = isChosenInstalled
-            ? [.load(.accurate), .delete(.fast)]
-            : [.download(.accurate), .load(.accurate), .delete(.fast)]
+        let expected: [FakeTranscriber.Call] =
+            if isChosenInstalled {
+                [.load(.accurate), .delete(.fast)]
+            } else {
+                [.download(.accurate), .load(.accurate), .delete(.fast)]
+            }
 
         #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == expected })
         #expect(controller.state.isReady)
@@ -61,6 +66,7 @@ struct SpeechModelControllerTests {
     func `downloads and loads a chosen model, then deletes the previous one`() async {
         let transcriber = FakeTranscriber(installed: [.fast])
         let (controller, settings) = make(transcriber)
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
@@ -77,6 +83,7 @@ struct SpeechModelControllerTests {
     func `cancels the download of a model the user turns away from`() async {
         let transcriber = FakeTranscriber(installed: [.fast], holdsDownloads: true)
         let (controller, settings) = make(transcriber)
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
@@ -97,6 +104,7 @@ struct SpeechModelControllerTests {
     func `reloads the model that keeps transcribing while the chosen one downloads or after it fails`(failsDownload: Bool) async {
         let transcriber = FakeTranscriber(installed: [.fast], holdsDownloads: true)
         let (controller, settings) = make(transcriber)
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
@@ -105,7 +113,9 @@ struct SpeechModelControllerTests {
         settings.settings.speechModel = .accurate
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            transcriber.calls.contains(.download(.accurate)) && controller.state.canRetry == failsDownload
+            guard transcriber.calls.contains(.download(.accurate)) else { return false }
+
+            return controller.state.canRetry == failsDownload
         })
 
         controller.reload()
@@ -127,6 +137,7 @@ struct SpeechModelControllerTests {
         })
         let (controller, settings) = make(transcriber)
         releaseContinuation.yield(())
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
@@ -139,7 +150,9 @@ struct SpeechModelControllerTests {
         controller.reload()
         transcriber.failsDownloads = false
         controller.retry()
+
         #expect(await !Poll.until(timeout: .milliseconds(300)) { controller.state.isReady })
+
         releaseContinuation.yield(())
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -153,6 +166,7 @@ struct SpeechModelControllerTests {
         let transcriber = FakeTranscriber()
         let (controller, settings) = make(transcriber, pro: .unlicensed(trialStarted: .distantPast))
         settings.settings.speechModel = .accurate
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.fast), .delete(.accurate)] })
@@ -175,6 +189,7 @@ struct SpeechModelControllerTests {
         let transcriber = FakeTranscriber(installed: [])
         transcriber.failsDownloads = true
         let (controller, _) = make(transcriber)
+
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.canRetry })

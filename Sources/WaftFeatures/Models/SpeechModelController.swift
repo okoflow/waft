@@ -44,6 +44,7 @@ final class SpeechModelController {
         Task {
             while true {
                 let model = chosenModel
+
                 let isInstalled = await transcriber.isModelInstalled(model)
 
                 guard chosenModel == model else { continue }
@@ -62,6 +63,7 @@ final class SpeechModelController {
     func modelDidChange() {
         Task {
             let model = chosenModel
+
             let isInstalled = await transcriber.isModelInstalled(model)
 
             guard chosenModel == model else { return }
@@ -72,6 +74,7 @@ final class SpeechModelController {
 
     private func apply(_ event: SpeechModelState.Event) {
         let effects = state.handle(event)
+
         guard !effects.isEmpty else { return }
 
         let previous = effectsTask

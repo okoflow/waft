@@ -23,6 +23,7 @@ extension Language {
 
     static func inlineList(_ languages: [Language]) -> String {
         let names = languages.map(\.inlineName)
+
         let formatter = ListFormatter()
         formatter.locale = interfaceLocale
 

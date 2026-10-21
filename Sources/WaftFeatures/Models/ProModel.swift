@@ -43,7 +43,9 @@ final class ProModel {
     }
 
     var showsLicenseSection: Bool {
-        license != nil || hasTriedActivation || !ProAccess.isFreeDuringBeta
+        guard license == nil, !hasTriedActivation else { return true }
+
+        return !ProAccess.isFreeDuringBeta
     }
 
     var canActivateDraft: Bool {
@@ -117,11 +119,15 @@ final class ProModel {
     }
 
     func locks(_ mode: Mode) -> Bool {
-        mode.usesAI && !isUnlocked
+        guard mode.usesAI else { return false }
+
+        return !isUnlocked
     }
 
     func locks(_ model: SpeechModel) -> Bool {
-        model.needsPro && !isUnlocked
+        guard model.needsPro else { return false }
+
+        return !isUnlocked
     }
 
     func purchase() {

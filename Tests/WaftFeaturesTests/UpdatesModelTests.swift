@@ -9,6 +9,7 @@ struct UpdatesModelTests {
         let updater = FakeAppUpdater()
         let updates = UpdatesModel(updater: updater)
         updates.onShowingUpdateChange = { sessionChangeCount += 1 }
+
         updates.start()
         updater.report(isPending: true, isShowing: true)
 

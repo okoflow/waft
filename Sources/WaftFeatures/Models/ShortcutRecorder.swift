@@ -94,6 +94,7 @@ final class ShortcutRecorder {
         }
 
         let combination = KeyCombination(keyCode: Int64(event.keyCode), modifiers: Self.modifiers(of: event.modifierFlags))
+
         guard combination.hasRequiredModifier else {
             reject(.needsModifier, for: action)
 

@@ -45,8 +45,10 @@ struct HistoryModelTests {
     func `goes back from the shown page after the history shrinks`() {
         let settings = settingsModel()
         let history = model(entries: 120, settings: settings)
+
         history.showNextPage()
         history.showNextPage()
+
         settings.settings.historyLimit = 100
         history.keepWithinLimits()
 
@@ -60,6 +62,7 @@ struct HistoryModelTests {
     @Test
     func `searches from the first page for the trimmed query`() {
         let history = model(entries: 120)
+
         history.showNextPage()
         history.searchText = "  entry 11\n"
 
@@ -85,6 +88,7 @@ struct HistoryModelTests {
         let settings = settingsModel()
         let history = model(entries: 0, settings: settings)
         settings.settings.keepsHistory = false
+
         history.add(entry(1))
 
         #expect(history.history.entries.isEmpty)
@@ -97,6 +101,7 @@ struct HistoryModelTests {
         let store = FakeValueStore(history(entries: 3))
         let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
         let added = DictationHistory.Entry(date: Self.start.addingTimeInterval(2 * 86400), text: "Later", mode: .clean, app: nil)
+
         history.add(added)
 
         #expect(history.history.entries == [added])
@@ -123,6 +128,7 @@ struct HistoryModelTests {
         let store = FakeValueStore(stored)
         let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
         settings.settings.historyRetention = .day
+
         history.expireOldEntries(every: .milliseconds(10))
 
         #expect(await Poll.until(timeout: .seconds(5)) { history.history.entries.isEmpty })
@@ -150,6 +156,7 @@ struct HistoryModelTests {
     func `removes every entry from the store`() {
         let store = FakeValueStore(history(entries: 3))
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
         history.removeAll()
 
         #expect(history.history.entries.isEmpty)
@@ -161,6 +168,7 @@ struct HistoryModelTests {
         let stored = history(entries: 120)
         let store = FakeValueStore(stored, failsDeleting: true)
         let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
         history.showNextPage()
         history.removeAll()
 

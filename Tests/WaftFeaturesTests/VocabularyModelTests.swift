@@ -26,6 +26,7 @@ struct VocabularyModelTests {
     func `saves edited drafts trimmed and without blank terms or snippets`() {
         let store = FakeValueStore<Vocabulary>()
         let vocabulary = model(store)
+
         vocabulary.addTerm()
         vocabulary.addTerm()
         vocabulary.addSnippet()
@@ -42,6 +43,7 @@ struct VocabularyModelTests {
     func `splits spoken forms at Latin and Arabic commas`() {
         let store = FakeValueStore<Vocabulary>()
         let vocabulary = model(store)
+
         vocabulary.addTerm()
         vocabulary.terms[0].term = "Waft"
         vocabulary.terms[0].spokenForms = "واف، وافت, waft"
@@ -53,6 +55,7 @@ struct VocabularyModelTests {
     func `saves the dictionary without a removed term or snippet`() {
         let store = FakeValueStore(Self.stored)
         let vocabulary = model(store)
+
         vocabulary.removeTerm(vocabulary.terms[0].id)
         vocabulary.removeSnippet(vocabulary.snippets[0].id)
 
@@ -63,6 +66,7 @@ struct VocabularyModelTests {
     func `adds a blank term or snippet without saving it`() {
         let store = FakeValueStore<Vocabulary>()
         let vocabulary = model(store)
+
         vocabulary.addTerm()
         vocabulary.addSnippet()
 
@@ -75,6 +79,7 @@ struct VocabularyModelTests {
     func `reloads a dictionary edited on disk into the drafts`() {
         let store = FakeValueStore(Self.stored)
         let vocabulary = model(store)
+
         store.value = Self.edited
 
         #expect(vocabulary.reloadFromDisk() == Self.edited)
@@ -86,6 +91,7 @@ struct VocabularyModelTests {
     func `keeps the current dictionary when the file is missing`() {
         let store = FakeValueStore(Self.stored)
         let vocabulary = model(store)
+
         store.value = nil
 
         #expect(vocabulary.reloadFromDisk() == Self.stored)
@@ -101,6 +107,7 @@ struct VocabularyModelTests {
         let urlOpener = FakeURLOpener()
         let vocabulary = VocabularyModel(store: store, fileURL: Self.fileURL, urlOpener: urlOpener)
         store.value = onDisk
+
         vocabulary.openInEditor()
 
         #expect(store.value == written)
@@ -111,6 +118,7 @@ struct VocabularyModelTests {
     func `reveals the dictionary file in Finder`() {
         let urlOpener = FakeURLOpener()
         let vocabulary = VocabularyModel(store: FakeValueStore(Self.stored), fileURL: Self.fileURL, urlOpener: urlOpener)
+
         vocabulary.revealInFinder()
 
         #expect(urlOpener.revealed == [Self.fileURL])

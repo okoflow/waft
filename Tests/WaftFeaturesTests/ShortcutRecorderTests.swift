@@ -27,6 +27,7 @@ struct ShortcutRecorderTests {
     ) throws {
         let recorder = recorder()
         recorder.start(.translator)
+
         try recorder.handle(event(keyCode: keyCode, flags: flags))
 
         #expect(settings.settings.shortcuts[.translator] == combination)
@@ -37,6 +38,7 @@ struct ShortcutRecorderTests {
     func `rejects a key without Command, Control, or Option`(flags: NSEvent.ModifierFlags) throws {
         let recorder = recorder()
         recorder.start(.fixSelection)
+
         try recorder.handle(event(keyCode: Self.letterK, flags: flags))
 
         #expect(recorder.rejection == .needsModifier)
@@ -49,6 +51,7 @@ struct ShortcutRecorderTests {
     func `rejects the combination of another shortcut and names it`() throws {
         let recorder = recorder()
         recorder.start(.modeCycle)
+
         try recorder.handle(event(keyCode: Self.letterT, flags: Self.controlOption))
 
         #expect(recorder.rejection == .taken(.shortcut(.translator)))
@@ -59,6 +62,7 @@ struct ShortcutRecorderTests {
     func `accepts the combination it already has`() throws {
         let recorder = recorder()
         recorder.start(.translator)
+
         try recorder.handle(event(keyCode: Self.letterT, flags: Self.controlOption))
 
         #expect(recorder.rejection == nil)
@@ -69,6 +73,7 @@ struct ShortcutRecorderTests {
     func `cancels on Escape and keeps the shortcut`() throws {
         let recorder = recorder()
         recorder.start(.translator)
+
         try recorder.handle(event(keyCode: Self.escape, flags: Self.controlOption))
 
         #expect(!recorder.isRecording)
@@ -78,6 +83,7 @@ struct ShortcutRecorderTests {
     @Test
     func `suspends the global shortcuts while it records`() {
         let recorder = recorder()
+
         recorder.start(.translator)
 
         #expect(shortcut.registered == nil)
@@ -90,6 +96,7 @@ struct ShortcutRecorderTests {
     @Test
     func `clears a shortcut and restores its default`() {
         let recorder = recorder()
+
         recorder.clear(.translator)
 
         #expect(settings.settings.shortcuts[.translator] == nil)

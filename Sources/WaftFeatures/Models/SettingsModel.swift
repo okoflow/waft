@@ -51,9 +51,6 @@ package final class SettingsModel {
     private func settingsDidChange(from oldValue: Settings) {
         guard settings != oldValue else { return }
 
-        let changesHistoryLimits = settings.historyRetention != oldValue.historyRetention
-            || settings.historyLimit != oldValue.historyLimit
-
         store.write(settings)
 
         if settings.languages.languages != oldValue.languages.languages {
@@ -64,7 +61,7 @@ package final class SettingsModel {
             onSpeechModelChange?()
         }
 
-        if changesHistoryLimits {
+        if (settings.historyRetention, settings.historyLimit) != (oldValue.historyRetention, oldValue.historyLimit) {
             onHistoryLimitsChange?()
         }
 

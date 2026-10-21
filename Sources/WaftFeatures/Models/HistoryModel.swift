@@ -16,7 +16,7 @@ final class HistoryModel {
         }
 
         var isPaged: Bool {
-            hasPrevious || hasNext
+            [hasPrevious, hasNext].contains(true)
         }
     }
 
@@ -40,8 +40,11 @@ final class HistoryModel {
 
     var currentPage: Page {
         let matching = matchingEntries
+
         let lastIndex = Self.lastPageIndex(forCount: matching.count)
+
         let index = min(pageIndex, lastIndex)
+
         let entries = Array(matching.dropFirst(index * Self.pageSize).prefix(Self.pageSize))
 
         return Page(
@@ -59,6 +62,7 @@ final class HistoryModel {
 
     private var matchingEntries: [DictationHistory.Entry] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
         guard !query.isEmpty else { return history.newestFirst }
 
         return history.newestFirst.filter { $0.text.localizedCaseInsensitiveContains(query) }

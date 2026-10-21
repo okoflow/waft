@@ -71,26 +71,42 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     func updateActivationPolicy(closing: NSWindow? = nil) {
-        let hasOpenWindow = allWindows.contains { $0 != closing && ($0.isVisible || $0.isMiniaturized) }
-        let needsDockIcon = hasOpenWindow || isShowingUpdate
+        NSApp.setActivationPolicy(needsDockIcon(closing: closing) ? .regular : .accessory)
+    }
 
-        NSApp.setActivationPolicy(needsDockIcon ? .regular : .accessory)
+    private func needsDockIcon(closing: NSWindow?) -> Bool {
+        let otherWindows = allWindows.filter { $0 != closing }
+
+        guard !otherWindows.contains(where: \.isOpen) else { return true }
+
+        return isShowingUpdate
     }
 
     private func show(_ keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>, make: (AppModel) -> NSWindow) {
         guard let model else { return }
 
-        if self[keyPath: keyPath] == nil {
-            self[keyPath: keyPath] = make(model)
-        }
-
-        guard let window = self[keyPath: keyPath] else { return }
+        let window = reusableWindow(at: keyPath) { make(model) }
 
         releaseFocusOnOutsideClicks()
         NSApp.setActivationPolicy(.regular)
         NSApp.activate()
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
+    }
+
+    private func reusableWindow(
+        at keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>,
+        make: () -> NSWindow,
+    ) -> NSWindow {
+        if let window = self[keyPath: keyPath] {
+            return window
+        }
+
+        let window = make()
+
+        self[keyPath: keyPath] = window
+
+        return window
     }
 
     private func releaseFocusOnOutsideClicks() {
@@ -142,12 +158,14 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         let view = TranslatorView(model: model.translator) { [weak self] in
             self?.showSettings(.pro)
         }
+
         let window = makeWindow(
             view,
             size: Metrics.translatorSize,
             minimumSize: Metrics.translatorMinimumSize,
             title: String(localized: "Translator"),
         )
+
         window.titleVisibility = .visible
 
         return window
@@ -220,10 +238,22 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 }
 
+extension NSWindow {
+    fileprivate var isOpen: Bool {
+        [isVisible, isMiniaturized].contains(true)
+    }
+}
+
 extension NSView {
     fileprivate var isTextInput: Bool {
-        sequence(first: self, next: \.superview).contains { view in
-            view is NSTextView || view is NSTextField || (view as? NSScrollView)?.documentView is NSTextView
+        sequence(first: self, next: \.superview).contains(where: \.isTextControl)
+    }
+
+    private var isTextControl: Bool {
+        switch self {
+        case is NSTextView, is NSTextField: true
+        case let scrollView as NSScrollView: scrollView.documentView is NSTextView
+        default: false
         }
     }
 }

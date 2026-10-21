@@ -65,7 +65,8 @@ final class GlobalShortcutController {
     private func update(_ action: ShortcutAction) {
         guard let handler = handlers[action] else { return }
 
-        let wanted = isSuspended ? nil : settings.settings.shortcuts[action]
+        let wanted = wantedCombination(for: action)
+
         guard wanted != attempted[action] else { return }
 
         let shortcut = shortcuts[action]
@@ -88,5 +89,11 @@ final class GlobalShortcutController {
         }
 
         unavailable.remove(action)
+    }
+
+    private func wantedCombination(for action: ShortcutAction) -> KeyCombination? {
+        guard !isSuspended else { return nil }
+
+        return settings.settings.shortcuts[action]
     }
 }

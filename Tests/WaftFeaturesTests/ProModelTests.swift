@@ -24,6 +24,7 @@ struct ProModelTests {
     func `activates a valid key from the draft`() {
         let keyStore = FakeValueStore<String>()
         let pro = model(keyStore: keyStore)
+
         pro.draft = "  \(Self.key)\n"
         pro.activateDraft()
 
@@ -37,6 +38,7 @@ struct ProModelTests {
     func `reports a draft that is not a valid key until the draft changes`(draft: String, problem: ProModel.ActivationProblem) {
         let keyStore = FakeValueStore<String>()
         let pro = model(keyStore: keyStore)
+
         pro.draft = draft
         pro.activateDraft()
 
@@ -60,6 +62,7 @@ struct ProModelTests {
         var changeCount = 0
         let pro = model()
         pro.onAccessChange = { changeCount += 1 }
+
         pro.draft = Self.key
         pro.activateDraft()
 
@@ -79,6 +82,7 @@ struct ProModelTests {
     func `removes the key on deactivation`() {
         let keyStore = FakeValueStore(Self.key)
         let pro = model(keyStore: keyStore)
+
         pro.deactivate()
 
         #expect(pro.license == nil)
