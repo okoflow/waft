@@ -1,5 +1,5 @@
 import WaftCore
-@testable import WaftFeatures
+import WaftFeatures
 
 extension GlobalShortcuts {
     static func fake(_ shortcuts: [ShortcutAction: FakeGlobalShortcut] = [:]) -> GlobalShortcuts {
