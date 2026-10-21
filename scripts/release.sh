@@ -155,7 +155,7 @@ main() {
   check_tree "v${version}" "${commit}"
   check_prerequisites
 
-  WORK_DIR=$(mktemp -d)
+  WORK_DIR=$(mktemp --directory)
   trap cleanup EXIT
 
   rm -rf -- "${OUTPUT:?}"

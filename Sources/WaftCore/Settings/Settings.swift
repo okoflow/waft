@@ -64,6 +64,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let legacy = try decoder.container(keyedBy: LegacyCodingKeys.self)
+
         let storedLimit = container.decode(.historyLimit, default: historyLimit)
         let allowedHandsFree = legacy.decode(.allowsHandsFree, default: true)
 

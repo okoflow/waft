@@ -11,6 +11,16 @@ package actor AudioEngineRecorder: AudioRecorder {
         let configurationObserver: any NSObjectProtocol
         let sampleRate: Double
         let channelCount: AVAudioChannelCount
+
+        var hasStarted: Bool {
+            guard !sink.hasAudio else { return true }
+
+            return engine.isRunning
+        }
+
+        func matches(_ format: AVAudioFormat) -> Bool {
+            (format.sampleRate, format.channelCount) == (sampleRate, channelCount)
+        }
     }
 
     private static let tailGrace = Duration.milliseconds(150)
@@ -102,6 +112,7 @@ package actor AudioEngineRecorder: AudioRecorder {
         }
 
         engine.inputNode.installTap(onBus: 0, bufferSize: 1024, format: format, block: Self.tapBlock(for: sink))
+
         let observer = observeConfigurationChanges(of: engine, for: recording)
 
         do {
@@ -172,21 +183,22 @@ package actor AudioEngineRecorder: AudioRecorder {
 
             return
         }
+        guard current.engine.isRunning else {
+            report(.stoppedAfterDeviceChange, for: recording)
+
+            return
+        }
 
         let format = current.engine.inputNode.inputFormat(forBus: 0)
-        let hasFormatChanged = format.sampleRate != current.sampleRate || format.channelCount != current.channelCount
+        guard !current.matches(format) else { return }
 
-        if !current.engine.isRunning {
-            report(.stoppedAfterDeviceChange, for: recording)
-        } else if hasFormatChanged {
-            report(.formatChanged, for: recording)
-        }
+        report(.formatChanged, for: recording)
     }
 
     private func checkStartup(of current: Session) async {
         guard !current.engine.isRunning else { return }
 
-        let resumed = await Poll.until(timeout: .milliseconds(200)) { current.sink.hasAudio || current.engine.isRunning }
+        let resumed = await Poll.until(timeout: .milliseconds(200)) { current.hasStarted }
 
         if !resumed, session?.recording == current.recording {
             report(.stoppedWhileStarting, for: current.recording)

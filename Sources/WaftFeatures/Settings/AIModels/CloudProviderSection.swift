@@ -57,8 +57,8 @@ private struct APIKeyRows: View {
             action: String(localized: "Remove Key"),
         )
 
-        if confirmation.ask() {
-            apiKey.remove()
-        }
+        guard confirmation.ask() else { return }
+
+        apiKey.remove()
     }
 }

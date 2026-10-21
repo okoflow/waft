@@ -14,7 +14,8 @@ struct PermissionRow: View {
     var body: some View {
         SettingsRow(.verbatim(permission.title), description: description) {
             HStack(spacing: Metrics.inlineSpacing) {
-                if isGranted {
+                switch (isGranted, offersRequest) {
+                case (true, _):
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(Palette.success)
                         .modifier(CheckmarkAppear())
@@ -23,12 +24,14 @@ struct PermissionRow: View {
                     Text("Allowed")
                         .foregroundStyle(Palette.secondaryText)
                         .transition(.opacity)
-                } else if offersRequest {
+
+                case (false, true):
                     Button("Allow…") {
                         Task { await monitor.request(permission) }
                     }
                     .transition(.opacity)
-                } else {
+
+                case (false, false):
                     Text("Not allowed yet")
                         .foregroundStyle(Palette.secondaryText)
                         .transition(.opacity)

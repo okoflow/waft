@@ -15,14 +15,15 @@ package struct LocalServer: Codable, Equatable, Sendable {
     package var model: String
 
     package var isConfigured: Bool {
-        !baseURL.isEmpty && !model.isEmpty
+        [baseURL, model].allSatisfy { !$0.isEmpty }
     }
 
     package var isOnThisMac: Bool {
         let address = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let host = URLComponents(string: address)?.host?.lowercased() else { return true }
+        guard let host = URLComponents(string: address)?.host?.lowercased(),
+              !Self.loopbackHosts.contains(host) else { return true }
 
-        return Self.loopbackHosts.contains(host) || host.hasSuffix(".localhost")
+        return host.hasSuffix(".localhost")
     }
 
     package init(baseURL: String = defaultBaseURL, model: String = "") {
@@ -32,6 +33,7 @@ package struct LocalServer: Codable, Equatable, Sendable {
 
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+
         let defaults = LocalServer()
 
         baseURL = container.decode(.baseURL, default: defaults.baseURL)

@@ -13,6 +13,7 @@ struct SelectionActionsTests {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let inserter = FakeTextInserter()
         let actions = actions(rewriter, selecting: "Привет", detects: .russian, inserter: inserter)
+
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -31,6 +32,7 @@ struct SelectionActionsTests {
         let rewriter = FakeTextRewriter(.success("Привіт."))
         let inserter = FakeTextInserter()
         let actions = actions(rewriter, selecting: "Hello", detects: .english, inserter: inserter)
+
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -50,6 +52,7 @@ struct SelectionActionsTests {
         let rewriter = FakeTextRewriter(.success("We meet on Friday."))
         let inserter = FakeTextInserter()
         let actions = actions(rewriter, selecting: "we meat on friday", detects: .english, inserter: inserter)
+
         actions.run(.fix)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -69,6 +72,7 @@ struct SelectionActionsTests {
             detects: .russian,
             inserter: FakeTextInserter(.skipped(reason)),
         )
+
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Hello."] })
@@ -83,6 +87,7 @@ struct SelectionActionsTests {
             detects: .russian,
             inserter: FakeTextInserter(.skipped(.secureField)),
         )
+
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -95,6 +100,7 @@ struct SelectionActionsTests {
     func `asks to select text first`(selection: String?) {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let actions = actions(rewriter, selecting: selection)
+
         actions.run(.translate)
 
         #expect(hud.content == .message(HUDMessage(
@@ -108,6 +114,7 @@ struct SelectionActionsTests {
     func `leaves the selection alone and says why when the model fails`() async {
         let inserter = FakeTextInserter()
         let actions = actions(FakeTextRewriter(.failure(.offline)), selecting: "Привет", detects: .russian, inserter: inserter)
+
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -120,6 +127,7 @@ struct SelectionActionsTests {
     func `needs Waft+`() {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let actions = actions(rewriter, selecting: "Привет", pro: .unlicensed(trialStarted: .distantPast))
+
         actions.run(.translate)
 
         #expect(hud.content == .message(HUDMessage(kind: .information, title: "Translating and fixing text is part of Waft+.")))

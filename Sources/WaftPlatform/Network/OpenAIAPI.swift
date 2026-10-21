@@ -39,8 +39,11 @@ struct OpenAIAPI: RewriteAPI {
 
             throw .serviceUnavailable
 
+        case "incomplete" where response.incompleteDetails?.reason == "content_filter":
+            throw .refused
+
         case "incomplete":
-            throw response.incompleteDetails?.reason == "content_filter" ? .refused : .truncated
+            throw .truncated
 
         default:
             break

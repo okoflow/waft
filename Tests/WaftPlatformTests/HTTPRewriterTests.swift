@@ -10,6 +10,7 @@ struct HTTPRewriterTests {
         let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
 
         _ = try await rewriter.rewrite(.cleanup("hello"))
+
         let request = try #require(transport.requests.first)
 
         #expect(request.url?.absoluteString == "https://api.example.com/v1/rewrite")

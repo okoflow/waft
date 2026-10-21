@@ -19,6 +19,7 @@ struct AppStatusTests {
     @Test
     func `reports a failed speech model`() {
         var state = SpeechModelState()
+
         _ = state.handle(.started(.fast, isInstalled: false))
         _ = state.handle(.failed(.fast, "network lost"))
 

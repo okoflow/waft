@@ -132,6 +132,7 @@ struct TryoutModelTests {
 
         tryout.reset()
         rewriter.release()
+
         let finished = await Poll.until(timeout: .milliseconds(300)) { tryout.phase != .idle }
 
         #expect(!finished)

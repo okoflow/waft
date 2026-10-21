@@ -17,8 +17,8 @@ struct ResetInstructionsButton: View {
             action: String(localized: "Reset to Default"),
         )
 
-        if confirmation.ask() {
-            reset()
-        }
+        guard confirmation.ask() else { return }
+
+        reset()
     }
 }

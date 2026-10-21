@@ -22,6 +22,7 @@ struct JSONFileStoreTests {
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
 
             try store.save(Self.sample)
+
             let text = try String(contentsOf: url, encoding: .utf8)
 
             #expect(store.exists())
@@ -36,9 +37,10 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "sample.json")
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
-            try store.save(Self.sample)
 
             try store.save(Self.sample)
+            try store.save(Self.sample)
+
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
 
             #expect(attributes[.posixPermissions] as? Int == 0o600)
@@ -49,11 +51,13 @@ struct JSONFileStoreTests {
     func `restricts a file that others could read to its owner when it saves over it`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "dictionary.json")
-            try Data("{}".utf8).write(to: url)
-            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
             let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
 
+            try Data("{}".utf8).write(to: url)
+            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
+
             try store.save(Self.sample)
+
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
 
             #expect(attributes[.posixPermissions] as? Int == 0o600)
@@ -65,6 +69,7 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "dictionary.json")
             let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
+
             try store.save(Self.sample)
             try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
 
@@ -78,6 +83,7 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "nested/history.json")
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
+
             try store.save(Self.sample)
 
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
@@ -93,8 +99,9 @@ struct JSONFileStoreTests {
     func `restricts the copy of an unreadable file to its owner`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
-            try Data(#"{"name": "#.utf8).write(to: url)
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
+
+            try Data(#"{"name": "#.utf8).write(to: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -112,8 +119,9 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "settings.json")
             let corrupt = Data(#"{"name": "Waft", "count": "#.utf8)
-            try corrupt.write(to: url)
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
+
+            try corrupt.write(to: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -132,8 +140,9 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
             let recoveryCopy = directory.appending(path: "history.unreadable.json")
-            try Data(#"{"name": "#.utf8).write(to: url)
             let store = JSONFileStore<StoredSample>(name: "history", url: url)
+
+            try Data(#"{"name": "#.utf8).write(to: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -160,8 +169,9 @@ struct JSONFileStoreTests {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "history.json")
             let recoveryCopy = directory.appending(path: "history.unreadable.json")
-            try Data(#"{"name": "#.utf8).write(to: url)
             let store = JSONFileStore<StoredSample>(name: "history", url: url)
+
+            try Data(#"{"name": "#.utf8).write(to: url)
 
             #expect(throws: DecodingError.self) {
                 try store.load()
@@ -187,8 +197,8 @@ struct JSONFileStoreTests {
     func `deletes the file and tolerates deleting twice`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let store = JSONFileStore<StoredSample>(name: "sample", url: directory.appending(path: "sample.json"))
-            try store.save(Self.sample)
 
+            try store.save(Self.sample)
             try store.delete()
 
             #expect(!store.exists())

@@ -20,6 +20,8 @@ package enum AudioLevel {
     }
 
     static func decibels(rootMeanSquare: Float) -> Float {
-        rootMeanSquare > 0 ? 20 * log10(rootMeanSquare) : -.infinity
+        guard rootMeanSquare > 0 else { return -.infinity }
+
+        return 20 * log10(rootMeanSquare)
     }
 }

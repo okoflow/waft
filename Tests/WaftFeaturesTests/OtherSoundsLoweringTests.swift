@@ -8,6 +8,7 @@ struct OtherSoundsLoweringTests {
     @Test
     func `lowers other sounds to a quarter after the delay`() async {
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
+
         lowering.lower { true }
 
         #expect(await Poll.until(timeout: .seconds(5)) { outputVolume.isLowered })
@@ -17,6 +18,7 @@ struct OtherSoundsLoweringTests {
     @Test
     func `skips lowering once the recording is no longer wanted`() async throws {
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
+
         lowering.lower { false }
 
         try await Task.sleep(for: .milliseconds(100))
@@ -27,6 +29,7 @@ struct OtherSoundsLoweringTests {
     @Test
     func `cancels a pending lowering and brings the volume back on restore`() async throws {
         let pending = OtherSoundsLowering(outputVolume: outputVolume, delay: .seconds(60))
+
         pending.lower { true }
         pending.restore()
 
@@ -35,6 +38,7 @@ struct OtherSoundsLoweringTests {
         #expect(outputVolume.loweredFractions.isEmpty)
 
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
+
         lowering.lower { true }
 
         #expect(await Poll.until(timeout: .seconds(5)) { outputVolume.isLowered })

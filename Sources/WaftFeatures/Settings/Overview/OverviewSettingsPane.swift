@@ -19,6 +19,7 @@ private struct RecentSection: View {
 
     var body: some View {
         let today = Date()
+
         let days = statistics.daily(last: Self.dayCount, endingOn: today)
         let recent = statistics.total(last: Self.dayCount, endingOn: today)
 
@@ -80,9 +81,9 @@ private struct AllTimeSection: View {
             action: String(localized: "Reset Statistics"),
         )
 
-        if confirmation.ask() {
-            statistics.reset()
-        }
+        guard confirmation.ask() else { return }
+
+        statistics.reset()
     }
 }
 

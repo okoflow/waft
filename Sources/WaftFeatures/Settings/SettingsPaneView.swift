@@ -5,13 +5,16 @@ struct SettingsPaneView: View {
     let state: SettingsWindowState
 
     var body: some View {
-        if let mode = state.editedMode {
+        switch (state.editedMode, state.editedTextTask) {
+        case let (mode?, _):
             ModeEditorPage(mode: mode, settings: model.settings, tryout: model.modeTryout, state: state)
                 .id(mode)
-        } else if let kind = state.editedTextTask {
+
+        case let (nil, kind?):
             TextTaskEditorPage(kind: kind, settings: model.settings, tryout: model.translatorTryout, state: state)
                 .id(kind)
-        } else {
+
+        case (nil, nil):
             SettingsPage(.verbatim(state.selection.title), needsWaftPlus: state.selection.needsWaftPlus) {
                 content
             }

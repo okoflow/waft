@@ -41,6 +41,7 @@ struct SettingsModesTests {
     @Test
     func `adds, updates, and removes a custom mode`() {
         var settings = Settings.defaults
+
         var custom = settings.addCustomMode(named: "New Mode")
         custom.instructions = "Write haiku."
         settings.update(custom)

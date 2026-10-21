@@ -3,8 +3,9 @@ extension Language {
 
     func foldedScalar(_ scalar: Unicode.Scalar) -> Unicode.Scalar? {
         guard !isOptionalMark(scalar) else { return nil }
+        guard self == .romanian else { return scalar }
 
-        return self == .romanian ? Self.cedillaToCommaBelow[scalar, default: scalar] : scalar
+        return Self.cedillaToCommaBelow[scalar, default: scalar]
     }
 
     private func isOptionalMark(_ scalar: Unicode.Scalar) -> Bool {

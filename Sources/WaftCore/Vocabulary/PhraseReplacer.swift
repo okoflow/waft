@@ -24,6 +24,7 @@ struct PhraseReplacer {
         rules = replacements
             .compactMap { Self.rule(for: $0, in: language) }
             .sorted { $0.segments.count > $1.segments.count }
+
         self.language = language
     }
 
@@ -31,11 +32,15 @@ struct PhraseReplacer {
         let segments = TextSegment.split(replacement.phrase.trimmingCharacters(in: .whitespacesAndNewlines))
         guard let first = segments.first, first.isWord else { return nil }
 
-        let normalized = segments.map { segment in
-            segment.isWord ? TextSegment(text: segment.text.normalizedWord(in: language), isWord: true) : segment
-        }
+        let normalized = segments.map { normalizedWord($0, in: language) }
 
         return Rule(segments: normalized, replacement: replacement.replacement)
+    }
+
+    private static func normalizedWord(_ segment: TextSegment, in language: Language) -> TextSegment {
+        guard segment.isWord else { return segment }
+
+        return TextSegment(text: segment.text.normalizedWord(in: language), isWord: true)
     }
 
     private static func koreanParticle(after word: String, in spoken: String) -> String? {
@@ -55,6 +60,7 @@ struct PhraseReplacer {
         guard !rules.isEmpty else { return text }
 
         let segments = TextSegment.split(text)
+
         var result = ""
         var index = 0
 
@@ -62,10 +68,12 @@ struct PhraseReplacer {
             if segments[index].isWord, let match = match(at: index, in: segments) {
                 result += match.replacement + match.rest
                 index = match.lastSegment + 1
-            } else {
-                result += segments[index].text
-                index += 1
+
+                continue
             }
+
+            result += segments[index].text
+            index += 1
         }
 
         return result

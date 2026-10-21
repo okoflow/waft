@@ -8,6 +8,7 @@ struct NSPasteboardPrivateTests {
     func `writes text as a plain string marked as private`() throws {
         try NSPasteboard.withTemporary { pasteboard in
             pasteboard.writePrivately("Dictated.")
+
             let types = try #require(pasteboard.types).map(\.rawValue)
 
             #expect(pasteboard.string(forType: .string) == "Dictated.")

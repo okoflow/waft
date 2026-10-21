@@ -8,16 +8,11 @@ package enum InsertionDecision: Equatable, Sendable {
         isFocusOnTarget: Bool,
         isKeyHeld: Bool,
     ) -> InsertionDecision {
-        if isSecureField {
-            .skip(.secureField)
-        } else if !canPostKeys {
-            .skip(.noAccessibility)
-        } else if !isFocusOnTarget {
-            .skip(.focusChanged)
-        } else if isKeyHeld {
-            .skip(.keyHeld)
-        } else {
-            .paste
-        }
+        guard !isSecureField else { return .skip(.secureField) }
+        guard canPostKeys else { return .skip(.noAccessibility) }
+        guard isFocusOnTarget else { return .skip(.focusChanged) }
+        guard !isKeyHeld else { return .skip(.keyHeld) }
+
+        return .paste
     }
 }

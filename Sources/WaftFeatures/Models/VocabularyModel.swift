@@ -42,16 +42,19 @@ final class VocabularyModel {
     private static func vocabulary(from terms: [TermDraft], _ snippets: [SnippetDraft]) -> Vocabulary {
         let validTerms = terms.compactMap { draft -> Vocabulary.Term? in
             let term = draft.term.trimmingCharacters(in: .whitespaces)
+
             guard !term.isEmpty else { return nil }
 
-            let spoken = draft.spokenForms.split { $0 == "," || $0 == "،" }
+            let spoken = draft.spokenForms.split { [",", "،"].contains($0) }
                 .map { $0.trimmingCharacters(in: .whitespaces) }
                 .filter { !$0.isEmpty }
 
             return Vocabulary.Term(term: term, spoken: spoken)
         }
+
         let validSnippets = snippets.compactMap { draft -> Vocabulary.Snippet? in
             let trigger = draft.trigger.trimmingCharacters(in: .whitespaces)
+
             guard !trigger.isEmpty else { return nil }
 
             return Vocabulary.Snippet(trigger: trigger, text: draft.text)

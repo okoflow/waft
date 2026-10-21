@@ -51,6 +51,7 @@ enum PasteShortcut {
                 return character == "v"
             }
         }
+
         guard let keyCode else { return fallbackKeyCode }
 
         return keyCode

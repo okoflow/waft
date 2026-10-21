@@ -24,8 +24,9 @@ struct PracticeStep: View {
 
     private var modelStatus: String {
         let state = model.speechModelController.state
+        guard state.isReady else { return state.statusText }
 
-        return state.isReady ? String(localized: "Speech model ready") : state.statusText
+        return String(localized: "Speech model ready")
     }
 
     init(model: AppModel) {

@@ -79,6 +79,6 @@ extension Language {
     }
 
     var hasDottedCapitalI: Bool {
-        self == .azerbaijani || self == .turkish
+        [.azerbaijani, .turkish].contains(self)
     }
 }

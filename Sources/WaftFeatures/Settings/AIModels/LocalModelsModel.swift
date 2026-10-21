@@ -100,12 +100,9 @@ final class LocalModelsModel {
     }
 
     private func choose(_ baseURL: String, serving models: [String]) {
-        let configured = settings.settings.localServer
         var server = LocalServer(baseURL: baseURL)
 
-        if configured.baseURL == baseURL, models.contains(configured.model) {
-            server.model = configured.model
-        } else if let model = models.first {
+        if let model = preferredModel(at: baseURL, among: models) {
             server.model = model
         }
 
@@ -114,9 +111,15 @@ final class LocalModelsModel {
         showRunning(with: models)
     }
 
+    private func preferredModel(at baseURL: String, among models: [String]) -> String? {
+        let configured = settings.settings.localServer
+        guard configured.baseURL == baseURL, models.contains(configured.model) else { return models.first }
+
+        return configured.model
+    }
+
     private func reportNoKnownServer() async {
         let configured = settings.settings.localServer
-
         guard LocalServer.knownServers.contains(where: { $0.baseURL == configured.baseURL }) else {
             checkedAddress = configured.baseURL
             await checkServer(at: configured)

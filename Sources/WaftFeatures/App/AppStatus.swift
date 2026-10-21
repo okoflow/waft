@@ -10,9 +10,10 @@ enum AppStatus: Equatable {
     static func readyMessage(in settings: Settings) -> String {
         let key = settings.pushToTalkKey.shortTitle
 
-        return settings.dictationStart == .tap
-            ? String(localized: "Ready: tap \(key) and speak")
-            : String(localized: "Ready: hold \(key) and speak")
+        return switch settings.dictationStart {
+        case .tap: String(localized: "Ready: tap \(key) and speak")
+        case .hold, .holdOrDoubleTap: String(localized: "Ready: hold \(key) and speak")
+        }
     }
 
     func title(in settings: Settings) -> String {

@@ -67,7 +67,6 @@ final class SelectionActions {
         }
 
         let target = focusTracker.currentFocus()
-
         guard let selection = target.element?.selectedText, !selection.isBlank else {
             hud.show(HUDMessage(kind: .information, title: String(localized: "Select the text first, then press the shortcut.")))
 
@@ -83,14 +82,22 @@ final class SelectionActions {
 
     private func rework(_ selection: String, by action: Action, in target: FocusTarget) async {
         let detected = detector.language(of: selection)
+
         let into = settings.settings.translator.target(forSource: detected)
+
         let language =
             if let detected {
                 detected
             } else {
                 into
             }
-        let textTask: TextTask = action == .fix ? .fix : .translate(from: nil, into: into)
+
+        let textTask: TextTask =
+            switch action {
+            case .translate: .translate(from: nil, into: into)
+            case .fix: .fix
+            }
+
         let setup = settings.settings.translatorSetup(for: textTask.kind)
 
         hud.setWorking(Self.workingLabel(for: action, into: into))
@@ -104,10 +111,12 @@ final class SelectionActions {
                 as: textTask,
                 setup: setup,
             )
+
             let keys = Self.shortcutKeys
             let keyboardState = keyboardState
 
             await Poll.until(timeout: Self.releaseTimeout) { !keys.contains(where: keyboardState.isHeld) }
+
             await deliver(reworked, into: target)
         } catch {
             let reason = RewriteFallback(error).reason(for: setup.provider).sentenceCased()

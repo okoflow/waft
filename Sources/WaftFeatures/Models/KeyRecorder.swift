@@ -69,9 +69,7 @@ final class KeyRecorder {
 
             return
         }
-
-        let isPress = isKeyDown || key.isHeld(in: UInt64(event.modifierFlags.rawValue))
-        guard isPress else { return }
+        guard isPress(of: key, in: event) else { return }
         guard key != takenKey else {
             reject(for: purpose, isTaken: true)
 
@@ -80,6 +78,12 @@ final class KeyRecorder {
 
         record?(key)
         stop()
+    }
+
+    private func isPress(of key: PushToTalkKey, in event: NSEvent) -> Bool {
+        guard event.type != .keyDown else { return true }
+
+        return key.isHeld(in: UInt64(event.modifierFlags.rawValue))
     }
 
     private func reject(for purpose: RecordingPurpose, isTaken: Bool) {

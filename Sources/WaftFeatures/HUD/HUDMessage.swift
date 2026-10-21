@@ -20,7 +20,9 @@ struct HUDMessage: Equatable, Sendable {
 
     var duration: Duration {
         let characters = [title, detail].compactMap(\.self).reduce(0) { $0 + $1.count }
+
         let readingTime = min(10, 2 + Double(characters) / 15)
+
         let seconds = kind == .pasted ? min(readingTime, 4) : readingTime
 
         return .milliseconds(Int(seconds * 1000))

@@ -29,6 +29,7 @@ extension String {
         let kept = String(String.UnicodeScalarView(normalizedWord(in: language).unicodeScalars.filter {
             !Self.ignoredCategories.contains($0.properties.generalCategory)
         }))
+
         let words = kept.split(whereSeparator: \.isWhitespace)
 
         return language.hasLooseWordSpacing ? words.joined() : words.joined(separator: " ")

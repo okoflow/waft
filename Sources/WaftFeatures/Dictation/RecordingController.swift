@@ -152,7 +152,7 @@ final class RecordingController {
             }
 
             if settings.settings.lowersOtherSounds {
-                otherSounds.lower { [weak self] in self?.recording?.id == id && self?.isRecording == true }
+                otherSounds.lower { [weak self] in self?.recording?.isLive(withID: id) == true }
             }
 
         case let .failed(id, failure) where id == recording?.id:

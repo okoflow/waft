@@ -49,11 +49,15 @@ package final class AppModel {
     }
 
     var needsSetup: Bool {
-        !settings.settings.hasCompletedSetup || !permissions.allGranted
+        guard settings.settings.hasCompletedSetup else { return true }
+
+        return !permissions.allGranted
     }
 
     private var lacksPermissions: Bool {
-        !permissions.allGranted || keyMonitor.status == .unavailable
+        guard permissions.allGranted else { return true }
+
+        return keyMonitor.status == .unavailable
     }
 
     package init(dependencies: AppDependencies) {
@@ -128,6 +132,7 @@ package final class AppModel {
 
         pro.draft = key
         pro.activateDraft()
+
         windows.showSettings(.pro)
     }
 

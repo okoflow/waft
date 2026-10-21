@@ -140,6 +140,7 @@ package enum RewritePrompt {
 
     package static func userMessage(for request: RewriteRequest) -> String {
         let spokenLanguage = "Spoken language: \(request.language.name)."
+
         let lines =
             switch request.kind {
             case let .cleanup(_, target):

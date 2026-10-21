@@ -11,7 +11,9 @@ package enum HallucinationFilter {
     ]
 
     package static func keepsSegment(averageLogProbability: Double, compressionRatio: Double) -> Bool {
-        averageLogProbability >= minimumAverageLogProbability && compressionRatio <= maximumCompressionRatio
+        guard averageLogProbability >= minimumAverageLogProbability else { return false }
+
+        return compressionRatio <= maximumCompressionRatio
     }
 
     package static func isHallucination(
@@ -20,37 +22,46 @@ package enum HallucinationFilter {
         prompt: String?,
         vocabulary: [String] = [],
     ) -> Bool {
-        isOnlySoundTags(text)
-            || isEcho(of: prompt, in: text, language: language, vocabulary: vocabulary)
-            || isStockPhrase(text, in: language)
+        guard !isOnlySoundTags(text),
+              !isEcho(of: prompt, in: text, language: language, vocabulary: vocabulary) else { return true }
+
+        return isStockPhrase(text, in: language)
     }
 
     private static func isOnlySoundTags(_ text: String) -> Bool {
         var depth: [Character] = []
-        var hasSpokenCharacter = false
 
         for character in text where character != "♪" {
             if let pair = enclosingPairs.first(where: { $0.close == character }), depth.last == pair.open {
                 depth.removeLast()
-            } else if let pair = enclosingPairs.first(where: { $0.open == character }) {
+
+                continue
+            }
+
+            if let pair = enclosingPairs.first(where: { $0.open == character }) {
                 depth.append(pair.open)
-            } else if depth.isEmpty, character.isLetter || character.isNumber {
-                hasSpokenCharacter = true
+
+                continue
+            }
+
+            if depth.isEmpty, character.isLetterOrNumber {
+                return false
             }
         }
 
-        return !hasSpokenCharacter
+        return true
     }
 
     private static func isEcho(of prompt: String?, in text: String, language: Language, vocabulary: [String]) -> Bool {
         guard let prompt else { return false }
 
         let normalized = text.normalizedForComparison(in: language)
-        let normalizedPrompt = prompt.normalizedForComparison(in: language)
-        let isSubstantial = !normalized.isEmpty && normalized.count * 2 >= normalizedPrompt.count
-        let isTerm = vocabulary.contains { $0.normalizedForComparison(in: language) == normalized }
+        guard !normalized.isEmpty else { return false }
 
-        return isSubstantial && !isTerm && normalizedPrompt.contains(normalized)
+        let normalizedPrompt = prompt.normalizedForComparison(in: language)
+        guard normalized.count * 2 >= normalizedPrompt.count, normalizedPrompt.contains(normalized) else { return false }
+
+        return !vocabulary.contains { $0.normalizedForComparison(in: language) == normalized }
     }
 
     private static func isStockPhrase(_ text: String, in language: Language) -> Bool {
@@ -62,9 +73,9 @@ package enum HallucinationFilter {
 
             let rest = normalized.dropFirst(known.count)
 
-            return language.hasLooseWordSpacing
-                ? rest.count <= phrase.trailingWords * 3
-                : rest.split(separator: " ").count <= phrase.trailingWords
+            guard language.hasLooseWordSpacing else { return rest.split(separator: " ").count <= phrase.trailingWords }
+
+            return rest.count <= phrase.trailingWords * 3
         }
     }
 }

@@ -9,6 +9,7 @@ struct ShimmeringText: View {
     var body: some View {
         TimelineView(.animation(paused: reducesMotion)) { context in
             let phase = context.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1.6) / 1.6
+
             let center = -0.3 + 1.6 * phase
 
             Text(text)

@@ -17,11 +17,13 @@ enum WaftMark {
             path.lineWidth = 8 * scale
             path.lineCapStyle = .round
             path.lineJoinStyle = .round
+
             NSColor.black.setStroke()
             path.stroke()
 
             return true
         }
+
         image.isTemplate = true
 
         return image

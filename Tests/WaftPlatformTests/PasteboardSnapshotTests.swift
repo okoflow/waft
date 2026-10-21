@@ -30,6 +30,7 @@ struct PasteboardSnapshotTests {
 
             pasteboard.writePrivately("Dictated.")
             snapshot.restore(to: pasteboard)
+
             let items = try #require(pasteboard.pasteboardItems)
 
             #expect(items.map { Set($0.types) } == [[.string], [.html]])
@@ -42,6 +43,7 @@ struct PasteboardSnapshotTests {
     func `restores a clipboard only while its items together fit the size limit`(itemCount: Int, isRestored: Bool) {
         NSPasteboard.withTemporary { pasteboard in
             let halfOfLimit = Data(count: PasteboardRestorePolicy.maximumSnapshotBytes / 2 + 1)
+
             pasteboard.clearContents()
             pasteboard.writeObjects((0 ..< itemCount).map { _ in Self.item([.string: halfOfLimit]) })
 

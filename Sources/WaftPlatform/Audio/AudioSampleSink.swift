@@ -114,9 +114,11 @@ final class AudioSampleSink: @unchecked Sendable {
             logFirstFailure {
                 Logger.audio.error("Couldn't convert audio: \(error.domain, privacy: .public) \(error.code, privacy: .public)")
             }
+
+            return []
         }
 
-        guard error == nil, output.frameLength > 0, let channel = output.floatChannelData?[0] else { return [] }
+        guard output.frameLength > 0, let channel = output.floatChannelData?[0] else { return [] }
 
         return Array(UnsafeBufferPointer(start: channel, count: Int(output.frameLength)))
     }

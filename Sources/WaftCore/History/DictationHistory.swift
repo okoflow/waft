@@ -9,8 +9,9 @@ package struct DictationHistory: Codable, Equatable, Sendable {
 
         package var preview: String {
             let line = String(text.map { $0.isNewline ? " " : $0 })
+            guard line.count > 50 else { return line }
 
-            return line.count > 50 ? String(line.prefix(49)) + "…" : line
+            return String(line.prefix(49)) + "…"
         }
 
         package init(date: Date, text: String, mode: Mode, app: String?) {

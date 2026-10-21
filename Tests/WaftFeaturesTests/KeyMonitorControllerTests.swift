@@ -7,6 +7,7 @@ struct KeyMonitorControllerTests {
     func `reports unavailable and retries until the monitor starts`() async {
         let monitor = FakeKeyEventMonitor(startsSuccessfully: false)
         let keyMonitor = KeyMonitorController(monitor: monitor, retryInterval: 0)
+
         keyMonitor.start()
 
         #expect(keyMonitor.status == .unavailable)
@@ -20,6 +21,7 @@ struct KeyMonitorControllerTests {
     func `starts again on a permission change only while unavailable`(startsSuccessfully: Bool, startCount: Int) {
         let monitor = FakeKeyEventMonitor(startsSuccessfully: startsSuccessfully)
         let keyMonitor = KeyMonitorController(monitor: monitor)
+
         keyMonitor.start()
         keyMonitor.permissionsDidChange()
 
@@ -30,6 +32,7 @@ struct KeyMonitorControllerTests {
     func `restarts a monitor that stopped while ready`() async {
         let monitor = FakeKeyEventMonitor()
         let keyMonitor = KeyMonitorController(monitor: monitor, healthCheckInterval: 0)
+
         keyMonitor.start()
         monitor.isRunning = false
 

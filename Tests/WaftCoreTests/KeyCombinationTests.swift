@@ -57,6 +57,7 @@ struct KeyCombinationTests {
     @Test
     func `survives an encoding round trip`() throws {
         let combination = KeyCombination(keyCode: 3, modifiers: [.control, .shift, .command])
+
         let data = try JSONEncoder().encode(combination)
 
         #expect(try JSONDecoder().decode(KeyCombination.self, from: data) == combination)

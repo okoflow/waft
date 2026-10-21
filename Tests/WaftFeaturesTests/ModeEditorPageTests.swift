@@ -29,6 +29,7 @@ struct ModeEditorPageTests {
         let page = page()
         let name = page.binding(\.name, of: custom)
         let instructions = page.binding(\.instructions, of: custom)
+
         var updated = custom
         updated.name = "Changed elsewhere"
         updated.instructions = "Changed instructions"
@@ -44,6 +45,7 @@ struct ModeEditorPageTests {
         let page = page()
         let name = page.binding(\.name, of: custom)
         let instructions = page.binding(\.instructions, of: custom)
+
         let other = CustomMode(name: "Other mode", instructions: "Keep these instructions")
         settings.settings.customModes.append(other)
         settings.settings.removeCustomMode(custom.id)

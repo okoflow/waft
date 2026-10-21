@@ -2,6 +2,12 @@ struct HesitationPattern: Sendable {
     struct Run: Sendable {
         let letter: Character
         let count: Int
+
+        func accepts(_ run: Run) -> Bool {
+            guard letter == run.letter else { return false }
+
+            return run.count >= count
+        }
     }
 
     private static let patternsByLanguage: [Language: [HesitationPattern]] = shortestSpellings
@@ -34,7 +40,9 @@ struct HesitationPattern: Sendable {
     }
 
     func matches(_ runs: [Run]) -> Bool {
-        self.runs.count == runs.count && zip(self.runs, runs).allSatisfy { $0.letter == $1.letter && $1.count >= $0.count }
+        guard self.runs.count == runs.count else { return false }
+
+        return zip(self.runs, runs).allSatisfy { $0.accepts($1) }
     }
 }
 

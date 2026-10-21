@@ -7,7 +7,6 @@ struct InstructionsSection: View {
 
     private var note: LocalizedStringKey {
         let provider = settings.settings.modelProvider
-
         guard !provider.isCloud, settings.settings.localServer.isOnThisMac else {
             return "Sent to \(provider.title) with your text."
         }

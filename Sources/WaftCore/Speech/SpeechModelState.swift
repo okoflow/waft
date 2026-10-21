@@ -50,23 +50,21 @@ package struct SpeechModelState: Equatable, Sendable {
     }
 
     package var canTranscribe: Bool {
-        isReady || servingModel != nil
+        guard !isReady else { return true }
+
+        return servingModel != nil
     }
 
     package var canRetry: Bool {
-        if case .failed = phase {
-            true
-        } else {
-            false
-        }
+        guard case .failed = phase else { return false }
+
+        return true
     }
 
     package var progress: Double? {
-        if case let .downloading(progress) = phase {
-            progress
-        } else {
-            nil
-        }
+        guard case let .downloading(progress) = phase else { return nil }
+
+        return progress
     }
 
     package var statusText: String {
@@ -177,9 +175,16 @@ package struct SpeechModelState: Equatable, Sendable {
         pendingChoice = nil
         hasRetriedLoad = false
         needsReload = false
-        phase = choice.isInstalled ? .loading : .downloading(progress: 0)
 
-        return [choice.isInstalled ? .load(model) : .download(model)]
+        guard choice.isInstalled else {
+            phase = .downloading(progress: 0)
+
+            return [.download(model)]
+        }
+
+        phase = .loading
+
+        return [.load(model)]
     }
 
     private mutating func finishLoading() -> [Effect] {

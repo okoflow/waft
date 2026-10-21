@@ -21,6 +21,7 @@ struct DictationQueueTests {
     func `pastes the processed text into the target and records it in history and statistics`() async {
         let inserter = FakeTextInserter()
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
+
         queue.submit(job())
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -36,6 +37,7 @@ struct DictationQueueTests {
     func `copies the text instead of pasting when pasting into the focused field is off`() async {
         let inserter = FakeTextInserter()
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
+
         queue.submit(job { $0.pastesIntoFocusedField = false })
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.copied(Self.hello)) })
@@ -48,6 +50,7 @@ struct DictationQueueTests {
     func `copies the text when the inserter skips the paste`(reason: InsertionSkipReason) async {
         let inserter = FakeTextInserter(.skipped(reason))
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
+
         queue.submit(job())
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.copied(Self.hello)) })
@@ -59,6 +62,7 @@ struct DictationQueueTests {
     func `keeps a password field's text out of the clipboard and history but offers it as the latest transcript`() async {
         let inserter = FakeTextInserter(.skipped(.secureField))
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
+
         queue.submit(job())
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.blockedInPasswordField) })
@@ -72,6 +76,7 @@ struct DictationQueueTests {
     func `reports no speech when the transcript is missing or empty`(transcript: Transcript?) async {
         let inserter = FakeTextInserter()
         let queue = queue(FakeTranscriber(.success(transcript)), inserter: inserter)
+
         queue.submit(job())
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.noSpeech) })
@@ -83,6 +88,7 @@ struct DictationQueueTests {
     func `reports a failed transcription with the error's description`() async {
         let error = CocoaError(.fileReadCorruptFile)
         let queue = queue(FakeTranscriber(.failure(error)))
+
         queue.submit(job())
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.failed(error.localizedDescription)) })
@@ -93,6 +99,7 @@ struct DictationQueueTests {
         let transcriber = FakeTranscriber(.success(.spoken("Hallo Welt", in: .german)))
         let vocabulary = Vocabulary(terms: [Vocabulary.Term(term: "Okoflow", spoken: ["oko flow"])], snippets: [])
         let queue = queue(transcriber)
+
         queue.submit(job(vocabulary: vocabulary) { $0.languages = .preferred(by: ["de"]).pinning(.german) })
 
         #expect(await Poll.until(timeout: .seconds(5)) { !transcriber.requests.isEmpty })
@@ -104,6 +111,7 @@ struct DictationQueueTests {
         let inserter = FakeTextInserter()
         let rewriter = FakeTextRewriter(.success("Meeting at three"))
         let queue = queue(FakeTranscriber(.success(.spoken("Make it three"))), inserter: inserter, rewriter: rewriter)
+
         queue.submit(job(selection: "Meeting at noon"))
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -117,6 +125,7 @@ struct DictationQueueTests {
     func `reports a failed edit with the rewrite error's reason in sentence case`() async {
         let rewriter = FakeTextRewriter(.failure(.offline))
         let queue = queue(FakeTranscriber(.success(.spoken("Make it three"))), rewriter: rewriter)
+
         queue.submit(job(selection: "Meeting at noon"))
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.editFailed("You're offline")) })
@@ -143,6 +152,7 @@ struct DictationQueueTests {
         }
 
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), rewriter: rewriter)
+
         queue.submit(job)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .working(label) })
@@ -187,6 +197,7 @@ struct DictationQueueTests {
     @Test
     func `copies the latest transcript on request and nothing before the first one`() async {
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))))
+
         queue.copyLatestTranscript()
 
         #expect(clipboard.copied.isEmpty)

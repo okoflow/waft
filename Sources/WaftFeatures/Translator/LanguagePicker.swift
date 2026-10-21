@@ -51,7 +51,6 @@ private struct LanguageList: View {
 
     private var matches: [Language] {
         let query = state.query
-
         guard !query.isBlank else { return Language.allByDisplayName }
 
         return Language.allByDisplayName.filter { language in
@@ -108,13 +107,19 @@ private struct LanguageList: View {
             LanguageRow(
                 id: language.rawValue,
                 title: language.displayName,
-                detail: language.nativeName == language.displayName ? nil : language.nativeName,
+                detail: detail(of: language),
                 isSelected: selection == language,
                 state: state,
             ) {
                 choose(language)
             }
         }
+    }
+
+    private func detail(of language: Language) -> String? {
+        guard language.nativeName != language.displayName else { return nil }
+
+        return language.nativeName
     }
 
     private func chooseFirstMatch() {

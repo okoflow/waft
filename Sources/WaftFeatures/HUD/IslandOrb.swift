@@ -19,8 +19,14 @@ struct IslandOrb: View {
         }
     }
 
+    private var isPaused: Bool {
+        guard !reducesMotion else { return true }
+
+        return style == .still
+    }
+
     var body: some View {
-        TimelineView(.animation(paused: reducesMotion || style == .still)) { context in
+        TimelineView(.animation(paused: isPaused)) { context in
             let time = context.date.timeIntervalSinceReferenceDate
 
             Canvas { canvas, area in
@@ -36,7 +42,9 @@ struct IslandOrb: View {
 
         for dot in OrbDot.sphere(count: dotCount, rotation: rotation(at: time), scan: scan(at: time)) {
             let front = (dot.depth + 1) / 2
+
             let diameter = (0.8 + 1.2 * front + 0.8 * dot.glow) * size / 18
+
             let bounds = CGRect(
                 x: area.width / 2 + dot.horizontal * radius - diameter / 2,
                 y: area.height / 2 + dot.vertical * radius - diameter / 2,
@@ -82,9 +90,12 @@ private struct OrbDot {
     static func sphere(count: Int, rotation: Double, scan: Double?) -> [Self] {
         let dots = (0 ..< count).map { index in
             let height = 1 - 2 * (Double(index) + 0.5) / Double(count)
-            let ring = (1 - height * height).squareRoot()
             let angle = goldenAngle * Double(index) + rotation
+
+            let ring = (1 - height * height).squareRoot()
+
             let depth = sin(angle) * ring
+
             let vertical = height * cos(tilt) - depth * sin(tilt)
 
             return Self(

@@ -8,7 +8,9 @@ struct WaftApp: App {
 
     var body: some Scene {
         let settings = appDelegate.model.settings
+
         let isShown = settings.settings.showsMenuBarIcon
+
         let isInserted = Binding(
             get: { isShown },
             set: { newValue in

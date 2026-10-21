@@ -8,6 +8,7 @@ struct PermissionMonitorTests {
         var changeCount = 0
         let monitor = PermissionMonitor(provider: FakePermissionProvider([:], answers: [.microphone: answer]))
         monitor.onChange = { changeCount += 1 }
+
         await monitor.request(.microphone)
 
         #expect(monitor.status(of: .microphone) == answer)

@@ -47,7 +47,7 @@ package final class KeyEventTap: KeyEventMonitor {
     }
 
     private func installTap() {
-        guard AXIsProcessTrusted() || CGPreflightListenEventAccess(), let port = makeTap() else { return }
+        guard canListenToKeys(), let port = makeTap() else { return }
 
         let source = CFMachPortCreateRunLoopSource(nil, port, 0)
         CFRunLoopAddSource(CFRunLoopGetMain(), source, .commonModes)
@@ -55,6 +55,12 @@ package final class KeyEventTap: KeyEventMonitor {
 
         tap = port
         runLoopSource = source
+    }
+
+    private func canListenToKeys() -> Bool {
+        guard !AXIsProcessTrusted() else { return true }
+
+        return CGPreflightListenEventAccess()
     }
 
     private func invalidateTap() {

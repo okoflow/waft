@@ -43,7 +43,7 @@ extension Settings {
     }
 
     package func mode(after current: Mode, includingAI: Bool) -> Mode {
-        let available = modes.filter { includingAI || !$0.usesAI }
+        let available = includingAI ? modes : modes.filter { !$0.usesAI }
         guard let index = available.firstIndex(of: current) else { return .light }
 
         return available[(index + 1) % available.count]
@@ -65,6 +65,7 @@ extension Settings {
 
     package mutating func removeCustomMode(_ id: CustomMode.ID) {
         customModes.removeAll { $0.id == id }
+
         dropMissingCustomModes()
     }
 

@@ -48,11 +48,11 @@ final class OnboardingModel {
     }
 
     private var previousStep: Step? {
-        Step.allCases.last { $0.rawValue < step.rawValue && shows($0) }
+        Step.allCases.prefix { $0.rawValue < step.rawValue }.last(where: shows)
     }
 
     private var nextStep: Step? {
-        Step.allCases.first { $0.rawValue > step.rawValue && shows($0) }
+        Step.allCases.drop { $0.rawValue <= step.rawValue }.first(where: shows)
     }
 
     init(

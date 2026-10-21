@@ -41,8 +41,8 @@ struct LicenseSection: View {
             action: String(localized: "Remove License"),
         )
 
-        if confirmation.ask() {
-            pro.deactivate()
-        }
+        guard confirmation.ask() else { return }
+
+        pro.deactivate()
     }
 }

@@ -37,7 +37,7 @@ extension KeyCombination {
     }
 
     private static func isPrintable(_ character: Character) -> Bool {
-        character.isLetter || character.isNumber || character.isPunctuation || character.isSymbol
+        [character.isLetter, character.isNumber, character.isPunctuation, character.isSymbol].contains(true)
     }
 
     func keyboardShortcut(in layout: any KeyboardLayout) -> KeyboardShortcut? {

@@ -7,6 +7,7 @@ struct APIKeyModelTests {
         let store = FakeValueStore(stored)
         let apiKey = APIKeyModel(store: store)
         apiKey.draft = "  my-api-key\n"
+
         apiKey.saveDraft()
 
         #expect(store.value == "my-api-key")
@@ -20,6 +21,7 @@ struct APIKeyModelTests {
         let apiKey = APIKeyModel(store: store)
         let draft = "  replacement-key\n"
         apiKey.draft = draft
+
         apiKey.saveDraft()
 
         #expect(apiKey.draft == draft)
@@ -33,6 +35,7 @@ struct APIKeyModelTests {
         let store = FakeValueStore<String>()
         let apiKey = APIKeyModel(store: store)
         apiKey.draft = draft
+
         apiKey.saveDraft()
 
         #expect(store.value == nil)
@@ -43,6 +46,7 @@ struct APIKeyModelTests {
     func `removes the stored key`() {
         let store = FakeValueStore("my-api-key")
         let apiKey = APIKeyModel(store: store)
+
         apiKey.remove()
 
         #expect(store.value == nil)

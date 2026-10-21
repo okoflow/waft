@@ -19,13 +19,7 @@ package struct ProAccess: Equatable, Sendable {
     }
 
     package init(license: License?, trialStarted: Date, now: Date) {
-        if let license {
-            status = .licensed(license)
-        } else if Self.isFreeDuringBeta {
-            status = .beta
-        } else {
-            status = Self.trialStatus(startedOn: trialStarted, now: now, calendar: .current)
-        }
+        status = Self.status(license: license, trialStarted: trialStarted, now: now)
     }
 
     package static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
@@ -37,5 +31,15 @@ package struct ProAccess: Equatable, Sendable {
 
     static func trialStatus(startedOn start: Date, now: Date, calendar: Calendar) -> Status {
         now < trialEnd(startedOn: start, now: now, calendar: calendar) ? .trial : .expired
+    }
+
+    private static func status(license: License?, trialStarted: Date, now: Date) -> Status {
+        if let license {
+            return .licensed(license)
+        }
+
+        guard !isFreeDuringBeta else { return .beta }
+
+        return trialStatus(startedOn: trialStarted, now: now, calendar: .current)
     }
 }

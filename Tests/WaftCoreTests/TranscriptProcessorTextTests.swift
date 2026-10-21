@@ -7,6 +7,7 @@ struct TranscriptProcessorTextTests {
     func `reworks text with the edit time limit and the instructions of the setup`() async throws {
         let log = RewriteLog()
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Fix only the typos.")
+
         let processor = TranscriptProcessor.answering(.success("We meet on Friday."), log: log)
 
         let fixed = try await processor.rework("we meat on friday", in: .english, as: .fix, setup: setup)

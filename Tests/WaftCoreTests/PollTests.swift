@@ -29,6 +29,7 @@ struct PollTests {
     @Test
     func `gives up at once when the task is canceled`() async {
         let clock = ContinuousClock()
+
         let start = clock.now
         let task = Task { await Poll.until(timeout: .seconds(10)) { false } }
 

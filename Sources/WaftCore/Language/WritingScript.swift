@@ -91,6 +91,7 @@ package enum WritingScript: Sendable {
 
         for scalar in text.unicodeScalars where scalar.properties.isAlphabetic {
             let script = WritingScript(scalar)
+
             let weight = script?.isCompact == true ? 3 : 1
 
             total += weight

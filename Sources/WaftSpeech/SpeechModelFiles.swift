@@ -58,7 +58,7 @@ struct SpeechModelFiles {
     }
 
     private var isPresent: Bool {
-        FileManager.default.fileExists(atPath: folder.path) || FileManager.default.fileExists(atPath: downloadCache.path)
+        [folder, downloadCache].contains { FileManager.default.fileExists(atPath: $0.path) }
     }
 
     private var tokenizerFolder: URL {
@@ -93,6 +93,7 @@ struct SpeechModelFiles {
 
     func markComplete() throws {
         try Data().write(to: folder.appending(path: Self.completionMarker))
+
         try Self.removeIfPresent(downloadCache)
     }
 

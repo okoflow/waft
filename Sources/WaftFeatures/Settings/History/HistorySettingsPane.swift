@@ -17,6 +17,12 @@ struct HistorySettingsPane: View {
         return "No dictations yet"
     }
 
+    private var canClear: Bool {
+        guard history.history.entries.isEmpty else { return true }
+
+        return history.hasUnreadableHistory
+    }
+
     var body: some View {
         SettingsSection("Saving") {
             ToggleRow("Keep history", isOn: $settings.settings.keepsHistory, description: "Saved only on this Mac.")
@@ -78,7 +84,7 @@ struct HistorySettingsPane: View {
                 .frame(width: 200)
         } footer: {
             Button("Clear History…", role: .destructive, action: confirmClear)
-                .disabled(history.history.entries.isEmpty && !history.hasUnreadableHistory)
+                .disabled(!canClear)
         }
     }
 
@@ -93,9 +99,9 @@ struct HistorySettingsPane: View {
             action: String(localized: "Clear History"),
         )
 
-        if confirmation.ask() {
-            history.removeAll()
-        }
+        guard confirmation.ask() else { return }
+
+        history.removeAll()
     }
 }
 

@@ -10,7 +10,8 @@ struct LocalServerSection: View {
         switch localModels.serverState {
         case .unknown: "Not checked yet"
         case .checking: "Checking…"
-        case .running: localModels.serverModels.isEmpty ? "Running, but no models are loaded" : "Running"
+        case .running where localModels.serverModels.isEmpty: "Running, but no models are loaded"
+        case .running: "Running"
         case .notRunning: "Not running at this address"
         }
     }
@@ -24,7 +25,10 @@ struct LocalServerSection: View {
     }
 
     private var modelTitle: String {
-        settings.settings.localServer.model.isEmpty ? String(localized: "Choose") : settings.settings.localServer.model
+        let model = settings.settings.localServer.model
+        guard !model.isEmpty else { return String(localized: "Choose") }
+
+        return model
     }
 
     var body: some View {

@@ -21,10 +21,6 @@ usage() {
   exit 2
 }
 
-warn() {
-  printf 'warning: %s\n' "$@" >&2
-}
-
 die() {
   local message
   printf -v message '%s\n' "$@"
@@ -32,6 +28,10 @@ die() {
   printf 'error: %s' "${message}" >&2
 
   exit 1
+}
+
+warn() {
+  printf 'warning: %s\n' "$@" >&2
 }
 
 has_identity() {

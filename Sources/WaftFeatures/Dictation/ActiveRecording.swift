@@ -18,4 +18,16 @@ struct ActiveRecording {
 
         return true
     }
+
+    var isStuckHandsFree: Bool {
+        guard isHandsFree else { return false }
+
+        return !isLive
+    }
+
+    func isLive(withID id: RecordingID) -> Bool {
+        guard self.id == id else { return false }
+
+        return isLive
+    }
 }

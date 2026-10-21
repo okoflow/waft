@@ -26,6 +26,7 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
 
     func rewrite(_ request: RewriteRequest) async throws(RewriteError) -> String {
         let call = try api.call(for: request)
+
         var urlRequest = URLRequest(url: call.url, timeoutInterval: request.deadline / .seconds(1))
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = try Self.encoded(call.body)
