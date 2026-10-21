@@ -57,14 +57,15 @@ languages detect faster and more accurately. To skip detection, choose a
 ## Modes
 
 Light is the default. Choose a mode under **Mode** in the menu or in Settings ›
-Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> for the next one.
+Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> by default for the next
+one.
 [Shortcuts](#shortcuts) says how to change it.
 
 | Mode | What it does | AI model |
 | --- | --- | --- |
 | Raw | Pastes what Whisper heard | No |
 | Light | Removes hesitations such as "um", tidies the spacing, capitalizes, and adds a period. In 19 languages, "new line" or "new paragraph", said as a phrase of its own with a short pause around it, starts one | No |
-| Clean | Also removes filler words and false starts, keeps your final version in your language, and fixes grammar and punctuation. Spoken punctuation such as "comma", dates, times, and amounts become marks and digits, and enumerations go on numbered lines | Yes |
+| Clean | Also removes filler words and false starts, keeps your final version in your language, and fixes grammar and punctuation. Spoken punctuation such as "comma", dates, times, and amounts become marks and digits, and an explicit enumeration, such as "first…, second…", goes on numbered lines | Yes |
 | Formal | Clean in a polite business tone, keeping how you address the reader (*du* or *Sie*) | Yes |
 | Translate | Translates into **Translate into** in Settings › Writing, English by default. **Two-way with** adds a second language, so with English and Russian each comes out in the other | Yes |
 | Your modes | Follow the instructions you wrote | Yes |
@@ -78,7 +79,7 @@ the reasons.
 Choose the **Provider** in Settings › AI Models, Claude by default.
 
 - **Claude** and **OpenAI** need an API key: paste it under **API key** and
-  click **Save**, and **Remove…** deletes it after you confirm. Create the
+  click **Save**, and **Remove Key…** deletes it after you confirm. Create the
   Claude key inside a workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
   and the OpenAI key in the
   [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
@@ -129,8 +130,8 @@ HUD says then.
 
 **Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
 in any app, opens a window with your text on the left and its translation on
-the right. Type or paste up to 5,000 characters, or hold the dictation key and
-speak; the AI model translates half a second after you stop typing.
+the right. Type or paste up to 5,000 characters, or dictate; the AI model
+translates half a second after you stop typing.
 
 - The left half detects the language unless you choose one. The right half
   translates into **Translate into**, English by default, and text already in
@@ -143,7 +144,8 @@ speak; the AI model translates half a second after you stop typing.
   opens its **Instructions**, which you can rewrite and try as for a mode.
 - **Model** in Settings › Translator sets the translator's own
   [tier](#choosing-the-ai-model), the default one unless you change it. A
-  local server translates with its own model.
+  local server translates with its own model. Until the AI model is set up,
+  **Set Up…** there opens Settings › AI Models.
 
 ### Selected text
 
@@ -242,6 +244,8 @@ Settings.
 - **App language** in Settings › General switches Waft's interface between 23
   languages, or **Same as macOS**. Arabic and Hebrew lay it out from right to
   left.
+- **Play sounds**, on by default, plays a short chime when recording starts
+  and another when it stops.
 - **Lower other sounds while recording**, on by default, turns the Mac's volume
   down to a quarter once recording starts and restores it afterward, unless you
   changed it meanwhile.
@@ -272,9 +276,10 @@ license in Settings › Waft+:
 
 | Feature | Without a license |
 | --- | --- |
-| The AI modes | Fall back to Light, and the HUD says so; the next-mode shortcut switches only between Raw and Light |
+| The AI modes | Choosing one opens Settings › Waft+, a mode chosen before falls back to Light and the HUD says so, and the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
-| The translator | The window translates nothing, and the shortcuts on selected text show that they need Waft+ |
+| The translator | The window takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
+| File transcription | The window takes no file and shows that it needs Waft+ |
 | The speech model | Waft recognizes speech with Fast |
 | The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |
 

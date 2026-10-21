@@ -16,15 +16,15 @@
 "1 month" = "1 maand";
 "1 week" = "1 week";
 "1 year" = "1 jaar";
-"A soft click when recording starts and stops." = "Een zachte klik bij het begin en einde van de opname.";
+"A soft chime when recording starts and stops." = "Een zacht belletje bij het begin en einde van de opname.";
 "AI Models" = "AI-modellen";
 "AI model" = "AI-model";
-"AI modes and editing by voice use this model." = "AI-modi en bewerken met spraak gebruiken dit model.";
 "AI modes keep the model chosen in AI Models." = "AI-modi gebruiken het model dat je hebt gekozen bij ‘AI-modellen’.";
 "AI modes need Waft+" = "AI-modi vereisen Waft+";
 "AI modes need a %@ API key." = "AI-modi hebben een API-sleutel van %@ nodig.";
 "AI modes need a local server and model." = "AI-modi hebben een lokale server en een model nodig.";
 "AI modes" = "AI-modi";
+"AI modes, editing by voice, and the translator use this model." = "AI-modi, bewerken met spraak en de vertaler gebruiken dit model.";
 "API key" = "API-sleutel";
 "About" = "Info";
 "Accessibility" = "Toegankelijkheid";
@@ -179,7 +179,7 @@
 "Listening…" = "Luisteren…";
 "Local server" = "Lokale server";
 "Locked" = "Vergrendeld";
-"Lower other sounds while recording" = "Andere geluiden zachter zetten tijdens opnemen";
+"Lower other sounds while recording" = "Zet andere geluiden zachter tijdens opname";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV en meer";
 "Make modes with your own instructions, or tune the built-in ones." = "Maak modi met je eigen instructies of pas de ingebouwde aan.";
 "Makes fewer mistakes and is still quick." = "Maakt minder fouten en is toch snel.";
@@ -257,6 +257,7 @@
 "Relaunch" = "Start opnieuw";
 "Remove %@" = "Verwijder %@";
 "Remove Key" = "Verwijder sleutel";
+"Remove Key…" = "Verwijder sleutel…";
 "Remove License" = "Verwijder licentie";
 "Remove License…" = "Verwijder licentie…";
 "Remove the API key?" = "API-sleutel verwijderen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Verwijder term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Verwijdert stopwoorden en haperingen en verbetert grammatica en toon.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Verwijdert stopwoorden en haperingen, verbetert de grammatica en behoudt je taal.";
-"Remove…" = "Verwijder…";
 "Replace the key" = "Vervang de sleutel";
 "Replaces the selection with its translation." = "Vervangt de selectie door de vertaling.";
 "Reset Statistics" = "Stel statistieken opnieuw in";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift-rechts";
 "Run Again" = "Voer opnieuw uit";
 "Run it to see what Waft writes." = "Voer het uit om te zien wat Waft schrijft.";
-"Run the mode to see what it writes." = "Voer de modus uit om te zien wat hij schrijft.";
 "Run" = "Voer uit";
 "Running" = "Actief";
 "Running, but no models are loaded" = "Actief, maar er zijn geen modellen geladen";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Het spraakmodel heeft geen tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Het spraakmodel is niet beschikbaar. Probeer het opnieuw via het menu.";
 "The speech model isn't loaded." = "Het spraakmodel is niet geladen.";
-"The speech model isn't ready yet" = "Het spraakmodel is nog niet gereed";
+"The speech model isn't ready yet." = "Het spraakmodel is nog niet gereed.";
 "The text appears at the cursor." = "De tekst verschijnt bij de cursor.";
 "The translator and the shortcut that translates selected text." = "De vertaler en de sneltoets die geselecteerde tekst vertaalt.";
 "The translator is part of Waft+" = "De vertaler hoort bij Waft+";
+"The translator needs a %@ API key." = "De vertaler heeft een API-sleutel van %@ nodig.";
+"The translator needs a local server and model." = "De vertaler heeft een lokale server en een model nodig.";
 "There's no speech in this file." = "Dit bestand bevat geen spraak.";
 "These apps get their own mode." = "Deze apps krijgen een eigen modus.";
 "They work in any app." = "Ze werken in elke app.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Vertaal geselecteerde tekst";
 "Translate turns anything you say into %@." = "‘Vertalen’ zet alles wat je zegt om in het %@.";
 "Translate" = "Vertalen";
+"Translates in its own window, and translates or fixes selected text in any app." = "Vertaalt in een eigen venster en vertaalt of verbetert geselecteerde tekst in elke app.";
 "Translates what you said into another language." = "Vertaalt wat je zei naar een andere taal.";
 "Translating and fixing text is part of Waft+." = "Tekst vertalen en verbeteren hoort bij Waft+.";
 "Translating into %@…" = "Vertalen naar het %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "In beide richtingen";
 "Type something to try" = "Typ iets om te proberen";
 "Type, paste, or hold %@ and speak" = "Typ, plak of houd %@ ingedrukt en spreek";
+"Type, paste, or tap %@ and speak" = "Typ, plak of druk op %@ en spreek";
 "Unavailable: another app uses this shortcut. Choose another one." = "Niet beschikbaar: een andere app gebruikt deze sneltoets. Kies een andere.";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
 "Updates" = "Updates";
@@ -416,7 +419,7 @@
 "Voice" = "Stem";
 "Waft can't read this file." = "Waft kan dit bestand niet lezen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan de microfoon niet gebruiken. Geef toegang in Instellingen › Algemeen.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kon de bewaarde geschiedenis niet lezen en heeft er een kopie van bewaard. Wis geschiedenis verwijdert beide.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kon de bewaarde geschiedenis niet lezen en heeft er een kopie van bewaard. ‘Wis geschiedenis’ verwijdert beide.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft verwijdert hem uit de sleutelhanger. De AI-modi gebruiken ‘Licht’ totdat je een sleutel toevoegt.";
 "Waft is listening" = "Waft luistert";
 "Waft keeps no dictations while Keep history is off." = "Waft bewaart geen dictaten zolang ‘Bewaar geschiedenis’ uit staat.";

@@ -16,15 +16,15 @@
 "1 month" = "1 Monat";
 "1 week" = "1 Woche";
 "1 year" = "1 Jahr";
-"A soft click when recording starts and stops." = "Ein leises Klicken zu Beginn und am Ende der Aufnahme.";
+"A soft chime when recording starts and stops." = "Ein sanfter Klang zu Beginn und am Ende der Aufnahme.";
 "AI Models" = "KI-Modelle";
 "AI model" = "KI-Modell";
-"AI modes and editing by voice use this model." = "KI-Modi und das Bearbeiten per Stimme nutzen dieses Modell.";
 "AI modes keep the model chosen in AI Models." = "KI-Modi behalten das Modell, das unter KI-Modelle ausgewählt ist.";
 "AI modes need Waft+" = "KI-Modi benötigen Waft+";
 "AI modes need a %@ API key." = "KI-Modi benötigen einen %@-API-Schlüssel.";
 "AI modes need a local server and model." = "KI-Modi benötigen einen lokalen Server und ein Modell.";
 "AI modes" = "KI-Modi";
+"AI modes, editing by voice, and the translator use this model." = "KI-Modi, das Bearbeiten per Stimme und der Übersetzer nutzen dieses Modell.";
 "API key" = "API-Schlüssel";
 "About" = "Info";
 "Accessibility" = "Bedienungshilfen";
@@ -257,6 +257,7 @@
 "Relaunch" = "Neu starten";
 "Remove %@" = "%@ entfernen";
 "Remove Key" = "Schlüssel entfernen";
+"Remove Key…" = "Schlüssel entfernen …";
 "Remove License" = "Lizenz entfernen";
 "Remove License…" = "Lizenz entfernen …";
 "Remove the API key?" = "API-Schlüssel entfernen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Begriff entfernen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Entfernt Füllwörter und Versprecher und korrigiert Grammatik und Ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Entfernt Füllwörter und Versprecher, korrigiert die Grammatik und behält deine Sprache bei.";
-"Remove…" = "Entfernen …";
 "Replace the key" = "Schlüssel ersetzen";
 "Replaces the selection with its translation." = "Ersetzt die Auswahl durch ihre Übersetzung.";
 "Reset Statistics" = "Statistik zurücksetzen";
@@ -282,7 +282,6 @@
 "Right Shift" = "Umschalttaste rechts";
 "Run Again" = "Erneut ausführen";
 "Run it to see what Waft writes." = "Führe es aus, um zu sehen, was Waft schreibt.";
-"Run the mode to see what it writes." = "Führe den Modus aus, um zu sehen, was er schreibt.";
 "Run" = "Ausführen";
 "Running" = "Läuft";
 "Running, but no models are loaded" = "Läuft, aber keine Modelle geladen";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Das Spracherkennungsmodell hat keinen Tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Das Spracherkennungsmodell ist nicht verfügbar. Versuche es über das Menü erneut.";
 "The speech model isn't loaded." = "Das Spracherkennungsmodell ist nicht geladen.";
-"The speech model isn't ready yet" = "Das Spracherkennungsmodell ist noch nicht bereit";
+"The speech model isn't ready yet." = "Das Spracherkennungsmodell ist noch nicht bereit.";
 "The text appears at the cursor." = "Der Text erscheint an der Einfügemarke.";
 "The translator and the shortcut that translates selected text." = "Der Übersetzer und der Tastaturkurzbefehl, der ausgewählten Text übersetzt.";
 "The translator is part of Waft+" = "Der Übersetzer ist Teil von Waft+";
+"The translator needs a %@ API key." = "Der Übersetzer benötigt einen %@-API-Schlüssel.";
+"The translator needs a local server and model." = "Der Übersetzer benötigt einen lokalen Server und ein Modell.";
 "There's no speech in this file." = "In dieser Datei wird nicht gesprochen.";
 "These apps get their own mode." = "Diese Apps haben einen eigenen Modus.";
 "They work in any app." = "Sie funktionieren in jeder App.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Ausgewählten Text übersetzen";
 "Translate turns anything you say into %@." = "„Übersetzung“ gibt alles Gesagte auf %@ aus.";
 "Translate" = "Übersetzung";
+"Translates in its own window, and translates or fixes selected text in any app." = "Übersetzt in einem eigenen Fenster und übersetzt oder korrigiert ausgewählten Text in jeder App.";
 "Translates what you said into another language." = "Übersetzt das Gesagte in eine andere Sprache.";
 "Translating and fixing text is part of Waft+." = "Das Übersetzen und Korrigieren von Text ist Teil von Waft+.";
 "Translating into %@…" = "Wird in %@ übersetzt …";
@@ -404,6 +406,7 @@
 "Two-way" = "In beide Richtungen";
 "Type something to try" = "Tippe etwas zum Ausprobieren";
 "Type, paste, or hold %@ and speak" = "Tippe, setze Text ein oder halte %@ gedrückt und sprich";
+"Type, paste, or tap %@ and speak" = "Tippe, setze Text ein oder drücke %@ und sprich";
 "Unavailable: another app uses this shortcut. Choose another one." = "Nicht verfügbar: Eine andere App verwendet diesen Tastaturkurzbefehl. Wähle einen anderen.";
 "Unlock Waft+…" = "Waft+ freischalten …";
 "Updates" = "Updates";
@@ -444,7 +447,7 @@
 "Words" = "Wörter";
 "Write instructions once and dictate in your own style." = "Schreib Anweisungen einmal und diktiere in deinem eigenen Stil.";
 "Writing system" = "Schrift";
-"Writing" = "Text";
+"Writing" = "Schreiben";
 "You say" = "Du sagst";
 "You write" = "Du schreibst";
 "You're all set" = "Alles bereit";
@@ -455,8 +458,8 @@
 "Your own modes" = "Eigene Modi";
 "Your speech is recognized on this Mac." = "Die Spracherkennung läuft auf diesem Mac.";
 "Your words appear here" = "Deine Worte erscheinen hier";
-"add your %@ API key in Settings › AI Models" = "Füge deinen API-Schlüssel für %@ unter Einstellungen › KI-Modelle hinzu";
-"choose a local server and model in Settings › AI Models" = "Wähle unter Einstellungen › KI-Modelle einen lokalen Server und ein Modell aus";
+"add your %@ API key in Settings › AI Models" = "füge deinen API-Schlüssel für %@ unter Einstellungen › KI-Modelle hinzu";
+"choose a local server and model in Settings › AI Models" = "wähle unter Einstellungen › KI-Modelle einen lokalen Server und ein Modell aus";
 "days in a row" = "Tage in Folge";
 "detected" = "erkannt";
 "dictations" = "Diktate";
@@ -470,8 +473,8 @@
 "right ⌘" = "⌘ rechts";
 "right ⌥" = "⌥ rechts";
 "saved over typing" = "gegenüber dem Tippen gespart";
-"the local server isn't running" = "Der lokale Server läuft nicht";
+"the local server isn't running" = "der lokale Server läuft nicht";
 "um so I think we should uh meet on Friday" = "äh also ich glaube wir sollten uns äh am Freitag treffen";
 "words a minute" = "Wörter pro Minute";
 "words" = "Wörter";
-"you're offline" = "Du bist offline";
+"you're offline" = "du bist offline";

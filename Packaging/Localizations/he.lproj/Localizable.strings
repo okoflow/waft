@@ -16,15 +16,15 @@
 "1 month" = "חודש אחד";
 "1 week" = "שבוע אחד";
 "1 year" = "שנה אחת";
-"A soft click when recording starts and stops." = "נקישה עדינה בתחילת ההקלטה ובסופה.";
+"A soft chime when recording starts and stops." = "צליל עדין בתחילת ההקלטה ובסופה.";
 "AI Models" = "מודלי בינה מלאכותית";
 "AI model" = "מודל בינה מלאכותית";
-"AI modes and editing by voice use this model." = "מצבי בינה מלאכותית ועריכה קולית משתמשים במודל זה.";
 "AI modes keep the model chosen in AI Models." = "מצבי בינה מלאכותית ממשיכים להשתמש במודל שנבחר ב״מודלי בינה מלאכותית״.";
 "AI modes need Waft+" = "מצבי בינה מלאכותית דורשים Waft+‎";
 "AI modes need a %@ API key." = "מצבי בינה מלאכותית דורשים מפתח API של %@.";
 "AI modes need a local server and model." = "מצבי בינה מלאכותית דורשים שרת מקומי ומודל.";
 "AI modes" = "מצבי בינה מלאכותית";
+"AI modes, editing by voice, and the translator use this model." = "מצבי בינה מלאכותית, עריכה קולית והמתרגם משתמשים במודל זה.";
 "API key" = "מפתח API";
 "About" = "מידע";
 "Accessibility" = "נגישות";
@@ -80,9 +80,9 @@
 "Clear" = "ניקוי";
 "Click the box, hold %@, and say “Hello, Waft”." = "יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
-"Click to copy all" = "לחצו להעתקת הכול";
-"Click to copy" = "לחצו להעתקה";
-"Click to copy, or select a part" = "לחצו להעתקה, או בחרו חלק";
+"Click to copy all" = "לחיצה להעתקת הכול";
+"Click to copy" = "לחיצה להעתקה";
+"Click to copy, or select a part" = "לחיצה להעתקה, או בחירת חלק";
 "Click, then press the key to use" = "יש ללחוץ כאן ואז על המקש הרצוי";
 "Click, then press the shortcut to use" = "יש ללחוץ כאן ואז על הקיצור הרצוי";
 "Continue" = "המשך";
@@ -104,7 +104,7 @@
 "Delete “%@”?" = "למחוק את ״%@״?";
 "Detect language" = "זיהוי שפה";
 "Detect" = "זיהוי";
-"Development build" = "גירסת פיתוח";
+"Development build" = "גרסת פיתוח";
 "Dictate in any app instead of typing." = "ניתן להכתיב בכל יישום במקום להקליד.";
 "Dictation key" = "מקש הכתבה";
 "Dictation" = "הכתבה";
@@ -140,7 +140,7 @@
 "Forever" = "לצמיתות";
 "Formal" = "רשמי";
 "Free trial ends %@." = "תקופת הניסיון ללא תשלום תסתיים %@.";
-"Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגירסת בטא.";
+"Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגרסת בטא.";
 "General" = "כללי";
 "Get Started" = "התחלה";
 "Get an API key" = "קבלת מפתח API";
@@ -257,6 +257,7 @@
 "Relaunch" = "הפעלה מחדש";
 "Remove %@" = "הסרת %@";
 "Remove Key" = "הסרת המפתח";
+"Remove Key…" = "הסרת המפתח…";
 "Remove License" = "הסרת הרישיון";
 "Remove License…" = "הסרת הרישיון…";
 "Remove the API key?" = "להסיר את מפתח ה-API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "הסרת המונח";
 "Removes fillers and false starts, and fixes grammar and tone." = "מסיר מילות מילוי והתחלות שגויות, ומתקן דקדוק וטון.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "מסיר מילות מילוי והתחלות שגויות, מתקן דקדוק ושומר על שפת הדיבור.";
-"Remove…" = "הסרה…";
 "Replace the key" = "החלפת המפתח";
 "Replaces the selection with its translation." = "מחליף את המלל שנבחר בתרגום שלו.";
 "Reset Statistics" = "איפוס הסטטיסטיקה";
@@ -282,7 +282,6 @@
 "Right Shift" = "מקש Shift הימני";
 "Run Again" = "הפעלה חוזרת";
 "Run it to see what Waft writes." = "יש להפעיל כדי לראות מה Waft כותב.";
-"Run the mode to see what it writes." = "יש להפעיל את המצב כדי לראות מה הוא כותב.";
 "Run" = "הפעלה";
 "Running" = "פועל";
 "Running, but no models are loaded" = "פועל, אך לא נטענו מודלים";
@@ -342,7 +341,7 @@
 "Text in any language becomes %@." = "מלל בכל שפה מתורגם ל%@.";
 "Text to paste" = "מלל להדבקה";
 "Text to translate" = "מלל לתרגום";
-"Text" = "טקסט";
+"Text" = "מלל";
 "That doesn't look like a Waft license key." = "זה לא נראה כמו מפתח רישיון של Waft.";
 "That key is already in use. Choose another one." = "מקש זה כבר בשימוש. יש לבחור מקש אחר.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "מקש זה מקליד מלל. יש ללחוץ על Option, Command, Shift, Control, Fn או על מקש פונקציה.";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "למודל זיהוי הדיבור חסר רכיב ה-tokenizer.";
 "The speech model isn't available. Retry from the menu." = "מודל זיהוי הדיבור אינו זמין. ניתן לנסות שוב מהתפריט.";
 "The speech model isn't loaded." = "מודל זיהוי הדיבור לא נטען.";
-"The speech model isn't ready yet" = "מודל זיהוי הדיבור עדיין לא מוכן";
+"The speech model isn't ready yet." = "מודל זיהוי הדיבור עדיין לא מוכן.";
 "The text appears at the cursor." = "המלל מופיע במיקום הסמן.";
 "The translator and the shortcut that translates selected text." = "המתרגם והקיצור שמתרגם את המלל שנבחר.";
 "The translator is part of Waft+" = "המתרגם כלול ב-Waft+‎";
+"The translator needs a %@ API key." = "המתרגם דורש מפתח API של %@.";
+"The translator needs a local server and model." = "המתרגם דורש שרת מקומי ומודל.";
 "There's no speech in this file." = "אין דיבור בקובץ זה.";
 "These apps get their own mode." = "ליישומים אלה יש מצב משלהם.";
 "They work in any app." = "הם פועלים בכל יישום.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "תרגום המלל שנבחר";
 "Translate turns anything you say into %@." = "במצב ״תרגום״, כל מה שנאמר מתורגם ל%@.";
 "Translate" = "תרגום";
+"Translates in its own window, and translates or fixes selected text in any app." = "מתרגם בחלון משלו, ומתרגם או מתקן מלל שנבחר בכל יישום.";
 "Translates what you said into another language." = "מתרגם את מה שנאמר לשפה אחרת.";
 "Translating and fixing text is part of Waft+." = "תרגום ותיקון מלל כלולים ב-Waft+‎.";
 "Translating into %@…" = "מתרגם ל%@…";
@@ -404,6 +406,7 @@
 "Two-way" = "דו-כיווני";
 "Type something to try" = "יש להקליד משהו לניסיון";
 "Type, paste, or hold %@ and speak" = "יש להקליד, להדביק או להחזיק את %@ ולדבר";
+"Type, paste, or tap %@ and speak" = "יש להקליד, להדביק או ללחוץ על %@ ולדבר";
 "Unavailable: another app uses this shortcut. Choose another one." = "לא זמין: יישום אחר משתמש בקיצור הזה. יש לבחור קיצור אחר.";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
 "Updates" = "עדכונים";
@@ -412,7 +415,7 @@
 "Used Light mode: %@" = "הופעל מצב ״בסיסי״: %@";
 "Used by %@ on this Mac." = "מועברות אל %@ ב-Mac זה.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "נעשה שימוש במפתח API משלך. רק המלל נשלח אל %@, אף פעם לא השמע.";
-"Version %@" = "גירסה %@";
+"Version %@" = "גרסה %@";
 "Voice" = "קול";
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";

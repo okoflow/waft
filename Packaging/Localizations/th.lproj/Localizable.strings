@@ -16,15 +16,15 @@
 "1 month" = "1 เดือน";
 "1 week" = "1 สัปดาห์";
 "1 year" = "1 ปี";
-"A soft click when recording starts and stops." = "เสียงคลิกเบาๆ เมื่อเริ่มและหยุดบันทึกเสียง";
+"A soft chime when recording starts and stops." = "เสียงกริ่งเบาๆ เมื่อเริ่มและหยุดบันทึกเสียง";
 "AI Models" = "โมเดล AI";
 "AI model" = "โมเดล AI";
-"AI modes and editing by voice use this model." = "โหมด AI และการแก้ไขด้วยเสียงจะใช้โมเดลนี้";
 "AI modes keep the model chosen in AI Models." = "โหมด AI ยังคงใช้โมเดลที่เลือกไว้ใน “โมเดล AI”";
 "AI modes need Waft+" = "โหมด AI ต้องใช้ Waft+";
 "AI modes need a %@ API key." = "โหมด AI ต้องใช้คีย์ API ของ %@";
 "AI modes need a local server and model." = "โหมด AI ต้องใช้เซิร์ฟเวอร์ในเครื่องและโมเดล";
 "AI modes" = "โหมด AI";
+"AI modes, editing by voice, and the translator use this model." = "โหมด AI การแก้ไขด้วยเสียง และตัวแปลภาษาจะใช้โมเดลนี้";
 "API key" = "คีย์ API";
 "About" = "เกี่ยวกับ";
 "Accessibility" = "การช่วยการเข้าถึง";
@@ -32,7 +32,7 @@
 "Accurate" = "แม่นยำ";
 "Activate" = "เปิดใช้งาน";
 "Add App…" = "เพิ่มแอป…";
-"Add Command, Control, or Option, or press a function key." = "เพิ่มปุ่ม Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น";
+"Add Command, Control, or Option, or press a function key." = "เพิ่มปุ่ม Command, Control หรือ Option หรือกดปุ่มฟังก์ชัน";
 "Add Language" = "เพิ่มภาษา";
 "Add Snippet" = "เพิ่มข้อความสำเร็จรูป";
 "Add Term" = "เพิ่มคำศัพท์";
@@ -231,8 +231,8 @@
 "Play sounds" = "เล่นเสียง";
 "Preparing the speech model, about a minute the first time…" = "กำลังเตรียมโมเดลจำเสียงพูด ครั้งแรกจะใช้เวลาประมาณหนึ่งนาที…";
 "Preparing the speech model…" = "กำลังเตรียมโมเดลจำเสียงพูด…";
-"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
-"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "กดปุ่มพร้อมกับ Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
+"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชัน กด Esc เพื่อยกเลิก";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "กดปุ่มพร้อมกับ Command, Control หรือ Option หรือกดปุ่มฟังก์ชัน กด Esc เพื่อยกเลิก";
 "Press a key…" = "กดปุ่ม…";
 "Press a shortcut…" = "กดปุ่มลัด…";
 "Press the key to use, or Esc to cancel" = "กดปุ่มที่จะใช้ หรือกด Esc เพื่อยกเลิก";
@@ -257,6 +257,7 @@
 "Relaunch" = "เปิดใหม่";
 "Remove %@" = "เอาภาษา%@ออก";
 "Remove Key" = "เอาคีย์ออก";
+"Remove Key…" = "เอาคีย์ออก…";
 "Remove License" = "เอาใบอนุญาตออก";
 "Remove License…" = "เอาใบอนุญาตออก…";
 "Remove the API key?" = "เอาคีย์ API ออกหรือไม่";
@@ -265,7 +266,6 @@
 "Remove the term" = "เอาคำศัพท์ออก";
 "Removes fillers and false starts, and fixes grammar and tone." = "ตัดคำติดปากและการพูดซ้ำออก พร้อมแก้ไวยากรณ์และน้ำเสียง";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "ตัดคำติดปากและการพูดซ้ำออก แก้ไวยากรณ์ และคงภาษาเดิมของคุณไว้";
-"Remove…" = "เอาออก…";
 "Replace the key" = "แทนที่คีย์";
 "Replaces the selection with its translation." = "แทนที่ข้อความที่เลือกด้วยคำแปล";
 "Reset Statistics" = "รีเซ็ตสถิติ";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift ขวา";
 "Run Again" = "สั่งทำงานอีกครั้ง";
 "Run it to see what Waft writes." = "สั่งทำงานเพื่อดูว่า Waft จะเขียนออกมาอย่างไร";
-"Run the mode to see what it writes." = "สั่งให้โหมดทำงานเพื่อดูว่าจะเขียนออกมาอย่างไร";
 "Run" = "สั่งทำงาน";
 "Running" = "กำลังทำงาน";
 "Running, but no models are loaded" = "กำลังทำงาน แต่ไม่ได้โหลดโมเดลไว้";
@@ -345,7 +344,7 @@
 "Text" = "ข้อความ";
 "That doesn't look like a Waft license key." = "ดูเหมือนว่านี่ไม่ใช่คีย์ใบอนุญาตของ Waft";
 "That key is already in use. Choose another one." = "ปุ่มนั้นถูกใช้อยู่แล้ว เลือกปุ่มอื่น";
-"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชั่น";
+"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชัน";
 "That shortcut is already used for “%@”. Choose another one." = "ปุ่มลัดนี้ถูกใช้กับ “%@” อยู่แล้ว เลือกปุ่มลัดอื่น";
 "The chosen microphone can't be used." = "ไม่สามารถใช้ไมโครโฟนที่เลือกได้";
 "The file has no sound to transcribe." = "ไฟล์นี้ไม่มีเสียงให้ถอด";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "โมเดลจำเสียงพูดไม่มีตัวแบ่งโทเค็น";
 "The speech model isn't available. Retry from the menu." = "โมเดลจำเสียงพูดไม่พร้อมใช้งาน ลองอีกครั้งจากเมนู";
 "The speech model isn't loaded." = "ยังไม่ได้โหลดโมเดลจำเสียงพูด";
-"The speech model isn't ready yet" = "โมเดลจำเสียงพูดยังไม่พร้อม";
+"The speech model isn't ready yet." = "โมเดลจำเสียงพูดยังไม่พร้อม";
 "The text appears at the cursor." = "ข้อความจะปรากฏที่เคอร์เซอร์";
 "The translator and the shortcut that translates selected text." = "ตัวแปลภาษาและปุ่มลัดที่แปลข้อความที่เลือก";
 "The translator is part of Waft+" = "ตัวแปลภาษาเป็นส่วนหนึ่งของ Waft+";
+"The translator needs a %@ API key." = "ตัวแปลภาษาต้องใช้คีย์ API ของ %@";
+"The translator needs a local server and model." = "ตัวแปลภาษาต้องใช้เซิร์ฟเวอร์ในเครื่องและโมเดล";
 "There's no speech in this file." = "ไม่มีเสียงพูดในไฟล์นี้";
 "These apps get their own mode." = "แอปเหล่านี้จะใช้โหมดของตัวเอง";
 "They work in any app." = "ใช้ได้ในทุกแอป";
@@ -388,6 +389,7 @@
 "Translate selected text" = "แปลข้อความที่เลือก";
 "Translate turns anything you say into %@." = "“แปลภาษา” จะแปลทุกสิ่งที่คุณพูดเป็นภาษา%@";
 "Translate" = "แปลภาษา";
+"Translates in its own window, and translates or fixes selected text in any app." = "แปลในหน้าต่างของตัวเอง และแปลหรือตรวจแก้ข้อความที่เลือกในแอปใดก็ได้";
 "Translates what you said into another language." = "แปลสิ่งที่คุณพูดเป็นภาษาอื่น";
 "Translating and fixing text is part of Waft+." = "การแปลและการตรวจแก้ข้อความเป็นส่วนหนึ่งของ Waft+";
 "Translating into %@…" = "กำลังแปลเป็นภาษา%@…";
@@ -404,6 +406,7 @@
 "Two-way" = "สองทาง";
 "Type something to try" = "ลองพิมพ์อะไรสักอย่าง";
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
+"Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
 "Updates" = "รายการอัปเดต";
@@ -412,7 +415,7 @@
 "Used Light mode: %@" = "ใช้โหมด “ปรับเล็กน้อย” แทน: %@";
 "Used by %@ on this Mac." = "ใช้โดย %@ บน Mac เครื่องนี้";
 "Uses your own API key. Only the text goes to %@, never the audio." = "ใช้คีย์ API ของคุณเอง ส่งเฉพาะข้อความไปยัง %@ ไม่ส่งเสียง";
-"Version %@" = "เวอร์ชั่น %@";
+"Version %@" = "เวอร์ชัน %@";
 "Voice" = "เสียง";
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";

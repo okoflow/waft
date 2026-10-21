@@ -5,17 +5,14 @@ struct SettingsSidebar: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Metrics.sidebarRowSpacing) {
-            ForEach(Array(SidebarGroup.all.enumerated()), id: \.offset) { index, group in
+            ForEach(SidebarGroup.all, id: \.panes) { group in
                 if let title = group.title {
                     Text(title)
                         .font(.sidebarGroup)
                         .foregroundStyle(Palette.secondaryText)
                         .padding(.leading, Metrics.sidebarRowInset)
-                        .padding(.top, index == 0 ? 0 : Metrics.sidebarGroupSpacing)
+                        .padding(.top, Metrics.sidebarGroupSpacing)
                         .accessibilityAddTraits(.isHeader)
-                } else if index > 0 {
-                    Spacer()
-                        .frame(height: Metrics.sidebarGroupSpacing)
                 }
 
                 ForEach(group.panes, id: \.self) { pane in

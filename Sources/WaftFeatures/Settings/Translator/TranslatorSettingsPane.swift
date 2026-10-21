@@ -4,6 +4,7 @@ import WaftCore
 struct TranslatorSettingsPane: View {
     @Bindable var settings: SettingsModel
 
+    let apiKeys: PerProvider<APIKeyModel>
     let shortcuts: GlobalShortcutController
     let shortcutRecorder: ShortcutRecorder
     let pro: ProModel
@@ -33,7 +34,7 @@ struct TranslatorSettingsPane: View {
 
         TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
 
-        TranslatorModelSection(settings: settings, state: state)
+        TranslatorModelSection(settings: settings, apiKeys: apiKeys, state: state)
 
         SettingsSection("Shortcuts", subtitle: "They work in any app.") {
             shortcutRow(.translator)
@@ -44,7 +45,7 @@ struct TranslatorSettingsPane: View {
         } footer: {
             Button("Open Translator", action: openTranslator)
         }
-        .onDisappear { shortcutRecorder.stop() }
+        .onDisappear(perform: shortcutRecorder.stop)
     }
 
     private func shortcutRow(_ action: ShortcutAction, description: LocalizedStringKey? = nil) -> some View {

@@ -16,15 +16,15 @@
 "1 month" = "1 måned";
 "1 week" = "1 uge";
 "1 year" = "1 år";
-"A soft click when recording starts and stops." = "Et blødt klik, når optagelsen starter og stopper.";
+"A soft chime when recording starts and stops." = "En blød klokketone, når optagelsen starter og stopper.";
 "AI Models" = "AI-modeller";
 "AI model" = "AI-model";
-"AI modes and editing by voice use this model." = "AI-tilstande og redigering med stemmen bruger denne model.";
 "AI modes keep the model chosen in AI Models." = "AI-tilstande bruger fortsat den model, der er valgt i AI-modeller.";
 "AI modes need Waft+" = "AI-tilstande kræver Waft+";
 "AI modes need a %@ API key." = "AI-tilstande kræver en API-nøgle til %@.";
 "AI modes need a local server and model." = "AI-tilstande kræver en lokal server og en model.";
 "AI modes" = "AI-tilstande";
+"AI modes, editing by voice, and the translator use this model." = "AI-tilstande, redigering med stemmen og oversætteren bruger denne model.";
 "API key" = "API-nøgle";
 "About" = "Om";
 "Accessibility" = "Tilgængelighed";
@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Henter talemodellen… %@";
 "Drop an audio or video file here" = "Træk et lyd- eller videoarkiv hertil";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Fjerner “øh” og “øhm” og tilføjer stort begyndelsesbogstav og punktum.";
-"Edit %@" = "Rediger “%@”";
+"Edit %@" = "Rediger %@";
 "Edit the mode" = "Rediger tilstanden";
 "Edit" = "Redigering";
 "Edited" = "Redigeret";
@@ -137,7 +137,7 @@
 "Fixing" = "Rettelse";
 "Fn" = "Fn";
 "Follows your instructions." = "Følger dine instruktioner.";
-"Forever" = "Uendeligt";
+"Forever" = "For altid";
 "Formal" = "Formel";
 "Free trial ends %@." = "Din gratis prøveperiode slutter %@.";
 "Free while Waft is in beta." = "Gratis, mens Waft er i beta.";
@@ -157,7 +157,7 @@
 "Instructions" = "Instruktioner";
 "It works in any app." = "Den virker i alle apps.";
 "Keep at most" = "Behold højst";
-"Keep dictations for" = "Behold dikteringer";
+"Keep dictations for" = "Behold dikteringer i";
 "Keep history" = "Gem historik";
 "Kept in the Keychain." = "Opbevares i nøgleringen.";
 "Key %lld" = "Tast %lld";
@@ -257,6 +257,7 @@
 "Relaunch" = "Start igen";
 "Remove %@" = "Fjern %@";
 "Remove Key" = "Fjern nøgle";
+"Remove Key…" = "Fjern nøgle…";
 "Remove License" = "Fjern licens";
 "Remove License…" = "Fjern licens…";
 "Remove the API key?" = "Fjern API-nøglen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Fjern udtrykket";
 "Removes fillers and false starts, and fixes grammar and tone." = "Fjerner fyldord og forsnakkelser og retter grammatik og tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Fjerner fyldord og forsnakkelser, retter grammatikken og bevarer dit sprog.";
-"Remove…" = "Fjern…";
 "Replace the key" = "Udskift nøglen";
 "Replaces the selection with its translation." = "Erstatter den markerede tekst med oversættelsen.";
 "Reset Statistics" = "Nulstil statistik";
@@ -282,7 +282,6 @@
 "Right Shift" = "Højre Skift";
 "Run Again" = "Kør igen";
 "Run it to see what Waft writes." = "Kør den for at se, hvad Waft skriver.";
-"Run the mode to see what it writes." = "Kør tilstanden for at se, hvad den skriver.";
 "Run" = "Kør";
 "Running" = "Kører";
 "Running, but no models are loaded" = "Kører, men ingen modeller er indlæst";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Talemodellen har ingen tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Talemodellen er ikke tilgængelig. Prøv igen fra menuen.";
 "The speech model isn't loaded." = "Talemodellen er ikke indlæst.";
-"The speech model isn't ready yet" = "Talemodellen er ikke klar endnu";
+"The speech model isn't ready yet." = "Talemodellen er ikke klar endnu.";
 "The text appears at the cursor." = "Teksten vises ved markøren.";
 "The translator and the shortcut that translates selected text." = "Oversætteren og genvejen, der oversætter markeret tekst.";
 "The translator is part of Waft+" = "Oversætteren er en del af Waft+";
+"The translator needs a %@ API key." = "Oversætteren kræver en API-nøgle til %@.";
+"The translator needs a local server and model." = "Oversætteren kræver en lokal server og en model.";
 "There's no speech in this file." = "Der er ingen tale i dette arkiv.";
 "These apps get their own mode." = "Disse apps får deres egen tilstand.";
 "They work in any app." = "De virker i alle apps.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Oversæt markeret tekst";
 "Translate turns anything you say into %@." = "“Oversættelse” oversætter alt, hvad du siger, til %@.";
 "Translate" = "Oversættelse";
+"Translates in its own window, and translates or fixes selected text in any app." = "Oversætter i sit eget vindue og oversætter eller retter markeret tekst i alle apps.";
 "Translates what you said into another language." = "Oversætter det, du har sagt, til et andet sprog.";
 "Translating and fixing text is part of Waft+." = "Oversættelse og rettelse af tekst er en del af Waft+.";
 "Translating into %@…" = "Oversætter til %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Tovejs";
 "Type something to try" = "Skriv noget for at prøve";
 "Type, paste, or hold %@ and speak" = "Skriv, sæt ind, eller hold %@ nede, og tal";
+"Type, paste, or tap %@ and speak" = "Skriv, sæt ind, eller tryk på %@, og tal";
 "Unavailable: another app uses this shortcut. Choose another one." = "Ikke tilgængelig: en anden app bruger denne genvej. Vælg en anden.";
 "Unlock Waft+…" = "Lås Waft+ op…";
 "Updates" = "Opdateringer";
@@ -444,7 +447,7 @@
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner én gang, og dikter i din egen stil.";
 "Writing system" = "Skriftsystem";
-"Writing" = "Tekst";
+"Writing" = "Skrivning";
 "You say" = "Du siger";
 "You write" = "Du skriver";
 "You're all set" = "Du er klar";

@@ -16,15 +16,15 @@
 "1 month" = "1 mois";
 "1 week" = "1 semaine";
 "1 year" = "1 an";
-"A soft click when recording starts and stops." = "Un léger clic au début et à la fin de l’enregistrement.";
+"A soft chime when recording starts and stops." = "Un léger carillon au début et à la fin de l’enregistrement.";
 "AI Models" = "Modèles d’IA";
 "AI model" = "Modèle d’IA";
-"AI modes and editing by voice use this model." = "Les modes IA et l’édition vocale utilisent ce modèle.";
 "AI modes keep the model chosen in AI Models." = "Les modes IA conservent le modèle choisi dans Modèles d’IA.";
 "AI modes need Waft+" = "les modes IA nécessitent Waft+";
 "AI modes need a %@ API key." = "Les modes IA nécessitent une clé API %@.";
 "AI modes need a local server and model." = "Les modes IA nécessitent un serveur local et un modèle.";
 "AI modes" = "Modes IA";
+"AI modes, editing by voice, and the translator use this model." = "Les modes IA, l’édition vocale et le traducteur utilisent ce modèle.";
 "API key" = "Clé API";
 "About" = "À propos";
 "Accessibility" = "Accessibilité";
@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Téléchargement du modèle vocal… %@";
 "Drop an audio or video file here" = "Déposez un fichier audio ou vidéo ici";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Supprime les « euh » et les « hum », ajoute une majuscule et un point.";
-"Edit %@" = "Modifier le mode %@";
+"Edit %@" = "Modifier « %@ »";
 "Edit the mode" = "Modifier le mode";
 "Edit" = "Édition";
 "Edited" = "Modifié";
@@ -213,7 +213,7 @@
 "Not running at this address" = "Introuvable à cette adresse";
 "Notices the dictation key and pastes the text where you type." = "Détecte la touche de dictée et colle le texte là où vous écrivez.";
 "Off" = "Désactivé";
-"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur le serveur à cette adresse ; le texte ne va que là.";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur le serveur à cette adresse ; le texte ne va que là.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur ce Mac ; le texte ne le quitte jamais.";
 "On macOS 27, it's under Device Control and Data Access." = "Sous macOS 27, ce réglage se trouve dans Contrôle de l’appareil et accès aux données.";
 "On-device dictation for macOS with AI cleanup." = "Dictée sur l’appareil pour macOS, avec mise au propre par l’IA.";
@@ -257,6 +257,7 @@
 "Relaunch" = "Relancer";
 "Remove %@" = "Supprimer « %@ »";
 "Remove Key" = "Supprimer la clé";
+"Remove Key…" = "Supprimer la clé…";
 "Remove License" = "Supprimer la licence";
 "Remove License…" = "Supprimer la licence…";
 "Remove the API key?" = "Supprimer la clé API ?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Supprimer le terme";
 "Removes fillers and false starts, and fixes grammar and tone." = "Supprime les mots parasites et les faux départs, corrige la grammaire et le ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Supprime les mots parasites et les faux départs, corrige la grammaire, conserve votre langue.";
-"Remove…" = "Supprimer…";
 "Replace the key" = "Remplacer la clé";
 "Replaces the selection with its translation." = "Remplace la sélection par sa traduction.";
 "Reset Statistics" = "Réinitialiser les statistiques";
@@ -282,7 +282,6 @@
 "Right Shift" = "Maj droite";
 "Run Again" = "Relancer";
 "Run it to see what Waft writes." = "Lancez-le pour voir ce que Waft écrit.";
-"Run the mode to see what it writes." = "Lancez le mode pour voir ce qu’il écrit.";
 "Run" = "Lancer";
 "Running" = "En cours d’exécution";
 "Running, but no models are loaded" = "En cours d’exécution, mais aucun modèle n’est chargé";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Le modèle vocal n’a pas de tokeniseur.";
 "The speech model isn't available. Retry from the menu." = "Le modèle vocal n’est pas disponible. Réessayez depuis le menu.";
 "The speech model isn't loaded." = "Le modèle vocal n’est pas chargé.";
-"The speech model isn't ready yet" = "Le modèle vocal n’est pas encore prêt";
+"The speech model isn't ready yet." = "Le modèle vocal n’est pas encore prêt.";
 "The text appears at the cursor." = "Le texte apparaît au point d’insertion.";
 "The translator and the shortcut that translates selected text." = "Le traducteur et le raccourci qui traduit le texte sélectionné.";
 "The translator is part of Waft+" = "Le traducteur fait partie de Waft+";
+"The translator needs a %@ API key." = "Le traducteur nécessite une clé API %@.";
+"The translator needs a local server and model." = "Le traducteur nécessite un serveur local et un modèle.";
 "There's no speech in this file." = "Ce fichier ne contient aucune parole.";
 "These apps get their own mode." = "Ces apps ont leur propre mode.";
 "They work in any app." = "Ils fonctionnent dans n’importe quelle app.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Traduire le texte sélectionné";
 "Translate turns anything you say into %@." = "Le mode Traduction traduit tout ce que vous dites en %@.";
 "Translate" = "Traduction";
+"Translates in its own window, and translates or fixes selected text in any app." = "Traduit dans sa propre fenêtre, et traduit ou corrige le texte sélectionné dans n’importe quelle app.";
 "Translates what you said into another language." = "Traduit ce que vous avez dit dans une autre langue.";
 "Translating and fixing text is part of Waft+." = "La traduction et la correction de texte font partie de Waft+.";
 "Translating into %@…" = "Traduction en %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Dans les deux sens";
 "Type something to try" = "Tapez quelque chose pour essayer";
 "Type, paste, or hold %@ and speak" = "Tapez, collez ou maintenez %@ et parlez";
+"Type, paste, or tap %@ and speak" = "Tapez, collez ou appuyez sur %@ et parlez";
 "Unavailable: another app uses this shortcut. Choose another one." = "Indisponible : une autre app utilise ce raccourci. Choisissez-en un autre.";
 "Unlock Waft+…" = "Débloquer Waft+…";
 "Updates" = "Mises à jour";
@@ -416,7 +419,7 @@
 "Voice" = "Voix";
 "Waft can't read this file." = "Waft ne peut pas lire ce fichier.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ne peut pas utiliser le micro. Autorisez-le dans Réglages › Général.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft la supprime du trousseau. Les modes IA utilisent le mode Léger jusqu’à ce que vous ajoutiez une clé.";
 "Waft is listening" = "Waft écoute";
 "Waft keeps no dictations while Keep history is off." = "Waft ne conserve aucune dictée tant que « Conserver l’historique » est désactivé.";
@@ -443,8 +446,8 @@
 "Words dictated each day for the last 7 days" = "Mots dictés chaque jour au cours des 7 derniers jours";
 "Words" = "Mots";
 "Write instructions once and dictate in your own style." = "Rédigez vos instructions une fois, puis dictez dans votre style.";
-"Writing system" = "Écriture";
-"Writing" = "Texte";
+"Writing system" = "Système d’écriture";
+"Writing" = "Écriture";
 "You say" = "Vous dites";
 "You write" = "Vous écrivez";
 "You're all set" = "Tout est prêt";
@@ -457,9 +460,9 @@
 "Your words appear here" = "Vos mots apparaîtront ici";
 "add your %@ API key in Settings › AI Models" = "ajoutez votre clé API %@ dans Réglages › Modèles d’IA";
 "choose a local server and model in Settings › AI Models" = "choisissez un serveur local et un modèle dans Réglages › Modèles d’IA";
-"days in a row" = "Jours d’affilée";
+"days in a row" = "jours d’affilée";
 "detected" = "détectée";
-"dictations" = "Dictées";
+"dictations" = "dictées";
 "hey can u send me the report by friday? thanks" = "salut tu peu menvoyer le rapport avant vendredi? merci";
 "left ⇧" = "⇧ gauche";
 "left ⌃" = "⌃ gauche";
@@ -469,9 +472,9 @@
 "right ⌃" = "⌃ droite";
 "right ⌘" = "⌘ droite";
 "right ⌥" = "⌥ droite";
-"saved over typing" = "Temps gagné sur la saisie";
+"saved over typing" = "temps gagné sur la saisie";
 "the local server isn't running" = "le serveur local n’est pas lancé";
 "um so I think we should uh meet on Friday" = "euh alors je pense qu’on devrait euh se voir vendredi";
-"words a minute" = "Mots par minute";
-"words" = "Mots";
+"words a minute" = "mots par minute";
+"words" = "mots";
 "you're offline" = "vous êtes hors ligne";

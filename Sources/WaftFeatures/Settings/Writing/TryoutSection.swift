@@ -6,7 +6,6 @@ struct TryoutSection: View {
 
     let sampleTitle: LocalizedStringKey
     let samplePrompt: LocalizedStringKey
-    let idleNote: LocalizedStringKey
     let run: () -> Void
 
     var body: some View {
@@ -41,7 +40,7 @@ struct TryoutSection: View {
     private var result: some View {
         switch tryout.phase {
         case .idle:
-            Text(idleNote)
+            Text("Run it to see what Waft writes.")
                 .font(.rowTitle)
                 .foregroundStyle(.tertiary)
 

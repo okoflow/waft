@@ -23,25 +23,14 @@ struct WritingSettingsPane: View {
         return .verbatim(String(localized: "Speak \(other) to get \(target), and \(target) to get \(other).").sentenceCased())
     }
 
-    private var setupNote: LocalizedStringKey? {
-        AIModelSetup.missingSetup(in: settings, apiKeys: apiKeys)
-    }
-
     private var appIdentifiers: [String] {
         settings.settings.appModes.bundleIdentifiers
     }
 
     var body: some View {
-        SettingsSection("Modes") {
+        ModelSetupSection("Modes", setup: .modes, settings: settings, apiKeys: apiKeys, state: state) {
             DividedForEach(Mode.builtIn, id: \.self) { mode in
                 ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
-            }
-        } footer: {
-            if let setupNote {
-                Text(setupNote)
-                    .detailText()
-
-                Button("Set Up…") { state.selection = .aiModels }
             }
         }
 
@@ -62,9 +51,14 @@ struct WritingSettingsPane: View {
         SettingsSection("Shortcut", subtitle: "It works in any app.") {
             ShortcutRow(action: .modeCycle, settings: settings, shortcuts: shortcuts, recorder: shortcutRecorder)
         }
-        .onDisappear { shortcutRecorder.stop() }
+        .onDisappear(perform: shortcutRecorder.stop)
 
-        TranslationSection(title: "Translation", subtitle: translationNote, translation: $settings.settings.translation)
+        TranslationSection(
+            title: "Translation",
+            subtitle: translationNote,
+            isPro: true,
+            translation: $settings.settings.translation,
+        )
 
         SettingsSection("Apps", subtitle: "These apps get their own mode.") {
             if appIdentifiers.isEmpty {
@@ -72,11 +66,11 @@ struct WritingSettingsPane: View {
             }
 
             DividedForEach(appIdentifiers, id: \.self) { bundleIdentifier in
-                AppModeRow(bundleIdentifier: bundleIdentifier, settings: settings)
+                AppModeRow(bundleIdentifier: bundleIdentifier, settings: settings, pro: pro, state: state)
             }
             .rowTransition()
         } footer: {
-            Button("Add App…", action: addApp)
+            Button("Add App…", action: chooseApp)
         }
         .motion(Motion.layout, value: appIdentifiers)
 
@@ -89,6 +83,12 @@ struct WritingSettingsPane: View {
         }
     }
 
+    func add(_ bundleIdentifier: String) {
+        guard settings.settings.appModes.mode(for: bundleIdentifier) == nil else { return }
+
+        settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
+    }
+
     private func addMode() {
         guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
@@ -97,7 +97,7 @@ struct WritingSettingsPane: View {
         state.editedMode = .custom(custom.id)
     }
 
-    private func addApp() {
+    private func chooseApp() {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.directoryURL = URL(filePath: "/Applications")
@@ -111,18 +111,24 @@ struct WritingSettingsPane: View {
             return
         }
 
-        settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
+        add(bundleIdentifier)
     }
 }
 
 private struct AppModeRow: View {
     let bundleIdentifier: String
     let settings: SettingsModel
+    let pro: ProModel
+    let state: SettingsWindowState
 
     private var mode: Binding<Mode> {
         Binding(
             get: { settings.settings.mode(for: bundleIdentifier) },
-            set: { settings.settings.appModes.set($0, for: bundleIdentifier) },
+            set: { mode in
+                guard state.passesWaftPlusGate(isUnlocked: !pro.locks(mode)) else { return }
+
+                settings.settings.appModes.set(mode, for: bundleIdentifier)
+            },
         )
     }
 
@@ -141,7 +147,7 @@ private struct AppModeRow: View {
             HStack(spacing: Metrics.controlSpacing) {
                 MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
                     ForEach(settings.settings.modes, id: \.self) { mode in
-                        Text(settings.settings.title(of: mode)).tag(mode)
+                        optionTitle(of: mode).tag(mode)
                     }
                 }
 
@@ -151,5 +157,13 @@ private struct AppModeRow: View {
             }
         }
         .settingsRowPadding()
+    }
+
+    private func optionTitle(of mode: Mode) -> Text {
+        let title = settings.settings.title(of: mode)
+
+        guard pro.locks(mode) else { return Text(title) }
+
+        return Text("\(title) (Waft+)")
     }
 }

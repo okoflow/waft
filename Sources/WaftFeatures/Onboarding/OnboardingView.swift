@@ -20,7 +20,7 @@ struct OnboardingView: View {
             OnboardingFooter(onboarding: model.onboarding)
         }
         .motion(Motion.page, value: model.onboarding.step)
-        .frame(width: 640, height: 540)
+        .frame(width: Metrics.onboardingSize.width, height: Metrics.onboardingSize.height)
         .windowChrome()
     }
 

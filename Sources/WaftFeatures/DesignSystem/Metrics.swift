@@ -21,6 +21,7 @@ enum Metrics {
     static let controlSpacing: CGFloat = 8
     static let inlineSpacing: CGFloat = 6
     static let labelSpacing: CGFloat = 2
+    static let heroSpacing: CGFloat = 4
     static let controlHeight: CGFloat = 24
     static let largeControlHeight: CGFloat = 32
     static let controlPadding: CGFloat = 12
@@ -54,6 +55,9 @@ enum Metrics {
     static let fileIconSize: CGFloat = 32
     static let dropZoneHeight: CGFloat = 220
     static let transcriptPadding: CGFloat = 12
+    static let settingsSize = CGSize(width: 820, height: 660)
+    static let settingsMinimumSize = CGSize(width: 760, height: 520)
+    static let transcriptionSize = CGSize(width: 600, height: 580)
     static let transcriptionMinimumSize = CGSize(width: 520, height: 480)
     static let translatorSize = CGSize(width: 900, height: 460)
     static let translatorMinimumSize = CGSize(width: 640, height: 340)
@@ -64,6 +68,7 @@ enum Metrics {
     static let swapButtonSize: CGFloat = 36
     static let languageListHeight: CGFloat = 300
     static let languageListWidth: CGFloat = 260
+    static let onboardingSize = CGSize(width: 640, height: 540)
     static let onboardingTopInset: CGFloat = 56
     static let onboardingSideInset: CGFloat = 72
     static let onboardingFooterInset: CGFloat = 28

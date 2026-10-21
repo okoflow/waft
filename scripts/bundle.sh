@@ -84,6 +84,7 @@ assemble_app() {
   cp "Packaging/${PRODUCT}-Info.plist" "${CONTENTS}/Info.plist"
   cp "Packaging/${PRODUCT}.icns" "${RESOURCES}/${PRODUCT}.icns"
   cp -R Packaging/Localizations/*.lproj "${RESOURCES}/"
+  cp Packaging/Sounds/*.aiff "${RESOURCES}/"
   cp LICENSE "${RESOURCES}/"
   print_acknowledgments >"${RESOURCES}/ACKNOWLEDGMENTS"
 

@@ -8,7 +8,7 @@ struct AboutSettingsPane: View {
     private static let copyright = Bundle.main.object(forInfoDictionaryKey: "NSHumanReadableCopyright") as? String
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: Metrics.heroSpacing) {
             AppIcon(size: Metrics.pageIconSize)
 
             Text("Waft")

@@ -25,7 +25,7 @@ struct ModeEditorPage: View {
     }
 
     var body: some View {
-        SettingsPage(.verbatim(settings.settings.title(of: mode)), needsWaftPlus: mode.usesAI, back: close) {
+        SettingsPage(.verbatim(settings.settings.title(of: mode)), needsWaftPlus: mode.usesAI, back: state.closeEditor) {
             if let custom {
                 Button("Delete Mode…", role: .destructive) { delete(custom) }
             } else {
@@ -50,7 +50,6 @@ struct ModeEditorPage: View {
                 tryout: tryout,
                 sampleTitle: "You say",
                 samplePrompt: "Say something to try",
-                idleNote: "Run the mode to see what it writes.",
             ) {
                 tryout.run(mode)
             }
@@ -75,10 +74,6 @@ struct ModeEditorPage: View {
         )
     }
 
-    private func close() {
-        state.editedMode = nil
-    }
-
     private func delete(_ custom: CustomMode) {
         let confirmation = Confirmation(
             message: String(localized: "Delete “\(settings.settings.title(of: mode))”?"),
@@ -88,7 +83,7 @@ struct ModeEditorPage: View {
 
         guard confirmation.ask() else { return }
 
-        close()
+        state.closeEditor()
         settings.settings.removeCustomMode(custom.id)
     }
 }

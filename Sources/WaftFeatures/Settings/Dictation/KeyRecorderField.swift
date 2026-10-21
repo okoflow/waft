@@ -19,7 +19,7 @@ struct KeyRecorderField: View {
             prompt: "Press a key…",
             rejections: recorder.rejections[purpose, default: 0],
             help: isRecording ? Text("Press the key to use, or Esc to cancel") : Text("Click, then press the key to use"),
-            label: purpose == .dictation ? Text("Dictation key") : Text("Editing key"),
+            label: Text(purpose.title),
         ) {
             if isRecording {
                 recorder.stop()

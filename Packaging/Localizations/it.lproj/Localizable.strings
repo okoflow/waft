@@ -16,15 +16,15 @@
 "1 month" = "1 mese";
 "1 week" = "1 settimana";
 "1 year" = "1 anno";
-"A soft click when recording starts and stops." = "Un leggero clic all’inizio e alla fine della registrazione.";
+"A soft chime when recording starts and stops." = "Un leggero rintocco all’inizio e alla fine della registrazione.";
 "AI Models" = "Modelli di IA";
 "AI model" = "Modello di IA";
-"AI modes and editing by voice use this model." = "Le modalità IA e la modifica a voce usano questo modello.";
 "AI modes keep the model chosen in AI Models." = "Le modalità IA mantengono il modello scelto in Modelli di IA.";
 "AI modes need Waft+" = "le modalità IA richiedono Waft+";
 "AI modes need a %@ API key." = "Le modalità IA richiedono una chiave API di %@.";
 "AI modes need a local server and model." = "Le modalità IA richiedono un server locale e un modello.";
 "AI modes" = "Modalità IA";
+"AI modes, editing by voice, and the translator use this model." = "Le modalità IA, la modifica a voce e il traduttore usano questo modello.";
 "API key" = "Chiave API";
 "About" = "Info";
 "Accessibility" = "Accessibilità";
@@ -257,6 +257,7 @@
 "Relaunch" = "Riavvia";
 "Remove %@" = "Rimuovi “%@”";
 "Remove Key" = "Rimuovi chiave";
+"Remove Key…" = "Rimuovi chiave…";
 "Remove License" = "Rimuovi licenza";
 "Remove License…" = "Rimuovi licenza…";
 "Remove the API key?" = "Vuoi rimuovere la chiave API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Rimuovi il termine";
 "Removes fillers and false starts, and fixes grammar and tone." = "Rimuove intercalari e ripensamenti, corregge grammatica e tono.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Rimuove intercalari e ripensamenti, corregge la grammatica, mantiene la tua lingua.";
-"Remove…" = "Rimuovi…";
 "Replace the key" = "Sostituisci la chiave";
 "Replaces the selection with its translation." = "Sostituisce la selezione con la sua traduzione.";
 "Reset Statistics" = "Azzera statistiche";
@@ -282,7 +282,6 @@
 "Right Shift" = "Maiuscole a destra";
 "Run Again" = "Esegui di nuovo";
 "Run it to see what Waft writes." = "Eseguilo per vedere cosa scrive Waft.";
-"Run the mode to see what it writes." = "Esegui la modalità per vedere cosa scrive.";
 "Run" = "Esegui";
 "Running" = "In esecuzione";
 "Running, but no models are loaded" = "In esecuzione, ma nessun modello caricato";
@@ -305,7 +304,7 @@
 "Sent to %@ with your text." = "Inviate a %@ insieme al tuo testo.";
 "Server address" = "Indirizzo del server";
 "Set Up…" = "Configura…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "In Impostazioni di Sistema › Tastiera, imposta il tasto 🌐 in modo che non faccia nulla.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "In Impostazioni di Sistema › Tastiera, imposta “Premi il tasto 🌐 per” su “Non fare nulla”.";
 "Settings…" = "Impostazioni…";
 "Setup needed" = "Configurazione necessaria";
 "Shortcut" = "Scorciatoia";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Il modello vocale non ha un tokenizer.";
 "The speech model isn't available. Retry from the menu." = "Il modello vocale non è disponibile. Riprova dal menu.";
 "The speech model isn't loaded." = "Il modello vocale non è caricato.";
-"The speech model isn't ready yet" = "Il modello vocale non è ancora pronto";
+"The speech model isn't ready yet." = "Il modello vocale non è ancora pronto.";
 "The text appears at the cursor." = "Il testo appare nel punto di inserimento.";
 "The translator and the shortcut that translates selected text." = "Il traduttore e la scorciatoia che traduce il testo selezionato.";
 "The translator is part of Waft+" = "Il traduttore fa parte di Waft+";
+"The translator needs a %@ API key." = "Il traduttore richiede una chiave API di %@.";
+"The translator needs a local server and model." = "Il traduttore richiede un server locale e un modello.";
 "There's no speech in this file." = "Questo file non contiene parlato.";
 "These apps get their own mode." = "Queste app hanno una modalità propria.";
 "They work in any app." = "Funzionano in qualsiasi app.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Traduci il testo selezionato";
 "Translate turns anything you say into %@." = "“Traduzione” trasforma tutto ciò che dici in %@.";
 "Translate" = "Traduzione";
+"Translates in its own window, and translates or fixes selected text in any app." = "Traduce in una finestra propria e traduce o corregge il testo selezionato in qualsiasi app.";
 "Translates what you said into another language." = "Traduce ciò che hai detto in un’altra lingua.";
 "Translating and fixing text is part of Waft+." = "La traduzione e la correzione del testo fanno parte di Waft+.";
 "Translating into %@…" = "Traduzione in %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Bidirezionale";
 "Type something to try" = "Scrivi qualcosa per provare";
 "Type, paste, or hold %@ and speak" = "Scrivi, incolla o tieni premuto %@ e parla";
+"Type, paste, or tap %@ and speak" = "Scrivi, incolla o premi %@ e parla";
 "Unavailable: another app uses this shortcut. Choose another one." = "Non disponibile: un’altra app usa questa scorciatoia. Scegline un’altra.";
 "Unlock Waft+…" = "Sblocca Waft+…";
 "Updates" = "Aggiornamenti";

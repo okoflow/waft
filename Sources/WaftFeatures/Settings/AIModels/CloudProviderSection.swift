@@ -34,7 +34,7 @@ private struct APIKeyRows: View {
     var body: some View {
         if apiKey.isSet {
             SettingsRow("Key saved", description: "Kept in the Keychain.") {
-                Button("Remove…", role: .destructive, action: confirmRemoval)
+                Button("Remove Key…", role: .destructive, action: confirmRemoval)
             }
             .rowTransition()
             RowDivider()
@@ -44,7 +44,7 @@ private struct APIKeyRows: View {
         HStack(spacing: Metrics.controlSpacing) {
             InputField("API key", prompt: prompt, text: $apiKey.draft, isSecure: true)
 
-            Button("Save") { apiKey.saveDraft() }
+            Button("Save", action: apiKey.saveDraft)
                 .disabled(!apiKey.canSaveDraft)
         }
         .settingsRowPadding()

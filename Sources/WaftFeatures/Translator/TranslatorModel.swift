@@ -20,6 +20,8 @@ final class TranslatorModel {
     private(set) var failure: String?
 
     @ObservationIgnored private var task: Task<Void, Never>?
+    @ObservationIgnored private var hasDroppedTranslation = false
+    @ObservationIgnored private var translatedInput = ""
 
     private let processor: TranscriptProcessor
     private let detector: any LanguageDetector
@@ -73,6 +75,10 @@ final class TranslatorModel {
         settings.settings.pushToTalkKey.shortTitle
     }
 
+    var startsDictationByTapping: Bool {
+        settings.settings.dictationStart == .tap
+    }
+
     var isLocked: Bool {
         !pro.isUnlocked
     }
@@ -108,7 +114,7 @@ final class TranslatorModel {
             settings.settings.translator.translation.target = from
         }
 
-        guard !output.isEmpty else {
+        guard !output.isEmpty, translatedInput == input else {
             translateNow()
 
             return
@@ -129,8 +135,19 @@ final class TranslatorModel {
     }
 
     func stop() {
-        task?.cancel()
+        guard let task else { return }
+
+        task.cancel()
+        self.task = nil
         isTranslating = false
+        hasDroppedTranslation = true
+    }
+
+    func resume() {
+        guard hasDroppedTranslation else { return }
+
+        hasDroppedTranslation = false
+        translateNow()
     }
 
     private func inputDidChange(from oldValue: String) {
@@ -149,6 +166,8 @@ final class TranslatorModel {
 
     private func schedule(after pause: Duration) {
         task?.cancel()
+        task = nil
+        hasDroppedTranslation = false
 
         let text = input
 
@@ -193,6 +212,7 @@ final class TranslatorModel {
             guard !Task.isCancelled else { return }
 
             output = translated
+            translatedInput = text
             failure = nil
         } catch {
             guard !Task.isCancelled else { return }
@@ -200,6 +220,7 @@ final class TranslatorModel {
             failure = RewriteFallback(error).reason(for: setup.provider).sentenceCased()
         }
 
+        task = nil
         isTranslating = false
     }
 }

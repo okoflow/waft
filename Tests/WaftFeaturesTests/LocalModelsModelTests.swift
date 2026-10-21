@@ -38,6 +38,33 @@ struct LocalModelsModelTests {
     }
 
     @Test
+    func `keeps the chosen model when the detected server lists it`() async {
+        settings.settings.localServer = LocalServer(baseURL: Self.lmStudio, model: "gemma3")
+        let localModels = LocalModelsModel(
+            browser: FakeLocalServerBrowser([Self.lmStudio: ["qwen3", "gemma3"]]),
+            settings: settings,
+        )
+        localModels.detect()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { localModels.serverState == .running })
+        #expect(settings.settings.localServer == LocalServer(baseURL: Self.lmStudio, model: "gemma3"))
+    }
+
+    @Test
+    func `checks the configured address when no known server answers`() async {
+        let remote = LocalServer(baseURL: "http://192.168.1.20:11434/v1", model: "qwen3")
+        settings.settings.localServer = remote
+        let browser = FakeLocalServerBrowser([remote.baseURL: ["qwen3"]])
+        let localModels = LocalModelsModel(browser: browser, settings: settings)
+        localModels.detect()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { localModels.serverState == .running })
+        #expect(localModels.serverModels == ["qwen3"])
+        #expect(browser.answered == LocalServer.knownServers.map(\.baseURL) + [remote.baseURL])
+        #expect(settings.settings.localServer == remote)
+    }
+
+    @Test
     func `shows no server running when none of the known servers answers`() async {
         let browser = FakeLocalServerBrowser([:])
         let localModels = LocalModelsModel(browser: browser, settings: settings)

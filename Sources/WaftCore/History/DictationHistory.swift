@@ -8,7 +8,7 @@ package struct DictationHistory: Codable, Equatable, Sendable {
         package let app: String?
 
         package var preview: String {
-            let line = text.replacingOccurrences(of: "\n", with: " ")
+            let line = String(text.map { $0.isNewline ? " " : $0 })
 
             return line.count > 50 ? String(line.prefix(49)) + "…" : line
         }

@@ -77,11 +77,10 @@ final class LocalModelsModel {
         for known in LocalServer.knownServers {
             guard !Task.isCancelled else { return }
 
-            var server = LocalServer(baseURL: known.baseURL)
             let models: [String]
 
             do throws(RewriteError) {
-                models = try await browser.models(at: server)
+                models = try await browser.models(at: LocalServer(baseURL: known.baseURL))
             } catch {
                 guard !Task.isCancelled else { return }
 
@@ -90,18 +89,40 @@ final class LocalModelsModel {
 
             guard !Task.isCancelled else { return }
 
-            if let model = models.first {
-                server.model = model
-            }
-
-            checkedAddress = server.baseURL
-            settings.settings.localServer = server
-            showRunning(with: models)
+            choose(known.baseURL, serving: models)
 
             return
         }
 
         guard !Task.isCancelled else { return }
+
+        await reportNoKnownServer()
+    }
+
+    private func choose(_ baseURL: String, serving models: [String]) {
+        let configured = settings.settings.localServer
+        var server = LocalServer(baseURL: baseURL)
+
+        if configured.baseURL == baseURL, models.contains(configured.model) {
+            server.model = configured.model
+        } else if let model = models.first {
+            server.model = model
+        }
+
+        checkedAddress = baseURL
+        settings.settings.localServer = server
+        showRunning(with: models)
+    }
+
+    private func reportNoKnownServer() async {
+        let configured = settings.settings.localServer
+
+        guard LocalServer.knownServers.contains(where: { $0.baseURL == configured.baseURL }) else {
+            checkedAddress = configured.baseURL
+            await checkServer(at: configured)
+
+            return
+        }
 
         showNotRunning()
     }

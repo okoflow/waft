@@ -16,15 +16,15 @@
 "1 month" = "1 месяц";
 "1 week" = "1 неделя";
 "1 year" = "1 год";
-"A soft click when recording starts and stops." = "Тихий щелчок в начале и в конце записи.";
+"A soft chime when recording starts and stops." = "Мягкий звон в начале и в конце записи.";
 "AI Models" = "ИИ-модели";
 "AI model" = "ИИ-модель";
-"AI modes and editing by voice use this model." = "ИИ-режимы и правка голосом используют эту модель.";
 "AI modes keep the model chosen in AI Models." = "ИИ-режимы используют модель, выбранную в разделе «ИИ-модели».";
 "AI modes need Waft+" = "для ИИ-режимов нужен Waft+";
 "AI modes need a %@ API key." = "Для ИИ-режимов нужен ключ API %@.";
 "AI modes need a local server and model." = "Для ИИ-режимов нужны локальный сервер и модель.";
 "AI modes" = "ИИ-режимы";
+"AI modes, editing by voice, and the translator use this model." = "ИИ-режимы, правка голосом и переводчик используют эту модель.";
 "API key" = "Ключ API";
 "About" = "О программе";
 "Accessibility" = "Универсальный доступ";
@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Загрузка модели речи… %@";
 "Drop an audio or video file here" = "Перетащите сюда аудио- или видеофайл";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Убирает «э-э» и «м-м», ставит заглавную букву и точку.";
-"Edit %@" = "Изменить режим «%@»";
+"Edit %@" = "Изменить «%@»";
 "Edit the mode" = "Изменить режим";
 "Edit" = "Правка";
 "Edited" = "Изменено";
@@ -257,6 +257,7 @@
 "Relaunch" = "Перезапустить";
 "Remove %@" = "Убрать «%@»";
 "Remove Key" = "Удалить ключ";
+"Remove Key…" = "Удалить ключ…";
 "Remove License" = "Удалить лицензию";
 "Remove License…" = "Удалить лицензию…";
 "Remove the API key?" = "Удалить ключ API?";
@@ -265,12 +266,11 @@
 "Remove the term" = "Удалить термин";
 "Removes fillers and false starts, and fixes grammar and tone." = "Убирает слова-паразиты и оговорки, исправляет грамматику и тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Убирает слова-паразиты и оговорки, исправляет грамматику, сохраняет ваш язык.";
-"Remove…" = "Удалить…";
 "Replace the key" = "Заменить ключ";
 "Replaces the selection with its translation." = "Заменяет выделенный текст его переводом.";
 "Reset Statistics" = "Сбросить статистику";
 "Reset Statistics…" = "Сбросить статистику…";
-"Reset the instructions of “%@”?" = "Сбросить инструкции режима «%@»?";
+"Reset the instructions of “%@”?" = "Сбросить инструкции «%@»?";
 "Reset to Default" = "Сбросить изменения";
 "Reset to Default…" = "Сбросить изменения…";
 "Reset your dictation statistics?" = "Сбросить статистику диктовки?";
@@ -282,7 +282,6 @@
 "Right Shift" = "Правый Shift";
 "Run Again" = "Ещё раз";
 "Run it to see what Waft writes." = "Запустите, чтобы увидеть, что напишет Waft.";
-"Run the mode to see what it writes." = "Запустите режим, чтобы увидеть результат.";
 "Run" = "Запустить";
 "Running" = "Работает";
 "Running, but no models are loaded" = "Работает, но модели не загружены";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "У модели речи нет токенизатора.";
 "The speech model isn't available. Retry from the menu." = "Модель речи недоступна. Повторите попытку в меню.";
 "The speech model isn't loaded." = "Модель речи не загружена в память.";
-"The speech model isn't ready yet" = "Модель речи ещё не готова";
+"The speech model isn't ready yet." = "Модель речи ещё не готова.";
 "The text appears at the cursor." = "Текст появится у курсора.";
 "The translator and the shortcut that translates selected text." = "Переводчик и сочетание клавиш, которое переводит выделенный текст.";
 "The translator is part of Waft+" = "Переводчик входит в Waft+";
+"The translator needs a %@ API key." = "Для переводчика нужен ключ API %@.";
+"The translator needs a local server and model." = "Для переводчика нужны локальный сервер и модель.";
 "There's no speech in this file." = "В этом файле нет речи.";
 "These apps get their own mode." = "У этих приложений свой режим.";
 "They work in any app." = "Работают в любом приложении.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Перевести выделенный текст";
 "Translate turns anything you say into %@." = "Всё сказанное переводится на %@.";
 "Translate" = "Перевод";
+"Translates in its own window, and translates or fixes selected text in any app." = "Переводит в своём окне, а также переводит или исправляет выделенный текст в любом приложении.";
 "Translates what you said into another language." = "Переводит сказанное на другой язык.";
 "Translating and fixing text is part of Waft+." = "Перевод и исправление текста входят в Waft+.";
 "Translating into %@…" = "Перевожу на %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Двусторонний";
 "Type something to try" = "Введите что-нибудь для проверки";
 "Type, paste, or hold %@ and speak" = "Введите, вставьте или удерживайте %@ и говорите";
+"Type, paste, or tap %@ and speak" = "Введите, вставьте или нажмите %@ и говорите";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: это сочетание использует другое приложение. Выберите другое.";
 "Unlock Waft+…" = "Разблокировать Waft+…";
 "Updates" = "Обновления";
@@ -444,7 +447,7 @@
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишите инструкции один раз и диктуйте в своём стиле.";
 "Writing system" = "Письменность";
-"Writing" = "Текст";
+"Writing" = "Написание";
 "You say" = "Вы говорите";
 "You write" = "Вы пишете";
 "You're all set" = "Всё готово";

@@ -16,15 +16,15 @@
 "1 month" = "1개월";
 "1 week" = "1주";
 "1 year" = "1년";
-"A soft click when recording starts and stops." = "녹음을 시작하고 멈출 때 작은 클릭음이 납니다.";
+"A soft chime when recording starts and stops." = "녹음을 시작하고 멈출 때 부드러운 알림음이 납니다.";
 "AI Models" = "AI 모델";
 "AI model" = "AI 모델";
-"AI modes and editing by voice use this model." = "AI 모드와 ‘음성으로 편집’에 이 모델을 사용합니다.";
 "AI modes keep the model chosen in AI Models." = "AI 모드는 ‘AI 모델’에서 선택한 모델을 그대로 사용합니다.";
 "AI modes need Waft+" = "AI 모드에는 Waft+가 필요함";
 "AI modes need a %@ API key." = "AI 모드에는 %@ API 키가 필요합니다.";
 "AI modes need a local server and model." = "AI 모드에는 로컬 서버와 모델이 필요합니다.";
 "AI modes" = "AI 모드";
+"AI modes, editing by voice, and the translator use this model." = "AI 모드, ‘음성으로 편집’, 번역기에 이 모델을 사용합니다.";
 "API key" = "API 키";
 "About" = "정보";
 "Accessibility" = "손쉬운 사용";
@@ -257,6 +257,7 @@
 "Relaunch" = "다시 실행";
 "Remove %@" = "%@ 제거";
 "Remove Key" = "키 제거";
+"Remove Key…" = "키 제거…";
 "Remove License" = "라이선스 제거";
 "Remove License…" = "라이선스 제거…";
 "Remove the API key?" = "API 키를 제거하겠습니까?";
@@ -265,12 +266,11 @@
 "Remove the term" = "용어 제거";
 "Removes fillers and false starts, and fixes grammar and tone." = "군말과 고쳐 말한 부분을 지우고 문법과 어조를 다듬습니다.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "군말과 고쳐 말한 부분을 지우고 문법을 바로잡으며, 언어는 그대로 둡니다.";
-"Remove…" = "제거…";
 "Replace the key" = "새 키로 교체";
 "Replaces the selection with its translation." = "선택한 텍스트를 번역문으로 바꿉니다.";
 "Reset Statistics" = "통계 재설정";
 "Reset Statistics…" = "통계 재설정…";
-"Reset the instructions of “%@”?" = "‘%@’ 모드의 지시문을 재설정하겠습니까?";
+"Reset the instructions of “%@”?" = "‘%@’의 지시문을 재설정하겠습니까?";
 "Reset to Default" = "기본값으로 재설정";
 "Reset to Default…" = "기본값으로 재설정…";
 "Reset your dictation statistics?" = "받아쓰기 통계를 재설정하겠습니까?";
@@ -282,7 +282,6 @@
 "Right Shift" = "오른쪽 Shift";
 "Run Again" = "다시 실행";
 "Run it to see what Waft writes." = "실행하면 Waft가 쓴 결과를 볼 수 있습니다.";
-"Run the mode to see what it writes." = "모드를 실행하면 결과를 볼 수 있습니다.";
 "Run" = "실행";
 "Running" = "실행 중";
 "Running, but no models are loaded" = "실행 중이지만 로드된 모델 없음";
@@ -293,7 +292,7 @@
 "Save" = "저장";
 "Saved only on this Mac." = "이 Mac에만 저장됩니다.";
 "Saving" = "보관";
-"Say something to try" = "시험해 볼 문장을 입력하세요";
+"Say something to try" = "말할 내용을 입력해 보세요";
 "Say the phrase on its own to paste the text." = "문구만 따로 말하면 해당 텍스트를 붙여넣습니다.";
 "Search languages" = "언어 검색";
 "Search" = "검색";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "음성 인식 모델에 토크나이저가 없습니다.";
 "The speech model isn't available. Retry from the menu." = "음성 인식 모델을 사용할 수 없습니다. 메뉴에서 다시 시도하세요.";
 "The speech model isn't loaded." = "음성 인식 모델이 로드되지 않았습니다.";
-"The speech model isn't ready yet" = "음성 인식 모델이 아직 준비되지 않았습니다";
+"The speech model isn't ready yet." = "음성 인식 모델이 아직 준비되지 않았습니다.";
 "The text appears at the cursor." = "커서 위치에 텍스트가 입력됩니다.";
 "The translator and the shortcut that translates selected text." = "번역기와 선택한 텍스트를 번역하는 단축키입니다.";
 "The translator is part of Waft+" = "번역기는 Waft+ 기능입니다";
+"The translator needs a %@ API key." = "번역기에는 %@ API 키가 필요합니다.";
+"The translator needs a local server and model." = "번역기에는 로컬 서버와 모델이 필요합니다.";
 "There's no speech in this file." = "이 파일에는 말소리가 없습니다.";
 "These apps get their own mode." = "다음 앱에는 각각의 모드가 적용됩니다.";
 "They work in any app." = "어떤 앱에서든 작동합니다.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "선택한 텍스트 번역";
 "Translate turns anything you say into %@." = "‘번역’ 모드는 말한 내용을 모두 %@로 번역합니다.";
 "Translate" = "번역";
+"Translates in its own window, and translates or fixes selected text in any app." = "별도 창에서 번역하고, 어떤 앱에서든 선택한 텍스트를 번역하거나 교정합니다.";
 "Translates what you said into another language." = "말한 내용을 다른 언어로 번역합니다.";
 "Translating and fixing text is part of Waft+." = "텍스트 번역과 교정은 Waft+ 기능입니다.";
 "Translating into %@…" = "%@로 번역 중…";
@@ -404,6 +406,7 @@
 "Two-way" = "양방향";
 "Type something to try" = "시험해 볼 내용을 입력하세요";
 "Type, paste, or hold %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 길게 누른 채 말하세요";
+"Type, paste, or tap %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 누르고 말하세요";
 "Unavailable: another app uses this shortcut. Choose another one." = "사용할 수 없음: 다른 앱에서 이 단축키를 사용하고 있습니다. 다른 단축키를 선택하세요.";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
 "Updates" = "업데이트";

@@ -52,7 +52,7 @@ private struct ProHero: View {
         HStack(spacing: Metrics.rowSpacing) {
             AppIcon(size: Metrics.cardIconSize)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: Metrics.heroSpacing) {
                 HStack(spacing: Metrics.inlineSpacing) {
                     Text(verbatim: "Waft")
                         .font(.proTitle)
@@ -101,6 +101,12 @@ private struct ProBenefit {
             tint: .blue,
             title: "Translate",
             detail: "Speak any of \(Language.allCases.count) languages and get another, one way or both.",
+        ),
+        ProBenefit(
+            symbolName: SettingsPane.translator.symbolName,
+            tint: SettingsPane.translator.tint,
+            title: "Translator",
+            detail: "Translates in its own window, and translates or fixes selected text in any app.",
         ),
         ProBenefit(
             symbolName: SettingsPane.aiModels.symbolName,

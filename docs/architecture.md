@@ -74,7 +74,8 @@ The tables list the folders whose names don't say enough.
 [Tests](../CONTRIBUTING.md#tests).
 
 **`Packaging`** holds the rest of the app bundle: `Waft-Info.plist`, the
-entitlements, the icon, the translations, and the Homebrew cask template.
+entitlements, the icon, the translations, the start and stop sounds, and the
+Homebrew cask template.
 **`scripts`** holds the shell scripts that `make` runs.
 
 ## The dictation flow
@@ -100,8 +101,9 @@ entitlements, the icon, the translations, and the Homebrew cask template.
    the selection read at the key press and the spoken instruction to the
    `TextRewriter`, and the answer replaces the selection. A failure pastes
    nothing.
-6. The outcome becomes a `HUDMessage`. Text that is pasted or copied becomes
-   the latest transcript and, unless it came from an edit, a history entry.
+6. The outcome becomes a `HUDMessage`. The text becomes the latest
+   transcript, even in a password field, and text that is pasted or copied
+   becomes a history entry unless it came from an edit.
 
 ## Invariants
 

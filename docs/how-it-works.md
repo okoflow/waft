@@ -40,8 +40,9 @@ Waft skips recordings without speech, such as silence, key clicks, or steady
 noise. The rest goes to the speech model you chose, run on Core ML by
 [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
-- **Language.** With one language pinned or enabled, Whisper decodes in it.
-  Otherwise it detects the language first, among those you enabled.
+- **Language.** With a **Spoken language** chosen or one language enabled,
+  Whisper decodes in it. Otherwise it detects the language first, among those
+  you enabled.
 - **Prompt.** Whisper first reads a short example sentence in the spoken
   language, except in Japanese, Korean, and Thai, then up to 200 characters of
   your dictionary terms.
@@ -63,9 +64,10 @@ The recognized text goes through five steps:
 2. If the whole text is a snippet phrase, Waft uses the snippet as it is and
    skips the steps below.
 3. The mode runs: Raw keeps the text, Light applies its rules, and the AI
-   modes ask the AI model you chose, unless nothing but hesitations was said.
+   modes ask the AI model you chose, unless nothing but hesitations was said
+   or they need Waft+.
 4. For Chinese and Serbian, Waft converts the result into your
-   [writing system](usage.md#languages).
+   [writing system](usage.md#languages), except what your own modes return.
 5. Dictionary terms apply again, and snippet phrases inside the text expand.
 
 ### Light
@@ -87,7 +89,8 @@ Light makes these changes and no others:
 ### The AI modes
 
 Clean, Formal, Translate, and your modes send the text, the spoken language,
-and the mode's instructions to the AI model you chose.
+the target language for Translate, and the mode's instructions to the AI model
+you chose.
 [Choosing the AI model](usage.md#choosing-the-ai-model) lists the models and
 their time limits. Waft marks the transcript as text to edit, never
 instructions to follow, so a dictated question stays a question.
@@ -128,8 +131,9 @@ Waft pastes through the clipboard rather than typing key by key:
 
 1. It waits up to 10 seconds for you to release the dictation key.
 2. It checks the focused field. A password field gets nothing, not even the
-   clipboard. If focus moved to another app or field, or Accessibility isn't
-   allowed, Waft copies the text and the HUD says "Copied: press ⌘V to paste".
+   clipboard. If **Paste into the focused field** is off, the key is still
+   held, focus moved to another app or field, or Accessibility isn't allowed,
+   Waft copies the text and the HUD says "Copied: press ⌘V to paste".
 3. It saves the clipboard, puts the text on it, and presses
    <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard
    layout, so Dvorak and Colemak work too.

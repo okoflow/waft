@@ -16,15 +16,15 @@
 "1 month" = "1 måned";
 "1 week" = "1 uke";
 "1 year" = "1 år";
-"A soft click when recording starts and stops." = "Et lavt klikk når opptaket starter og stopper.";
+"A soft chime when recording starts and stops." = "En myk klokketone når opptaket starter og stopper.";
 "AI Models" = "KI-modeller";
 "AI model" = "KI-modell";
-"AI modes and editing by voice use this model." = "KI-moduser og redigering med stemmen bruker denne modellen.";
 "AI modes keep the model chosen in AI Models." = "KI-modusene beholder modellen som er valgt i «KI-modeller».";
 "AI modes need Waft+" = "KI-moduser krever Waft+";
 "AI modes need a %@ API key." = "KI-moduser krever en API-nøkkel for %@.";
 "AI modes need a local server and model." = "KI-moduser krever en lokal tjener og en modell.";
 "AI modes" = "KI-moduser";
+"AI modes, editing by voice, and the translator use this model." = "KI-moduser, redigering med stemmen og oversetteren bruker denne modellen.";
 "API key" = "API-nøkkel";
 "About" = "Om";
 "Accessibility" = "Tilgjengelighet";
@@ -157,7 +157,7 @@
 "Instructions" = "Instruksjoner";
 "It works in any app." = "Den fungerer i alle apper.";
 "Keep at most" = "Behold høyst";
-"Keep dictations for" = "Behold dikteringer";
+"Keep dictations for" = "Behold dikteringer i";
 "Keep history" = "Lagre logg";
 "Kept in the Keychain." = "Oppbevares i nøkkelringen.";
 "Key %lld" = "Tast %lld";
@@ -213,7 +213,7 @@
 "Not running at this address" = "Kjører ikke på denne adressen";
 "Notices the dictation key and pastes the text where you type." = "Registrerer dikteringstasten og limer inn teksten der du skriver.";
 "Off" = "Av";
-"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på serveren på denne adressen; teksten sendes bare dit.";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på tjeneren på denne adressen; teksten sendes bare dit.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på denne Macen; teksten forlater den aldri.";
 "On macOS 27, it's under Device Control and Data Access." = "I macOS 27 finner du dette under Enhetskontroll og datatilgang.";
 "On-device dictation for macOS with AI cleanup." = "Lokal diktering for macOS med KI-opprydding.";
@@ -257,6 +257,7 @@
 "Relaunch" = "Start på nytt";
 "Remove %@" = "Fjern %@";
 "Remove Key" = "Fjern nøkkel";
+"Remove Key…" = "Fjern nøkkel…";
 "Remove License" = "Fjern lisens";
 "Remove License…" = "Fjern lisens…";
 "Remove the API key?" = "Vil du fjerne API-nøkkelen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Fjern termen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Fjerner fyllord og forsnakkelser og retter grammatikk og tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Fjerner fyllord og forsnakkelser, retter grammatikk og beholder språket ditt.";
-"Remove…" = "Fjern…";
 "Replace the key" = "Erstatt nøkkelen";
 "Replaces the selection with its translation." = "Erstatter det markerte med oversettingen.";
 "Reset Statistics" = "Nullstill statistikk";
@@ -282,7 +282,6 @@
 "Right Shift" = "Høyre Skift-tast";
 "Run Again" = "Kjør igjen";
 "Run it to see what Waft writes." = "Kjør den for å se hva Waft skriver.";
-"Run the mode to see what it writes." = "Kjør modusen for å se hva den skriver.";
 "Run" = "Kjør";
 "Running" = "Kjører";
 "Running, but no models are loaded" = "Kjører, men ingen modeller er lastet inn";
@@ -305,7 +304,7 @@
 "Sent to %@ with your text." = "Sendes til %@ sammen med teksten din.";
 "Server address" = "Tjeneradresse";
 "Set Up…" = "Konfigurer…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐 for å» til «ikke gjøre noe» i Systeminnstillinger › Tastatur.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐-tasten for å» til «Ikke gjøre noe» i Systeminnstillinger › Tastatur.";
 "Settings…" = "Innstillinger…";
 "Setup needed" = "Oppsett kreves";
 "Shortcut" = "Snarvei";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Talemodellen har ingen tokeniserer.";
 "The speech model isn't available. Retry from the menu." = "Talemodellen er ikke tilgjengelig. Prøv igjen fra menyen.";
 "The speech model isn't loaded." = "Talemodellen er ikke lastet inn.";
-"The speech model isn't ready yet" = "Talemodellen er ikke klar ennå";
+"The speech model isn't ready yet." = "Talemodellen er ikke klar ennå.";
 "The text appears at the cursor." = "Teksten vises ved markøren.";
 "The translator and the shortcut that translates selected text." = "Oversetteren og snarveien som oversetter markert tekst.";
 "The translator is part of Waft+" = "Oversetteren er en del av Waft+";
+"The translator needs a %@ API key." = "Oversetteren krever en API-nøkkel for %@.";
+"The translator needs a local server and model." = "Oversetteren krever en lokal tjener og en modell.";
 "There's no speech in this file." = "Det er ingen tale i denne filen.";
 "These apps get their own mode." = "Disse appene får sin egen modus.";
 "They work in any app." = "De fungerer i alle apper.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Oversett markert tekst";
 "Translate turns anything you say into %@." = "«Oversetting» gjør om alt du sier til %@.";
 "Translate" = "Oversetting";
+"Translates in its own window, and translates or fixes selected text in any app." = "Oversetter i eget vindu, og oversetter eller korrigerer markert tekst i alle apper.";
 "Translates what you said into another language." = "Oversetter det du sa, til et annet språk.";
 "Translating and fixing text is part of Waft+." = "Oversetting og korrigering av tekst er en del av Waft+.";
 "Translating into %@…" = "Oversetter til %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Toveis";
 "Type something to try" = "Skriv noe for å prøve";
 "Type, paste, or hold %@ and speak" = "Skriv, lim inn, eller hold nede %@ og snakk";
+"Type, paste, or tap %@ and speak" = "Skriv, lim inn, eller trykk på %@ og snakk";
 "Unavailable: another app uses this shortcut. Choose another one." = "Utilgjengelig: en annen app bruker denne snarveien. Velg en annen.";
 "Unlock Waft+…" = "Lås opp Waft+…";
 "Updates" = "Oppdateringer";

@@ -125,10 +125,10 @@ struct RecordingControllerTests {
     @Test
     func `refuses a trigger with its reason and ends it silently`() {
         let recordings = model()
-        recordings.refuse(Self.dictation, because: "The speech model isn't ready yet")
+        recordings.refuse(Self.dictation, because: "The speech model isn't ready yet.")
 
         #expect(!recordings.isRecording)
-        #expect(hud.content == .message(HUDMessage(kind: .information, title: "The speech model isn't ready yet")))
+        #expect(hud.content == .message(HUDMessage(kind: .information, title: "The speech model isn't ready yet.")))
 
         recordings.finish(releasedAt: 2)
 

@@ -16,15 +16,15 @@
 "1 month" = "1 månad";
 "1 week" = "1 vecka";
 "1 year" = "1 år";
-"A soft click when recording starts and stops." = "Ett mjukt klick när inspelningen startar och stoppar.";
+"A soft chime when recording starts and stops." = "Ett mjukt klingande när inspelningen startar och stoppar.";
 "AI Models" = "AI-modeller";
 "AI model" = "AI-modell";
-"AI modes and editing by voice use this model." = "AI-lägen och röstredigering använder den här modellen.";
 "AI modes keep the model chosen in AI Models." = "AI-lägen använder modellen som valts i ”AI-modeller”.";
 "AI modes need Waft+" = "AI-lägen kräver Waft+";
 "AI modes need a %@ API key." = "AI-lägen kräver en API-nyckel för %@.";
 "AI modes need a local server and model." = "AI-lägen kräver en lokal server och en modell.";
 "AI modes" = "AI-lägen";
+"AI modes, editing by voice, and the translator use this model." = "AI-lägen, röstredigering och översättaren använder den här modellen.";
 "API key" = "API-nyckel";
 "About" = "Om";
 "Accessibility" = "Hjälpmedel";
@@ -157,7 +157,7 @@
 "Instructions" = "Instruktioner";
 "It works in any app." = "Det fungerar i alla appar.";
 "Keep at most" = "Behåll högst";
-"Keep dictations for" = "Behåll dikteringar";
+"Keep dictations for" = "Behåll dikteringar i";
 "Keep history" = "Spara historik";
 "Kept in the Keychain." = "Sparas i nyckelringen.";
 "Key %lld" = "Tangent %lld";
@@ -257,6 +257,7 @@
 "Relaunch" = "Starta om";
 "Remove %@" = "Ta bort %@";
 "Remove Key" = "Ta bort nyckel";
+"Remove Key…" = "Ta bort nyckel…";
 "Remove License" = "Ta bort licens";
 "Remove License…" = "Ta bort licens…";
 "Remove the API key?" = "Vill du ta bort API-nyckeln?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Ta bort termen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Tar bort utfyllnadsord och felstarter och rättar grammatik och ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Tar bort utfyllnadsord och felstarter, rättar grammatik och behåller ditt språk.";
-"Remove…" = "Ta bort…";
 "Replace the key" = "Ersätt nyckeln";
 "Replaces the selection with its translation." = "Ersätter markeringen med dess översättning.";
 "Reset Statistics" = "Nollställ statistik";
@@ -282,7 +282,6 @@
 "Right Shift" = "Höger skifttangent";
 "Run Again" = "Kör igen";
 "Run it to see what Waft writes." = "Kör det för att se vad Waft skriver.";
-"Run the mode to see what it writes." = "Kör läget för att se vad det skriver.";
 "Run" = "Kör";
 "Running" = "Körs";
 "Running, but no models are loaded" = "Körs, men inga modeller är inlästa";
@@ -305,7 +304,7 @@
 "Sent to %@ with your text." = "Skickas till %@ med din text.";
 "Server address" = "Serveradress";
 "Set Up…" = "Ställ in…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”göra ingenting” i Systeminställningar › Tangentbord.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”Göra ingenting” i Systeminställningar › Tangentbord.";
 "Settings…" = "Inställningar…";
 "Setup needed" = "Inställning krävs";
 "Shortcut" = "Kortkommando";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Talmodellen saknar tokeniserare.";
 "The speech model isn't available. Retry from the menu." = "Talmodellen är inte tillgänglig. Försök igen från menyn.";
 "The speech model isn't loaded." = "Talmodellen är inte inläst.";
-"The speech model isn't ready yet" = "Talmodellen är inte redo än";
+"The speech model isn't ready yet." = "Talmodellen är inte redo än.";
 "The text appears at the cursor." = "Texten visas vid markören.";
 "The translator and the shortcut that translates selected text." = "Översättaren och kortkommandot som översätter markerad text.";
 "The translator is part of Waft+" = "Översättaren ingår i Waft+";
+"The translator needs a %@ API key." = "Översättaren kräver en API-nyckel för %@.";
+"The translator needs a local server and model." = "Översättaren kräver en lokal server och en modell.";
 "There's no speech in this file." = "Det finns inget tal i filen.";
 "These apps get their own mode." = "De här apparna får ett eget läge.";
 "They work in any app." = "De fungerar i alla appar.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Översätt markerad text";
 "Translate turns anything you say into %@." = "”Översättning” gör om allt du säger till %@.";
 "Translate" = "Översättning";
+"Translates in its own window, and translates or fixes selected text in any app." = "Översätter i ett eget fönster och översätter eller rättar markerad text i alla appar.";
 "Translates what you said into another language." = "Översätter det du sa till ett annat språk.";
 "Translating and fixing text is part of Waft+." = "Översättning och rättning av text ingår i Waft+.";
 "Translating into %@…" = "Översätter till %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Åt båda hållen";
 "Type something to try" = "Skriv något för att testa";
 "Type, paste, or hold %@ and speak" = "Skriv, klistra in eller håll ned %@ och tala";
+"Type, paste, or tap %@ and speak" = "Skriv, klistra in eller tryck på %@ och tala";
 "Unavailable: another app uses this shortcut. Choose another one." = "Inte tillgängligt: en annan app använder det här kortkommandot. Välj ett annat.";
 "Unlock Waft+…" = "Lås upp Waft+…";
 "Updates" = "Uppdateringar";
@@ -444,7 +447,7 @@
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner en gång och diktera i din egen stil.";
 "Writing system" = "Skriftsystem";
-"Writing" = "Text";
+"Writing" = "Skrivande";
 "You say" = "Du säger";
 "You write" = "Du skriver";
 "You're all set" = "Allt är klart";

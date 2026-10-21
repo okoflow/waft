@@ -15,7 +15,7 @@ struct TextTaskEditorPage: View {
     }
 
     var body: some View {
-        SettingsPage(.verbatim(kind.title), needsWaftPlus: true, back: state.closeEditor) {
+        SettingsPage(.verbatim(kind.title), back: state.closeEditor) {
             ResetInstructionsButton(
                 title: kind.title,
                 isCustomized: settings.settings.translator.instructions.isCustomized(kind),
@@ -29,7 +29,6 @@ struct TextTaskEditorPage: View {
                 tryout: tryout,
                 sampleTitle: "You write",
                 samplePrompt: "Type something to try",
-                idleNote: "Run it to see what Waft writes.",
             ) {
                 tryout.run(task: kind)
             }

@@ -8,7 +8,7 @@ extension LocalServer {
             base.removeLast()
         }
 
-        guard let url = URL(string: base + path) else { throw .unavailable }
+        guard let url = URL(string: base + path), url.host() != nil else { throw .unavailable }
 
         return url
     }

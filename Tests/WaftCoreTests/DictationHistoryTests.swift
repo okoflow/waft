@@ -67,6 +67,8 @@ struct DictationHistoryTests {
     @Test(arguments: [
         ("Short line.", "Short line."),
         ("Two\nlines", "Two lines"),
+        ("Windows\r\nlines", "Windows lines"),
+        ("Paragraph\u{2029}break", "Paragraph break"),
         (String(repeating: "a", count: 50), String(repeating: "a", count: 50)),
         (String(repeating: "a", count: 51), String(repeating: "a", count: 49) + "…"),
     ])

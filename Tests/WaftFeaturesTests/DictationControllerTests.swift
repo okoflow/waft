@@ -150,6 +150,26 @@ struct DictationControllerTests {
     }
 
     @Test
+    func `starts a new recording on the tap after a hands-free recording fails`() async throws {
+        settings.settings.dictationStart = .tap
+        let controller = await controller(watchdogInterval: 0)
+        await pressDictationKey(at: 0)
+        await releaseDictationKey(at: 0.1)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
+
+        recorder.send(.failed(RecordingID.none.next, .deviceUnavailable))
+
+        #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
+
+        try await Task.sleep(for: .milliseconds(100))
+        await pressDictationKey(at: 1)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { recorder.startedDevices.count == 2 })
+        #expect(controller.isRecording)
+    }
+
+    @Test
     func `finishes a recording whose key-up never arrives`() async {
         let controller = await controller(keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         await pressDictationKey(at: -1)
@@ -169,7 +189,9 @@ struct DictationControllerTests {
         #expect(transcriber.requests.map(\.vocabulary) == [["Okoflow"]])
         #expect(!controller.isRecording)
     }
+}
 
+extension DictationControllerTests {
     private func controller(
         isSpeechModelReady: Bool = true,
         permissions: PermissionMonitor = DictationControllerTests.permissions(microphone: .granted),

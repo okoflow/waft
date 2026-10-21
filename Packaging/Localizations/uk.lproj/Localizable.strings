@@ -16,15 +16,15 @@
 "1 month" = "1 місяць";
 "1 week" = "1 тиждень";
 "1 year" = "1 рік";
-"A soft click when recording starts and stops." = "Тихе клацання на початку й наприкінці запису.";
+"A soft chime when recording starts and stops." = "Мʼякий дзвін на початку й наприкінці запису.";
 "AI Models" = "Моделі ШІ";
 "AI model" = "Модель ШІ";
-"AI modes and editing by voice use this model." = "Режими ШІ й редагування голосом використовують цю модель.";
 "AI modes keep the model chosen in AI Models." = "Режими ШІ використовують модель, вибрану в розділі «Моделі ШІ».";
 "AI modes need Waft+" = "для режимів ШІ потрібен Waft+";
 "AI modes need a %@ API key." = "Для режимів ШІ потрібен ключ API %@.";
 "AI modes need a local server and model." = "Для режимів ШІ потрібні локальний сервер і модель.";
 "AI modes" = "Режими ШІ";
+"AI modes, editing by voice, and the translator use this model." = "Режими ШІ, редагування голосом і перекладач використовують цю модель.";
 "API key" = "Ключ API";
 "About" = "Про програму";
 "Accessibility" = "Доступність";
@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Викачування моделі мовлення… %@";
 "Drop an audio or video file here" = "Перетягніть сюди аудіо- або відеофайл";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Прибирає «е-е» і «м-м», ставить велику літеру й крапку.";
-"Edit %@" = "Змінити режим «%@»";
+"Edit %@" = "Змінити «%@»";
 "Edit the mode" = "Змінити режим";
 "Edit" = "Редагування";
 "Edited" = "Змінено";
@@ -159,7 +159,7 @@
 "Keep at most" = "Зберігати не більше";
 "Keep dictations for" = "Зберігати диктування";
 "Keep history" = "Зберігати історію";
-"Kept in the Keychain." = "Зберігається у вʼязці ключів.";
+"Kept in the Keychain." = "Зберігається в Ключарі.";
 "Key %lld" = "Клавіша %lld";
 "Key saved" = "Ключ збережено";
 "Language" = "Мова";
@@ -257,6 +257,7 @@
 "Relaunch" = "Перезапустити";
 "Remove %@" = "Вилучити «%@»";
 "Remove Key" = "Вилучити ключ";
+"Remove Key…" = "Вилучити ключ…";
 "Remove License" = "Вилучити ліцензію";
 "Remove License…" = "Вилучити ліцензію…";
 "Remove the API key?" = "Вилучити ключ API?";
@@ -265,12 +266,11 @@
 "Remove the term" = "Вилучити термін";
 "Removes fillers and false starts, and fixes grammar and tone." = "Прибирає слова-паразити й обмовки, виправляє граматику й тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Прибирає слова-паразити й обмовки, виправляє граматику, зберігає вашу мову.";
-"Remove…" = "Вилучити…";
 "Replace the key" = "Замінити ключ";
 "Replaces the selection with its translation." = "Замінює виділений текст його перекладом.";
 "Reset Statistics" = "Скинути статистику";
 "Reset Statistics…" = "Скинути статистику…";
-"Reset the instructions of “%@”?" = "Скинути інструкції режиму «%@»?";
+"Reset the instructions of “%@”?" = "Скинути інструкції «%@»?";
 "Reset to Default" = "Скинути до типових";
 "Reset to Default…" = "Скинути до типових…";
 "Reset your dictation statistics?" = "Скинути статистику диктування?";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift справа";
 "Run Again" = "Ще раз";
 "Run it to see what Waft writes." = "Запустіть, щоб побачити, що напише Waft.";
-"Run the mode to see what it writes." = "Запустіть режим, щоб побачити результат.";
 "Run" = "Запустити";
 "Running" = "Працює";
 "Running, but no models are loaded" = "Працює, але моделі не завантажено";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "Модель мовлення не має токенізатора.";
 "The speech model isn't available. Retry from the menu." = "Модель мовлення недоступна. Повторіть спробу з меню.";
 "The speech model isn't loaded." = "Модель мовлення не завантажено.";
-"The speech model isn't ready yet" = "Модель мовлення ще не готова";
+"The speech model isn't ready yet." = "Модель мовлення ще не готова.";
 "The text appears at the cursor." = "Текст зʼявиться там, де курсор.";
 "The translator and the shortcut that translates selected text." = "Перекладач і комбінація клавіш, яка перекладає виділений текст.";
 "The translator is part of Waft+" = "Перекладач входить до Waft+";
+"The translator needs a %@ API key." = "Для перекладача потрібен ключ API %@.";
+"The translator needs a local server and model." = "Для перекладача потрібні локальний сервер і модель.";
 "There's no speech in this file." = "У цьому файлі немає мовлення.";
 "These apps get their own mode." = "Ці програми мають власний режим.";
 "They work in any app." = "Працюють у будь-якій програмі.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Перекласти виділений текст";
 "Translate turns anything you say into %@." = "«Переклад» перекладає все сказане. Мова перекладу: %@.";
 "Translate" = "Переклад";
+"Translates in its own window, and translates or fixes selected text in any app." = "Перекладає у власному вікні, а також перекладає або виправляє виділений текст у будь-якій програмі.";
 "Translates what you said into another language." = "Перекладає сказане на іншу мову.";
 "Translating and fixing text is part of Waft+." = "Переклад і виправлення тексту входять до Waft+.";
 "Translating into %@…" = "Переклад: %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Двосторонній";
 "Type something to try" = "Введіть щось для перевірки";
 "Type, paste, or hold %@ and speak" = "Введіть, вставте або утримуйте %@ і говоріть";
+"Type, paste, or tap %@ and speak" = "Введіть, вставте або натисніть %@ і говоріть";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: цю комбінацію використовує інша програма. Виберіть іншу.";
 "Unlock Waft+…" = "Розблокувати Waft+…";
 "Updates" = "Оновлення";
@@ -417,7 +420,7 @@
 "Waft can't read this file." = "Waft не може прочитати цей файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не може використовувати мікрофон. Надайте доступ у Параметрах › Загальні.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не зміг прочитати збережену історію й залишив її копію. «Очистити історію» видалить обидві.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft видалить його з вʼязки ключів. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft видалить його з Ключаря. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
 "Waft is listening" = "Waft слухає";
 "Waft keeps no dictations while Keep history is off." = "Поки перемикач «Зберігати історію» вимкнений, Waft не зберігає диктувань.";
 "Waft listens for these languages." = "Waft розпізнає ці мови.";
@@ -444,7 +447,7 @@
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишіть інструкції один раз і диктуйте у своєму стилі.";
 "Writing system" = "Писемність";
-"Writing" = "Текст";
+"Writing" = "Написання";
 "You say" = "Ви кажете";
 "You write" = "Ви пишете";
 "You're all set" = "Усе готово";
@@ -457,7 +460,7 @@
 "Your words appear here" = "Тут зʼявляться ваші слова";
 "add your %@ API key in Settings › AI Models" = "додайте ключ API %@ у Параметрах › Моделі ШІ";
 "choose a local server and model in Settings › AI Models" = "виберіть локальний сервер і модель у Параметрах › Моделі ШІ";
-"days in a row" = "днів поспіль";
+"days in a row" = "дн. поспіль";
 "detected" = "визначено";
 "dictations" = "усього диктувань";
 "hey can u send me the report by friday? thanks" = "привіт скинь плз звіт до пʼятниці? дяки";

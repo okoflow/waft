@@ -96,33 +96,26 @@ package struct TranscriptProcessor: Sendable {
             return ProcessedText(text: text, mode: .raw)
 
         case .light:
-            return light(text, language: language)
+            return ProcessedText(text: light(text, language: language), mode: .light)
 
         case .clean, .formal, .translate, .custom:
             let lightened = light(text, language: language)
-            guard !lightened.text.isBlank else { return lightened }
-            guard allowsAI else { return light(text, language: language, fallback: .needsPro) }
+            guard !lightened.isBlank else { return ProcessedText(text: lightened, mode: .light) }
+            guard allowsAI else { return ProcessedText(text: lightened, mode: .light, fallback: .needsPro) }
 
-            return await cleanUp(text, mode: mode, language: language, setup: setup)
+            do throws(RewriteError) {
+                let kind = Self.kind(for: mode, language: language, setup: setup)
+                let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
+
+                return ProcessedText(text: rewritten, mode: mode)
+            } catch {
+                return ProcessedText(text: lightened, mode: .light, fallback: RewriteFallback(error))
+            }
         }
     }
 
-    private func cleanUp(_ text: String, mode: Mode, language: Language, setup: RewriteSetup) async -> ProcessedText {
-        let kind = Self.kind(for: mode, language: language, setup: setup)
-
-        do throws(RewriteError) {
-            let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
-
-            return ProcessedText(text: rewritten, mode: mode)
-        } catch {
-            return light(text, language: language, fallback: RewriteFallback(error))
-        }
-    }
-
-    private func light(_ text: String, language: Language, fallback: RewriteFallback? = nil) -> ProcessedText {
-        let cleaned = VoiceCommands.apply(LightModeRules.apply(text, language: language), language: language)
-
-        return ProcessedText(text: cleaned, mode: .light, fallback: fallback)
+    private func light(_ text: String, language: Language) -> String {
+        VoiceCommands.apply(LightModeRules.apply(text, language: language), language: language)
     }
 
     private func rewrite(

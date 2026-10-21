@@ -16,15 +16,15 @@
 "1 month" = "1 month";
 "1 week" = "1 week";
 "1 year" = "1 year";
-"A soft click when recording starts and stops." = "A soft click when recording starts and stops.";
+"A soft chime when recording starts and stops." = "A soft chime when recording starts and stops.";
 "AI Models" = "AI Models";
 "AI model" = "AI model";
-"AI modes and editing by voice use this model." = "AI modes and editing by voice use this model.";
 "AI modes keep the model chosen in AI Models." = "AI modes keep the model chosen in AI Models.";
 "AI modes need Waft+" = "AI modes need Waft+";
 "AI modes need a %@ API key." = "AI modes need a %@ API key.";
 "AI modes need a local server and model." = "AI modes need a local server and model.";
 "AI modes" = "AI modes";
+"AI modes, editing by voice, and the translator use this model." = "AI modes, editing by voice, and the translator use this model.";
 "API key" = "API key";
 "About" = "About";
 "Accessibility" = "Accessibility";
@@ -257,6 +257,7 @@
 "Relaunch" = "Relaunch";
 "Remove %@" = "Remove %@";
 "Remove Key" = "Remove Key";
+"Remove Key…" = "Remove Key…";
 "Remove License" = "Remove License";
 "Remove License…" = "Remove License…";
 "Remove the API key?" = "Remove the API key?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Remove the term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Removes fillers and false starts, and fixes grammar and tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Removes fillers and false starts, fixes grammar, keeps your language.";
-"Remove…" = "Remove…";
 "Replace the key" = "Replace the key";
 "Replaces the selection with its translation." = "Replaces the selection with its translation.";
 "Reset Statistics" = "Reset Statistics";
@@ -282,7 +282,6 @@
 "Right Shift" = "Right Shift";
 "Run Again" = "Run Again";
 "Run it to see what Waft writes." = "Run it to see what Waft writes.";
-"Run the mode to see what it writes." = "Run the mode to see what it writes.";
 "Run" = "Run";
 "Running" = "Running";
 "Running, but no models are loaded" = "Running, but no models are loaded";
@@ -364,10 +363,12 @@
 "The speech model has no tokenizer." = "The speech model has no tokenizer.";
 "The speech model isn't available. Retry from the menu." = "The speech model isn't available. Retry from the menu.";
 "The speech model isn't loaded." = "The speech model isn't loaded.";
-"The speech model isn't ready yet" = "The speech model isn't ready yet";
+"The speech model isn't ready yet." = "The speech model isn't ready yet.";
 "The text appears at the cursor." = "The text appears at the cursor.";
 "The translator and the shortcut that translates selected text." = "The translator and the shortcut that translates selected text.";
 "The translator is part of Waft+" = "The translator is part of Waft+";
+"The translator needs a %@ API key." = "The translator needs a %@ API key.";
+"The translator needs a local server and model." = "The translator needs a local server and model.";
 "There's no speech in this file." = "There's no speech in this file.";
 "These apps get their own mode." = "These apps get their own mode.";
 "They work in any app." = "They work in any app.";
@@ -388,6 +389,7 @@
 "Translate selected text" = "Translate selected text";
 "Translate turns anything you say into %@." = "Translate turns anything you say into %@.";
 "Translate" = "Translate";
+"Translates in its own window, and translates or fixes selected text in any app." = "Translates in its own window, and translates or fixes selected text in any app.";
 "Translates what you said into another language." = "Translates what you said into another language.";
 "Translating and fixing text is part of Waft+." = "Translating and fixing text is part of Waft+.";
 "Translating into %@…" = "Translating into %@…";
@@ -404,6 +406,7 @@
 "Two-way" = "Two-way";
 "Type something to try" = "Type something to try";
 "Type, paste, or hold %@ and speak" = "Type, paste, or hold %@ and speak";
+"Type, paste, or tap %@ and speak" = "Type, paste, or tap %@ and speak";
 "Unavailable: another app uses this shortcut. Choose another one." = "Unavailable: another app uses this shortcut. Choose another one.";
 "Unlock Waft+…" = "Unlock Waft+…";
 "Updates" = "Updates";

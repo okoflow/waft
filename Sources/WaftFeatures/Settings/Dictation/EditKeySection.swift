@@ -4,8 +4,6 @@ import WaftCore
 struct EditKeySection: View {
     let settings: SettingsModel
     let keyRecorder: KeyRecorder
-    let isLocked: Bool
-    let showPro: () -> Void
 
     var body: some View {
         SettingsSection(
@@ -14,11 +12,7 @@ struct EditKeySection: View {
             isPro: true,
         ) {
             SettingsRow("Editing key", description: keyRecorder.note(for: .edit)) {
-                if isLocked {
-                    Button("Unlock Waft+…", action: showPro)
-                } else {
-                    recorder
-                }
+                recorder
             }
             .motion(Motion.feedback, value: settings.settings.editKey)
         }
