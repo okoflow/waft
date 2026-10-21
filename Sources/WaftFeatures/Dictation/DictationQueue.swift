@@ -80,6 +80,7 @@ final class DictationQueue {
         pendingCount += 1
 
         hud.setWorking(Self.transcribingLabel)
+
         continuation.yield(job)
     }
 

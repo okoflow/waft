@@ -33,6 +33,7 @@ struct DictationControllerTests {
     @Test
     func `starts a recording when the dictation key goes down`() async {
         let controller = await controller()
+
         await pressDictationKey(at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !recorder.startedDevices.isEmpty })
@@ -42,6 +43,7 @@ struct DictationControllerTests {
     @Test
     func `submits the recording to the queue when the key is released after the minimum hold`() async {
         let controller = await controller()
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.5)
 
@@ -53,6 +55,7 @@ struct DictationControllerTests {
     @Test
     func `discards a recording released before the minimum hold without submitting it`() async {
         let controller = await controller()
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.1)
 
@@ -67,6 +70,7 @@ struct DictationControllerTests {
         let message = try #require(SpeechModelState().notReadyMessage)
         let refusal = HUDMessage(kind: .information, title: message)
         let controller = await controller(isSpeechModelReady: false)
+
         await pressDictationKey(at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(refusal) })
@@ -76,6 +80,7 @@ struct DictationControllerTests {
     @Test
     func `refuses to record when the microphone is denied`() async {
         let controller = await controller(permissions: Self.permissions(microphone: .denied))
+
         await pressDictationKey(at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(Self.microphoneDenied) })
@@ -86,6 +91,7 @@ struct DictationControllerTests {
     func `refuses editing by voice without Pro`() async {
         settings.settings.editKey = PushToTalkKey(keyCode: Self.leftOption)
         let controller = await controller(pro: .unlicensed(trialStarted: .distantPast))
+
         await send(Self.leftOption, flags: Self.leftOptionFlag, at: 0)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
@@ -98,6 +104,7 @@ struct DictationControllerTests {
     func `ignores key events while the key recorder records a new key`() async {
         let controller = await controller()
         keyRecorder.start(.dictation, excluding: nil) { _ in }
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.5)
 
@@ -109,6 +116,7 @@ struct DictationControllerTests {
     func `ignores the edit key while a dictation is recording`() async {
         settings.settings.editKey = PushToTalkKey(keyCode: Self.leftOption)
         let controller = await controller()
+
         await pressDictationKey(at: 0)
         await send(Self.leftOption, flags: Self.rightOptionFlag | Self.leftOptionFlag, at: 0.1)
         await send(Self.leftOption, flags: Self.rightOptionFlag, at: 0.6)
@@ -123,6 +131,7 @@ struct DictationControllerTests {
     @Test
     func `locks a dictation hands-free on a double tap`() async {
         let controller = await controller()
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.1)
         await pressDictationKey(at: 0.2)
@@ -137,6 +146,7 @@ struct DictationControllerTests {
         settings.settings.dictationStart = .tap
         let permissions = Self.permissions(microphone: .denied, answer: .granted)
         let controller = await controller(permissions: permissions)
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.1)
 
@@ -153,6 +163,7 @@ struct DictationControllerTests {
     func `starts a new recording on the tap after a hands-free recording fails`() async throws {
         settings.settings.dictationStart = .tap
         let controller = await controller(watchdogInterval: 0)
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.1)
 
@@ -172,6 +183,7 @@ struct DictationControllerTests {
     @Test
     func `finishes a recording whose key-up never arrives`() async {
         let controller = await controller(keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
+
         await pressDictationKey(at: -1)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
@@ -182,6 +194,7 @@ struct DictationControllerTests {
     func `reloads the dictionary from disk for each dictation`() async {
         let controller = await controller()
         vocabularyStore.value = Vocabulary(terms: [Vocabulary.Term(term: "Okoflow", spoken: ["oko flow"])], snippets: [])
+
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.5)
 
@@ -199,10 +212,6 @@ extension DictationControllerTests {
         keyboardState: FakeKeyboardState = FakeKeyboardState(holdsKeys: true),
         watchdogInterval: TimeInterval = 60,
     ) async -> DictationController {
-        let speechModelController = isSpeechModelReady
-            ? await SpeechModelController.ready(settings: settings)
-            : SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
-
         let recordings = RecordingController(
             recorder: recorder,
             focusTracker: FakeFocusTracker(),
@@ -215,12 +224,12 @@ extension DictationControllerTests {
             watchdogInterval: watchdogInterval,
         )
 
-        let controller = DictationController(
+        let controller = await DictationController(
             keyEventMonitor: monitor,
             recordings: recordings,
             settings: settings,
             permissions: permissions,
-            speechModelController: speechModelController,
+            speechModelController: speechModelController(isReady: isSpeechModelReady, pro: pro),
             vocabulary: VocabularyModel(store: vocabularyStore, fileURL: URL(filePath: "/dev/null"), urlOpener: FakeURLOpener()),
             keyRecorder: keyRecorder,
             shortcutRecorder: ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings)),
@@ -231,6 +240,14 @@ extension DictationControllerTests {
         controller.start()
 
         return controller
+    }
+
+    private func speechModelController(isReady: Bool, pro: ProModel) async -> SpeechModelController {
+        guard isReady else {
+            return SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
+        }
+
+        return await .ready(settings: settings)
     }
 
     private func queue() -> DictationQueue {

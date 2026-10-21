@@ -78,7 +78,7 @@ final class DictationController {
 
     private func tick(_ event: PushToTalk.Event, at time: TimeInterval) {
         guard let recording = recordings.recording else { return }
-        guard recording.isLive || !recording.isHandsFree else {
+        guard !recording.isStuckHandsFree else {
             triggers.reset(recording.purpose)
             recordings.discard(because: .interrupted)
 
@@ -130,11 +130,13 @@ final class DictationController {
     }
 
     private func startRecording(for trigger: RecordingTrigger) {
-        if let problem = reasonNotToRecord(for: trigger.purpose) {
-            recordings.refuse(trigger, because: problem)
-        } else {
+        guard let problem = reasonNotToRecord(for: trigger.purpose) else {
             recordings.begin(trigger)
+
+            return
         }
+
+        recordings.refuse(trigger, because: problem)
     }
 
     private func reasonNotToRecord(for purpose: RecordingPurpose) -> String? {
