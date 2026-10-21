@@ -12,13 +12,19 @@ struct KeyRecorderField: View {
         recorder.isRecording(purpose)
     }
 
+    private var help: Text {
+        guard isRecording else { return Text("Click, then press the key to use") }
+
+        return Text("Press the key to use, or Esc to cancel")
+    }
+
     var body: some View {
         RecorderField(
             title: key?.title,
             isRecording: isRecording,
             prompt: "Press a key…",
             rejections: recorder.rejections[purpose, default: 0],
-            help: isRecording ? Text("Press the key to use, or Esc to cancel") : Text("Click, then press the key to use"),
+            help: help,
             label: Text(purpose.title),
         ) {
             if isRecording {

@@ -21,11 +21,13 @@ final class SettingsWindowState {
     }
 
     func passesWaftPlusGate(isUnlocked: Bool) -> Bool {
-        if !isUnlocked {
+        guard isUnlocked else {
             selection = .pro
+
+            return false
         }
 
-        return isUnlocked
+        return true
     }
 
     func move(by offset: Int) {
@@ -36,10 +38,13 @@ final class SettingsWindowState {
     }
 
     func hover(_ pane: SettingsPane, _ isHovering: Bool) {
-        if isHovering {
+        guard !isHovering else {
             hoveredPane = pane
-        } else if hoveredPane == pane {
-            hoveredPane = nil
+
+            return
         }
+        guard hoveredPane == pane else { return }
+
+        hoveredPane = nil
     }
 }

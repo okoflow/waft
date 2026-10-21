@@ -26,6 +26,12 @@ struct ShortcutRow: View {
         return "Unavailable: another app uses this shortcut. Choose another one."
     }
 
+    private var help: Text {
+        guard isRecording else { return Text("Click, then press the shortcut to use") }
+
+        return Text("Press the shortcut to use, or Esc to cancel")
+    }
+
     var body: some View {
         SettingsRow(.verbatim(action.title), description: note) {
             RecorderField(
@@ -33,8 +39,7 @@ struct ShortcutRow: View {
                 isRecording: isRecording,
                 prompt: "Press a shortcut…",
                 rejections: recorder.rejections[action, default: 0],
-                help: isRecording ? Text("Press the shortcut to use, or Esc to cancel") :
-                    Text("Click, then press the shortcut to use"),
+                help: help,
                 label: Text(verbatim: action.title),
             ) {
                 if isRecording {

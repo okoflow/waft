@@ -80,9 +80,9 @@ private struct AllTimeSection: View {
             action: String(localized: "Reset Statistics"),
         )
 
-        if confirmation.ask() {
-            statistics.reset()
-        }
+        guard confirmation.ask() else { return }
+
+        statistics.reset()
     }
 }
 

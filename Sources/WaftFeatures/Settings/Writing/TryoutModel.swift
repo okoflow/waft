@@ -67,15 +67,22 @@ final class TryoutModel {
         }
 
         let text = sample
+
         let source = sourceLanguage(of: text)
         let target = settings.settings.translator.target(forSource: source)
-        let task: TextTask = kind == .fix ? .fix : .translate(from: settings.settings.translator.source, into: target)
+
+        let task: TextTask =
+            switch kind {
+            case .fix: .fix
+            case .translate: .translate(from: settings.settings.translator.source, into: target)
+            }
         let language =
             if let source {
                 source
             } else {
                 target
             }
+
         let setup = settings.settings.translatorSetup(for: kind)
         let processor = processor
 
@@ -95,9 +102,9 @@ final class TryoutModel {
         task = nil
         phase = .idle
 
-        if sample.isBlank {
-            sample = defaultSample
-        }
+        guard sample.isBlank else { return }
+
+        sample = defaultSample
     }
 
     private func spokenLanguage(of text: String) -> Language? {

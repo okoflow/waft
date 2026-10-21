@@ -26,6 +26,7 @@ struct DictationSettingsPane: View {
         guard !alike.isEmpty else { return nil }
 
         let names = Language.inlineList(alike)
+
         let note = String(localized: "\(names) sound alike. If Waft mixes them up, choose one as the spoken language.")
 
         return .verbatim(note.sentenceCased())
@@ -40,9 +41,9 @@ struct DictationSettingsPane: View {
             return note
         }
 
-        return settings.settings.pushToTalkKey == .function
-            ? "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard."
-            : nil
+        guard settings.settings.pushToTalkKey == .function else { return nil }
+
+        return "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard."
     }
 
     private var microphoneName: String {
@@ -146,7 +147,9 @@ private struct AddLanguageButton: View {
     let settings: SettingsModel
 
     private var title: String {
-        language.displayName == language.nativeName ? language.displayName : "\(language.displayName) · \(language.nativeName)"
+        guard language.displayName != language.nativeName else { return language.displayName }
+
+        return "\(language.displayName) · \(language.nativeName)"
     }
 
     var body: some View {
@@ -162,11 +165,14 @@ private struct LanguageRow: View {
     let canRemove: Bool
     let remove: () -> Void
 
+    private var description: LocalizedStringKey? {
+        guard language.nativeName != language.displayName else { return nil }
+
+        return .verbatim(language.displayName)
+    }
+
     var body: some View {
-        SettingsRow(
-            .verbatim(language.nativeName),
-            description: language.nativeName == language.displayName ? nil : .verbatim(language.displayName),
-        ) {
+        SettingsRow(.verbatim(language.nativeName), description: description) {
             if let chosen = settings.settings.writingVariants.variant(for: language) {
                 MenuPicker("Writing system", selection: variantBinding(showing: chosen), current: chosen.nativeName) {
                     ForEach(language.writingVariants, id: \.self) { variant in

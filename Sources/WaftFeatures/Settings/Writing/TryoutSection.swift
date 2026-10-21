@@ -8,6 +8,12 @@ struct TryoutSection: View {
     let samplePrompt: LocalizedStringKey
     let run: () -> Void
 
+    private var canRun: Bool {
+        guard tryout.phase != .running else { return false }
+
+        return !tryout.sample.isBlank
+    }
+
     var body: some View {
         SettingsSection("Try it") {
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
@@ -30,7 +36,7 @@ struct TryoutSection: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 Button(tryout.phase == .idle ? "Run" : "Run Again", action: run)
-                    .disabled(tryout.phase == .running || tryout.sample.isBlank)
+                    .disabled(!canRun)
             }
             .settingsRowPadding()
         }

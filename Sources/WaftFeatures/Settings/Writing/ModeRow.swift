@@ -76,9 +76,9 @@ private struct ModeLabel: View {
     }
 
     private var processingNote: Text {
-        provider.isCloud
-            ? Text("Sends the recognized text to \(provider.title)")
-            : Text("Runs on this Mac with \(provider.title)")
+        guard provider.isCloud else { return Text("Runs on this Mac with \(provider.title)") }
+
+        return Text("Sends the recognized text to \(provider.title)")
     }
 
     private var isBuiltIn: Bool {
@@ -86,7 +86,9 @@ private struct ModeLabel: View {
     }
 
     private var isEdited: Bool {
-        isBuiltIn && mode.usesAI && settings.instructions.isCustomized(mode)
+        guard isBuiltIn, mode.usesAI else { return false }
+
+        return settings.instructions.isCustomized(mode)
     }
 
     var body: some View {

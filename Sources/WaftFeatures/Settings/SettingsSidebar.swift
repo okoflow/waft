@@ -61,7 +61,9 @@ private struct SidebarRow: View {
     }
 
     private var showsHover: Bool {
-        state.hoveredPane == pane && !isSelected
+        guard !isSelected else { return false }
+
+        return state.hoveredPane == pane
     }
 
     var body: some View {

@@ -15,14 +15,14 @@ enum AIModelSetup {
     func missingSetup(in settings: SettingsModel, apiKeys: PerProvider<APIKeyModel>) -> LocalizedStringKey? {
         switch settings.settings.modelProvider {
         case let .cloud(provider):
-            apiKeys[provider].isSet
-                ? nil
-                : missingKeyNote(for: provider)
+            guard !apiKeys[provider].isSet else { return nil }
+
+            return missingKeyNote(for: provider)
 
         case .localServer:
-            settings.settings.localServer.isConfigured
-                ? nil
-                : missingServerNote
+            guard !settings.settings.localServer.isConfigured else { return nil }
+
+            return missingServerNote
         }
     }
 

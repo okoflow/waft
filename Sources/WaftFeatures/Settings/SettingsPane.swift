@@ -28,7 +28,7 @@ package enum SettingsPane: CaseIterable {
     }
 
     var needsWaftPlus: Bool {
-        self == .aiModels || self == .translator
+        [.aiModels, .translator].contains(self)
     }
 
     var symbolName: String {
