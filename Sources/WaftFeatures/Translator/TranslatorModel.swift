@@ -73,6 +73,10 @@ final class TranslatorModel {
         settings.settings.pushToTalkKey.shortTitle
     }
 
+    var startsDictationByTapping: Bool {
+        settings.settings.dictationStart == .tap
+    }
+
     var isLocked: Bool {
         !pro.isUnlocked
     }

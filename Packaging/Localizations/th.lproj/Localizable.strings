@@ -257,6 +257,7 @@
 "Relaunch" = "เปิดใหม่";
 "Remove %@" = "เอาภาษา%@ออก";
 "Remove Key" = "เอาคีย์ออก";
+"Remove Key…" = "เอาคีย์ออก…";
 "Remove License" = "เอาใบอนุญาตออก";
 "Remove License…" = "เอาใบอนุญาตออก…";
 "Remove the API key?" = "เอาคีย์ API ออกหรือไม่";
@@ -265,7 +266,6 @@
 "Remove the term" = "เอาคำศัพท์ออก";
 "Removes fillers and false starts, and fixes grammar and tone." = "ตัดคำติดปากและการพูดซ้ำออก พร้อมแก้ไวยากรณ์และน้ำเสียง";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "ตัดคำติดปากและการพูดซ้ำออก แก้ไวยากรณ์ และคงภาษาเดิมของคุณไว้";
-"Remove…" = "เอาออก…";
 "Replace the key" = "แทนที่คีย์";
 "Replaces the selection with its translation." = "แทนที่ข้อความที่เลือกด้วยคำแปล";
 "Reset Statistics" = "รีเซ็ตสถิติ";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift ขวา";
 "Run Again" = "สั่งทำงานอีกครั้ง";
 "Run it to see what Waft writes." = "สั่งทำงานเพื่อดูว่า Waft จะเขียนออกมาอย่างไร";
-"Run the mode to see what it writes." = "สั่งให้โหมดทำงานเพื่อดูว่าจะเขียนออกมาอย่างไร";
 "Run" = "สั่งทำงาน";
 "Running" = "กำลังทำงาน";
 "Running, but no models are loaded" = "กำลังทำงาน แต่ไม่ได้โหลดโมเดลไว้";
@@ -404,6 +403,7 @@
 "Two-way" = "สองทาง";
 "Type something to try" = "ลองพิมพ์อะไรสักอย่าง";
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
+"Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อค Waft+…";
 "Updates" = "รายการอัปเดต";

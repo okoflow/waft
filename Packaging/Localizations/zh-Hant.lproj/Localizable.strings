@@ -257,6 +257,7 @@
 "Relaunch" = "重新啟動";
 "Remove %@" = "移除%@";
 "Remove Key" = "移除密鑰";
+"Remove Key…" = "移除密鑰⋯";
 "Remove License" = "移除授權";
 "Remove License…" = "移除授權⋯";
 "Remove the API key?" = "要移除API密鑰嗎？";
@@ -265,7 +266,6 @@
 "Remove the term" = "移除詞彙";
 "Removes fillers and false starts, and fixes grammar and tone." = "刪除贅字和改口，並修正文法和語氣。";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "刪除贅字和改口，修正文法，並保留原本的語言。";
-"Remove…" = "移除⋯";
 "Replace the key" = "取代密鑰";
 "Replaces the selection with its translation." = "以譯文取代所選內容。";
 "Reset Statistics" = "重置統計資料";
@@ -282,7 +282,6 @@
 "Right Shift" = "右側Shift鍵";
 "Run Again" = "再次執行";
 "Run it to see what Waft writes." = "執行後即可看到Waft輸出的內容。";
-"Run the mode to see what it writes." = "執行此模式，看看它會寫出什麼。";
 "Run" = "執行";
 "Running" = "執行中";
 "Running, but no models are loaded" = "執行中，但未載入任何模型";
@@ -404,6 +403,7 @@
 "Two-way" = "雙向";
 "Type something to try" = "輸入點什麼來試試看";
 "Type, paste, or hold %@ and speak" = "輸入、貼上，或按住%@並說話";
+"Type, paste, or tap %@ and speak" = "輸入、貼上，或按一下%@並說話";
 "Unavailable: another app uses this shortcut. Choose another one." = "無法使用：其他App正在使用此快速鍵。請選擇其他快速鍵。";
 "Unlock Waft+…" = "解鎖Waft+⋯";
 "Updates" = "更新項目";

@@ -257,6 +257,7 @@
 "Relaunch" = "Reabrir";
 "Remove %@" = "Remover “%@”";
 "Remove Key" = "Remover chave";
+"Remove Key…" = "Remover chave…";
 "Remove License" = "Remover licença";
 "Remove License…" = "Remover licença…";
 "Remove the API key?" = "Remover a chave de API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Remover o termo";
 "Removes fillers and false starts, and fixes grammar and tone." = "Remove hesitações e falsos começos e corrige a gramática e o tom.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Remove hesitações e falsos começos, corrige a gramática e mantém o seu idioma.";
-"Remove…" = "Remover…";
 "Replace the key" = "Substituir a chave";
 "Replaces the selection with its translation." = "Substitui a seleção pela tradução.";
 "Reset Statistics" = "Repor estatísticas";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift da direita";
 "Run Again" = "Executar novamente";
 "Run it to see what Waft writes." = "Execute para ver o que o Waft escreve.";
-"Run the mode to see what it writes." = "Execute o modo para ver o que escreve.";
 "Run" = "Executar";
 "Running" = "Em execução";
 "Running, but no models are loaded" = "Em execução, mas sem modelos carregados";
@@ -404,6 +403,7 @@
 "Two-way" = "Bidirecional";
 "Type something to try" = "Escreva algo para experimentar";
 "Type, paste, or hold %@ and speak" = "Escreva, cole ou mantenha premida a tecla %@ e fale";
+"Type, paste, or tap %@ and speak" = "Escreva, cole ou prima a tecla %@ e fale";
 "Unavailable: another app uses this shortcut. Choose another one." = "Indisponível: outra aplicação usa esse atalho. Escolha outro.";
 "Unlock Waft+…" = "Desbloquear Waft+…";
 "Updates" = "Atualizações";

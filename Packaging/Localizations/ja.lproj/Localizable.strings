@@ -257,6 +257,7 @@
 "Relaunch" = "再起動";
 "Remove %@" = "「%@」を削除";
 "Remove Key" = "キーを削除";
+"Remove Key…" = "キーを削除…";
 "Remove License" = "ライセンスを削除";
 "Remove License…" = "ライセンスを削除…";
 "Remove the API key?" = "APIキーを削除しますか？";
@@ -265,7 +266,6 @@
 "Remove the term" = "用語を削除";
 "Removes fillers and false starts, and fixes grammar and tone." = "つなぎ言葉や言い直しを取り除き、文法とトーンを整えます。";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "つなぎ言葉や言い直しを取り除いて文法を整えます。言語はそのままです。";
-"Remove…" = "削除…";
 "Replace the key" = "キーを置き換える";
 "Replaces the selection with its translation." = "選択したテキストを翻訳結果に置き換えます。";
 "Reset Statistics" = "統計をリセット";
@@ -282,7 +282,6 @@
 "Right Shift" = "右Shift";
 "Run Again" = "もう一度実行";
 "Run it to see what Waft writes." = "実行すると、Waftの出力結果を確認できます。";
-"Run the mode to see what it writes." = "モードを実行すると、出力結果を確認できます。";
 "Run" = "実行";
 "Running" = "実行中";
 "Running, but no models are loaded" = "実行中ですが、モデルが読み込まれていません";
@@ -404,6 +403,7 @@
 "Two-way" = "双方向";
 "Type something to try" = "試しに何かタイプしてください";
 "Type, paste, or hold %@ and speak" = "入力・ペーストするか、%@キーを押したまま話してください";
+"Type, paste, or tap %@ and speak" = "入力・ペーストするか、%@キーを押して話してください";
 "Unavailable: another app uses this shortcut. Choose another one." = "使用できません：ほかのアプリがこのショートカットを使用しています。別のショートカットを選択してください。";
 "Unlock Waft+…" = "Waft+のロックを解除…";
 "Updates" = "アップデート";

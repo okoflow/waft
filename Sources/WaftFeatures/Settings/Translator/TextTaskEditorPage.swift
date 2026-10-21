@@ -29,7 +29,6 @@ struct TextTaskEditorPage: View {
                 tryout: tryout,
                 sampleTitle: "You write",
                 samplePrompt: "Type something to try",
-                idleNote: "Run it to see what Waft writes.",
             ) {
                 tryout.run(task: kind)
             }

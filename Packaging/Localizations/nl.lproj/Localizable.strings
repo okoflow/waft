@@ -257,6 +257,7 @@
 "Relaunch" = "Start opnieuw";
 "Remove %@" = "Verwijder %@";
 "Remove Key" = "Verwijder sleutel";
+"Remove Key…" = "Verwijder sleutel…";
 "Remove License" = "Verwijder licentie";
 "Remove License…" = "Verwijder licentie…";
 "Remove the API key?" = "API-sleutel verwijderen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Verwijder term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Verwijdert stopwoorden en haperingen en verbetert grammatica en toon.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Verwijdert stopwoorden en haperingen, verbetert de grammatica en behoudt je taal.";
-"Remove…" = "Verwijder…";
 "Replace the key" = "Vervang de sleutel";
 "Replaces the selection with its translation." = "Vervangt de selectie door de vertaling.";
 "Reset Statistics" = "Stel statistieken opnieuw in";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift-rechts";
 "Run Again" = "Voer opnieuw uit";
 "Run it to see what Waft writes." = "Voer het uit om te zien wat Waft schrijft.";
-"Run the mode to see what it writes." = "Voer de modus uit om te zien wat hij schrijft.";
 "Run" = "Voer uit";
 "Running" = "Actief";
 "Running, but no models are loaded" = "Actief, maar er zijn geen modellen geladen";
@@ -404,6 +403,7 @@
 "Two-way" = "In beide richtingen";
 "Type something to try" = "Typ iets om te proberen";
 "Type, paste, or hold %@ and speak" = "Typ, plak of houd %@ ingedrukt en spreek";
+"Type, paste, or tap %@ and speak" = "Typ, plak of druk op %@ en spreek";
 "Unavailable: another app uses this shortcut. Choose another one." = "Niet beschikbaar: een andere app gebruikt deze sneltoets. Kies een andere.";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
 "Updates" = "Updates";

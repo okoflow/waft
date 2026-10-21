@@ -257,6 +257,7 @@
 "Relaunch" = "Starta om";
 "Remove %@" = "Ta bort %@";
 "Remove Key" = "Ta bort nyckel";
+"Remove Key…" = "Ta bort nyckel…";
 "Remove License" = "Ta bort licens";
 "Remove License…" = "Ta bort licens…";
 "Remove the API key?" = "Vill du ta bort API-nyckeln?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Ta bort termen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Tar bort utfyllnadsord och felstarter och rättar grammatik och ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Tar bort utfyllnadsord och felstarter, rättar grammatik och behåller ditt språk.";
-"Remove…" = "Ta bort…";
 "Replace the key" = "Ersätt nyckeln";
 "Replaces the selection with its translation." = "Ersätter markeringen med dess översättning.";
 "Reset Statistics" = "Nollställ statistik";
@@ -282,7 +282,6 @@
 "Right Shift" = "Höger skifttangent";
 "Run Again" = "Kör igen";
 "Run it to see what Waft writes." = "Kör det för att se vad Waft skriver.";
-"Run the mode to see what it writes." = "Kör läget för att se vad det skriver.";
 "Run" = "Kör";
 "Running" = "Körs";
 "Running, but no models are loaded" = "Körs, men inga modeller är inlästa";
@@ -404,6 +403,7 @@
 "Two-way" = "Åt båda hållen";
 "Type something to try" = "Skriv något för att testa";
 "Type, paste, or hold %@ and speak" = "Skriv, klistra in eller håll ned %@ och tala";
+"Type, paste, or tap %@ and speak" = "Skriv, klistra in eller tryck på %@ och tala";
 "Unavailable: another app uses this shortcut. Choose another one." = "Inte tillgängligt: en annan app använder det här kortkommandot. Välj ett annat.";
 "Unlock Waft+…" = "Lås upp Waft+…";
 "Updates" = "Uppdateringar";

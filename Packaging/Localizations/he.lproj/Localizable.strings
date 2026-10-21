@@ -257,6 +257,7 @@
 "Relaunch" = "הפעלה מחדש";
 "Remove %@" = "הסרת %@";
 "Remove Key" = "הסרת המפתח";
+"Remove Key…" = "הסרת המפתח…";
 "Remove License" = "הסרת הרישיון";
 "Remove License…" = "הסרת הרישיון…";
 "Remove the API key?" = "להסיר את מפתח ה-API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "הסרת המונח";
 "Removes fillers and false starts, and fixes grammar and tone." = "מסיר מילות מילוי והתחלות שגויות, ומתקן דקדוק וטון.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "מסיר מילות מילוי והתחלות שגויות, מתקן דקדוק ושומר על שפת הדיבור.";
-"Remove…" = "הסרה…";
 "Replace the key" = "החלפת המפתח";
 "Replaces the selection with its translation." = "מחליף את המלל שנבחר בתרגום שלו.";
 "Reset Statistics" = "איפוס הסטטיסטיקה";
@@ -282,7 +282,6 @@
 "Right Shift" = "מקש Shift הימני";
 "Run Again" = "הפעלה חוזרת";
 "Run it to see what Waft writes." = "יש להפעיל כדי לראות מה Waft כותב.";
-"Run the mode to see what it writes." = "יש להפעיל את המצב כדי לראות מה הוא כותב.";
 "Run" = "הפעלה";
 "Running" = "פועל";
 "Running, but no models are loaded" = "פועל, אך לא נטענו מודלים";
@@ -404,6 +403,7 @@
 "Two-way" = "דו-כיווני";
 "Type something to try" = "יש להקליד משהו לניסיון";
 "Type, paste, or hold %@ and speak" = "יש להקליד, להדביק או להחזיק את %@ ולדבר";
+"Type, paste, or tap %@ and speak" = "יש להקליד, להדביק או ללחוץ על %@ ולדבר";
 "Unavailable: another app uses this shortcut. Choose another one." = "לא זמין: יישום אחר משתמש בקיצור הזה. יש לבחור קיצור אחר.";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
 "Updates" = "עדכונים";

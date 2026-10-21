@@ -34,7 +34,7 @@ private struct APIKeyRows: View {
     var body: some View {
         if apiKey.isSet {
             SettingsRow("Key saved", description: "Kept in the Keychain.") {
-                Button("Remove…", role: .destructive, action: confirmRemoval)
+                Button("Remove Key…", role: .destructive, action: confirmRemoval)
             }
             .rowTransition()
             RowDivider()

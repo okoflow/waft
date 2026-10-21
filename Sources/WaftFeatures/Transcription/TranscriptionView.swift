@@ -76,13 +76,9 @@ private struct TranscriptionHeader: View {
             IconTile(symbolName: "waveform", tint: .red, size: Metrics.headerTileSize)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                HStack(spacing: Metrics.inlineSpacing) {
-                    Text("Transcribe File")
-                        .font(.pageTitle)
-                        .accessibilityAddTraits(.isHeader)
-
-                    ProBadge()
-                }
+                Text("Transcribe File")
+                    .font(.pageTitle)
+                    .accessibilityAddTraits(.isHeader)
 
                 Text("Audio and video files, transcribed on this Mac.")
                     .detailText()

@@ -257,6 +257,7 @@
 "Relaunch" = "Relaunch";
 "Remove %@" = "Remove %@";
 "Remove Key" = "Remove Key";
+"Remove Key…" = "Remove Key…";
 "Remove License" = "Remove License";
 "Remove License…" = "Remove License…";
 "Remove the API key?" = "Remove the API key?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Remove the term";
 "Removes fillers and false starts, and fixes grammar and tone." = "Removes fillers and false starts, and fixes grammar and tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Removes fillers and false starts, fixes grammar, keeps your language.";
-"Remove…" = "Remove…";
 "Replace the key" = "Replace the key";
 "Replaces the selection with its translation." = "Replaces the selection with its translation.";
 "Reset Statistics" = "Reset Statistics";
@@ -282,7 +282,6 @@
 "Right Shift" = "Right Shift";
 "Run Again" = "Run Again";
 "Run it to see what Waft writes." = "Run it to see what Waft writes.";
-"Run the mode to see what it writes." = "Run the mode to see what it writes.";
 "Run" = "Run";
 "Running" = "Running";
 "Running, but no models are loaded" = "Running, but no models are loaded";
@@ -404,6 +403,7 @@
 "Two-way" = "Two-way";
 "Type something to try" = "Type something to try";
 "Type, paste, or hold %@ and speak" = "Type, paste, or hold %@ and speak";
+"Type, paste, or tap %@ and speak" = "Type, paste, or tap %@ and speak";
 "Unavailable: another app uses this shortcut. Choose another one." = "Unavailable: another app uses this shortcut. Choose another one.";
 "Unlock Waft+…" = "Unlock Waft+…";
 "Updates" = "Updates";

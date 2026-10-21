@@ -257,6 +257,7 @@
 "Relaunch" = "Yeniden Çalıştır";
 "Remove %@" = "Kaldır: %@";
 "Remove Key" = "Anahtarı Kaldır";
+"Remove Key…" = "Anahtarı Kaldır…";
 "Remove License" = "Lisansı Kaldır";
 "Remove License…" = "Lisansı Kaldır…";
 "Remove the API key?" = "API anahtarı kaldırılsın mı?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Terimi kaldır";
 "Removes fillers and false starts, and fixes grammar and tone." = "Dolgu sözcüklerini ve yanlış başlangıçları atar, dilbilgisini ve tonu düzeltir.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Dolgu sözcüklerini ve yanlış başlangıçları atar, dilbilgisini düzeltir, dilinizi korur.";
-"Remove…" = "Kaldır…";
 "Replace the key" = "Anahtarı değiştirin";
 "Replaces the selection with its translation." = "Seçimi çevirisiyle değiştirir.";
 "Reset Statistics" = "İstatistikleri Sıfırla";
@@ -282,7 +282,6 @@
 "Right Shift" = "Sağ Shift";
 "Run Again" = "Tekrar Çalıştır";
 "Run it to see what Waft writes." = "Waft’ın ne yazdığını görmek için çalıştırın.";
-"Run the mode to see what it writes." = "Ne yazdığını görmek için modu çalıştırın.";
 "Run" = "Çalıştır";
 "Running" = "Çalışıyor";
 "Running, but no models are loaded" = "Çalışıyor ama yüklü model yok";
@@ -404,6 +403,7 @@
 "Two-way" = "İki yönlü";
 "Type something to try" = "Denemek için bir şey yazın";
 "Type, paste, or hold %@ and speak" = "Yazın, yapıştırın ya da %@ tuşunu basılı tutup konuşun";
+"Type, paste, or tap %@ and speak" = "Yazın, yapıştırın ya da %@ tuşuna basıp konuşun";
 "Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kısayolu kullanıyor. Başka bir kısayol seçin.";
 "Unlock Waft+…" = "Waft+’ın Kilidini Aç…";
 "Updates" = "Güncellemeler";

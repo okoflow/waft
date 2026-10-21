@@ -57,7 +57,8 @@ languages detect faster and more accurately. To skip detection, choose a
 ## Modes
 
 Light is the default. Choose a mode under **Mode** in the menu or in Settings ›
-Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> for the next one.
+Writing, or press <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> by default for the next
+one.
 [Shortcuts](#shortcuts) says how to change it.
 
 | Mode | What it does | AI model |
@@ -78,7 +79,7 @@ the reasons.
 Choose the **Provider** in Settings › AI Models, Claude by default.
 
 - **Claude** and **OpenAI** need an API key: paste it under **API key** and
-  click **Save**, and **Remove…** deletes it after you confirm. Create the
+  click **Save**, and **Remove Key…** deletes it after you confirm. Create the
   Claude key inside a workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys)
   and the OpenAI key in the
   [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
@@ -272,9 +273,10 @@ license in Settings › Waft+:
 
 | Feature | Without a license |
 | --- | --- |
-| The AI modes | Fall back to Light, and the HUD says so; the next-mode shortcut switches only between Raw and Light |
+| The AI modes | Choosing one opens Settings › Waft+, a mode chosen before falls back to Light and the HUD says so, and the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
-| The translator | The window translates nothing, and the shortcuts on selected text show that they need Waft+ |
+| The translator | The window takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
+| File transcription | The window takes no file and shows that it needs Waft+ |
 | The speech model | Waft recognizes speech with Fast |
 | The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |
 

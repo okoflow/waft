@@ -89,9 +89,7 @@ struct DictationSettingsPane: View {
 
         SpeechModelSection(settings: settings, controller: speechModelController, pro: pro, state: state)
 
-        EditKeySection(settings: settings, keyRecorder: keyRecorder, isLocked: !pro.isUnlocked) {
-            state.selection = .pro
-        }
+        EditKeySection(settings: settings, keyRecorder: keyRecorder)
 
         SettingsSection("Languages", subtitle: "Waft listens for these languages.") {
             ForEach(selection.languages, id: \.self) { language in
@@ -131,7 +129,7 @@ struct DictationSettingsPane: View {
                     }
                 }
             } label: {
-                Label("Add Language", systemImage: "plus")
+                Text("Add Language")
             }
             .menuStyle(.button)
             .menuIndicator(.hidden)

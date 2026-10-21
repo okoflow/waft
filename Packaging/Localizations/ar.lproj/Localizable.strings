@@ -257,6 +257,7 @@
 "Relaunch" = "إعادة التشغيل";
 "Remove %@" = "إزالة %@";
 "Remove Key" = "إزالة المفتاح";
+"Remove Key…" = "إزالة المفتاح…";
 "Remove License" = "إزالة الترخيص";
 "Remove License…" = "إزالة الترخيص…";
 "Remove the API key?" = "هل تريد إزالة مفتاح API؟";
@@ -265,7 +266,6 @@
 "Remove the term" = "إزالة المصطلح";
 "Removes fillers and false starts, and fixes grammar and tone." = "يحذفان كلمات الحشو والبدايات المتعثرة، ويصححان القواعد والنبرة.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "يحذف كلمات الحشو والبدايات المتعثرة، ويصحح القواعد، ويحافظ على لغتك.";
-"Remove…" = "إزالة…";
 "Replace the key" = "استبدال المفتاح";
 "Replaces the selection with its translation." = "يستبدل التحديد بترجمته.";
 "Reset Statistics" = "إعادة تعيين الإحصائيات";
@@ -282,7 +282,6 @@
 "Right Shift" = "مفتاح shift الأيمن";
 "Run Again" = "التشغيل مرة أخرى";
 "Run it to see what Waft writes." = "شغّله لترى ما يكتبه Waft.";
-"Run the mode to see what it writes." = "شغّل النمط لترى ما يكتبه.";
 "Run" = "تشغيل";
 "Running" = "قيد التشغيل";
 "Running, but no models are loaded" = "قيد التشغيل، لكن لم يتم تحميل أي نماذج";
@@ -404,6 +403,7 @@
 "Two-way" = "في الاتجاهين";
 "Type something to try" = "اكتب شيئًا للتجربة";
 "Type, paste, or hold %@ and speak" = "اكتب أو الصق أو اضغط مطولًا على %@ وتحدّث";
+"Type, paste, or tap %@ and speak" = "اكتب أو الصق أو اضغط على %@ وتحدّث";
 "Unavailable: another app uses this shortcut. Choose another one." = "غير متاح: هناك تطبيق آخر يستخدم هذا الاختصار. اختر اختصارًا آخر.";
 "Unlock Waft+…" = "فتح قفل Waft+‎…";
 "Updates" = "التحديثات";

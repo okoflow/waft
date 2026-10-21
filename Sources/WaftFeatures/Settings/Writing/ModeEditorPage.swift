@@ -50,7 +50,6 @@ struct ModeEditorPage: View {
                 tryout: tryout,
                 sampleTitle: "You say",
                 samplePrompt: "Say something to try",
-                idleNote: "Run the mode to see what it writes.",
             ) {
                 tryout.run(mode)
             }

@@ -257,6 +257,7 @@
 "Relaunch" = "Перезапустити";
 "Remove %@" = "Вилучити «%@»";
 "Remove Key" = "Вилучити ключ";
+"Remove Key…" = "Вилучити ключ…";
 "Remove License" = "Вилучити ліцензію";
 "Remove License…" = "Вилучити ліцензію…";
 "Remove the API key?" = "Вилучити ключ API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Вилучити термін";
 "Removes fillers and false starts, and fixes grammar and tone." = "Прибирає слова-паразити й обмовки, виправляє граматику й тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Прибирає слова-паразити й обмовки, виправляє граматику, зберігає вашу мову.";
-"Remove…" = "Вилучити…";
 "Replace the key" = "Замінити ключ";
 "Replaces the selection with its translation." = "Замінює виділений текст його перекладом.";
 "Reset Statistics" = "Скинути статистику";
@@ -282,7 +282,6 @@
 "Right Shift" = "Shift справа";
 "Run Again" = "Ще раз";
 "Run it to see what Waft writes." = "Запустіть, щоб побачити, що напише Waft.";
-"Run the mode to see what it writes." = "Запустіть режим, щоб побачити результат.";
 "Run" = "Запустити";
 "Running" = "Працює";
 "Running, but no models are loaded" = "Працює, але моделі не завантажено";
@@ -404,6 +403,7 @@
 "Two-way" = "Двосторонній";
 "Type something to try" = "Введіть щось для перевірки";
 "Type, paste, or hold %@ and speak" = "Введіть, вставте або утримуйте %@ і говоріть";
+"Type, paste, or tap %@ and speak" = "Введіть, вставте або натисніть %@ і говоріть";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: цю комбінацію використовує інша програма. Виберіть іншу.";
 "Unlock Waft+…" = "Розблокувати Waft+…";
 "Updates" = "Оновлення";

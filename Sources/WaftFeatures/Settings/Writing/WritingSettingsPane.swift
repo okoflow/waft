@@ -77,7 +77,7 @@ struct WritingSettingsPane: View {
             }
 
             DividedForEach(appIdentifiers, id: \.self) { bundleIdentifier in
-                AppModeRow(bundleIdentifier: bundleIdentifier, settings: settings)
+                AppModeRow(bundleIdentifier: bundleIdentifier, settings: settings, pro: pro, state: state)
             }
             .rowTransition()
         } footer: {
@@ -123,11 +123,17 @@ struct WritingSettingsPane: View {
 private struct AppModeRow: View {
     let bundleIdentifier: String
     let settings: SettingsModel
+    let pro: ProModel
+    let state: SettingsWindowState
 
     private var mode: Binding<Mode> {
         Binding(
             get: { settings.settings.mode(for: bundleIdentifier) },
-            set: { settings.settings.appModes.set($0, for: bundleIdentifier) },
+            set: { mode in
+                guard state.passesWaftPlusGate(isUnlocked: !pro.locks(mode)) else { return }
+
+                settings.settings.appModes.set(mode, for: bundleIdentifier)
+            },
         )
     }
 
@@ -146,7 +152,7 @@ private struct AppModeRow: View {
             HStack(spacing: Metrics.controlSpacing) {
                 MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
                     ForEach(settings.settings.modes, id: \.self) { mode in
-                        Text(settings.settings.title(of: mode)).tag(mode)
+                        optionTitle(of: mode).tag(mode)
                     }
                 }
 
@@ -156,5 +162,13 @@ private struct AppModeRow: View {
             }
         }
         .settingsRowPadding()
+    }
+
+    private func optionTitle(of mode: Mode) -> Text {
+        let title = settings.settings.title(of: mode)
+
+        guard pro.locks(mode) else { return Text(title) }
+
+        return Text("\(title) (Waft+)")
     }
 }

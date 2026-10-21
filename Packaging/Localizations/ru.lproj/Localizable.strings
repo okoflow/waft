@@ -257,6 +257,7 @@
 "Relaunch" = "Перезапустить";
 "Remove %@" = "Убрать «%@»";
 "Remove Key" = "Удалить ключ";
+"Remove Key…" = "Удалить ключ…";
 "Remove License" = "Удалить лицензию";
 "Remove License…" = "Удалить лицензию…";
 "Remove the API key?" = "Удалить ключ API?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Удалить термин";
 "Removes fillers and false starts, and fixes grammar and tone." = "Убирает слова-паразиты и оговорки, исправляет грамматику и тон.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Убирает слова-паразиты и оговорки, исправляет грамматику, сохраняет ваш язык.";
-"Remove…" = "Удалить…";
 "Replace the key" = "Заменить ключ";
 "Replaces the selection with its translation." = "Заменяет выделенный текст его переводом.";
 "Reset Statistics" = "Сбросить статистику";
@@ -282,7 +282,6 @@
 "Right Shift" = "Правый Shift";
 "Run Again" = "Ещё раз";
 "Run it to see what Waft writes." = "Запустите, чтобы увидеть, что напишет Waft.";
-"Run the mode to see what it writes." = "Запустите режим, чтобы увидеть результат.";
 "Run" = "Запустить";
 "Running" = "Работает";
 "Running, but no models are loaded" = "Работает, но модели не загружены";
@@ -404,6 +403,7 @@
 "Two-way" = "Двусторонний";
 "Type something to try" = "Введите что-нибудь для проверки";
 "Type, paste, or hold %@ and speak" = "Введите, вставьте или удерживайте %@ и говорите";
+"Type, paste, or tap %@ and speak" = "Введите, вставьте или нажмите %@ и говорите";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: это сочетание использует другое приложение. Выберите другое.";
 "Unlock Waft+…" = "Разблокировать Waft+…";
 "Updates" = "Обновления";

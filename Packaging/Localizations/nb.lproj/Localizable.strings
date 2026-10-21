@@ -257,6 +257,7 @@
 "Relaunch" = "Start på nytt";
 "Remove %@" = "Fjern %@";
 "Remove Key" = "Fjern nøkkel";
+"Remove Key…" = "Fjern nøkkel…";
 "Remove License" = "Fjern lisens";
 "Remove License…" = "Fjern lisens…";
 "Remove the API key?" = "Vil du fjerne API-nøkkelen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Fjern termen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Fjerner fyllord og forsnakkelser og retter grammatikk og tone.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Fjerner fyllord og forsnakkelser, retter grammatikk og beholder språket ditt.";
-"Remove…" = "Fjern…";
 "Replace the key" = "Erstatt nøkkelen";
 "Replaces the selection with its translation." = "Erstatter det markerte med oversettingen.";
 "Reset Statistics" = "Nullstill statistikk";
@@ -282,7 +282,6 @@
 "Right Shift" = "Høyre Skift-tast";
 "Run Again" = "Kjør igjen";
 "Run it to see what Waft writes." = "Kjør den for å se hva Waft skriver.";
-"Run the mode to see what it writes." = "Kjør modusen for å se hva den skriver.";
 "Run" = "Kjør";
 "Running" = "Kjører";
 "Running, but no models are loaded" = "Kjører, men ingen modeller er lastet inn";
@@ -404,6 +403,7 @@
 "Two-way" = "Toveis";
 "Type something to try" = "Skriv noe for å prøve";
 "Type, paste, or hold %@ and speak" = "Skriv, lim inn, eller hold nede %@ og snakk";
+"Type, paste, or tap %@ and speak" = "Skriv, lim inn, eller trykk på %@ og snakk";
 "Unavailable: another app uses this shortcut. Choose another one." = "Utilgjengelig: en annen app bruker denne snarveien. Velg en annen.";
 "Unlock Waft+…" = "Lås opp Waft+…";
 "Updates" = "Oppdateringer";

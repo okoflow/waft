@@ -49,6 +49,14 @@ private struct SourcePane: View {
         return language.displayName
     }
 
+    private var placeholder: LocalizedStringKey {
+        let key = model.dictationKeyTitle
+
+        guard model.startsDictationByTapping else { return "Type, paste, or hold \(key) and speak" }
+
+        return "Type, paste, or tap \(key) and speak"
+    }
+
     private var characterCount: String {
         "\(model.input.count.formatted()) / \(TranslatorModel.characterLimit.formatted())"
     }
@@ -85,7 +93,7 @@ private struct SourcePane: View {
                     .accessibilityLabel("Text to translate")
 
                 if model.input.isEmpty {
-                    Text("Type, paste, or hold \(model.dictationKeyTitle) and speak")
+                    Text(placeholder)
                         .font(.translatorText)
                         .foregroundStyle(.tertiary)
                         .allowsHitTesting(false)

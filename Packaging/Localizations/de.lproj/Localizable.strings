@@ -257,6 +257,7 @@
 "Relaunch" = "Neu starten";
 "Remove %@" = "%@ entfernen";
 "Remove Key" = "Schlüssel entfernen";
+"Remove Key…" = "Schlüssel entfernen …";
 "Remove License" = "Lizenz entfernen";
 "Remove License…" = "Lizenz entfernen …";
 "Remove the API key?" = "API-Schlüssel entfernen?";
@@ -265,7 +266,6 @@
 "Remove the term" = "Begriff entfernen";
 "Removes fillers and false starts, and fixes grammar and tone." = "Entfernt Füllwörter und Versprecher und korrigiert Grammatik und Ton.";
 "Removes fillers and false starts, fixes grammar, keeps your language." = "Entfernt Füllwörter und Versprecher, korrigiert die Grammatik und behält deine Sprache bei.";
-"Remove…" = "Entfernen …";
 "Replace the key" = "Schlüssel ersetzen";
 "Replaces the selection with its translation." = "Ersetzt die Auswahl durch ihre Übersetzung.";
 "Reset Statistics" = "Statistik zurücksetzen";
@@ -282,7 +282,6 @@
 "Right Shift" = "Umschalttaste rechts";
 "Run Again" = "Erneut ausführen";
 "Run it to see what Waft writes." = "Führe es aus, um zu sehen, was Waft schreibt.";
-"Run the mode to see what it writes." = "Führe den Modus aus, um zu sehen, was er schreibt.";
 "Run" = "Ausführen";
 "Running" = "Läuft";
 "Running, but no models are loaded" = "Läuft, aber keine Modelle geladen";
@@ -404,6 +403,7 @@
 "Two-way" = "In beide Richtungen";
 "Type something to try" = "Tippe etwas zum Ausprobieren";
 "Type, paste, or hold %@ and speak" = "Tippe, setze Text ein oder halte %@ gedrückt und sprich";
+"Type, paste, or tap %@ and speak" = "Tippe, setze Text ein oder drücke %@ und sprich";
 "Unavailable: another app uses this shortcut. Choose another one." = "Nicht verfügbar: Eine andere App verwendet diesen Tastaturkurzbefehl. Wähle einen anderen.";
 "Unlock Waft+…" = "Waft+ freischalten …";
 "Updates" = "Updates";

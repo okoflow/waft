@@ -100,8 +100,9 @@ entitlements, the icon, the translations, and the Homebrew cask template.
    the selection read at the key press and the spoken instruction to the
    `TextRewriter`, and the answer replaces the selection. A failure pastes
    nothing.
-6. The outcome becomes a `HUDMessage`. Text that is pasted or copied becomes
-   the latest transcript and, unless it came from an edit, a history entry.
+6. The outcome becomes a `HUDMessage`. The text becomes the latest
+   transcript, even in a password field, and text that is pasted or copied
+   becomes a history entry unless it came from an edit.
 
 ## Invariants
 

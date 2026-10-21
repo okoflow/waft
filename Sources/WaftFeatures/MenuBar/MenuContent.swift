@@ -31,10 +31,12 @@ package struct MenuContent: View {
 
         Divider()
 
-        ModeMenu(settings: model.settings, pro: model.pro, shortcutTitle: model.shortcuts.title(for: .modeCycle))
+        ModeMenu(settings: model.settings, pro: model.pro, shortcutTitle: model.shortcuts.title(for: .modeCycle)) {
+            model.windows.showSettings(.pro)
+        }
 
         if let app = model.frontmostApp.app {
-            AppModeMenu(app: app, settings: model.settings, pro: model.pro)
+            AppModeMenu(app: app, settings: model.settings, pro: model.pro) { model.windows.showSettings(.pro) }
         }
 
         LanguageMenu(settings: model.settings) { model.windows.showSettings(.dictation) }
@@ -74,14 +76,29 @@ package struct MenuContent: View {
 }
 
 private struct ModeMenu: View {
-    @Bindable var settings: SettingsModel
-
+    let settings: SettingsModel
     let pro: ProModel
     let shortcutTitle: String?
+    let showPro: () -> Void
+
+    private var mode: Binding<Mode> {
+        Binding(
+            get: { settings.settings.mode },
+            set: { mode in
+                guard !pro.locks(mode) else {
+                    showPro()
+
+                    return
+                }
+
+                settings.settings.mode = mode
+            },
+        )
+    }
 
     var body: some View {
         Menu("Mode: \(settings.settings.title(of: settings.settings.mode))") {
-            Picker("Mode", selection: $settings.settings.mode) {
+            Picker("Mode", selection: mode) {
                 ForEach(settings.settings.modes, id: \.self) { mode in
                     ModeOption(mode: mode, settings: settings.settings, pro: pro).tag(mode)
                 }
@@ -102,6 +119,7 @@ private struct AppModeMenu: View {
     let app: RunningApp
     let settings: SettingsModel
     let pro: ProModel
+    let showPro: () -> Void
 
     private var ownMode: Mode? {
         settings.settings.appModes.mode(for: app.bundleIdentifier)
@@ -116,7 +134,15 @@ private struct AppModeMenu: View {
     private var mode: Binding<Mode?> {
         Binding(
             get: { ownMode },
-            set: { settings.settings.appModes.set($0, for: app.bundleIdentifier) },
+            set: { mode in
+                if let mode, pro.locks(mode) {
+                    showPro()
+
+                    return
+                }
+
+                settings.settings.appModes.set(mode, for: app.bundleIdentifier)
+            },
         )
     }
 
