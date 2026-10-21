@@ -16,8 +16,7 @@ extension ShortcutConflict {
     var title: String {
         switch self {
         case let .shortcut(action): action.title
-        case .key(.dictation): String(localized: "Dictation key")
-        case .key(.edit): String(localized: "Editing key")
+        case let .key(purpose): purpose.title
         }
     }
 }
