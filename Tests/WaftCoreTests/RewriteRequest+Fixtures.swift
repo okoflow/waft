@@ -38,4 +38,15 @@ extension RewriteRequest {
             deadline: .seconds(20),
         )
     }
+
+    static func text(_ text: String, task: TextTask, rephrases: Bool = false) -> RewriteRequest {
+        RewriteRequest(
+            text: text,
+            language: .english,
+            kind: .text(task, rephrases: rephrases),
+            localServer: nil,
+            cloudModel: .balanced,
+            deadline: .seconds(20),
+        )
+    }
 }

@@ -73,6 +73,28 @@ package struct TranscriptProcessor: Sendable {
         return try await rewrite(request, with: setup.provider)
     }
 
+    package func rework(
+        _ text: String,
+        in language: Language,
+        as task: TextTask,
+        rephrases: Bool,
+        setup: RewriteSetup,
+    ) async throws(RewriteError) -> String {
+        let request = RewriteRequest(
+            text: text,
+            language: language,
+            kind: .text(task, rephrases: rephrases),
+            localServer: setup.serverInUse,
+            cloudModel: setup.cloudModelInUse,
+            deadline: setup.editDeadline,
+        )
+        let reworked = try await rewrite(request, with: setup.provider)
+
+        guard case let .translate(_, target) = task else { return reworked }
+
+        return reworked.written(in: setup.writingVariants.variant(for: target), keeping: [])
+    }
+
     private func apply(
         _ mode: Mode,
         to text: String,

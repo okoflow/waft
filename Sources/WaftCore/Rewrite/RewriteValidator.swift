@@ -15,6 +15,8 @@ enum RewriteValidator {
             try validatedCustom(answer, of: request.text)
         case let .edit(selection):
             try validatedEdit(answer, of: selection)
+        case .text:
+            try validatedText(answer, of: request.text)
         }
     }
 
@@ -48,6 +50,13 @@ enum RewriteValidator {
     private static func validatedEdit(_ answer: String, of selection: String) throws(RewriteError) -> String {
         let text = unwrapped(answer, input: selection, from: editWrappers)
         guard !text.isEmpty else { throw .unreadableResponse }
+
+        return text
+    }
+
+    private static func validatedText(_ answer: String, of input: String) throws(RewriteError) -> String {
+        let text = unwrapped(answer, input: input, from: editWrappers)
+        guard !text.isEmpty, text.count <= input.count * 5 + 200 else { throw .unreadableResponse }
 
         return text
     }

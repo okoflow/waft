@@ -21,4 +21,9 @@ struct RewriteRequestTests {
 
         #expect(request.outputTokenBudget == budget)
     }
+
+    @Test(arguments: [(10, 1024), (1000, 3000), (2000, 4096)])
+    func `budgets output tokens for a text task from the text`(length: Int, budget: Int) {
+        #expect(RewriteRequest.text(String(repeating: "a", count: length), task: .fix).outputTokenBudget == budget)
+    }
 }

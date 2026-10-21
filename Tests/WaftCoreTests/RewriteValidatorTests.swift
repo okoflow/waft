@@ -29,7 +29,11 @@ struct RewriteValidatorTests {
         }
     }
 
-    @Test(arguments: [(RewriteRequest.cleanup("hi"), 2 * 3 + 60), (.custom("tell him yes friday works"), 600)])
+    @Test(arguments: [
+        (RewriteRequest.cleanup("hi"), 2 * 3 + 60),
+        (.custom("tell him yes friday works"), 600),
+        (.text("Hi.", task: .fix), 3 * 5 + 200),
+    ])
     func `rejects an answer longer than the limit of its request`(request: RewriteRequest, limit: Int) throws {
         #expect(try RewriteValidator.validated(String(repeating: "a", count: limit), for: request).count == limit)
         #expect(throws: RewriteError.unreadableResponse) {
@@ -123,6 +127,20 @@ struct RewriteValidatorTests {
     func `rejects an empty edit`(answer: String) {
         #expect(throws: RewriteError.unreadableResponse) {
             try RewriteValidator.validated(answer, for: .edit("make it shorter", selection: "Some text."))
+        }
+    }
+
+    @Test(arguments: [("<text>\nHallo.\n</text>", "Hallo."), ("«Hallo.»", "Hallo."), ("Hallo.", "Hallo.")])
+    func `unwraps the answer to a text task`(answer: String, expected: String) throws {
+        let request = RewriteRequest.text("Hello.", task: .translate(from: nil, into: .german))
+
+        #expect(try RewriteValidator.validated(answer, for: request) == expected)
+    }
+
+    @Test(arguments: ["", "  ", "\" \"", "\"\"", "<text> </text>", "<text></text>"])
+    func `rejects an empty answer to a text task`(answer: String) {
+        #expect(throws: RewriteError.unreadableResponse) {
+            try RewriteValidator.validated(answer, for: .text("Hi.", task: .fix))
         }
     }
 }
