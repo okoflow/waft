@@ -70,7 +70,7 @@ struct WritingSettingsPane: View {
             }
             .rowTransition()
         } footer: {
-            Button("Add App…", action: addApp)
+            Button("Add App…", action: chooseApp)
         }
         .motion(Motion.layout, value: appIdentifiers)
 
@@ -83,6 +83,12 @@ struct WritingSettingsPane: View {
         }
     }
 
+    func add(_ bundleIdentifier: String) {
+        guard settings.settings.appModes.mode(for: bundleIdentifier) == nil else { return }
+
+        settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
+    }
+
     private func addMode() {
         guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
@@ -91,7 +97,7 @@ struct WritingSettingsPane: View {
         state.editedMode = .custom(custom.id)
     }
 
-    private func addApp() {
+    private func chooseApp() {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [.application]
         panel.directoryURL = URL(filePath: "/Applications")
@@ -105,7 +111,7 @@ struct WritingSettingsPane: View {
             return
         }
 
-        settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
+        add(bundleIdentifier)
     }
 }
 
