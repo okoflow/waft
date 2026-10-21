@@ -13,7 +13,11 @@ struct TranscriptionView: View {
 
             if model.isLocked {
                 VStack(spacing: Metrics.accessorySpacing) {
-                    ProGateBanner(showPro: showPro)
+                    ProGateBanner(
+                        title: "File transcription is part of Waft+",
+                        detail: "Recordings and videos become text and subtitles, right on your Mac.",
+                        showPro: showPro,
+                    )
 
                     DropZone(model: model)
                 }
@@ -190,33 +194,5 @@ private struct FailureCard: View {
             }
             .settingsRowPadding()
         }
-    }
-}
-
-private struct ProGateBanner: View {
-    let showPro: () -> Void
-
-    var body: some View {
-        let shape = RoundedRectangle.card
-
-        HStack(spacing: Metrics.rowSpacing) {
-            WaftPlusMark(size: Metrics.tileSize)
-
-            VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                Text("File transcription is part of Waft+")
-                    .font(.cardTitle)
-
-                Text("Recordings and videos become text and subtitles, right on your Mac.")
-                    .detailText()
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            Spacer(minLength: 0)
-
-            Button("Unlock Waft+…", action: showPro)
-                .buttonStyle(PushButtonStyle(isProminent: true))
-        }
-        .padding(Metrics.rowPadding)
-        .background(Palette.plusTint, in: shape)
     }
 }
