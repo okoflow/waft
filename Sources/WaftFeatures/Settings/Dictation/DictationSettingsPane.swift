@@ -137,7 +137,7 @@ struct DictationSettingsPane: View {
             .disabled(addableLanguages.isEmpty)
         }
         .motion(Motion.layout, value: selection.languages)
-        .onDisappear { keyRecorder.stop() }
+        .onDisappear(perform: keyRecorder.stop)
     }
 }
 

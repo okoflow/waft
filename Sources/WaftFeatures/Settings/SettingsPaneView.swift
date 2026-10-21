@@ -5,10 +5,10 @@ struct SettingsPaneView: View {
     let state: SettingsWindowState
 
     var body: some View {
-        if let mode = state.editedMode, state.selection == .writing {
+        if let mode = state.editedMode {
             ModeEditorPage(mode: mode, settings: model.settings, tryout: model.modeTryout, state: state)
                 .id(mode)
-        } else if let kind = state.editedTextTask, state.selection == .translator {
+        } else if let kind = state.editedTextTask {
             TextTaskEditorPage(kind: kind, settings: model.settings, tryout: model.translatorTryout, state: state)
                 .id(kind)
         } else {

@@ -33,7 +33,7 @@ struct SpeechModelSection: View {
                     }
 
                     if controller.state.canRetry {
-                        Button("Retry") { controller.retry() }
+                        Button("Retry", action: controller.retry)
                     }
 
                     Button("Show in Finder", action: controller.revealInFinder)

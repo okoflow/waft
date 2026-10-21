@@ -17,12 +17,10 @@ private struct RecentSection: View {
 
     let statistics: DictationStatistics
 
-    private var days: [(date: Date, day: DictationStatistics.Day)] {
-        statistics.daily(last: Self.dayCount, endingOn: Date())
-    }
-
     var body: some View {
-        let recent = statistics.total(last: Self.dayCount, endingOn: Date())
+        let today = Date()
+        let days = statistics.daily(last: Self.dayCount, endingOn: today)
+        let recent = statistics.total(last: Self.dayCount, endingOn: today)
 
         SettingsSection("Last 7 days", subtitle: "Counted on this Mac: words and time, never the text.") {
             HStack(spacing: 0) {

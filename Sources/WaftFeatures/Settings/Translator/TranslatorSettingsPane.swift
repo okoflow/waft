@@ -45,7 +45,7 @@ struct TranslatorSettingsPane: View {
         } footer: {
             Button("Open Translator", action: openTranslator)
         }
-        .onDisappear { shortcutRecorder.stop() }
+        .onDisappear(perform: shortcutRecorder.stop)
     }
 
     private func shortcutRow(_ action: ShortcutAction, description: LocalizedStringKey? = nil) -> some View {

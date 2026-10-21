@@ -22,7 +22,7 @@ struct DictionarySettingsPane: View {
             }
             .rowTransition()
         } footer: {
-            Button("Add Term") { vocabulary.addTerm() }
+            Button("Add Term", action: vocabulary.addTerm)
         }
         .motion(Motion.layout, value: vocabulary.terms.count)
 
@@ -44,14 +44,14 @@ struct DictionarySettingsPane: View {
             }
             .rowTransition()
         } footer: {
-            Button("Add Snippet") { vocabulary.addSnippet() }
+            Button("Add Snippet", action: vocabulary.addSnippet)
         }
         .motion(Motion.layout, value: vocabulary.snippets.count)
 
         SettingsSection("File", subtitle: "Both lists are saved as a JSON file you can edit.") {
             SettingsRow("Dictionary file") {
-                Button("Open in Editor") { vocabulary.openInEditor() }
-                Button("Show in Finder") { vocabulary.revealInFinder() }
+                Button("Open in Editor", action: vocabulary.openInEditor)
+                Button("Show in Finder", action: vocabulary.revealInFinder)
             }
         }
     }

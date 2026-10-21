@@ -51,7 +51,7 @@ struct WritingSettingsPane: View {
         SettingsSection("Shortcut", subtitle: "It works in any app.") {
             ShortcutRow(action: .modeCycle, settings: settings, shortcuts: shortcuts, recorder: shortcutRecorder)
         }
-        .onDisappear { shortcutRecorder.stop() }
+        .onDisappear(perform: shortcutRecorder.stop)
 
         TranslationSection(
             title: "Translation",

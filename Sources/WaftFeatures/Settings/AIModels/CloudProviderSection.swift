@@ -44,7 +44,7 @@ private struct APIKeyRows: View {
         HStack(spacing: Metrics.controlSpacing) {
             InputField("API key", prompt: prompt, text: $apiKey.draft, isSecure: true)
 
-            Button("Save") { apiKey.saveDraft() }
+            Button("Save", action: apiKey.saveDraft)
                 .disabled(!apiKey.canSaveDraft)
         }
         .settingsRowPadding()
