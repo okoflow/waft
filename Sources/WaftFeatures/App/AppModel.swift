@@ -22,6 +22,8 @@ package final class AppModel {
     let interfaceLanguage: InterfaceLanguageModel
     let queue: DictationQueue
     let modeTryout: ModeTryoutModel
+    let translator: TranslatorModel
+    let translatorShortcuts: TranslatorShortcuts
 
     private let hud: HUDController
     private let keyMonitor: KeyMonitorController
@@ -75,17 +77,14 @@ package final class AppModel {
             pro: pro,
             queue: queue,
         )
-        modeSwitcher = ModeSwitcher(shortcut: dependencies.modeShortcut, settings: settings, hud: hud, pro: pro)
+        modeSwitcher = ModeSwitcher(shortcut: dependencies.shortcuts.modeCycle, settings: settings, hud: hud, pro: pro)
         apiKeys = Self.makeAPIKeys(dependencies)
         localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
         frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
+        translator = Self.makeTranslator(dependencies, settings: settings, pro: pro)
+        translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, settings: settings, pro: pro, hud: hud)
         onboarding = OnboardingModel(permissions: permissions)
-        transcription = Self.makeTranscription(
-            dependencies,
-            speechModelController: speechModelController,
-            settings: settings,
-            pro: pro,
-        )
+        transcription = Self.makeTranscription(dependencies, controller: speechModelController, settings: settings, pro: pro)
         updates = UpdatesModel(updater: dependencies.updater)
         interfaceLanguage = InterfaceLanguageModel(store: dependencies.interfaceLanguageStore, lifecycle: dependencies.lifecycle)
         inserter = dependencies.inserter
@@ -101,6 +100,7 @@ package final class AppModel {
         keyMonitor.start()
         dictation.start()
         modeSwitcher.start()
+        translatorShortcuts.start()
         frontmostApp.start()
         updates.start()
         history.expireOldEntries()
@@ -146,6 +146,7 @@ package final class AppModel {
         speechModelController.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
         updates.onShowingUpdateChange = { [weak self] in self?.windows.updateActivationPolicy() }
+        translatorShortcuts.onOpenTranslator = { [weak self] in self?.windows.showTranslator() }
     }
 
     private func permissionsDidChange() {
@@ -242,7 +243,7 @@ extension AppModel {
 
     private static func makeTranscription(
         _ dependencies: AppDependencies,
-        speechModelController: SpeechModelController,
+        controller speechModelController: SpeechModelController,
         settings: SettingsModel,
         pro: ProModel,
     ) -> FileTranscriptionModel {

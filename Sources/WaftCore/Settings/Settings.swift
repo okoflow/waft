@@ -15,6 +15,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case localServer
         case instructions
         case translation
+        case translator
         case pushToTalkKey
         case dictationStart
         case editKey
@@ -40,6 +41,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var localServer = LocalServer()
     package var instructions = ModeInstructions()
     package var translation = Translation()
+    package var translator = TranslatorSettings()
     package var pushToTalkKey = PushToTalkKey.rightOption
     package var dictationStart = DictationStart.holdOrDoubleTap
     package var editKey: PushToTalkKey?
@@ -74,6 +76,7 @@ package struct Settings: Codable, Equatable, Sendable {
         localServer = container.decode(.localServer, default: localServer)
         instructions = container.decode(.instructions, default: instructions)
         translation = container.decode(.translation, default: translation)
+        translator = container.decode(.translator, default: TranslatorSettings(translation: translation))
         pushToTalkKey = container.decode(.pushToTalkKey, default: pushToTalkKey)
         dictationStart = container.decode(.dictationStart, default: allowedHandsFree ? .holdOrDoubleTap : .hold)
         editKey = container.decodeIfValid(.editKey)

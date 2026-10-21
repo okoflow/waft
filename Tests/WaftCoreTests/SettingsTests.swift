@@ -84,6 +84,14 @@ struct SettingsTests {
     }
 
     @Test
+    func `starts the translator from the Translate mode languages`() throws {
+        let settings = try decode(#"{"translation":{"target":"fr","twoWayLanguage":"ru"}}"#)
+        let translation = Translation(target: .french, twoWayLanguage: .russian)
+
+        #expect(settings.translator == TranslatorSettings(translation: translation))
+    }
+
+    @Test
     func `survives an encoding round trip`() throws {
         var settings = Settings.defaults
         settings.mode = .formal
@@ -96,6 +104,10 @@ struct SettingsTests {
         settings.localServer = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")
         settings.instructions.set("Be brief.", for: .clean)
         settings.translation = Translation(target: .german, twoWayLanguage: .english)
+        settings.translator.translation = Translation(target: .english, twoWayLanguage: .hebrew)
+        settings.translator.source = .hebrew
+        settings.translator.rephrases = true
+        settings.translator.remember(.hebrew)
         settings.pushToTalkKey = .function
         settings.dictationStart = .tap
         settings.customModes = [CustomMode.emailReply]

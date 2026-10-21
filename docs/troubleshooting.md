@@ -11,13 +11,14 @@ text is what the HUD shows.
 | --- | --- |
 | The menu says "Setup needed" | Choose **Finish Setup…** or click **Allow…** in Settings › General |
 | "Waft can't use the microphone. Allow it in Settings › General." | Click **Allow…** next to Microphone |
-| "Editing by voice is part of Waft+." | Add a license in Settings › Waft+ |
+| "Editing by voice is part of Waft+." or "Translating and fixing text is part of Waft+." | Add a license in Settings › Waft+ |
 | The menu or the HUD shows the speech model downloading or preparing | Wait; [The speech model](how-it-works.md#the-speech-model) says how long it takes |
 | The menu says "Speech model failed" | See [The speech model fails](#the-speech-model-fails) |
 | Another key is set | The first line of the menu and **Dictation key** in Settings › Dictation show which one |
 | <kbd>🌐</kbd> opens emoji or dictation | Set **Press 🌐 key to** to **Do Nothing** in System Settings › Keyboard |
 | A function key acts as a media key | Turn on **Use F1, F2, etc. keys as standard function keys** in System Settings › Keyboard › Keyboard Shortcuts › Function Keys |
 | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> doesn't switch modes | Another app holds it; use the menu |
+| A translator shortcut does nothing | Another app holds it, and Settings › Translator shows it as "Unavailable"; use the menu |
 | Permissions were lost after a rebuild | Run `make signing` once ([Development setup](../CONTRIBUTING.md#development-setup)), rebuild, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security, and allow them again. On macOS 27 and later, Accessibility there is called Device Control and Data Access |
 | The menu bar icon is missing | Turn on **Show in menu bar** in Settings › General, and on macOS 26 and later allow Waft in System Settings › Menu Bar. A crowded menu bar can hide the icon behind the notch |
 
@@ -30,7 +31,8 @@ text is what the HUD shows.
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
 | "Couldn't edit the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
-| "Select the text to edit, then hold the key and say what to change." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
+| "Select the text to edit, then hold the key and say what to change." or "Select the text first, then press the shortcut." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
+| "Couldn't translate the text" or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
 | The text has no leading space | The app, such as an Electron app, a game, or a remote desktop, exposes little to Accessibility, so Waft can't see the text before the cursor |
 
 ## Recognition is poor or picks the wrong language

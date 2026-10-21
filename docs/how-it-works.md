@@ -112,6 +112,18 @@ When the model fails or its answer is rejected, a dictation gets the Light
 text. [The AI modes use Light](troubleshooting.md#the-ai-modes-use-light)
 lists the reasons.
 
+### The translator
+
+The [translator](usage.md#translator) and its shortcuts on selected text send
+the text, the target language, and the source language when you chose one.
+The model reads the text as material to translate or fix, never as
+instructions, and gets the time limit of an edit. macOS detects the language
+of the text on your Mac, which decides when two-way applies.
+
+Waft rejects an answer that is empty or longer than five times the text plus
+200 characters. A translation into Chinese or Serbian is converted into your
+writing system; a fix keeps the script the AI model wrote.
+
 ## Pasting
 
 Waft pastes through the clipboard rather than typing key by key:

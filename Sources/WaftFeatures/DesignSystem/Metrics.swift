@@ -54,6 +54,15 @@ enum Metrics {
     static let dropZoneHeight: CGFloat = 220
     static let transcriptPadding: CGFloat = 12
     static let transcriptionMinimumSize = CGSize(width: 520, height: 480)
+    static let translatorSize = CGSize(width: 900, height: 460)
+    static let translatorMinimumSize = CGSize(width: 640, height: 340)
+    static let translatorTop: CGFloat = 36
+    static let translatorLineSpacing: CGFloat = 4
+    static let translatorTextSize: CGFloat = 16
+    static let textInset: CGFloat = 5
+    static let swapButtonSize: CGFloat = 36
+    static let languageListHeight: CGFloat = 300
+    static let languageListWidth: CGFloat = 260
     static let onboardingTopInset: CGFloat = 56
     static let onboardingSideInset: CGFloat = 72
     static let onboardingFooterInset: CGFloat = 28

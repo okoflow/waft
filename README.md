@@ -64,8 +64,8 @@ cleans it up when you want prose.
   </thead>
   <tbody>
     <tr>
-      <td valign="top"><b>Edit by voice</b><br>Select text, hold a key, say
-        "make it shorter".</td>
+      <td valign="top"><b>Edit and translate</b><br>Say "make it shorter" over
+        a selection, or translate it with a shortcut.</td>
       <td valign="top"><b>Transcribe files</b><br>Recordings and videos to
         text or SRT.</td>
       <td valign="top"><b>Your words</b><br>A dictionary, snippets, and history
@@ -103,9 +103,9 @@ cleans it up when you want prose.
 
 ## Waft+
 
-[Waft+](docs/usage.md#waft) adds the AI modes, editing by voice, file
-transcription, and the Accurate speech model for a single payment of $13.99,
-and is free while Waft is in beta.
+[Waft+](docs/usage.md#waft) adds the AI modes, editing by voice, the
+translator, file transcription, and the Accurate speech model for a single
+payment of $13.99, and is free while Waft is in beta.
 
 ## Contributing
 

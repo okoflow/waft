@@ -23,7 +23,7 @@ flowchart TD
 | `WaftCore` | Nonisolated | Domain types, text and recognition rules, state machines, and every interface between modules |
 | `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the model files, and the language-restricted tokenizer |
 | `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, the AI APIs, license signatures, updates, and the system |
-| `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, and file transcription |
+| `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, file transcription, and the translator |
 | `Waft` | Main actor | The app, its delegate, and `AppDependencies.live()` |
 
 ## Code map
@@ -39,7 +39,8 @@ The tables list the folders whose names don't say enough.
 | `Language` | `Language` with its names, writing systems, and sound-alike languages, and the `WritingVariants` for Chinese and Serbian |
 | `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
 | `Settings` | `Settings`, and `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup` |
-| `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
+| `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
+| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, and **Make it clearer** |
 | `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 
@@ -61,11 +62,12 @@ The tables list the folders whose names don't say enough.
 
 | Folder | What lives there |
 | --- | --- |
-| `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, and file transcription, and gives Waft a Dock icon while one of them is open or Sparkle shows an update |
+| `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of them is open or Sparkle shows an update |
 | `Models` | The observable state that several features share, including `PermissionMonitor`; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
+| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which registers the three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
 
 **`Tests`** has a Swift Testing target for every module but `Waft`; see

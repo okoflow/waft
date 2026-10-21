@@ -5,27 +5,45 @@ import WaftCore
 @MainActor
 package final class CarbonHotKey: GlobalShortcut {
     private static let signature = OSType(0x5761_6674)
-    private static let identifier: UInt32 = 1
-    private static let keyCode = UInt32(kVK_ANSI_M)
-    private static let modifiers = UInt32(controlKey | optionKey)
+    private static let controlOption = controlKey | optionKey
+
+    package let title: String
+
+    private let identifier: UInt32
+    private let keyCode: UInt32
+    private let modifiers: UInt32
 
     private var hotKey: EventHotKeyRef?
     private var handler: EventHandlerRef?
     private var action: (@MainActor () -> Void)?
 
-    package var title: String {
-        "⌃⌥M"
+    private init(identifier: UInt32, keyCode: Int, modifiers: Int, title: String) {
+        self.identifier = identifier
+        self.keyCode = UInt32(keyCode)
+        self.modifiers = UInt32(modifiers)
+        self.title = title
     }
 
-    private init() {}
-
     package static func modeCycle() -> CarbonHotKey {
-        CarbonHotKey()
+        CarbonHotKey(identifier: 1, keyCode: kVK_ANSI_M, modifiers: controlOption, title: "⌃⌥M")
+    }
+
+    package static func translator() -> CarbonHotKey {
+        CarbonHotKey(identifier: 2, keyCode: kVK_ANSI_T, modifiers: controlOption, title: "⌃⌥T")
+    }
+
+    package static func translateSelection() -> CarbonHotKey {
+        CarbonHotKey(identifier: 3, keyCode: kVK_ANSI_T, modifiers: controlOption | shiftKey, title: "⌃⌥⇧T")
+    }
+
+    package static func fixSelection() -> CarbonHotKey {
+        CarbonHotKey(identifier: 4, keyCode: kVK_ANSI_F, modifiers: controlOption, title: "⌃⌥F")
     }
 
     package func register(_ action: @escaping @MainActor () -> Void) -> Bool {
         guard hotKey == nil else { return true }
 
+        let shortcut = title
         var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
         let context = Unmanaged.passUnretained(self).toOpaque()
         let installStatus = InstallEventHandler(
@@ -38,15 +56,19 @@ package final class CarbonHotKey: GlobalShortcut {
         )
 
         guard installStatus == noErr else {
-            Logger.keyboard.error("Couldn't install the mode shortcut handler: OSStatus \(installStatus, privacy: .public)")
+            Logger.keyboard.error(
+                "Couldn't install the \(shortcut, privacy: .public) handler: OSStatus \(installStatus, privacy: .public)",
+            )
 
             return false
         }
 
-        let hotKeyID = EventHotKeyID(signature: Self.signature, id: Self.identifier)
-        let registerStatus = RegisterEventHotKey(Self.keyCode, Self.modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKey)
+        let hotKeyID = EventHotKeyID(signature: Self.signature, id: identifier)
+        let registerStatus = RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKey)
         guard registerStatus == noErr else {
-            Logger.keyboard.error("Couldn't register the mode shortcut: OSStatus \(registerStatus, privacy: .public)")
+            Logger.keyboard.error(
+                "Couldn't register the \(shortcut, privacy: .public) shortcut: OSStatus \(registerStatus, privacy: .public)",
+            )
 
             RemoveEventHandler(handler)
             handler = nil
@@ -60,7 +82,7 @@ package final class CarbonHotKey: GlobalShortcut {
     }
 
     fileprivate func handle(_ pressed: EventHotKeyID) -> OSStatus {
-        guard pressed.signature == Self.signature, pressed.id == Self.identifier else { return OSStatus(eventNotHandledErr) }
+        guard pressed.signature == Self.signature, pressed.id == identifier else { return OSStatus(eventNotHandledErr) }
 
         action?()
 

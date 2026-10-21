@@ -51,8 +51,9 @@ languages detect faster and more accurately. To skip detection, choose a
 - Chinese and Serbian have a **Writing system** in Settings › Dictation:
   Simplified or Traditional characters, and Latin or Cyrillic letters. Waft
   converts what you dictate or transcribe in that language into it, including
-  what Translate translates into it; what your own modes return, a result in
-  another language, and an edit by voice keep the script the AI model wrote.
+  what Translate and the translator translate into it; what your own modes
+  return, a result in another language, an edit by voice, and a fix of
+  selected text keep the script the AI model wrote.
 
 ## Modes
 
@@ -124,6 +125,38 @@ edit changes nothing;
 [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the
 HUD says then.
 
+## Translator
+
+**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> in any
+app, opens a window with your text on the left and its translation on the
+right. Type or paste up to 5,000 characters, or hold the dictation key and
+speak; the AI model translates half a second after you stop typing.
+
+- The left half detects the language until you choose one with the arrows
+  next to its name, and shows the language it found. The right half
+  translates into **Translate into** in Settings › Translator, English by
+  default. With **Two-way with** set there, text in the **Translate into**
+  language goes into the two-way one, as in Translate. The translator starts
+  from the languages of Translate and keeps its own afterward.
+- A click on the translation copies all of it; select a part to copy only
+  that.
+- The arrows between the halves swap the languages and the texts.
+- **Make it clearer** in Settings › Translator also untangles long sentences
+  and puts the points in order, in the window and in the shortcuts on
+  selected text.
+
+### Selected text
+
+Two shortcuts work on text selected in any app, without speaking:
+
+| Shortcut | What it does |
+| --- | --- |
+| <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd> | Replaces the selection with its translation into **Translate into**, or into **Two-way with** when the selection is already in the first |
+| <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd> | Fixes spelling, grammar, and punctuation in the selection |
+
+When the AI model fails, the selection stays as it was and the HUD says why.
+If focus moved while the model worked, Waft copies the result instead.
+
 ## Transcribing files
 
 **Transcribe File…** in the menu opens a window for recordings and videos.
@@ -183,6 +216,7 @@ while one of its windows is open.
 | The first line | Says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed" |
 | Finish Setup…, Retry Speech Model, Install Update… | Appear only when needed: setup is unfinished or a permission is missing, the speech model failed, or an update is waiting |
 | Copy Last Dictation, Recent Dictations | Copy the latest text, pasted or not, within 10 minutes of the dictation, or one of your last five dictations; **Show History** opens the full list |
+| Transcribe File…, Translator… | Open the windows for [files](#transcribing-files) and [the translator](#translator) |
 | Unlock Waft+… | Appears while you have no license once Waft+ is on sale |
 
 To hide the icon, turn off **Show in menu bar** in Settings › General.
@@ -212,8 +246,8 @@ build again.
 
 Dictation, the Raw and Light modes, the dictionary, and history are free.
 Waft+ adds Clean, Formal, Translate, rewritten instructions, your modes,
-editing by voice, file transcription, and the Accurate speech model for a
-single payment of $13.99. **Speech model** in Settings › Dictation switches
+editing by voice, the translator, file transcription, and the Accurate speech
+model for a single payment of $13.99. **Speech model** in Settings › Dictation switches
 between Fast and Accurate;
 [The speech model](how-it-works.md#the-speech-model) compares them.
 
@@ -226,8 +260,9 @@ license in Settings › Waft+:
 | --- | --- |
 | The AI modes | Fall back to Light, and the HUD says so; <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
+| The translator | The window translates nothing, and the shortcuts on selected text show that they need Waft+ |
 | The speech model | Waft recognizes speech with Fast |
-| The menu | Marks the AI modes and file transcription "(Waft+)" |
+| The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |
 
 The license key arrives with your receipt: paste it into **License key** and
 click **Activate**, or open the activation link in the email. Waft checks the

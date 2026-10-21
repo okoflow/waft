@@ -61,10 +61,11 @@ struct AppModelTests {
             transcriber: FakeTranscriber(),
             mediaDecoder: FakeMediaDecoder(),
             rewriters: .all(FakeTextRewriter()),
+            languageDetector: FakeLanguageDetector(),
             localServers: FakeLocalServerBrowser([:]),
             keyEventMonitor: FakeKeyEventMonitor(),
             keyboardState: FakeKeyboardState(holdsKeys: false),
-            modeShortcut: FakeGlobalShortcut(),
+            shortcuts: .fake(),
             focusTracker: FakeFocusTracker(),
             frontmostAppMonitor: FakeFrontmostAppMonitor(),
             urlOpener: FakeURLOpener(),
@@ -88,11 +89,4 @@ struct AppModelTests {
             licenseChecker: FakeLicenseSignatureChecker(signature: Data(), payload: Data()),
         )
     }
-}
-
-private final class FakeFrontmostAppMonitor: FrontmostAppMonitor {
-    let frontmostApp: RunningApp? = nil
-    let activations = AsyncStream<RunningApp> { $0.finish() }
-
-    func start() {}
 }

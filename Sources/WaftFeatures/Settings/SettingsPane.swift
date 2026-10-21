@@ -5,6 +5,7 @@ package enum SettingsPane: CaseIterable {
     case dictation
     case dictionary
     case writing
+    case translator
     case aiModels
     case history
     case general
@@ -17,6 +18,7 @@ package enum SettingsPane: CaseIterable {
         case .general: String(localized: "General")
         case .dictation: String(localized: "Dictation")
         case .writing: String(localized: "Writing")
+        case .translator: String(localized: "Translator")
         case .aiModels: String(localized: "AI Models")
         case .dictionary: String(localized: "Dictionary")
         case .history: String(localized: "History")
@@ -26,7 +28,7 @@ package enum SettingsPane: CaseIterable {
     }
 
     var needsWaftPlus: Bool {
-        self == .aiModels
+        self == .aiModels || self == .translator
     }
 
     var symbolName: String {
@@ -35,6 +37,7 @@ package enum SettingsPane: CaseIterable {
         case .general: "gearshape.fill"
         case .dictation: "mic.fill"
         case .writing: "slider.horizontal.3"
+        case .translator: "character.bubble.fill"
         case .aiModels: "cpu.fill"
         case .dictionary: "book.closed.fill"
         case .history: "clock.fill"
@@ -49,6 +52,7 @@ package enum SettingsPane: CaseIterable {
         case .general, .about: .gray
         case .dictation: .red
         case .writing: .teal
+        case .translator: .blue
         case .aiModels: .purple
         case .dictionary: .orange
         case .history: .indigo

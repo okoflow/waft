@@ -8,10 +8,11 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private var settingsWindow: NSWindow?
     private var onboardingWindow: NSWindow?
     private var transcriptionWindow: NSWindow?
+    private var translatorWindow: NSWindow?
     private var clickMonitor: Any?
 
     private var openWindows: [NSWindow] {
-        [settingsWindow, onboardingWindow, transcriptionWindow].compactMap(\.self)
+        [settingsWindow, onboardingWindow, transcriptionWindow, translatorWindow].compactMap(\.self)
     }
 
     private var isShowingUpdate: Bool {
@@ -46,6 +47,10 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
             model?.transcription.cancel()
         }
 
+        if closing == translatorWindow {
+            model?.translator.stop()
+        }
+
         updateActivationPolicy(closing: closing)
     }
 
@@ -59,6 +64,12 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         guard let model else { return }
 
         present(window(\.transcriptionWindow) { makeTranscriptionWindow(model: model) })
+    }
+
+    func showTranslator() {
+        guard let model else { return }
+
+        present(window(\.translatorWindow) { makeTranslatorWindow(model: model) })
     }
 
     func closeOnboarding() {
@@ -135,6 +146,20 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
         let window = makeWindow(content, size: NSSize(width: 600, height: 580), minimumSize: Metrics.transcriptionMinimumSize)
         window.title = String(localized: "Transcribe File")
+
+        return window
+    }
+
+    private func makeTranslatorWindow(model: AppModel) -> NSWindow {
+        let view = TranslatorView(model: model.translator) { [weak self] in
+            self?.showSettings(.pro)
+        }
+        let content = NSHostingController(rootView: view.tint(Palette.accent))
+        content.sizingOptions = []
+
+        let window = makeWindow(content, size: Metrics.translatorSize, minimumSize: Metrics.translatorMinimumSize)
+        window.title = String(localized: "Translator")
+        window.titleVisibility = .visible
 
         return window
     }

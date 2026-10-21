@@ -19,10 +19,11 @@ extension AppDependencies {
             transcriber: WhisperTranscriber(),
             mediaDecoder: MediaAudioReader(),
             rewriters: .http(apiKeys: apiKeyStores),
+            languageDetector: NaturalLanguageDetector(),
             localServers: LocalServerBrowser(),
             keyEventMonitor: KeyEventTap(),
             keyboardState: keyboardState,
-            modeShortcut: CarbonHotKey.modeCycle(),
+            shortcuts: shortcuts(),
             focusTracker: focusTracker,
             frontmostAppMonitor: WorkspaceAppMonitor(),
             urlOpener: WorkspaceURLOpener(),
@@ -44,6 +45,15 @@ extension AppDependencies {
             trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),
             interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),
+        )
+    }
+
+    private static func shortcuts() -> GlobalShortcuts {
+        GlobalShortcuts(
+            modeCycle: CarbonHotKey.modeCycle(),
+            translator: CarbonHotKey.translator(),
+            translateSelection: CarbonHotKey.translateSelection(),
+            fixSelection: CarbonHotKey.fixSelection(),
         )
     }
 

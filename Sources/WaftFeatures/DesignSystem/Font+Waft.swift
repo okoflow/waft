@@ -12,6 +12,7 @@ extension Font {
     static let prominentControl = Font.system(size: 13, weight: .medium)
     static let editor = Font.system(size: 12)
     static let practice = Font.system(size: 15)
+    static let translatorText = Font.system(size: Metrics.translatorTextSize)
     static let badge = Font.system(size: 10, weight: .medium)
     static let cardTitle = Font.system(size: 13, weight: .semibold)
     static let metric = Font.system(size: 22, weight: .semibold, design: .rounded)

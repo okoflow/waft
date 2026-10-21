@@ -53,6 +53,11 @@ struct SettingsPaneView: View {
                 state: state,
             )
 
+        case .translator:
+            TranslatorSettingsPane(settings: model.settings, shortcuts: model.translatorShortcuts) {
+                model.windows.showTranslator()
+            }
+
         case .aiModels:
             AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)
 

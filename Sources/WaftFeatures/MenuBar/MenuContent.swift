@@ -44,6 +44,11 @@ package struct MenuContent: View {
             model.windows.showTranscription()
         }
 
+        Button(model.translator.isLocked ? "Translator (Waft+)…" : "Translator…") {
+            model.windows.showTranslator()
+        }
+        .keyboardShortcut("t", modifiers: [.control, .option])
+
         Divider()
 
         Button("Settings…") { model.windows.showSettings() }
