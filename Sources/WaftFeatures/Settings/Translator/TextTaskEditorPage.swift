@@ -15,7 +15,7 @@ struct TextTaskEditorPage: View {
     }
 
     var body: some View {
-        SettingsPage(.verbatim(kind.title), needsWaftPlus: true, back: state.closeEditor) {
+        SettingsPage(.verbatim(kind.title), back: state.closeEditor) {
             ResetInstructionsButton(
                 title: kind.title,
                 isCustomized: settings.settings.translator.instructions.isCustomized(kind),

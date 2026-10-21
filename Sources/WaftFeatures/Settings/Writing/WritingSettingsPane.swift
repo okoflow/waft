@@ -64,7 +64,12 @@ struct WritingSettingsPane: View {
         }
         .onDisappear { shortcutRecorder.stop() }
 
-        TranslationSection(title: "Translation", subtitle: translationNote, translation: $settings.settings.translation)
+        TranslationSection(
+            title: "Translation",
+            subtitle: translationNote,
+            isPro: true,
+            translation: $settings.settings.translation,
+        )
 
         SettingsSection("Apps", subtitle: "These apps get their own mode.") {
             if appIdentifiers.isEmpty {

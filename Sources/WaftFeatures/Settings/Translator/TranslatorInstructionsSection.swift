@@ -7,7 +7,7 @@ struct TranslatorInstructionsSection: View {
     let state: SettingsWindowState
 
     var body: some View {
-        SettingsSection("Instructions", subtitle: "What the AI model is told to do with your text.", isPro: true) {
+        SettingsSection("Instructions", subtitle: "What the AI model is told to do with your text.") {
             DividedForEach(TextTask.Kind.allCases, id: \.self) { kind in
                 InstructionsRow(
                     kind: kind,
