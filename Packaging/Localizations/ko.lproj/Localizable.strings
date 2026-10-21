@@ -270,7 +270,7 @@
 "Replaces the selection with its translation." = "선택한 텍스트를 번역문으로 바꿉니다.";
 "Reset Statistics" = "통계 재설정";
 "Reset Statistics…" = "통계 재설정…";
-"Reset the instructions of “%@”?" = "‘%@’ 모드의 지시문을 재설정하겠습니까?";
+"Reset the instructions of “%@”?" = "‘%@’의 지시문을 재설정하겠습니까?";
 "Reset to Default" = "기본값으로 재설정";
 "Reset to Default…" = "기본값으로 재설정…";
 "Reset your dictation statistics?" = "받아쓰기 통계를 재설정하겠습니까?";
@@ -292,7 +292,7 @@
 "Save" = "저장";
 "Saved only on this Mac." = "이 Mac에만 저장됩니다.";
 "Saving" = "보관";
-"Say something to try" = "시험해 볼 문장을 입력하세요";
+"Say something to try" = "말할 내용을 입력해 보세요";
 "Say the phrase on its own to paste the text." = "문구만 따로 말하면 해당 텍스트를 붙여넣습니다.";
 "Search languages" = "언어 검색";
 "Search" = "검색";

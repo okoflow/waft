@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Téléchargement du modèle vocal… %@";
 "Drop an audio or video file here" = "Déposez un fichier audio ou vidéo ici";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Supprime les « euh » et les « hum », ajoute une majuscule et un point.";
-"Edit %@" = "Modifier le mode %@";
+"Edit %@" = "Modifier « %@ »";
 "Edit the mode" = "Modifier le mode";
 "Edit" = "Édition";
 "Edited" = "Modifié";
@@ -213,7 +213,7 @@
 "Not running at this address" = "Introuvable à cette adresse";
 "Notices the dictation key and pastes the text where you type." = "Détecte la touche de dictée et colle le texte là où vous écrivez.";
 "Off" = "Désactivé";
-"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur le serveur à cette adresse ; le texte ne va que là.";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur le serveur à cette adresse ; le texte ne va que là.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX ou Jan sur ce Mac ; le texte ne le quitte jamais.";
 "On macOS 27, it's under Device Control and Data Access." = "Sous macOS 27, ce réglage se trouve dans Contrôle de l’appareil et accès aux données.";
 "On-device dictation for macOS with AI cleanup." = "Dictée sur l’appareil pour macOS, avec mise au propre par l’IA.";
@@ -419,7 +419,7 @@
 "Voice" = "Voix";
 "Waft can't read this file." = "Waft ne peut pas lire ce fichier.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ne peut pas utiliser le micro. Autorisez-le dans Réglages › Général.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft la supprime du trousseau. Les modes IA utilisent le mode Léger jusqu’à ce que vous ajoutiez une clé.";
 "Waft is listening" = "Waft écoute";
 "Waft keeps no dictations while Keep history is off." = "Waft ne conserve aucune dictée tant que « Conserver l’historique » est désactivé.";
@@ -446,8 +446,8 @@
 "Words dictated each day for the last 7 days" = "Mots dictés chaque jour au cours des 7 derniers jours";
 "Words" = "Mots";
 "Write instructions once and dictate in your own style." = "Rédigez vos instructions une fois, puis dictez dans votre style.";
-"Writing system" = "Écriture";
-"Writing" = "Texte";
+"Writing system" = "Système d’écriture";
+"Writing" = "Écriture";
 "You say" = "Vous dites";
 "You write" = "Vous écrivez";
 "You're all set" = "Tout est prêt";
@@ -460,9 +460,9 @@
 "Your words appear here" = "Vos mots apparaîtront ici";
 "add your %@ API key in Settings › AI Models" = "ajoutez votre clé API %@ dans Réglages › Modèles d’IA";
 "choose a local server and model in Settings › AI Models" = "choisissez un serveur local et un modèle dans Réglages › Modèles d’IA";
-"days in a row" = "Jours d’affilée";
+"days in a row" = "jours d’affilée";
 "detected" = "détectée";
-"dictations" = "Dictées";
+"dictations" = "dictées";
 "hey can u send me the report by friday? thanks" = "salut tu peu menvoyer le rapport avant vendredi? merci";
 "left ⇧" = "⇧ gauche";
 "left ⌃" = "⌃ gauche";
@@ -472,9 +472,9 @@
 "right ⌃" = "⌃ droite";
 "right ⌘" = "⌘ droite";
 "right ⌥" = "⌥ droite";
-"saved over typing" = "Temps gagné sur la saisie";
+"saved over typing" = "temps gagné sur la saisie";
 "the local server isn't running" = "le serveur local n’est pas lancé";
 "um so I think we should uh meet on Friday" = "euh alors je pense qu’on devrait euh se voir vendredi";
-"words a minute" = "Mots par minute";
-"words" = "Mots";
+"words a minute" = "mots par minute";
+"words" = "mots";
 "you're offline" = "vous êtes hors ligne";

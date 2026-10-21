@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Викачування моделі мовлення… %@";
 "Drop an audio or video file here" = "Перетягніть сюди аудіо- або відеофайл";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Прибирає «е-е» і «м-м», ставить велику літеру й крапку.";
-"Edit %@" = "Змінити режим «%@»";
+"Edit %@" = "Змінити «%@»";
 "Edit the mode" = "Змінити режим";
 "Edit" = "Редагування";
 "Edited" = "Змінено";
@@ -159,7 +159,7 @@
 "Keep at most" = "Зберігати не більше";
 "Keep dictations for" = "Зберігати диктування";
 "Keep history" = "Зберігати історію";
-"Kept in the Keychain." = "Зберігається у вʼязці ключів.";
+"Kept in the Keychain." = "Зберігається в Ключарі.";
 "Key %lld" = "Клавіша %lld";
 "Key saved" = "Ключ збережено";
 "Language" = "Мова";
@@ -270,7 +270,7 @@
 "Replaces the selection with its translation." = "Замінює виділений текст його перекладом.";
 "Reset Statistics" = "Скинути статистику";
 "Reset Statistics…" = "Скинути статистику…";
-"Reset the instructions of “%@”?" = "Скинути інструкції режиму «%@»?";
+"Reset the instructions of “%@”?" = "Скинути інструкції «%@»?";
 "Reset to Default" = "Скинути до типових";
 "Reset to Default…" = "Скинути до типових…";
 "Reset your dictation statistics?" = "Скинути статистику диктування?";
@@ -420,7 +420,7 @@
 "Waft can't read this file." = "Waft не може прочитати цей файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не може використовувати мікрофон. Надайте доступ у Параметрах › Загальні.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не зміг прочитати збережену історію й залишив її копію. «Очистити історію» видалить обидві.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft видалить його з вʼязки ключів. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
+"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft видалить його з Ключаря. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
 "Waft is listening" = "Waft слухає";
 "Waft keeps no dictations while Keep history is off." = "Поки перемикач «Зберігати історію» вимкнений, Waft не зберігає диктувань.";
 "Waft listens for these languages." = "Waft розпізнає ці мови.";
@@ -447,7 +447,7 @@
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишіть інструкції один раз і диктуйте у своєму стилі.";
 "Writing system" = "Писемність";
-"Writing" = "Текст";
+"Writing" = "Написання";
 "You say" = "Ви кажете";
 "You write" = "Ви пишете";
 "You're all set" = "Усе готово";
@@ -460,7 +460,7 @@
 "Your words appear here" = "Тут зʼявляться ваші слова";
 "add your %@ API key in Settings › AI Models" = "додайте ключ API %@ у Параметрах › Моделі ШІ";
 "choose a local server and model in Settings › AI Models" = "виберіть локальний сервер і модель у Параметрах › Моделі ШІ";
-"days in a row" = "днів поспіль";
+"days in a row" = "дн. поспіль";
 "detected" = "визначено";
 "dictations" = "усього диктувань";
 "hey can u send me the report by friday? thanks" = "привіт скинь плз звіт до пʼятниці? дяки";

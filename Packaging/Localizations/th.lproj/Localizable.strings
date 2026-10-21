@@ -32,7 +32,7 @@
 "Accurate" = "แม่นยำ";
 "Activate" = "เปิดใช้งาน";
 "Add App…" = "เพิ่มแอป…";
-"Add Command, Control, or Option, or press a function key." = "เพิ่มปุ่ม Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น";
+"Add Command, Control, or Option, or press a function key." = "เพิ่มปุ่ม Command, Control หรือ Option หรือกดปุ่มฟังก์ชัน";
 "Add Language" = "เพิ่มภาษา";
 "Add Snippet" = "เพิ่มข้อความสำเร็จรูป";
 "Add Term" = "เพิ่มคำศัพท์";
@@ -231,8 +231,8 @@
 "Play sounds" = "เล่นเสียง";
 "Preparing the speech model, about a minute the first time…" = "กำลังเตรียมโมเดลจำเสียงพูด ครั้งแรกจะใช้เวลาประมาณหนึ่งนาที…";
 "Preparing the speech model…" = "กำลังเตรียมโมเดลจำเสียงพูด…";
-"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
-"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "กดปุ่มพร้อมกับ Command, Control หรือ Option หรือกดปุ่มฟังก์ชั่น กด Esc เพื่อยกเลิก";
+"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "กดปุ่ม Option, Command, Shift หรือ Control ด้านใดก็ได้ ปุ่ม Fn หรือปุ่มฟังก์ชัน กด Esc เพื่อยกเลิก";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "กดปุ่มพร้อมกับ Command, Control หรือ Option หรือกดปุ่มฟังก์ชัน กด Esc เพื่อยกเลิก";
 "Press a key…" = "กดปุ่ม…";
 "Press a shortcut…" = "กดปุ่มลัด…";
 "Press the key to use, or Esc to cancel" = "กดปุ่มที่จะใช้ หรือกด Esc เพื่อยกเลิก";
@@ -344,7 +344,7 @@
 "Text" = "ข้อความ";
 "That doesn't look like a Waft license key." = "ดูเหมือนว่านี่ไม่ใช่คีย์ใบอนุญาตของ Waft";
 "That key is already in use. Choose another one." = "ปุ่มนั้นถูกใช้อยู่แล้ว เลือกปุ่มอื่น";
-"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชั่น";
+"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "ปุ่มนั้นใช้พิมพ์ข้อความ กดปุ่ม Option, Command, Shift, Control, Fn หรือปุ่มฟังก์ชัน";
 "That shortcut is already used for “%@”. Choose another one." = "ปุ่มลัดนี้ถูกใช้กับ “%@” อยู่แล้ว เลือกปุ่มลัดอื่น";
 "The chosen microphone can't be used." = "ไม่สามารถใช้ไมโครโฟนที่เลือกได้";
 "The file has no sound to transcribe." = "ไฟล์นี้ไม่มีเสียงให้ถอด";
@@ -415,7 +415,7 @@
 "Used Light mode: %@" = "ใช้โหมด “ปรับเล็กน้อย” แทน: %@";
 "Used by %@ on this Mac." = "ใช้โดย %@ บน Mac เครื่องนี้";
 "Uses your own API key. Only the text goes to %@, never the audio." = "ใช้คีย์ API ของคุณเอง ส่งเฉพาะข้อความไปยัง %@ ไม่ส่งเสียง";
-"Version %@" = "เวอร์ชั่น %@";
+"Version %@" = "เวอร์ชัน %@";
 "Voice" = "เสียง";
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";

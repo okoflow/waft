@@ -80,9 +80,9 @@
 "Clear" = "ניקוי";
 "Click the box, hold %@, and say “Hello, Waft”." = "יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
-"Click to copy all" = "לחצו להעתקת הכול";
-"Click to copy" = "לחצו להעתקה";
-"Click to copy, or select a part" = "לחצו להעתקה, או בחרו חלק";
+"Click to copy all" = "לחיצה להעתקת הכול";
+"Click to copy" = "לחיצה להעתקה";
+"Click to copy, or select a part" = "לחיצה להעתקה, או בחירת חלק";
 "Click, then press the key to use" = "יש ללחוץ כאן ואז על המקש הרצוי";
 "Click, then press the shortcut to use" = "יש ללחוץ כאן ואז על הקיצור הרצוי";
 "Continue" = "המשך";
@@ -104,7 +104,7 @@
 "Delete “%@”?" = "למחוק את ״%@״?";
 "Detect language" = "זיהוי שפה";
 "Detect" = "זיהוי";
-"Development build" = "גירסת פיתוח";
+"Development build" = "גרסת פיתוח";
 "Dictate in any app instead of typing." = "ניתן להכתיב בכל יישום במקום להקליד.";
 "Dictation key" = "מקש הכתבה";
 "Dictation" = "הכתבה";
@@ -140,7 +140,7 @@
 "Forever" = "לצמיתות";
 "Formal" = "רשמי";
 "Free trial ends %@." = "תקופת הניסיון ללא תשלום תסתיים %@.";
-"Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגירסת בטא.";
+"Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגרסת בטא.";
 "General" = "כללי";
 "Get Started" = "התחלה";
 "Get an API key" = "קבלת מפתח API";
@@ -341,7 +341,7 @@
 "Text in any language becomes %@." = "מלל בכל שפה מתורגם ל%@.";
 "Text to paste" = "מלל להדבקה";
 "Text to translate" = "מלל לתרגום";
-"Text" = "טקסט";
+"Text" = "מלל";
 "That doesn't look like a Waft license key." = "זה לא נראה כמו מפתח רישיון של Waft.";
 "That key is already in use. Choose another one." = "מקש זה כבר בשימוש. יש לבחור מקש אחר.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "מקש זה מקליד מלל. יש ללחוץ על Option, Command, Shift, Control, Fn או על מקש פונקציה.";
@@ -415,7 +415,7 @@
 "Used Light mode: %@" = "הופעל מצב ״בסיסי״: %@";
 "Used by %@ on this Mac." = "מועברות אל %@ ב-Mac זה.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "נעשה שימוש במפתח API משלך. רק המלל נשלח אל %@, אף פעם לא השמע.";
-"Version %@" = "גירסה %@";
+"Version %@" = "גרסה %@";
 "Voice" = "קול";
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";

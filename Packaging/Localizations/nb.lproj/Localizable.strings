@@ -157,7 +157,7 @@
 "Instructions" = "Instruksjoner";
 "It works in any app." = "Den fungerer i alle apper.";
 "Keep at most" = "Behold høyst";
-"Keep dictations for" = "Behold dikteringer";
+"Keep dictations for" = "Behold dikteringer i";
 "Keep history" = "Lagre logg";
 "Kept in the Keychain." = "Oppbevares i nøkkelringen.";
 "Key %lld" = "Tast %lld";
@@ -213,7 +213,7 @@
 "Not running at this address" = "Kjører ikke på denne adressen";
 "Notices the dictation key and pastes the text where you type." = "Registrerer dikteringstasten og limer inn teksten der du skriver.";
 "Off" = "Av";
-"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på serveren på denne adressen; teksten sendes bare dit.";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på tjeneren på denne adressen; teksten sendes bare dit.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX eller Jan på denne Macen; teksten forlater den aldri.";
 "On macOS 27, it's under Device Control and Data Access." = "I macOS 27 finner du dette under Enhetskontroll og datatilgang.";
 "On-device dictation for macOS with AI cleanup." = "Lokal diktering for macOS med KI-opprydding.";
@@ -304,7 +304,7 @@
 "Sent to %@ with your text." = "Sendes til %@ sammen med teksten din.";
 "Server address" = "Tjeneradresse";
 "Set Up…" = "Konfigurer…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐 for å» til «ikke gjøre noe» i Systeminnstillinger › Tastatur.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐-tasten for å» til «Ikke gjøre noe» i Systeminnstillinger › Tastatur.";
 "Settings…" = "Innstillinger…";
 "Setup needed" = "Oppsett kreves";
 "Shortcut" = "Snarvei";

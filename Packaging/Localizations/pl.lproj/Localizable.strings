@@ -117,10 +117,10 @@
 "Downloading the speech model… %@" = "Pobieram model mowy… %@";
 "Drop an audio or video file here" = "Przeciągnij tutaj plik audio lub wideo";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Usuwa „yyy” i „eee”, dodaje wielką literę i kropkę.";
-"Edit %@" = "Edytuj tryb „%@”";
+"Edit %@" = "Edytuj „%@”";
 "Edit the mode" = "Edytuj tryb";
 "Edit" = "Edycja";
-"Edited" = "Zmieniony";
+"Edited" = "Zmieniono";
 "Editing by voice is part of Waft+." = "Edycja głosem jest częścią Waft+.";
 "Editing by voice" = "Edycja głosem";
 "Editing key" = "Klawisz edycji";
@@ -270,7 +270,7 @@
 "Replaces the selection with its translation." = "Zastępuje zaznaczenie jego tłumaczeniem.";
 "Reset Statistics" = "Wyzeruj statystyki";
 "Reset Statistics…" = "Wyzeruj statystyki…";
-"Reset the instructions of “%@”?" = "Przywrócić domyślne instrukcje trybu „%@”?";
+"Reset the instructions of “%@”?" = "Przywrócić domyślne instrukcje „%@”?";
 "Reset to Default" = "Przywróć domyślne";
 "Reset to Default…" = "Przywróć domyślne…";
 "Reset your dictation statistics?" = "Wyzerować statystyki dyktowania?";
@@ -386,7 +386,7 @@
 "Translate and polish text in any of 45 languages with your AI model." = "Tłumacz i dopracowuj tekst w 45 językach za pomocą swojego modelu AI.";
 "Translate from" = "Tłumacz z";
 "Translate into" = "Tłumacz na";
-"Translate selected text" = "Tłumacz zaznaczony tekst";
+"Translate selected text" = "Przetłumacz zaznaczony tekst";
 "Translate turns anything you say into %@." = "„Tłumaczenie” przekłada wszystko, co powiesz, na %@.";
 "Translate" = "Tłumaczenie";
 "Translates in its own window, and translates or fixes selected text in any app." = "Tłumaczy w osobnym oknie i tłumaczy lub poprawia zaznaczony tekst w każdej aplikacji.";
@@ -419,7 +419,7 @@
 "Voice" = "Głos";
 "Waft can't read this file." = "Waft nie może odczytać tego pliku.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft nie może używać mikrofonu. Pozwól na to w Ustawieniach › Ogólne.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft nie mógł odczytać zapisanej historii i zachował jej kopię. Wymaż historię usuwa obie.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft nie mógł odczytać zapisanej historii i zachował jej kopię. „Wymaż historię” usuwa obie.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft usunie go z pęku kluczy. Dopóki nie dodasz klucza, tryby AI będą używać trybu „Lekki”.";
 "Waft is listening" = "Waft słucha";
 "Waft keeps no dictations while Keep history is off." = "Waft nie zachowuje dyktowań, gdy opcja „Zachowuj historię” jest wyłączona.";
@@ -447,7 +447,7 @@
 "Words" = "Słowa";
 "Write instructions once and dictate in your own style." = "Napisz instrukcje raz i dyktuj we własnym stylu.";
 "Writing system" = "Pismo";
-"Writing" = "Tekst";
+"Writing" = "Pisanie";
 "You say" = "Mówisz";
 "You write" = "Piszesz";
 "You're all set" = "Wszystko gotowe";

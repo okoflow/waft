@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Baixando o modelo de fala… %@";
 "Drop an audio or video file here" = "Solte aqui um arquivo de áudio ou vídeo";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Remove “hã” e “hum”, coloca letra maiúscula e ponto final.";
-"Edit %@" = "Editar o modo %@";
+"Edit %@" = "Editar “%@”";
 "Edit the mode" = "Editar o modo";
 "Edit" = "Edição";
 "Edited" = "Editado";

@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Henter talemodellen… %@";
 "Drop an audio or video file here" = "Træk et lyd- eller videoarkiv hertil";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Fjerner “øh” og “øhm” og tilføjer stort begyndelsesbogstav og punktum.";
-"Edit %@" = "Rediger “%@”";
+"Edit %@" = "Rediger %@";
 "Edit the mode" = "Rediger tilstanden";
 "Edit" = "Redigering";
 "Edited" = "Redigeret";
@@ -137,7 +137,7 @@
 "Fixing" = "Rettelse";
 "Fn" = "Fn";
 "Follows your instructions." = "Følger dine instruktioner.";
-"Forever" = "Uendeligt";
+"Forever" = "For altid";
 "Formal" = "Formel";
 "Free trial ends %@." = "Din gratis prøveperiode slutter %@.";
 "Free while Waft is in beta." = "Gratis, mens Waft er i beta.";
@@ -157,7 +157,7 @@
 "Instructions" = "Instruktioner";
 "It works in any app." = "Den virker i alle apps.";
 "Keep at most" = "Behold højst";
-"Keep dictations for" = "Behold dikteringer";
+"Keep dictations for" = "Behold dikteringer i";
 "Keep history" = "Gem historik";
 "Kept in the Keychain." = "Opbevares i nøgleringen.";
 "Key %lld" = "Tast %lld";
@@ -447,7 +447,7 @@
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner én gang, og dikter i din egen stil.";
 "Writing system" = "Skriftsystem";
-"Writing" = "Tekst";
+"Writing" = "Skrivning";
 "You say" = "Du siger";
 "You write" = "Du skriver";
 "You're all set" = "Du er klar";

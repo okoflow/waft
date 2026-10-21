@@ -304,7 +304,7 @@
 "Sent to %@ with your text." = "Se envían a %@ junto con tu texto.";
 "Server address" = "Dirección del servidor";
 "Set Up…" = "Configurar…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "En Configuración del Sistema › Teclado, selecciona “no hacer nada” en “Presionar la tecla 🌐 para”.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "En Configuración del Sistema › Teclado, selecciona “No hacer nada” en “Presionar la tecla 🌐 para”.";
 "Settings…" = "Configuración…";
 "Setup needed" = "Configuración pendiente";
 "Shortcut" = "Atajo";
@@ -419,7 +419,7 @@
 "Voice" = "Voz";
 "Waft can't read this file." = "Waft no puede leer este archivo.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft no puede usar el micrófono. Permite el acceso en Configuración › General.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft no pudo leer el historial guardado y conservó una copia. «Borrar historial» elimina ambos.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft no pudo leer el historial guardado y conservó una copia. “Borrar historial” elimina ambos.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft la elimina del llavero. Los modos de IA usarán el modo “Ligero” hasta que agregues una clave.";
 "Waft is listening" = "Waft está escuchando";
 "Waft keeps no dictations while Keep history is off." = "Waft no guarda dictados mientras “Guardar historial” esté desactivado.";
@@ -447,7 +447,7 @@
 "Words" = "Palabras";
 "Write instructions once and dictate in your own style." = "Escribe instrucciones una vez y dicta con tu propio estilo.";
 "Writing system" = "Sistema de escritura";
-"Writing" = "Texto";
+"Writing" = "Escritura";
 "You say" = "Tú dices";
 "You write" = "Tú escribes";
 "You're all set" = "Todo listo";

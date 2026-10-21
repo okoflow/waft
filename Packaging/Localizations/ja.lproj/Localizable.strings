@@ -292,7 +292,7 @@
 "Save" = "保存";
 "Saved only on this Mac." = "このMacにのみ保存されます。";
 "Saving" = "保存";
-"Say something to try" = "試しに何か入力してください";
+"Say something to try" = "話す内容を入力して試してください";
 "Say the phrase on its own to paste the text." = "語句だけを話すと、そのテキストがペーストされます。";
 "Search languages" = "言語を検索";
 "Search" = "検索";
@@ -447,7 +447,7 @@
 "Words" = "単語数";
 "Write instructions once and dictate in your own style." = "指示を一度書けば、自分のスタイルで音声入力できます。";
 "Writing system" = "文字体系";
-"Writing" = "テキスト";
+"Writing" = "文章";
 "You say" = "話した内容";
 "You write" = "入力した内容";
 "You're all set" = "準備ができました";

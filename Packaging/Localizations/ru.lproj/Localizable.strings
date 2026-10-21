@@ -117,7 +117,7 @@
 "Downloading the speech model… %@" = "Загрузка модели речи… %@";
 "Drop an audio or video file here" = "Перетащите сюда аудио- или видеофайл";
 "Drops “um” and “uh” and adds a capital letter and a period." = "Убирает «э-э» и «м-м», ставит заглавную букву и точку.";
-"Edit %@" = "Изменить режим «%@»";
+"Edit %@" = "Изменить «%@»";
 "Edit the mode" = "Изменить режим";
 "Edit" = "Правка";
 "Edited" = "Изменено";
@@ -270,7 +270,7 @@
 "Replaces the selection with its translation." = "Заменяет выделенный текст его переводом.";
 "Reset Statistics" = "Сбросить статистику";
 "Reset Statistics…" = "Сбросить статистику…";
-"Reset the instructions of “%@”?" = "Сбросить инструкции режима «%@»?";
+"Reset the instructions of “%@”?" = "Сбросить инструкции «%@»?";
 "Reset to Default" = "Сбросить изменения";
 "Reset to Default…" = "Сбросить изменения…";
 "Reset your dictation statistics?" = "Сбросить статистику диктовки?";
@@ -447,7 +447,7 @@
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишите инструкции один раз и диктуйте в своём стиле.";
 "Writing system" = "Письменность";
-"Writing" = "Текст";
+"Writing" = "Написание";
 "You say" = "Вы говорите";
 "You write" = "Вы пишете";
 "You're all set" = "Всё готово";

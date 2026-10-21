@@ -157,7 +157,7 @@
 "Instructions" = "Instruktioner";
 "It works in any app." = "Det fungerar i alla appar.";
 "Keep at most" = "Behåll högst";
-"Keep dictations for" = "Behåll dikteringar";
+"Keep dictations for" = "Behåll dikteringar i";
 "Keep history" = "Spara historik";
 "Kept in the Keychain." = "Sparas i nyckelringen.";
 "Key %lld" = "Tangent %lld";
@@ -304,7 +304,7 @@
 "Sent to %@ with your text." = "Skickas till %@ med din text.";
 "Server address" = "Serveradress";
 "Set Up…" = "Ställ in…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”göra ingenting” i Systeminställningar › Tangentbord.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Ställ in ”Tryck på 🌐-tangenten för att” på ”Göra ingenting” i Systeminställningar › Tangentbord.";
 "Settings…" = "Inställningar…";
 "Setup needed" = "Inställning krävs";
 "Shortcut" = "Kortkommando";
@@ -447,7 +447,7 @@
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner en gång och diktera i din egen stil.";
 "Writing system" = "Skriftsystem";
-"Writing" = "Text";
+"Writing" = "Skrivande";
 "You say" = "Du säger";
 "You write" = "Du skriver";
 "You're all set" = "Allt är klart";
