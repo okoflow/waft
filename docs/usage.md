@@ -65,7 +65,7 @@ one.
 | --- | --- | --- |
 | Raw | Pastes what Whisper heard | No |
 | Light | Removes hesitations such as "um", tidies the spacing, capitalizes, and adds a period. In 19 languages, "new line" or "new paragraph", said as a phrase of its own with a short pause around it, starts one | No |
-| Clean | Also removes filler words and false starts, keeps your final version in your language, and fixes grammar and punctuation. Spoken punctuation such as "comma", dates, times, and amounts become marks and digits, and enumerations go on numbered lines | Yes |
+| Clean | Also removes filler words and false starts, keeps your final version in your language, and fixes grammar and punctuation. Spoken punctuation such as "comma", dates, times, and amounts become marks and digits, and an explicit enumeration, such as "first…, second…", goes on numbered lines | Yes |
 | Formal | Clean in a polite business tone, keeping how you address the reader (*du* or *Sie*) | Yes |
 | Translate | Translates into **Translate into** in Settings › Writing, English by default. **Two-way with** adds a second language, so with English and Russian each comes out in the other | Yes |
 | Your modes | Follow the instructions you wrote | Yes |
@@ -130,8 +130,8 @@ HUD says then.
 
 **Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
 in any app, opens a window with your text on the left and its translation on
-the right. Type or paste up to 5,000 characters, or hold the dictation key and
-speak; the AI model translates half a second after you stop typing.
+the right. Type or paste up to 5,000 characters, or dictate; the AI model
+translates half a second after you stop typing.
 
 - The left half detects the language unless you choose one. The right half
   translates into **Translate into**, English by default, and text already in

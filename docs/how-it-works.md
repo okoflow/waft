@@ -40,8 +40,9 @@ Waft skips recordings without speech, such as silence, key clicks, or steady
 noise. The rest goes to the speech model you chose, run on Core ML by
 [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
-- **Language.** With one language pinned or enabled, Whisper decodes in it.
-  Otherwise it detects the language first, among those you enabled.
+- **Language.** With a **Spoken language** chosen or one language enabled,
+  Whisper decodes in it. Otherwise it detects the language first, among those
+  you enabled.
 - **Prompt.** Whisper first reads a short example sentence in the spoken
   language, except in Japanese, Korean, and Thai, then up to 200 characters of
   your dictionary terms.
