@@ -7,10 +7,6 @@ struct TranslatorModelSection: View {
     let apiKeys: PerProvider<APIKeyModel>
     let state: SettingsWindowState
 
-    private var setupNote: LocalizedStringKey? {
-        AIModelSetup.translator.missingSetup(in: settings, apiKeys: apiKeys)
-    }
-
     var body: some View {
         switch settings.settings.modelProvider {
         case let .cloud(provider):
@@ -31,17 +27,15 @@ struct TranslatorModelSection: View {
         }
     }
 
-    @ViewBuilder
     private func section(subtitle: LocalizedStringKey? = nil, @ViewBuilder content: () -> some View) -> some View {
-        if let setupNote {
-            SettingsSection("AI model", subtitle: subtitle, content: content) {
-                Text(setupNote)
-                    .detailText()
-
-                Button("Set Up…") { state.selection = .aiModels }
-            }
-        } else {
-            SettingsSection("AI model", subtitle: subtitle, content: content)
-        }
+        ModelSetupSection(
+            "AI model",
+            setup: .translator,
+            settings: settings,
+            apiKeys: apiKeys,
+            state: state,
+            subtitle: subtitle,
+            content: content,
+        )
     }
 }

@@ -23,25 +23,14 @@ struct WritingSettingsPane: View {
         return .verbatim(String(localized: "Speak \(other) to get \(target), and \(target) to get \(other).").sentenceCased())
     }
 
-    private var setupNote: LocalizedStringKey? {
-        AIModelSetup.modes.missingSetup(in: settings, apiKeys: apiKeys)
-    }
-
     private var appIdentifiers: [String] {
         settings.settings.appModes.bundleIdentifiers
     }
 
     var body: some View {
-        SettingsSection("Modes") {
+        ModelSetupSection("Modes", setup: .modes, settings: settings, apiKeys: apiKeys, state: state) {
             DividedForEach(Mode.builtIn, id: \.self) { mode in
                 ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
-            }
-        } footer: {
-            if let setupNote {
-                Text(setupNote)
-                    .detailText()
-
-                Button("Set Up…") { state.selection = .aiModels }
             }
         }
 
