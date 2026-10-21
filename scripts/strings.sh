@@ -61,7 +61,7 @@ code_keys() {
     jq '.tables.Localizable[]?.key | select(. != "%@")' "${data}" >>"${output}.unsorted"
   done <<<"${sources}"
 
-  LC_ALL=C sort -u "${output}.unsorted" >"${output}"
+  LC_ALL=C sort --unique "${output}.unsorted" >"${output}"
 }
 
 table_keys() {
@@ -69,7 +69,7 @@ table_keys() {
 
   plutil -convert json -o "${output}.json" "${table}"
   jq 'keys[]' "${output}.json" >"${output}.unsorted"
-  LC_ALL=C sort -u "${output}.unsorted" >"${output}"
+  LC_ALL=C sort --unique "${output}.unsorted" >"${output}"
 }
 
 check_keys() {
@@ -157,7 +157,7 @@ main() {
 
   cd "$(dirname "$0")/.."
 
-  WORK_DIR=$(mktemp -d)
+  WORK_DIR=$(mktemp --directory)
   trap cleanup EXIT
 
   case ${1:-check} in
