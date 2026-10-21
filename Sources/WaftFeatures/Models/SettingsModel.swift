@@ -29,11 +29,7 @@ package final class SettingsModel {
             do {
                 try loginItem.setEnabled(newValue)
             } catch {
-                let cause = error as NSError
-
-                Logger.settings.error(
-                    "Couldn't change the login item: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
-                )
+                Logger.settings.error("Couldn't change the login item: \(error.logDescription, privacy: .public)")
             }
 
             isLoginItemEnabled = loginItem.isEnabled

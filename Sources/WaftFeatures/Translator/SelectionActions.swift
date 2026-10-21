@@ -9,7 +9,6 @@ final class SelectionActions {
 
     private static let releaseTimeout = Duration.seconds(5)
     private static let shortcutKeys = [54, 55, 56, 58, 59, 60, 61, 62].compactMap { PushToTalkKey(keyCode: $0) }
-    private static let pasteShortcut = "⌘V"
 
     private var task: Task<Void, Never>?
 
@@ -127,11 +126,7 @@ final class SelectionActions {
 
         case .skipped:
             clipboard.copy(text)
-            hud.show(HUDMessage(
-                kind: .copied,
-                title: text,
-                detail: String(localized: "Copied: press \(Self.pasteShortcut) to paste"),
-            ))
+            hud.show(.copied(text))
         }
     }
 }

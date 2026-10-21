@@ -8,7 +8,7 @@ extension AppDependencies {
     static func live() -> AppDependencies {
         let focusTracker = AccessibilityFocusTracker()
         let keyboardState = SystemKeyboardState()
-        let apiKeyStores = apiKeyStores()
+        let apiKeyStores = PerProvider<any ValueStore<String>> { KeychainStore.apiKey(for: $0) }
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
         let statisticsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
@@ -23,7 +23,7 @@ extension AppDependencies {
             localServers: LocalServerBrowser(),
             keyEventMonitor: KeyEventTap(),
             keyboardState: keyboardState,
-            shortcuts: shortcuts(),
+            shortcuts: GlobalShortcuts(layout: CurrentKeyboardLayout()) { _ in CarbonHotKey() },
             focusTracker: focusTracker,
             frontmostAppMonitor: WorkspaceAppMonitor(),
             urlOpener: WorkspaceURLOpener(),
@@ -46,13 +46,5 @@ extension AppDependencies {
             interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),
         )
-    }
-
-    private static func shortcuts() -> GlobalShortcuts {
-        GlobalShortcuts(layout: CurrentKeyboardLayout()) { _ in CarbonHotKey() }
-    }
-
-    private static func apiKeyStores() -> PerProvider<any ValueStore<String>> {
-        PerProvider { KeychainStore.apiKey(for: $0) }
     }
 }

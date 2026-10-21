@@ -202,19 +202,9 @@ private struct CopyHint: View {
 }
 
 private struct TranslatorPane<Header: View, Content: View, Footer: View>: View {
-    private let header: Header
-    private let content: Content
-    private let footer: Footer
-
-    init(
-        @ViewBuilder header: () -> Header,
-        @ViewBuilder content: () -> Content,
-        @ViewBuilder footer: () -> Footer,
-    ) {
-        self.header = header()
-        self.content = content()
-        self.footer = footer()
-    }
+    @ViewBuilder let header: Header
+    @ViewBuilder let content: Content
+    @ViewBuilder let footer: Footer
 
     var body: some View {
         VStack(alignment: .leading, spacing: Metrics.accessorySpacing) {

@@ -22,13 +22,11 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     package func showSettings(_ pane: SettingsPane? = nil) {
-        guard let model else { return }
-
         if let pane {
             settingsState.selection = pane
         }
 
-        present(window(\.settingsWindow) { makeSettingsWindow(model: model) })
+        show(\.settingsWindow, make: makeSettingsWindow)
     }
 
     package func windowWillClose(_ notification: Notification) {
@@ -56,21 +54,15 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     func showOnboarding() {
-        guard let model else { return }
-
-        present(window(\.onboardingWindow) { makeOnboardingWindow(model: model) })
+        show(\.onboardingWindow, make: makeOnboardingWindow)
     }
 
     func showTranscription() {
-        guard let model else { return }
-
-        present(window(\.transcriptionWindow) { makeTranscriptionWindow(model: model) })
+        show(\.transcriptionWindow, make: makeTranscriptionWindow)
     }
 
     func showTranslator() {
-        guard let model else { return }
-
-        present(window(\.translatorWindow) { makeTranslatorWindow(model: model) })
+        show(\.translatorWindow, make: makeTranslatorWindow)
     }
 
     func closeOnboarding() {
@@ -84,18 +76,15 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         NSApp.setActivationPolicy(needsDockIcon ? .regular : .accessory)
     }
 
-    private func window(_ keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>, make: () -> NSWindow) -> NSWindow {
-        if let existing = self[keyPath: keyPath] {
-            return existing
+    private func show(_ keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>, make: (AppModel) -> NSWindow) {
+        guard let model else { return }
+
+        if self[keyPath: keyPath] == nil {
+            self[keyPath: keyPath] = make(model)
         }
 
-        let window = make()
-        self[keyPath: keyPath] = window
+        guard let window = self[keyPath: keyPath] else { return }
 
-        return window
-    }
-
-    private func present(_ window: NSWindow) {
         releaseFocusOnOutsideClicks()
         NSApp.setActivationPolicy(.regular)
         NSApp.activate()
@@ -123,11 +112,8 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func makeSettingsWindow(model: AppModel) -> NSWindow {
-        let content = NSHostingController(rootView: SettingsWindowView(model: model, state: settingsState).tint(Palette.accent))
-        content.sizingOptions = []
-
         let window = makeWindow(
-            content,
+            SettingsWindowView(model: model, state: settingsState),
             size: NSSize(width: 820, height: 660),
             minimumSize: NSSize(width: 760, height: 520),
             hasToolbar: true,
@@ -142,24 +128,25 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         let view = TranscriptionView(model: model.transcription) { [weak self] in
             self?.showSettings(.pro)
         }
-        let content = NSHostingController(rootView: view.tint(Palette.accent))
-        content.sizingOptions = []
 
-        let window = makeWindow(content, size: NSSize(width: 600, height: 580), minimumSize: Metrics.transcriptionMinimumSize)
-        window.title = String(localized: "Transcribe File")
-
-        return window
+        return makeWindow(
+            view,
+            size: NSSize(width: 600, height: 580),
+            minimumSize: Metrics.transcriptionMinimumSize,
+            title: String(localized: "Transcribe File"),
+        )
     }
 
     private func makeTranslatorWindow(model: AppModel) -> NSWindow {
         let view = TranslatorView(model: model.translator) { [weak self] in
             self?.showSettings(.pro)
         }
-        let content = NSHostingController(rootView: view.tint(Palette.accent))
-        content.sizingOptions = []
-
-        let window = makeWindow(content, size: Metrics.translatorSize, minimumSize: Metrics.translatorMinimumSize)
-        window.title = String(localized: "Translator")
+        let window = makeWindow(
+            view,
+            size: Metrics.translatorSize,
+            minimumSize: Metrics.translatorMinimumSize,
+            title: String(localized: "Translator"),
+        )
         window.titleVisibility = .visible
 
         return window
@@ -180,13 +167,21 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func makeWindow(
-        _ content: NSViewController,
+        _ view: some View,
         size: NSSize,
         minimumSize: NSSize,
+        title: String? = nil,
         hasToolbar: Bool = false,
     ) -> NSWindow {
+        let content = NSHostingController(rootView: view.tint(Palette.accent))
+        content.sizingOptions = []
+
         let window = NSWindow(contentViewController: content)
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
+
+        if let title {
+            window.title = title
+        }
 
         if hasToolbar {
             window.toolbar = NSToolbar()

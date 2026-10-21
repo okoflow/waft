@@ -2,7 +2,6 @@ import AppKit
 import SwiftUI
 
 struct HUDIsland: View {
-    fileprivate static let compactInset: CGFloat = 14
     fileprivate static let cardInset: CGFloat = 18
     fileprivate static let bottomInset: CGFloat = 14
     fileprivate static let textSpacing: CGFloat = 4
@@ -10,6 +9,8 @@ struct HUDIsland: View {
     fileprivate static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
     fileprivate static let detailFont = NSFont.systemFont(ofSize: 12)
     fileprivate static let footnoteFont = NSFont.systemFont(ofSize: 11)
+
+    private static let compactInset: CGFloat = 14
 
     let content: HUDContent?
     let hud: HUDController
@@ -22,7 +23,7 @@ struct HUDIsland: View {
                 .frame(width: layout.restWidth, height: layout.restHeight)
 
         case let .listening(badge, isHandsFree):
-            CompactIsland(layout: layout) {
+            IslandRow(gap: layout.gap) {
                 HStack(spacing: 5) {
                     Image(systemName: isHandsFree ? "lock.fill" : "mic.fill")
                         .foregroundStyle(Palette.danger)
@@ -31,9 +32,14 @@ struct HUDIsland: View {
                         .monospacedDigit()
                         .contentTransition(.numericText())
                 }
-            } trailing: {
+                .padding(.leading, Self.compactInset)
+
                 LevelBars(levels: hud.levels)
+                    .padding(.trailing, Self.compactInset)
             }
+            .font(.hudSymbol)
+            .foregroundStyle(.white)
+            .frame(height: layout.topHeight)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Waft is listening")
             .accessibilityValue(listeningState(badge: badge, isHandsFree: isHandsFree))
@@ -54,25 +60,6 @@ struct HUDIsland: View {
         guard isHandsFree else { return badge }
 
         return [badge, String(localized: "Hands-free")].formatted(.list(type: .and, width: .narrow))
-    }
-}
-
-private struct CompactIsland<Leading: View, Trailing: View>: View {
-    let layout: HUDLayout
-    @ViewBuilder let leading: Leading
-    @ViewBuilder let trailing: Trailing
-
-    var body: some View {
-        IslandRow(gap: layout.gap) {
-            leading
-                .padding(.leading, HUDIsland.compactInset)
-
-            trailing
-                .padding(.trailing, HUDIsland.compactInset)
-        }
-        .font(.hudSymbol)
-        .foregroundStyle(.white)
-        .frame(height: layout.topHeight)
     }
 }
 

@@ -109,9 +109,7 @@ final class DictationQueue {
                 vocabulary: job.vocabulary.promptTerms,
             )
         } catch {
-            let cause = error as NSError
-
-            Logger.dictation.error("Transcription failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.dictation.error("Transcription failed: \(error.logDescription, privacy: .public)")
 
             return .failed(error.localizedDescription)
         }

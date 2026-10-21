@@ -105,10 +105,7 @@ final class SpeechModelController {
         do {
             try await transcriber.deleteModel(model)
         } catch {
-            let cause = error as NSError
-
-            Logger.speechModel
-                .error("Couldn't delete the speech model: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Couldn't delete the speech model: \(error.logDescription, privacy: .public)")
         }
     }
 
@@ -126,9 +123,7 @@ final class SpeechModelController {
         } catch {
             guard !Task.isCancelled else { return }
 
-            let cause = error as NSError
-
-            Logger.speechModel.error("Download failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Download failed: \(error.logDescription, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))
         }
@@ -147,9 +142,7 @@ final class SpeechModelController {
                 onReady?()
             }
         } catch {
-            let cause = error as NSError
-
-            Logger.speechModel.error("Load failed: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)")
+            Logger.speechModel.error("Load failed: \(error.logDescription, privacy: .public)")
 
             apply(.failed(model, error.localizedDescription))
         }
