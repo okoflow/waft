@@ -387,7 +387,7 @@
 "Translate from" = "Переводить с";
 "Translate into" = "Переводить на";
 "Translate selected text" = "Перевести выделенный текст";
-"Translate turns anything you say into %@." = "Всё сказанное переводится на %@.";
+"Translate turns anything you say into %@." = "Режим «Перевод» переводит всё сказанное на %@.";
 "Translate" = "Перевод";
 "Translates in its own window, and translates or fixes selected text in any app." = "Переводит в своём окне, а также переводит или исправляет выделенный текст в любом приложении.";
 "Translates what you said into another language." = "Переводит сказанное на другой язык.";
