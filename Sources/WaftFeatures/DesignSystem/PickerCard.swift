@@ -4,7 +4,7 @@ struct PickerCard<Preview: View>: View {
     private let title: LocalizedStringKey
     private let detail: LocalizedStringKey
     private let isSelected: Bool
-    private let isPro: Bool
+    private let needsWaftPlus: Bool
     private let action: () -> Void
     private let preview: Preview
 
@@ -12,14 +12,14 @@ struct PickerCard<Preview: View>: View {
         _ title: LocalizedStringKey,
         detail: LocalizedStringKey,
         isSelected: Bool,
-        isPro: Bool = false,
+        needsWaftPlus: Bool = false,
         action: @escaping () -> Void,
         @ViewBuilder preview: () -> Preview,
     ) {
         self.title = title
         self.detail = detail
         self.isSelected = isSelected
-        self.isPro = isPro
+        self.needsWaftPlus = needsWaftPlus
         self.action = action
         self.preview = preview()
     }
@@ -39,7 +39,7 @@ struct PickerCard<Preview: View>: View {
                         Text(title)
                             .font(.cardTitle)
 
-                        if isPro {
+                        if needsWaftPlus {
                             ProBadge()
                         }
                     }

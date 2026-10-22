@@ -15,7 +15,7 @@ struct SpeechModelSection: View {
                         .verbatim(model.title),
                         detail: .verbatim(model.summary),
                         isSelected: controller.chosenModel == model,
-                        isPro: model.needsPro,
+                        needsWaftPlus: model.needsWaftPlus,
                     ) {
                         choose(model)
                     } preview: {

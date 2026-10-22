@@ -4,7 +4,7 @@ import WaftCore
 struct TranslationSection: View {
     let title: LocalizedStringKey
     let subtitle: LocalizedStringKey
-    var isPro = false
+    var needsWaftPlus = false
 
     @Binding var translation: WaftCore.Translation
 
@@ -15,7 +15,7 @@ struct TranslationSection: View {
     }
 
     var body: some View {
-        SettingsSection(title, subtitle: subtitle, isPro: isPro) {
+        SettingsSection(title, subtitle: subtitle, needsWaftPlus: needsWaftPlus) {
             PickerRow("Translate into", selection: $translation.target, current: translation.target.displayName) {
                 ForEach(Language.allByDisplayName, id: \.self) { language in
                     Text(language.displayName).tag(language)

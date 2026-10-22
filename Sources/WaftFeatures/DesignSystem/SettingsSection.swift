@@ -3,7 +3,7 @@ import SwiftUI
 struct SettingsSection<Content: View, Accessory: View, Footer: View>: View {
     private let title: LocalizedStringKey?
     private let subtitle: LocalizedStringKey?
-    private let isPro: Bool
+    private let needsWaftPlus: Bool
     private let content: Content
     private let accessory: Accessory?
     private let footer: Footer?
@@ -14,27 +14,27 @@ struct SettingsSection<Content: View, Accessory: View, Footer: View>: View {
         @ViewBuilder accessory: () -> Accessory,
         @ViewBuilder footer: () -> Footer,
     ) {
-        self.init(title: title, subtitle: nil, isPro: false, content: content(), accessory: accessory(), footer: footer())
+        self.init(title: title, subtitle: nil, needsWaftPlus: false, content: content(), accessory: accessory(), footer: footer())
     }
 
     private init(
         title: LocalizedStringKey?,
         subtitle: LocalizedStringKey?,
-        isPro: Bool,
+        needsWaftPlus: Bool,
         content: Content,
         accessory: Accessory?,
         footer: Footer?,
     ) {
         self.title = title
         self.subtitle = subtitle
-        self.isPro = isPro
+        self.needsWaftPlus = needsWaftPlus
         self.content = content
         self.accessory = accessory
         self.footer = footer
     }
 
     var body: some View {
-        SettingsGroup(title: title, subtitle: subtitle, isPro: isPro, accessory: accessory) {
+        SettingsGroup(title: title, subtitle: subtitle, needsWaftPlus: needsWaftPlus, accessory: accessory) {
             SettingsCard {
                 content
             }
@@ -54,10 +54,10 @@ extension SettingsSection where Accessory == EmptyView, Footer == EmptyView {
     init(
         _ title: LocalizedStringKey? = nil,
         subtitle: LocalizedStringKey? = nil,
-        isPro: Bool = false,
+        needsWaftPlus: Bool = false,
         @ViewBuilder content: () -> Content,
     ) {
-        self.init(title: title, subtitle: subtitle, isPro: isPro, content: content(), accessory: nil, footer: nil)
+        self.init(title: title, subtitle: subtitle, needsWaftPlus: needsWaftPlus, content: content(), accessory: nil, footer: nil)
     }
 }
 
@@ -65,10 +65,17 @@ extension SettingsSection where Accessory == EmptyView {
     init(
         _ title: LocalizedStringKey?,
         subtitle: LocalizedStringKey? = nil,
-        isPro: Bool = false,
+        needsWaftPlus: Bool = false,
         @ViewBuilder content: () -> Content,
         @ViewBuilder footer: () -> Footer,
     ) {
-        self.init(title: title, subtitle: subtitle, isPro: isPro, content: content(), accessory: nil, footer: footer())
+        self.init(
+            title: title,
+            subtitle: subtitle,
+            needsWaftPlus: needsWaftPlus,
+            content: content(),
+            accessory: nil,
+            footer: footer(),
+        )
     }
 }
