@@ -10,16 +10,29 @@ struct CopyButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: Metrics.inlineSpacing) {
-                if isCopied {
+            ZStack {
+                Text("Copy")
+                    .hidden()
+
+                HStack(spacing: Metrics.inlineSpacing) {
                     Image(systemName: "checkmark")
                         .font(.glyph)
-                        .foregroundStyle(Palette.success)
-                        .modifier(CheckmarkAppear())
-                }
 
-                title
-                    .contentTransition(.opacity)
+                    Text("Copied")
+                }
+                .hidden()
+
+                HStack(spacing: Metrics.inlineSpacing) {
+                    if isCopied {
+                        Image(systemName: "checkmark")
+                            .font(.glyph)
+                            .foregroundStyle(Palette.success)
+                            .modifier(CheckmarkAppear())
+                    }
+
+                    title
+                        .contentTransition(.opacity)
+                }
             }
             .frame(minWidth: 52)
         }

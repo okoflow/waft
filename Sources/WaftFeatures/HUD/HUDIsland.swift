@@ -20,7 +20,7 @@ struct HUDIsland: View {
         case let .listening(badge, isHandsFree):
             CompactRow(layout: layout) {
                 HStack(spacing: 5) {
-                    Image(systemName: isHandsFree ? "lock.fill" : "mic.fill")
+                    IslandSymbol(name: isHandsFree ? "lock.fill" : "mic.fill")
                         .foregroundStyle(Palette.danger)
 
                     Text(hud.listeningSince, style: .timer)
@@ -108,9 +108,8 @@ private struct PastedRow: View {
 
     var body: some View {
         CompactRow(layout: layout) {
-            Image(systemName: "checkmark.circle.fill")
+            IslandSymbol(name: "checkmark.circle.fill")
                 .foregroundStyle(Palette.success)
-                .accessibilityHidden(true)
         } trailing: {
             PastedStatus(message: message, hasCopied: hasCopied)
         }
@@ -219,22 +218,18 @@ private struct MessageCard: View {
     private var symbol: some View {
         switch message.kind {
         case .pasted:
-            Image(systemName: "checkmark.circle.fill")
+            IslandSymbol(name: "checkmark.circle.fill")
                 .foregroundStyle(Palette.success)
-                .accessibilityHidden(true)
 
         case .copied:
-            Image(systemName: "doc.on.clipboard.fill")
-                .accessibilityHidden(true)
+            IslandSymbol(name: "doc.on.clipboard.fill")
 
         case .information:
-            Image(systemName: "info.circle")
-                .accessibilityHidden(true)
+            IslandSymbol(name: "info.circle")
 
         case .warning:
-            Image(systemName: "exclamationmark.triangle.fill")
+            IslandSymbol(name: "exclamationmark.triangle.fill")
                 .foregroundStyle(Palette.warning)
-                .accessibilityHidden(true)
         }
     }
 
@@ -246,7 +241,7 @@ private struct MessageCard: View {
                 PastedStatus(message: message, hasCopied: hasCopied)
                     .hidden()
 
-                Image(systemName: hasCopied ? "checkmark" : "doc.on.doc")
+                IslandSymbol(name: hasCopied ? "checkmark" : "doc.on.doc")
                     .foregroundStyle(hasCopied ? Palette.success : .white)
             }
             .accessibilityHidden(true)

@@ -4,11 +4,16 @@ struct PastedStatus: View {
     let message: HUDMessage
     let hasCopied: Bool
 
-    private var text: LocalizedStringKey {
-        guard !hasCopied else { return "Copied" }
+    private var deliveredText: LocalizedStringKey {
         guard message.detail == nil else { return "Without AI" }
 
         return "Pasted"
+    }
+
+    private var text: LocalizedStringKey {
+        guard !hasCopied else { return "Copied" }
+
+        return deliveredText
     }
 
     private var style: AnyShapeStyle {
@@ -18,8 +23,16 @@ struct PastedStatus: View {
     }
 
     var body: some View {
-        Text(text)
-            .font(.hudCaption)
-            .foregroundStyle(style)
+        ZStack(alignment: .trailing) {
+            Text(deliveredText)
+                .hidden()
+
+            Text("Copied")
+                .hidden()
+
+            Text(text)
+                .foregroundStyle(style)
+        }
+        .font(.hudCaption)
     }
 }

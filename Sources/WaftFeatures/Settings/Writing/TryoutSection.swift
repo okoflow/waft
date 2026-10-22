@@ -35,8 +35,15 @@ struct TryoutSection: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                Button(tryout.phase == .idle ? "Run" : "Run Again", action: run)
-                    .disabled(!canRun)
+                Button(action: run) {
+                    ZStack {
+                        Text("Run Again")
+                            .hidden()
+
+                        Text(tryout.phase == .idle ? "Run" : "Run Again")
+                    }
+                }
+                .disabled(!canRun)
             }
             .settingsRowPadding()
         }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct RecorderField: View {
+    private static let glyphWidth: CGFloat = 17
+
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
     let title: String?
@@ -26,9 +28,16 @@ struct RecorderField: View {
                     .font(.glyph)
                     .foregroundStyle(isRecording ? Palette.accent : Palette.secondaryText)
                     .contentTransition(.symbolEffect(.replace))
+                    .frame(width: Self.glyphWidth)
                     .accessibilityHidden(true)
 
                 ZStack {
+                    Text(prompt)
+                        .hidden()
+
+                    Text(shownTitle)
+                        .hidden()
+
                     if isRecording {
                         Text(prompt)
                             .foregroundStyle(Palette.secondaryText)
