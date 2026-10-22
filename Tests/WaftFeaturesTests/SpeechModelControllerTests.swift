@@ -162,7 +162,7 @@ struct SpeechModelControllerTests {
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `loads the fast model when Pro locks the accurate one`() async {
+    func `loads the fast model when Waft+ locks the accurate one`() async {
         let transcriber = FakeTranscriber()
         let (controller, settings) = make(transcriber, pro: .unlicensed(trialStarted: .distantPast))
         settings.settings.speechModel = .accurate

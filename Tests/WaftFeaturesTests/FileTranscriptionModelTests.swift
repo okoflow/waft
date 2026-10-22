@@ -172,7 +172,7 @@ struct FileTranscriptionModelTests {
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `ignores files without Pro`() async {
+    func `ignores files without Waft+`() async {
         let transcription = await model(
             FakeTranscriber(file: .success(Self.transcript)),
             pro: .unlicensed(trialStarted: .distantPast),

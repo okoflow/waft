@@ -50,7 +50,7 @@ struct ModeSwitcherTests {
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `skips the AI modes without Pro`() {
+    func `skips the AI modes without Waft+`() {
         let switcher = ModeSwitcher(
             shortcuts: shortcuts,
             settings: settings,
