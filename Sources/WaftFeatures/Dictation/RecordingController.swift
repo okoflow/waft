@@ -144,7 +144,7 @@ final class RecordingController {
 
     private func handle(_ event: RecordingEvent) {
         switch event {
-        case let .started(id, deviceName) where id == recording?.id:
+        case let .started(id, deviceName) where recording?.isLive(withID: id) == true:
             Logger.dictation.info("Recording from \(deviceName)")
 
             if settings.settings.playsSounds {
@@ -155,7 +155,7 @@ final class RecordingController {
                 otherSounds.lower { [weak self] in self?.recording?.isLive(withID: id) == true }
             }
 
-        case let .failed(id, failure) where id == recording?.id:
+        case let .failed(id, failure) where recording?.isLive(withID: id) == true:
             fail(with: failure)
 
         case .started, .failed:
@@ -164,7 +164,7 @@ final class RecordingController {
     }
 
     private func fail(with failure: RecordingFailure) {
-        guard var failed = recording, !failed.hasFailed else { return }
+        guard var failed = recording else { return }
 
         failed.hasFailed = true
         recording = failed

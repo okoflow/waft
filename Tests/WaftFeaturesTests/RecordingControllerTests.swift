@@ -159,6 +159,26 @@ struct RecordingControllerTests {
     }
 
     @Test
+    func `ignores the recorder starting or failing an edit it already rejected`() async {
+        let message = HUDMessage(kind: .information, title: "Select the text to edit, then hold the key and say what to change.")
+        focusTracker.focus = .app("com.example.notes", element: FakeFocusedElement(selectedText: nil))
+        let recordings = model()
+
+        recordings.begin(Self.edit)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
+
+        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
+        recorder.send(.failed(Self.first, .deviceUnavailable))
+
+        let reacted = await Poll.until(timeout: .milliseconds(300)) { !sounds.played.isEmpty }
+
+        #expect(!reacted)
+        #expect(recorder.releaseTimes == [nil])
+        #expect(hud.content == .message(message))
+    }
+
+    @Test
     func `keeps the selected text for an edit`() async {
         let recordings = model()
 
