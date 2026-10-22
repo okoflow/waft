@@ -55,6 +55,11 @@ Waft marks the text it puts on the clipboard as transient and concealed, so
 clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org)
 conventions don't store it, and Universal Clipboard skips it.
 
+The [shortcuts on selected text](usage.md#selected-text) read the clipboard
+when an app hides the selection from Accessibility: Waft presses
+<kbd>⌘</kbd><kbd>C</kbd>, reads the copied text, and restores the clipboard.
+The app, not Waft, copies that text, so a clipboard manager may store it.
+
 ## Logs
 
 The unified log, under the `com.okoflow.waft` subsystem, never contains:

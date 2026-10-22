@@ -67,7 +67,7 @@ The tables list the folders whose names don't say enough.
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
-| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which translates or fixes the selected text; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
+| `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
 
 **`Tests`** has a Swift Testing target for every module but `Waft`; see
