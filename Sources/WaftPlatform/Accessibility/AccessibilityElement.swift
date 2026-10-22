@@ -14,6 +14,12 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
         string(kAXSelectedTextAttribute).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    var hasEmptySelection: Bool {
+        guard let selection = selectedRange() else { return false }
+
+        return selection.length == 0
+    }
+
     var characterBeforeCaret: Character? {
         guard let selection = selectedRange(), selection.location > 0 else { return nil }
 

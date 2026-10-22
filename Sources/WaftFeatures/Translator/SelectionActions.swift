@@ -7,7 +7,6 @@ final class SelectionActions {
         case fix
     }
 
-    private static let releaseTimeout = Duration.seconds(5)
     private static let shortcutKeys = [54, 55, 56, 58, 59, 60, 61, 62].compactMap { PushToTalkKey(keyCode: $0) }
 
     private var task: Task<Void, Never>?
@@ -21,6 +20,7 @@ final class SelectionActions {
     private let settings: SettingsModel
     private let pro: ProModel
     private let hud: HUDController
+    private let releaseTimeout: Duration
 
     init(
         rewriters: Rewriters,
@@ -32,6 +32,7 @@ final class SelectionActions {
         settings: SettingsModel,
         pro: ProModel,
         hud: HUDController,
+        releaseTimeout: Duration = .seconds(5),
     ) {
         processor = TranscriptProcessor(rewriters: rewriters)
         self.detector = detector
@@ -42,6 +43,7 @@ final class SelectionActions {
         self.settings = settings
         self.pro = pro
         self.hud = hud
+        self.releaseTimeout = releaseTimeout
     }
 
     private static func workingLabel(for action: Action, into language: Language) -> String {
@@ -67,17 +69,41 @@ final class SelectionActions {
         }
 
         let target = focusTracker.currentFocus()
-        guard let selection = target.element?.selectedText, !selection.isBlank else {
+
+        task = Task { [weak self] in
+            await self?.reworkSelection(by: action, in: target)
+
+            self?.task = nil
+        }
+    }
+
+    private func reworkSelection(by action: Action, in target: FocusTarget) async {
+        let selection = await selectedText(in: target)
+        guard let selection, !selection.isBlank else {
             hud.show(HUDMessage(kind: .information, title: String(localized: "Select the text first, then press the shortcut.")))
 
             return
         }
 
-        task = Task { [weak self] in
-            await self?.rework(selection, by: action, in: target)
+        await rework(selection, by: action, in: target)
+    }
 
-            self?.task = nil
-        }
+    private func selectedText(in target: FocusTarget) async -> String? {
+        guard let selection = target.element?.selectedText else { return await copiedSelection(in: target) }
+
+        return selection
+    }
+
+    private func copiedSelection(in target: FocusTarget) async -> String? {
+        guard !showsOnlyCaret(target), await waitForShortcutRelease() else { return nil }
+
+        return await inserter.copySelection(from: target)
+    }
+
+    private func showsOnlyCaret(_ target: FocusTarget) -> Bool {
+        guard let element = target.element else { return false }
+
+        return element.hasEmptySelection
     }
 
     private func rework(_ selection: String, by action: Action, in target: FocusTarget) async {
@@ -112,10 +138,7 @@ final class SelectionActions {
                 setup: setup,
             )
 
-            let keys = Self.shortcutKeys
-            let keyboardState = keyboardState
-
-            await Poll.until(timeout: Self.releaseTimeout) { !keys.contains(where: keyboardState.isHeld) }
+            await waitForShortcutRelease()
 
             await deliver(reworked, into: target)
         } catch {
@@ -123,6 +146,14 @@ final class SelectionActions {
 
             hud.show(HUDMessage(kind: .warning, title: Self.failureTitle(of: action), detail: reason))
         }
+    }
+
+    @discardableResult
+    private func waitForShortcutRelease() async -> Bool {
+        let keys = Self.shortcutKeys
+        let keyboardState = keyboardState
+
+        return await Poll.until(timeout: releaseTimeout) { !keys.contains(where: keyboardState.isHeld) }
     }
 
     private func deliver(_ text: String, into target: FocusTarget) async {

@@ -155,6 +155,11 @@ Two [shortcuts](#shortcuts) work on text selected in any app:
   into the translator's languages.
 - **Fix selected text** corrects its spelling, grammar, and punctuation.
 
+Waft reads the selection through Accessibility. An app that doesn't expose it
+there, such as Chrome or an Electron app, gets
+<kbd>⌘</kbd><kbd>C</kbd> instead, and Waft then restores your clipboard as it
+does after [pasting](how-it-works.md#pasting).
+
 If focus moved while the AI model worked, Waft copies the result instead. A
 failure changes nothing;
 [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the
