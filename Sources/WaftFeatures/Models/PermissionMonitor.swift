@@ -4,8 +4,6 @@ import WaftCore
 
 @Observable
 final class PermissionMonitor {
-    private static let pollInterval: TimeInterval = 1
-
     @ObservationIgnored var onChange: (() -> Void)?
 
     private var statuses: [Permission: PermissionStatus] = [:]
@@ -13,13 +11,21 @@ final class PermissionMonitor {
     @ObservationIgnored private var timer: Timer?
 
     private let provider: any PermissionProvider
+    private let pollInterval: TimeInterval
+    private let grantedPollInterval: TimeInterval
 
     var allGranted: Bool {
         Permission.allCases.allSatisfy { status(of: $0).isGranted }
     }
 
-    init(provider: any PermissionProvider) {
+    private var currentPollInterval: TimeInterval {
+        allGranted ? grantedPollInterval : pollInterval
+    }
+
+    init(provider: any PermissionProvider, pollInterval: TimeInterval = 1, grantedPollInterval: TimeInterval = 30) {
         self.provider = provider
+        self.pollInterval = pollInterval
+        self.grantedPollInterval = grantedPollInterval
 
         refresh()
     }
@@ -37,9 +43,7 @@ final class PermissionMonitor {
     func startMonitoring() {
         guard timer == nil else { return }
 
-        timer = .scheduledInCommonModes(every: Self.pollInterval, repeats: true) { [weak self] in
-            self?.refresh()
-        }
+        schedulePolling()
     }
 
     func refresh() {
@@ -49,5 +53,20 @@ final class PermissionMonitor {
         statuses = latest
 
         onChange?()
+    }
+
+    private func schedulePolling() {
+        timer?.invalidate()
+        timer = .scheduledInCommonModes(every: currentPollInterval, repeats: true) { [weak self] in
+            self?.poll()
+        }
+    }
+
+    private func poll() {
+        refresh()
+
+        guard let timer, timer.timeInterval != currentPollInterval else { return }
+
+        schedulePolling()
     }
 }

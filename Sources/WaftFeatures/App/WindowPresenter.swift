@@ -88,6 +88,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
         let window = reusableWindow(at: keyPath) { make(model) }
 
+        model.permissions.refresh()
         releaseFocusOnOutsideClicks()
         NSApp.setActivationPolicy(.regular)
         NSApp.activate()

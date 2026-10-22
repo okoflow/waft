@@ -81,10 +81,12 @@ Homebrew cask template.
 ## The dictation flow
 
 1. `PermissionMonitor` polls the microphone and Accessibility status once a
-   second. A change moves onboarding on and makes `KeyMonitorController`
-   start the `KeyEventMonitor` if it isn't running. The controller also
-   restarts a monitor that stops, and `KeyEventTap` turns itself back on when
-   macOS switches it off.
+   second while one is missing and every 30 seconds once both are granted,
+   since each check of the microphone asks macOS's privacy service; opening a
+   window checks them at once. A change moves onboarding on and makes
+   `KeyMonitorController` start the `KeyEventMonitor` if it isn't running. The
+   controller also restarts a monitor that stops, and `KeyEventTap` turns
+   itself back on when macOS switches it off.
 2. `DictationController` feeds the monitor's key events to
    `RecordingTriggers` and hands finished recordings to the queue.
    `RecordingController` starts and stops the `AudioRecorder`, polls
