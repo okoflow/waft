@@ -165,7 +165,7 @@
 "Language" = "Lingua";
 "Language: %@" = "Lingua: %@";
 "Languages" = "Lingue";
-"Last 7 days" = "Ultimi 7 giorni";
+"Last %lld days" = "Ultimi %lld giorni";
 "Left Command" = "Comando a sinistra";
 "Left Control" = "Control a sinistra";
 "Left Option" = "Opzione a sinistra";
@@ -199,7 +199,7 @@
 "Next page" = "Pagina successiva";
 "No apps yet" = "Ancora nessuna app";
 "No audio was captured." = "Nessun audio registrato.";
-"No dictations in the last 7 days" = "Nessuna dettatura negli ultimi 7 giorni";
+"No dictations in the last %lld days" = "Nessuna dettatura negli ultimi %lld giorni";
 "No dictations yet" = "Ancora nessuna dettatura";
 "No languages found" = "Nessuna lingua trovata";
 "No matches" = "Nessun risultato";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Trascrizione in corso… %@";
 "Transcribing…" = "Trascrizione in corso…";
 "Transcription failed" = "Trascrizione non riuscita";
-"Translate and polish text in any of 45 languages with your AI model." = "Traduci e rifinisci testi in 45 lingue con il tuo modello di IA.";
+"Translate and polish text in any of %lld languages with your AI model." = "Traduci e rifinisci testi in %lld lingue con il tuo modello di IA.";
 "Translate from" = "Traduci da";
 "Translate into" = "Traduci in";
 "Translate selected text" = "Traduci il testo selezionato";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Quando il modello vocale sarà pronto, fai clic nel campo, tieni premuto %@ e di’ “Ciao, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Quando il modello vocale sarà pronto, fai clic nel campo, premi %@, di’ “Ciao, Waft” e premilo di nuovo.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper funziona su questo Mac, quindi l’audio non ne esce mai.";
-"Words dictated each day for the last 7 days" = "Parole dettate ogni giorno negli ultimi 7 giorni";
+"Words dictated each day for the last %lld days" = "Parole dettate ogni giorno negli ultimi %lld giorni";
 "Words" = "Parole";
 "Write instructions once and dictate in your own style." = "Scrivi le istruzioni una volta e detta con il tuo stile.";
 "Writing system" = "Sistema di scrittura";

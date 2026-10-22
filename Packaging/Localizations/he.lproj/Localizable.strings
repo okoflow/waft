@@ -165,7 +165,7 @@
 "Language" = "שפה";
 "Language: %@" = "שפה: %@";
 "Languages" = "שפות";
-"Last 7 days" = "7 הימים האחרונים";
+"Last %lld days" = "%lld הימים האחרונים";
 "Left Command" = "מקש Command השמאלי";
 "Left Control" = "מקש Control השמאלי";
 "Left Option" = "מקש Option השמאלי";
@@ -199,7 +199,7 @@
 "Next page" = "העמוד הבא";
 "No apps yet" = "אין עדיין יישומים";
 "No audio was captured." = "לא הוקלט שמע.";
-"No dictations in the last 7 days" = "אין הכתבות ב-7 הימים האחרונים";
+"No dictations in the last %lld days" = "אין הכתבות ב-%lld הימים האחרונים";
 "No dictations yet" = "אין עדיין הכתבות";
 "No languages found" = "לא נמצאו שפות";
 "No matches" = "אין תוצאות";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "מתמלל… %@";
 "Transcribing…" = "מתמלל…";
 "Transcription failed" = "התמלול נכשל";
-"Translate and polish text in any of 45 languages with your AI model." = "ניתן לתרגם ולשפר מלל ב-45 שפות באמצעות מודל הבינה המלאכותית שלך.";
+"Translate and polish text in any of %lld languages with your AI model." = "ניתן לתרגם ולשפר מלל ב-%lld שפות באמצעות מודל הבינה המלאכותית שלך.";
 "Translate from" = "תרגום משפה";
 "Translate into" = "תרגום לשפה";
 "Translate selected text" = "תרגום המלל שנבחר";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
 "Whisper runs on this Mac, so audio never leaves it." = "המודל Whisper פועל ב-Mac זה, כך שהשמע אף פעם לא יוצא ממנו.";
-"Words dictated each day for the last 7 days" = "מילים שהוכתבו בכל יום ב-7 הימים האחרונים";
+"Words dictated each day for the last %lld days" = "מילים שהוכתבו בכל יום ב-%lld הימים האחרונים";
 "Words" = "מילים";
 "Write instructions once and dictate in your own style." = "די לכתוב הוראות פעם אחת כדי להכתיב בסגנון שלך.";
 "Writing system" = "סוג כתב";

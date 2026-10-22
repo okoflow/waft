@@ -165,7 +165,7 @@
 "Language" = "Språk";
 "Language: %@" = "Språk: %@";
 "Languages" = "Språk";
-"Last 7 days" = "Senaste 7 dagarna";
+"Last %lld days" = "Senaste %lld dagarna";
 "Left Command" = "Vänster kommandotangent";
 "Left Control" = "Vänster kontrolltangent";
 "Left Option" = "Vänster alternativtangent";
@@ -199,7 +199,7 @@
 "Next page" = "Nästa sida";
 "No apps yet" = "Inga appar än";
 "No audio was captured." = "Inget ljud spelades in.";
-"No dictations in the last 7 days" = "Inga dikteringar de senaste 7 dagarna";
+"No dictations in the last %lld days" = "Inga dikteringar de senaste %lld dagarna";
 "No dictations yet" = "Inga dikteringar än";
 "No languages found" = "Inga språk hittades";
 "No matches" = "Inga träffar";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Transkriberar… %@";
 "Transcribing…" = "Transkriberar…";
 "Transcription failed" = "Transkriberingen misslyckades";
-"Translate and polish text in any of 45 languages with your AI model." = "Översätt och finslipa text på 45 språk med din AI-modell.";
+"Translate and polish text in any of %lld languages with your AI model." = "Översätt och finslipa text på %lld språk med din AI-modell.";
 "Translate from" = "Översätt från";
 "Translate into" = "Översätt till";
 "Translate selected text" = "Översätt markerad text";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "När talmodellen är redo klickar du i fältet, håller ned %@ och säger ”Hej, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "När talmodellen är redo klickar du i fältet, trycker på %@, säger ”Hej, Waft” och trycker på den igen.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper körs på den här datorn, så ljudet lämnar den aldrig.";
-"Words dictated each day for the last 7 days" = "Dikterade ord per dag de senaste 7 dagarna";
+"Words dictated each day for the last %lld days" = "Dikterade ord per dag de senaste %lld dagarna";
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruktioner en gång och diktera i din egen stil.";
 "Writing system" = "Skriftsystem";

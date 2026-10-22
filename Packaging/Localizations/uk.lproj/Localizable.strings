@@ -165,7 +165,7 @@
 "Language" = "Мова";
 "Language: %@" = "Мова: %@";
 "Languages" = "Мови";
-"Last 7 days" = "Останні 7 днів";
+"Last %lld days" = "Останні %lld днів";
 "Left Command" = "Command зліва";
 "Left Control" = "Control зліва";
 "Left Option" = "Option зліва";
@@ -199,7 +199,7 @@
 "Next page" = "Наступна сторінка";
 "No apps yet" = "Програм ще немає";
 "No audio was captured." = "Звук не записано.";
-"No dictations in the last 7 days" = "За останні 7 днів диктувань не було";
+"No dictations in the last %lld days" = "За останні %lld днів диктувань не було";
 "No dictations yet" = "Диктувань ще немає";
 "No languages found" = "Мов не знайдено";
 "No matches" = "Нічого не знайдено";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Розпізнавання… %@";
 "Transcribing…" = "Розпізнавання…";
 "Transcription failed" = "Не вдалося розпізнати";
-"Translate and polish text in any of 45 languages with your AI model." = "Перекладайте й редагуйте текст будь-якою з 45 мов за допомогою вашої моделі ШІ.";
+"Translate and polish text in any of %lld languages with your AI model." = "Перекладайте й редагуйте текст будь-якою з %lld мов за допомогою вашої моделі ШІ.";
 "Translate from" = "Мова оригіналу";
 "Translate into" = "Мова перекладу";
 "Translate selected text" = "Перекласти виділений текст";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Коли модель мовлення буде готова, клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Коли модель мовлення буде готова, клацніть у полі, натисніть %@, скажіть «Привіт, Waft» і натисніть клавішу ще раз.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper працює на цьому Mac, тож звук нікуди не передається.";
-"Words dictated each day for the last 7 days" = "Слова, продиктовані за кожен з останніх 7 днів";
+"Words dictated each day for the last %lld days" = "Слова, продиктовані за кожен з останніх %lld днів";
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишіть інструкції один раз і диктуйте у своєму стилі.";
 "Writing system" = "Писемність";

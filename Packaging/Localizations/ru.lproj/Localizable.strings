@@ -165,7 +165,7 @@
 "Language" = "Язык";
 "Language: %@" = "Язык: %@";
 "Languages" = "Языки";
-"Last 7 days" = "Последние 7 дней";
+"Last %lld days" = "Последние %lld дней";
 "Left Command" = "Левый Command";
 "Left Control" = "Левый Control";
 "Left Option" = "Левый Option";
@@ -199,7 +199,7 @@
 "Next page" = "Следующая страница";
 "No apps yet" = "Приложений пока нет";
 "No audio was captured." = "Звук не записался.";
-"No dictations in the last 7 days" = "За последние 7 дней диктовок не было";
+"No dictations in the last %lld days" = "За последние %lld дней диктовок не было";
 "No dictations yet" = "Диктовок пока нет";
 "No languages found" = "Языки не найдены";
 "No matches" = "Ничего не найдено";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Расшифровка… %@";
 "Transcribing…" = "Распознаю…";
 "Transcription failed" = "Не удалось распознать речь";
-"Translate and polish text in any of 45 languages with your AI model." = "Переводите и правьте текст на любом из 45 языков с помощью вашей ИИ-модели.";
+"Translate and polish text in any of %lld languages with your AI model." = "Переводите и правьте текст на любом из %lld языков с помощью вашей ИИ-модели.";
 "Translate from" = "Переводить с";
 "Translate into" = "Переводить на";
 "Translate selected text" = "Перевести выделенный текст";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Когда модель речи будет готова, нажмите на поле, удерживайте %@ и скажите «Привет, Waft».";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Когда модель речи будет готова, нажмите на поле, затем на %@, скажите «Привет, Waft» и нажмите клавишу ещё раз.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper работает на этом Mac, поэтому звук никуда не уходит.";
-"Words dictated each day for the last 7 days" = "Надиктованные слова по дням за последние 7 дней";
+"Words dictated each day for the last %lld days" = "Надиктованные слова по дням за последние %lld дней";
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишите инструкции один раз и диктуйте в своём стиле.";
 "Writing system" = "Письменность";

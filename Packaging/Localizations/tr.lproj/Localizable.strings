@@ -165,7 +165,7 @@
 "Language" = "Dil";
 "Language: %@" = "Dil: %@";
 "Languages" = "Diller";
-"Last 7 days" = "Son 7 gün";
+"Last %lld days" = "Son %lld gün";
 "Left Command" = "Sol Komut";
 "Left Control" = "Sol Kontrol";
 "Left Option" = "Sol Option";
@@ -199,7 +199,7 @@
 "Next page" = "Sonraki sayfa";
 "No apps yet" = "Henüz uygulama yok";
 "No audio was captured." = "Ses kaydedilmedi.";
-"No dictations in the last 7 days" = "Son 7 günde dikte yok";
+"No dictations in the last %lld days" = "Son %lld günde dikte yok";
 "No dictations yet" = "Henüz dikte yok";
 "No languages found" = "Dil bulunamadı";
 "No matches" = "Eşleşme yok";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Yazıya çevriliyor… %@";
 "Transcribing…" = "Yazıya çevriliyor…";
 "Transcription failed" = "Yazıya çevrilemedi";
-"Translate and polish text in any of 45 languages with your AI model." = "YZ modelinizle 45 dilde metin çevirin ve düzenleyin.";
+"Translate and polish text in any of %lld languages with your AI model." = "YZ modelinizle %lld dilde metin çevirin ve düzenleyin.";
 "Translate from" = "Şu dilden çevir";
 "Translate into" = "Şu dile çevir";
 "Translate selected text" = "Seçili metni çevir";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper bu Mac’te çalışır, bu yüzden ses Mac’ten hiç çıkmaz.";
-"Words dictated each day for the last 7 days" = "Son 7 günde her gün dikte edilen sözcükler";
+"Words dictated each day for the last %lld days" = "Son %lld günde her gün dikte edilen sözcükler";
 "Words" = "Sözcük";
 "Write instructions once and dictate in your own style." = "Talimatları bir kez yazın, kendi tarzınızda dikte edin.";
 "Writing system" = "Yazı sistemi";

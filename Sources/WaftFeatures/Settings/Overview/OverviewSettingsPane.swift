@@ -23,7 +23,7 @@ private struct RecentSection: View {
         let days = statistics.daily(last: Self.dayCount, endingOn: today)
         let recent = statistics.total(last: Self.dayCount, endingOn: today)
 
-        SettingsSection("Last 7 days", subtitle: "Counted on this Mac: words and time, never the text.") {
+        SettingsSection("Last \(Self.dayCount) days", subtitle: "Counted on this Mac: words and time, never the text.") {
             HStack(spacing: 0) {
                 Metric(value: recent.words.formatted(), label: "words")
                 Metric(value: savedTime(in: recent), label: "saved over typing")
@@ -33,7 +33,7 @@ private struct RecentSection: View {
             RowDivider()
 
             if days.allSatisfy({ $0.day.words == 0 }) {
-                EmptyRow("No dictations in the last 7 days")
+                EmptyRow("No dictations in the last \(Self.dayCount) days")
             } else {
                 WordsChart(days: days)
                     .settingsRowPadding()
@@ -127,6 +127,6 @@ private struct WordsChart: View {
             }
         }
         .frame(height: 96)
-        .accessibilityLabel("Words dictated each day for the last 7 days")
+        .accessibilityLabel("Words dictated each day for the last \(days.count) days")
     }
 }

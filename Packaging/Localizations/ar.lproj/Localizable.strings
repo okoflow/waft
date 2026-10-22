@@ -165,7 +165,7 @@
 "Language" = "اللغة";
 "Language: %@" = "اللغة: %@";
 "Languages" = "اللغات";
-"Last 7 days" = "آخر ٧ أيام";
+"Last %lld days" = "آخر %lld أيام";
 "Left Command" = "مفتاح Command الأيسر";
 "Left Control" = "مفتاح Control الأيسر";
 "Left Option" = "مفتاح Option الأيسر";
@@ -199,7 +199,7 @@
 "Next page" = "الصفحة التالية";
 "No apps yet" = "لا توجد تطبيقات بعد";
 "No audio was captured." = "لم يُسجَّل أي صوت.";
-"No dictations in the last 7 days" = "لا توجد عمليات إملاء في آخر ٧ أيام";
+"No dictations in the last %lld days" = "لا توجد عمليات إملاء في آخر %lld أيام";
 "No dictations yet" = "لا توجد عمليات إملاء بعد";
 "No languages found" = "لم يتم العثور على أي لغة";
 "No matches" = "لا توجد نتائج";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "يجري التحويل إلى نص… %@";
 "Transcribing…" = "يجري التعرف على الكلام…";
 "Transcription failed" = "تعذر التعرف على الكلام";
-"Translate and polish text in any of 45 languages with your AI model." = "ترجم النصوص وحسّنها بأي لغة من ٤٥ لغة باستخدام نموذج الذكاء الاصطناعي الخاص بك.";
+"Translate and polish text in any of %lld languages with your AI model." = "ترجم النصوص وحسّنها بأي لغة من %lld لغة باستخدام نموذج الذكاء الاصطناعي الخاص بك.";
 "Translate from" = "الترجمة من";
 "Translate into" = "الترجمة إلى";
 "Translate selected text" = "ترجمة النص المحدد";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "عندما يصبح نموذج الكلام جاهزًا، انقر على الحقل، واضغط مطولًا على %@، وقل \"مرحبًا يا Waft\".";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "عندما يصبح نموذج الكلام جاهزًا، انقر على الحقل، واضغط على %@، وقل \"مرحبًا يا Waft\"، ثم اضغط عليه مرة أخرى.";
 "Whisper runs on this Mac, so audio never leaves it." = "يعمل Whisper على هذا الـ Mac، لذا لا يغادره الصوت أبدًا.";
-"Words dictated each day for the last 7 days" = "الكلمات المملاة يوميًا خلال آخر ٧ أيام";
+"Words dictated each day for the last %lld days" = "الكلمات المملاة يوميًا خلال آخر %lld أيام";
 "Words" = "الكلمات";
 "Write instructions once and dictate in your own style." = "اكتب التعليمات مرة واحدة ليأتي إملاؤك بأسلوبك الخاص.";
 "Writing system" = "نظام الكتابة";
