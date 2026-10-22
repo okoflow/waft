@@ -59,7 +59,7 @@ enum RewriteValidator {
 
         var text = answer.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        for wrapper in applicable where isWrapped(text, in: wrapper) {
+        while let wrapper = applicable.first(where: { isWrapped(text, in: $0) }) {
             text = String(text.dropFirst(wrapper.open.count).dropLast(wrapper.close.count))
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         }
