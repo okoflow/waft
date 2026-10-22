@@ -178,7 +178,7 @@
 "Like Clean, in a polite business tone." = "เหมือน “เรียบเรียง” แต่ใช้น้ำเสียงสุภาพแบบธุรกิจ";
 "Listening…" = "กำลังฟัง…";
 "Local server" = "เซิร์ฟเวอร์ในเครื่อง";
-"Locked" = "ล็อคอยู่";
+"Locked" = "ล็อกอยู่";
 "Lower other sounds while recording" = "ลดเสียงอื่นขณะบันทึก";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV และอื่นๆ";
 "Make modes with your own instructions, or tune the built-in ones." = "สร้างโหมดด้วยคำสั่งของคุณเอง หรือปรับแต่งโหมดในตัว";
@@ -408,7 +408,7 @@
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
 "Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
-"Unlock Waft+…" = "ปลดล็อค Waft+…";
+"Unlock Waft+…" = "ปลดล็อก Waft+…";
 "Updates" = "รายการอัปเดต";
 "Use the default mode in this app" = "ใช้โหมดเริ่มต้นในแอปนี้";
 "Use the default shortcut" = "ใช้ปุ่มลัดเริ่มต้น";
