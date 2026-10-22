@@ -37,6 +37,7 @@ private struct FakeFocusedElement: FocusedElement {
     let isSecureTextField = false
     let characterBeforeCaret: Character? = nil
     let selectedText: String? = nil
+    let hasEmptySelection = false
 
     func compare(with _: any FocusedElement) -> FocusComparison {
         comparison

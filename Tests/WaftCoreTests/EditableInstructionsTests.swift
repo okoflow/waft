@@ -2,9 +2,9 @@ import Foundation
 import Testing
 @testable import WaftCore
 
-struct ModeInstructionsTests {
+struct EditableInstructionsTests {
     @Test(arguments: Mode.builtIn)
-    func `falls back to the default instructions`(mode: Mode) {
+    func `falls back to the default instructions of a mode`(mode: Mode) {
         let instructions = EditableInstructions<Mode>()
 
         #expect(instructions.text(for: mode) == RewritePrompt.defaultInstructions(for: mode))
@@ -12,8 +12,17 @@ struct ModeInstructionsTests {
         #expect(!instructions.isCustomized(mode))
     }
 
+    @Test(arguments: TextTask.Kind.allCases)
+    func `falls back to the default instructions of a text task`(kind: TextTask.Kind) {
+        let instructions = EditableInstructions<TextTask.Kind>()
+
+        #expect(instructions.text(for: kind) == RewritePrompt.defaultTextInstructions(for: kind))
+        #expect(instructions.editableText(for: kind) == RewritePrompt.defaultTextInstructions(for: kind))
+        #expect(!instructions.isCustomized(kind))
+    }
+
     @Test
-    func `uses custom instructions for their mode only`() {
+    func `uses custom instructions for their subject only`() {
         var instructions = EditableInstructions<Mode>()
         instructions.set("Write like a pirate.", for: .formal)
 
@@ -43,7 +52,7 @@ struct ModeInstructionsTests {
     }
 
     @Test
-    func `resets a mode to the default`() {
+    func `resets a subject to the default`() {
         var instructions = EditableInstructions<Mode>()
         instructions.set("Custom.", for: .clean)
 
@@ -54,11 +63,14 @@ struct ModeInstructionsTests {
     }
 
     @Test
-    func `decodes the stored format`() throws {
-        let json = #"{"custom":{"formal":"Write like a pirate."}}"#
+    func `decodes the stored instructions of modes and text tasks`() throws {
+        let modes = Data(#"{"custom":{"formal":"Write like a pirate."}}"#.utf8)
+        let textTasks = Data(#"{"custom":{"fix":"Fix only the typos."}}"#.utf8)
 
-        let instructions = try JSONDecoder().decode(EditableInstructions<Mode>.self, from: Data(json.utf8))
+        let modeInstructions = try JSONDecoder().decode(EditableInstructions<Mode>.self, from: modes)
+        let textTaskInstructions = try JSONDecoder().decode(EditableInstructions<TextTask.Kind>.self, from: textTasks)
 
-        #expect(instructions.text(for: .formal) == "Write like a pirate.")
+        #expect(modeInstructions.text(for: .formal) == "Write like a pirate.")
+        #expect(textTaskInstructions.text(for: .fix) == "Fix only the typos.")
     }
 }

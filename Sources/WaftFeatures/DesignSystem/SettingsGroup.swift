@@ -3,7 +3,7 @@ import SwiftUI
 struct SettingsGroup<Content: View, Accessory: View>: View {
     private let title: LocalizedStringKey?
     private let subtitle: LocalizedStringKey?
-    private let isPro: Bool
+    private let needsWaftPlus: Bool
     private let accessory: Accessory?
     private let content: Content
 
@@ -16,13 +16,13 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
     init(
         title: LocalizedStringKey?,
         subtitle: LocalizedStringKey?,
-        isPro: Bool,
+        needsWaftPlus: Bool,
         accessory: Accessory?,
         @ViewBuilder content: () -> Content,
     ) {
         self.title = title
         self.subtitle = subtitle
-        self.isPro = isPro
+        self.needsWaftPlus = needsWaftPlus
         self.accessory = accessory
         self.content = content()
     }
@@ -46,7 +46,7 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
                             .font(.sectionTitle)
                             .accessibilityAddTraits(.isHeader)
 
-                        if isPro {
+                        if needsWaftPlus {
                             ProBadge()
                         }
                     }
@@ -71,9 +71,9 @@ extension SettingsGroup where Accessory == EmptyView {
     init(
         _ title: LocalizedStringKey,
         subtitle: LocalizedStringKey? = nil,
-        isPro: Bool = false,
+        needsWaftPlus: Bool = false,
         @ViewBuilder content: () -> Content,
     ) {
-        self.init(title: title, subtitle: subtitle, isPro: isPro, accessory: nil, content: content)
+        self.init(title: title, subtitle: subtitle, needsWaftPlus: needsWaftPlus, accessory: nil, content: content)
     }
 }

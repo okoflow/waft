@@ -1,19 +1,19 @@
 struct AnthropicRequest: Encodable {
-    struct OutputConfig: Encodable {
+    struct OutputConfiguration: Encodable {
         let effort: String
     }
 
     enum CodingKeys: String, CodingKey {
         case model
         case maximumTokens = "max_tokens"
-        case outputConfig = "output_config"
+        case outputConfiguration = "output_config"
         case system
         case messages
     }
 
     let model: String
     let maximumTokens: Int
-    let outputConfig = OutputConfig(effort: "low")
+    let outputConfiguration = OutputConfiguration(effort: "low")
     let system: String
     let messages: [ChatMessage]
 }

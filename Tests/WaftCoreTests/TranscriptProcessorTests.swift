@@ -105,7 +105,7 @@ struct TranscriptProcessorTests {
         (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
         (.custom(UUID()), ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
     ])
-    func `asks for Pro only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
+    func `asks for Waft+ only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
         let log = RewriteLog()
 
         let processed = await process("see you tomorrow", mode: mode, allowsAI: false, log: log)

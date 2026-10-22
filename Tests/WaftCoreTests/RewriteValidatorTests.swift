@@ -9,7 +9,9 @@ struct RewriteValidatorTests {
         ("\"So the meeting is on Friday.\"", "So the meeting is on Friday."),
         ("<transcript>\nSo the meeting is on Friday.\n</transcript>", "So the meeting is on Friday."),
         ("<transcript>\"So the meeting is on Friday.\"</transcript>", "So the meeting is on Friday."),
+        ("\"<transcript>So the meeting is on Friday.</transcript>\"", "So the meeting is on Friday."),
         ("«So the meeting is on Friday.»", "So the meeting is on Friday."),
+        ("«\"So the meeting is on Friday.\"»", "So the meeting is on Friday."),
     ])
     func `unwraps quotes and transcript tags around a cleanup`(answer: String, expected: String) throws {
         #expect(try RewriteValidator.validated(answer, for: .cleanup("um so the meeting is on friday")) == expected)
@@ -109,6 +111,7 @@ struct RewriteValidatorTests {
         ("<text>\nShorter.\n</text>", "Shorter."),
         ("<text>\"Shorter.\"</text>", "Shorter."),
         ("\"Shorter.\"", "Shorter."),
+        ("\"<text>Shorter.</text>\"", "Shorter."),
         ("Короче.", "Короче."),
     ])
     func `unwraps an edit`(answer: String, expected: String) throws {

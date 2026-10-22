@@ -9,8 +9,6 @@ final class KeyRecorder {
         let isTaken: Bool
     }
 
-    private static let escapeKeyCode: UInt16 = 53
-
     private(set) var purpose: RecordingPurpose?
     private(set) var rejection: Rejection?
     private(set) var rejections: [RecordingPurpose: Int] = [:]
@@ -56,7 +54,7 @@ final class KeyRecorder {
 
         let isKeyDown = event.type == .keyDown
 
-        if isKeyDown, event.keyCode == Self.escapeKeyCode {
+        if isKeyDown, event.isEscape {
             stop()
 
             return

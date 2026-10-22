@@ -165,7 +165,7 @@
 "Language" = "言語";
 "Language: %@" = "言語：%@";
 "Languages" = "言語";
-"Last 7 days" = "過去7日間";
+"Last %lld days" = "過去%lld日間";
 "Left Command" = "左Command";
 "Left Control" = "左Control";
 "Left Option" = "左Option";
@@ -199,7 +199,7 @@
 "Next page" = "次のページ";
 "No apps yet" = "アプリはまだありません";
 "No audio was captured." = "音声が録音されませんでした。";
-"No dictations in the last 7 days" = "過去7日間の音声入力はありません";
+"No dictations in the last %lld days" = "過去%lld日間の音声入力はありません";
 "No dictations yet" = "音声入力はまだありません";
 "No languages found" = "言語が見つかりません";
 "No matches" = "一致する項目はありません";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "文字起こし中… %@";
 "Transcribing…" = "文字起こし中…";
 "Transcription failed" = "文字起こしに失敗しました";
-"Translate and polish text in any of 45 languages with your AI model." = "お使いのAIモデルで、45言語のテキストを翻訳したり、文章を整えたりできます。";
+"Translate and polish text in any of %lld languages with your AI model." = "お使いのAIモデルで、%lld言語のテキストを翻訳したり、文章を整えたりできます。";
 "Translate from" = "翻訳元";
 "Translate into" = "翻訳先";
 "Translate selected text" = "選択したテキストを翻訳";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押して「こんにちは、Waft」と話してから、もう一度押してください。";
 "Whisper runs on this Mac, so audio never leaves it." = "WhisperはこのMac上で動作するため、音声がMacの外に出ることはありません。";
-"Words dictated each day for the last 7 days" = "過去7日間に音声入力した日ごとの単語数";
+"Words dictated each day for the last %lld days" = "過去%lld日間に音声入力した日ごとの単語数";
 "Words" = "単語数";
 "Write instructions once and dictate in your own style." = "指示を一度書けば、自分のスタイルで音声入力できます。";
 "Writing system" = "文字体系";

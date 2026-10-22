@@ -40,10 +40,10 @@ struct IslandOrb: View {
     private func draw(in canvas: inout GraphicsContext, area: CGSize, time: TimeInterval) {
         let radius = area.width / 2 - 1
 
-        for dot in OrbDot.sphere(count: dotCount, rotation: rotation(at: time), scan: scan(at: time)) {
+        for dot in OrbDot.sphere(count: dotCount, rotation: rotation(at: time), shine: shine(at: time)) {
             let front = (dot.depth + 1) / 2
 
-            let diameter = (0.8 + 1.2 * front + 0.8 * dot.glow) * size / 18
+            let diameter = (0.8 + 1.2 * front + 0.25 * dot.glow) * size / 18
 
             let bounds = CGRect(
                 x: area.width / 2 + dot.horizontal * radius - diameter / 2,
@@ -63,17 +63,17 @@ struct IslandOrb: View {
         }
     }
 
-    private func scan(at time: TimeInterval) -> Double? {
+    private func shine(at time: TimeInterval) -> Double? {
         switch style {
         case .still: nil
-        case .scanning: sin(time * 2.4) * 0.7
+        case .scanning: Shimmer.center(at: time)
         }
     }
 
     private func opacity(front: Double, glow: Double) -> Double {
         switch style {
         case .still: 0.35 + 0.65 * front
-        case .scanning: min(1, 0.25 + 0.6 * front + 0.6 * glow)
+        case .scanning: min(1, 0.15 + 0.45 * front + 0.75 * glow)
         }
     }
 }
@@ -87,7 +87,7 @@ private struct OrbDot {
     let depth: Double
     let glow: Double
 
-    static func sphere(count: Int, rotation: Double, scan: Double?) -> [Self] {
+    static func sphere(count: Int, rotation: Double, shine: Double?) -> [Self] {
         let dots = (0 ..< count).map { index in
             let height = 1 - 2 * (Double(index) + 0.5) / Double(count)
             let angle = goldenAngle * Double(index) + rotation
@@ -96,22 +96,24 @@ private struct OrbDot {
 
             let depth = sin(angle) * ring
 
-            let vertical = height * cos(tilt) - depth * sin(tilt)
+            let horizontal = cos(angle) * ring
 
             return Self(
-                horizontal: cos(angle) * ring,
-                vertical: vertical,
+                horizontal: horizontal,
+                vertical: height * cos(tilt) - depth * sin(tilt),
                 depth: height * sin(tilt) + depth * cos(tilt),
-                glow: glow(at: vertical, scan: scan),
+                glow: glow(at: horizontal, shine: shine),
             )
         }
 
         return dots.sorted { $0.depth < $1.depth }
     }
 
-    private static func glow(at vertical: Double, scan: Double?) -> Double {
-        guard let scan else { return 0 }
+    private static func glow(at horizontal: Double, shine: Double?) -> Double {
+        guard let shine else { return 0 }
 
-        return max(0, 1 - abs(vertical - scan) * 3)
+        let position = (horizontal + 1) / 2
+
+        return max(0, 1 - abs(position - shine) / Shimmer.width)
     }
 }

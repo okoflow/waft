@@ -4,7 +4,7 @@ package enum SpeechModel: String, CaseIterable, Codable, Sendable {
     case fast
     case accurate
 
-    package var needsPro: Bool {
+    package var needsWaftPlus: Bool {
         switch self {
         case .fast: false
         case .accurate: true
@@ -30,7 +30,7 @@ package enum SpeechModel: String, CaseIterable, Codable, Sendable {
     }
 
     package func usable(withProUnlocked isUnlocked: Bool) -> SpeechModel {
-        guard needsPro, !isUnlocked else { return self }
+        guard needsWaftPlus, !isUnlocked else { return self }
 
         return .fast
     }

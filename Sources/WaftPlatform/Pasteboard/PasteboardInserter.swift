@@ -7,6 +7,7 @@ import os
 @MainActor
 package final class PasteboardInserter: TextInserter {
     private static let readTimeout = Duration.seconds(1.5)
+    private static let copyTimeout = Duration.milliseconds(500)
     private static let settleDelay = Duration.milliseconds(150)
     private static let keyReleaseTimeout = Duration.seconds(10)
     private static let idleTimeout = Duration.seconds(2)
@@ -50,6 +51,36 @@ package final class PasteboardInserter: TextInserter {
         return .pasted
     }
 
+    package func copySelection(from target: FocusTarget) async -> String? {
+        activeInsertions += 1
+        defer { activeInsertions -= 1 }
+
+        let current = focusTracker.currentFocus()
+        guard AXIsProcessTrusted(), !isSecureField(current), target.isSameFocus(as: current) else { return nil }
+
+        let snapshot = await Task.detached { PasteboardSnapshot.take(from: .general) }.value
+        let changeCount = NSPasteboard.general.changeCount
+
+        CommandShortcut.copy.post()
+
+        await Poll.until(timeout: Self.copyTimeout) { copiedText(since: changeCount) != nil }
+
+        let copied = copiedText(since: changeCount)
+        let copiedChangeCount = NSPasteboard.general.changeCount
+
+        if copiedChangeCount != changeCount {
+            restore(snapshot, expecting: copiedChangeCount)
+        }
+
+        guard let copied else {
+            Logger.insertion.notice("Found no selection to copy in \(current.appDescription, privacy: .public)")
+
+            return nil
+        }
+
+        return copied
+    }
+
     package func waitUntilIdle() async {
         await Poll.until(timeout: Self.idleTimeout) { activeInsertions == 0 }
     }
@@ -76,7 +107,7 @@ package final class PasteboardInserter: TextInserter {
         }
 
         lazyText.arm()
-        PasteShortcut.post()
+        CommandShortcut.paste.post()
 
         guard await Poll.until(timeout: Self.readTimeout, { lazyText.wasReadAfterArming }) else {
             Logger.insertion.notice("Skipped pasting: the app didn't read the text in time")
@@ -89,6 +120,12 @@ package final class PasteboardInserter: TextInserter {
         restore(snapshot, expecting: ownChangeCount)
 
         return .pasted
+    }
+
+    private func copiedText(since changeCount: Int) -> String? {
+        guard NSPasteboard.general.changeCount != changeCount else { return nil }
+
+        return NSPasteboard.general.string(forType: .string)
     }
 
     private func restore(_ snapshot: PasteboardSnapshot, expecting changeCount: Int) {

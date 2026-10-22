@@ -90,3 +90,10 @@ struct AppModelTests {
         )
     }
 }
+
+private final class FakeFrontmostAppMonitor: FrontmostAppMonitor {
+    let frontmostApp: RunningApp? = nil
+    let activations = AsyncStream<RunningApp> { $0.finish() }
+
+    func start() {}
+}

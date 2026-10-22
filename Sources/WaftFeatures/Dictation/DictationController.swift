@@ -62,6 +62,12 @@ final class DictationController {
         }
     }
 
+    func takesEscape(pressedAt time: TimeInterval) -> Bool {
+        guard !isRecording else { return true }
+
+        return triggers.cancelledRecording(byEscapeAt: time)
+    }
+
     func prepareToQuit() {
         recordings.discard(because: .interrupted)
     }

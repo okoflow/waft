@@ -10,7 +10,7 @@ struct TranslatorView: View {
             if model.isLocked {
                 ProGateBanner(
                     title: "The translator is part of Waft+",
-                    detail: "Translate and polish text in any of 45 languages with your AI model.",
+                    detail: "Translate and polish text in any of \(Language.allCases.count) languages with your AI model.",
                     showPro: showPro,
                 )
             }

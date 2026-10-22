@@ -148,6 +148,10 @@ package final class AppModel {
         lifecycle.quit()
     }
 
+    func dictationTakesEscape(pressedAt time: TimeInterval) -> Bool {
+        dictation.takesEscape(pressedAt: time)
+    }
+
     private func connectModels() {
         settings.onLanguagesChange = { [weak speechModelController] in speechModelController?.reload() }
         settings.onSpeechModelChange = { [weak speechModelController] in speechModelController?.modelDidChange() }

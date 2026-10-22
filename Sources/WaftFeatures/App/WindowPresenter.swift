@@ -10,6 +10,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private var transcriptionWindow: NSWindow?
     private var translatorWindow: NSWindow?
     private var clickMonitor: Any?
+    private var escapeMonitor: Any?
 
     private var allWindows: [NSWindow] {
         [settingsWindow, onboardingWindow, transcriptionWindow, translatorWindow].compactMap(\.self)
@@ -64,6 +65,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     func showTranslator() {
         model?.translator.resume()
         show(\.translatorWindow, make: makeTranslatorWindow)
+        closeTranslatorOnEscape()
     }
 
     func closeOnboarding() {
@@ -86,6 +88,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
         let window = reusableWindow(at: keyPath) { make(model) }
 
+        model.permissions.refresh()
         releaseFocusOnOutsideClicks()
         NSApp.setActivationPolicy(.regular)
         NSApp.activate()
@@ -116,6 +119,31 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
             return event
         }
+    }
+
+    private func closeTranslatorOnEscape() {
+        guard escapeMonitor == nil else { return }
+
+        escapeMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self, let translatorWindow, closesTranslator(on: event) else { return event }
+
+            translatorWindow.performClose(nil)
+
+            return nil
+        }
+    }
+
+    private func closesTranslator(on event: NSEvent) -> Bool {
+        guard event.isPlainEscape, event.window == translatorWindow, !dictationTakes(event) else { return false }
+        guard let editor = event.window?.firstResponder as? NSTextView else { return true }
+
+        return !editor.hasMarkedText()
+    }
+
+    private func dictationTakes(_ escape: NSEvent) -> Bool {
+        guard let model else { return false }
+
+        return model.dictationTakesEscape(pressedAt: escape.timestamp)
     }
 
     private func releaseFocus(for event: NSEvent) {

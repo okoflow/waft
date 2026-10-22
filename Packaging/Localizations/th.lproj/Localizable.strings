@@ -165,7 +165,7 @@
 "Language" = "ภาษา";
 "Language: %@" = "ภาษา: %@";
 "Languages" = "ภาษา";
-"Last 7 days" = "7 วันที่ผ่านมา";
+"Last %lld days" = "%lld วันที่ผ่านมา";
 "Left Command" = "Command ซ้าย";
 "Left Control" = "Control ซ้าย";
 "Left Option" = "Option ซ้าย";
@@ -178,7 +178,7 @@
 "Like Clean, in a polite business tone." = "เหมือน “เรียบเรียง” แต่ใช้น้ำเสียงสุภาพแบบธุรกิจ";
 "Listening…" = "กำลังฟัง…";
 "Local server" = "เซิร์ฟเวอร์ในเครื่อง";
-"Locked" = "ล็อคอยู่";
+"Locked" = "ล็อกอยู่";
 "Lower other sounds while recording" = "ลดเสียงอื่นขณะบันทึก";
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV และอื่นๆ";
 "Make modes with your own instructions, or tune the built-in ones." = "สร้างโหมดด้วยคำสั่งของคุณเอง หรือปรับแต่งโหมดในตัว";
@@ -199,7 +199,7 @@
 "Next page" = "หน้าถัดไป";
 "No apps yet" = "ยังไม่มีแอป";
 "No audio was captured." = "ไม่ได้บันทึกเสียงใดๆ";
-"No dictations in the last 7 days" = "ไม่มีการป้อนตามคำบอกใน 7 วันที่ผ่านมา";
+"No dictations in the last %lld days" = "ไม่มีการป้อนตามคำบอกใน %lld วันที่ผ่านมา";
 "No dictations yet" = "ยังไม่มีการป้อนตามคำบอก";
 "No languages found" = "ไม่พบภาษา";
 "No matches" = "ไม่พบรายการที่ตรงกัน";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "กำลังถอดเสียง… %@";
 "Transcribing…" = "กำลังถอดเสียง…";
 "Transcription failed" = "ถอดเสียงไม่สำเร็จ";
-"Translate and polish text in any of 45 languages with your AI model." = "แปลและเกลาข้อความได้ 45 ภาษาด้วยโมเดล AI ของคุณ";
+"Translate and polish text in any of %lld languages with your AI model." = "แปลและเกลาข้อความได้ %lld ภาษาด้วยโมเดล AI ของคุณ";
 "Translate from" = "แปลจาก";
 "Translate into" = "แปลเป็น";
 "Translate selected text" = "แปลข้อความที่เลือก";
@@ -408,7 +408,7 @@
 "Type, paste, or hold %@ and speak" = "พิมพ์ วาง หรือกด %@ ค้างไว้แล้วพูด";
 "Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
-"Unlock Waft+…" = "ปลดล็อค Waft+…";
+"Unlock Waft+…" = "ปลดล็อก Waft+…";
 "Updates" = "รายการอัปเดต";
 "Use the default mode in this app" = "ใช้โหมดเริ่มต้นในแอปนี้";
 "Use the default shortcut" = "ใช้ปุ่มลัดเริ่มต้น";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ พูดว่า “สวัสดี Waft” แล้วกดอีกครั้ง";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper ทำงานบน Mac เครื่องนี้ เสียงจึงไม่ออกไปนอกเครื่อง";
-"Words dictated each day for the last 7 days" = "จำนวนคำที่ป้อนตามคำบอกในแต่ละวันตลอด 7 วันที่ผ่านมา";
+"Words dictated each day for the last %lld days" = "จำนวนคำที่ป้อนตามคำบอกในแต่ละวันตลอด %lld วันที่ผ่านมา";
 "Words" = "จำนวนคำ";
 "Write instructions once and dictate in your own style." = "เขียนคำสั่งครั้งเดียว แล้วป้อนตามคำบอกในสไตล์ของคุณเอง";
 "Writing system" = "ระบบการเขียน";

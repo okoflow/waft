@@ -125,7 +125,7 @@ final class ProModel {
     }
 
     func locks(_ model: SpeechModel) -> Bool {
-        guard model.needsPro else { return false }
+        guard model.needsWaftPlus else { return false }
 
         return !isUnlocked
     }

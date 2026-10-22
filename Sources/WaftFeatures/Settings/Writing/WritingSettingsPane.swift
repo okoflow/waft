@@ -34,7 +34,7 @@ struct WritingSettingsPane: View {
             }
         }
 
-        SettingsSection("Your modes", subtitle: "Write instructions once and dictate in your own style.", isPro: true) {
+        SettingsSection("Your modes", subtitle: "Write instructions once and dictate in your own style.", needsWaftPlus: true) {
             if settings.settings.customModes.isEmpty {
                 EmptyRow("No modes yet")
             }
@@ -56,7 +56,7 @@ struct WritingSettingsPane: View {
         TranslationSection(
             title: "Translation",
             subtitle: translationNote,
-            isPro: true,
+            needsWaftPlus: true,
             translation: $settings.settings.translation,
         )
 

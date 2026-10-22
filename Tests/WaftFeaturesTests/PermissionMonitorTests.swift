@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -20,5 +21,21 @@ struct PermissionMonitorTests {
         let monitor = PermissionMonitor(provider: FakePermissionProvider([.microphone: .granted, .accessibility: accessibility]))
 
         #expect(monitor.allGranted == allGranted)
+    }
+
+    @Test
+    func `polls slowly once every permission is granted`() async {
+        let provider = FakePermissionProvider([.microphone: .granted, .accessibility: .notDetermined])
+        let monitor = PermissionMonitor(provider: provider, pollInterval: 0.01, grantedPollInterval: 60)
+        monitor.startMonitoring()
+
+        provider.setStatus(.granted, for: .accessibility)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { monitor.allGranted })
+
+        provider.setStatus(.denied, for: .accessibility)
+        await Task.slept(for: .milliseconds(200))
+
+        #expect(monitor.allGranted)
     }
 }

@@ -165,7 +165,7 @@
 "Language" = "Language";
 "Language: %@" = "Language: %@";
 "Languages" = "Languages";
-"Last 7 days" = "Last 7 days";
+"Last %lld days" = "Last %lld days";
 "Left Command" = "Left Command";
 "Left Control" = "Left Control";
 "Left Option" = "Left Option";
@@ -199,7 +199,7 @@
 "Next page" = "Next page";
 "No apps yet" = "No apps yet";
 "No audio was captured." = "No audio was captured.";
-"No dictations in the last 7 days" = "No dictations in the last 7 days";
+"No dictations in the last %lld days" = "No dictations in the last %lld days";
 "No dictations yet" = "No dictations yet";
 "No languages found" = "No languages found";
 "No matches" = "No matches";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Transcribing… %@";
 "Transcribing…" = "Transcribing…";
 "Transcription failed" = "Transcription failed";
-"Translate and polish text in any of 45 languages with your AI model." = "Translate and polish text in any of 45 languages with your AI model.";
+"Translate and polish text in any of %lld languages with your AI model." = "Translate and polish text in any of %lld languages with your AI model.";
 "Translate from" = "Translate from";
 "Translate into" = "Translate into";
 "Translate selected text" = "Translate selected text";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper runs on this Mac, so audio never leaves it.";
-"Words dictated each day for the last 7 days" = "Words dictated each day for the last 7 days";
+"Words dictated each day for the last %lld days" = "Words dictated each day for the last %lld days";
 "Words" = "Words";
 "Write instructions once and dictate in your own style." = "Write instructions once and dictate in your own style.";
 "Writing system" = "Writing system";

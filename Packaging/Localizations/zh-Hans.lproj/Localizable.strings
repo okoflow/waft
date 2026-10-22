@@ -165,7 +165,7 @@
 "Language" = "语言";
 "Language: %@" = "语言：%@";
 "Languages" = "语言";
-"Last 7 days" = "最近7天";
+"Last %lld days" = "最近%lld天";
 "Left Command" = "左Command键";
 "Left Control" = "左Control键";
 "Left Option" = "左Option键";
@@ -199,7 +199,7 @@
 "Next page" = "下一页";
 "No apps yet" = "尚无App";
 "No audio was captured." = "未录到任何音频。";
-"No dictations in the last 7 days" = "最近7天没有听写";
+"No dictations in the last %lld days" = "最近%lld天没有听写";
 "No dictations yet" = "尚无听写";
 "No languages found" = "未找到语言";
 "No matches" = "无匹配项";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "正在转写…%@";
 "Transcribing…" = "正在转写…";
 "Transcription failed" = "转写失败";
-"Translate and polish text in any of 45 languages with your AI model." = "用你的AI模型翻译并润色文本，支持45种语言。";
+"Translate and polish text in any of %lld languages with your AI model." = "用你的AI模型翻译并润色文本，支持%lld种语言。";
 "Translate from" = "翻译自";
 "Translate into" = "翻译为";
 "Translate selected text" = "翻译所选文本";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "语音识别模型就绪后，点按输入框，按住%@，然后说“你好，Waft”。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "语音识别模型就绪后，点按输入框，按一下%@，说“你好，Waft”，然后再按一下。";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper在此Mac上运行，因此音频不会离开此Mac。";
-"Words dictated each day for the last 7 days" = "最近7天每天听写的字词数";
+"Words dictated each day for the last %lld days" = "最近%lld天每天听写的字词数";
 "Words" = "字词";
 "Write instructions once and dictate in your own style." = "指令只需写一次，即可按你的风格听写。";
 "Writing system" = "书写系统";

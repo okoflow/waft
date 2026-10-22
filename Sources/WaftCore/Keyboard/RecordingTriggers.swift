@@ -1,8 +1,11 @@
 package import Foundation
 
 package struct RecordingTriggers: Sendable {
+    private static let escapeTimeTolerance: TimeInterval = 0.05
+
     private var dictation = PushToTalk()
     private var edit = PushToTalk()
+    private var cancelledAt: TimeInterval?
 
     package init() {
         edit.dictationStart = .hold
@@ -31,6 +34,34 @@ package struct RecordingTriggers: Sendable {
         at time: TimeInterval,
         settings: Settings,
     ) -> PushToTalk.Action? {
+        let action = action(for: event, of: purpose, at: time, settings: settings)
+
+        if action == .discardRecording(.cancelled) {
+            cancelledAt = time
+        }
+
+        return action
+    }
+
+    package func cancelledRecording(byEscapeAt time: TimeInterval) -> Bool {
+        guard let cancelledAt else { return false }
+
+        return abs(cancelledAt - time) < Self.escapeTimeTolerance
+    }
+
+    package mutating func reset(_ purpose: RecordingPurpose) {
+        switch purpose {
+        case .dictation: dictation.reset()
+        case .edit: edit.reset()
+        }
+    }
+
+    private mutating func action(
+        for event: PushToTalk.Event,
+        of purpose: RecordingPurpose,
+        at time: TimeInterval,
+        settings: Settings,
+    ) -> PushToTalk.Action? {
         switch purpose {
         case .dictation:
             dictation.dictationStart = settings.dictationStart
@@ -39,13 +70,6 @@ package struct RecordingTriggers: Sendable {
 
         case .edit:
             return edit.handle(event, at: time)
-        }
-    }
-
-    package mutating func reset(_ purpose: RecordingPurpose) {
-        switch purpose {
-        case .dictation: dictation.reset()
-        case .edit: edit.reset()
         }
     }
 }

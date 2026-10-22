@@ -23,7 +23,25 @@ struct SelectionActionsTests {
         #expect(request.text == "Привет")
         #expect(request.textTask == .translate(from: nil, into: .english))
         #expect(inserter.insertions.map(\.text) == ["Hello."])
+        #expect(inserter.copyCount == 0)
         #expect(hud.content == .message(HUDMessage(kind: .pasted, title: "Hello.")))
+    }
+
+    @Test
+    func `copies the selection that the app keeps from Accessibility`() async throws {
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let inserter = FakeTextInserter(copying: "Привет")
+        let actions = actions(rewriter, selecting: nil, detects: .russian, inserter: inserter)
+
+        actions.run(.translate)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
+
+        let request = try #require(rewriter.requests.first)
+
+        #expect(request.text == "Привет")
+        #expect(inserter.copyCount == 1)
+        #expect(inserter.insertions.map(\.text) == ["Hello."])
     }
 
     @Test
@@ -96,17 +114,46 @@ struct SelectionActionsTests {
         #expect(clipboard.copied.isEmpty)
     }
 
-    @Test(arguments: [String?.none, " \n"])
-    func `asks to select text first`(selection: String?) {
+    @Test(arguments: [(String?.none, String?.none), (" \n", nil), (nil, " \n")])
+    func `asks to select text first`(selection: String?, copied: String?) async {
         let rewriter = FakeTextRewriter(.success("Hello."))
-        let actions = actions(rewriter, selecting: selection)
+        let actions = actions(rewriter, selecting: selection, inserter: FakeTextInserter(copying: copied))
 
         actions.run(.translate)
 
-        #expect(hud.content == .message(HUDMessage(
-            kind: .information,
-            title: "Select the text first, then press the shortcut.",
-        )))
+        #expect(await Poll.until(timeout: .seconds(5)) {
+            hud.content == .message(HUDMessage(kind: .information, title: "Select the text first, then press the shortcut."))
+        })
+        #expect(rewriter.requests.isEmpty)
+    }
+
+    @Test
+    func `asks to select text without copying when the app shows only the caret`() async {
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let inserter = FakeTextInserter(copying: "The whole line")
+        let actions = actions(rewriter, selecting: nil, inserter: inserter, showsOnlyCaret: true)
+
+        actions.run(.translate)
+
+        #expect(await Poll.until(timeout: .seconds(5)) {
+            hud.content == .message(HUDMessage(kind: .information, title: "Select the text first, then press the shortcut."))
+        })
+        #expect(inserter.copyCount == 0)
+        #expect(rewriter.requests.isEmpty)
+    }
+
+    @Test
+    func `copies nothing while the shortcut is still held`() async {
+        let rewriter = FakeTextRewriter(.success("Hello."))
+        let inserter = FakeTextInserter(copying: "Привет")
+        let actions = actions(rewriter, selecting: nil, inserter: inserter, holdsKeys: true)
+
+        actions.run(.translate)
+
+        #expect(await Poll.until(timeout: .seconds(5)) {
+            hud.content == .message(HUDMessage(kind: .information, title: "Select the text first, then press the shortcut."))
+        })
+        #expect(inserter.copyCount == 0)
         #expect(rewriter.requests.isEmpty)
     }
 
@@ -140,19 +187,23 @@ struct SelectionActionsTests {
         detects language: Language? = nil,
         inserter: FakeTextInserter = FakeTextInserter(),
         pro: ProModel = .unlicensed(),
+        holdsKeys: Bool = false,
+        showsOnlyCaret: Bool = false,
     ) -> SelectionActions {
-        let focus = FocusTarget.app("com.example.notes", element: FakeFocusedElement(selectedText: selection))
+        let element = FakeFocusedElement(selectedText: selection, hasEmptySelection: showsOnlyCaret)
+        let focus = FocusTarget.app("com.example.notes", element: element)
 
         return SelectionActions(
             rewriters: .all(rewriter),
             detector: FakeLanguageDetector(language: language),
             focusTracker: FakeFocusTracker(focus),
-            keyboardState: FakeKeyboardState(holdsKeys: false),
+            keyboardState: FakeKeyboardState(holdsKeys: holdsKeys),
             inserter: inserter,
             clipboard: clipboard,
             settings: settings,
             pro: pro,
             hud: hud,
+            releaseTimeout: .zero,
         )
     }
 }

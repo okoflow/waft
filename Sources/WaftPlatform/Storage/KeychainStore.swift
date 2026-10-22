@@ -3,7 +3,7 @@ import Foundation
 import Security
 
 package struct KeychainStore: ValueStore {
-    private enum KeychainError: LocalizedError, CustomNSError {
+    private enum KeychainError: CustomNSError {
         case unexpectedStatus(OSStatus)
         case unreadableItem
 
@@ -11,18 +11,6 @@ package struct KeychainStore: ValueStore {
             switch self {
             case let .unexpectedStatus(status): Int(status)
             case .unreadableItem: Int(errSecDecode)
-            }
-        }
-
-        var errorDescription: String? {
-            switch self {
-            case let .unexpectedStatus(status):
-                guard let message = SecCopyErrorMessageString(status, nil) else { return "OSStatus \(status)" }
-
-                return message as String
-
-            case .unreadableItem:
-                return "The Keychain item isn't UTF-8 text"
             }
         }
     }

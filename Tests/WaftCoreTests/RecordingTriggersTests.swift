@@ -41,6 +41,19 @@ struct RecordingTriggersTests {
     }
 
     @Test
+    func `remembers the Escape that cancels a recording`() {
+        var triggers = RecordingTriggers()
+        let settings = Settings(languages: .preferred(by: []))
+
+        _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
+        let fired = triggers.handle(.keyDown(KeyEvent.escapeKeyCode, flags: KeyEvent.rightOptionFlag, at: 5), settings: settings)
+
+        #expect(fired.map(\.action) == [.discardRecording(.cancelled)])
+        #expect(triggers.cancelledRecording(byEscapeAt: 5))
+        #expect(!triggers.cancelledRecording(byEscapeAt: 6))
+    }
+
+    @Test
     func `discards both recordings when the key monitor stops`() {
         var triggers = RecordingTriggers()
         var settings = Settings(languages: .preferred(by: []))

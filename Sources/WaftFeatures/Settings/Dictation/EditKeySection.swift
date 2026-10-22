@@ -9,7 +9,7 @@ struct EditKeySection: View {
         SettingsSection(
             "Editing by voice",
             subtitle: "Select text, hold the key, and say what to change, like “make it shorter”.",
-            isPro: true,
+            needsWaftPlus: true,
         ) {
             SettingsRow("Editing key", description: keyRecorder.note(for: .edit)) {
                 recorder

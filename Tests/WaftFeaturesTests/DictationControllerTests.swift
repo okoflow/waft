@@ -88,7 +88,7 @@ struct DictationControllerTests {
     }
 
     @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `refuses editing by voice without Pro`() async {
+    func `refuses editing by voice without Waft+`() async {
         settings.settings.editKey = PushToTalkKey(keyCode: Self.leftOption)
         let controller = await controller(pro: .unlicensed(trialStarted: .distantPast))
 

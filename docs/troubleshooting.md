@@ -30,7 +30,8 @@ text is what the HUD shows.
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
 | "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
-| "Select the text to edit, then hold the key and say what to change." or "Select the text first, then press the shortcut." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
+| "Select the text to edit, then hold the key and say what to change." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
+| "Select the text first, then press the shortcut." | Nothing is selected, or the app didn't copy the selection when Waft pressed <kbd>⌘</kbd><kbd>C</kbd>; [The translator](how-it-works.md#the-translator) has the details |
 | The text has no leading space | The app, such as an Electron app, a game, or a remote desktop, exposes little to Accessibility, so Waft can't see the text before the cursor |
 
 ## Recognition is poor or picks the wrong language

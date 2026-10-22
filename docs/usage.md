@@ -140,6 +140,8 @@ translates half a second after you stop typing.
   separate afterward.
 - A click on the translation copies all of it; select a part to copy only
   that. The arrows between the halves swap the languages and the texts.
+- <kbd>Esc</kbd> closes the window, which keeps the text and its translation
+  for the next time you open it.
 - The arrow next to **Translation** or **Fixing** in Settings › Translator
   opens its **Instructions**, which you can rewrite and try as for a mode.
 - **Model** in Settings › Translator sets the translator's own
@@ -154,6 +156,11 @@ Two [shortcuts](#shortcuts) work on text selected in any app:
 - **Translate selected text** replaces the selection with its translation
   into the translator's languages.
 - **Fix selected text** corrects its spelling, grammar, and punctuation.
+
+Waft reads the selection through Accessibility. An app that doesn't expose it
+there, such as Chrome or an Electron app, gets
+<kbd>⌘</kbd><kbd>C</kbd> instead, and Waft then restores your clipboard as it
+does after [pasting](how-it-works.md#pasting).
 
 If focus moved while the AI model worked, Waft copies the result instead. A
 failure changes nothing;

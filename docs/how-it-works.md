@@ -125,6 +125,15 @@ the language of the text on your Mac, which decides when two-way applies.
 Waft rejects an answer that is empty or longer than five times the text plus
 200 characters.
 
+The shortcuts read the selection through Accessibility. When the app doesn't
+expose it, Waft waits up to 5 seconds for you to release the shortcut, saves
+the clipboard, and presses <kbd>⌘</kbd><kbd>C</kbd> with the key that types
+"c" in your keyboard layout. If the app copies text within half a second, Waft
+takes it as the selection and restores the clipboard as after
+[pasting](#pasting); otherwise the HUD asks you to select the text. A password
+field gets no <kbd>⌘</kbd><kbd>C</kbd>, and neither does a field that reports
+only the cursor, since editors such as VS Code copy the whole line then.
+
 ## Pasting
 
 Waft pastes through the clipboard rather than typing key by key:

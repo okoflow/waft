@@ -165,7 +165,7 @@
 "Language" = "Taal";
 "Language: %@" = "Taal: %@";
 "Languages" = "Talen";
-"Last 7 days" = "Afgelopen 7 dagen";
+"Last %lld days" = "Afgelopen %lld dagen";
 "Left Command" = "Command-links";
 "Left Control" = "Control-links";
 "Left Option" = "Option-links";
@@ -199,7 +199,7 @@
 "Next page" = "Volgende pagina";
 "No apps yet" = "Nog geen apps";
 "No audio was captured." = "Er is geen audio opgenomen.";
-"No dictations in the last 7 days" = "Geen dictaten in de afgelopen 7 dagen";
+"No dictations in the last %lld days" = "Geen dictaten in de afgelopen %lld dagen";
 "No dictations yet" = "Nog geen dictaten";
 "No languages found" = "Geen talen gevonden";
 "No matches" = "Geen resultaten";
@@ -383,7 +383,7 @@
 "Transcribing… %@" = "Transcriberen… %@";
 "Transcribing…" = "Transcriberen…";
 "Transcription failed" = "Transcriptie mislukt";
-"Translate and polish text in any of 45 languages with your AI model." = "Vertaal en verfijn tekst in 45 talen met je eigen AI-model.";
+"Translate and polish text in any of %lld languages with your AI model." = "Vertaal en verfijn tekst in %lld talen met je eigen AI-model.";
 "Translate from" = "Vertaal uit";
 "Translate into" = "Vertaal naar";
 "Translate selected text" = "Vertaal geselecteerde tekst";
@@ -443,7 +443,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Zodra het spraakmodel gereed is, klik je in het veld, houd je %@ ingedrukt en zeg je ‘Hallo, Waft’.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Zodra het spraakmodel gereed is, klik je in het veld, druk je op %@, zeg je ‘Hallo, Waft’ en druk je er nogmaals op.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper draait op deze Mac, dus de audio verlaat je Mac nooit.";
-"Words dictated each day for the last 7 days" = "Gedicteerde woorden per dag in de afgelopen 7 dagen";
+"Words dictated each day for the last %lld days" = "Gedicteerde woorden per dag in de afgelopen %lld dagen";
 "Words" = "Woorden";
 "Write instructions once and dictate in your own style." = "Schrijf eenmalig instructies en dicteer in je eigen stijl.";
 "Writing system" = "Schrift";

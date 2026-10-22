@@ -8,7 +8,7 @@ struct SpeechModelTests {
         (.accurate, true, .accurate),
         (.accurate, false, .fast),
     ])
-    func `falls back to the fast model when Pro is locked`(model: SpeechModel, isUnlocked: Bool, expected: SpeechModel) {
+    func `falls back to the fast model when Waft+ is locked`(model: SpeechModel, isUnlocked: Bool, expected: SpeechModel) {
         #expect(model.usable(withProUnlocked: isUnlocked) == expected)
     }
 }
