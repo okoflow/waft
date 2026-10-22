@@ -142,7 +142,7 @@ Waft pastes through the clipboard rather than typing key by key:
 2. It checks the focused field. A password field gets nothing, not even the
    clipboard. If **Paste into the focused field** is off, the key is still
    held, focus moved to another app or field, or Accessibility isn't allowed,
-   Waft copies the text and the HUD says "Copied: press ⌘V to paste".
+   Waft copies the text, and the HUD shows it with <kbd>⌘</kbd><kbd>V</kbd>.
 3. It saves the clipboard, puts the text on it, and presses
    <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard
    layout, so Dvorak and Colemak work too.

@@ -81,8 +81,11 @@ final class HUDPanel: NSPanel, HUDWindow {
     }
 
     private func updateMouseEvents() {
+        let mouse = NSEvent.mouseLocation
+
         guard hud.canCopyMessage, let island = layout.islandFrame else {
             ignoresMouseEvents = true
+            hud.pointerMoved(to: mouse, isOver: false)
 
             return
         }
@@ -94,6 +97,9 @@ final class HUDPanel: NSPanel, HUDWindow {
             height: island.height,
         )
 
-        ignoresMouseEvents = !onScreen.contains(NSEvent.mouseLocation)
+        let isOver = onScreen.contains(mouse)
+
+        ignoresMouseEvents = !isOver
+        hud.pointerMoved(to: mouse, isOver: isOver)
     }
 }

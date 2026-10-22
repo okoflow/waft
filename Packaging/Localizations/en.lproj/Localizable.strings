@@ -71,8 +71,7 @@
 "Clean and Formal" = "Clean and Formal";
 "Clean" = "Clean";
 "Clean, Formal, and Translate need an AI model." = "Clean, Formal, and Translate need an AI model.";
-"Cleaning up on this Mac…" = "Cleaning up on this Mac…";
-"Cleaning up with %@…" = "Cleaning up with %@…";
+"Cleaning up…" = "Cleaning up…";
 "Clear History" = "Clear History";
 "Clear History…" = "Clear History…";
 "Clear the dictation history?" = "Clear the dictation history?";
@@ -80,8 +79,6 @@
 "Clear" = "Clear";
 "Click the box, hold %@, and say “Hello, Waft”." = "Click the box, hold %@, and say “Hello, Waft”.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Click the box, tap %@, say “Hello, Waft”, and tap it again.";
-"Click to copy all" = "Click to copy all";
-"Click to copy" = "Click to copy";
 "Click to copy, or select a part" = "Click to copy, or select a part";
 "Click, then press the key to use" = "Click, then press the key to use";
 "Click, then press the shortcut to use" = "Click, then press the shortcut to use";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Editing by voice is part of Waft+.";
 "Editing by voice" = "Editing by voice";
 "Editing key" = "Editing key";
-"Editing on this Mac…" = "Editing on this Mac…";
-"Editing with %@…" = "Editing with %@…";
+"Editing…" = "Editing…";
 "Exactly what was heard." = "Exactly what was heard.";
 "Fast" = "Fast";
 "File transcription is part of Waft+" = "File transcription is part of Waft+";
@@ -226,6 +222,7 @@
 "Output" = "Output";
 "Overview" = "Overview";
 "Paste into the focused field" = "Paste into the focused field";
+"Pasted" = "Pasted";
 "Permissions" = "Permissions";
 "Phrase to say" = "Phrase to say";
 "Play sounds" = "Play sounds";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Translates in its own window, and translates or fixes selected text in any app.";
 "Translates what you said into another language." = "Translates what you said into another language.";
 "Translating and fixing text is part of Waft+." = "Translating and fixing text is part of Waft+.";
-"Translating into %@…" = "Translating into %@…";
 "Translating…" = "Translating…";
 "Translation" = "Translation";
 "Translator (Waft+)…" = "Translator (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper runs on this Mac, so audio never leaves it.";
+"Without AI" = "Without AI";
 "Words dictated each day for the last %lld days" = "Words dictated each day for the last %lld days";
 "Words" = "Words";
 "Write instructions once and dictate in your own style." = "Write instructions once and dictate in your own style.";

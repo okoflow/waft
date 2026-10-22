@@ -94,7 +94,7 @@ struct SelectionActionsTests {
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Hello."] })
-        #expect(hud.content == .message(HUDMessage(kind: .copied, title: "Hello.", detail: "Copied: press ⌘V to paste")))
+        #expect(hud.content == .message(HUDMessage(kind: .copied, title: "Hello.")))
     }
 
     @Test

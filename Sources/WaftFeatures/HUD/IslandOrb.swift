@@ -1,49 +1,52 @@
 import SwiftUI
 
 struct IslandOrb: View {
-    enum Style {
-        case still
-        case scanning
-    }
+    private static let dotCount = 80
+    private static let assemblyDuration: TimeInterval = 0.6
+    private static let pulseDuration: TimeInterval = 0.45
+    private static let overflow: CGFloat = 6
 
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
-    let style: Style
     let size: CGFloat
-    let tint: Color
-
-    private var dotCount: Int {
-        switch style {
-        case .still: 56
-        case .scanning: 80
-        }
-    }
-
-    private var isPaused: Bool {
-        guard !reducesMotion else { return true }
-
-        return style == .still
-    }
+    let appearedAt: Date
+    let pulsedAt: Date
 
     var body: some View {
-        TimelineView(.animation(paused: isPaused)) { context in
-            let time = context.date.timeIntervalSinceReferenceDate
+        TimelineView(.animation(paused: reducesMotion)) { context in
+            let date = context.date
 
             Canvas { canvas, area in
-                draw(in: &canvas, area: area, time: time)
+                draw(in: &canvas, area: area, date: date)
             }
+            .frame(width: size + Self.overflow, height: size + Self.overflow)
         }
         .frame(width: size, height: size)
         .accessibilityHidden(true)
     }
 
-    private func draw(in canvas: inout GraphicsContext, area: CGSize, time: TimeInterval) {
-        let radius = area.width / 2 - 1
+    private static func progress(since start: Date, at date: Date, over duration: TimeInterval) -> Double {
+        min(1, max(0, date.timeIntervalSince(start) / duration))
+    }
 
-        for dot in OrbDot.sphere(count: dotCount, rotation: rotation(at: time), shine: shine(at: time)) {
+    private static func overshoot(_ progress: Double) -> Double {
+        let rest = progress - 1
+
+        return 1 + 2.2 * rest * rest * rest + 1.2 * rest * rest
+    }
+
+    private func draw(in canvas: inout GraphicsContext, area: CGSize, date: Date) {
+        let assembly = assembly(at: date)
+        let pulse = pulse(at: date)
+
+        let radius = (size / 2 - 1) * Self.overshoot(assembly) * (1 + 0.06 * pulse)
+
+        let rotation = date.timeIntervalSinceReferenceDate * 0.9
+
+        for dot in OrbDot.sphere(count: Self.dotCount, rotation: rotation) {
             let front = (dot.depth + 1) / 2
 
-            let diameter = (0.8 + 1.2 * front + 0.25 * dot.glow) * size / 18
+            let diameter = (0.6 + 0.9 * front) * (1 + 0.2 * pulse) * size / 18
 
             let bounds = CGRect(
                 x: area.width / 2 + dot.horizontal * radius - diameter / 2,
@@ -52,29 +55,22 @@ struct IslandOrb: View {
                 height: diameter,
             )
 
-            canvas.fill(Path(ellipseIn: bounds), with: .color(tint.opacity(opacity(front: front, glow: dot.glow))))
+            let opacity = min(1, 0.3 + 0.7 * front + 0.3 * pulse) * min(1, 2 * assembly)
+
+            canvas.fill(Path(ellipseIn: bounds), with: .color(.white.opacity(opacity)))
         }
     }
 
-    private func rotation(at time: TimeInterval) -> Double {
-        switch style {
-        case .still: 0.6
-        case .scanning: time * 0.9
-        }
+    private func assembly(at date: Date) -> Double {
+        guard !reducesMotion else { return 1 }
+
+        return Self.progress(since: appearedAt, at: date, over: Self.assemblyDuration)
     }
 
-    private func shine(at time: TimeInterval) -> Double? {
-        switch style {
-        case .still: nil
-        case .scanning: Shimmer.center(at: time)
-        }
-    }
+    private func pulse(at date: Date) -> Double {
+        guard !reducesMotion else { return 0 }
 
-    private func opacity(front: Double, glow: Double) -> Double {
-        switch style {
-        case .still: 0.35 + 0.65 * front
-        case .scanning: min(1, 0.15 + 0.45 * front + 0.75 * glow)
-        }
+        return sin(.pi * Self.progress(since: pulsedAt, at: date, over: Self.pulseDuration))
     }
 }
 
@@ -85,9 +81,8 @@ private struct OrbDot {
     let horizontal: Double
     let vertical: Double
     let depth: Double
-    let glow: Double
 
-    static func sphere(count: Int, rotation: Double, shine: Double?) -> [Self] {
+    static func sphere(count: Int, rotation: Double) -> [Self] {
         let dots = (0 ..< count).map { index in
             let height = 1 - 2 * (Double(index) + 0.5) / Double(count)
             let angle = goldenAngle * Double(index) + rotation
@@ -102,18 +97,9 @@ private struct OrbDot {
                 horizontal: horizontal,
                 vertical: height * cos(tilt) - depth * sin(tilt),
                 depth: height * sin(tilt) + depth * cos(tilt),
-                glow: glow(at: horizontal, shine: shine),
             )
         }
 
         return dots.sorted { $0.depth < $1.depth }
-    }
-
-    private static func glow(at horizontal: Double, shine: Double?) -> Double {
-        guard let shine else { return 0 }
-
-        let position = (horizontal + 1) / 2
-
-        return max(0, 1 - abs(position - shine) / Shimmer.width)
     }
 }

@@ -8,7 +8,7 @@ struct HUDMessage: Equatable, Sendable {
         case warning
     }
 
-    private static let pasteShortcut = "⌘V"
+    private static let glanceTime = 5.0
 
     let kind: Kind
     let title: String
@@ -19,13 +19,13 @@ struct HUDMessage: Equatable, Sendable {
     }
 
     var duration: Duration {
-        let characters = [title, detail].compactMap(\.self).reduce(0) { $0 + $1.count }
+        .milliseconds(Int(seconds * 1000))
+    }
 
-        let readingTime = min(10, 2 + Double(characters) / 15)
+    private var seconds: Double {
+        guard kind == .pasted else { return Self.readingTime(of: [title, detail]) }
 
-        let seconds = kind == .pasted ? min(readingTime, 4) : readingTime
-
-        return .milliseconds(Int(seconds * 1000))
+        return max(Self.glanceTime, Self.readingTime(of: [detail]))
     }
 
     init(kind: Kind, title: String, detail: String? = nil) {
@@ -35,12 +35,16 @@ struct HUDMessage: Equatable, Sendable {
     }
 
     static func copied(_ text: String, note: String? = nil) -> HUDMessage {
-        let hint = String(localized: "Copied: press \(pasteShortcut) to paste")
-
-        return HUDMessage(kind: .copied, title: text, detail: [hint, note].compactMap(\.self).joined(separator: "\n"))
+        HUDMessage(kind: .copied, title: text, detail: note)
     }
 
     static func recordingFailed(_ detail: String) -> HUDMessage {
         HUDMessage(kind: .warning, title: String(localized: "Recording failed"), detail: detail)
+    }
+
+    private static func readingTime(of texts: [String?]) -> Double {
+        let characters = texts.compactMap(\.self).reduce(0) { $0 + $1.count }
+
+        return min(10, 2 + Double(characters) / 15)
     }
 }

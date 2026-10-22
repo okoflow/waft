@@ -132,18 +132,16 @@ struct DictationQueueTests {
     }
 
     @Test(arguments: [
-        (Mode.clean, ModelProvider.cloud(.claude), String?.none, "Cleaning up with Claude…", String?.some("Clean")),
-        (.clean, .localServer, nil, "Cleaning up on this Mac…", "Clean"),
-        (.translate, .cloud(.claude), nil, "Translating into English…", "Translate"),
-        (.clean, .cloud(.openAI), "Meeting at noon", "Editing with OpenAI…", nil),
-        (.clean, .localServer, "Meeting at noon", "Editing on this Mac…", nil),
+        (Mode.clean, ModelProvider.cloud(.claude), String?.none, "Cleaning up…"),
+        (.formal, .localServer, nil, "Cleaning up…"),
+        (.translate, .cloud(.claude), nil, "Translating…"),
+        (.clean, .cloud(.openAI), "Meeting at noon", "Editing…"),
     ])
-    func `shows the working label for the job's mode and provider while it rewrites`(
+    func `shows the phase of the job while it rewrites`(
         mode: Mode,
         provider: ModelProvider,
         selection: String?,
         label: String,
-        cleanupMode: String?,
     ) async {
         let rewriter = FakeTextRewriter(.success("Hello world."), holdsRequests: true)
         let job = job(selection: selection) { settings in
@@ -156,7 +154,6 @@ struct DictationQueueTests {
         queue.submit(job)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .working(label) })
-        #expect(hud.cleanup == cleanupMode.map { HUDCleanup(mode: $0, transcript: "Hello world") })
 
         rewriter.release()
     }

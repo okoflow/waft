@@ -28,12 +28,8 @@ struct DictationOutcomeTests {
     @Test(arguments: [
         (DictationOutcome.pasted(ProcessedText(text: "Hi.", mode: .clean)), HUDMessage.Kind.pasted, String?.none),
         (.pasted(ProcessedText(text: "Hi.", mode: .light, fallback: .timeout)), .pasted, fallback),
-        (.copied(ProcessedText(text: "Hi.", mode: .clean)), .copied, "Copied: press ⌘V to paste"),
-        (
-            .copied(ProcessedText(text: "Hi.", mode: .light, fallback: .timeout)),
-            .copied,
-            "Copied: press ⌘V to paste\n\(fallback)",
-        ),
+        (.copied(ProcessedText(text: "Hi.", mode: .clean)), .copied, nil),
+        (.copied(ProcessedText(text: "Hi.", mode: .light, fallback: .timeout)), .copied, fallback),
     ])
     func `shows the delivered text with its detail`(outcome: DictationOutcome, kind: HUDMessage.Kind, detail: String?) {
         #expect(outcome.message(for: .cloud(.claude)) == HUDMessage(kind: kind, title: "Hi.", detail: detail))

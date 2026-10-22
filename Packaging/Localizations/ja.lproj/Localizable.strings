@@ -71,8 +71,7 @@
 "Clean and Formal" = "「清書」と「フォーマル」";
 "Clean" = "清書";
 "Clean, Formal, and Translate need an AI model." = "「清書」、「フォーマル」、「翻訳」にはAIモデルが必要です。";
-"Cleaning up on this Mac…" = "このMacで文章を整えています…";
-"Cleaning up with %@…" = "%@で文章を整えています…";
+"Cleaning up…" = "文章を整えています…";
 "Clear History" = "履歴を消去";
 "Clear History…" = "履歴を消去…";
 "Clear the dictation history?" = "音声入力の履歴を消去しますか？";
@@ -80,8 +79,6 @@
 "Clear" = "消去";
 "Click the box, hold %@, and say “Hello, Waft”." = "入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "入力欄をクリックし、%@キーを押して「こんにちは、Waft」と話してから、もう一度押してください。";
-"Click to copy all" = "クリックしてすべてコピー";
-"Click to copy" = "クリックしてコピー";
 "Click to copy, or select a part" = "クリックしてコピー、または一部を選択";
 "Click, then press the key to use" = "クリックしてから、使用するキーを押してください";
 "Click, then press the shortcut to use" = "クリックしてから、使用するショートカットを押してください";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "「音声で編集」はWaft+の機能です。";
 "Editing by voice" = "音声で編集";
 "Editing key" = "編集キー";
-"Editing on this Mac…" = "このMacで編集中…";
-"Editing with %@…" = "%@で編集中…";
+"Editing…" = "編集中…";
 "Exactly what was heard." = "聞き取ったとおりに入力します。";
 "Fast" = "高速";
 "File transcription is part of Waft+" = "ファイルの文字起こしはWaft+の機能です";
@@ -226,6 +222,7 @@
 "Output" = "出力";
 "Overview" = "概要";
 "Paste into the focused field" = "選択中の入力欄にペースト";
+"Pasted" = "ペースト済み";
 "Permissions" = "アクセス許可";
 "Phrase to say" = "話す語句";
 "Play sounds" = "サウンドを再生";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "専用のウィンドウで翻訳し、どのアプリでも選択したテキストを翻訳または修正します。";
 "Translates what you said into another language." = "話した内容を別の言語に翻訳します。";
 "Translating and fixing text is part of Waft+." = "テキストの翻訳と修正はWaft+の機能です。";
-"Translating into %@…" = "%@に翻訳中…";
 "Translating…" = "翻訳中…";
 "Translation" = "翻訳";
 "Translator (Waft+)…" = "翻訳ツール（Waft+）…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押して「こんにちは、Waft」と話してから、もう一度押してください。";
 "Whisper runs on this Mac, so audio never leaves it." = "WhisperはこのMac上で動作するため、音声がMacの外に出ることはありません。";
+"Without AI" = "AIなし";
 "Words dictated each day for the last %lld days" = "過去%lld日間に音声入力した日ごとの単語数";
 "Words" = "単語数";
 "Write instructions once and dictate in your own style." = "指示を一度書けば、自分のスタイルで音声入力できます。";

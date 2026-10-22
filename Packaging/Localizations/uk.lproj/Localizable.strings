@@ -71,8 +71,7 @@
 "Clean and Formal" = "«Чистовий» і «Діловий»";
 "Clean" = "Чистовий";
 "Clean, Formal, and Translate need an AI model." = "Для режимів «Чистовий», «Діловий» і «Переклад» потрібна модель ШІ.";
-"Cleaning up on this Mac…" = "Обробка на цьому Mac…";
-"Cleaning up with %@…" = "Обробка через %@…";
+"Cleaning up…" = "Очищення…";
 "Clear History" = "Очистити історію";
 "Clear History…" = "Очистити історію…";
 "Clear the dictation history?" = "Очистити історію диктування?";
@@ -80,8 +79,6 @@
 "Clear" = "Очистити";
 "Click the box, hold %@, and say “Hello, Waft”." = "Клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Клацніть у полі, натисніть %@, скажіть «Привіт, Waft» і натисніть клавішу ще раз.";
-"Click to copy all" = "Клацніть, щоб скопіювати все";
-"Click to copy" = "Клацніть, щоб скопіювати";
 "Click to copy, or select a part" = "Клацніть, щоб скопіювати, або виділіть частину";
 "Click, then press the key to use" = "Клацніть, а потім натисніть потрібну клавішу";
 "Click, then press the shortcut to use" = "Клацніть, а потім натисніть потрібну комбінацію клавіш";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Редагування голосом входить до Waft+.";
 "Editing by voice" = "Редагування голосом";
 "Editing key" = "Клавіша редагування";
-"Editing on this Mac…" = "Редагування на цьому Mac…";
-"Editing with %@…" = "Редагування через %@…";
+"Editing…" = "Редагування…";
 "Exactly what was heard." = "Саме те, що прозвучало.";
 "Fast" = "Швидка";
 "File transcription is part of Waft+" = "Розпізнавання файлів входить до Waft+";
@@ -226,6 +222,7 @@
 "Output" = "Вставлення";
 "Overview" = "Огляд";
 "Paste into the focused field" = "Вставляти в активне поле";
+"Pasted" = "Вставлено";
 "Permissions" = "Дозволи";
 "Phrase to say" = "Фраза";
 "Play sounds" = "Відтворювати звуки";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Перекладає у власному вікні, а також перекладає або виправляє виділений текст у будь-якій програмі.";
 "Translates what you said into another language." = "Перекладає сказане на іншу мову.";
 "Translating and fixing text is part of Waft+." = "Переклад і виправлення тексту входять до Waft+.";
-"Translating into %@…" = "Переклад: %@…";
 "Translating…" = "Переклад…";
 "Translation" = "Переклад";
 "Translator (Waft+)…" = "Перекладач (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Коли модель мовлення буде готова, клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Коли модель мовлення буде готова, клацніть у полі, натисніть %@, скажіть «Привіт, Waft» і натисніть клавішу ще раз.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper працює на цьому Mac, тож звук нікуди не передається.";
+"Without AI" = "Без ШІ";
 "Words dictated each day for the last %lld days" = "Слова, продиктовані за кожен з останніх %lld днів";
 "Words" = "Слова";
 "Write instructions once and dictate in your own style." = "Напишіть інструкції один раз і диктуйте у своєму стилі.";

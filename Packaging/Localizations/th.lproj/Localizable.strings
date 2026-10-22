@@ -71,8 +71,7 @@
 "Clean and Formal" = "โหมด “เรียบเรียง” และ “ทางการ”";
 "Clean" = "เรียบเรียง";
 "Clean, Formal, and Translate need an AI model." = "“เรียบเรียง” “ทางการ” และ “แปลภาษา” ต้องใช้โมเดล AI";
-"Cleaning up on this Mac…" = "กำลังเกลาข้อความบน Mac เครื่องนี้…";
-"Cleaning up with %@…" = "กำลังเกลาข้อความด้วย %@…";
+"Cleaning up…" = "กำลังเกลาข้อความ…";
 "Clear History" = "ล้างประวัติ";
 "Clear History…" = "ล้างประวัติ…";
 "Clear the dictation history?" = "ล้างประวัติการป้อนตามคำบอกหรือไม่";
@@ -80,8 +79,6 @@
 "Clear" = "ล้าง";
 "Click the box, hold %@, and say “Hello, Waft”." = "คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "คลิกในช่อง กด %@ พูดว่า “สวัสดี Waft” แล้วกดอีกครั้ง";
-"Click to copy all" = "คลิกเพื่อคัดลอกทั้งหมด";
-"Click to copy" = "คลิกเพื่อคัดลอก";
 "Click to copy, or select a part" = "คลิกเพื่อคัดลอก หรือเลือกบางส่วน";
 "Click, then press the key to use" = "คลิก แล้วกดปุ่มที่จะใช้";
 "Click, then press the shortcut to use" = "คลิก แล้วกดปุ่มลัดที่จะใช้";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "การแก้ไขด้วยเสียงเป็นส่วนหนึ่งของ Waft+";
 "Editing by voice" = "การแก้ไขด้วยเสียง";
 "Editing key" = "ปุ่มแก้ไข";
-"Editing on this Mac…" = "กำลังแก้ไขบน Mac เครื่องนี้…";
-"Editing with %@…" = "กำลังแก้ไขด้วย %@…";
+"Editing…" = "กำลังแก้ไข…";
 "Exactly what was heard." = "ตรงตามที่ได้ยินทุกคำ";
 "Fast" = "เร็ว";
 "File transcription is part of Waft+" = "การถอดเสียงไฟล์เป็นส่วนหนึ่งของ Waft+";
@@ -226,6 +222,7 @@
 "Output" = "การวางข้อความ";
 "Overview" = "ภาพรวม";
 "Paste into the focused field" = "วางลงในช่องที่ใช้งานอยู่";
+"Pasted" = "วางแล้ว";
 "Permissions" = "สิทธิ์การเข้าถึง";
 "Phrase to say" = "วลีที่จะพูด";
 "Play sounds" = "เล่นเสียง";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "แปลในหน้าต่างของตัวเอง และแปลหรือตรวจแก้ข้อความที่เลือกในแอปใดก็ได้";
 "Translates what you said into another language." = "แปลสิ่งที่คุณพูดเป็นภาษาอื่น";
 "Translating and fixing text is part of Waft+." = "การแปลและการตรวจแก้ข้อความเป็นส่วนหนึ่งของ Waft+";
-"Translating into %@…" = "กำลังแปลเป็นภาษา%@…";
 "Translating…" = "กำลังแปล…";
 "Translation" = "การแปล";
 "Translator (Waft+)…" = "ตัวแปลภาษา (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ พูดว่า “สวัสดี Waft” แล้วกดอีกครั้ง";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper ทำงานบน Mac เครื่องนี้ เสียงจึงไม่ออกไปนอกเครื่อง";
+"Without AI" = "ไม่ใช้ AI";
 "Words dictated each day for the last %lld days" = "จำนวนคำที่ป้อนตามคำบอกในแต่ละวันตลอด %lld วันที่ผ่านมา";
 "Words" = "จำนวนคำ";
 "Write instructions once and dictate in your own style." = "เขียนคำสั่งครั้งเดียว แล้วป้อนตามคำบอกในสไตล์ของคุณเอง";

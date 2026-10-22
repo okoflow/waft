@@ -74,7 +74,7 @@ cleans it up when you want prose.
   </tbody>
 </table>
 
-![The HUD at the notch while listening, cleaning up, and after pasting](.github/screenshots/hud.jpg)
+![The HUD at the notch while listening, cleaning up, after pasting, and under the pointer](.github/screenshots/hud.jpg)
 
 ## How it compares
 
