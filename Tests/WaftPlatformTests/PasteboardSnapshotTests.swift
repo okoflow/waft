@@ -39,6 +39,24 @@ struct PasteboardSnapshotTests {
         }
     }
 
+    @Test
+    func `restores an earlier transcript with the markers that keep it private`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            pasteboard.writePrivately("Earlier.")
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let types = try #require(pasteboard.types).map(\.rawValue)
+
+            #expect(snapshot.plan == .restore)
+            #expect(pasteboard.string(forType: .string) == "Earlier.")
+            #expect(Set(types).isSuperset(of: PasteboardRestorePolicy.markerTypes))
+        }
+    }
+
     @Test(arguments: [(1, true), (2, false)])
     func `restores a clipboard only while its items together fit the size limit`(itemCount: Int, isRestored: Bool) {
         NSPasteboard.withTemporary { pasteboard in
