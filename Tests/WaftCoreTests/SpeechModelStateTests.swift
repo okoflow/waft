@@ -116,6 +116,30 @@ struct SpeechModelStateTests {
     }
 
     @Test(arguments: [
+        (
+            SpeechModelState.readyEvents + [.chosen(.accurate, isInstalled: false)],
+            [SpeechModelState.Effect.load(.fast)],
+            SpeechModelState.Phase.downloading(progress: 0),
+        ),
+        (
+            SpeechModelState.readyEvents + [.chosen(.accurate, isInstalled: false), .failed(.accurate, "network lost")],
+            [.load(.fast)],
+            .failed(reason: "network lost", during: .download),
+        ),
+        ([.started(.fast, isInstalled: false)], [], .downloading(progress: 0)),
+    ])
+    func `reloads the serving model while another one downloads or has failed`(
+        events: [SpeechModelState.Event],
+        effects: [SpeechModelState.Effect],
+        phase: SpeechModelState.Phase,
+    ) {
+        var state = SpeechModelState(after: events)
+
+        #expect(state.handle(.reloadRequested) == effects)
+        #expect(state.phase == phase)
+    }
+
+    @Test(arguments: [
         SpeechModelState.Event.downloaded(.fast),
         .loaded(.fast),
         .downloadProgressed(.fast, 0.5),
