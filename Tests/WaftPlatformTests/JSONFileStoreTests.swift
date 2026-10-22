@@ -33,21 +33,6 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `keeps a file restricted to its owner after an overwrite`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "sample.json")
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
-
-            try store.save(Self.sample)
-            try store.save(Self.sample)
-
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-
-            #expect(attributes[.posixPermissions] as? Int == 0o600)
-        }
-    }
-
-    @Test
     func `restricts a file that others could read to its owner when it saves over it`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "dictionary.json")
