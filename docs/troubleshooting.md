@@ -25,7 +25,7 @@ text is what the HUD shows.
 
 | Symptom | Cause and fix |
 | --- | --- |
-| "Copied: press ⌘V to paste" | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
+| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
 | "Not pasted into a password field" | A password field, or an app that holds secure keyboard input so Waft can't see the field; **Copy Last Dictation** in the menu gets the text back |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
@@ -45,10 +45,11 @@ text is what the HUD shows.
 
 ## The AI modes use Light
 
-Under the text, the HUD adds "Used Light mode:" and a reason, with your
-provider's name in place of *provider*. The next dictation tries the AI model
-again. The `network` log category records the HTTP status or the connection
-error of a failed request, as [Logs](#logs) shows.
+The HUD shows "Without AI" next to the check mark. Pointing at it shows the text
+with "Used Light mode:" and a reason, as does the text Waft couldn't paste, with
+your provider's name in place of *provider*. The next dictation tries the AI
+model again. The `network` log category records the HTTP status or the
+connection error of a failed request, as [Logs](#logs) shows.
 
 | The reason | Fix |
 | --- | --- |

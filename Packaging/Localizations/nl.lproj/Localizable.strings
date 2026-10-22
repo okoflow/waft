@@ -71,8 +71,7 @@
 "Clean and Formal" = "‘Netjes’ en ‘Formeel’";
 "Clean" = "Netjes";
 "Clean, Formal, and Translate need an AI model." = "‘Netjes’, ‘Formeel’ en ‘Vertalen’ hebben een AI-model nodig.";
-"Cleaning up on this Mac…" = "Opschonen op deze Mac…";
-"Cleaning up with %@…" = "Opschonen met %@…";
+"Cleaning up…" = "Opschonen…";
 "Clear History" = "Wis geschiedenis";
 "Clear History…" = "Wis geschiedenis…";
 "Clear the dictation history?" = "Dicteergeschiedenis wissen?";
@@ -80,8 +79,6 @@
 "Clear" = "Wis";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klik in het veld, houd %@ ingedrukt en zeg ‘Hallo, Waft’.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klik in het veld, druk op %@, zeg ‘Hallo, Waft’ en druk er nogmaals op.";
-"Click to copy all" = "Klik om alles te kopiëren";
-"Click to copy" = "Klik om te kopiëren";
 "Click to copy, or select a part" = "Klik om te kopiëren, of selecteer een deel";
 "Click, then press the key to use" = "Klik en druk dan op de gewenste toets";
 "Click, then press the shortcut to use" = "Klik en druk dan op de gewenste sneltoets";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Bewerken met spraak hoort bij Waft+.";
 "Editing by voice" = "Bewerken met spraak";
 "Editing key" = "Bewerkingstoets";
-"Editing on this Mac…" = "Bewerken op deze Mac…";
-"Editing with %@…" = "Bewerken met %@…";
+"Editing…" = "Bewerken…";
 "Exactly what was heard." = "Precies wat er werd gehoord.";
 "Fast" = "Snel";
 "File transcription is part of Waft+" = "Bestanden transcriberen hoort bij Waft+";
@@ -226,6 +222,7 @@
 "Output" = "Uitvoer";
 "Overview" = "Overzicht";
 "Paste into the focused field" = "Plak in het actieve veld";
+"Pasted" = "Geplakt";
 "Permissions" = "Toestemmingen";
 "Phrase to say" = "Gesproken zin";
 "Play sounds" = "Speel geluiden af";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Vertaalt in een eigen venster en vertaalt of verbetert geselecteerde tekst in elke app.";
 "Translates what you said into another language." = "Vertaalt wat je zei naar een andere taal.";
 "Translating and fixing text is part of Waft+." = "Tekst vertalen en verbeteren hoort bij Waft+.";
-"Translating into %@…" = "Vertalen naar het %@…";
 "Translating…" = "Vertalen…";
 "Translation" = "Vertaling";
 "Translator (Waft+)…" = "Vertaler (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Zodra het spraakmodel gereed is, klik je in het veld, houd je %@ ingedrukt en zeg je ‘Hallo, Waft’.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Zodra het spraakmodel gereed is, klik je in het veld, druk je op %@, zeg je ‘Hallo, Waft’ en druk je er nogmaals op.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper draait op deze Mac, dus de audio verlaat je Mac nooit.";
+"Without AI" = "Zonder AI";
 "Words dictated each day for the last %lld days" = "Gedicteerde woorden per dag in de afgelopen %lld dagen";
 "Words" = "Woorden";
 "Write instructions once and dictate in your own style." = "Schrijf eenmalig instructies en dicteer in je eigen stijl.";

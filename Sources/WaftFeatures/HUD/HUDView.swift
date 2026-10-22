@@ -10,7 +10,8 @@ struct HUDView: View {
         switch hud.content {
         case nil: layout.hasNotch ? 9 : 12
         case .listening: 12
-        case .working, .message: 20
+        case .working: 20
+        case .message: hud.showsCompactMessage ? 12 : 20
         }
     }
 
@@ -18,8 +19,8 @@ struct HUDView: View {
         switch hud.content {
         case nil: "rest"
         case .listening: "listening"
-        case .working: hud.cleanup == nil ? "working" : "cleanup"
-        case let .message(message): "message:\(message.title)"
+        case .working: "working"
+        case let .message(message): "message:\(message.title):\(hud.showsCompactMessage)"
         }
     }
 

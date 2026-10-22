@@ -46,9 +46,9 @@ final class SelectionActions {
         self.releaseTimeout = releaseTimeout
     }
 
-    private static func workingLabel(for action: Action, into language: Language) -> String {
+    private static func workingLabel(for action: Action) -> String {
         switch action {
-        case .translate: String(localized: "Translating into \(language.inlineName)…")
+        case .translate: String(localized: "Translating…")
         case .fix: String(localized: "Fixing the text…")
         }
     }
@@ -126,7 +126,7 @@ final class SelectionActions {
 
         let setup = settings.settings.translatorSetup(for: textTask.kind)
 
-        hud.setWorking(Self.workingLabel(for: action, into: into))
+        hud.setWorking(Self.workingLabel(for: action))
 
         defer { hud.setWorking(nil) }
 

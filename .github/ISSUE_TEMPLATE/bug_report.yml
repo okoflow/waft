@@ -13,7 +13,7 @@ body:
     attributes:
       label: What happened
       description: What you did, what you saw, and what you expected instead.
-      placeholder: 'Dictated into a Safari text field in Light mode; the HUD said "Copied: press ⌘V to paste" instead of pasting.'
+      placeholder: 'Dictated into a Safari text field in Light mode; the HUD showed the text with ⌘V instead of pasting.'
     validations:
       required: true
 

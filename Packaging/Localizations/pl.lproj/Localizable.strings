@@ -71,8 +71,7 @@
 "Clean and Formal" = "„Staranny” i „Formalny”";
 "Clean" = "Staranny";
 "Clean, Formal, and Translate need an AI model." = "Tryby „Staranny”, „Formalny” i „Tłumaczenie” wymagają modelu AI.";
-"Cleaning up on this Mac…" = "Porządkuję tekst na tym Macu…";
-"Cleaning up with %@…" = "%@ porządkuje tekst…";
+"Cleaning up…" = "Porządkuję tekst…";
 "Clear History" = "Wymaż historię";
 "Clear History…" = "Wymaż historię…";
 "Clear the dictation history?" = "Wymazać historię dyktowania?";
@@ -80,8 +79,6 @@
 "Clear" = "Wymaż";
 "Click the box, hold %@, and say “Hello, Waft”." = "Kliknij pole, przytrzymaj %@ i powiedz „Cześć, Waft”.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Kliknij pole, naciśnij %@, powiedz „Cześć, Waft” i naciśnij klawisz ponownie.";
-"Click to copy all" = "Kliknij, aby skopiować całość";
-"Click to copy" = "Kliknij, aby skopiować";
 "Click to copy, or select a part" = "Kliknij, aby skopiować, lub zaznacz fragment";
 "Click, then press the key to use" = "Kliknij, a potem naciśnij wybrany klawisz";
 "Click, then press the shortcut to use" = "Kliknij, a potem naciśnij wybrany skrót";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Edycja głosem jest częścią Waft+.";
 "Editing by voice" = "Edycja głosem";
 "Editing key" = "Klawisz edycji";
-"Editing on this Mac…" = "Edytuję tekst na tym Macu…";
-"Editing with %@…" = "%@ edytuje tekst…";
+"Editing…" = "Edytuję tekst…";
 "Exactly what was heard." = "Dokładnie to, co usłyszano.";
 "Fast" = "Szybki";
 "File transcription is part of Waft+" = "Transkrypcja plików jest częścią Waft+";
@@ -226,6 +222,7 @@
 "Output" = "Wklejanie";
 "Overview" = "Przegląd";
 "Paste into the focused field" = "Wklejaj do aktywnego pola";
+"Pasted" = "Wklejono";
 "Permissions" = "Uprawnienia";
 "Phrase to say" = "Wypowiadana fraza";
 "Play sounds" = "Odtwarzaj dźwięki";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Tłumaczy w osobnym oknie i tłumaczy lub poprawia zaznaczony tekst w każdej aplikacji.";
 "Translates what you said into another language." = "Tłumaczy to, co mówisz, na inny język.";
 "Translating and fixing text is part of Waft+." = "Tłumaczenie i poprawianie tekstu jest częścią Waft+.";
-"Translating into %@…" = "Tłumaczę na %@…";
 "Translating…" = "Tłumaczę…";
 "Translation" = "Tłumaczenie";
 "Translator (Waft+)…" = "Tłumacz (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Gdy model mowy będzie gotowy, kliknij pole, przytrzymaj %@ i powiedz „Cześć, Waft”.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Gdy model mowy będzie gotowy, kliknij pole, naciśnij %@, powiedz „Cześć, Waft” i naciśnij klawisz ponownie.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper działa na tym Macu, więc dźwięk nigdy go nie opuszcza.";
+"Without AI" = "Bez AI";
 "Words dictated each day for the last %lld days" = "Słowa podyktowane każdego dnia w ciągu ostatnich %lld dni";
 "Words" = "Słowa";
 "Write instructions once and dictate in your own style." = "Napisz instrukcje raz i dyktuj we własnym stylu.";

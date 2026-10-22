@@ -71,8 +71,7 @@
 "Clean and Formal" = "「潤飾」和「正式」模式";
 "Clean" = "潤飾";
 "Clean, Formal, and Translate need an AI model." = "「潤飾」、「正式」和「翻譯」需要AI模型。";
-"Cleaning up on this Mac…" = "正在此Mac上潤飾⋯";
-"Cleaning up with %@…" = "正在使用%@潤飾⋯";
+"Cleaning up…" = "正在潤飾⋯";
 "Clear History" = "清除記錄";
 "Clear History…" = "清除記錄⋯";
 "Clear the dictation history?" = "要清除聽寫記錄嗎？";
@@ -80,8 +79,6 @@
 "Clear" = "清除";
 "Click the box, hold %@, and say “Hello, Waft”." = "按一下輸入框，按住%@，然後說「你好，Waft」。";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "按一下輸入框，按一下%@，說「你好，Waft」，然後再按一下。";
-"Click to copy all" = "按一下以拷貝全部";
-"Click to copy" = "按一下以拷貝";
 "Click to copy, or select a part" = "按一下以拷貝，或選取一部分";
 "Click, then press the key to use" = "按一下，然後按下要使用的按鍵";
 "Click, then press the shortcut to use" = "按一下，然後按下要使用的快速鍵";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "「語音編輯」是Waft+的功能。";
 "Editing by voice" = "語音編輯";
 "Editing key" = "編輯鍵";
-"Editing on this Mac…" = "正在此Mac上編輯⋯";
-"Editing with %@…" = "正在使用%@編輯⋯";
+"Editing…" = "正在編輯⋯";
 "Exactly what was heard." = "完全照聽到的內容輸出。";
 "Fast" = "快速";
 "File transcription is part of Waft+" = "「檔案轉錄」是Waft+的功能";
@@ -226,6 +222,7 @@
 "Output" = "輸出";
 "Overview" = "概覽";
 "Paste into the focused field" = "貼到目前的文字欄位";
+"Pasted" = "已貼上";
 "Permissions" = "權限";
 "Phrase to say" = "要說出的詞句";
 "Play sounds" = "播放音效";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "在獨立視窗中翻譯，也能在任何App中翻譯或修正所選文字。";
 "Translates what you said into another language." = "將你說的內容翻譯成其他語言。";
 "Translating and fixing text is part of Waft+." = "翻譯和修正文字是Waft+的功能。";
-"Translating into %@…" = "正在翻譯成%@⋯";
 "Translating…" = "正在翻譯⋯";
 "Translation" = "翻譯";
 "Translator (Waft+)…" = "翻譯工具（Waft+）⋯";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "語音辨識模型就緒後，按一下輸入框，按住%@，然後說「你好，Waft」。";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "語音辨識模型就緒後，按一下輸入框，按一下%@，說「你好，Waft」，然後再按一下。";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper在此Mac上執行，因此音訊絕不會離開此Mac。";
+"Without AI" = "未使用AI";
 "Words dictated each day for the last %lld days" = "過去%lld天每天聽寫的字詞數";
 "Words" = "字詞";
 "Write instructions once and dictate in your own style." = "只要寫一次指示，就能以你的風格聽寫。";

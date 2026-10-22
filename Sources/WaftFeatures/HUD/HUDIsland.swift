@@ -2,15 +2,10 @@ import AppKit
 import SwiftUI
 
 struct HUDIsland: View {
+    fileprivate static let compactInset: CGFloat = 14
     fileprivate static let cardInset: CGFloat = 18
     fileprivate static let bottomInset: CGFloat = 14
-    fileprivate static let textSpacing: CGFloat = 4
-    fileprivate static let cardOrbSize: CGFloat = 18
-    fileprivate static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
-    fileprivate static let detailFont = NSFont.systemFont(ofSize: 12)
-    fileprivate static let footnoteFont = NSFont.systemFont(ofSize: 11)
-
-    private static let compactInset: CGFloat = 14
+    fileprivate static let orbSize: CGFloat = 34
 
     let content: HUDContent?
     let hud: HUDController
@@ -23,7 +18,7 @@ struct HUDIsland: View {
                 .frame(width: layout.restWidth, height: layout.restHeight)
 
         case let .listening(badge, isHandsFree):
-            IslandRow(gap: layout.gap) {
+            CompactRow(layout: layout) {
                 HStack(spacing: 5) {
                     Image(systemName: isHandsFree ? "lock.fill" : "mic.fill")
                         .foregroundStyle(Palette.danger)
@@ -32,27 +27,22 @@ struct HUDIsland: View {
                         .monospacedDigit()
                         .contentTransition(.numericText())
                 }
-                .padding(.leading, Self.compactInset)
-
+            } trailing: {
                 LevelBars(levels: hud.levels)
-                    .padding(.trailing, Self.compactInset)
             }
-            .font(.hudSymbol)
-            .foregroundStyle(.white)
-            .frame(height: layout.topHeight)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Waft is listening")
             .accessibilityValue(listeningState(badge: badge, isHandsFree: isHandsFree))
 
         case let .working(label):
-            if let cleanup = hud.cleanup {
-                CleanupCard(label: label, cleanup: cleanup, layout: layout)
-            } else {
-                TranscribingCard(label: label, layout: layout)
-            }
+            WorkingCard(label: label, appearedAt: hud.workingSince, steppedAt: hud.stepChangedAt, layout: layout)
 
         case let .message(message):
-            MessageCard(message: message, hasCopied: hud.hasCopied, layout: layout, copy: hud.copyMessage)
+            if hud.showsCompactMessage {
+                PastedRow(message: message, hasCopied: hud.hasCopied, layout: layout, copy: hud.copyMessage)
+            } else {
+                MessageCard(message: message, hasCopied: hud.hasCopied, layout: layout, copy: hud.copyMessage)
+            }
         }
     }
 
@@ -63,45 +53,41 @@ struct HUDIsland: View {
     }
 }
 
-private struct IslandCard<Leading: View, Trailing: View, Content: View>: View {
+private struct CompactRow<Leading: View, Trailing: View>: View {
     let layout: HUDLayout
     @ViewBuilder let leading: Leading
     @ViewBuilder let trailing: Trailing
-    @ViewBuilder let content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            IslandRow(gap: layout.gap) {
-                leading
-                    .padding(.leading, HUDIsland.cardInset)
+        IslandRow(gap: layout.gap) {
+            leading
+                .padding(.leading, HUDIsland.compactInset)
 
-                trailing
-                    .font(.hudCaption)
-                    .foregroundStyle(.secondary)
-                    .padding(.trailing, HUDIsland.cardInset)
-            }
-            .font(.hudSymbol)
-            .frame(height: layout.topHeight)
-
-            content
-                .padding(.horizontal, HUDIsland.cardInset)
-                .padding(.bottom, HUDIsland.bottomInset)
+            trailing
+                .padding(.trailing, HUDIsland.compactInset)
         }
+        .font(.hudSymbol)
         .foregroundStyle(.white)
+        .frame(height: layout.topHeight)
     }
 }
 
-private struct TranscribingCard: View {
+private struct WorkingCard: View {
     let label: String
+    let appearedAt: Date
+    let steppedAt: Date
     let layout: HUDLayout
 
     var body: some View {
         VStack(spacing: 8) {
-            IslandOrb(style: .scanning, size: 34, tint: .white)
+            IslandOrb(size: HUDIsland.orbSize, appearedAt: appearedAt, pulsedAt: steppedAt)
 
             ShimmeringText(text: label)
                 .font(.hudCaption)
+                .id(label)
+                .transition(.opacity)
         }
+        .motion(Motion.islandContent, value: label)
         .frame(width: layout.spanWidth)
         .padding(.top, layout.topHeight)
         .padding(.bottom, HUDIsland.bottomInset)
@@ -110,40 +96,37 @@ private struct TranscribingCard: View {
     }
 }
 
-private struct CleanupCard: View {
-    let label: String
-    let cleanup: HUDCleanup
+private struct PastedRow: View {
+    let message: HUDMessage
+    let hasCopied: Bool
     let layout: HUDLayout
+    let copy: () -> Void
+
+    private var spokenText: String {
+        [message.title, message.detail].compactMap(\.self).joined(separator: "\n")
+    }
 
     var body: some View {
-        IslandCard(layout: layout) {
-            IslandOrb(style: .scanning, size: HUDIsland.cardOrbSize, tint: Palette.accent)
+        CompactRow(layout: layout) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(Palette.success)
+                .accessibilityHidden(true)
         } trailing: {
-            Text(cleanup.mode)
-        } content: {
-            VStack(alignment: .leading, spacing: HUDIsland.textSpacing) {
-                Text(cleanup.transcript)
-                    .font(Font(HUDIsland.titleFont))
-                    .foregroundStyle(.tertiary)
-                    .lineLimit(3)
-                    .contentDirection(of: cleanup.transcript)
-
-                Text(label)
-                    .font(Font(HUDIsland.footnoteFont))
-                    .foregroundStyle(.secondary)
-            }
-            .frame(
-                width: TextWidth.fitting([(cleanup.transcript, HUDIsland.titleFont), (label, HUDIsland.footnoteFont)]),
-                alignment: .leading,
-            )
-            .fixedSize(horizontal: false, vertical: true)
+            PastedStatus(message: message, hasCopied: hasCopied)
         }
         .accessibilityElement(children: .combine)
+        .accessibilityValue(spokenText)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction(.default, copy)
+        .accessibilityAction(named: "Copy", copy)
     }
 }
 
 private struct MessageCard: View {
     private static let longTitleLength = 140
+    private static let textSpacing: CGFloat = 4
+    private static let titleFont = NSFont.systemFont(ofSize: 14, weight: .medium)
+    private static let detailFont = NSFont.systemFont(ofSize: 12)
 
     let message: HUDMessage
     let hasCopied: Bool
@@ -154,18 +137,11 @@ private struct MessageCard: View {
         message.title.count > Self.longTitleLength
     }
 
-    private var footer: LocalizedStringKey? {
-        guard message.isCopyable else { return nil }
-        guard !hasCopied else { return "Copied" }
-
-        return isLong ? "Click to copy all" : "Click to copy"
-    }
-
     private var measuredLines: [(String, NSFont)] {
-        var lines = [(message.title, HUDIsland.titleFont)]
+        var lines = [(message.title, Self.titleFont)]
 
         if let detail = message.detail {
-            lines.append((detail, HUDIsland.detailFont))
+            lines.append((detail, Self.detailFont))
         }
 
         return lines
@@ -206,44 +182,49 @@ private struct MessageCard: View {
     }
 
     private var card: some View {
-        IslandCard(layout: layout) {
-            symbol
-        } trailing: {
-            EmptyView()
-        } content: {
-            VStack(alignment: .leading, spacing: HUDIsland.textSpacing) {
+        VStack(alignment: .leading, spacing: 0) {
+            IslandRow(gap: layout.gap) {
+                symbol
+                    .padding(.leading, HUDIsland.cardInset)
+
+                action
+                    .padding(.trailing, HUDIsland.cardInset)
+            }
+            .font(.hudSymbol)
+            .frame(height: layout.topHeight)
+
+            VStack(alignment: .leading, spacing: Self.textSpacing) {
                 Text(message.title)
-                    .font(Font(HUDIsland.titleFont))
+                    .font(Font(Self.titleFont))
                     .lineLimit(3)
                     .mask(fade)
                     .contentDirection(of: message.title)
 
                 if let detail = message.detail {
                     Text(detail)
-                        .font(Font(HUDIsland.detailFont))
+                        .font(Font(Self.detailFont))
                         .foregroundStyle(detailStyle)
                         .lineLimit(3)
-                }
-
-                if let footer {
-                    Text(footer)
-                        .font(Font(HUDIsland.footnoteFont))
-                        .foregroundStyle(.secondary)
                 }
             }
             .frame(width: TextWidth.fitting(measuredLines), alignment: .leading)
             .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, HUDIsland.cardInset)
+            .padding(.bottom, HUDIsland.bottomInset)
         }
+        .foregroundStyle(.white)
     }
 
     @ViewBuilder
     private var symbol: some View {
         switch message.kind {
         case .pasted:
-            IslandOrb(style: .still, size: HUDIsland.cardOrbSize, tint: Palette.success)
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(Palette.success)
+                .accessibilityHidden(true)
 
         case .copied:
-            Image(systemName: "doc.on.clipboard")
+            Image(systemName: "doc.on.clipboard.fill")
                 .accessibilityHidden(true)
 
         case .information:
@@ -254,6 +235,27 @@ private struct MessageCard: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundStyle(Palette.warning)
                 .accessibilityHidden(true)
+        }
+    }
+
+    @ViewBuilder
+    private var action: some View {
+        switch message.kind {
+        case .pasted:
+            ZStack(alignment: .trailing) {
+                PastedStatus(message: message, hasCopied: hasCopied)
+                    .hidden()
+
+                Image(systemName: hasCopied ? "checkmark" : "doc.on.doc")
+                    .foregroundStyle(hasCopied ? Palette.success : .white)
+            }
+            .accessibilityHidden(true)
+
+        case .copied:
+            PasteKeys()
+
+        case .information, .warning:
+            EmptyView()
         }
     }
 }

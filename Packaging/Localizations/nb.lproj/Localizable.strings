@@ -71,8 +71,7 @@
 "Clean and Formal" = "«Ryddig» og «Formell»";
 "Clean" = "Ryddig";
 "Clean, Formal, and Translate need an AI model." = "«Ryddig», «Formell» og «Oversetting» krever en KI-modell.";
-"Cleaning up on this Mac…" = "Rydder opp på denne Macen…";
-"Cleaning up with %@…" = "Rydder opp med %@…";
+"Cleaning up…" = "Rydder opp…";
 "Clear History" = "Tøm logg";
 "Clear History…" = "Tøm logg…";
 "Clear the dictation history?" = "Vil du tømme dikteringsloggen?";
@@ -80,8 +79,6 @@
 "Clear" = "Tøm";
 "Click the box, hold %@, and say “Hello, Waft”." = "Klikk i feltet, hold nede %@ og si «Hei, Waft».";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Klikk i feltet, trykk på %@, si «Hei, Waft» og trykk på den igjen.";
-"Click to copy all" = "Klikk for å kopiere alt";
-"Click to copy" = "Klikk for å kopiere";
 "Click to copy, or select a part" = "Klikk for å kopiere, eller merk en del";
 "Click, then press the key to use" = "Klikk, og trykk deretter på tasten du vil bruke";
 "Click, then press the shortcut to use" = "Klikk, og trykk deretter på snarveien du vil bruke";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Redigering med stemmen er en del av Waft+.";
 "Editing by voice" = "Redigering med stemmen";
 "Editing key" = "Redigeringstast";
-"Editing on this Mac…" = "Redigerer på denne Macen…";
-"Editing with %@…" = "Redigerer med %@…";
+"Editing…" = "Redigerer…";
 "Exactly what was heard." = "Nøyaktig det som ble oppfattet.";
 "Fast" = "Rask";
 "File transcription is part of Waft+" = "Avskrift av filer er en del av Waft+";
@@ -226,6 +222,7 @@
 "Output" = "Innliming";
 "Overview" = "Oversikt";
 "Paste into the focused field" = "Lim inn i det aktive feltet";
+"Pasted" = "Limt inn";
 "Permissions" = "Tillatelser";
 "Phrase to say" = "Frase du sier";
 "Play sounds" = "Spill lyder";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Oversetter i eget vindu, og oversetter eller korrigerer markert tekst i alle apper.";
 "Translates what you said into another language." = "Oversetter det du sa, til et annet språk.";
 "Translating and fixing text is part of Waft+." = "Oversetting og korrigering av tekst er en del av Waft+.";
-"Translating into %@…" = "Oversetter til %@…";
 "Translating…" = "Oversetter…";
 "Translation" = "Oversetting";
 "Translator (Waft+)…" = "Oversetter (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Når talemodellen er klar, klikker du i feltet, holder nede %@ og sier «Hei, Waft».";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Når talemodellen er klar, klikker du i feltet, trykker på %@, sier «Hei, Waft» og trykker på den igjen.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper kjører på denne Macen, så lyden forlater den aldri.";
+"Without AI" = "Uten KI";
 "Words dictated each day for the last %lld days" = "Dikterte ord per dag de siste %lld dagene";
 "Words" = "Ord";
 "Write instructions once and dictate in your own style." = "Skriv instruksjoner én gang og dikter i din egen stil.";

@@ -9,6 +9,10 @@ final class DictationQueue {
         String(localized: "Transcribing…")
     }
 
+    private static var editingLabel: String {
+        String(localized: "Editing…")
+    }
+
     private var recentTranscripts = RecentTranscripts()
 
     @ObservationIgnored private var pendingCount = 0
@@ -54,20 +58,10 @@ final class DictationQueue {
         }
     }
 
-    private static func editingLabel(for provider: ModelProvider) -> String {
-        guard provider.isCloud else { return String(localized: "Editing on this Mac…") }
+    private static func workingLabel(for mode: Mode) -> String {
+        guard mode == .translate else { return String(localized: "Cleaning up…") }
 
-        return String(localized: "Editing with \(provider.title)…")
-    }
-
-    private static func workingLabel(for job: DictationJob, spoken: Language) -> String {
-        if job.mode == .translate {
-            return String(localized: "Translating into \(job.setup.translation.target(forSpoken: spoken).inlineName)…")
-        }
-
-        guard job.setup.provider.isCloud else { return String(localized: "Cleaning up on this Mac…") }
-
-        return String(localized: "Cleaning up with \(job.setup.provider.title)…")
+        return String(localized: "Translating…")
     }
 
     private static func describe(_ fallback: RewriteFallback?) -> String {
@@ -126,10 +120,7 @@ final class DictationQueue {
         }
 
         if job.mode.usesAI, job.allowsAI {
-            hud.setWorking(
-                Self.workingLabel(for: job, spoken: transcript.language),
-                cleanup: HUDCleanup(mode: job.modeTitle, transcript: transcript.text),
-            )
+            hud.setWorking(Self.workingLabel(for: job.mode))
         }
 
         let processed = await processor.process(
@@ -146,16 +137,14 @@ final class DictationQueue {
     }
 
     private func edit(_ selection: String, following transcript: Transcript, for job: DictationJob) async -> DictationOutcome {
-        let provider = job.setup.provider
-
-        hud.setWorking(Self.editingLabel(for: provider))
+        hud.setWorking(Self.editingLabel)
 
         do throws(RewriteError) {
             let edited = try await processor.edit(selection, following: transcript, setup: job.setup)
 
             return await deliver(ProcessedText(text: edited, mode: job.mode), for: job)
         } catch {
-            return .editFailed(RewriteFallback(error).reason(for: provider).sentenceCased())
+            return .editFailed(RewriteFallback(error).reason(for: job.setup.provider).sentenceCased())
         }
     }
 

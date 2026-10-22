@@ -71,8 +71,7 @@
 "Clean and Formal" = "המצבים ״נקי״ ו״רשמי״";
 "Clean" = "נקי";
 "Clean, Formal, and Translate need an AI model." = "המצבים ״נקי״, ״רשמי״ ו״תרגום״ דורשים מודל בינה מלאכותית.";
-"Cleaning up on this Mac…" = "מעבד את המלל ב-Mac זה…";
-"Cleaning up with %@…" = "מעבד את המלל באמצעות %@…";
+"Cleaning up…" = "מעבד את המלל…";
 "Clear History" = "ניקוי ההיסטוריה";
 "Clear History…" = "ניקוי ההיסטוריה…";
 "Clear the dictation history?" = "לנקות את היסטוריית ההכתבות?";
@@ -80,8 +79,6 @@
 "Clear" = "ניקוי";
 "Click the box, hold %@, and say “Hello, Waft”." = "יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
-"Click to copy all" = "לחיצה להעתקת הכול";
-"Click to copy" = "לחיצה להעתקה";
 "Click to copy, or select a part" = "לחיצה להעתקה, או בחירת חלק";
 "Click, then press the key to use" = "יש ללחוץ כאן ואז על המקש הרצוי";
 "Click, then press the shortcut to use" = "יש ללחוץ כאן ואז על הקיצור הרצוי";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "עריכה קולית כלולה ב-Waft+‎.";
 "Editing by voice" = "עריכה קולית";
 "Editing key" = "מקש עריכה";
-"Editing on this Mac…" = "עורך ב-Mac זה…";
-"Editing with %@…" = "עורך באמצעות %@…";
+"Editing…" = "עורך…";
 "Exactly what was heard." = "בדיוק מה שנשמע.";
 "Fast" = "מהיר";
 "File transcription is part of Waft+" = "תמלול קבצים כלול ב-Waft+‎";
@@ -226,6 +222,7 @@
 "Output" = "פלט";
 "Overview" = "סקירה";
 "Paste into the focused field" = "הדבקה בשדה הפעיל";
+"Pasted" = "הודבק";
 "Permissions" = "הרשאות";
 "Phrase to say" = "ביטוי שנאמר";
 "Play sounds" = "השמעת צלילים";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "מתרגם בחלון משלו, ומתרגם או מתקן מלל שנבחר בכל יישום.";
 "Translates what you said into another language." = "מתרגם את מה שנאמר לשפה אחרת.";
 "Translating and fixing text is part of Waft+." = "תרגום ותיקון מלל כלולים ב-Waft+‎.";
-"Translating into %@…" = "מתרגם ל%@…";
 "Translating…" = "מתרגם…";
 "Translation" = "תרגום";
 "Translator (Waft+)…" = "מתרגם (Waft+‎)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, ללחוץ על %@, לומר ״שלום, Waft״ וללחוץ עליו שוב.";
 "Whisper runs on this Mac, so audio never leaves it." = "המודל Whisper פועל ב-Mac זה, כך שהשמע אף פעם לא יוצא ממנו.";
+"Without AI" = "ללא בינה מלאכותית";
 "Words dictated each day for the last %lld days" = "מילים שהוכתבו בכל יום ב-%lld הימים האחרונים";
 "Words" = "מילים";
 "Write instructions once and dictate in your own style." = "די לכתוב הוראות פעם אחת כדי להכתיב בסגנון שלך.";

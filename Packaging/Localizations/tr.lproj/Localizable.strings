@@ -71,8 +71,7 @@
 "Clean and Formal" = "“Temiz” ve “Resmî”";
 "Clean" = "Temiz";
 "Clean, Formal, and Translate need an AI model." = "“Temiz”, “Resmî” ve “Çeviri” için YZ modeli gerekir.";
-"Cleaning up on this Mac…" = "Bu Mac’te düzeltiliyor…";
-"Cleaning up with %@…" = "%@ ile düzeltiliyor…";
+"Cleaning up…" = "Düzeltiliyor…";
 "Clear History" = "Geçmişi Sil";
 "Clear History…" = "Geçmişi Sil…";
 "Clear the dictation history?" = "Dikte geçmişi silinsin mi?";
@@ -80,8 +79,6 @@
 "Clear" = "Temizle";
 "Click the box, hold %@, and say “Hello, Waft”." = "Kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
-"Click to copy all" = "Tümünü kopyalamak için tıklayın";
-"Click to copy" = "Kopyalamak için tıklayın";
 "Click to copy, or select a part" = "Kopyalamak için tıklayın veya bir bölüm seçin";
 "Click, then press the key to use" = "Tıklayın, ardından kullanılacak tuşa basın";
 "Click, then press the shortcut to use" = "Tıklayın, ardından kullanılacak kısayola basın";
@@ -124,8 +121,7 @@
 "Editing by voice is part of Waft+." = "Sesle düzenleme bir Waft+ özelliğidir.";
 "Editing by voice" = "Sesle düzenleme";
 "Editing key" = "Düzenleme tuşu";
-"Editing on this Mac…" = "Bu Mac’te düzenleniyor…";
-"Editing with %@…" = "%@ ile düzenleniyor…";
+"Editing…" = "Düzenleniyor…";
 "Exactly what was heard." = "Duyulanın aynısı.";
 "Fast" = "Hızlı";
 "File transcription is part of Waft+" = "Dosyaları yazıya çevirme bir Waft+ özelliğidir";
@@ -226,6 +222,7 @@
 "Output" = "Çıktı";
 "Overview" = "Genel Bakış";
 "Paste into the focused field" = "Etkin alana yapıştır";
+"Pasted" = "Yapıştırıldı";
 "Permissions" = "İzinler";
 "Phrase to say" = "Söylenecek ifade";
 "Play sounds" = "Sesleri çal";
@@ -392,7 +389,6 @@
 "Translates in its own window, and translates or fixes selected text in any app." = "Kendi penceresinde çevirir, seçili metni her uygulamada çevirir veya düzeltir.";
 "Translates what you said into another language." = "Söylediklerinizi başka bir dile çevirir.";
 "Translating and fixing text is part of Waft+." = "Metin çevirme ve düzeltme birer Waft+ özelliğidir.";
-"Translating into %@…" = "%@ diline çevriliyor…";
 "Translating…" = "Çevriliyor…";
 "Translation" = "Çeviri";
 "Translator (Waft+)…" = "Çevirmen (Waft+)…";
@@ -443,6 +439,7 @@
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
 "When the speech model is ready, click the box, tap %@, say “Hello, Waft”, and tap it again." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
 "Whisper runs on this Mac, so audio never leaves it." = "Whisper bu Mac’te çalışır, bu yüzden ses Mac’ten hiç çıkmaz.";
+"Without AI" = "YZ olmadan";
 "Words dictated each day for the last %lld days" = "Son %lld günde her gün dikte edilen sözcükler";
 "Words" = "Sözcük";
 "Write instructions once and dictate in your own style." = "Talimatları bir kez yazın, kendi tarzınızda dikte edin.";

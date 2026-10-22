@@ -9,9 +9,11 @@ Waft. [Getting started](getting-started.md) covers the first launch, and
 Hold the dictation key, speak, and let go. The HUD grows out of the notch, or
 drops from the top edge of a screen without one. It shows the time and a level
 meter while you speak, with a lock instead of the microphone when you dictate
-hands-free, and a dotted orb while Waft transcribes. While an AI mode cleans the
-text up, it shows the mode's name and what Whisper heard. After pasting, it
-shows the text, up to three lines; click it to copy the whole text again.
+hands-free. While Waft works, a dotted orb shows the step under it:
+"Transcribing…", then "Cleaning up…" or "Translating…" in an AI mode, or
+"Editing…" when you edit by voice. After pasting, it shows "Pasted" with a
+check mark for a few seconds; point at it to see the text, up to three lines,
+and click to copy the whole text again.
 
 - Cancel a recording with <kbd>Esc</kbd>, which still reaches the app in front,
   or by pressing another key while you hold the dictation key. Nothing is
@@ -70,9 +72,10 @@ one.
 | Translate | Translates into **Translate into** in Settings › Writing, English by default. **Two-way with** adds a second language, so with English and Russian each comes out in the other | Yes |
 | Your modes | Follow the instructions you wrote | Yes |
 
-When the AI model can't be used, Waft pastes the Light text and the HUD says
-why. [The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists
-the reasons.
+When the AI model can't be used, Waft pastes the Light text and the HUD shows
+"Without AI".
+[The AI modes use Light](troubleshooting.md#the-ai-modes-use-light) lists the
+reasons.
 
 ### Choosing the AI model
 
