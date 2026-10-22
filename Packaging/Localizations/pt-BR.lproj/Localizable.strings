@@ -419,7 +419,7 @@
 "Voice" = "Voz";
 "Waft can't read this file." = "O Waft não consegue ler este arquivo.";
 "Waft can't use the microphone. Allow it in Settings › General." = "O Waft não pode usar o microfone. Permita o acesso em Ajustes › Geral.";
-"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "O Waft não conseguiu ler o histórico salvo e guardou uma cópia dele. Limpar Histórico apaga os dois.";
+"Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "O Waft não conseguiu ler o histórico salvo e guardou uma cópia dele. “Limpar Histórico” apaga os dois.";
 "Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "O Waft a apaga das Chaves. Os modos de IA usam o modo Leve até você adicionar uma chave.";
 "Waft is listening" = "O Waft está ouvindo";
 "Waft keeps no dictations while Keep history is off." = "O Waft não guarda ditados enquanto “Manter histórico” estiver desativado.";
