@@ -7,8 +7,8 @@ struct HistorySettingsPane: View {
 
     let state: SettingsWindowState
 
-    private var emptyText: LocalizedStringKey {
-        guard history.searchText.isEmpty else { return "No matches" }
+    var emptyText: LocalizedStringKey {
+        guard history.history.entries.isEmpty else { return "No matches" }
         guard !history.hasUnreadableHistory else {
             return "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both."
         }
