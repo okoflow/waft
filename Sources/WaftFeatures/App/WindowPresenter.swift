@@ -265,17 +265,6 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 }
 
-extension NSEvent {
-    private static let escapeKeyCode: UInt16 = 53
-    private static let shortcutModifiers: NSEvent.ModifierFlags = [.command, .option, .control, .shift]
-
-    fileprivate var isPlainEscape: Bool {
-        guard keyCode == Self.escapeKeyCode else { return false }
-
-        return modifierFlags.isDisjoint(with: Self.shortcutModifiers)
-    }
-}
-
 extension NSWindow {
     fileprivate var isOpen: Bool {
         [isVisible, isMiniaturized].contains(true)

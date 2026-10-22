@@ -9,8 +9,6 @@ final class ShortcutRecorder {
         case taken(ShortcutConflict)
     }
 
-    private static let escapeKeyCode: UInt16 = 53
-
     private static let modifierFlags: [(NSEvent.ModifierFlags, KeyCombination.Modifiers)] = [
         (.control, .control),
         (.option, .option),
@@ -87,7 +85,7 @@ final class ShortcutRecorder {
 
     func handle(_ event: NSEvent) {
         guard let action, event.type == .keyDown else { return }
-        guard event.keyCode != Self.escapeKeyCode else {
+        guard !event.isEscape else {
             stop()
 
             return
