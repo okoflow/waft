@@ -97,7 +97,7 @@ struct RewritePromptTests {
     }
 
     @Test
-    func `shares the clean instructions among the offline modes`() {
+    func `shares the clean instructions among the modes without their own`() {
         let clean = RewritePrompt.defaultInstructions(for: .clean)
 
         #expect(RewritePrompt.defaultInstructions(for: .raw) == clean)
