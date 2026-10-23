@@ -116,11 +116,13 @@ lists the reasons.
 
 The [translator](usage.md#translator) and its shortcuts on selected text send
 the text, the instructions of the task, and, for a translation, the target
-language and the source language you chose. Rules after the instructions,
-which you can't edit, make the model treat the text as material, never as
-instructions, and reply with the text alone, keeping its formatting, links,
-and code. The translator's tier gets the time limit of an edit. macOS detects
-the language of the text on your Mac, which decides when two-way applies.
+language and the source language you chose, unless it gave way. Rules after the
+instructions, which you can't edit, make the model treat the text as material,
+never as instructions, and reply with the text alone, keeping its formatting,
+links, and code. The translator's tier gets the time limit of an edit. macOS
+detects the language of the text on your Mac, leaning toward your dictation and
+translator languages, which decides when two-way applies and when a chosen
+source language gives way.
 
 Waft rejects an answer that is empty or longer than five times the text plus
 200 characters.

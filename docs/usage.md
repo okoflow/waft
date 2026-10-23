@@ -134,19 +134,29 @@ HUD says then.
 ## Translator
 
 **Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
-in any app, opens a window with your text on the left and its translation on
-the right. Type or paste up to 5,000 characters, or dictate; the AI model
+in any app, opens a floating panel over the app you're in, with your text on
+the left and its translation on the right. It doesn't bring Waft or its other
+windows forward. Type or paste up to 5,000 characters, or dictate; the AI model
 translates half a second after you stop typing.
 
-- The left half detects the language unless you choose one. The right half
-  translates into **Translate into**, English by default, and text already in
-  that language into **Two-way with**, as Translate does. Change them in the
-  window or in Settings › Translator; they start as Translate's and stay
-  separate afterward.
+- The left half detects the language unless you choose one, leaning toward
+  your languages so that short words land right. The right half translates
+  into **Translate into**, English by default, and text already in that
+  language into **Two-way with**, as Translate does. On a new Mac they pair
+  English with your first other system language. Change **Translate into** in
+  the panel, and both in Settings › Translator.
+- A language you choose on the left gives way when the text is in one of the
+  two languages on the right, and "detected" shows next to it.
+  Without **Two-way with**, text already in **Translate into** goes into the
+  language you chose on the left.
 - A click on the translation copies all of it; select a part to copy only
-  that. The arrows between the halves swap the languages and the texts.
-- <kbd>Esc</kbd> closes the window, which keeps the text and its translation
-  for the next time you open it.
+  that. The arrows between the halves, or <kbd>⌘</kbd><kbd>⇧</kbd><kbd>S</kbd>,
+  swap the texts, make the text's language **Translate into**, and set the
+  left half to **Detect language**. **Two-way with** becomes the language the
+  text went into, unless the text is in neither language of the pair.
+- <kbd>Esc</kbd>, a click outside the panel, or switching apps or desktops
+  closes it, which keeps the text and its translation for the next time you
+  open it.
 - The arrow next to **Translation** or **Fixing** in Settings › Translator
   opens its **Instructions**, which you can rewrite and try as for a mode.
 - **Model** in Settings › Translator sets the translator's own
@@ -237,14 +247,14 @@ key uses. The minus button next to it turns it off.
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
 Waft lives in the menu bar, as the Waft W mark, and shows in the Dock only
-while one of its windows is open.
+while Settings, the setup guide, or the file transcription window is open.
 
 | Item | What it does |
 | --- | --- |
 | The first line | Says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed" |
 | Finish Setup…, Retry Speech Model, Install Update… | Appear only when needed: setup is unfinished or a permission is missing, the speech model failed, or an update is waiting |
 | Copy Last Dictation, Recent Dictations | Copy the latest text, pasted or not, within 10 minutes of the dictation, or one of your last five dictations; **Show History** opens the full list |
-| Transcribe File…, Translator… | Open the windows for [files](#transcribing-files) and [the translator](#translator) |
+| Transcribe File…, Translator… | Open [file transcription](#transcribing-files) and [the translator](#translator) |
 | Unlock Waft+… | Appears while you have no license once Waft+ is on sale |
 
 To hide the icon, turn off **Show in menu bar** in Settings › General.
@@ -290,7 +300,7 @@ license in Settings › Waft+:
 | --- | --- |
 | The AI modes | Choosing one opens Settings › Waft+, a mode chosen before falls back to Light and the HUD says so, and the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
-| The translator | The window takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
+| The translator | The panel takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
 | File transcription | The window takes no file and shows that it needs Waft+ |
 | The speech model | Waft recognizes speech with Fast |
 | The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |

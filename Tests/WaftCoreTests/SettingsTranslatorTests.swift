@@ -46,4 +46,36 @@ struct SettingsTranslatorTests {
 
         #expect(settings.translatorSetup(for: kind).instructions == "Keep it short.")
     }
+
+    @Test(arguments: [
+        (["ru-RU", "en-US"], Language?.some(.russian)),
+        (["en-GB", "de-DE"], .german),
+        (["en-US"], nil),
+    ])
+    func `pairs English with the first other system language for a new translator`(
+        localeIdentifiers: [String],
+        otherLanguage: Language?,
+    ) {
+        let settings = Settings(preferredLanguages: localeIdentifiers)
+
+        #expect(settings.translator.source == nil)
+        #expect(settings.translator.translation == Translation(target: .english, twoWayLanguage: otherLanguage))
+        #expect(settings.translation == Translation())
+    }
+
+    @Test
+    func `expects the translator's languages, then the dictation and recent ones, each once`() {
+        var settings = Settings(languages: LanguageSelection(languages: [.english, .german]))
+        settings.translator.translation = Translation(target: .english, twoWayLanguage: .russian)
+        settings.translator.remember(.french)
+        settings.translator.remember(.russian)
+
+        #expect(settings.expectedTranslatorLanguages == [.russian, .english, .german, .french])
+        #expect(settings.translatorDetectionHints == settings.expectedTranslatorLanguages)
+
+        settings.translator.source = .ukrainian
+
+        #expect(settings.expectedTranslatorLanguages.first == .ukrainian)
+        #expect(settings.translatorDetectionHints == [.ukrainian])
+    }
 }

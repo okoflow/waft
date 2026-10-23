@@ -8,12 +8,11 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private var settingsWindow: NSWindow?
     private var onboardingWindow: NSWindow?
     private var transcriptionWindow: NSWindow?
-    private var translatorWindow: NSWindow?
+    private var translatorPanel: TranslatorPanel?
     private var clickMonitor: Any?
-    private var escapeMonitor: Any?
 
-    private var allWindows: [NSWindow] {
-        [settingsWindow, onboardingWindow, transcriptionWindow, translatorWindow].compactMap(\.self)
+    private var appWindows: [NSWindow] {
+        [settingsWindow, onboardingWindow, transcriptionWindow].compactMap(\.self)
     }
 
     private var isShowingUpdate: Bool {
@@ -47,7 +46,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
             model?.transcription.cancel()
         }
 
-        if closing == translatorWindow {
+        if closing == translatorPanel {
             model?.translator.stop()
         }
 
@@ -63,9 +62,10 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     func showTranslator() {
-        model?.translator.resume()
-        show(\.translatorWindow, make: makeTranslatorWindow)
-        closeTranslatorOnEscape()
+        guard let model else { return }
+
+        model.translator.resume()
+        reusableWindow(at: \.translatorPanel) { makeTranslatorPanel(model: model) }.present()
     }
 
     func closeOnboarding() {
@@ -77,7 +77,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func needsDockIcon(closing: NSWindow?) -> Bool {
-        let otherWindows = allWindows.filter { $0 != closing }
+        let otherWindows = appWindows.filter { $0 != closing }
         guard !otherWindows.contains(where: \.isOpen) else { return true }
 
         return isShowingUpdate
@@ -96,10 +96,10 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         window.orderFrontRegardless()
     }
 
-    private func reusableWindow(
-        at keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>,
-        make: () -> NSWindow,
-    ) -> NSWindow {
+    private func reusableWindow<Window: NSWindow>(
+        at keyPath: ReferenceWritableKeyPath<WindowPresenter, Window?>,
+        make: () -> Window,
+    ) -> Window {
         if let window = self[keyPath: keyPath] {
             return window
         }
@@ -119,25 +119,6 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 
             return event
         }
-    }
-
-    private func closeTranslatorOnEscape() {
-        guard escapeMonitor == nil else { return }
-
-        escapeMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let self, let translatorWindow, closesTranslator(on: event) else { return event }
-
-            translatorWindow.performClose(nil)
-
-            return nil
-        }
-    }
-
-    private func closesTranslator(on event: NSEvent) -> Bool {
-        guard event.isPlainEscape, event.window == translatorWindow, !dictationTakes(event) else { return false }
-        guard let editor = event.window?.firstResponder as? NSTextView else { return true }
-
-        return !editor.hasMarkedText()
     }
 
     private func dictationTakes(_ escape: NSEvent) -> Bool {
@@ -180,21 +161,27 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         )
     }
 
-    private func makeTranslatorWindow(model: AppModel) -> NSWindow {
+    private func makeTranslatorPanel(model: AppModel) -> TranslatorPanel {
         let view = TranslatorView(model: model.translator) { [weak self] in
+            self?.translatorPanel?.close()
             self?.showSettings(.pro)
         }
 
-        let window = makeWindow(
-            view,
-            size: Metrics.translatorSize,
-            minimumSize: Metrics.translatorMinimumSize,
-            title: String(localized: "Translator"),
-        )
+        let panel = TranslatorPanel(content: hostingController(for: view)) { [weak self] event in
+            guard let self else { return false }
 
-        window.titleVisibility = .visible
+            return dictationTakes(event)
+        }
 
-        return window
+        panel.title = String(localized: "Translator")
+        panel.setContentSize(Metrics.translatorSize)
+        panel.contentMinSize = Metrics.translatorMinimumSize
+
+        style(panel)
+
+        panel.titleVisibility = .visible
+
+        return panel
     }
 
     private func makeOnboardingWindow(model: AppModel) -> NSWindow {
@@ -218,10 +205,7 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         title: String? = nil,
         hasToolbar: Bool = false,
     ) -> NSWindow {
-        let content = NSHostingController(rootView: view.tint(Palette.accent))
-        content.sizingOptions = []
-
-        let window = NSWindow(contentViewController: content)
+        let window = NSWindow(contentViewController: hostingController(for: view))
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
 
         if let title {
@@ -239,6 +223,13 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         style(window)
 
         return window
+    }
+
+    private func hostingController(for view: some View) -> NSViewController {
+        let content = NSHostingController(rootView: view.tint(Palette.accent))
+        content.sizingOptions = []
+
+        return content
     }
 
     private func style(_ window: NSWindow) {

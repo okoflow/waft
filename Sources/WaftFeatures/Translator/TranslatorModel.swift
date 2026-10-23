@@ -34,6 +34,7 @@ final class TranslatorModel {
         get { settings.settings.translator.source }
         set {
             settings.settings.translator.source = newValue
+            detected = nil
 
             if let newValue {
                 settings.settings.translator.remember(newValue)
@@ -54,9 +55,13 @@ final class TranslatorModel {
     }
 
     var knownSource: Language? {
-        guard let source else { return detected }
+        settings.settings.translator.knownSource(detected: detected)
+    }
 
-        return source
+    var isShowingDetected: Bool {
+        guard detected != nil else { return false }
+
+        return trustedSource == nil
     }
 
     var effectiveTarget: Language {
@@ -64,7 +69,9 @@ final class TranslatorModel {
     }
 
     var isTwoWay: Bool {
-        effectiveTarget != target
+        guard settings.settings.translator.translation.twoWayLanguage != nil else { return false }
+
+        return effectiveTarget != target
     }
 
     var recentLanguages: [Language] {
@@ -84,7 +91,24 @@ final class TranslatorModel {
     }
 
     var canSwap: Bool {
-        knownSource != nil
+        swappedTranslation != nil
+    }
+
+    private var trustedSource: Language? {
+        settings.settings.translator.trustedSource(detected: detected)
+    }
+
+    private var swappedTranslation: Translation? {
+        let translator = settings.settings.translator
+
+        guard let from = knownSource else {
+            guard let other = translator.translation.twoWayLanguage else { return nil }
+
+            return Translation(target: other, twoWayLanguage: target)
+        }
+        guard from != effectiveTarget else { return nil }
+
+        return translator.swapped(from: from)
     }
 
     init(
@@ -104,15 +128,12 @@ final class TranslatorModel {
     }
 
     func swapLanguages() {
-        guard let from = knownSource else { return }
+        guard let swappedTranslation else { return }
 
-        let into = effectiveTarget
-
-        settings.settings.translator.source = into
-
-        if settings.settings.translator.target(forSource: into) != from {
-            settings.settings.translator.translation.target = from
-        }
+        var translator = settings.settings.translator
+        translator.source = nil
+        translator.translation = swappedTranslation
+        settings.settings.translator = translator
 
         guard !output.isEmpty, translatedInput == input else {
             translateNow()
@@ -205,7 +226,7 @@ final class TranslatorModel {
             let translated = try await processor.rework(
                 text,
                 in: language,
-                as: .translate(from: source, into: into),
+                as: .translate(from: trustedSource, into: into),
                 setup: setup,
             )
 
@@ -225,8 +246,6 @@ final class TranslatorModel {
     }
 
     private func detectedLanguage(of text: String) -> Language? {
-        guard source == nil else { return nil }
-
-        return detector.language(of: text)
+        detector.language(of: text, expecting: settings.settings.translatorDetectionHints)
     }
 }

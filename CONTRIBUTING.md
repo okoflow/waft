@@ -288,7 +288,7 @@ Commits follow
 | `modes` | Raw, Light, Clean, Formal, Translate, your modes, and their instructions |
 | `models` | The AI models and their providers |
 | `edit` | Editing by voice |
-| `translator` | The translator window and the shortcuts on selected text |
+| `translator` | The translator panel and the shortcuts on selected text |
 | `files` | File transcription |
 | `dictionary` | The dictionary and snippets |
 | `history` | History and the statistics |

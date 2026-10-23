@@ -68,13 +68,15 @@ final class TryoutModel {
 
         let text = sample
 
-        let source = sourceLanguage(of: text)
-        let target = settings.settings.translator.target(forSource: source)
+        let translator = settings.settings.translator
+        let detected = detector.language(of: text, expecting: settings.settings.translatorDetectionHints)
+        let source = translator.knownSource(detected: detected)
+        let target = translator.target(forSource: source)
 
         let task: TextTask =
             switch kind {
             case .fix: .fix
-            case .translate: .translate(from: settings.settings.translator.source, into: target)
+            case .translate: .translate(from: translator.trustedSource(detected: detected), into: target)
             }
         let language =
             if let source {
@@ -114,17 +116,11 @@ final class TryoutModel {
             return forced
         }
 
-        if let detected = detector.language(of: text), selection.languages.contains(detected) {
+        if let detected = detector.language(of: text, expecting: selection.languages), selection.languages.contains(detected) {
             return detected
         }
 
         return selection.languages.first
-    }
-
-    private func sourceLanguage(of text: String) -> Language? {
-        guard let source = settings.settings.translator.source else { return detector.language(of: text) }
-
-        return source
     }
 
     private func start(_ work: @escaping () async -> Phase) {
