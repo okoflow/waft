@@ -65,7 +65,7 @@ The tables list the folders whose names don't say enough.
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of them is open or Sparkle shows an update |
 | `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
-| `HUD` | `HUDController` and the HUD window at the notch or the top of the screen |
+| `HUD` | `HUDController` and the HUD window at the notch, at the top of the screen, or below the menu bar when another app's window covers the notch |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
 | `Translator` | `TranslatorModel` behind the translator window; `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |

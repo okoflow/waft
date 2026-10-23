@@ -89,7 +89,7 @@ private struct WorkingCard: View {
         }
         .motion(Motion.islandContent, value: label)
         .frame(width: layout.spanWidth)
-        .padding(.top, layout.topHeight)
+        .padding(.top, layout.isFloating ? HUDIsland.bottomInset : layout.topHeight)
         .padding(.bottom, HUDIsland.bottomInset)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label)

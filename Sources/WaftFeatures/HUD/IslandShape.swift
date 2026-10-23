@@ -4,6 +4,7 @@ nonisolated struct IslandShape: Shape {
     static let ear: CGFloat = 6
 
     var radius: CGFloat
+    var isFloating = false
 
     var animatableData: CGFloat {
         get { radius }
@@ -11,6 +12,10 @@ nonisolated struct IslandShape: Shape {
     }
 
     func path(in rect: CGRect) -> Path {
+        guard !isFloating else {
+            return Path(roundedRect: rect, cornerRadius: min(radius, rect.height / 2), style: .continuous)
+        }
+
         let ear = min(Self.ear, rect.height)
 
         let corner = max(0, min(radius, rect.height - ear))
