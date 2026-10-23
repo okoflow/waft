@@ -1,0 +1,6 @@
+[files]
+extend-exclude = ["Cargo.lock", "bun.lock"]
+ignore-hidden = false
+
+[default]
+locale = "en-us"

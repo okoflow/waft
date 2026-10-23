@@ -1,0 +1,7 @@
+:root {
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+}
+
+:root[data-platform="windows"] {
+  --font-system: "Segoe UI Variable Text", "Segoe UI", sans-serif;
+}

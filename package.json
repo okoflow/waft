@@ -1,0 +1,22 @@
+{
+  "$schema": "https://www.schemastore.org/package.json",
+  "name": "waft",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "ui"
+  ],
+  "scripts": {
+    "build": "tauri build",
+    "check": "ultracite check && typos && tombi format --check && tombi lint && bun run --filter @waft/ui check && cargo fmt --all --check && CARGO_BUILD_WARNINGS=deny cargo clippy --workspace --all-targets --locked && cargo nextest run --workspace --locked && cargo deny check && cargo shear",
+    "dev": "tauri dev --config app/src-tauri/tauri.dev.conf.json",
+    "fix": "ultracite fix && tombi format && cargo fmt --all",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@tauri-apps/cli": "2.12.4",
+    "ultracite": "8.0.2"
+  },
+  "packageManager": "bun@1.4.4"
+}
