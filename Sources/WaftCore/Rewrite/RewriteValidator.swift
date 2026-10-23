@@ -68,7 +68,8 @@ enum RewriteValidator {
     }
 
     private static func isWrapped(_ text: String, in wrapper: Wrapper) -> Bool {
-        guard text.hasPrefix(wrapper.open), text.hasSuffix(wrapper.close),
+        guard text.hasPrefix(wrapper.open),
+              text.hasSuffix(wrapper.close),
               text.count >= wrapper.open.count + wrapper.close.count else {
             return false
         }

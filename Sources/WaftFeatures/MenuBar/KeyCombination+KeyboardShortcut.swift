@@ -55,7 +55,9 @@ extension KeyCombination {
             return KeyEquivalent(Character(scalar))
         }
 
-        guard let text = layout.character(forKeyCode: keyCode), text.count == 1, let character = text.first,
+        guard let text = layout.character(forKeyCode: keyCode),
+              text.count == 1,
+              let character = text.first,
               Self.isPrintable(character) else { return nil }
 
         return KeyEquivalent(character)

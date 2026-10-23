@@ -20,7 +20,8 @@ package struct RecordingTriggers: Sendable {
 
     package mutating func handle(_ keyEvent: KeyEvent, settings: Settings) -> [RecordingTrigger] {
         RecordingPurpose.allCases.compactMap { purpose in
-            guard let key = Self.key(for: purpose, in: settings), let event = key.event(for: keyEvent),
+            guard let key = Self.key(for: purpose, in: settings),
+                  let event = key.event(for: keyEvent),
                   let action = handle(event, for: purpose, at: keyEvent.timestamp, settings: settings)
             else { return nil }
 

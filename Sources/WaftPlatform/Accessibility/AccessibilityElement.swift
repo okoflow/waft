@@ -75,8 +75,11 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
             return .same
         }
 
-        guard let role = string(kAXRoleAttribute), role == other.string(kAXRoleAttribute),
-              let window, let otherWindow = other.window, CFEqual(window, otherWindow)
+        guard let role = string(kAXRoleAttribute),
+              role == other.string(kAXRoleAttribute),
+              let window,
+              let otherWindow = other.window,
+              CFEqual(window, otherWindow)
         else { return .different }
 
         return .same

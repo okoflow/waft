@@ -147,10 +147,9 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func releaseFocus(for event: NSEvent) {
-        guard let window = event.window, [settingsWindow, onboardingWindow].contains(window),
-              window.firstResponder is NSText,
-              let hit = window.contentView?.hitTest(event.locationInWindow), !hit.isTextInput
-        else { return }
+        guard let window = event.window,
+              [settingsWindow, onboardingWindow].contains(window),
+              window.clickLeavesEditedText(at: event.locationInWindow) else { return }
 
         window.makeFirstResponder(nil)
     }
@@ -268,6 +267,12 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 extension NSWindow {
     fileprivate var isOpen: Bool {
         [isVisible, isMiniaturized].contains(true)
+    }
+
+    fileprivate func clickLeavesEditedText(at location: NSPoint) -> Bool {
+        guard firstResponder is NSText, let hit = contentView?.hitTest(location) else { return false }
+
+        return !hit.isTextInput
     }
 }
 
