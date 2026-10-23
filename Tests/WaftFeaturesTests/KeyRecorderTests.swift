@@ -30,7 +30,7 @@ struct KeyRecorderTests {
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
 
-        #expect(recorder.rejection == KeyRecorder.Rejection(purpose: .edit, isTaken: false))
+        #expect(recorder.rejection == .typesText)
         #expect(recorder.rejections == [.edit: 2])
         #expect(recorder.isRecording(.edit))
     }
@@ -41,7 +41,7 @@ struct KeyRecorderTests {
 
         try recorder.handle(event(.keyDown, keyCode: Self.functionKey))
 
-        #expect(recorder.rejection == KeyRecorder.Rejection(purpose: .edit, isTaken: true))
+        #expect(recorder.rejection == .taken)
         #expect(recorder.isRecording(.edit))
     }
 

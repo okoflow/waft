@@ -4,5 +4,5 @@ package protocol FocusedElement: Sendable {
     var selectedText: String? { get }
     var hasEmptySelection: Bool { get }
 
-    func compare(with other: any FocusedElement) -> FocusComparison
+    func isDifferent(from other: any FocusedElement) -> Bool
 }

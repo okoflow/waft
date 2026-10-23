@@ -33,7 +33,7 @@ struct TranscriptProcessorWritingSystemTests {
         answer: String,
         expected: String,
     ) async {
-        var settings = Settings(languages: .preferred(by: []))
+        var settings = Settings.defaults
         settings.translation = Translation(target: target)
         settings.writingVariants = variants
 

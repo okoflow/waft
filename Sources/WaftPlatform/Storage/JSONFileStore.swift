@@ -23,7 +23,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         do {
             try FileManager.default.removeItem(at: file)
         } catch {
-            Logger.storage.error("Couldn't remove a temporary file", cause: error)
+            Logger.storage.error("Couldn't remove a temporary file: \(error.logDescription, privacy: .public)")
         }
     }
 
@@ -80,14 +80,14 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     private func restrictToOwner() {
         guard chmod(url.path, 0o600) != 0 else { return }
 
-        Logger.storage.error("Couldn't restrict a file to its owner", cause: Self.lastPOSIXError())
+        Logger.storage.error("Couldn't restrict a file to its owner: \(Self.lastPOSIXError().logDescription, privacy: .public)")
     }
 
     private func keepUnreadableCopy(of data: Data) {
         do {
             try write(data, to: unreadableCopy)
         } catch {
-            Logger.storage.error("Couldn't keep a copy of an unreadable file", cause: error)
+            Logger.storage.error("Couldn't keep a copy of an unreadable file: \(error.logDescription, privacy: .public)")
         }
     }
 

@@ -121,7 +121,7 @@ package actor AudioEngineRecorder: AudioRecorder {
             NotificationCenter.default.removeObserver(observer)
             engine.inputNode.removeTap(onBus: 0)
 
-            Logger.audio.error("The audio engine didn't start", cause: error)
+            Logger.audio.error("The audio engine didn't start: \(error.logDescription, privacy: .public)")
 
             throw .engineDidNotStart
         }

@@ -14,13 +14,6 @@ struct DictationSettingsPane: View {
         settings.settings.languages
     }
 
-    private var pinnedLanguage: Binding<Language?> {
-        Binding(
-            get: { selection.pinned },
-            set: { settings.settings.languages = selection.pinning($0) },
-        )
-    }
-
     private var spokenLanguageNote: LocalizedStringKey? {
         let alike = Language.soundAlike(among: selection.languages)
         guard !alike.isEmpty else { return nil }
@@ -52,12 +45,6 @@ struct DictationSettingsPane: View {
         }
 
         return microphone.name
-    }
-
-    private var pinnedTitle: String {
-        guard let pinned = selection.pinned else { return String(localized: "Automatic") }
-
-        return pinned.displayName
     }
 
     private var addableLanguages: [Language] {
@@ -104,8 +91,8 @@ struct DictationSettingsPane: View {
 
             PickerRow(
                 "Spoken language",
-                selection: pinnedLanguage,
-                current: pinnedTitle,
+                selection: settings.pinnedLanguage,
+                current: settings.pinnedLanguageTitle,
                 description: spokenLanguageNote,
             ) {
                 Text("Automatic").tag(Language?.none)

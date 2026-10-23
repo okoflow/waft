@@ -4,9 +4,9 @@ import WaftCore
 
 @Observable
 final class KeyRecorder {
-    struct Rejection: Equatable {
-        let purpose: RecordingPurpose
-        let isTaken: Bool
+    enum Rejection: Equatable {
+        case typesText
+        case taken
     }
 
     private(set) var purpose: RecordingPurpose?
@@ -62,14 +62,14 @@ final class KeyRecorder {
 
         guard let key = PushToTalkKey(keyCode: Int64(event.keyCode)) else {
             if isKeyDown {
-                reject(for: purpose, isTaken: false)
+                reject(.typesText, for: purpose)
             }
 
             return
         }
         guard isPress(of: key, in: event) else { return }
         guard key != takenKey else {
-            reject(for: purpose, isTaken: true)
+            reject(.taken, for: purpose)
 
             return
         }
@@ -84,8 +84,8 @@ final class KeyRecorder {
         return key.isHeld(in: UInt64(event.modifierFlags.rawValue))
     }
 
-    private func reject(for purpose: RecordingPurpose, isTaken: Bool) {
-        rejection = Rejection(purpose: purpose, isTaken: isTaken)
+    private func reject(_ rejection: Rejection, for purpose: RecordingPurpose) {
+        self.rejection = rejection
         rejections[purpose, default: 0] += 1
     }
 }

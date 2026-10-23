@@ -16,7 +16,7 @@ package final class SystemAppLifecycle: AppLifecycle {
         do {
             try waiter.run()
         } catch {
-            Logger.system.error("Couldn't relaunch", cause: error)
+            Logger.system.error("Couldn't relaunch: \(error.logDescription, privacy: .public)")
 
             return
         }

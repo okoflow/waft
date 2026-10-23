@@ -11,16 +11,16 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
         combinations = [:]
 
         for action in ShortcutAction.allCases {
-            combinations[action] = Self.decode(action, in: container)
+            combinations[action] = try Self.decode(action, in: container)
         }
     }
 
     private static func decode(
         _ action: ShortcutAction,
         in container: KeyedDecodingContainer<ShortcutAction>,
-    ) -> KeyCombination? {
-        let isCleared = try? container.decodeNil(forKey: action)
-        guard isCleared != true else { return nil }
+    ) throws -> KeyCombination? {
+        guard container.contains(action) else { return action.defaultCombination }
+        guard try !container.decodeNil(forKey: action) else { return nil }
 
         return container.decode(action, default: action.defaultCombination)
     }

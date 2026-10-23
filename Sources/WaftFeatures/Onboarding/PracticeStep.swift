@@ -2,7 +2,6 @@ import SwiftUI
 import WaftCore
 
 struct PracticeStep: View {
-    @Bindable private var onboarding: OnboardingModel
     @FocusState private var isTyping: Bool
 
     let model: AppModel
@@ -29,22 +28,17 @@ struct PracticeStep: View {
         return String(localized: "Speech model ready")
     }
 
-    init(model: AppModel) {
-        self.model = model
-        onboarding = model.onboarding
-    }
-
     var body: some View {
         OnboardingStep(title: "Try it", message: message) {
             IconTile(symbolName: "text.cursor", tint: .purple, size: Metrics.heroTileSize)
         } content: {
             VStack(spacing: Metrics.groupSpacing) {
-                TextField("Your words appear here", text: $onboarding.practiceText, axis: .vertical)
+                TextField("Your words appear here", text: Bindable(model.onboarding).practiceText, axis: .vertical)
                     .textFieldStyle(.plain)
                     .font(.practice)
                     .lineLimit(4, reservesSpace: true)
                     .focused($isTyping)
-                    .contentDirection(of: onboarding.practiceText)
+                    .contentDirection(of: model.onboarding.practiceText)
                     .padding(14)
                     .modifier(FieldChrome(isFocused: isTyping, cornerRadius: Metrics.cardRadius))
 

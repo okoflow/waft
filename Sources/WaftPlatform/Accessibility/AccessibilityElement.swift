@@ -68,11 +68,11 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
         return unsafeDowncast(value, to: AXUIElement.self)
     }
 
-    func compare(with other: any FocusedElement) -> FocusComparison {
-        guard let other = other as? AccessibilityElement else { return .unknown }
+    func isDifferent(from other: any FocusedElement) -> Bool {
+        guard let other = other as? AccessibilityElement else { return false }
 
         if CFEqual(element, other.element) {
-            return .same
+            return false
         }
 
         guard let role = string(kAXRoleAttribute),
@@ -80,9 +80,9 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
               let window,
               let otherWindow = other.window,
               CFEqual(window, otherWindow)
-        else { return .different }
+        else { return true }
 
-        return .same
+        return false
     }
 
     private func string(_ name: String) -> String? {
