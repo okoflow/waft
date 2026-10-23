@@ -42,13 +42,14 @@ struct HUDView: View {
     private var island: some View {
         let size = layout.contentSize
         let animation = hud.content == nil ? Motion.islandClose : Motion.islandOpen
-        let shape = IslandShape(radius: radius)
+        let shape = IslandShape(radius: radius, isFloating: layout.isFloating)
+        let ears = layout.isFloating ? 0 : 2 * IslandShape.ear
         let content = HUDIsland(content: hud.content, hud: hud, layout: layout)
 
         return ZStack(alignment: .top) {
             shape
                 .fill(.black)
-                .frame(width: size.width + 2 * IslandShape.ear, height: size.height)
+                .frame(width: size.width + ears, height: size.height)
 
             content
                 .fixedSize()

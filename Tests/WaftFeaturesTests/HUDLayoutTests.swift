@@ -25,4 +25,22 @@ struct HUDLayoutTests {
         #expect(layout.topHeight == 32)
         #expect(layout.contentSize == CGSize(width: 2 * HUDLayout.wing, height: 0))
     }
+
+    @Test
+    func `floats below the menu bar with the row height and no notch`() {
+        let layout = HUDLayout()
+
+        layout.place(around: CGSize(width: 185, height: 38))
+        layout.placeBelowMenuBar()
+
+        #expect(layout.isFloating)
+        #expect(!layout.hasNotch)
+        #expect(layout.topHeight == 32)
+        #expect(layout.contentSize == CGSize(width: 2 * HUDLayout.wing, height: 0))
+
+        layout.place(around: CGSize(width: 185, height: 38))
+
+        #expect(!layout.isFloating)
+        #expect(layout.contentSize == CGSize(width: 185, height: 38))
+    }
 }

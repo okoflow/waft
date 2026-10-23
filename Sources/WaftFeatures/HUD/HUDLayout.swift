@@ -10,6 +10,7 @@ final class HUDLayout {
     private(set) var gap: CGFloat = 0
     private(set) var topHeight = rowHeight
     private(set) var hasNotch = false
+    private(set) var isFloating = false
     var contentSize = CGSize.zero
 
     @ObservationIgnored var islandFrame: CGRect?
@@ -27,6 +28,16 @@ final class HUDLayout {
     }
 
     func place(around notch: CGSize?) {
+        isFloating = false
+        arrange(around: notch)
+    }
+
+    func placeBelowMenuBar() {
+        isFloating = true
+        arrange(around: nil)
+    }
+
+    private func arrange(around notch: CGSize?) {
         hasNotch = notch != nil
         gap = 0
         topHeight = Self.rowHeight
@@ -35,8 +46,6 @@ final class HUDLayout {
             gap = notch.width
             topHeight = max(Self.rowHeight, notch.height)
         }
-
-        guard contentSize == .zero else { return }
 
         contentSize = CGSize(width: restWidth, height: restHeight)
     }

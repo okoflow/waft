@@ -4,6 +4,7 @@ import SwiftUI
 final class HUDPanel: NSPanel, HUDWindow {
     private static let canvasSize = CGSize(width: 640, height: 280)
     private static let trackingInterval: TimeInterval = 1.0 / 30
+    private static let menuBarGap: CGFloat = 8
 
     private static var screenUnderMouse: NSScreen? {
         let mouse = NSEvent.mouseLocation
@@ -64,11 +65,59 @@ final class HUDPanel: NSPanel, HUDWindow {
         return CGSize(width: right.minX - left.maxX, height: screen.safeAreaInsets.top)
     }
 
+    private static func quartzFrame(of screen: NSScreen) -> CGRect {
+        guard let primary = NSScreen.screens.first else { return screen.frame }
+
+        return CGRect(
+            x: screen.frame.minX,
+            y: primary.frame.height - screen.frame.maxY,
+            width: screen.frame.width,
+            height: screen.frame.height,
+        )
+    }
+
+    private static func restArea(on screen: CGRect, notch: CGSize?) -> CGRect {
+        var size = CGSize(width: 2 * HUDLayout.wing, height: NSStatusBar.system.thickness)
+
+        if let notch {
+            size = notch
+        }
+
+        return CGRect(x: screen.midX - size.width / 2, y: screen.minY, width: size.width, height: size.height)
+    }
+
+    private static func menuBarHeight(of screen: NSScreen) -> CGFloat {
+        max(screen.safeAreaInsets.top, screen.frame.maxY - screen.visibleFrame.maxY, NSStatusBar.system.thickness)
+    }
+
+    private static func level(above coveringLevel: Int) -> NSWindow.Level {
+        NSWindow.Level(rawValue: max(NSWindow.Level.statusBar.rawValue, coveringLevel + 1))
+    }
+
     func showOnActiveScreen() {
         guard let screen = Self.screenUnderMouse else { return }
 
-        layout.place(around: Self.notch(of: screen))
-        setFrameOrigin(NSPoint(x: screen.frame.midX - frame.width / 2, y: screen.frame.maxY - frame.height))
+        let notch = Self.notch(of: screen)
+        let quartzFrame = Self.quartzFrame(of: screen)
+
+        let coveringLevel = ForeignWindow.coveringLevel(
+            of: Self.restArea(on: quartzFrame, notch: notch),
+            on: quartzFrame,
+            among: ForeignWindow.onScreen(),
+        )
+
+        var top = screen.frame.maxY
+
+        if let coveringLevel {
+            level = Self.level(above: coveringLevel)
+            layout.placeBelowMenuBar()
+            top -= Self.menuBarHeight(of: screen) + Self.menuBarGap
+        } else {
+            level = .statusBar
+            layout.place(around: notch)
+        }
+
+        setFrameOrigin(NSPoint(x: screen.frame.midX - frame.width / 2, y: top - frame.height))
         orderFrontRegardless()
         startTracking()
     }
