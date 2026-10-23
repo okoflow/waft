@@ -7,7 +7,7 @@ package final class AccessibilityFocusTracker: FocusTracker {
     package init() {}
 
     package func currentFocus() -> FocusTarget {
-        let app = NSWorkspace.shared.frontmostApplication
+        let app = NSApp.keyWindow == nil ? NSWorkspace.shared.frontmostApplication : NSRunningApplication.current
         let element = AXIsProcessTrusted() ? AccessibilityElement.focusedElement() : nil
 
         return FocusTarget(processID: app?.processIdentifier, bundleIdentifier: app?.bundleIdentifier, element: element)
