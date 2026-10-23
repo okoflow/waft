@@ -1,7 +1,7 @@
 import Foundation
 
 extension Error {
-    var logDescription: String {
+    package var logDescription: String {
         let cause = self as NSError
 
         return "\(cause.domain) \(cause.code)"

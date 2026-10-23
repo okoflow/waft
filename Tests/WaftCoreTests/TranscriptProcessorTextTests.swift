@@ -28,7 +28,7 @@ struct TranscriptProcessorTextTests {
         answer: String,
         expected: String,
     ) async throws {
-        var settings = Settings(languages: .preferred(by: []))
+        var settings = Settings.defaults
         settings.writingVariants = WritingVariants([.serbian: .cyrillic])
         let processor = TranscriptProcessor.answering(.success(answer), log: RewriteLog())
 

@@ -112,7 +112,7 @@ final class AudioSampleSink: @unchecked Sendable {
 
         if let error {
             logFirstFailure {
-                Logger.audio.error("Couldn't convert audio: \(error.domain, privacy: .public) \(error.code, privacy: .public)")
+                Logger.audio.error("Couldn't convert audio: \(error.logDescription, privacy: .public)")
             }
 
             return []

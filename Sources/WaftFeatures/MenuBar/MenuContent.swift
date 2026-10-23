@@ -100,7 +100,7 @@ private struct ModeMenu: View {
         Menu("Mode: \(settings.settings.title(of: settings.settings.mode))") {
             Picker("Mode", selection: mode) {
                 ForEach(settings.settings.modes, id: \.self) { mode in
-                    ModeOption(mode: mode, settings: settings.settings, pro: pro).tag(mode)
+                    pro.optionTitle(of: mode, in: settings.settings).tag(mode)
                 }
             }
             .pickerStyle(.inline)
@@ -151,27 +151,11 @@ private struct AppModeMenu: View {
             Picker("Mode in \(app.name)", selection: mode) {
                 Text("Default (\(settings.settings.title(of: settings.settings.mode)))").tag(Mode?.none)
                 ForEach(settings.settings.modes, id: \.self) { mode in
-                    ModeOption(mode: mode, settings: settings.settings, pro: pro).tag(Mode?.some(mode))
+                    pro.optionTitle(of: mode, in: settings.settings).tag(Mode?.some(mode))
                 }
             }
             .pickerStyle(.inline)
             .labelsHidden()
-        }
-    }
-}
-
-private struct ModeOption: View {
-    let mode: Mode
-    let settings: WaftCore.Settings
-    let pro: ProModel
-
-    var body: some View {
-        let title = settings.title(of: mode)
-
-        if pro.locks(mode) {
-            Text("\(title) (Waft+)")
-        } else {
-            Text(title)
         }
     }
 }
@@ -184,22 +168,9 @@ private struct LanguageMenu: View {
         settings.settings.languages.languages.map(\.displayName).formatted(.list(type: .and, width: .narrow))
     }
 
-    private var pinnedTitle: String {
-        guard let pinned = settings.settings.languages.pinned else { return String(localized: "Automatic") }
-
-        return pinned.displayName
-    }
-
-    private var pinned: Binding<Language?> {
-        Binding(
-            get: { settings.settings.languages.pinned },
-            set: { settings.settings.languages = settings.settings.languages.pinning($0) },
-        )
-    }
-
     var body: some View {
-        Menu("Language: \(pinnedTitle)") {
-            Picker("Language", selection: pinned) {
+        Menu("Language: \(settings.pinnedLanguageTitle)") {
+            Picker("Language", selection: settings.pinnedLanguage) {
                 Text("Automatic (\(languageNames))").tag(Language?.none)
                 ForEach(settings.settings.languages.languages, id: \.self) { language in
                     Text(language.displayName).tag(Language?.some(language))

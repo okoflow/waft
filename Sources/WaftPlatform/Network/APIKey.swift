@@ -9,7 +9,7 @@ enum APIKey {
         do {
             key = try store.load()
         } catch {
-            Logger.network.error("Couldn't read the API key", cause: error)
+            Logger.network.error("Couldn't read the API key: \(error.logDescription, privacy: .public)")
 
             throw .missingKey
         }

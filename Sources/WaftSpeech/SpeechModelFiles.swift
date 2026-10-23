@@ -47,11 +47,7 @@ struct SpeechModelFiles {
         } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
             return false
         } catch {
-            let cause = error as NSError
-
-            Logger.speech.error(
-                "Couldn't inspect the speech model download: \(cause.domain, privacy: .public) \(cause.code, privacy: .public)",
-            )
+            Logger.speech.error("Couldn't inspect the speech model download: \(error.logDescription, privacy: .public)")
 
             return true
         }

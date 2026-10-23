@@ -20,6 +20,6 @@ package struct FocusTarget: Sendable {
         guard let processID, processID == current.processID else { return false }
         guard let element, let currentElement = current.element else { return true }
 
-        return element.compare(with: currentElement) != .different
+        return !element.isDifferent(from: currentElement)
     }
 }

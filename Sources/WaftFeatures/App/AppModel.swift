@@ -2,12 +2,14 @@ package import Foundation
 import WaftCore
 
 package final class AppModel {
+    private static let modeSample = String(localized: "um so I think we should uh meet on Friday")
+    private static let translatorSample = String(localized: "hey can u send me the report by friday? thanks")
+
     package let settings: SettingsModel
     package let windows = WindowPresenter()
 
     let permissions: PermissionMonitor
     let speechModelController: SpeechModelController
-    let modeSwitcher: ModeSwitcher
     let history: HistoryModel
     let statistics: StatisticsModel
     let vocabulary: VocabularyModel
@@ -26,8 +28,9 @@ package final class AppModel {
     let modeTryout: TryoutModel
     let translator: TranslatorModel
     let translatorTryout: TryoutModel
-    let translatorShortcuts: TranslatorShortcuts
 
+    private let modeSwitcher: ModeSwitcher
+    private let translatorShortcuts: TranslatorShortcuts
     private let hud: HUDController
     private let keyMonitor: KeyMonitorController
     private let dictation: DictationController
@@ -72,7 +75,7 @@ package final class AppModel {
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
         queue = Self.makeQueue(dependencies, history: history, statistics: statistics, hud: hud)
-        modeTryout = Self.makeModeTryout(dependencies, settings: settings, pro: pro)
+        modeTryout = Self.makeTryout(dependencies, settings: settings, pro: pro, defaultSample: Self.modeSample)
         keyMonitor = KeyMonitorController(monitor: dependencies.keyEventMonitor)
         dictation = DictationController(
             keyEventMonitor: dependencies.keyEventMonitor,
@@ -91,7 +94,7 @@ package final class AppModel {
         localModels = LocalModelsModel(browser: dependencies.localServers, settings: settings)
         frontmostApp = FrontmostAppTracker(monitor: dependencies.frontmostAppMonitor)
         translator = Self.makeTranslator(dependencies, settings: settings, pro: pro)
-        translatorTryout = Self.makeTranslatorTryout(dependencies, settings: settings, pro: pro)
+        translatorTryout = Self.makeTryout(dependencies, settings: settings, pro: pro, defaultSample: Self.translatorSample)
         translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, shortcuts, settings: settings, pro: pro, hud: hud)
         onboarding = OnboardingModel(permissions: permissions)
         transcription = Self.makeTranscription(dependencies, controller: speechModelController, settings: settings, pro: pro)
@@ -253,13 +256,18 @@ extension AppModel {
         )
     }
 
-    private static func makeModeTryout(_ dependencies: AppDependencies, settings: SettingsModel, pro: ProModel) -> TryoutModel {
+    private static func makeTryout(
+        _ dependencies: AppDependencies,
+        settings: SettingsModel,
+        pro: ProModel,
+        defaultSample: String,
+    ) -> TryoutModel {
         TryoutModel(
             rewriters: dependencies.rewriters,
             detector: dependencies.languageDetector,
             settings: settings,
             pro: pro,
-            defaultSample: String(localized: "um so I think we should uh meet on Friday"),
+            defaultSample: defaultSample,
         )
     }
 

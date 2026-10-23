@@ -50,10 +50,6 @@ package struct KeyCombination: Hashable, Sendable {
         return !modifiers.isDisjoint(with: Modifiers.required)
     }
 
-    package var modifierSymbols: String {
-        Self.symbols.filter { modifiers.contains($0.0) }.map(\.1).joined()
-    }
-
     var fixedKeyName: String? {
         if let number = functionKeyNumber {
             return "F\(number)"
@@ -64,6 +60,10 @@ package struct KeyCombination: Hashable, Sendable {
         }
 
         return Self.keyNames[keyCode]
+    }
+
+    private var modifierSymbols: String {
+        Self.symbols.filter { modifiers.contains($0.0) }.map(\.1).joined()
     }
 
     package init(keyCode: Int64, modifiers: Modifiers) {

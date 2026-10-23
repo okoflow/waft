@@ -147,7 +147,7 @@ private struct AppModeRow: View {
             HStack(spacing: Metrics.controlSpacing) {
                 MenuPicker("Mode", selection: mode, current: settings.settings.title(of: mode.wrappedValue)) {
                     ForEach(settings.settings.modes, id: \.self) { mode in
-                        optionTitle(of: mode).tag(mode)
+                        pro.optionTitle(of: mode, in: settings.settings).tag(mode)
                     }
                 }
 
@@ -157,13 +157,5 @@ private struct AppModeRow: View {
             }
         }
         .settingsRowPadding()
-    }
-
-    private func optionTitle(of mode: Mode) -> Text {
-        let title = settings.settings.title(of: mode)
-
-        guard pro.locks(mode) else { return Text(title) }
-
-        return Text("\(title) (Waft+)")
     }
 }
