@@ -143,15 +143,17 @@ translates half a second after you stop typing.
   your languages so that short words land right. The right half translates
   into **Translate into**, English by default, and text already in that
   language into **Two-way with**, as Translate does. On a new Mac they pair
-  English with your first other system language. Change them in the panel or
-  in Settings › Translator.
-- A language you choose on the left still gives way when the text is clearly
-  in one of the two languages on the right, and "detected" shows next to it.
+  English with your first other system language. Change **Translate into** in
+  the panel, and both in Settings › Translator.
+- A language you choose on the left gives way when the text is in one of the
+  two languages on the right, and "detected" shows next to it.
   Without **Two-way with**, text already in **Translate into** goes into the
   language you chose on the left.
 - A click on the translation copies all of it; select a part to copy only
-  that. The arrows between the halves swap the two languages on the right and
-  the texts, and keep detecting the language.
+  that. The arrows between the halves, or <kbd>⌘</kbd><kbd>⇧</kbd><kbd>S</kbd>,
+  swap the texts, make the text's language **Translate into**, and set the
+  left half to **Detect language**. **Two-way with** becomes the language the
+  text went into, unless the text is in neither language of the pair.
 - <kbd>Esc</kbd>, a click outside the panel, or switching apps or desktops
   closes it, which keeps the text and its translation for the next time you
   open it.
@@ -245,14 +247,14 @@ key uses. The minus button next to it turns it off.
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
 Waft lives in the menu bar, as the Waft W mark, and shows in the Dock only
-while one of its windows is open.
+while Settings, the setup guide, or the file transcription window is open.
 
 | Item | What it does |
 | --- | --- |
 | The first line | Says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed" |
 | Finish Setup…, Retry Speech Model, Install Update… | Appear only when needed: setup is unfinished or a permission is missing, the speech model failed, or an update is waiting |
 | Copy Last Dictation, Recent Dictations | Copy the latest text, pasted or not, within 10 minutes of the dictation, or one of your last five dictations; **Show History** opens the full list |
-| Transcribe File…, Translator… | Open the windows for [files](#transcribing-files) and [the translator](#translator) |
+| Transcribe File…, Translator… | Open [file transcription](#transcribing-files) and [the translator](#translator) |
 | Unlock Waft+… | Appears while you have no license once Waft+ is on sale |
 
 To hide the icon, turn off **Show in menu bar** in Settings › General.
@@ -298,7 +300,7 @@ license in Settings › Waft+:
 | --- | --- |
 | The AI modes | Choosing one opens Settings › Waft+, a mode chosen before falls back to Light and the HUD says so, and the next-mode shortcut switches only between Raw and Light |
 | Editing by voice | The editing key records nothing, and the HUD says it needs Waft+ |
-| The translator | The window takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
+| The translator | The panel takes no text and shows that it needs Waft+, and so does the HUD for the shortcuts on selected text |
 | File transcription | The window takes no file and shows that it needs Waft+ |
 | The speech model | Waft recognizes speech with Fast |
 | The menu | Marks the AI modes, file transcription, and the translator "(Waft+)" |

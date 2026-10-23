@@ -15,9 +15,8 @@ and `Waft` (the app and composition root).
 ## Commands
 
 - `make check` runs every check but `bundle`; run it before you push.
-- `make test` runs the tests. It passes `swift test` the paths of Swift
-  Testing and its macro plugins, which a plain `swift test` can miss with the
-  Command Line Tools alone.
+- `make test` runs the tests; [Tests](CONTRIBUTING.md#tests) says why not a
+  plain `swift test`.
 - `make format` fixes what `make format-check` reports.
 - `make strings-update` rewrites the English strings table from the code.
 - Run `make bundle` or `make run` only when asked. Both re-sign

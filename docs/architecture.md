@@ -40,7 +40,7 @@ The tables list the folders whose names don't say enough.
 | `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
 | `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; and `Settings+Translator`, which does the same for a `TextTask` and lists the languages the translator expects |
 | `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
-| `Translator` | `TranslatorSettings`: the translator's languages, its recent languages, its model tier, and the edited instructions of each `TextTask` |
+| `Translator` | `TranslatorSettings`: the translator's languages and recent languages, when a chosen source gives way, where text goes and how a swap turns the pair, its model tier, and the edited instructions of each `TextTask` |
 | `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 
@@ -65,7 +65,7 @@ The tables list the folders whose names don't say enough.
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of the first three is open or Sparkle shows an update |
 | `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
-| `HUD` | `HUDController` and the HUD window at the notch, at the top of the screen, or below the menu bar when another app's window covers the notch |
+| `HUD` | `HUDController` and `HUDPanel`, the HUD at the notch, at the top of the screen, or below the menu bar when `ForeignWindow` finds another app's window over the notch |
 | `MenuBar` | The menu bar icon (the W mark) and the menu |
 | `Translator` | `TranslatorModel` behind the translator; `TranslatorPanel`, the floating panel that opens over the app in front without activating Waft and closes when you leave it; `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
