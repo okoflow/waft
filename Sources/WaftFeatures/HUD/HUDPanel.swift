@@ -55,7 +55,8 @@ final class HUDPanel: NSPanel, HUDWindow {
     }
 
     private static func notch(of screen: NSScreen) -> CGSize? {
-        guard screen.safeAreaInsets.top > 0, let left = screen.auxiliaryTopLeftArea,
+        guard screen.safeAreaInsets.top > 0,
+              let left = screen.auxiliaryTopLeftArea,
               let right = screen.auxiliaryTopRightArea else {
             return nil
         }

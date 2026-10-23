@@ -37,7 +37,9 @@ struct TextSegment: Equatable {
     }
 
     private static func isInnerJoiner(at index: Int, in characters: [Character]) -> Bool {
-        guard innerJoiners.contains(characters[index]), index > 0, index + 1 < characters.count,
+        guard innerJoiners.contains(characters[index]),
+              index > 0,
+              index + 1 < characters.count,
               characters[index - 1].isLetterOrNumber else { return false }
 
         return characters[index + 1].isLetter

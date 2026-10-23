@@ -12,8 +12,10 @@ package struct LicenseKey: Sendable {
         let compact = String(text.unicodeScalars.filter { !CharacterSet.whitespacesAndNewlines.contains($0) })
 
         let parts = compact.split(separator: ".", omittingEmptySubsequences: false)
-        guard parts.count == 3, parts[0] == Self.prefix,
-              let payload = Self.decoded(parts[1]), let signature = Self.decoded(parts[2]),
+        guard parts.count == 3,
+              parts[0] == Self.prefix,
+              let payload = Self.decoded(parts[1]),
+              let signature = Self.decoded(parts[2]),
               let license = try? JSONDecoder().decode(License.self, from: payload)
         else { return nil }
 

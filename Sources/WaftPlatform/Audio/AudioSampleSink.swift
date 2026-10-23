@@ -46,12 +46,12 @@ final class AudioSampleSink: @unchecked Sendable {
 
     init?(inputFormat: AVAudioFormat, meter: LevelMeter, onFirstBuffer: @escaping @Sendable () -> Void) {
         guard let outputFormat = AVAudioFormat(
-            commonFormat: .pcmFormatFloat32,
-            sampleRate: SpeechAudio.sampleRate,
-            channels: 1,
-            interleaved: false,
-        ),
-            let converter = AVAudioConverter(from: inputFormat, to: outputFormat)
+                  commonFormat: .pcmFormatFloat32,
+                  sampleRate: SpeechAudio.sampleRate,
+                  channels: 1,
+                  interleaved: false,
+              ),
+              let converter = AVAudioConverter(from: inputFormat, to: outputFormat)
         else { return nil }
 
         converter.downmix = true
