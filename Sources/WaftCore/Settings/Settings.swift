@@ -61,6 +61,14 @@ package struct Settings: Codable, Equatable, Sendable {
         self.languages = languages
     }
 
+    package init(preferredLanguages localeIdentifiers: [String]) {
+        self.init(languages: .preferred(by: localeIdentifiers))
+
+        let otherLanguage = localeIdentifiers.lazy.compactMap(Language.init(localeIdentifier:)).first { $0 != .english }
+
+        translator = TranslatorSettings(translation: Translation(target: .english, twoWayLanguage: otherLanguage))
+    }
+
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let legacy = try decoder.container(keyedBy: LegacyCodingKeys.self)

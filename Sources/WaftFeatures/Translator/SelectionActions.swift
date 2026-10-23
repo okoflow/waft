@@ -107,7 +107,7 @@ final class SelectionActions {
     }
 
     private func rework(_ selection: String, by action: Action, in target: FocusTarget) async {
-        let detected = detector.language(of: selection)
+        let detected = detector.language(of: selection, expecting: settings.settings.expectedTranslatorLanguages)
 
         let into = settings.settings.translator.target(forSource: detected)
 

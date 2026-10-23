@@ -134,19 +134,27 @@ HUD says then.
 ## Translator
 
 **Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> by default
-in any app, opens a window with your text on the left and its translation on
-the right. Type or paste up to 5,000 characters, or dictate; the AI model
+in any app, opens a floating panel over the app you're in, with your text on
+the left and its translation on the right. It doesn't bring Waft or its other
+windows forward. Type or paste up to 5,000 characters, or dictate; the AI model
 translates half a second after you stop typing.
 
-- The left half detects the language unless you choose one. The right half
-  translates into **Translate into**, English by default, and text already in
-  that language into **Two-way with**, as Translate does. Change them in the
-  window or in Settings › Translator; they start as Translate's and stay
-  separate afterward.
+- The left half detects the language unless you choose one, leaning toward
+  your languages so that short words land right. The right half translates
+  into **Translate into**, English by default, and text already in that
+  language into **Two-way with**, as Translate does. On a new Mac they pair
+  English with your first other system language. Change them in the panel or
+  in Settings › Translator.
+- A language you choose on the left still gives way when the text is clearly
+  in one of the two languages on the right, and "detected" shows next to it.
+  Without **Two-way with**, text already in **Translate into** goes into the
+  language you chose on the left.
 - A click on the translation copies all of it; select a part to copy only
-  that. The arrows between the halves swap the languages and the texts.
-- <kbd>Esc</kbd> closes the window, which keeps the text and its translation
-  for the next time you open it.
+  that. The arrows between the halves swap the two languages on the right and
+  the texts, and keep detecting the language.
+- <kbd>Esc</kbd>, a click outside the panel, or switching apps or desktops
+  closes it, which keeps the text and its translation for the next time you
+  open it.
 - The arrow next to **Translation** or **Fixing** in Settings › Translator
   opens its **Instructions**, which you can rewrite and try as for a mode.
 - **Model** in Settings › Translator sets the translator's own

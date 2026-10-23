@@ -40,7 +40,7 @@ package final class SettingsModel {
         self.store = store
         self.loginItem = loginItem
         self.audioInputs = audioInputs
-        settings = store.read(default: Settings(languages: .preferred(by: Locale.preferredLanguages)))
+        settings = store.read(default: Settings(preferredLanguages: Locale.preferredLanguages))
         isLoginItemEnabled = loginItem.isEnabled
     }
 

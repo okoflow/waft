@@ -73,13 +73,13 @@ private struct SourcePane: View {
                     detectsLanguage: true,
                 )
 
-                if model.source == nil, model.detected != nil {
+                if model.isShowingDetected {
                     Text("detected")
                         .detailText()
                         .transition(.opacity)
                 }
             }
-            .motion(Motion.fade, value: model.detected)
+            .motion(Motion.fade, value: model.isShowingDetected)
         } content: {
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $model.input)
