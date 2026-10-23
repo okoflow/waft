@@ -1,9 +1,0 @@
-.build/
-build/
-
-.idea/
-.swiftpm/
-.vscode/
-.zed/
-
-.DS_Store
