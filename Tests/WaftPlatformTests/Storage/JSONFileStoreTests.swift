@@ -38,44 +38,15 @@ struct JSONFileStoreTests {
         }
     }
 
-    @Test
-    func `restricts a file that others could read to its owner when it saves over it`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "dictionary.json")
-            let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
-
-            try Data("{}".utf8).write(to: url)
-            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
-
-            try store.save(Self.sample)
-
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-
-            #expect(attributes[.posixPermissions] as? Int == 0o600)
-        }
-    }
-
-    @Test
-    func `restricts a file that others could read to its owner when it loads it`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "dictionary.json")
-            let store = JSONFileStore<StoredSample>(name: "dictionary", url: url)
-
-            try store.save(Self.sample)
-            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
-
-            #expect(try store.load() == Self.sample)
-            #expect(try FileManager.default.attributesOfItem(atPath: url.path)[.posixPermissions] as? Int == 0o600)
-        }
-    }
-
     @Test(arguments: [false, true])
-    func `restricts a folder that others could read to its owner`(isSaving: Bool) async throws {
+    func `restricts a file and its folder that others could read to their owner`(isSaving: Bool) async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let folder = directory.appending(path: "Waft", directoryHint: .isDirectory)
-            let store = JSONFileStore<StoredSample>(name: "sample", url: folder.appending(path: "sample.json"))
+            let url = folder.appending(path: "sample.json")
+            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
 
             try store.save(Self.sample)
+            try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: url.path)
             try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: folder.path)
 
             if isSaving {
@@ -84,6 +55,7 @@ struct JSONFileStoreTests {
                 #expect(try store.load() == Self.sample)
             }
 
+            #expect(try FileManager.default.attributesOfItem(atPath: url.path)[.posixPermissions] as? Int == 0o600)
             #expect(try FileManager.default.attributesOfItem(atPath: folder.path)[.posixPermissions] as? Int == 0o700)
         }
     }
