@@ -18,7 +18,7 @@ flowchart TD
 | Module | Isolation | What lives there |
 | --- | --- | --- |
 | `WaftCore` | Nonisolated | Domain types, text and recognition rules, state machines, and every interface between modules |
-| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the decoding rules it runs with, the model files, and the language-restricted tokenizer |
+| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the decoding rules it runs with, the pieces it splits a recording into, the model files, and the language-restricted tokenizer |
 | `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, language detection, the AI APIs, license signatures, updates, and the system |
 | `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, file transcription, and the translator |
 | `Waft` | Main actor | The app, its delegate, and `AppDependencies.live()` |

@@ -81,6 +81,21 @@ struct WhisperDecodingTests {
         #expect(WhisperDecoding.isConfident(segment) == isConfident)
     }
 
+    @Test(arguments: [(112, 111, true), (145, 22, false), (222, 0, false), (223, 0, true)])
+    func `notices a window that filled the decoder before its end`(
+        tokenCount: Int,
+        promptTokenCount: Int,
+        reachesLimit: Bool,
+    ) {
+        let segments = [
+            TranscriptionSegment(seek: 0, tokens: Array(repeating: 1, count: tokenCount - 10)),
+            TranscriptionSegment(seek: 0, tokens: Array(repeating: 1, count: 10)),
+            TranscriptionSegment(seek: 480_000, tokens: Array(repeating: 1, count: 40)),
+        ]
+
+        #expect(WhisperDecoding.reachesTokenLimit(segments, promptTokenCount: promptTokenCount) == reachesLimit)
+    }
+
     @Test
     func `keeps the text of the confident segments`() {
         let results = [

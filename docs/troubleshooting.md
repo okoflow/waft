@@ -83,4 +83,6 @@ Waft logs what it did and how long it took, and why an AI mode fell back to Ligh
 /usr/bin/log show --last 10m --info --predicate 'subsystem == "com.okoflow.waft"'
 ```
 
+When a dictation lost words, the `dictation` category gives the seconds of audio and the characters Whisper recognized and the mode returned, and the `speech` category says how many pieces Waft split the recording into and which piece gave no text, ran out of decoder tokens, or had segments dropped as unsure or made up.
+
 Attach the lines around the problem to a bug report.

@@ -202,12 +202,14 @@ final class DictationQueue {
     }
 
     private func log(_ transcript: Transcript, _ processed: ProcessedText, for job: DictationJob) {
-        Logger.dictation.info(
+        Logger.dictation.notice(
             """
             Recognized \(transcript.text.count) characters of \(transcript.language.rawValue, privacy: .public) \
+            from \(SpeechAudio.duration(of: job.samples), format: .fixed(precision: 1)) s of audio \
             in \(transcript.detectionDuration + transcript.decodingDuration, privacy: .public); \
             mode \(job.mode.rawValue, privacy: .public) ran as \(processed.mode.rawValue, privacy: .public), \
-            fallback \(Self.describe(processed.fallback), privacy: .public)
+            fallback \(Self.describe(processed.fallback), privacy: .public); \
+            processed \(processed.text.count) characters
             """,
         )
     }

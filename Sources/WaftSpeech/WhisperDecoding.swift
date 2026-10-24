@@ -107,6 +107,15 @@ enum WhisperDecoding {
         return !HallucinationFilter.isHallucination(segment.text, in: language, prompt: prompt, vocabulary: vocabulary)
     }
 
+    static func reachesTokenLimit(_ segments: [TranscriptionSegment], promptTokenCount: Int) -> Bool {
+        let prefill = promptTokenCount == 0 ? 0 : promptTokenCount + 1
+        let windows = Dictionary(grouping: segments, by: \.seek).values
+
+        return windows.contains { window in
+            window.map(\.tokens.count).reduce(0, +) + prefill >= decoderTokenLimit
+        }
+    }
+
     static func isConfident(_ segment: TranscriptionSegment) -> Bool {
         HallucinationFilter.keepsSegment(
             averageLogProbability: Double(segment.avgLogprob),
