@@ -20,7 +20,7 @@ struct SettingsTranslatorTests {
 
         #expect(setup.cloudModelInUse == model)
         #expect(setup.editDeadline == deadline)
-        #expect(setup.serverInUse == nil)
+        #expect(setup.localServerInUse == nil)
     }
 
     @Test
@@ -32,7 +32,7 @@ struct SettingsTranslatorTests {
 
         let setup = settings.translatorSetup(for: .fix)
 
-        #expect(setup.serverInUse == settings.localServer)
+        #expect(setup.localServerInUse == settings.localServer)
         #expect(setup.cloudModelInUse == nil)
     }
 

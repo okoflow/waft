@@ -8,7 +8,7 @@ package struct RewriteSetup: Sendable {
     private let cloudModels: PerProvider<CloudModel>
     private let localServer: LocalServer
 
-    var serverInUse: LocalServer? {
+    var localServerInUse: LocalServer? {
         provider == .localServer ? localServer : nil
     }
 

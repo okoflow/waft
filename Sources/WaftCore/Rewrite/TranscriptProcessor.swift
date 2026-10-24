@@ -136,7 +136,7 @@ package struct TranscriptProcessor: Sendable {
             text: text,
             language: language,
             kind: kind,
-            localServer: setup.serverInUse,
+            localServer: setup.localServerInUse,
             cloudModel: setup.cloudModelInUse,
             deadline: deadline,
         )
