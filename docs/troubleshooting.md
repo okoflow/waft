@@ -1,15 +1,10 @@
 # Troubleshooting
 
-This page says what to do when something doesn't work, starting from what the
-HUD or the first line of the menu says. [Usage](usage.md) describes the
-settings named here, and [Privacy](privacy.md) the files Waft keeps. Quoted
-text is what the HUD shows.
+This page says what to do when something doesn't work, starting from what the HUD or the first line of the menu says. [Usage](usage.md) describes the settings named here, and [Privacy](privacy.md) the files Waft keeps. Quoted text is what the HUD shows.
 
 ## macOS won't open Waft
 
-macOS says it can't verify that Waft is free of malware because Waft isn't
-notarized by Apple yet. [Install](getting-started.md#1-install) shows how to
-open it once with **Open Anyway**.
+macOS says it can't verify that Waft is free of malware because Waft isn't notarized by Apple yet. [Install](getting-started.md#1-install) shows how to open it once with **Open Anyway**.
 
 ## The dictation or editing key does nothing
 
@@ -51,11 +46,7 @@ open it once with **Open Anyway**.
 
 ## The AI modes use Light
 
-The HUD shows "Without AI" next to the check mark. Pointing at it shows the text
-with "Used Light mode:" and a reason, as does the text Waft couldn't paste, with
-your provider's name in place of *provider*. The next dictation tries the AI
-model again. The `network` log category records the HTTP status or the
-connection error of a failed request, as [Logs](#logs) shows.
+The HUD shows "Without AI" next to the check mark. Pointing at it shows the text with "Used Light mode:" and a reason, as does the text Waft couldn't paste, with your provider's name in place of *provider*. The next dictation tries the AI model again. The `network` log category records the HTTP status or the connection error of a failed request, as [Logs](#logs) shows.
 
 | The reason | Fix |
 | --- | --- |
@@ -73,12 +64,7 @@ connection error of a failed request, as [Logs](#logs) shows.
 
 ## The speech model fails
 
-**Retry Speech Model** in the menu resumes a failed download or loads the
-model again; if the load fails twice, the next retry deletes the model and
-downloads it anew. A download also fails without enough free space;
-[The speech model](how-it-works.md#the-speech-model) says how much. To start
-over by hand, quit Waft and remove the model and its compiled copy, which
-[What Waft keeps](privacy.md#what-waft-keeps) locates:
+**Retry Speech Model** in the menu resumes a failed download or loads the model again; if the load fails twice, the next retry deletes the model and downloads it anew. A download also fails without enough free space; [The speech model](how-it-works.md#the-speech-model) says how much. To start over by hand, quit Waft and remove the model and its compiled copy, which [What Waft keeps](privacy.md#what-waft-keeps) locates:
 
 ```sh
 rm -r ~/Library/Application\ Support/Waft/Models ~/Library/Caches/com.okoflow.waft
@@ -86,17 +72,11 @@ rm -r ~/Library/Application\ Support/Waft/Models ~/Library/Caches/com.okoflow.wa
 
 ## The dictionary, history, or statistics disappeared
 
-When Waft can't read `dictionary.json`, `history.json`, or `stats.json`, for
-example after a hand edit with a typo, it saves a copy beside it as
-`dictionary.unreadable.json` and so on, then starts empty. Fix the copy and
-move it back while Waft isn't running.
+When Waft can't read `dictionary.json`, `history.json`, or `stats.json`, for example after a hand edit with a typo, it saves a copy beside it as `dictionary.unreadable.json` and so on, then starts empty. Fix the copy and move it back while Waft isn't running.
 
 ## Logs
 
-Waft logs what it did and how long it took, and why an AI mode fell back to
-Light; [Logs](privacy.md#logs) lists what it never logs. Use `/usr/bin/log`,
-since zsh has a `log` command of its own, to watch the log live or show the
-last ten minutes:
+Waft logs what it did and how long it took, and why an AI mode fell back to Light; [Logs](privacy.md#logs) lists what it never logs. Use `/usr/bin/log`, since zsh has a `log` command of its own, to watch the log live or show the last ten minutes:
 
 ```sh
 /usr/bin/log stream --level info --predicate 'subsystem == "com.okoflow.waft"'
