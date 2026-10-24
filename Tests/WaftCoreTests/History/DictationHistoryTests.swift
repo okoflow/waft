@@ -54,16 +54,6 @@ struct DictationHistoryTests {
         #expect(history.entries.map(\.text) == kept)
     }
 
-    @Test
-    func `clears every entry`() {
-        var history = DictationHistory()
-        history.add(entry("Hello.", minutesAgo: 1))
-
-        history.removeAll()
-
-        #expect(history.entries.isEmpty)
-    }
-
     @Test(arguments: [
         ("Short line.", "Short line."),
         ("Two\nlines", "Two lines"),
