@@ -8,7 +8,7 @@ struct WhisperDecodingTests {
 
     @Test
     func `decodes in the chosen language with the prompt and without detection`() {
-        let options = WhisperDecoding.decodingOptions(for: .german, samples: [0], prompt: "Hallo.", tokenizer: Self.tokenizer)
+        let options = WhisperDecoding.decodingOptions(for: .german, prompt: "Hallo.", tokenizer: Self.tokenizer)
 
         #expect(options.language == "de")
         #expect(!options.detectLanguage)
@@ -17,12 +17,36 @@ struct WhisperDecodingTests {
         #expect(options.chunkingStrategy == nil)
     }
 
-    @Test(arguments: [(WhisperDecoding.windowSampleCount, false), (WhisperDecoding.windowSampleCount + 1, true)])
-    func `splits audio longer than one window by voice activity`(sampleCount: Int, splits: Bool) {
-        let samples = [Float](repeating: 0, count: sampleCount)
-        let options = WhisperDecoding.decodingOptions(for: .english, samples: samples, prompt: nil, tokenizer: nil)
+    @Test
+    func `decodes a chunk that starts mid-word instead of giving up on its first token`() {
+        let options = WhisperDecoding.decodingOptions(for: .russian, prompt: nil, tokenizer: nil)
 
-        #expect(options.chunkingStrategy == (splits ? .vad : nil))
+        #expect(options.firstTokenLogProbThreshold == nil)
+    }
+
+    @Test(arguments: [(0, 27), (22, 24), (90, 16), (111, 13)])
+    func `sizes chunks so the transcript fits after the prompt`(promptTokenCount: Int, seconds: Int) {
+        #expect(WhisperDecoding.chunkSampleCount(promptTokenCount: promptTokenCount) == seconds * 16000)
+    }
+
+    @Test
+    func `finds pauses above a steady noise floor`() {
+        let noise = [Float](repeating: 0.03, count: 16000)
+        let speech = [Float](repeating: 0.2, count: 16000)
+
+        let threshold = WhisperDecoding.silenceThreshold(of: noise + speech + noise + speech)
+
+        #expect(threshold > 0.03)
+        #expect(threshold < 0.2)
+    }
+
+    @Test
+    func `keeps a floor under the silence threshold of quiet pauses`() {
+        let silence = [Float](repeating: 0, count: 16000)
+        let speech = [Float](repeating: 0.2, count: 16000)
+
+        #expect(WhisperDecoding.silenceThreshold(of: silence + speech) == 0.001)
+        #expect(WhisperDecoding.silenceThreshold(of: []) == 0.001)
     }
 
     @Test(arguments: [(String?("Hallo."), FakeWhisperTokenizer?.none), (nil, Self.tokenizer), ("Unknown.", Self.tokenizer)])
@@ -30,14 +54,14 @@ struct WhisperDecodingTests {
         prompt: String?,
         tokenizer: FakeWhisperTokenizer?,
     ) {
-        let options = WhisperDecoding.decodingOptions(for: .german, samples: [0], prompt: prompt, tokenizer: tokenizer)
+        let options = WhisperDecoding.decodingOptions(for: .german, prompt: prompt, tokenizer: tokenizer)
 
         #expect(options.promptTokens == nil)
     }
 
     @Test
     func `keeps the last prompt tokens below the special tokens`() {
-        #expect(WhisperDecoding.promptTokens(for: "lang", tokenizer: Self.tokenizer) == Array(50 ..< 250))
+        #expect(WhisperDecoding.promptTokens(for: "lang", tokenizer: Self.tokenizer) == Array(139 ..< 250))
     }
 
     @Test

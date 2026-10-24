@@ -33,6 +33,7 @@ Waft skips recordings without speech, such as silence, key clicks, or steady noi
 
 - **Language.** With a **Spoken language** chosen or one language enabled, Whisper decodes in it. Otherwise it detects the language first, among those you enabled.
 - **Prompt.** Whisper first reads a short example sentence in the spoken language, except in Japanese, Korean, and Thai, then up to 200 characters of your dictionary terms.
+- **Long dictations.** Waft splits the recording at pauses, measured against the room's own noise level, and makes each piece short enough that its text fits in what is left of Whisper's 224-token window after the prompt. The pieces run side by side, and a piece that fails stops the dictation with an error instead of leaving a gap.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into the script you chose. Latin to Cyrillic goes letter by letter and leaves your dictionary terms, wherever the whole term appears, and words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API, in Latin letters.
 - **Made-up text.** Waft drops segments with low confidence or heavy repetition, results made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, and stock phrases such as "Thanks for watching" when they make up all or nearly all of the result.
 

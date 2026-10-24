@@ -16,6 +16,31 @@ package actor WhisperTranscriber: Transcriber {
 
     package init() {}
 
+    private static func chunks(of samples: [Float], maximumLength: Int) async throws -> [AudioChunk] {
+        let silence = EnergyVAD(energyThreshold: WhisperDecoding.silenceThreshold(of: samples))
+
+        return try await VADAudioChunker(windowPadding: 0, vad: silence).chunkAll(
+            audioArray: samples,
+            maxChunkLength: maximumLength,
+            decodeOptions: nil,
+        )
+    }
+
+    private static func transcribe(
+        _ chunks: [AudioChunk],
+        with options: DecodingOptions,
+        on whisper: WhisperKit,
+    ) async throws -> [TranscriptionResult] {
+        let speech = chunks.map(\.audioSamples).filter(SpeechGate.containsSpeech)
+
+        let outcomes = await whisper.transcribeWithOptions(
+            audioArrays: speech,
+            decodeOptionsArray: Array(repeating: options, count: speech.count),
+        )
+
+        return try outcomes.flatMap { try $0.get() }
+    }
+
     package nonisolated func modelDirectory(for model: SpeechModel) -> URL {
         SpeechModelFiles(model).folder
     }
@@ -91,15 +116,17 @@ package actor WhisperTranscriber: Transcriber {
 
         let decodingStart = ContinuousClock.now
         let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
+        let tokenizer = loaded.whisper.tokenizer
 
-        let options = WhisperDecoding.decodingOptions(
-            for: spoken,
-            samples: samples,
-            prompt: prompt,
-            tokenizer: loaded.whisper.tokenizer,
+        let options = WhisperDecoding.decodingOptions(for: spoken, prompt: prompt, tokenizer: tokenizer)
+        let promptTokenCount = WhisperDecoding.promptTokens(for: prompt, tokenizer: tokenizer).count
+
+        let chunks = try await Self.chunks(
+            of: samples,
+            maximumLength: WhisperDecoding.chunkSampleCount(promptTokenCount: promptTokenCount),
         )
 
-        let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
+        let results = try await Self.transcribe(chunks, with: options, on: loaded.whisper)
         guard let text = WhisperDecoding.acceptedText(of: results, language: spoken, prompt: prompt, vocabulary: vocabulary)
         else { return nil }
 
@@ -120,11 +147,7 @@ package actor WhisperTranscriber: Transcriber {
     ) async throws -> TimedTranscript? {
         guard let loaded else { throw TranscriberError.notLoaded }
 
-        let chunks = try await VADAudioChunker().chunkAll(
-            audioArray: samples,
-            maxChunkLength: WhisperDecoding.windowSampleCount,
-            decodeOptions: nil,
-        )
+        let chunks = try await Self.chunks(of: samples, maximumLength: WhisperDecoding.windowSampleCount)
 
         var spoken = language
         var segments: [TimedSegment] = []
@@ -164,12 +187,7 @@ package actor WhisperTranscriber: Transcriber {
         let prompt = WhisperDecoding.filePrompt(for: language, variant: variant)
         let offset = Double(chunk.seekOffsetIndex) / SpeechAudio.sampleRate
 
-        let options = WhisperDecoding.decodingOptions(
-            for: language,
-            samples: chunk.audioSamples,
-            prompt: prompt,
-            tokenizer: whisper.tokenizer,
-        )
+        let options = WhisperDecoding.decodingOptions(for: language, prompt: prompt, tokenizer: whisper.tokenizer)
 
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
 
