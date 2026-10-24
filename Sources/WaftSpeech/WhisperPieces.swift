@@ -54,7 +54,7 @@ enum WhisperPieces {
             let segments = pieceResults.flatMap(\.segments)
             let droppedCount = segments.count { !keepsSegment($0) }
 
-            if pieceResults.map(\.text).joined().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if pieceResults.map(\.text).joined().isBlank {
                 Logger.speech
                     .notice("Piece \(number) of \(pieces.count), \(seconds, format: .fixed(precision: 1)) s, gave no text")
             }
