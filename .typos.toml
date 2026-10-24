@@ -1,17 +1,6 @@
 [files]
-extend-exclude = [
-  ".git",
-  "Packaging/Localizations",
-  "Sources/WaftCore/Speech/WhisperPrompt.swift",
-  "Sources/WaftCore/Text/StockPhrase.swift",
-]
+extend-exclude = ["Cargo.lock", "bun.lock"]
 ignore-hidden = false
 
 [default]
 locale = "en-us"
-
-[default.extend-words]
-Sie = "Sie"
-
-[default.extend-identifiers]
-detectLangauge = "detectLangauge"

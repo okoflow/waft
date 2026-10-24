@@ -1,0 +1,49 @@
+[workspace]
+resolver = "3"
+members = ["app/src-tauri", "crates/*"]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.99"
+repository = "https://github.com/okoflow/waft"
+license = "GPL-3.0-only"
+publish = false
+
+[workspace.dependencies]
+objc2 = "0.6.5"
+objc2-app-kit = "0.3.2"
+objc2-foundation = "0.3.2"
+serde = { version = "1.0.229", features = ["derive"] }
+specta = "=2.0.0-rc.26"
+specta-typescript = "=0.0.13"
+tauri = "2.12.5"
+tauri-build = "2.7.4"
+tauri-nspanel = "2.1.1"
+tauri-plugin-single-instance = "2.5.4"
+tauri-specta = { version = "=2.0.0-rc.26", features = ["derive", "typescript"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+windows = "0.62.2"
+
+[workspace.lints.clippy]
+allow_attributes = "warn"
+allow_attributes_without_reason = "warn"
+dbg_macro = "warn"
+pedantic = { level = "warn", priority = -1 }
+print_stderr = "warn"
+print_stdout = "warn"
+todo = "warn"
+unimplemented = "warn"
+
+[workspace.lints.rust]
+rust_2018_idioms = { level = "warn", priority = -1 }
+unreachable_pub = "warn"
+unused_qualifications = "warn"
+
+[profile.release]
+opt-level = 3
+strip = true
+lto = true
+panic = "abort"
+codegen-units = 1

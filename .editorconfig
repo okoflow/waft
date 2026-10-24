@@ -8,13 +8,5 @@ indent_style             = space
 insert_final_newline     = true
 trim_trailing_whitespace = true
 
-[*.swift]
+[*.rs]
 indent_size = 4
-
-[{Makefile,*.entitlements,*.plist}]
-indent_style = tab
-
-[*.sh]
-binary_next_line   = true
-simplify           = true
-switch_case_indent = true

@@ -1,0 +1,32 @@
+[graph]
+all-features = true
+targets = ["aarch64-apple-darwin", "x86_64-pc-windows-msvc"]
+
+[advisories]
+ignore = [{ id = "RUSTSEC-2024-0436", reason = "paste is unmaintained and comes in through tauri-specta" }]
+
+[licenses]
+allow = [
+  "0BSD",
+  "Apache-2.0",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "CC0-1.0",
+  "MIT",
+  "MIT-0",
+  "MPL-2.0",
+  "Unicode-3.0",
+  "Unlicense",
+  "Zlib",
+]
+
+[licenses.private]
+ignore = true
+
+[bans]
+allow-wildcard-paths = true
+wildcards = "deny"
+
+[sources]
+unknown-git = "deny"
+unknown-registry = "deny"

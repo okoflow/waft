@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "./base.css";
+
+html,
+body {
+  overflow: hidden;
+  font-family: var(--font-system);
+  user-select: none;
+  background: transparent;
+}

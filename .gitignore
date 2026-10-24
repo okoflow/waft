@@ -1,8 +1,10 @@
-.build/
-build/
+/target/
+/app/src-tauri/gen/schemas/
+
+node_modules/
+dist/
 
 .idea/
-.swiftpm/
 .vscode/
 .zed/
 
