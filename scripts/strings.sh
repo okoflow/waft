@@ -1,7 +1,4 @@
 #!/bin/bash
-#
-# Checks every translation in Packaging/Localizations against the strings that
-# make build extracts from the code, or rewrites the English table from them.
 
 set -euo pipefail
 

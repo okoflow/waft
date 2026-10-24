@@ -76,6 +76,21 @@ cleans it up when you want prose.
 
 ![The HUD at the notch while listening, cleaning up, after pasting, and under the pointer](.github/screenshots/hud.jpg)
 
+## Install
+
+```sh
+brew install --cask okoflow/tap/waft
+```
+
+Or download `Waft-X.Y.Z.dmg` from the
+[latest release](https://github.com/okoflow/waft/releases/latest) and drag
+Waft to Applications. Waft needs a Mac with Apple silicon and macOS 14 or
+later, and updates itself.
+
+Waft isn't notarized by Apple yet, so macOS blocks the first launch of a copy
+from the disk image; [Install](docs/getting-started.md#1-install) shows how to
+open it. The Homebrew cask clears that check for you.
+
 ## How it compares
 
 <picture>

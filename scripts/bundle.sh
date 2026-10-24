@@ -1,7 +1,4 @@
 #!/bin/bash
-#
-# Builds Waft, assembles build/Waft.app with Sparkle and the licenses, and
-# signs it with the Waft Dev identity, SIGNING_IDENTITY, or ad hoc.
 
 set -euo pipefail
 

@@ -72,7 +72,8 @@ The unified log, under the `com.okoflow.waft` subsystem, never contains:
 
 ## Removing everything
 
-Quit Waft, delete the app, and run:
+Quit Waft and delete the app, or run `brew uninstall --zap --cask waft` if
+you installed it with Homebrew. Then run:
 
 ```sh
 rm -rf ~/Library/Application\ Support/Waft ~/Library/Caches/com.okoflow.waft \
