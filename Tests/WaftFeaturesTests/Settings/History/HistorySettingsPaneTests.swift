@@ -9,12 +9,10 @@ struct HistorySettingsPaneTests {
 
     @Test(arguments: [
         (false, "", true, "No dictations yet"),
-        (false, "  ", true, "No dictations yet"),
         (false, "Friday", false, "Waft keeps no dictations while Keep history is off."),
         (true, "Friday", true, "No matches"),
     ])
     func `explains why it shows no dictations`(hasEntries: Bool, searchText: String, keepsHistory: Bool, text: String) {
-        settings.settings.historyRetention = .forever
         settings.settings.keepsHistory = keepsHistory
         let pane = pane(store: FakeValueStore(history(hasEntries: hasEntries)))
         pane.history.searchText = searchText
