@@ -37,11 +37,11 @@ struct TranscriptionView: View {
                     .transition(.opacity)
 
                 case let .reading(file), let .transcribing(file, _):
-                    ProgressCard(model: model, file: file)
+                    TranscriptionProgressCard(model: model, file: file)
                         .transition(.opacity)
 
                 case let .finished(file, transcript):
-                    ResultView(model: model, file: file, transcript: transcript)
+                    TranscriptionResultView(model: model, file: file, transcript: transcript)
                         .transition(.opacity)
                 }
             }

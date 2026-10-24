@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ProgressCard: View {
+struct TranscriptionProgressCard: View {
     let model: FileTranscriptionModel
     let file: URL
 

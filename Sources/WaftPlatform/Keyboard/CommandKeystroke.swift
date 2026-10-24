@@ -3,7 +3,7 @@ import CoreGraphics
 import os
 
 @MainActor
-enum CommandShortcut {
+enum CommandKeystroke {
     case copy
     case paste
 

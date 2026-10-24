@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 import WaftCore
 
-struct ResultView: View {
+struct TranscriptionResultView: View {
     let model: FileTranscriptionModel
     let file: URL
     let transcript: TimedTranscript

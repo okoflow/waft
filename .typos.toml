@@ -2,8 +2,8 @@
 extend-exclude = [
   ".git",
   "Packaging/Localizations",
-  "Sources/WaftCore/Speech/WhisperPrompt.swift",
-  "Sources/WaftCore/Text/StockPhrase.swift",
+  "Sources/WaftCore/Speech/Recognition/WhisperPrompt.swift",
+  "Sources/WaftCore/Speech/Recognition/StockPhrase.swift",
 ]
 ignore-hidden = false
 

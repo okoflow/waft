@@ -98,6 +98,7 @@ Tests use [Swift Testing](https://developer.apple.com/documentation/testing) and
 
 Every test file follows one pattern:
 
+- A suite lives in the folder that mirrors its type's folder in `Sources`, and shared doubles and fixtures live in `Fakes/` and `Fixtures/`; `WaftSpeechTests` stays flat, like `Sources/WaftSpeech`.
 - A suite tests one type: `struct <Type>Tests` in `<Type>Tests.swift`, without `@Suite`. A suite for an extension that a module adds to another module's type is named after the extension's file, such as `StringCapitalizationTests` for `String+Capitalization.swift`. A suite that outgrows SwiftLint's limits splits by topic into `<Type><Topic>Tests`, such as `TranscriptProcessorWritingSystemTests`.
 - A test's name is a sentence about the type in the present tense, written as a raw identifier that starts with a verb, such as `` `drops entries older than the retention` ``. Names use American spelling and no contractions.
 - `#expect` makes every check, and `#expect(throws:)` checks errors. `#require` only unwraps a value that the rest of the test needs, in a statement of its own rather than inside an `#expect`.
