@@ -45,8 +45,6 @@ package struct SecretFileStore: ValueStore {
     package func save(_ value: String) throws {
         try file.save(value)
 
-        guard keychain.exists() else { return }
-
         deleteFromKeychain()
     }
 
