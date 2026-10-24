@@ -1,9 +1,6 @@
 # Architecture
 
-This page maps the code for contributors: where things live, the path a
-dictation takes through them, and the rules that keep them in place.
-[How it works](how-it-works.md) describes the same flow from the user's side,
-and [CONTRIBUTING.md](../CONTRIBUTING.md) how the code reads and is checked.
+This page maps the code for contributors: where things live, the path a dictation takes through them, and the rules that keep them in place. [How it works](how-it-works.md) describes the same flow from the user's side, and [CONTRIBUTING.md](../CONTRIBUTING.md) how the code reads and is checked.
 
 ## Modules
 
@@ -44,19 +41,11 @@ The tables list the folders whose names don't say enough.
 | `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 
-**`WaftPlatform`** implements the interfaces in a folder per area, such as
-`KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and
-`PasteboardInserter` in `Pasteboard`.
+**`WaftPlatform`** implements the interfaces in a folder per area, such as `KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and `PasteboardInserter` in `Pasteboard`.
 
-- `Network` holds `HTTPRewriter`, which sends a rewrite through an API
-  description per service (`AnthropicAPI`, `OpenAIAPI`, and
-  `ChatCompletionsAPI` for local servers), and `LocalServerBrowser`, which
-  lists a local server's models.
-- `Storage` holds `JSONFileStore`, which keeps a copy of a file it can't read,
-  so a later save doesn't destroy it. `ValueStore+Logging` in
-  `WaftFeatures/Support` logs persistence failures.
-- `Updates` holds `SparkleUpdater`, which turns itself off when `Info.plist`
-  has no `SUFeedURL`. `scripts/bundle.sh` removes the key from debug bundles.
+- `Network` holds `HTTPRewriter`, which sends a rewrite through an API description per service (`AnthropicAPI`, `OpenAIAPI`, and `ChatCompletionsAPI` for local servers), and `LocalServerBrowser`, which lists a local server's models.
+- `Storage` holds `JSONFileStore`, which keeps a copy of a file it can't read, so a later save doesn't destroy it. `ValueStore+Logging` in `WaftFeatures/Support` logs persistence failures.
+- `Updates` holds `SparkleUpdater`, which turns itself off when `Info.plist` has no `SUFeedURL`. `scripts/bundle.sh` removes the key from debug bundles.
 
 **`WaftFeatures`** is grouped by feature:
 
@@ -70,68 +59,32 @@ The tables list the folders whose names don't say enough.
 | `Translator` | `TranslatorModel` behind the translator; `TranslatorPanel`, the floating panel that opens over the app in front without activating Waft and closes when you leave it; `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
 | `Support` | Logging, timers, and display helpers that several features share |
 
-**`Tests`** has a Swift Testing target for every module but `Waft`; see
-[Tests](../CONTRIBUTING.md#tests).
+**`Tests`** has a Swift Testing target for every module but `Waft`; see [Tests](../CONTRIBUTING.md#tests).
 
-**`Packaging`** holds the rest of the app bundle: `Waft-Info.plist`, the
-entitlements, the icon, the translations, the start and stop sounds, and the
-Homebrew cask template.
-**`scripts`** holds the shell scripts that `make` runs.
+**`Packaging`** holds the rest of the app bundle: `Waft-Info.plist`, the entitlements, the icon, the translations, the start and stop sounds, and the Homebrew cask template. **`scripts`** holds the shell scripts that `make` runs.
 
 ## The dictation flow
 
-1. `PermissionMonitor` polls the microphone and Accessibility status once a
-   second while one is missing and every 30 seconds once both are granted,
-   since each check of the microphone asks macOS's privacy service; opening a
-   window checks them at once. A change moves onboarding on and makes
-   `KeyMonitorController` start the `KeyEventMonitor` if it isn't running. The
-   controller also restarts a monitor that stops, and `KeyEventTap` turns
-   itself back on when macOS switches it off.
-2. `DictationController` feeds the monitor's key events to
-   `RecordingTriggers` and hands finished recordings to the queue.
-   `RecordingController` starts and stops the `AudioRecorder`, polls
-   `ReleaseWatchdog` for a lost key-up, and captures the focus target.
-3. `DictationQueue` runs finished recordings one at a time: the `Transcriber`
-   recognizes them, `TranscriptProcessor` applies the dictionary, snippets,
-   and the mode, and the `TextInserter` pastes the result.
-4. An AI mode runs the `TextRewriter` under the deadline of the chosen
-   `CloudModel` or the local server, validates the answer with
-   `RewriteValidator`, and on any `RewriteError` falls back to Light with a
-   `RewriteFallback` that says why.
-5. An edit by voice gives Whisper the dictionary terms but skips their
-   replacements, the snippets, and the mode: `TranscriptProcessor.edit` sends
-   the selection read at the key press and the spoken instruction to the
-   `TextRewriter`, and the answer replaces the selection. A failure pastes
-   nothing.
-6. The outcome becomes a `HUDMessage`. The text becomes the latest
-   transcript, even in a password field, and text that is pasted or copied
-   becomes a history entry unless it came from an edit.
+1. `PermissionMonitor` polls the microphone and Accessibility status once a second while one is missing and every 30 seconds once both are granted, since each check of the microphone asks macOS's privacy service; opening a window checks them at once. A change moves onboarding on and makes `KeyMonitorController` start the `KeyEventMonitor` if it isn't running. The controller also restarts a monitor that stops, and `KeyEventTap` turns itself back on when macOS switches it off.
+2. `DictationController` feeds the monitor's key events to `RecordingTriggers` and hands finished recordings to the queue. `RecordingController` starts and stops the `AudioRecorder`, polls `ReleaseWatchdog` for a lost key-up, and captures the focus target.
+3. `DictationQueue` runs finished recordings one at a time: the `Transcriber` recognizes them, `TranscriptProcessor` applies the dictionary, snippets, and the mode, and the `TextInserter` pastes the result.
+4. An AI mode runs the `TextRewriter` under the deadline of the chosen `CloudModel` or the local server, validates the answer with `RewriteValidator`, and on any `RewriteError` falls back to Light with a `RewriteFallback` that says why.
+5. An edit by voice gives Whisper the dictionary terms but skips their replacements, the snippets, and the mode: `TranscriptProcessor.edit` sends the selection read at the key press and the spoken instruction to the `TextRewriter`, and the answer replaces the selection. A failure pastes nothing.
+6. The outcome becomes a `HUDMessage`. The text becomes the latest transcript, even in a password field, and text that is pasted or copied becomes a history entry unless it came from an edit.
 
 ## Invariants
 
-- Dependencies point toward `WaftCore`, which imports Foundation only and
-  builds with strict memory safety. `WaftFeatures` never imports an adapter
-  module; it sees adapters through the interfaces in `WaftCore`.
-- Only `AppDependencies.live()` names concrete adapters. There are no
-  singletons.
-- Declarations shared between modules are `package`, never `public`. Imports
-  follow the `InternalImportsByDefault` rule in [AGENTS.md](../AGENTS.md).
+- Dependencies point toward `WaftCore`, which imports Foundation only and builds with strict memory safety. `WaftFeatures` never imports an adapter module; it sees adapters through the interfaces in `WaftCore`.
+- Only `AppDependencies.live()` names concrete adapters. There are no singletons.
+- Declarations shared between modules are `package`, never `public`. Imports follow the `InternalImportsByDefault` rule in [AGENTS.md](../AGENTS.md).
 - Rules that need no system access are value types in `WaftCore`.
-- `WhisperTranscriber` and `AudioEngineRecorder` are actors, so recognition
-  and audio stay off the main actor.
-- Audio, dictated text, and clipboard contents never reach the log or the
-  disk, apart from the history the user keeps.
-- User-facing strings use `String(localized:)` or `LocalizedStringKey`, even
-  the names of domain values in `WaftCore`. Choosing a language in Waft writes
-  `AppleTextDirection` next to `AppleLanguages`, so Arabic and Hebrew lay out
-  right to left.
+- `WhisperTranscriber` and `AudioEngineRecorder` are actors, so recognition and audio stay off the main actor.
+- Audio, dictated text, and clipboard contents never reach the log or the disk, apart from the history the user keeps.
+- User-facing strings use `String(localized:)` or `LocalizedStringKey`, even the names of domain values in `WaftCore`. Choosing a language in Waft writes `AppleTextDirection` next to `AppleLanguages`, so Arabic and Hebrew lay out right to left.
 
 ## Third-party packages
 
-The package depends only on WhisperKit and Sparkle, pinned to exact versions
-in `Package.swift`, with every resolved package recorded in `Package.resolved`.
-Dependabot proposes updates for them and for the GitHub Actions. These
-candidates were rejected:
+The package depends only on WhisperKit and Sparkle, pinned to exact versions in `Package.swift`, with every resolved package recorded in `Package.resolved`. Dependabot proposes updates for them and for the GitHub Actions. These candidates were rejected:
 
 | Package | Why not |
 | --- | --- |
@@ -146,25 +99,13 @@ candidates were rejected:
 To add a language:
 
 1. Add a case to `Language` with its Whisper code.
-2. Add its names in `Language+Names` and its writing systems in
-   `Language+Typography`, where a period or question mark of its own also
-   goes. Letter case and word spacing follow from the `WritingScript`.
+2. Add its names in `Language+Names` and its writing systems in `Language+Typography`, where a period or question mark of its own also goes. Letter case and word spacing follow from the `WritingScript`.
 3. If it has marks that comparisons ignore, list them in `Language+Folding`.
-4. Add its rows: hesitation sounds in `HesitationPattern`, stock phrases in
-   `StockPhrase`, voice commands in `VoiceCommands`, and the example sentence
-   in `WhisperPrompt`.
+4. Add its rows: hesitation sounds in `HesitationPattern`, stock phrases in `StockPhrase`, voice commands in `VoiceCommands`, and the example sentence in `WhisperPrompt`.
 5. If it sounds like another language, add a group in `Language+SoundAlike`.
 
 To add anything else:
 
-- **A mode.** Add a case to `Mode` with its title, summary, and storage key,
-  and list it in `Mode.builtIn`. An AI mode needs its instruction in
-  `RewritePrompt`.
-- **An AI provider.** Describe its API in `WaftPlatform/Network` as a
-  `RewriteAPI` with a model identifier for each `CloudModel`, add a
-  `CloudProvider` case, a `PerProvider` property, the names of its models in
-  `CloudProvider+Display`, and its keychain account in
-  `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its
-  account in [Removing everything](privacy.md#removing-everything).
-- **An adapter.** Implement the interface in `WaftPlatform` and pass it in
-  `AppDependencies.live()`.
+- **A mode.** Add a case to `Mode` with its title, summary, and storage key, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
+- **An AI provider.** Describe its API in `WaftPlatform/Network` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its keychain account in `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its account in [Removing everything](privacy.md#removing-everything).
+- **An adapter.** Implement the interface in `WaftPlatform` and pass it in `AppDependencies.live()`.
