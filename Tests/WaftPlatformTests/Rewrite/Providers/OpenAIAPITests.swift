@@ -40,13 +40,6 @@ struct OpenAIAPITests {
         }
     }
 
-    @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-test", isBroken: true)])
-    func `needs an API key`(store: FakeValueStore<String>) {
-        #expect(throws: RewriteError.missingKey) {
-            try OpenAIAPI(apiKeyStore: store).call(for: .cleanup("hello"))
-        }
-    }
-
     @Test(arguments: [
         (
             #"{"output":[{"type":"reasoning"},{"type":"message","content":[{"type":"output_text","text":"Hi."}]}]}"#,

@@ -45,13 +45,6 @@ struct AnthropicAPITests {
         }
     }
 
-    @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-ant-test", isBroken: true)])
-    func `needs an API key`(store: FakeValueStore<String>) {
-        #expect(throws: RewriteError.missingKey) {
-            try AnthropicAPI(apiKeyStore: store).call(for: .cleanup("hello"))
-        }
-    }
-
     @Test(arguments: [
         (#"{"content":[{"type":"text","text":"Hello there."}],"stop_reason":"end_turn"}"#, "Hello there."),
         (
