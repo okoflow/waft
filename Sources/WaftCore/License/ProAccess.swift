@@ -10,7 +10,7 @@ package struct ProAccess: Equatable, Sendable {
 
     package static let isFreeDuringBeta = true
 
-    static let trialLength = 3
+    private static let trialLength = 3
 
     package let status: Status
 

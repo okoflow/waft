@@ -1,5 +1,5 @@
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct RunningAppTests {
     @Test(arguments: [("Safari", "Safari"), (nil, "com.apple.Safari")] as [(String?, String)])

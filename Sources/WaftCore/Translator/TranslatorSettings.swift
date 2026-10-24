@@ -7,10 +7,6 @@ package struct TranslatorSettings: Codable, Equatable, Sendable {
     package var cloudModel = CloudModel.balanced
     package private(set) var recentLanguages: [Language] = []
 
-    package init(translation: Translation = Translation()) {
-        self.translation = translation
-    }
-
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -19,6 +15,10 @@ package struct TranslatorSettings: Codable, Equatable, Sendable {
         instructions = container.decode(.instructions, default: instructions)
         cloudModel = container.decode(.cloudModel, default: cloudModel)
         recentLanguages = Array(container.decodeValidElements(.recentLanguages).prefix(Self.maximumRecentCount))
+    }
+
+    init(translation: Translation = Translation()) {
+        self.translation = translation
     }
 
     package func trustedSource(detected: Language?) -> Language? {

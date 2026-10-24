@@ -1,8 +1,8 @@
 package struct RewriteSetup: Sendable {
     package let provider: ModelProvider
     package let instructions: String
-    package let translation: Translation
 
+    let translation: Translation
     let writingVariants: WritingVariants
 
     private let cloudModels: PerProvider<CloudModel>
@@ -32,7 +32,7 @@ package struct RewriteSetup: Sendable {
         }
     }
 
-    package init(
+    init(
         provider: ModelProvider,
         instructions: String,
         cloudModels: PerProvider<CloudModel> = CloudModel.defaultChoices,

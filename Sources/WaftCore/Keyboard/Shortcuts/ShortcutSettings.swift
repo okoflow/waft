@@ -1,10 +1,6 @@
 package struct ShortcutSettings: Codable, Equatable, Sendable {
     private var combinations: [ShortcutAction: KeyCombination]
 
-    package init() {
-        combinations = Dictionary(uniqueKeysWithValues: ShortcutAction.allCases.map { ($0, $0.defaultCombination) })
-    }
-
     package init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: ShortcutAction.self)
 
@@ -13,6 +9,10 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
         for action in ShortcutAction.allCases {
             combinations[action] = try Self.decode(action, in: container)
         }
+    }
+
+    init() {
+        combinations = Dictionary(uniqueKeysWithValues: ShortcutAction.allCases.map { ($0, $0.defaultCombination) })
     }
 
     private static func decode(
@@ -38,10 +38,6 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
         }
     }
 
-    package func action(using combination: KeyCombination) -> ShortcutAction? {
-        ShortcutAction.allCases.first { combinations[$0] == combination }
-    }
-
     package func canReset(_ action: ShortcutAction) -> Bool {
         let fallback = action.defaultCombination
         guard combinations[action] != fallback else { return false }
@@ -53,5 +49,9 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
         guard canReset(action) else { return }
 
         combinations[action] = action.defaultCombination
+    }
+
+    func action(using combination: KeyCombination) -> ShortcutAction? {
+        ShortcutAction.allCases.first { combinations[$0] == combination }
     }
 }

@@ -5,7 +5,7 @@ package enum CloudModel: String, CaseIterable, Codable, Sendable {
     case balanced
     case smartest
 
-    package static let defaultChoices = PerProvider(claude: CloudModel.balanced, openAI: .balanced)
+    static let defaultChoices = PerProvider(claude: CloudModel.balanced, openAI: .balanced)
 
     package var summary: String {
         switch self {

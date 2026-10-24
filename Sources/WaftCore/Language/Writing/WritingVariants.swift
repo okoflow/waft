@@ -1,7 +1,7 @@
 package struct WritingVariants: Equatable, Sendable {
     private var chosen: [Language: WritingVariant]
 
-    package init(_ chosen: [Language: WritingVariant] = [:]) {
+    init(_ chosen: [Language: WritingVariant] = [:]) {
         self.chosen = chosen.filter { $0.key.writingVariants.contains($0.value) }
     }
 

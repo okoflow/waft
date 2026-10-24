@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct ShortcutSettingsTests {
     private static let controlOptionK = KeyCombination(keyCode: 40, modifiers: [.control, .option])

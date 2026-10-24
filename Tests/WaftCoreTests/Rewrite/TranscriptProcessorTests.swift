@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct TranscriptProcessorTests {
     private static let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean.")
