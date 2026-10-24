@@ -1,8 +1,18 @@
-package import AppKit
+import AppKit
 import SwiftUI
 
-package final class WindowPresenter: NSObject, NSWindowDelegate {
-    weak var model: AppModel?
+final class WindowPresenter: NSObject, NSWindowDelegate {
+    private static let settingsSize = CGSize(width: 820, height: 660)
+    private static let settingsMinimumSize = CGSize(width: 760, height: 520)
+    private static let transcriptionSize = CGSize(width: 600, height: 580)
+    private static let translatorSize = CGSize(width: 900, height: 460)
+
+    var onOnboardingClose: () -> Void = {}
+    var onSettingsClose: () -> Void = {}
+    var onTranscriptionClose: () -> Void = {}
+    var onTranslatorClose: () -> Void = {}
+    var isShowingUpdate: () -> Bool = { false }
+    var dictationTakesEscape: (TimeInterval) -> Bool = { _ in false }
 
     private let settingsState = SettingsWindowState()
     private var settingsWindow: NSWindow?
@@ -15,55 +25,46 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         [settingsWindow, onboardingWindow, transcriptionWindow].compactMap(\.self)
     }
 
-    private var isShowingUpdate: Bool {
-        guard let model else { return false }
-
-        return model.updates.isShowingUpdate
-    }
-
-    package func showSettings(_ pane: SettingsPane? = nil) {
-        if let pane {
-            settingsState.selection = pane
-        }
-
-        show(\.settingsWindow, make: makeSettingsWindow)
-    }
-
-    package func windowWillClose(_ notification: Notification) {
+    func windowWillClose(_ notification: Notification) {
         guard let closing = notification.object as? NSWindow else { return }
 
         if closing == onboardingWindow {
-            model?.onboarding.reset()
+            onOnboardingClose()
         }
 
         if closing == settingsWindow {
             settingsState.closeEditor()
-            model?.keyRecorder.stop()
-            model?.shortcutRecorder.stop()
+            onSettingsClose()
         }
 
         if closing == transcriptionWindow {
-            model?.transcription.cancel()
+            onTranscriptionClose()
         }
 
         if closing == translatorPanel {
-            model?.translator.stop()
+            onTranslatorClose()
         }
 
         updateActivationPolicy(closing: closing)
     }
 
-    func showOnboarding() {
-        show(\.onboardingWindow, make: makeOnboardingWindow)
+    func showSettings(_ pane: SettingsPane?, for model: AppModel) {
+        if let pane {
+            settingsState.selection = pane
+        }
+
+        show(\.settingsWindow, for: model, make: makeSettingsWindow)
     }
 
-    func showTranscription() {
-        show(\.transcriptionWindow, make: makeTranscriptionWindow)
+    func showOnboarding(for model: AppModel) {
+        show(\.onboardingWindow, for: model, make: makeOnboardingWindow)
     }
 
-    func showTranslator() {
-        guard let model else { return }
+    func showTranscription(for model: AppModel) {
+        show(\.transcriptionWindow, for: model, make: makeTranscriptionWindow)
+    }
 
+    func showTranslator(for model: AppModel) {
         model.translator.resume()
         reusableWindow(at: \.translatorPanel) { makeTranslatorPanel(model: model) }.present()
     }
@@ -80,12 +81,14 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         let otherWindows = appWindows.filter { $0 != closing }
         guard !otherWindows.contains(where: \.isOpen) else { return true }
 
-        return isShowingUpdate
+        return isShowingUpdate()
     }
 
-    private func show(_ keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>, make: (AppModel) -> NSWindow) {
-        guard let model else { return }
-
+    private func show(
+        _ keyPath: ReferenceWritableKeyPath<WindowPresenter, NSWindow?>,
+        for model: AppModel,
+        make: (AppModel) -> NSWindow,
+    ) {
         let window = reusableWindow(at: keyPath) { make(model) }
 
         model.permissions.refresh()
@@ -121,12 +124,6 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
         }
     }
 
-    private func dictationTakes(_ escape: NSEvent) -> Bool {
-        guard let model else { return false }
-
-        return model.dictationTakesEscape(pressedAt: escape.timestamp)
-    }
-
     private func releaseFocus(for event: NSEvent) {
         guard let window = event.window,
               [settingsWindow, onboardingWindow].contains(window),
@@ -138,8 +135,8 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     private func makeSettingsWindow(model: AppModel) -> NSWindow {
         let window = makeWindow(
             SettingsWindowView(model: model, state: settingsState),
-            size: Metrics.settingsSize,
-            minimumSize: Metrics.settingsMinimumSize,
+            size: Self.settingsSize,
+            minimumSize: Self.settingsMinimumSize,
             hasToolbar: true,
         )
 
@@ -149,33 +146,33 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
     }
 
     private func makeTranscriptionWindow(model: AppModel) -> NSWindow {
-        let view = TranscriptionView(model: model.transcription) { [weak self] in
-            self?.showSettings(.pro)
+        let view = TranscriptionView(model: model.transcription) { [weak model] in
+            model?.showSettings(.pro)
         }
 
         return makeWindow(
             view,
-            size: Metrics.transcriptionSize,
-            minimumSize: Metrics.transcriptionMinimumSize,
+            size: Self.transcriptionSize,
+            minimumSize: TranscriptionView.minimumSize,
             title: String(localized: "Transcribe File"),
         )
     }
 
     private func makeTranslatorPanel(model: AppModel) -> TranslatorPanel {
-        let view = TranslatorView(model: model.translator) { [weak self] in
+        let view = TranslatorView(model: model.translator) { [weak self, weak model] in
             self?.translatorPanel?.close()
-            self?.showSettings(.pro)
+            model?.showSettings(.pro)
         }
 
         let panel = TranslatorPanel(content: hostingController(for: view)) { [weak self] event in
             guard let self else { return false }
 
-            return dictationTakes(event)
+            return dictationTakesEscape(event.timestamp)
         }
 
         panel.title = String(localized: "Translator")
-        panel.setContentSize(Metrics.translatorSize)
-        panel.contentMinSize = Metrics.translatorMinimumSize
+        panel.setContentSize(Self.translatorSize)
+        panel.contentMinSize = TranslatorView.minimumSize
 
         style(panel)
 
@@ -258,25 +255,5 @@ package final class WindowPresenter: NSObject, NSWindowDelegate {
 extension NSWindow {
     fileprivate var isOpen: Bool {
         [isVisible, isMiniaturized].contains(true)
-    }
-
-    fileprivate func clickLeavesEditedText(at location: NSPoint) -> Bool {
-        guard firstResponder is NSText, let hit = contentView?.hitTest(location) else { return false }
-
-        return !hit.isTextInput
-    }
-}
-
-extension NSView {
-    fileprivate var isTextInput: Bool {
-        sequence(first: self, next: \.superview).contains(where: \.isTextControl)
-    }
-
-    private var isTextControl: Bool {
-        switch self {
-        case is NSTextView, is NSTextField: true
-        case let scrollView as NSScrollView: scrollView.documentView is NSTextView
-        default: false
-        }
     }
 }

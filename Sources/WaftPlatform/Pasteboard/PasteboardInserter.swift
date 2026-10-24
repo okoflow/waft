@@ -61,7 +61,7 @@ package final class PasteboardInserter: TextInserter {
         let snapshot = await Task.detached { PasteboardSnapshot.take(from: .general) }.value
         let changeCount = NSPasteboard.general.changeCount
 
-        CommandShortcut.copy.post()
+        CommandKeystroke.copy.post()
 
         await Poll.until(timeout: Self.copyTimeout) { copiedText(since: changeCount) != nil }
 
@@ -107,7 +107,7 @@ package final class PasteboardInserter: TextInserter {
         }
 
         lazyText.arm()
-        CommandShortcut.paste.post()
+        CommandKeystroke.paste.post()
 
         guard await Poll.until(timeout: Self.readTimeout, { lazyText.wasReadAfterArming }) else {
             Logger.insertion.notice("Skipped pasting: the app didn't read the text in time")

@@ -206,7 +206,7 @@ final class DictationQueue {
             """
             Recognized \(transcript.text.count) characters of \(transcript.language.rawValue, privacy: .public) \
             in \(transcript.detectionDuration + transcript.decodingDuration, privacy: .public); \
-            mode \(job.mode.storageKey, privacy: .public) ran as \(processed.mode.storageKey, privacy: .public), \
+            mode \(job.mode.rawValue, privacy: .public) ran as \(processed.mode.rawValue, privacy: .public), \
             fallback \(Self.describe(processed.fallback), privacy: .public)
             """,
         )

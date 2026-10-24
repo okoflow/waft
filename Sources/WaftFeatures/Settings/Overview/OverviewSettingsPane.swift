@@ -88,6 +88,8 @@ private struct AllTimeSection: View {
 }
 
 private struct Metric: View {
+    private static let verticalPadding: CGFloat = 14
+
     let value: String
     let label: LocalizedStringKey
 
@@ -102,7 +104,7 @@ private struct Metric: View {
                 .detailText()
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, Metrics.metricPadding)
+        .padding(.vertical, Self.verticalPadding)
         .accessibilityElement(children: .combine)
     }
 }

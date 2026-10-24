@@ -24,6 +24,9 @@ struct ProSettingsPane: View {
 }
 
 private struct ProHero: View {
+    private static let iconSize: CGFloat = 64
+    private static let padding: CGFloat = 20
+
     let pro: ProModel
 
     private var status: String {
@@ -50,7 +53,7 @@ private struct ProHero: View {
         let shape = RoundedRectangle.card
 
         HStack(spacing: Metrics.rowSpacing) {
-            AppIcon(size: Metrics.cardIconSize)
+            AppIcon(size: Self.iconSize)
 
             VStack(alignment: .leading, spacing: Metrics.heroSpacing) {
                 HStack(spacing: Metrics.inlineSpacing) {
@@ -77,7 +80,7 @@ private struct ProHero: View {
             }
         }
         .foregroundStyle(.white)
-        .padding(Metrics.heroCardPadding)
+        .padding(Self.padding)
         .brandGlow(in: shape)
     }
 }

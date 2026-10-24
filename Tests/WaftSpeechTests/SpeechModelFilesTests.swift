@@ -32,43 +32,19 @@ struct SpeechModelFilesTests {
         }
     }
 
-    @Test
-    func `counts a complete model without a download cache as installed`() throws {
+    @Test(arguments: [(String?.none, true), ("config.json.metadata", true), ("AudioEncoder.mlmodelc.incomplete", false)])
+    func `counts a complete model as installed unless its download is incomplete`(cacheFile: String?, isInstalled: Bool) throws {
         try withTemporaryDirectory { directory in
             let accurate = try installed(.accurate, in: directory)
 
-            #expect(!FileManager.default.fileExists(atPath: downloadCache(for: accurate).path))
-            #expect(accurate.isInstalled)
-        }
-    }
+            if let cacheFile {
+                let cache = downloadCache(for: accurate)
 
-    @Test
-    func `counts a complete model with finished download metadata as installed`() throws {
-        try withTemporaryDirectory { directory in
-            let accurate = try installed(.accurate, in: directory)
+                try FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
+                try Data().write(to: cache.appending(path: cacheFile))
+            }
 
-            let cache = downloadCache(for: accurate)
-
-            try FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
-            try Data().write(to: cache.appending(path: "config.json.metadata"))
-
-            #expect(accurate.isInstalled)
-        }
-    }
-
-    @Test
-    func `counts a model with an incomplete download as not installed`() throws {
-        try withTemporaryDirectory { directory in
-            let accurate = try installed(.accurate, in: directory)
-
-            #expect(accurate.isInstalled)
-
-            let pending = downloadCache(for: accurate)
-
-            try FileManager.default.createDirectory(at: pending, withIntermediateDirectories: true)
-            try Data().write(to: pending.appending(path: "AudioEncoder.mlmodelc.incomplete"))
-
-            #expect(!accurate.isInstalled)
+            #expect(accurate.isInstalled == isInstalled)
         }
     }
 

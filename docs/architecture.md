@@ -18,7 +18,7 @@ flowchart TD
 | Module | Isolation | What lives there |
 | --- | --- | --- |
 | `WaftCore` | Nonisolated | Domain types, text and recognition rules, state machines, and every interface between modules |
-| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the model files, and the language-restricted tokenizer |
+| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the decoding rules it runs with, the model files, and the language-restricted tokenizer |
 | `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, language detection, the AI APIs, license signatures, updates, and the system |
 | `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, file transcription, and the translator |
 | `Waft` | Main actor | The app, its delegate, and `AppDependencies.live()` |
@@ -31,19 +31,20 @@ The tables list the folders whose names don't say enough.
 
 | Folder | What lives there |
 | --- | --- |
-| `Keyboard` | The `KeyEventMonitor` interface; `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; `ReleaseWatchdog`, which catches a lost key-up; `ShortcutAction`, `KeyCombination`, and `ShortcutSettings`, the global shortcuts and their defaults |
-| `Speech` | The `Transcriber` interface, `SpeechModelState` (its transitions return the effects a controller runs), `SpeechGate`, `WhisperPrompt`, and `SubtitleFormatter` |
-| `Language` | `Language` with its names, writing systems, and sound-alike languages, and the `WritingVariants` for Chinese and Serbian |
-| `Text` | Light mode (`LightModeRules`, `VoiceCommands`), `HallucinationFilter`, and `SerbianCyrillic` |
-| `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; and `Settings+Translator`, which does the same for a `TextTask` and lists the languages the translator expects |
-| `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
-| `Translator` | `TranslatorSettings`: the translator's languages and recent languages, when a chosen source gives way, where text goes and how a swap turns the pair, its model tier, and the edited instructions of each `TextTask` |
+| `Keyboard` | `KeyEvent`, the `KeyEventMonitor` and `KeyboardLayout` interfaces, and `FunctionKeys`. `PushToTalk` holds `PushToTalk`, the state machine from key events to start, hands-free, finish, and discard for the chosen `DictationStart`; `RecordingTriggers`, which runs one for the dictation key and one for the editing key; and `ReleaseWatchdog`, which catches a lost key-up. `Shortcuts` holds `ShortcutAction`, `KeyCombination`, and `ShortcutSettings`, the global shortcuts and their defaults |
+| `Speech` | `Model` holds `SpeechModel` and `SpeechModelState`, whose transitions return the effects a controller runs. `Recognition` holds the `Transcriber` interface, `SpeechGate`, `WhisperPrompt`, and `HallucinationFilter` with its `StockPhrase` rows. `Files` holds `MediaDecoder`, `TimedTranscript`, and `SubtitleFormatter` |
+| `Language` | `Language` with its names, typography, and sound-alike languages. `Writing` holds the writing systems and the `WritingVariants` for Chinese and Serbian, with `SerbianCyrillic` |
+| `Text` | String rules that several features share. `LightMode` holds Light mode: `LightModeRules`, `HesitationRemover`, and `VoiceCommands` |
+| `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; `Settings+Shortcuts`, which finds the shortcut or key a new combination conflicts with; and `Settings+Translator`, which does the same as `Settings+Modes` for a `TextTask` and lists the languages the translator expects |
+| `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; `RewriteError` and `RewriteFallback`; and `Translation`, the target of Translate and the translator. `Providers` holds the providers, `CloudModel`, and the `TextRewriter` interface. `Prompt` holds `RewriteRequest`, `RewritePrompt`, and `RewriteValidator` |
+| `Translator` | `TextTask`, the work the translator does on typed text, and `TranslatorSettings`: the translator's languages and recent languages, when a chosen source gives way, where text goes and how a swap turns the pair, its model tier, and the edited instructions of each `TextTask` |
 | `Insertion` | The `TextInserter` interface, and whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
+| `Support` | `Poll`, `Task.slept`, `Uptime`, and the other helpers that every module uses, such as `Error.logDescription` |
 
 **`WaftPlatform`** implements the interfaces in a folder per area, such as `KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and `PasteboardInserter` in `Pasteboard`.
 
-- `Network` holds `HTTPRewriter`, which sends a rewrite through an API description per service (`AnthropicAPI`, `OpenAIAPI`, and `ChatCompletionsAPI` for local servers), and `LocalServerBrowser`, which lists a local server's models.
+- `Rewrite` holds `HTTPRewriter`, which sends a rewrite through an API description per service in `Providers` (`AnthropicAPI`, `OpenAIAPI`, and `ChatCompletionsAPI` for local servers) over the transport in `HTTP`, and `LocalServerBrowser`, which lists a local server's models.
 - `Storage` holds `JSONFileStore`, which keeps a copy of a file it can't read, so a later save doesn't destroy it. `ValueStore+Logging` in `WaftFeatures/Support` logs persistence failures.
 - `Updates` holds `SparkleUpdater`, which turns itself off when `Info.plist` has no `SUFeedURL`. `scripts/bundle.sh` removes the key from debug bundles.
 
@@ -54,12 +55,14 @@ The tables list the folders whose names don't say enough.
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of the first three is open or Sparkle shows an update |
 | `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
-| `HUD` | `HUDController` and `HUDPanel`, the HUD at the notch, at the top of the screen, or below the menu bar when `ForeignWindow` finds another app's window over the notch |
-| `MenuBar` | The menu bar icon (the W mark) and the menu |
-| `Translator` | `TranslatorModel` behind the translator; `TranslatorPanel`, the floating panel that opens over the app in front without activating Waft and closes when you leave it; `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it; `TranslatorShortcuts`, which handles its three shortcuts; `CopyableText`, the translation that copies itself on a click |
+| `HUD` | `HUDController` and `HUDPanel`, the HUD at the notch, at the top of the screen, or below the menu bar when `ForeignWindow` finds another app's window over the notch; `Island` holds the views inside it |
+| `MenuBar` | `MenuBarScene`, the menu bar icon (the W mark), and the menu |
+| `Settings` | `Window` holds the Settings window and its sidebar, a folder per pane holds that pane, and `Shared` holds what several panes or the setup guide use, such as `TryoutModel`, `AIModelSetup`, and `ShortcutRow` |
+| `Translator` | `Panel` holds `TranslatorModel` behind the translator; `TranslatorPanel`, the floating panel that opens over the app in front without activating Waft and closes when you leave it; and `CopyableText`, the translation that copies itself on a click. `Selection` holds `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it, and `TranslatorShortcuts`, which handles its three shortcuts |
+| `DesignSystem` | `Tokens` (colors, metrics, motion, and fonts), `Brand` (the icon and the Waft+ marks), `Controls`, `Rows` (the cards, sections, and rows of Settings and the setup guide), and view `Modifiers` |
 | `Support` | Logging, timers, and display helpers that several features share |
 
-**`Tests`** has a Swift Testing target for every module but `Waft`; see [Tests](../CONTRIBUTING.md#tests).
+**`Tests`** has a Swift Testing target for every module but `Waft`, with its suites in the folders of `Sources` and its shared doubles and fixtures in `Fakes` and `Fixtures`; see [Tests](../CONTRIBUTING.md#tests).
 
 **`Packaging`** holds the rest of the app bundle: `Waft-Info.plist`, the entitlements, the icon, the translations, the start and stop sounds, and the Homebrew cask template. **`scripts`** holds the shell scripts that `make` runs.
 
@@ -106,6 +109,6 @@ To add a language:
 
 To add anything else:
 
-- **A mode.** Add a case to `Mode` with its title, summary, and storage key, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
-- **An AI provider.** Describe its API in `WaftPlatform/Network` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its keychain account in `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its account in [Removing everything](privacy.md#removing-everything).
+- **A mode.** Add a case to `Mode` with its title, summary, and the raw value it is stored under, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
+- **An AI provider.** Describe its API in `WaftPlatform/Rewrite/Providers` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its keychain account in `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its account in [Removing everything](privacy.md#removing-everything).
 - **An adapter.** Implement the interface in `WaftPlatform` and pass it in `AppDependencies.live()`.

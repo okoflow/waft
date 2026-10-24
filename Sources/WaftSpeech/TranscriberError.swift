@@ -1,7 +1,7 @@
 import Foundation
 import WaftCore
 
-enum TranscriberError: LocalizedError {
+enum TranscriberError: LocalizedError, Equatable {
     case modelMissing(SpeechModel)
     case notLoaded
     case tokenizerMissing

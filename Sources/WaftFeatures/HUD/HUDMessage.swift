@@ -38,6 +38,10 @@ struct HUDMessage: Equatable, Sendable {
         HUDMessage(kind: .copied, title: text, detail: note)
     }
 
+    static func blockedInPasswordField(detail: String? = nil) -> HUDMessage {
+        HUDMessage(kind: .warning, title: String(localized: "Not pasted into a password field"), detail: detail)
+    }
+
     static func recordingFailed(_ detail: String) -> HUDMessage {
         HUDMessage(kind: .warning, title: String(localized: "Recording failed"), detail: detail)
     }

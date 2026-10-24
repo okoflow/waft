@@ -29,7 +29,7 @@ struct DoneStep: View {
                     ) {
                         Button("Set Up…") {
                             model.onboarding.finish()
-                            model.windows.showSettings(.aiModels)
+                            model.showSettings(.aiModels)
                         }
                     }
                 }

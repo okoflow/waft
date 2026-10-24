@@ -43,10 +43,6 @@ package enum Mode: Hashable, Codable, InstructionsSubject {
         }
     }
 
-    package var storageKey: String {
-        rawValue
-    }
-
     package var rawValue: String {
         switch self {
         case .raw: "raw"
@@ -62,15 +58,15 @@ package enum Mode: Hashable, Codable, InstructionsSubject {
         RewritePrompt.defaultInstructions(for: self)
     }
 
-    package init?(rawValue storageKey: String) {
-        if let builtIn = Self.builtIn.first(where: { $0.storageKey == storageKey }) {
+    package init?(rawValue: String) {
+        if let builtIn = Self.builtIn.first(where: { $0.rawValue == rawValue }) {
             self = builtIn
 
             return
         }
 
-        guard storageKey.hasPrefix(Self.customPrefix),
-              let id = UUID(uuidString: String(storageKey.dropFirst(Self.customPrefix.count)))
+        guard rawValue.hasPrefix(Self.customPrefix),
+              let id = UUID(uuidString: String(rawValue.dropFirst(Self.customPrefix.count)))
         else { return nil }
 
         self = .custom(id)
