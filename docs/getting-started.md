@@ -12,13 +12,13 @@ brew install --cask okoflow/tap/waft
 
 Or download `Waft-X.Y.Z.dmg` from the [latest release](https://github.com/okoflow/waft/releases/latest), open it, and drag Waft to Applications.
 
-Waft is signed by the project but not yet notarized by Apple, so macOS blocks a copy from the disk image the first time it opens. The Homebrew cask removes the quarantine flag behind that check, so a copy from Homebrew opens right away. To open a copy from the disk image:
+Waft is signed by the project but not yet notarized by Apple, so macOS blocks a copy from the disk image the first time it opens; a copy from Homebrew opens right away. Allow the disk image's copy once, and [updates](usage.md#updates) then install from inside Waft:
 
 1. Open Waft, and click **Done** when macOS says it can't verify Waft.
-2. In System Settings › Privacy & Security, click **Open Anyway** next to "Waft" was blocked, and confirm with your password or Touch ID.
+2. In System Settings › Privacy & Security, click **Open Anyway** next to the message that Waft was blocked, and confirm with your password or Touch ID.
 3. Click **Open Anyway** in the dialog that follows.
 
-You do this once: updates install from inside Waft, as [Updates](usage.md#updates) describes. To build Waft yourself instead, follow [Development setup](../CONTRIBUTING.md#development-setup); building needs a newer macOS than running does.
+To build Waft yourself instead, follow [Development setup](../CONTRIBUTING.md#development-setup); building needs a newer macOS than running does.
 
 ## 2. Set up
 

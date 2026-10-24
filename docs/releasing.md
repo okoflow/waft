@@ -6,13 +6,13 @@ This page describes how you turn `main` into a release that users get from GitHu
 
 | Artifact | Made by | Used by |
 | --- | --- | --- |
-| `Waft-X.Y.Z.dmg` | `scripts/release.sh`: the Waft Release signature | GitHub Releases, the Homebrew cask, and Sparkle |
+| `Waft-X.Y.Z.dmg` | `scripts/release.sh`, signed with Waft Release | GitHub Releases, the Homebrew cask, and Sparkle |
 | `appcast.xml` | Sparkle's `generate_appcast`, signed with the project's EdDSA key | Waft's updater, at `releases/latest/download/appcast.xml`, and the cask's `livecheck` |
 | `waft.rb` | `scripts/release.sh`, from `Packaging/Homebrew/waft.rb` | `Casks/waft.rb` in `okoflow/homebrew-tap` |
 
 Waft is not sandboxed, so the bundle ships Sparkle without its XPC services.
 
-Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity. macOS ties the permissions it grants to that certificate, so they survive updates, but Gatekeeper blocks the first launch until the user clicks **Open Anyway**. The cask's `postflight_steps` remove the quarantine flag, so a copy from Homebrew opens right away. [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
+Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity. macOS ties the permissions it grants to that certificate, so they survive updates, but Gatekeeper blocks the first launch of a copy from the disk image until the user clicks **Open Anyway**, as [Install](getting-started.md#1-install) shows. The cask's `postflight_steps` remove the quarantine flag, so a copy from Homebrew opens right away. [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
 
 ## One-time setup
 
@@ -69,7 +69,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
 
 5. Copy `build/release/waft.rb` to `Casks/waft.rb` in your clone of `okoflow/homebrew-tap`, then commit and push it.
 
-Installed copies find the update within a day, or at once with **Check for Updates…**.
+Installed copies then find the update, as [Updates](usage.md#updates) describes.
 
 ## Switching to a Developer ID
 

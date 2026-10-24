@@ -4,7 +4,7 @@ This page says what to do when something doesn't work, starting from what the HU
 
 ## macOS won't open Waft
 
-macOS says it can't verify that Waft is free of malware because Waft isn't notarized by Apple yet. [Install](getting-started.md#1-install) shows how to open it once with **Open Anyway**.
+When macOS says it can't verify that Waft is free of malware, allow it once with **Open Anyway**, as [Install](getting-started.md#1-install) shows.
 
 ## The dictation or editing key does nothing
 
@@ -15,11 +15,11 @@ macOS says it can't verify that Waft is free of malware because Waft isn't notar
 | "Editing by voice is part of Waft+." or "Translating and fixing text is part of Waft+." | Add a license in Settings › Waft+ |
 | The menu or the HUD shows the speech model downloading or preparing | Wait; [The speech model](how-it-works.md#the-speech-model) says how long it takes |
 | The menu says "Speech model failed" | See [The speech model fails](#the-speech-model-fails) |
+| The editing key shows "None" | There's none by default: set **Editing key** in Settings › Dictation |
 | Another key is set | The first line of the menu and **Dictation key** in Settings › Dictation show which one |
 | <kbd>🌐</kbd> opens emoji or dictation | Set **Press 🌐 key to** to **Do Nothing** in System Settings › Keyboard |
 | A function key acts as a media key | Turn on **Use F1, F2, etc. keys as standard function keys** in System Settings › Keyboard › Keyboard Shortcuts › Function Keys |
 | A shortcut does nothing | It shows "None" and is off, or Settings says "Unavailable: another app uses this shortcut. Choose another one." under it; [Shortcuts](usage.md#shortcuts) says how to change it |
-| Permissions were lost after a rebuild | Run `make signing` once ([Development setup](../CONTRIBUTING.md#development-setup)), rebuild, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security, and allow them again. On macOS 27 and later, Accessibility there is called Device Control and Data Access |
 | The menu bar icon is missing | Turn on **Show in menu bar** in Settings › General, and on macOS 26 and later allow Waft in System Settings › Menu Bar. A crowded menu bar can hide the icon behind the notch |
 
 ## The text isn't pasted
@@ -27,7 +27,7 @@ macOS says it can't verify that Waft is free of malware because Waft isn't notar
 | Symptom | Cause and fix |
 | --- | --- |
 | The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
-| "Not pasted into a password field" | A password field, or an app that holds secure keyboard input so Waft can't see the field; **Copy Last Dictation** in the menu gets the text back |
+| "Not pasted into a password field" | A password field, or an app that holds secure keyboard input so Waft can't see the field; **Copy Last Dictation** in the menu gets a dictation back within 10 minutes |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
 | "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |

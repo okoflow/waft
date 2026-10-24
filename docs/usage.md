@@ -90,9 +90,7 @@ Two [shortcuts](#shortcuts) work on text selected in any app:
 - **Translate selected text** replaces the selection with its translation into the translator's languages.
 - **Fix selected text** corrects its spelling, grammar, and punctuation.
 
-Waft reads the selection through Accessibility. An app that doesn't expose it there, such as Chrome or an Electron app, gets <kbd>⌘</kbd><kbd>C</kbd> instead, and Waft then restores your clipboard as it does after [pasting](how-it-works.md#pasting).
-
-If focus moved while the AI model worked, Waft copies the result instead. A failure changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
+Waft reads the selection through Accessibility, or copies it with <kbd>⌘</kbd><kbd>C</kbd> in apps that don't expose it there, such as Chrome or an Electron app; [The translator](how-it-works.md#the-translator) has the details. If focus moved while the AI model worked, Waft copies the result instead. A failure changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
 
 ## Transcribing files
 
@@ -139,7 +137,7 @@ Four shortcuts work in any app. To change one, click it and press a key with Com
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
-Waft lives in the menu bar, as the Waft W mark, and shows in the Dock only while Settings, the setup guide, or the file transcription window is open.
+Waft lives in the menu bar, as the Waft W mark, and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open.
 
 | Item | What it does |
 | --- | --- |
@@ -153,13 +151,14 @@ To hide the icon, turn off **Show in menu bar** in Settings › General. Dictati
 
 ## General settings
 
-- **App language** in Settings › General switches Waft's interface between 23 languages, or **Same as macOS**. Arabic and Hebrew lay it out from right to left.
+- **Open at login** in Settings › General starts Waft when you log in.
+- **App language** switches Waft's interface between 23 languages, or **Same as macOS**. Arabic and Hebrew lay it out from right to left.
 - **Play sounds**, on by default, plays a short chime when recording starts and another when it stops.
 - **Lower other sounds while recording**, on by default, turns the Mac's volume down to a quarter once recording starts and restores it afterward, unless you changed it meanwhile.
 
 ## Updates
 
-Waft checks for updates once a day and asks before installing one. Turn off **Check for updates automatically** in Settings › General to check only with **Check Now** there or **Check for Updates…** in the menu. Waft installs only an update signed with the project's key. A debug build, such as one from `make run`, doesn't update itself; [Development setup](../CONTRIBUTING.md#development-setup) describes how to build again.
+Waft checks for updates once a day and asks before installing one. Turn off **Check for updates automatically** in Settings › General to check only with **Check Now** there or **Check for Updates…** in the menu. Waft installs only an update signed with the project's key.
 
 ## Waft+
 

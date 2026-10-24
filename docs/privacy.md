@@ -23,44 +23,41 @@ Raw and Light never use the network, and the translator detects languages on you
 
 | What | Where |
 | --- | --- |
-| Settings | The `com.okoflow.waft` preferences domain |
+| Settings, the app language, the trial start, and the updater's state | The `com.okoflow.waft` preferences domain |
 | Dictionary and snippets | `~/Library/Application Support/Waft/dictionary.json` |
 | Daily word, dictation, and time counts for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
-| History, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
+| History, with the mode and app of each dictation, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
 
 Only you can read the dictionary, statistics, and history files. If Waft can't read one of them, it keeps an `*.unreadable.json` copy beside it, which **Clear History…** in Settings › History also deletes for the history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared) says how to recover it.
 
-**Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, and text that Waft kept out of a password field stay out of the history and the statistics.
+**Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, file transcriptions, and text that Waft kept out of a password field stay out of the history and the statistics.
 
 Waft marks the text it puts on the clipboard as transient and concealed, so clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org) conventions don't store it, and Universal Clipboard skips it.
 
-The [shortcuts on selected text](usage.md#selected-text) read the clipboard when an app hides the selection from Accessibility: Waft presses <kbd>⌘</kbd><kbd>C</kbd>, reads the copied text, and restores the clipboard. The app, not Waft, copies that text, so a clipboard manager may store it.
+When the [shortcuts on selected text](usage.md#selected-text) copy the selection with <kbd>⌘</kbd><kbd>C</kbd>, the app, not Waft, puts it on the clipboard, so a clipboard manager may store it.
 
 ## Logs
 
-The unified log, under the `com.okoflow.waft` subsystem, never contains:
-
-- The dictated text.
-- The audio.
-- The clipboard contents.
-
-[Logs](troubleshooting.md#logs) has the commands to read it.
+The unified log, under the `com.okoflow.waft` subsystem, never contains the dictated text, the audio, or the clipboard contents. [Logs](troubleshooting.md#logs) has the commands to read it.
 
 ## Removing everything
 
-Quit Waft and delete the app, or run `brew uninstall --zap --cask waft` if you installed it with Homebrew. Then run:
+If you installed Waft with Homebrew, `brew uninstall --zap --cask waft` quits it and removes the app, its files, and its settings. Otherwise, quit Waft, delete the app, and run:
 
 ```sh
 rm -rf ~/Library/Application\ Support/Waft ~/Library/Caches/com.okoflow.waft \
   ~/Library/HTTPStorages/com.okoflow.waft ~/Library/HTTPStorages/com.okoflow.waft.binarycookies
 defaults delete com.okoflow.waft
+```
+
+Either way, remove the API keys and the license key from the keychain, and the permissions you granted:
+
+```sh
 security delete-generic-password -s com.okoflow.waft -a anthropic-api-key
 security delete-generic-password -s com.okoflow.waft -a openai-api-key
 security delete-generic-password -s com.okoflow.waft -a license-key
 tccutil reset All com.okoflow.waft
 ```
-
-The `security` commands remove the API keys and the license key, and `tccutil` removes the permissions you granted.

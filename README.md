@@ -80,9 +80,7 @@ https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
 brew install --cask okoflow/tap/waft
 ```
 
-Or download `Waft-X.Y.Z.dmg` from the [latest release](https://github.com/okoflow/waft/releases/latest) and drag Waft to Applications. Waft needs a Mac with Apple silicon and macOS 14 or later, and updates itself.
-
-Waft isn't notarized by Apple yet, so macOS blocks the first launch of a copy from the disk image; [Install](docs/getting-started.md#1-install) shows how to open it. The Homebrew cask clears that check for you.
+Or download the disk image from the [latest release](https://github.com/okoflow/waft/releases/latest). [Install](docs/getting-started.md#1-install) lists the requirements and how to open a copy from the disk image the first time.
 
 ## How it compares
 
@@ -111,7 +109,7 @@ Waft isn't notarized by Apple yet, so macOS blocks the first launch of a copy fr
 
 ## Waft+
 
-[Waft+](docs/usage.md#waft) adds the AI modes, editing by voice, the translator, file transcription, and the Accurate speech model for a single payment of $13.99, and is free while Waft is in beta.
+Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features and the Accurate speech model for a single payment of $13.99, and is free while Waft is in beta.
 
 ## Contributing
 

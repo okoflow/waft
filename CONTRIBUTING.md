@@ -22,7 +22,7 @@ make signing
 make run
 ```
 
-`make signing` creates the Waft Dev code-signing identity in your login keychain once and asks for your password to trust it. Without it, every build is signed ad hoc and macOS forgets the permissions you granted. `make run` builds the debug configuration, signs it, and opens `build/Waft.app`; add `CONFIG=release` for an optimized build. A debug build doesn't update itself: pull and run `make run` again.
+`make signing` creates the Waft Dev code-signing identity in your login keychain once and asks for your password to trust it. Without it, every build is signed ad hoc and macOS forgets the permissions you granted; if that happened, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security after you rebuild, and allow them again. `make run` builds the debug configuration, signs it, and opens `build/Waft.app`; add `CONFIG=release` for an optimized build. A debug build doesn't update itself: pull and run `make run` again.
 
 To change the code, install the tools the checks use and the pre-commit hook:
 
@@ -79,6 +79,7 @@ The linters and formatters read their settings from dotfiles at the root, such a
 ### Platform
 
 - The package builds with the Command Line Tools alone, which lack Xcode's SwiftUI macro plugins. Keep view state in observable models instead of `@State`, declare environment values with an `EnvironmentKey` instead of `@Entry`, and do without `@Animatable` and `#Preview`. The `no_xcode_only_macros` rule catches them, along with `@AnimatableIgnored` and `@Previewable`.
+- `InternalImportsByDefault` is on: an import is `package import` only when a package declaration's signature names its types. A type reached through an alias, such as `CustomMode.ID` for `UUID`, doesn't count, and Swift 6.3 rejects the unused `package import`.
 - Mark only identifiers, durations, and counts `privacy: .public` in a log message. [Invariants](docs/architecture.md#invariants) lists what never reaches the log.
 - Animate with `.motion(_:value:)` and a `Motion` token rather than `.animation(_:value:)`, and pass a scoped or transition animation through `Motion.adapted(_:reducesMotion:)`, so Reduce Motion turns every animation into `Motion.reduced`. The `no_bare_animation` rule catches the plain modifiers.
 
@@ -110,7 +111,7 @@ Every test file follows one pattern:
 
 Scripts follow the [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html) and run on the Bash 3.2 that macOS ships. Every script has one layout:
 
-- `#!/bin/bash`, a header comment that says what the script does, and `set -euo pipefail`.
+- `#!/bin/bash` and `set -euo pipefail`, with no comments: the names say what each step does.
 - `readonly` constants, then globals, then functions: `usage` and `die`, which print to standard error, a `cleanup` trapped on `EXIT` when the script makes temporary files, a function for every step, and `main` at the bottom, called with `"$@"`.
 - A function names its arguments on its first line, as in `local version=$1 image=$2`, and separates its steps with blank lines.
 - A `local` that takes a `$(…)` is declared on a line of its own, since `local` hides the command's failure. A function that does work runs as a command, never inside `$(…)`, where Bash 3.2 ignores `set -e`.
