@@ -2,16 +2,12 @@ import SwiftUI
 import WaftCore
 
 struct MenuContent: View {
-    private let model: AppModel
+    let model: AppModel
 
     private var translatorShortcut: KeyboardShortcut? {
         guard let combination = model.shortcuts.combination(for: .translator) else { return nil }
 
         return combination.keyboardShortcut(in: model.shortcuts.layout)
-    }
-
-    init(model: AppModel) {
-        self.model = model
     }
 
     var body: some View {

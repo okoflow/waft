@@ -3,8 +3,8 @@ import SwiftUI
 struct HUDView: View {
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
-    private let hud: HUDController
-    private let layout: HUDLayout
+    let hud: HUDController
+    let layout: HUDLayout
 
     private var radius: CGFloat {
         switch hud.content {
@@ -22,11 +22,6 @@ struct HUDView: View {
         case .working: "working"
         case let .message(message): "message:\(message.title):\(hud.showsCompactMessage)"
         }
-    }
-
-    init(hud: HUDController, layout: HUDLayout) {
-        self.hud = hud
-        self.layout = layout
     }
 
     var body: some View {
