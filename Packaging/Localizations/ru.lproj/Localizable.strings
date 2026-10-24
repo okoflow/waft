@@ -86,6 +86,7 @@
 "Copied" = "Скопировано";
 "Copied: press %@ to paste" = "Скопировано: нажмите %@, чтобы вставить";
 "Copy Last Dictation" = "Скопировать последнюю диктовку";
+"Copy Original Transcript" = "Скопировать исходную расшифровку";
 "Copy" = "Скопировать";
 "Corrects spelling, grammar, and punctuation in the selection." = "Исправляет орфографию, грамматику и пунктуацию в выделенном тексте.";
 "Couldn't edit the text" = "Не удалось изменить текст";

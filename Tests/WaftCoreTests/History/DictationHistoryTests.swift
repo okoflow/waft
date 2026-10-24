@@ -81,6 +81,7 @@ struct DictationHistoryTests {
         var history = DictationHistory()
         history.add(DictationHistory.Entry(date: .fixed, text: "Hello.", mode: .clean, app: "com.apple.mail"))
         history.add(DictationHistory.Entry(date: .fixed, text: "Bye.", mode: .raw, app: nil))
+        history.add(DictationHistory.Entry(date: .fixed, text: "Hi there.", mode: .clean, app: nil, transcript: "hi there"))
 
         let data = try JSONEncoder().encode(history)
 
@@ -98,6 +99,25 @@ struct DictationHistoryTests {
         let history = try JSONDecoder().decode(DictationHistory.self, from: Data(json.utf8))
 
         #expect(history.entries.map(\.text) == kept)
+    }
+
+    @Test
+    func `loads an entry saved before it kept the original transcript`() throws {
+        let json = #"{"entries":[{"date":0,"text":"Kept.","mode":"clean","app":"com.apple.mail"}]}"#
+
+        let history = try JSONDecoder().decode(DictationHistory.self, from: Data(json.utf8))
+
+        let entry = try #require(history.entries.first)
+        #expect(entry.text == "Kept.")
+        #expect(entry.app == "com.apple.mail")
+        #expect(entry.transcript == nil)
+    }
+
+    @Test(arguments: [("hi there", String?.some("hi there")), ("Hi there.", nil), (nil, nil)])
+    func `keeps the original transcript only when the mode changed it`(transcript: String?, kept: String?) {
+        let entry = DictationHistory.Entry(date: .fixed, text: "Hi there.", mode: .clean, app: nil, transcript: transcript)
+
+        #expect(entry.transcript == kept)
     }
 
     private func entry(_ text: String, minutesAgo: Double) -> DictationHistory.Entry {

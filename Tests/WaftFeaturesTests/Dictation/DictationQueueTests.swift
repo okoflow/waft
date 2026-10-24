@@ -34,6 +34,18 @@ struct DictationQueueTests {
     }
 
     @Test
+    func `records the original transcript of a dictation the mode rewrote`() async {
+        let rewriter = FakeTextRewriter(.success("Hello, world."))
+        let queue = queue(FakeTranscriber(.success(.spoken("hello world"))), rewriter: rewriter)
+
+        queue.submit(job { $0.mode = .clean })
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !history.history.entries.isEmpty })
+        #expect(history.history.entries.map(\.text) == ["Hello, world."])
+        #expect(history.history.entries.map(\.transcript) == ["hello world"])
+    }
+
+    @Test
     func `copies the text instead of pasting when pasting into the focused field is off`() async {
         let inserter = FakeTextInserter()
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)

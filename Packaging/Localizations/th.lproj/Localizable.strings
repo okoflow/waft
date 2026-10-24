@@ -86,6 +86,7 @@
 "Copied" = "คัดลอกแล้ว";
 "Copied: press %@ to paste" = "คัดลอกแล้ว: กด %@ เพื่อวาง";
 "Copy Last Dictation" = "คัดลอกการป้อนตามคำบอกล่าสุด";
+"Copy Original Transcript" = "คัดลอกข้อความถอดเสียงต้นฉบับ";
 "Copy" = "คัดลอก";
 "Corrects spelling, grammar, and punctuation in the selection." = "แก้การสะกด ไวยากรณ์ และเครื่องหมายวรรคตอนในข้อความที่เลือก";
 "Couldn't edit the text" = "ไม่สามารถแก้ไขข้อความได้";

@@ -86,6 +86,7 @@
 "Copied" = "تم النسخ";
 "Copied: press %@ to paste" = "تم النسخ: اضغط على %@ للصق";
 "Copy Last Dictation" = "نسخ آخر عملية إملاء";
+"Copy Original Transcript" = "نسخ النص الأصلي";
 "Copy" = "نسخ";
 "Corrects spelling, grammar, and punctuation in the selection." = "يصحح الإملاء والقواعد وعلامات الترقيم في النص المحدد.";
 "Couldn't edit the text" = "تعذر تعديل النص";

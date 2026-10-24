@@ -86,6 +86,7 @@
 "Copied" = "Kopieret";
 "Copied: press %@ to paste" = "Kopieret: tryk på %@ for at sætte ind";
 "Copy Last Dictation" = "Kopier seneste diktering";
+"Copy Original Transcript" = "Kopier oprindelig transskription";
 "Copy" = "Kopier";
 "Corrects spelling, grammar, and punctuation in the selection." = "Retter stavning, grammatik og tegnsætning i den markerede tekst.";
 "Couldn't edit the text" = "Teksten kunne ikke redigeres";

@@ -109,6 +109,18 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `copies the original transcript of an entry that has one`() {
+        let clipboard = FakeClipboard()
+        let history = HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settingsModel(), clipboard: clipboard)
+        let changed = DictationHistory.Entry(date: Self.start, text: "Hi there.", mode: .clean, app: nil, transcript: "hi there")
+
+        history.copyTranscript(of: changed)
+        history.copyTranscript(of: entry(1))
+
+        #expect(clipboard.copied == ["hi there"])
+    }
+
+    @Test
     func `trims the stored history to the limit at launch and saves it`() {
         let settings = settingsModel()
         settings.settings.historyLimit = 100

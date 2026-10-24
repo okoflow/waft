@@ -120,7 +120,7 @@ Settings › Dictionary holds two lists:
 ## History and statistics
 
 - Settings › Overview shows your words, the time saved over typing at 40 words a minute, and your speaking speed for the last 7 days, and your words, dictations, and days in a row of all time. **Reset Statistics…** sets the counts to zero.
-- Settings › History lists your dictations with the time, mode, and app. **Copy** next to one copies it, and **Search** finds one. They stay for a month and up to 1,000 unless you change **Keep dictations for** or **Keep at most**. Turn off **Keep history** to stop saving; **Clear History…** deletes them all.
+- Settings › History lists your dictations with the time, mode, and app. **Copy** next to one copies it, **Copy Original Transcript** in the menu that Control-clicking it opens copies what Whisper heard before a mode rewrote it, and **Search** finds one. They stay for a month and up to 1,000 unless you change **Keep dictations for** or **Keep at most**. Turn off **Keep history** to stop saving; **Clear History…** deletes them all.
 
 ## Shortcuts
 

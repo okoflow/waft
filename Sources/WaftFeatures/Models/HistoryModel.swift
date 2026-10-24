@@ -102,6 +102,12 @@ final class HistoryModel {
         clipboard.copy(entry.text)
     }
 
+    func copyTranscript(of entry: DictationHistory.Entry) {
+        guard let transcript = entry.transcript else { return }
+
+        clipboard.copy(transcript)
+    }
+
     func removeAll() {
         guard store.remove() else { return }
 

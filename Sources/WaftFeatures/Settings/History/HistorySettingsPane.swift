@@ -69,10 +69,12 @@ struct HistorySettingsPane: View {
                     modeTitle: settings.settings.title(of: entry.mode),
                     appName: entry.app.map(InstalledApp.name(of:)),
                     isCopied: state.copiedEntries.isShowing(entry.date),
-                ) {
-                    history.copy(entry)
-                    state.copiedEntries.show(entry.date)
-                }
+                    copy: {
+                        history.copy(entry)
+                        state.copiedEntries.show(entry.date)
+                    },
+                    copyTranscript: { history.copyTranscript(of: entry) },
+                )
             }
 
             if page.isPaged {
@@ -111,6 +113,7 @@ private struct HistoryRow: View {
     let appName: String?
     let isCopied: Bool
     let copy: () -> Void
+    let copyTranscript: () -> Void
 
     private var details: String {
         let time = entry.date.formatted(date: .abbreviated, time: .shortened)
@@ -137,6 +140,13 @@ private struct HistoryRow: View {
             CopyButton(isCopied: isCopied, action: copy)
         }
         .settingsRowPadding()
+        .contextMenu {
+            Button("Copy", action: copy)
+
+            if entry.transcript != nil {
+                Button("Copy Original Transcript", action: copyTranscript)
+            }
+        }
     }
 }
 
