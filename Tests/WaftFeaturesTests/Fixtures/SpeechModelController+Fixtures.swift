@@ -15,4 +15,10 @@ extension SpeechModelController {
 
         return speechModelController
     }
+
+    static func make(isReady: Bool, settings: SettingsModel) async -> SpeechModelController {
+        guard isReady else { return unstarted(settings: settings) }
+
+        return await ready(settings: settings)
+    }
 }

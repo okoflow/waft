@@ -193,16 +193,10 @@ struct FileTranscriptionModelTests {
         await FileTranscriptionModel(
             transcriber: transcriber,
             decoder: decoder,
-            speechModelController: speechModelController(isReady: isSpeechModelReady),
+            speechModelController: .make(isReady: isSpeechModelReady, settings: settings),
             settings: settings,
             pro: pro,
             clipboard: clipboard,
         )
-    }
-
-    private func speechModelController(isReady: Bool) async -> SpeechModelController {
-        guard isReady else { return .unstarted(settings: settings) }
-
-        return await .ready(settings: settings)
     }
 }
