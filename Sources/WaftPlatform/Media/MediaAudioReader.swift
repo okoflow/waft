@@ -3,7 +3,13 @@ import AVFoundation
 import os
 import WaftCore
 
-package struct MediaAudioReader: MediaDecoder {
+package actor MediaAudioReader: MediaDecoder {
+    private let queue = DispatchSerialQueue(label: "\(AppIdentity.bundleIdentifier).media")
+
+    package nonisolated var unownedExecutor: UnownedSerialExecutor {
+        queue.asUnownedSerialExecutor()
+    }
+
     package init() {}
 
     private static func append(_ buffer: CMSampleBuffer, to samples: inout [Float]) throws(MediaAudioError) {
@@ -49,7 +55,6 @@ package struct MediaAudioReader: MediaDecoder {
         return .unreadable
     }
 
-    @concurrent
     package func samples(of url: URL) async throws -> [Float] {
         let asset = AVURLAsset(url: url)
         guard let track = try await asset.loadTracks(withMediaType: .audio).first else { throw MediaAudioError.noAudio }
