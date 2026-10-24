@@ -191,7 +191,11 @@ package actor WhisperTranscriber: Transcriber {
 
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
 
-        let segments = results.flatMap(\.segments).filter(WhisperDecoding.isConfident).compactMap { segment -> TimedSegment? in
+        let kept = results.flatMap(\.segments).filter { segment in
+            WhisperDecoding.keepsSegment(segment, in: language, prompt: prompt, vocabulary: [])
+        }
+
+        let segments = kept.compactMap { segment -> TimedSegment? in
             let text = segment.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return nil }
 

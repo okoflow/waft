@@ -91,12 +91,35 @@ struct WhisperDecodingTests {
             result(" world", segments: [TranscriptionSegment(text: " world", avgLogprob: -0.2)]),
         ]
 
-        #expect(WhisperDecoding.keptText(of: results) == " Hello world")
+        #expect(WhisperDecoding.keptText(of: results, language: .english, prompt: nil, vocabulary: []) == " Hello world")
+    }
+
+    @Test
+    func `drops an echo of the prompt and a stock phrase between real segments`() {
+        let prompt = "Hello! This is an example sentence, with commas and periods."
+        let results = [
+            result(" Ship it", segments: [TranscriptionSegment(text: " Ship it today.")]),
+            result(" Hello", segments: [TranscriptionSegment(text: " This is an example sentence, with commas and periods.")]),
+            result(" Thanks", segments: [TranscriptionSegment(text: " Thanks for watching!")]),
+            result(" Waft", segments: [TranscriptionSegment(text: " Waft.")]),
+            result(" Then", segments: [TranscriptionSegment(text: " Then tell the team.")]),
+        ]
+
+        let text = WhisperDecoding.keptText(of: results, language: .english, prompt: prompt, vocabulary: ["Waft"])
+
+        #expect(text == " Ship it today. Waft. Then tell the team.")
     }
 
     @Test
     func `joins the texts of results without segments`() {
-        #expect(WhisperDecoding.keptText(of: [result("Hello"), result("world")]) == "Hello world")
+        let text = WhisperDecoding.keptText(
+            of: [result("Hello"), result("world")],
+            language: .english,
+            prompt: nil,
+            vocabulary: [],
+        )
+
+        #expect(text == "Hello world")
     }
 
     @Test(arguments: [

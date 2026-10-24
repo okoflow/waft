@@ -72,7 +72,8 @@ enum WhisperDecoding {
         prompt: String?,
         vocabulary: [String],
     ) -> String? {
-        let text = keptText(of: results).trimmingCharacters(in: .whitespacesAndNewlines)
+        let text = keptText(of: results, language: language, prompt: prompt, vocabulary: vocabulary)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty,
               !HallucinationFilter.isHallucination(text, in: language, prompt: prompt, vocabulary: vocabulary) else {
             return nil
@@ -81,11 +82,29 @@ enum WhisperDecoding {
         return text.capitalizedIfUnstyled(in: language)
     }
 
-    static func keptText(of results: [TranscriptionResult]) -> String {
+    static func keptText(
+        of results: [TranscriptionResult],
+        language: Language,
+        prompt: String?,
+        vocabulary: [String],
+    ) -> String {
         let segments = results.flatMap(\.segments)
         guard !segments.isEmpty else { return results.map(\.text).joined(separator: " ") }
 
-        return segments.filter(isConfident).map(\.text).joined()
+        let kept = segments.filter { keepsSegment($0, in: language, prompt: prompt, vocabulary: vocabulary) }
+
+        return kept.map(\.text).joined()
+    }
+
+    static func keepsSegment(
+        _ segment: TranscriptionSegment,
+        in language: Language,
+        prompt: String?,
+        vocabulary: [String],
+    ) -> Bool {
+        guard isConfident(segment) else { return false }
+
+        return !HallucinationFilter.isHallucination(segment.text, in: language, prompt: prompt, vocabulary: vocabulary)
     }
 
     static func isConfident(_ segment: TranscriptionSegment) -> Bool {
