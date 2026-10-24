@@ -64,7 +64,7 @@ The HUD shows "Without AI" next to the check mark. Pointing at it shows the text
 | *provider* rejected the API key | Create a new key as [Choosing the AI model](usage.md#choosing-the-ai-model) describes |
 | *provider* isn't available | The model doesn't exist, or the secure connection failed |
 | *provider* returned an error | With Claude, the usual cause is a key created outside a workspace |
-| *provider*'s answer couldn't be used | The answer was empty, cut off, refused, too long, or in another script; dictate again. If one of your modes always fails, its instructions ask for more than [The AI modes](how-it-works.md#the-ai-modes) allows |
+| *provider*'s answer couldn't be used | The answer was empty, cut off, refused, too long, too short, or in another script; dictate again. If one of your modes always fails, its instructions ask for more than [The AI modes](how-it-works.md#the-ai-modes) allows |
 
 ## The speech model fails
 

@@ -22,8 +22,6 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     private static func removeTemporary(_ file: URL) {
-        guard FileManager.default.fileExists(atPath: file.path) else { return }
-
         do {
             try FileManager.default.removeItem(at: file)
         } catch {

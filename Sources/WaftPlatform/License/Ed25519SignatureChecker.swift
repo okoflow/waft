@@ -3,7 +3,7 @@ import CryptoKit
 import WaftCore
 
 package struct Ed25519SignatureChecker: LicenseSignatureChecking {
-    package static let licensePublicKey = "ILFVseTSw4B4Cfx699xDRoFH00t0pg9rX+h6qCEIEO0="
+    private static let licensePublicKey = "ILFVseTSw4B4Cfx699xDRoFH00t0pg9rX+h6qCEIEO0="
 
     private let publicKey: Curve25519.Signing.PublicKey
 

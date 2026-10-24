@@ -1,7 +1,7 @@
 import Foundation
 
-struct HUDMessage: Equatable, Sendable {
-    enum Kind: Sendable {
+struct HUDMessage: Equatable {
+    enum Kind {
         case pasted
         case copied
         case information
@@ -32,10 +32,6 @@ struct HUDMessage: Equatable, Sendable {
         self.kind = kind
         self.title = title
         self.detail = detail
-    }
-
-    static func copied(_ text: String, note: String? = nil) -> HUDMessage {
-        HUDMessage(kind: .copied, title: text, detail: note)
     }
 
     static func blockedInPasswordField(detail: String? = nil) -> HUDMessage {

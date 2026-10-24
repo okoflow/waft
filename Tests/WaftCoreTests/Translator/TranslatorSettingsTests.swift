@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct TranslatorSettingsTests {
     @Test(arguments: [

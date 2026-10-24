@@ -12,8 +12,6 @@ package enum AudioLevel {
     }
 
     package static func meterValue(rootMeanSquare: Float) -> Float {
-        guard rootMeanSquare > 0 else { return 0 }
-
         let normalized = (decibels(rootMeanSquare: rootMeanSquare) - meterFloorDecibels) / -meterFloorDecibels
 
         return min(1, max(0, normalized))

@@ -81,7 +81,7 @@ The tables list the folders whose names don't say enough.
 - Only `AppDependencies.live()` names concrete adapters. There are no singletons.
 - Declarations shared between modules are `package`, never `public`. Imports follow the `InternalImportsByDefault` rule in [Platform](../CONTRIBUTING.md#platform).
 - Rules that need no system access are value types in `WaftCore`.
-- `WhisperTranscriber` and `AudioEngineRecorder` are actors, so recognition and audio stay off the main actor.
+- `WhisperTranscriber`, `AudioEngineRecorder`, and `MediaAudioReader` are actors, so recognition, audio, and media files stay off the main actor. The last two run on serial dispatch queues of their own, so their blocking calls never hold a thread of the cooperative pool.
 - Audio, dictated text, and clipboard contents never reach the log or the disk, apart from the history the user keeps.
 - User-facing strings use `String(localized:)` or `LocalizedStringKey`, even the names of domain values in `WaftCore`. Choosing a language in Waft writes `AppleTextDirection` next to `AppleLanguages`, so Arabic and Hebrew lay out right to left.
 

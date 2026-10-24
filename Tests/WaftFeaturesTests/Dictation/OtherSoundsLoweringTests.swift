@@ -16,14 +16,12 @@ struct OtherSoundsLoweringTests {
     }
 
     @Test
-    func `skips lowering once the recording is no longer wanted`() async throws {
+    func `skips lowering once the recording is no longer wanted`() async {
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
 
         lowering.lower { false }
 
-        try await Task.sleep(for: .milliseconds(100))
-
-        #expect(outputVolume.loweredFractions.isEmpty)
+        #expect(await !Poll.until(timeout: .milliseconds(300)) { !outputVolume.loweredFractions.isEmpty })
     }
 
     @Test

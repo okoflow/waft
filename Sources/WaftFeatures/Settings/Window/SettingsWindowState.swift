@@ -13,7 +13,7 @@ final class SettingsWindowState {
 
     let copiedEntries = CopyFeedback<Date>()
 
-    var hoveredPane: SettingsPane?
+    private(set) var hoveredPane: SettingsPane?
 
     func closeEditor() {
         editedMode = nil

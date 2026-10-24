@@ -103,7 +103,7 @@ struct HUDControllerTests {
     func `copies the text of a delivered message when it is clicked`() {
         let hud = model()
 
-        hud.show(HUDMessage(kind: .pasted, title: "Hi."))
+        hud.show(Self.pasted)
 
         #expect(hud.canCopyMessage)
 
@@ -117,7 +117,7 @@ struct HUDControllerTests {
     func `closes a copied message after a pause and resets it for the next one`() async {
         let hud = model()
 
-        hud.show(HUDMessage(kind: .pasted, title: "Hi."))
+        hud.show(Self.pasted)
         hud.copyMessage()
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == nil })

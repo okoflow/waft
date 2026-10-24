@@ -140,7 +140,7 @@ final class SelectionActions {
 
             await deliver(reworked, into: target)
         } catch {
-            let reason = RewriteFallback(error).reason(for: setup.provider).sentenceCased()
+            let reason = error.explanation(for: setup.provider)
 
             hud.show(HUDMessage(kind: .warning, title: Self.failureTitle(of: action), detail: reason))
         }
@@ -164,7 +164,7 @@ final class SelectionActions {
 
         case .skipped:
             clipboard.copy(text)
-            hud.show(.copied(text))
+            hud.show(HUDMessage(kind: .copied, title: text))
         }
     }
 }

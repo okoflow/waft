@@ -6,11 +6,7 @@ struct OnboardingView: View {
     private static let sideInset: CGFloat = 72
     private static let size = CGSize(width: 640, height: 540)
 
-    private let model: AppModel
-
-    init(model: AppModel) {
-        self.model = model
-    }
+    let model: AppModel
 
     var body: some View {
         VStack(spacing: 0) {

@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct TranslationTests {
     @Test(arguments: [(Language.english, Language.russian), (.german, .english), (.russian, .english)])

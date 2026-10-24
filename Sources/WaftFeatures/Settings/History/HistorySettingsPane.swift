@@ -7,22 +7,6 @@ struct HistorySettingsPane: View {
 
     let state: SettingsWindowState
 
-    var emptyText: LocalizedStringKey {
-        guard history.history.entries.isEmpty else { return "No matches" }
-        guard !history.hasUnreadableHistory else {
-            return "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both."
-        }
-        guard settings.settings.keepsHistory else { return "Waft keeps no dictations while Keep history is off." }
-
-        return "No dictations yet"
-    }
-
-    private var canClear: Bool {
-        guard history.history.entries.isEmpty else { return true }
-
-        return history.hasUnreadableHistory
-    }
-
     var body: some View {
         SettingsSection("Saving") {
             ToggleRow("Keep history", isOn: $settings.settings.keepsHistory, description: "Saved only on this Mac.")
@@ -60,7 +44,7 @@ struct HistorySettingsPane: View {
 
         SettingsSection("Dictations") {
             if page.entries.isEmpty {
-                EmptyRow(emptyText)
+                EmptyRow(history.emptyText)
             }
 
             DividedForEach(page.entries, id: \.date) { entry in
@@ -86,7 +70,7 @@ struct HistorySettingsPane: View {
                 .frame(width: 200)
         } footer: {
             Button("Clear History…", role: .destructive, action: confirmClear)
-                .disabled(!canClear)
+                .disabled(!history.canClear)
         }
     }
 

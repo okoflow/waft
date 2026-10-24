@@ -144,7 +144,7 @@ final class DictationQueue {
 
             return await deliver(ProcessedText(text: edited, mode: job.mode), transcribed: nil, for: job)
         } catch {
-            return .editFailed(RewriteFallback(error).reason(for: job.setup.provider).sentenceCased())
+            return .editFailed(error.explanation(for: job.setup.provider))
         }
     }
 

@@ -230,7 +230,7 @@ extension DictationControllerTests {
             recordings: recordings,
             settings: settings,
             permissions: permissions,
-            speechModelController: speechModelController(isReady: isSpeechModelReady, pro: pro),
+            speechModelController: .make(isReady: isSpeechModelReady, settings: settings),
             vocabulary: VocabularyModel(store: vocabularyStore, fileURL: URL(filePath: "/dev/null"), urlOpener: FakeURLOpener()),
             keyRecorder: keyRecorder,
             shortcutRecorder: ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings)),
@@ -255,14 +255,6 @@ extension DictationControllerTests {
             hudDelay: .zero,
             watchdogInterval: watchdogInterval,
         )
-    }
-
-    private func speechModelController(isReady: Bool, pro: ProModel) async -> SpeechModelController {
-        guard isReady else {
-            return SpeechModelController(transcriber: transcriber, settings: settings, pro: pro, urlOpener: FakeURLOpener())
-        }
-
-        return await .ready(settings: settings)
     }
 
     private func queue() -> DictationQueue {

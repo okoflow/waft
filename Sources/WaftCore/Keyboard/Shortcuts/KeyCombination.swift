@@ -7,8 +7,8 @@ package struct KeyCombination: Hashable, Sendable {
         package static let shift = Modifiers(rawValue: 1 << 2)
         package static let command = Modifiers(rawValue: 1 << 3)
 
-        static let all: Modifiers = [.control, .option, .shift, .command]
-        static let required: Modifiers = [.control, .option, .command]
+        fileprivate static let all: Modifiers = [.control, .option, .shift, .command]
+        fileprivate static let required: Modifiers = [.control, .option, .command]
 
         package let rawValue: Int
 
@@ -50,7 +50,7 @@ package struct KeyCombination: Hashable, Sendable {
         return !modifiers.isDisjoint(with: Modifiers.required)
     }
 
-    var fixedKeyName: String? {
+    private var fixedKeyName: String? {
         if let number = functionKeyNumber {
             return "F\(number)"
         }

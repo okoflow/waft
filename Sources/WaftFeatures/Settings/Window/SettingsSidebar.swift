@@ -17,7 +17,7 @@ struct SettingsSidebar: View {
                     Text(title)
                         .font(.sidebarGroup)
                         .foregroundStyle(Palette.secondaryText)
-                        .padding(.leading, SettingsSidebar.rowInset)
+                        .padding(.leading, Self.rowInset)
                         .padding(.top, Self.groupSpacing)
                         .accessibilityAddTraits(.isHeader)
                 }

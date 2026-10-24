@@ -4,7 +4,8 @@ import WaftCore
 
 struct SpeechModelFiles {
     static let repository = "argmaxinc/whisperkit-coreml"
-    static let defaultBaseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
+
+    private static let defaultBaseDirectory = AppIdentity.supportDirectory.appending(path: "Models", directoryHint: .isDirectory)
 
     private static let completionMarker = ".waft-complete"
 

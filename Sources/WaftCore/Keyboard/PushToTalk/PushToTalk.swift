@@ -24,7 +24,7 @@ package struct PushToTalk: Sendable {
         case interrupted
     }
 
-    private enum State: Equatable {
+    private enum State {
         case idle
         case holding(since: TimeInterval)
         case handsFree(since: TimeInterval)
@@ -39,8 +39,6 @@ package struct PushToTalk: Sendable {
 
     private var state = State.idle
     private var lastTapEnded: TimeInterval?
-
-    init() {}
 
     mutating func handle(_ event: Event, at time: TimeInterval) -> Action? {
         switch (state, event) {

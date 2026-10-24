@@ -30,12 +30,13 @@ final class HistoryModel {
         didSet { pageIndex = 0 }
     }
 
+    let settings: SettingsModel
+
     private var pageIndex = 0
 
     @ObservationIgnored private var expiry: Task<Void, Never>?
 
     private let store: any ValueStore<DictationHistory>
-    private let settings: SettingsModel
     private let clipboard: any Clipboard
 
     var currentPage: Page {
@@ -54,6 +55,12 @@ final class HistoryModel {
             hasPrevious: index > 0,
             hasNext: index < lastIndex,
         )
+    }
+
+    var canClear: Bool {
+        guard history.entries.isEmpty else { return true }
+
+        return hasUnreadableHistory
     }
 
     var recentEntries: [DictationHistory.Entry] {

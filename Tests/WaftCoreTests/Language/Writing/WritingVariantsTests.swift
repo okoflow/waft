@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaftCore
+@testable import WaftCore
 
 struct WritingVariantsTests {
     @Test(arguments: [(Language.chinese, WritingVariant?.some(.simplified)), (.serbian, .latin), (.german, nil)])

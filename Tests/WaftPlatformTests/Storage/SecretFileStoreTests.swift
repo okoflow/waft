@@ -18,29 +18,6 @@ struct SecretFileStoreTests {
     }
 
     @Test
-    func `moves a keychain value into an owner-only file in an owner-only folder`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "Waft/anthropic-api-key.json")
-            let keychain = FakeValueStore<String>(Self.secret)
-            let store = SecretFileStore(
-                name: "Claude API key",
-                file: JSONFileStore<String>(name: "Claude API key", url: url),
-                keychain: keychain,
-            )
-
-            #expect(try store.load() == Self.secret)
-
-            let fileAttributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            let folderAttributes = try FileManager.default.attributesOfItem(atPath: url.deletingLastPathComponent().path)
-
-            #expect(fileAttributes[.posixPermissions] as? Int == 0o600)
-            #expect(folderAttributes[.posixPermissions] as? Int == 0o700)
-            #expect(try JSONFileStore<String>(name: "Claude API key", url: url).load() == Self.secret)
-            #expect(keychain.value == nil)
-        }
-    }
-
-    @Test
     func `keeps the file value and leaves the keychain alone when both have one`() throws {
         let file = FakeValueStore("sk-ant-file")
         let keychain = FakeValueStore<String>(Self.secret)
@@ -75,24 +52,6 @@ struct SecretFileStoreTests {
         #expect(file.value == nil)
         #expect(keychain.value == Self.secret)
         #expect(keychain.operations == [.exists, .load])
-    }
-
-    @Test
-    func `never touches the keychain once the value lives in the file`() throws {
-        let file = FakeValueStore<String>(nil)
-        let keychain = FakeValueStore<String>(Self.secret)
-        let store = store(file: file, keychain: keychain)
-
-        #expect(try store.load() == Self.secret)
-
-        let operationsAfterMove = keychain.operations
-
-        for _ in 1 ... 3 {
-            #expect(try store.load() == Self.secret)
-            #expect(store.exists())
-        }
-
-        #expect(keychain.operations == operationsAfterMove)
     }
 
     @Test

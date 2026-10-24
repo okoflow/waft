@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -157,6 +158,29 @@ struct HistoryModelTests {
         history.removeAll()
 
         #expect(!history.hasUnreadableHistory)
+    }
+
+    @Test(arguments: [
+        (0, "", true, "No dictations yet"),
+        (0, "Friday", false, "Waft keeps no dictations while Keep history is off."),
+        (1, "Friday", true, "No matches"),
+    ])
+    func `explains why it shows no dictations`(entries: Int, searchText: String, keepsHistory: Bool, text: String) {
+        let settings = settingsModel()
+        settings.settings.keepsHistory = keepsHistory
+        let history = model(entries: entries, settings: settings)
+        history.searchText = searchText
+
+        #expect(history.emptyText == LocalizedStringKey(text))
+    }
+
+    @Test
+    func `explains that the saved history could not be read even while searching`() {
+        let store = FakeValueStore(DictationHistory(), isBroken: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+        history.searchText = "Friday"
+
+        #expect(history.emptyText == "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.")
     }
 
     @Test

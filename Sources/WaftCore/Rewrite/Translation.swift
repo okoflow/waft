@@ -18,7 +18,7 @@ package struct Translation: Codable, Equatable, Sendable {
         self.init(target: container.decode(.target, default: .english), twoWayLanguage: container.decodeIfValid(.twoWayLanguage))
     }
 
-    package func target(forSpoken spoken: Language) -> Language {
+    func target(forSpoken spoken: Language) -> Language {
         guard spoken == target, let twoWayLanguage else { return target }
 
         return twoWayLanguage

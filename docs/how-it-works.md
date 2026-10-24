@@ -35,7 +35,7 @@ Waft skips recordings without speech, such as silence, key clicks, or steady noi
 - **Prompt.** Whisper first reads a short example sentence in the spoken language, except in Japanese, Korean, and Thai, then up to 200 characters of your dictionary terms.
 - **Long dictations.** Waft splits the recording at pauses, measured against the room's own noise level, and makes each piece short enough that its text fits in what is left of Whisper's 224-token window after the prompt. The pieces run side by side, and a piece that fails stops the dictation with an error instead of leaving a gap.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into the script you chose. Latin to Cyrillic goes letter by letter and leaves your dictionary terms, wherever the whole term appears, and words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API, in Latin letters.
-- **Made-up text.** Waft drops segments with low confidence or heavy repetition, and segments made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, or a stock phrase such as "Thanks for watching", so the rest of the dictation stays. It checks the whole result the same way once more.
+- **Made-up text.** Waft drops segments with low confidence or heavy repetition, and segments made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, or a stock phrase such as "Thanks for watching", so the rest of the dictation stays. It checks the whole result for tags, echoes, and stock phrases once more.
 
 ## Cleanup
 
@@ -84,7 +84,7 @@ Waft pastes through the clipboard rather than typing key by key:
 3. It saves the clipboard, puts the text on it, and presses <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard layout, so Dvorak and Colemak work too.
 4. Once the app has read the text, it restores your clipboard, including images and files, if nothing else was copied meanwhile, it held no more than 5 MB, and it held no concealed or transient item, such as a password manager's. If the app doesn't read the text within 1.5 seconds, the text stays on the clipboard.
 
-Waft trims the spaces at both ends of the text but keeps a line break that "new line" or "new paragraph" put there. It puts a space before the text unless the character before the cursor is a space, a line break, an opening bracket, a quote, or a slash, the text starts with a line break, or the text on either side of the cursor is Chinese or Japanese.
+Waft trims the spaces at both ends of the text but keeps a line break that "new line" or "new paragraph" put there. It puts a space before the text unless Waft sees no character before the cursor, that character is a space, a line break, an opening bracket, a quote, or a slash, the text starts with a line break, or the text on either side of the cursor is Chinese or Japanese.
 
 ## The speech model
 

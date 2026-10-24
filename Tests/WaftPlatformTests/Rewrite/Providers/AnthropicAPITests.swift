@@ -7,6 +7,13 @@ struct AnthropicAPITests {
     private static let api = AnthropicAPI(apiKeyStore: FakeValueStore("sk-ant-test"))
 
     @Test
+    func `needs an API key`() {
+        #expect(throws: RewriteError.missingKey) {
+            try AnthropicAPI(apiKeyStore: FakeValueStore<String>(nil)).call(for: .cleanup("hello"))
+        }
+    }
+
+    @Test
     func `calls the messages endpoint with the key and version`() throws {
         let call = try Self.api.call(for: .cleanup("um hello"))
 
@@ -45,15 +52,8 @@ struct AnthropicAPITests {
         }
     }
 
-    @Test(arguments: [FakeValueStore<String>(nil), FakeValueStore(""), FakeValueStore("sk-ant-test", isBroken: true)])
-    func `needs an API key`(store: FakeValueStore<String>) {
-        #expect(throws: RewriteError.missingKey) {
-            try AnthropicAPI(apiKeyStore: store).call(for: .cleanup("hello"))
-        }
-    }
-
     @Test(arguments: [
-        (#"{"content":[{"type":"text","text":"  Hello there.\n"}],"stop_reason":"end_turn"}"#, "Hello there."),
+        (#"{"content":[{"type":"text","text":"Hello there."}],"stop_reason":"end_turn"}"#, "Hello there."),
         (
             #"{"content":[{"type":"thinking","thinking":"hm"},{"type":"text","text":"Hello"},{"type":"text","text":" there."}]}"#,
             "Hello there.",

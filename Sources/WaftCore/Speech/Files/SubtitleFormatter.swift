@@ -48,7 +48,7 @@ package enum SubtitleFormatter {
         return groups(of: units, count: count, joiner: joiner).map { group in
             consumed += joiner.count + group.joined(separator: joiner).count
 
-            let end = segment.start + (segment.end - segment.start) * Double(consumed) / Double(max(1, total))
+            let end = segment.start + (segment.end - segment.start) * Double(consumed) / Double(total)
 
             let cue = Cue(start: start, end: end, lines: lines(of: group, limit: limit, joiner: joiner))
 
@@ -71,7 +71,7 @@ package enum SubtitleFormatter {
         var breaks: [Int] = []
         var lastBreak = 0
 
-        for part in 1 ..< max(1, count) {
+        for part in 1 ..< count {
             let target = Double(length) * Double(part) / Double(count)
             let earliest = lastBreak + 1
             guard earliest < units.count else { break }

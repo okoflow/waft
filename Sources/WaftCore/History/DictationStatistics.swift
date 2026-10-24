@@ -18,8 +18,6 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
             return Int((Double(words) / (seconds / 60)).rounded())
         }
 
-        package init() {}
-
         fileprivate static func + (left: Day, right: Day) -> Day {
             var sum = left
 

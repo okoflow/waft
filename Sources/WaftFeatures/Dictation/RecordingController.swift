@@ -189,7 +189,7 @@ final class RecordingController {
     }
 
     private func showListeningHUD(for id: RecordingID) {
-        guard let recording, recording.id == id, recording.isLive else { return }
+        guard let recording, recording.isLive(withID: id) else { return }
 
         let recorder = recorder
 

@@ -38,7 +38,7 @@ final class TryoutModel {
     }
 
     func run(_ mode: Mode) {
-        guard let language = spokenLanguage(of: sample), !sample.isBlank else { return }
+        guard !sample.isBlank, let language = spokenLanguage(of: sample) else { return }
 
         let transcript = Transcript(text: sample, language: language, detectionDuration: .zero, decodingDuration: .zero)
         let setup = settings.settings.rewriteSetup(for: mode)
@@ -94,7 +94,7 @@ final class TryoutModel {
 
                 return .finished(text: reworked, note: nil)
             } catch {
-                return .finished(text: "", note: RewriteFallback(error).reason(for: setup.provider).sentenceCased())
+                return .finished(text: "", note: error.explanation(for: setup.provider))
             }
         }
     }

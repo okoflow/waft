@@ -1,11 +1,11 @@
-package import WaftCore
 import Foundation
 import Observation
 import os
+import WaftCore
 
 @Observable
-package final class SettingsModel {
-    package var settings: Settings {
+final class SettingsModel {
+    var settings: Settings {
         didSet { settingsDidChange(from: oldValue) }
     }
 

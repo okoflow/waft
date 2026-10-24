@@ -94,7 +94,7 @@ The linters and formatters read their settings from dotfiles at the root, such a
 
 ## Tests
 
-Tests use [Swift Testing](https://developer.apple.com/documentation/testing) and run with `make test`, which passes `swift test` the paths of Swift Testing and its macro plugins; with the Command Line Tools alone, a plain `swift test` can miss them. Test the value types in `WaftCore` directly, adapters through small fakes of their interfaces, and the main-actor models in `WaftFeatures` with fakes of the `WaftCore` interfaces they receive. Pass fixed pauses in through the initializer, so tests set them to zero instead of waiting them out. Tests never touch the microphone, the network, the keychain, or Accessibility.
+Tests use [Swift Testing](https://developer.apple.com/documentation/testing) and run with `make test`, which passes `swift test` the paths of Swift Testing and its macro plugins; with the Command Line Tools alone, a plain `swift test` can miss them. Test the value types in `WaftCore` directly, adapters through small fakes of their interfaces, and the main-actor models in `WaftFeatures` with fakes of the `WaftCore` interfaces they receive. Pass fixed pauses in through the initializer, so tests set them to zero instead of waiting them out. Tests never touch the microphone, the network, the keychain, or Accessibility, and a suite that uses a temporary pasteboard is `@MainActor`, as the app's pasteboard code is.
 
 Every test file follows one pattern:
 

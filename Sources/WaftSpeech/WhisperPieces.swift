@@ -4,14 +4,29 @@ import WaftCore
 @preconcurrency import WhisperKit
 
 enum WhisperPieces {
+    private static let silenceFrameDuration = 0.1
+    private static let silenceMargin: Float = 2
+    private static let quietestSilenceThreshold: Float = 0.001
+
     static func split(_ samples: [Float], maximumLength: Int) async throws -> [AudioChunk] {
-        let silence = EnergyVAD(energyThreshold: WhisperDecoding.silenceThreshold(of: samples))
+        let silence = EnergyVAD(energyThreshold: silenceThreshold(of: samples))
 
         return try await VADAudioChunker(windowPadding: 0, vad: silence).chunkAll(
             audioArray: samples,
             maxChunkLength: maximumLength,
             decodeOptions: nil,
         )
+    }
+
+    static func silenceThreshold(of samples: [Float]) -> Float {
+        let frameLength = Int(SpeechAudio.sampleRate * silenceFrameDuration)
+
+        let levels = stride(from: 0, to: samples.count, by: frameLength).map { start in
+            AudioLevel.rootMeanSquare(samples[start ..< min(start + frameLength, samples.count)])
+        }.sorted()
+        guard !levels.isEmpty else { return quietestSilenceThreshold }
+
+        return max(quietestSilenceThreshold, levels[levels.count / 10] * silenceMargin)
     }
 
     static func transcribe(
@@ -39,7 +54,7 @@ enum WhisperPieces {
             let segments = pieceResults.flatMap(\.segments)
             let droppedCount = segments.count { !keepsSegment($0) }
 
-            if pieceResults.map(\.text).joined().trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if pieceResults.map(\.text).joined().isBlank {
                 Logger.speech
                     .notice("Piece \(number) of \(pieces.count), \(seconds, format: .fixed(precision: 1)) s, gave no text")
             }
