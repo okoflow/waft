@@ -18,7 +18,7 @@ struct AppModeOverridesTests {
     @Test
     func `adds an app with the given mode`() {
         var overrides = AppModeOverrides()
-        overrides.add("com.apple.Notes", with: .raw)
+        overrides.add(.raw, for: "com.apple.Notes")
 
         #expect(overrides.mode(for: "com.apple.Notes") == .raw)
     }
@@ -27,7 +27,7 @@ struct AppModeOverridesTests {
     func `keeps the mode of an app that is added again`() {
         var overrides = AppModeOverrides()
         overrides.set(.formal, for: "com.apple.Notes")
-        overrides.add("com.apple.Notes", with: .raw)
+        overrides.add(.raw, for: "com.apple.Notes")
 
         #expect(overrides.mode(for: "com.apple.Notes") == .formal)
     }

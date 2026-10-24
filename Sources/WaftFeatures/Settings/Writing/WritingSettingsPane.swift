@@ -105,7 +105,7 @@ struct WritingSettingsPane: View {
             return
         }
 
-        settings.settings.appModes.add(bundleIdentifier, with: settings.settings.mode)
+        settings.settings.appModes.add(settings.settings.mode, for: bundleIdentifier)
     }
 }
 
