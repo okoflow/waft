@@ -83,12 +83,6 @@ struct WritingSettingsPane: View {
         }
     }
 
-    func add(_ bundleIdentifier: String) {
-        guard settings.settings.appModes.mode(for: bundleIdentifier) == nil else { return }
-
-        settings.settings.appModes.set(settings.settings.mode, for: bundleIdentifier)
-    }
-
     private func addMode() {
         guard state.passesWaftPlusGate(isUnlocked: pro.isUnlocked) else { return }
 
@@ -111,7 +105,7 @@ struct WritingSettingsPane: View {
             return
         }
 
-        add(bundleIdentifier)
+        settings.settings.appModes.add(bundleIdentifier, with: settings.settings.mode)
     }
 }
 

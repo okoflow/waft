@@ -16,6 +16,23 @@ struct AppModeOverridesTests {
     }
 
     @Test
+    func `adds an app with the given mode`() {
+        var overrides = AppModeOverrides()
+        overrides.add("com.apple.Notes", with: .raw)
+
+        #expect(overrides.mode(for: "com.apple.Notes") == .raw)
+    }
+
+    @Test
+    func `keeps the mode of an app that is added again`() {
+        var overrides = AppModeOverrides()
+        overrides.set(.formal, for: "com.apple.Notes")
+        overrides.add("com.apple.Notes", with: .raw)
+
+        #expect(overrides.mode(for: "com.apple.Notes") == .formal)
+    }
+
+    @Test
     func `has no mode for an app without a bundle identifier`() {
         var overrides = AppModeOverrides()
         overrides.set(.raw, for: "")
