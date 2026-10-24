@@ -18,8 +18,8 @@ cask "waft" do
 
   app "Waft.app"
 
-  postflight do
-    system_command "/usr/bin/xattr", args: ["-d", "-r", "com.apple.quarantine", "#{appdir}/Waft.app"]
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-d", "-r", "com.apple.quarantine", "{{appdir}}/Waft.app"]
   end
 
   uninstall quit: "com.okoflow.waft"

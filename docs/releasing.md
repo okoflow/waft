@@ -12,7 +12,7 @@ This page describes how you turn `main` into a release that users get from GitHu
 
 Waft is not sandboxed, so the bundle ships Sparkle without its XPC services.
 
-Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity. macOS ties the permissions it grants to that certificate, so they survive updates, but Gatekeeper blocks the first launch until the user clicks **Open Anyway**. The cask's `postflight` removes the quarantine flag, so a copy from Homebrew opens right away. [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
+Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity. macOS ties the permissions it grants to that certificate, so they survive updates, but Gatekeeper blocks the first launch until the user clicks **Open Anyway**. The cask's `postflight_steps` remove the quarantine flag, so a copy from Homebrew opens right away. [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
 
 ## One-time setup
 
@@ -82,5 +82,5 @@ When the Apple Developer account has a Developer ID:
    ```
 
 2. Release with `SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)"`. The script then signs with the hardened runtime, which needs the microphone entitlement in `Packaging/Waft.entitlements`, notarizes and staples the app and the disk image, and checks the image with `spctl`.
-3. Remove the `postflight` from `Packaging/Homebrew/waft.rb`, and the **Open Anyway** steps from [Install](getting-started.md#1-install), the README, and [Troubleshooting](troubleshooting.md#macos-wont-open-waft).
+3. Remove `postflight_steps` from `Packaging/Homebrew/waft.rb`, and the **Open Anyway** steps from [Install](getting-started.md#1-install), the README, and [Troubleshooting](troubleshooting.md#macos-wont-open-waft).
 4. Say in the release notes that macOS asks once more for the microphone and Accessibility, since the signature changed.
