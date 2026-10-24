@@ -10,8 +10,8 @@ enum RewriteValidator {
     private static let shortestCleanupShare = 0.4
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
-        let (text, maximumLength) = unwrapped(answer, for: request)
-        guard !text.isEmpty, text.count <= maximumLength, text.count >= minimumLength(for: request) else {
+        let text = unwrapped(answer, for: request)
+        guard !text.isEmpty, text.count <= maximumLength(for: request), text.count >= minimumLength(for: request) else {
             throw .unreadableResponse
         }
         guard case let .cleanup(_, target) = request.kind, let script = WritingScript.dominant(in: text) else { return text }
@@ -22,23 +22,22 @@ enum RewriteValidator {
         return text
     }
 
-    private static func unwrapped(_ answer: String, for request: RewriteRequest) -> (text: String, maximumLength: Int) {
-        let input = request.text
-
+    private static func unwrapped(_ answer: String, for request: RewriteRequest) -> String {
         switch request.kind {
-        case let .cleanup(_, target):
-            let lengthFactor = cleanupLengthFactor(target: target, language: request.language)
+        case .cleanup, .custom: unwrapped(answer, input: request.text, from: cleanupWrappers)
+        case let .edit(selection): unwrapped(answer, input: selection, from: editWrappers)
+        case .text: unwrapped(answer, input: request.text, from: editWrappers)
+        }
+    }
 
-            return (unwrapped(answer, input: input, from: cleanupWrappers), input.count * lengthFactor + 60)
+    private static func maximumLength(for request: RewriteRequest) -> Int {
+        let length = request.text.count
 
-        case .custom:
-            return (unwrapped(answer, input: input, from: cleanupWrappers), max(input.count * 10, 600))
-
-        case let .edit(selection):
-            return (unwrapped(answer, input: selection, from: editWrappers), .max)
-
-        case .text:
-            return (unwrapped(answer, input: input, from: editWrappers), input.count * 5 + 200)
+        return switch request.kind {
+        case let .cleanup(_, target): length * cleanupLengthFactor(target: target, language: request.language) + 60
+        case .custom: max(length * 10, 600)
+        case .edit: .max
+        case .text: length * 5 + 200
         }
     }
 
