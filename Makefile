@@ -24,7 +24,7 @@ bundle: ## Build and sign build/Waft.app
 run: bundle ## Build, sign, and open Waft
 	open build/Waft.app
 
-release: ## Build, notarize, and package a release with NOTES into build/release
+release: ## Build, sign, and package a release with NOTES into build/release
 	scripts/release.sh "$(NOTES)"
 
 format: ## Format Swift, shell, and the property lists
