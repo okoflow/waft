@@ -49,7 +49,7 @@ struct OpenAIAPITests {
 
     @Test(arguments: [
         (
-            #"{"output":[{"type":"reasoning"},{"type":"message","content":[{"type":"output_text","text":" Hi. "}]}]}"#,
+            #"{"output":[{"type":"reasoning"},{"type":"message","content":[{"type":"output_text","text":"Hi."}]}]}"#,
             "Hi.",
         ),
         (

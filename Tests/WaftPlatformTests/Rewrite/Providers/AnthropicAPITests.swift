@@ -53,7 +53,7 @@ struct AnthropicAPITests {
     }
 
     @Test(arguments: [
-        (#"{"content":[{"type":"text","text":"  Hello there.\n"}],"stop_reason":"end_turn"}"#, "Hello there."),
+        (#"{"content":[{"type":"text","text":"Hello there."}],"stop_reason":"end_turn"}"#, "Hello there."),
         (
             #"{"content":[{"type":"thinking","thinking":"hm"},{"type":"text","text":"Hello"},{"type":"text","text":" there."}]}"#,
             "Hello there.",

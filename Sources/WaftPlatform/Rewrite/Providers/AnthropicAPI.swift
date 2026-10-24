@@ -39,9 +39,7 @@ struct AnthropicAPI: RewriteAPI {
         default: break
         }
 
-        let text = response.content.filter { $0.type == "text" }.compactMap(\.text).joined()
-
-        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return response.content.filter { $0.type == "text" }.compactMap(\.text).joined()
     }
 }
 

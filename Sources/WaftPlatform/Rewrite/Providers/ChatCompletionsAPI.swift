@@ -29,9 +29,7 @@ struct ChatCompletionsAPI: RewriteAPI {
 
         guard let content = choice.message.content else { throw .unreadableResponse }
 
-        let answer = content.replacingOccurrences(of: Self.reasoningPattern, with: "", options: .regularExpression)
-
-        return answer.trimmingCharacters(in: .whitespacesAndNewlines)
+        return content.replacingOccurrences(of: Self.reasoningPattern, with: "", options: .regularExpression)
     }
 }
 

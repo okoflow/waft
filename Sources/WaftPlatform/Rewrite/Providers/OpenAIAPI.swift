@@ -52,9 +52,7 @@ struct OpenAIAPI: RewriteAPI {
         let content = response.output.filter { $0.type == "message" }.flatMap(\.content)
         guard !content.contains(where: { $0.type == "refusal" }) else { throw .refused }
 
-        let text = content.filter { $0.type == "output_text" }.compactMap(\.text).joined()
-
-        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return content.filter { $0.type == "output_text" }.compactMap(\.text).joined()
     }
 }
 
