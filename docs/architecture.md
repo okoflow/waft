@@ -38,7 +38,7 @@ The tables list the folders whose names don't say enough.
 | `Settings` | `Settings`; `Settings+Modes`, which lists every mode and turns one into a `RewriteSetup`; and `Settings+Translator`, which does the same for a `TextTask` and lists the languages the translator expects |
 | `Rewrite` | `TranscriptProcessor`, which runs the dictionary, the mode, and the AI model under a deadline, and reworks typed text for a `TextTask`; the providers and `CloudModel`; `RewritePrompt`; `RewriteValidator` |
 | `Translator` | `TranslatorSettings`: the translator's languages and recent languages, when a chosen source gives way, where text goes and how a swap turns the pair, its model tier, and the edited instructions of each `TextTask` |
-| `Insertion` | Whether and how to paste: focus comparison, spacing, and restoring the clipboard |
+| `Insertion` | The `TextInserter` interface, and whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
 
 **`WaftPlatform`** implements the interfaces in a folder per area, such as `KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and `PasteboardInserter` in `Pasteboard`.
@@ -76,7 +76,7 @@ The tables list the folders whose names don't say enough.
 
 - Dependencies point toward `WaftCore`, which imports Foundation only and builds with strict memory safety. `WaftFeatures` never imports an adapter module; it sees adapters through the interfaces in `WaftCore`.
 - Only `AppDependencies.live()` names concrete adapters. There are no singletons.
-- Declarations shared between modules are `package`, never `public`. Imports follow the `InternalImportsByDefault` rule in [AGENTS.md](../AGENTS.md).
+- Declarations shared between modules are `package`, never `public`. Imports follow the `InternalImportsByDefault` rule in [Platform](../CONTRIBUTING.md#platform).
 - Rules that need no system access are value types in `WaftCore`.
 - `WhisperTranscriber` and `AudioEngineRecorder` are actors, so recognition and audio stay off the main actor.
 - Audio, dictated text, and clipboard contents never reach the log or the disk, apart from the history the user keeps.
@@ -84,7 +84,7 @@ The tables list the folders whose names don't say enough.
 
 ## Third-party packages
 
-The package depends only on WhisperKit and Sparkle, pinned to exact versions in `Package.swift`, with every resolved package recorded in `Package.resolved`. Dependabot proposes updates for them and for the GitHub Actions. These candidates were rejected:
+The package depends only on WhisperKit, from `argmax-oss-swift`, and Sparkle, pinned to exact versions in `Package.swift`, with every resolved package recorded in `Package.resolved`. Dependabot proposes updates for them and for the GitHub Actions. These candidates were rejected:
 
 | Package | Why not |
 | --- | --- |
