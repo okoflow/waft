@@ -1,6 +1,6 @@
 # Waft
 
-On-device dictation for macOS with AI cleanup. A global key starts and stops the recording, Whisper recognizes the speech on the Mac through WhisperKit, a mode cleans the text up offline or with Claude, OpenAI, or a local server, and the result is pasted into the focused field through the clipboard.
+On-device dictation with AI cleanup. A global key starts and stops the recording, Whisper recognizes the speech on the Mac through WhisperKit, a mode cleans the text up offline or with Claude, OpenAI, or a local server, and the result is pasted into the focused field through the clipboard.
 
 The Swift package splits into `WaftCore` (domain and every interface between modules, Foundation only), `WaftSpeech` (WhisperKit), `WaftPlatform` (macOS adapters, AI APIs, Sparkle), `WaftFeatures` (main-actor models and SwiftUI), and `Waft` (the app and composition root). [Architecture](docs/architecture.md) has the code map, and [CONTRIBUTING.md](CONTRIBUTING.md) the rules and checks; read the sections linked below before you change code or docs, or commit.
 

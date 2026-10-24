@@ -8,7 +8,7 @@
 
 <h1 align="center">Waft</h1>
 
-<p align="center">On-device dictation for macOS with AI cleanup.</p>
+<p align="center">On-device dictation with AI cleanup.</p>
 
 <p align="center">
   <a
