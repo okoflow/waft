@@ -1,8 +1,8 @@
-package import WaftCore
 import Foundation
 import Security
+import WaftCore
 
-package struct KeychainStore: ValueStore {
+struct KeychainStore: ValueStore {
     private enum KeychainError: CustomNSError {
         case unexpectedStatus(OSStatus)
         case unreadableItem
@@ -17,7 +17,7 @@ package struct KeychainStore: ValueStore {
 
     private static let service = AppIdentity.bundleIdentifier
 
-    package let name: String
+    let name: String
 
     private let account: String
 
@@ -29,18 +29,18 @@ package struct KeychainStore: ValueStore {
         ]
     }
 
-    package static func license() -> KeychainStore {
+    static func license() -> KeychainStore {
         KeychainStore(name: "license key", account: "license-key")
     }
 
-    package static func apiKey(for provider: CloudProvider) -> KeychainStore {
+    static func apiKey(for provider: CloudProvider) -> KeychainStore {
         switch provider {
         case .claude: KeychainStore(name: "Claude API key", account: "anthropic-api-key")
         case .openAI: KeychainStore(name: "OpenAI API key", account: "openai-api-key")
         }
     }
 
-    package func load() throws -> String? {
+    func load() throws -> String? {
         var search = query
         search[kSecReturnData as String] = true
         search[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -54,7 +54,7 @@ package struct KeychainStore: ValueStore {
         return text
     }
 
-    package func exists() -> Bool {
+    func exists() -> Bool {
         var search = query
         search[kSecReturnAttributes as String] = true
         search[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -62,7 +62,7 @@ package struct KeychainStore: ValueStore {
         return SecItemCopyMatching(search as CFDictionary, nil) == errSecSuccess
     }
 
-    package func save(_ value: String) throws {
+    func save(_ value: String) throws {
         let data = Data(value.utf8)
         let status = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
 
@@ -76,7 +76,7 @@ package struct KeychainStore: ValueStore {
         }
     }
 
-    package func delete() throws {
+    func delete() throws {
         let status = SecItemDelete(query as CFDictionary)
         guard [errSecSuccess, errSecItemNotFound].contains(status) else { throw KeychainError.unexpectedStatus(status) }
     }

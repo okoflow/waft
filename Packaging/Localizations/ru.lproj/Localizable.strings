@@ -156,7 +156,7 @@
 "Keep at most" = "Хранить не больше";
 "Keep dictations for" = "Срок хранения";
 "Keep history" = "Сохранять историю";
-"Kept in the Keychain." = "Хранится в связке ключей.";
+"Kept on this Mac, readable only by you." = "Хранится на этом Mac, прочитать его можете только вы.";
 "Key %lld" = "Клавиша %lld";
 "Key saved" = "Ключ сохранён";
 "Language" = "Язык";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft не может прочитать этот файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не может использовать микрофон. Разрешите доступ в Настройках › Основные.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не смог прочитать сохранённую историю и оставил её копию. «Очистить историю» удалит обе.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft удалит его из связки ключей. Пока вы не добавите ключ, вместо ИИ-режимов применяется режим «Лёгкий».";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft удалит его с этого Mac. Пока вы не добавите ключ, вместо ИИ-режимов применяется режим «Лёгкий».";
 "Waft is listening" = "Waft слушает";
 "Waft keeps no dictations while Keep history is off." = "Пока переключатель «Сохранять историю» выключен, Waft не сохраняет диктовки.";
 "Waft listens for these languages." = "Waft распознаёт эти языки.";

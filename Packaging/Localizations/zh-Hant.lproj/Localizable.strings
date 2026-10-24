@@ -156,7 +156,7 @@
 "Keep at most" = "最多保留";
 "Keep dictations for" = "聽寫保留期限";
 "Keep history" = "保留記錄";
-"Kept in the Keychain." = "儲存在鑰匙圈中。";
+"Kept on this Mac, readable only by you." = "儲存在此Mac上，只有你可以讀取。";
 "Key %lld" = "按鍵%lld";
 "Key saved" = "金鑰已儲存";
 "Language" = "語言";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft無法讀取此檔案。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft無法使用麥克風。請在「設定」›「一般」中允許。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft無法讀取已儲存的記錄，已保留一份副本。「清除記錄」會同時刪除兩者。";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft會將其從鑰匙圈中刪除。在你加入金鑰之前，AI模式會使用「輕度」模式。";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft會將其從此Mac上刪除。在你加入金鑰之前，AI模式會使用「輕度」模式。";
 "Waft is listening" = "Waft正在聆聽";
 "Waft keeps no dictations while Keep history is off." = "「保留記錄」關閉時，Waft不會保留任何聽寫。";
 "Waft listens for these languages." = "Waft會辨識這些語言。";

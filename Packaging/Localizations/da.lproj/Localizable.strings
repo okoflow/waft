@@ -156,7 +156,7 @@
 "Keep at most" = "Behold højst";
 "Keep dictations for" = "Behold dikteringer i";
 "Keep history" = "Gem historik";
-"Kept in the Keychain." = "Opbevares i nøgleringen.";
+"Kept on this Mac, readable only by you." = "Opbevares på denne Mac og kan kun læses af dig.";
 "Key %lld" = "Tast %lld";
 "Key saved" = "Nøgle gemt";
 "Language" = "Sprog";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft kan ikke læse dette arkiv.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruge mikrofonen. Tillad adgang i Indstillinger › Generelt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunne ikke læse den gemte historik og har gemt en kopi af den. Ryd historik sletter begge.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft sletter den fra nøgleringen. AI-tilstandene bruger “Let”, indtil du tilføjer en nøgle.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft sletter den fra denne Mac. AI-tilstandene bruger “Let”, indtil du tilføjer en nøgle.";
 "Waft is listening" = "Waft lytter";
 "Waft keeps no dictations while Keep history is off." = "Waft gemmer ingen dikteringer, så længe “Gem historik” er slået fra.";
 "Waft listens for these languages." = "Waft lytter efter disse sprog.";

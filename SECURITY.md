@@ -27,7 +27,7 @@ In scope: everything in this repository, including the app, the scripts, and the
 
 - Audio leaving the Mac, or text leaving it other than for the AI provider you chose.
 - Text pasted into a password field, or into another app than the one you dictated into.
-- An API key leaving the keychain for anything other than its provider's API.
+- An API key leaving its owner-only file for anything other than its provider's API.
 - Dictated text or clipboard contents reaching the logs, the disk, or other apps.
 - The event tap or the Accessibility access used beyond what dictation needs.
 - An update installed without the project's signature, or a license key accepted without a valid signature.

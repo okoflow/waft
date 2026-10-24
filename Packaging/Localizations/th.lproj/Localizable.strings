@@ -156,7 +156,7 @@
 "Keep at most" = "เก็บไว้ไม่เกิน";
 "Keep dictations for" = "เก็บไว้นาน";
 "Keep history" = "เก็บประวัติ";
-"Kept in the Keychain." = "เก็บไว้ในพวงกุญแจ";
+"Kept on this Mac, readable only by you." = "เก็บไว้ใน Mac เครื่องนี้ และอ่านได้เฉพาะคุณ";
 "Key %lld" = "ปุ่ม %lld";
 "Key saved" = "บันทึกคีย์แล้ว";
 "Language" = "ภาษา";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจากพวงกุญแจ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจาก Mac เครื่องนี้ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
 "Waft is listening" = "Waft กำลังฟัง";
 "Waft keeps no dictations while Keep history is off." = "Waft จะไม่เก็บการป้อนตามคำบอกไว้ขณะที่ “เก็บประวัติ” ปิดอยู่";
 "Waft listens for these languages." = "Waft จะฟังภาษาเหล่านี้";

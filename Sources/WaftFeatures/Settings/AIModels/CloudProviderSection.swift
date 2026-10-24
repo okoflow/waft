@@ -33,7 +33,7 @@ private struct APIKeyRows: View {
 
     var body: some View {
         if apiKey.isSet {
-            SettingsRow("Key saved", description: "Kept in the Keychain.") {
+            SettingsRow("Key saved", description: "Kept on this Mac, readable only by you.") {
                 Button("Remove Key…", role: .destructive, action: confirmRemoval)
             }
             .rowTransition()
@@ -53,7 +53,7 @@ private struct APIKeyRows: View {
     private func confirmRemoval() {
         let confirmation = Confirmation(
             message: String(localized: "Remove the API key?"),
-            detail: String(localized: "Waft deletes it from the Keychain. The AI modes use Light until you add a key."),
+            detail: String(localized: "Waft deletes it from this Mac. The AI modes use Light until you add a key."),
             action: String(localized: "Remove Key"),
         )
 

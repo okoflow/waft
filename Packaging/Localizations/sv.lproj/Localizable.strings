@@ -156,7 +156,7 @@
 "Keep at most" = "Behåll högst";
 "Keep dictations for" = "Behåll dikteringar i";
 "Keep history" = "Spara historik";
-"Kept in the Keychain." = "Sparas i nyckelringen.";
+"Kept on this Mac, readable only by you." = "Sparas på den här datorn och kan bara läsas av dig.";
 "Key %lld" = "Tangent %lld";
 "Key saved" = "Nyckeln har sparats";
 "Language" = "Språk";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft kan inte läsa den här filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan inte använda mikrofonen. Tillåt åtkomst i Inställningar › Allmänt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunde inte läsa den sparade historiken och har behållit en kopia av den. Rensa historik raderar båda.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft raderar den från nyckelringen. AI-lägena använder ”Lätt” tills du lägger till en nyckel.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft raderar den från den här datorn. AI-lägena använder ”Lätt” tills du lägger till en nyckel.";
 "Waft is listening" = "Waft lyssnar";
 "Waft keeps no dictations while Keep history is off." = "Waft sparar inga dikteringar medan ”Spara historik” är avstängt.";
 "Waft listens for these languages." = "Waft lyssnar efter de här språken.";
