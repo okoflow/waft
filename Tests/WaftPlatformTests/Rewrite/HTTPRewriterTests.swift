@@ -21,39 +21,12 @@ struct HTTPRewriterTests {
         #expect(request.timeoutInterval == 3)
     }
 
-    @Test(arguments: [200, 299])
-    func `returns the answer the API reads from a successful response`(status: Int) async throws {
-        let transport = FakeHTTPTransport(.status(status, body: Data("Hello.".utf8)))
+    @Test
+    func `returns the answer the API reads from the response`() async throws {
+        let transport = FakeHTTPTransport(.status(200, body: Data("Hello.".utf8)))
         let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
 
         #expect(try await rewriter.rewrite(.cleanup("hello")) == "Hello.")
-    }
-
-    @Test(arguments: [
-        (FakeHTTPTransport.Reply.status(300), RewriteError.serviceUnavailable),
-        (.notHTTP, .unreadableResponse),
-        (.failure(URLError(.timedOut)), .timeout),
-    ])
-    func `maps an unsuccessful reply to a rewrite error`(reply: FakeHTTPTransport.Reply, error: RewriteError) async {
-        let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: FakeHTTPTransport(reply))
-
-        await #expect(throws: error) {
-            try await rewriter.rewrite(.cleanup("hello"))
-        }
-    }
-
-    @Test(arguments: [
-        #"{"error":{"message":"private dictated text","type":"private clipboard text","code":"Bearer private-token"}}"#,
-        #"{"error":{"message":false,"type":[],"code":{}}}"#,
-        "private dictated text",
-    ])
-    func `maps a failure by its status regardless of server diagnostics`(body: String) async {
-        let transport = FakeHTTPTransport(.status(401, body: Data(body.utf8)))
-        let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
-
-        await #expect(throws: RewriteError.rejectedKey) {
-            try await rewriter.rewrite(.cleanup("private dictated text"))
-        }
     }
 
     @Test

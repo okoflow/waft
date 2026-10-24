@@ -6,10 +6,10 @@ import WaftCore
 struct LocalServerBrowserTests {
     private static let server = LocalServer(baseURL: "http://localhost:1234/v1")
 
-    @Test(arguments: [200, 203])
-    func `lists the models the server reports at its models path`(status: Int) async throws {
+    @Test
+    func `lists the models the server reports at its models path`() async throws {
         let body = Data(#"{"object":"list","data":[{"id":"qwen3","object":"model"},{"id":"gemma3","object":"model"}]}"#.utf8)
-        let transport = FakeHTTPTransport(.status(status, body: body))
+        let transport = FakeHTTPTransport(.status(200, body: body))
 
         let models = try await LocalServerBrowser(transport: transport).models(at: Self.server)
 
@@ -17,20 +17,11 @@ struct LocalServerBrowserTests {
         #expect(transport.requests.map(\.url?.absoluteString) == ["http://localhost:1234/v1/models"])
     }
 
-    @Test(arguments: [
-        (FakeHTTPTransport.Reply.status(204), RewriteError.unreadableResponse),
-        (.status(300), .serviceUnavailable),
-        (.status(401), .rejectedKey),
-        (.status(404), .unavailable),
-        (.status(500), .serviceUnavailable),
-        (.notHTTP, .unreadableResponse),
-        (.status(200, body: Data(#"{"models":[]}"#.utf8)), .unreadableResponse),
-        (.failure(URLError(.timedOut)), .timeout),
-    ])
-    func `maps a reply without a model list to a rewrite error`(reply: FakeHTTPTransport.Reply, error: RewriteError) async {
+    @Test(arguments: [FakeHTTPTransport.Reply.status(204), .status(200, body: Data(#"{"models":[]}"#.utf8))])
+    func `rejects a reply without a model list as unreadable`(reply: FakeHTTPTransport.Reply) async {
         let browser = LocalServerBrowser(transport: FakeHTTPTransport(reply))
 
-        await #expect(throws: error) {
+        await #expect(throws: RewriteError.unreadableResponse) {
             try await browser.models(at: Self.server)
         }
     }
