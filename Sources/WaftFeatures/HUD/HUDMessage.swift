@@ -34,10 +34,6 @@ struct HUDMessage: Equatable {
         self.detail = detail
     }
 
-    static func copied(_ text: String, note: String? = nil) -> HUDMessage {
-        HUDMessage(kind: .copied, title: text, detail: note)
-    }
-
     static func blockedInPasswordField(detail: String? = nil) -> HUDMessage {
         HUDMessage(kind: .warning, title: String(localized: "Not pasted into a password field"), detail: detail)
     }

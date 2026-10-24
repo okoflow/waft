@@ -15,7 +15,7 @@ enum DictationOutcome {
             HUDMessage(kind: .pasted, title: processed.text, detail: processed.fallback?.message(for: provider))
 
         case let .copied(processed):
-            .copied(processed.text, note: processed.fallback?.message(for: provider))
+            HUDMessage(kind: .copied, title: processed.text, detail: processed.fallback?.message(for: provider))
 
         case .blockedInPasswordField:
             .blockedInPasswordField(detail: String(localized: "Choose Copy Last Dictation in the Waft menu."))

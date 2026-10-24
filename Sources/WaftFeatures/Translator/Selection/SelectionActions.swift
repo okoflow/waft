@@ -164,7 +164,7 @@ final class SelectionActions {
 
         case .skipped:
             clipboard.copy(text)
-            hud.show(.copied(text))
+            hud.show(HUDMessage(kind: .copied, title: text))
         }
     }
 }
