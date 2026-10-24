@@ -27,15 +27,13 @@ struct OtherSoundsLoweringTests {
     }
 
     @Test
-    func `cancels a pending lowering and brings the volume back on restore`() async throws {
-        let pending = OtherSoundsLowering(outputVolume: outputVolume, delay: .seconds(60))
+    func `cancels a pending lowering and brings the volume back on restore`() async {
+        let pending = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
 
         pending.lower { true }
         pending.restore()
 
-        try await Task.sleep(for: .milliseconds(100))
-
-        #expect(outputVolume.loweredFractions.isEmpty)
+        #expect(await !Poll.until(timeout: .milliseconds(300)) { !outputVolume.loweredFractions.isEmpty })
 
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
 

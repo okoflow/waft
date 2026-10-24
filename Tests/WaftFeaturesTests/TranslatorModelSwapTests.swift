@@ -78,7 +78,7 @@ struct TranslatorModelSwapTests {
     }
 
     @Test
-    func `swaps nothing when the text is already in the language it goes into`() async {
+    func `offers no swap when the text is already in the language it goes into`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let detector = FakeLanguageDetector(language: .english)
         let translator = TranslatorModel.translating(with: rewriter, settings: settings, detector: detector)

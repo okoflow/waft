@@ -4,17 +4,6 @@ import WaftCore
 @testable import WaftFeatures
 
 struct SpeechModelControllerTests {
-    @Test
-    func `loads the installed model and deletes the other one`() async {
-        let transcriber = FakeTranscriber(installed: [.fast])
-        let (controller, _) = make(transcriber)
-
-        controller.start()
-
-        #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.fast), .delete(.accurate)] })
-        #expect(controller.state.isReady)
-    }
-
     @Test(arguments: [true, false])
     func `starts the current model when the choice changes during the installation check`(isChosenInstalled: Bool) async {
         let (queries, queryContinuation) = AsyncStream.makeStream(of: SpeechModel.self)
@@ -25,14 +14,14 @@ struct SpeechModelControllerTests {
         }
 
         let installed: Set<SpeechModel> = isChosenInstalled ? [.fast, .accurate] : [.fast]
-        let transcriber = FakeTranscriber(installed: installed) { model in
+        let transcriber = FakeTranscriber(installed: installed, beforeInstallationCheck: { model in
             guard model == .fast else { return }
 
             queryContinuation.yield(model)
 
             var iterator = releases.makeAsyncIterator()
             _ = await iterator.next()
-        }
+        })
 
         let settings = SettingsModel.inMemory()
         let controller = SpeechModelController(
@@ -70,6 +59,7 @@ struct SpeechModelControllerTests {
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
+        #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.fast), .delete(.accurate)] })
 
         settings.settings.speechModel = .accurate
 

@@ -40,7 +40,11 @@ struct RecordingControllerTests {
         recordings.begin(Self.dictation)
         recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
 
-        #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == Array(played.dropLast()) })
+        if playsSounds {
+            #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
+        } else {
+            #expect(await !Poll.until(timeout: .milliseconds(300)) { !sounds.played.isEmpty })
+        }
 
         recordings.finish(releasedAt: 2)
 

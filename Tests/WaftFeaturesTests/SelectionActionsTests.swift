@@ -127,26 +127,14 @@ struct SelectionActionsTests {
         #expect(rewriter.requests.isEmpty)
     }
 
-    @Test
-    func `asks to select text without copying when the app shows only the caret`() async {
+    @Test(arguments: [(true, false), (false, true)])
+    func `asks to select text without copying when the app shows only the caret or the shortcut stays held`(
+        showsOnlyCaret: Bool,
+        holdsKeys: Bool,
+    ) async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let inserter = FakeTextInserter(copying: "The whole line")
-        let actions = actions(rewriter, selecting: nil, inserter: inserter, showsOnlyCaret: true)
-
-        actions.run(.translate)
-
-        #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(kind: .information, title: "Select the text first, then press the shortcut."))
-        })
-        #expect(inserter.copyCount == 0)
-        #expect(rewriter.requests.isEmpty)
-    }
-
-    @Test
-    func `copies nothing while the shortcut is still held`() async {
-        let rewriter = FakeTextRewriter(.success("Hello."))
-        let inserter = FakeTextInserter(copying: "Привет")
-        let actions = actions(rewriter, selecting: nil, inserter: inserter, holdsKeys: true)
+        let actions = actions(rewriter, selecting: nil, inserter: inserter, holdsKeys: holdsKeys, showsOnlyCaret: showsOnlyCaret)
 
         actions.run(.translate)
 

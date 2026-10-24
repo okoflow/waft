@@ -35,7 +35,7 @@ struct ProAccessTests {
     @Test(arguments: [(9, 0), (10, 15), (10, 23)])
     func `ends the trial three days after the day it started`(day: Int, hour: Int) throws {
         let start = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: day, hour: hour)))
-        let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: day + ProAccess.trialLength)))
+        let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 10, day: day + 3)))
 
         #expect(ProAccess.trialEnd(startedOn: start, now: start, calendar: .gmt) == end)
     }

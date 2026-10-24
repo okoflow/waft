@@ -16,7 +16,7 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `saves into new folders and loads the value back`() async throws {
+    func `saves into new folders as an owner-only file and loads the value back`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "nested/deeper/sample.json")
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
@@ -24,8 +24,12 @@ struct JSONFileStoreTests {
             try store.save(Self.sample)
 
             let text = try String(contentsOf: url, encoding: .utf8)
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            let leftovers = try FileManager.default.contentsOfDirectory(atPath: url.deletingLastPathComponent().path)
 
             #expect(store.exists())
+            #expect(attributes[.posixPermissions] as? Int == 0o600)
+            #expect(leftovers == ["sample.json"])
             #expect(try store.load() == Self.sample)
             #expect(text.contains("\"https://waft.okoflow.com\""))
             #expect(text.contains("\n"))
@@ -64,45 +68,10 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `writes a new file restricted to its owner and leaves no temporary file`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "nested/history.json")
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
-
-            try store.save(Self.sample)
-
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            let leftovers = try FileManager.default.contentsOfDirectory(atPath: url.deletingLastPathComponent().path)
-
-            #expect(attributes[.posixPermissions] as? Int == 0o600)
-            #expect(leftovers == ["history.json"])
-            #expect(try store.load() == Self.sample)
-        }
-    }
-
-    @Test
-    func `restricts the copy of an unreadable file to its owner`() async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "history.json")
-            let store = JSONFileStore<StoredSample>(name: "sample", url: url)
-
-            try Data(#"{"name": "#.utf8).write(to: url)
-
-            #expect(throws: DecodingError.self) {
-                try store.load()
-            }
-
-            let copy = directory.appending(path: "history.unreadable.json")
-            let attributes = try FileManager.default.attributesOfItem(atPath: copy.path)
-
-            #expect(attributes[.posixPermissions] as? Int == 0o600)
-        }
-    }
-
-    @Test
-    func `keeps a copy of an unreadable file and reports the failure`() async throws {
+    func `keeps an owner-only copy of an unreadable file and reports the failure`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "settings.json")
+            let copy = directory.appending(path: "settings.unreadable.json")
             let corrupt = Data(#"{"name": "Waft", "count": "#.utf8)
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
 
@@ -111,41 +80,13 @@ struct JSONFileStoreTests {
             #expect(throws: DecodingError.self) {
                 try store.load()
             }
-            #expect(try Data(contentsOf: directory.appending(path: "settings.unreadable.json")) == corrupt)
+            #expect(try Data(contentsOf: copy) == corrupt)
+            #expect(try FileManager.default.attributesOfItem(atPath: copy.path)[.posixPermissions] as? Int == 0o600)
             #expect(try Data(contentsOf: url) == corrupt)
 
             try store.save(Self.sample)
 
-            #expect(try Data(contentsOf: directory.appending(path: "settings.unreadable.json")) == corrupt)
-        }
-    }
-
-    @Test(arguments: [false, true])
-    func `deletes an unreadable recovery copy with or without its original`(isOriginalMissing: Bool) async throws {
-        try await FileManager.withTemporaryDirectory { directory throws in
-            let url = directory.appending(path: "history.json")
-            let recoveryCopy = directory.appending(path: "history.unreadable.json")
-            let store = JSONFileStore<StoredSample>(name: "history", url: url)
-
-            try Data(#"{"name": "#.utf8).write(to: url)
-
-            #expect(throws: DecodingError.self) {
-                try store.load()
-            }
-            #expect(FileManager.default.fileExists(atPath: recoveryCopy.path))
-
-            if isOriginalMissing {
-                try FileManager.default.removeItem(at: url)
-            }
-
-            try store.delete()
-
-            #expect(!FileManager.default.fileExists(atPath: url.path))
-            #expect(!FileManager.default.fileExists(atPath: recoveryCopy.path))
-            #expect(try store.load() == nil)
-            #expect(throws: Never.self) {
-                try store.delete()
-            }
+            #expect(try Data(contentsOf: copy) == corrupt)
         }
     }
 
@@ -178,15 +119,35 @@ struct JSONFileStoreTests {
         }
     }
 
-    @Test
-    func `deletes the file and tolerates deleting twice`() async throws {
+    @Test(arguments: [(true, false), (true, true), (false, true)])
+    func `deletes the file and its unreadable recovery copy and tolerates deleting twice`(
+        hasOriginal: Bool,
+        hasRecoveryCopy: Bool,
+    ) async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
-            let store = JSONFileStore<StoredSample>(name: "sample", url: directory.appending(path: "sample.json"))
+            let url = directory.appending(path: "history.json")
+            let recoveryCopy = directory.appending(path: "history.unreadable.json")
+            let store = JSONFileStore<StoredSample>(name: "history", url: url)
 
-            try store.save(Self.sample)
+            if hasRecoveryCopy {
+                try Data(#"{"name": "#.utf8).write(to: url)
+
+                #expect(throws: DecodingError.self) {
+                    try store.load()
+                }
+                #expect(FileManager.default.fileExists(atPath: recoveryCopy.path))
+            } else {
+                try store.save(Self.sample)
+            }
+
+            if !hasOriginal {
+                try FileManager.default.removeItem(at: url)
+            }
+
             try store.delete()
 
-            #expect(!store.exists())
+            #expect(!FileManager.default.fileExists(atPath: url.path))
+            #expect(!FileManager.default.fileExists(atPath: recoveryCopy.path))
             #expect(try store.load() == nil)
             #expect(throws: Never.self) {
                 try store.delete()

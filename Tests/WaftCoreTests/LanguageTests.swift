@@ -36,23 +36,25 @@ struct LanguageTests {
     }
 
     @Test(arguments: [
-        (Language.english, ".", true, true),
-        (.japanese, "。", false, false),
-        (.chinese, "。", false, false),
-        (.thai, "", false, false),
-        (.korean, ".", true, false),
-        (.hindi, "।", true, false),
-        (.russian, ".", true, true),
+        (Language.english, ".", true, " ", true),
+        (.japanese, "。", false, "", false),
+        (.chinese, "。", false, "", false),
+        (.thai, "", false, "", false),
+        (.korean, ".", true, " ", false),
+        (.hindi, "।", true, " ", false),
+        (.russian, ".", true, " ", true),
     ])
-    func `knows the typography of a language`(language: Language, fullStop: String, spaced: Bool, hasCase: Bool) {
+    func `knows the typography of a language`(
+        language: Language,
+        fullStop: String,
+        spaced: Bool,
+        wordSeparator: String,
+        hasCase: Bool,
+    ) {
         #expect(language.fullStop == fullStop)
         #expect(language.separatesWordsWithSpaces == spaced)
+        #expect(language.wordSeparator == wordSeparator)
         #expect(language.hasLetterCase == hasCase)
-    }
-
-    @Test(arguments: [(Language.english, " "), (.japanese, ""), (.chinese, ""), (.thai, ""), (.korean, " ")])
-    func `puts a space between words only where the script does`(language: Language, separator: String) {
-        #expect(language.wordSeparator == separator)
     }
 
     @Test(arguments: [

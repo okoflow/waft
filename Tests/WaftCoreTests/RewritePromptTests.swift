@@ -3,13 +3,15 @@ import Testing
 @testable import WaftCore
 
 struct RewritePromptTests {
-    @Test
-    func `puts the transcript between tags with the spoken language`() {
-        let request = RewriteRequest.cleanup("um hello there", language: .german)
+    @Test(arguments: [
+        (RewriteRequest.cleanup("um hello there", language: .german), "German"),
+        (.custom("um see you friday", language: .english), "English"),
+    ])
+    func `puts the transcript between tags with the spoken language`(request: RewriteRequest, name: String) {
         let expected = """
-        Spoken language: German.
+        Spoken language: \(name).
         <transcript>
-        um hello there
+        \(request.text)
         </transcript>
         Reply with the finished text alone.
         """
@@ -25,20 +27,6 @@ struct RewritePromptTests {
         Translate into: \(name).
         <transcript>
         hola
-        </transcript>
-        Reply with the finished text alone.
-        """
-
-        #expect(RewritePrompt.userMessage(for: request) == expected)
-    }
-
-    @Test
-    func `puts the transcript of a custom mode between tags without a translation target`() {
-        let request = RewriteRequest.custom("um see you friday", language: .english)
-        let expected = """
-        Spoken language: English.
-        <transcript>
-        um see you friday
         </transcript>
         Reply with the finished text alone.
         """
@@ -63,21 +51,16 @@ struct RewritePromptTests {
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
 
-    @Test
-    func `starts the cleanup system prompt with the mode instructions`() {
-        let system = RewritePrompt.system(for: .cleanup("hi", instructions: "Be brief."))
+    @Test(arguments: [
+        (RewriteRequest.cleanup("hi", instructions: "Be brief."), "Be brief."),
+        (.custom("hi", instructions: "Reply as a short email."), "Reply as a short email."),
+    ])
+    func `starts the system prompt of a transcript with its instructions`(request: RewriteRequest, instructions: String) {
+        let system = RewritePrompt.system(for: request)
 
-        #expect(system.hasPrefix("Be brief.\n"))
+        #expect(system.hasPrefix(instructions + "\n"))
         #expect(system.contains("<transcript> tags"))
         #expect(!system.contains("<instruction>"))
-    }
-
-    @Test
-    func `starts the system prompt of a custom mode with its instructions`() {
-        let system = RewritePrompt.system(for: .custom("hi", instructions: "Reply as a short email."))
-
-        #expect(system.hasPrefix("Reply as a short email.\n"))
-        #expect(system.contains("<transcript> tags"))
     }
 
     @Test

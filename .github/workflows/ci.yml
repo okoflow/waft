@@ -6,7 +6,8 @@ on:
     branches:
       - main
 
-permissions: {}
+permissions:
+  contents: read
 
 env:
   DEVELOPER_DIR: /Library/Developer/CommandLineTools
@@ -18,8 +19,6 @@ concurrency:
 jobs:
   check:
     name: Check
-    permissions:
-      contents: read
     runs-on: xcode-27
 
     steps:
@@ -44,8 +43,6 @@ jobs:
 
   compat:
     name: Command Line Tools 26
-    permissions:
-      contents: read
     runs-on: macos-26
 
     steps:
@@ -53,9 +50,6 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
-      - name: Build
-        run: make build
 
       - name: Test
         run: make test

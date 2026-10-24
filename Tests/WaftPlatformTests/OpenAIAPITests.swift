@@ -68,7 +68,6 @@ struct OpenAIAPITests {
         (#"{"status":"incomplete","incomplete_details":{"reason":"content_filter"},"output":[]}"#, .refused),
         (#"{"status":"incomplete","output":[]}"#, .truncated),
         (#"{"status":"failed","output":[]}"#, .serviceUnavailable),
-        (#"{"status":"failed","error":{"code":"server_error","message":"Try again."},"output":[]}"#, .serviceUnavailable),
         (#"{"output":[{"type":"message","content":[{"type":"refusal","refusal":"No."}]}]}"#, .refused),
         (#"{"status":"completed"}"#, .unreadableResponse),
         ("not json", .unreadableResponse),

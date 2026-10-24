@@ -3,13 +3,6 @@ import Testing
 import WaftCore
 
 struct SubtitleFormatterTests {
-    @Test
-    func `writes a numbered cue with millisecond timestamps`() {
-        let output = srt(segment(0, 2.5, "Hello world."))
-
-        #expect(output == "1\n00:00:00,000 --> 00:00:02,500\nHello world.\n")
-    }
-
     @Test(arguments: [(3725.5, "01:02:05,500"), (59.9994, "00:00:59,999"), (59.9996, "00:01:00,000"), (-3, "00:00:00,000")])
     func `formats hours, minutes, seconds, and milliseconds`(time: TimeInterval, timestamp: String) {
         let output = srt(segment(time, time + 1, "Hi."))

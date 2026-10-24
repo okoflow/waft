@@ -43,23 +43,6 @@ struct TranslatorModelTests {
     }
 
     @Test
-    func `names a chosen source language to the model and remembers it`() async throws {
-        let rewriter = FakeTextRewriter(.success("Hello."))
-        let translator = model(rewriter, detects: .dutch)
-
-        translator.source = .german
-        translator.input = "Hallo"
-
-        #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
-
-        let request = try #require(rewriter.requests.last)
-
-        #expect(request.textTask == .translate(from: .german, into: .english))
-        #expect(!translator.isShowingDetected)
-        #expect(translator.recentLanguages == [.german])
-    }
-
-    @Test
     func `translates by the instructions and the model of the translator`() async throws {
         settings.settings.translator.instructions.set("Translate like a pirate.", for: .translate)
         settings.settings.translator.cloudModel = .smartest

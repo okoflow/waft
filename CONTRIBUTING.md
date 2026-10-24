@@ -4,8 +4,8 @@ This page covers the setup, the checks a change passes, and the rules for code, 
 
 ## Ways to contribute
 
-- **Report a bug** with the bug report form. Include the Waft and macOS versions, the mode, and the log lines around the problem.
-- **Propose a feature** with the feature request form. Describe the problem before the solution.
+- **Report a bug** with the bug report form.
+- **Propose a feature** with the feature request form.
 - **Report a vulnerability** privately, as described in [SECURITY.md](SECURITY.md).
 - **Send a pull request** for an open issue. Comment on the issue first for anything larger than a fix, so the approach is agreed before the work.
 
@@ -35,7 +35,7 @@ The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the checks
 
 ## Checks
 
-`make check` runs the checks below in this order, except `bundle`, which re-signs the app you run. Run it before you push. CI runs `make check` and then `make bundle` with the Command Line Tools for Xcode 27 on every pull request and every push to `main`, and builds and tests with the Command Line Tools for Xcode 26 in a second job. GitHub's CodeQL also scans the Swift code, the cask, and the workflows.
+`make check` runs the checks below in this order, except `bundle`, which re-signs the app you run. Run it before you push. CI runs `make check` and then `make bundle` with the Command Line Tools for Xcode 27 on every pull request and every push to `main`, and runs `make test` with the Command Line Tools for Xcode 26 in a second job. GitHub's CodeQL also scans the Swift code, the cask, and the workflows.
 
 | Target | Tool | Fails on |
 | --- | --- | --- |

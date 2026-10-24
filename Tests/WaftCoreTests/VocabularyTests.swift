@@ -39,19 +39,18 @@ struct VocabularyTests {
         ("ask müller", "ask Dr. Müller"),
         ("ask dr. müller", "ask Dr. Müller"),
         ("ask Dr. Müller", "ask Dr. Müller"),
+        ("I use yahoo daily", "I use Yahoo! daily"),
+        ("I use Yahoo! daily", "I use Yahoo! daily"),
     ])
     func `keeps a term with punctuation whole`(text: String, expected: String) {
         let vocabulary = Vocabulary(
-            terms: [Vocabulary.Term(term: "Node.js", spoken: ["node"]), Vocabulary.Term(term: "Dr. Müller", spoken: ["müller"])],
+            terms: [
+                Vocabulary.Term(term: "Node.js", spoken: ["node"]),
+                Vocabulary.Term(term: "Dr. Müller", spoken: ["müller"]),
+                Vocabulary.Term(term: "Yahoo!", spoken: ["yahoo"]),
+            ],
             snippets: [],
         )
-
-        #expect(vocabulary.correcting(text, language: .english) == expected)
-    }
-
-    @Test(arguments: [("I use yahoo daily", "I use Yahoo! daily"), ("I use Yahoo! daily", "I use Yahoo! daily")])
-    func `keeps a term that ends in punctuation whole`(text: String, expected: String) {
-        let vocabulary = Vocabulary(terms: [Vocabulary.Term(term: "Yahoo!", spoken: ["yahoo"])], snippets: [])
 
         #expect(vocabulary.correcting(text, language: .english) == expected)
     }

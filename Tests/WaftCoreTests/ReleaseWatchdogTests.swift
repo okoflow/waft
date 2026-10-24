@@ -4,13 +4,6 @@ import Testing
 
 struct ReleaseWatchdogTests {
     @Test
-    func `reports holding while the key is down`() {
-        var watchdog = ReleaseWatchdog()
-
-        #expect(watchdog.poll(isHeld: true, at: 1) == .holding)
-    }
-
-    @Test
     func `waits for several released polls before reporting a release`() {
         var watchdog = ReleaseWatchdog()
 

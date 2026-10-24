@@ -43,7 +43,7 @@ struct TranslatorModelSourceTests {
     }
 
     @Test
-    func `keeps a chosen source when the text looks like a language outside the pair`() async throws {
+    func `keeps and remembers a chosen source when the text looks like a language outside the pair`() async throws {
         let rewriter = FakeTextRewriter(.success("Child."))
         let detector = FakeLanguageDetector(languagesByText: ["Kind": .dutch])
         let translator = TranslatorModel.translating(with: rewriter, settings: settings, detector: detector)
@@ -58,5 +58,6 @@ struct TranslatorModelSourceTests {
         #expect(request.textTask == .translate(from: .german, into: .english))
         #expect(translator.knownSource == .german)
         #expect(!translator.isShowingDetected)
+        #expect(translator.recentLanguages == [.german])
     }
 }

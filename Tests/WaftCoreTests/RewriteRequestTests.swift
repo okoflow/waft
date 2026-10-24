@@ -2,28 +2,24 @@ import Testing
 import WaftCore
 
 struct RewriteRequestTests {
-    @Test(arguments: [(10, 512), (256, 512), (1000, 2000), (2048, 4096), (5000, 4096)])
-    func `budgets output tokens for a cleanup from the transcript`(length: Int, budget: Int) {
-        #expect(RewriteRequest.cleanup(String(repeating: "a", count: length)).outputTokenBudget == budget)
-    }
-
-    @Test(arguments: [(10, 1024), (256, 1024), (1000, 4000), (2000, 4096)])
-    func `budgets more output tokens for a custom mode from the transcript`(length: Int, budget: Int) {
-        #expect(RewriteRequest.custom(String(repeating: "a", count: length)).outputTokenBudget == budget)
-    }
-
-    @Test(arguments: [(10, 1024), (1000, 2000), (3000, 4096)])
-    func `budgets output tokens for an edit from the selection`(length: Int, budget: Int) {
-        let request = RewriteRequest.edit(
-            String(repeating: "x", count: 4000),
-            selection: String(repeating: "a", count: length),
-        )
-
+    @Test(arguments: [
+        (RewriteRequest.cleanup(String(repeating: "a", count: 10)), 512),
+        (.cleanup(String(repeating: "a", count: 256)), 512),
+        (.cleanup(String(repeating: "a", count: 1000)), 2000),
+        (.cleanup(String(repeating: "a", count: 2048)), 4096),
+        (.cleanup(String(repeating: "a", count: 5000)), 4096),
+        (.custom(String(repeating: "a", count: 10)), 1024),
+        (.custom(String(repeating: "a", count: 256)), 1024),
+        (.custom(String(repeating: "a", count: 1000)), 4000),
+        (.custom(String(repeating: "a", count: 2000)), 4096),
+        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 10)), 1024),
+        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 1000)), 2000),
+        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 3000)), 4096),
+        (.text(String(repeating: "a", count: 10), task: .fix), 1024),
+        (.text(String(repeating: "a", count: 1000), task: .fix), 3000),
+        (.text(String(repeating: "a", count: 2000), task: .fix), 4096),
+    ])
+    func `budgets output tokens by the kind of request`(request: RewriteRequest, budget: Int) {
         #expect(request.outputTokenBudget == budget)
-    }
-
-    @Test(arguments: [(10, 1024), (1000, 3000), (2000, 4096)])
-    func `budgets output tokens for a text task from the text`(length: Int, budget: Int) {
-        #expect(RewriteRequest.text(String(repeating: "a", count: length), task: .fix).outputTokenBudget == budget)
     }
 }

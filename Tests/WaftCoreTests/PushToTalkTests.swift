@@ -3,25 +3,19 @@ import Testing
 @testable import WaftCore
 
 struct PushToTalkTests {
-    @Test
-    func `records while the key is held`() {
-        let actions = handle([(.keyDown, 10), (.keyUp, 11.5)])
-
-        #expect(actions == [.startRecording, .finishRecording])
-    }
-
-    @Test(arguments: [0.05, 0.2, 0.29])
-    func `discards a tap that is too short`(holdDuration: TimeInterval) {
-        let actions = handle([(.keyDown, 10), (.keyUp, 10 + holdDuration)])
-
-        #expect(actions == [.startRecording, .discardRecording(.tooShort)])
-    }
-
-    @Test
-    func `keeps a hold of exactly the minimum duration`() {
-        let actions = handle([(.keyDown, 0), (.keyUp, PushToTalk.minimumHold)])
-
-        #expect(actions.last == .finishRecording)
+    @Test(arguments: [
+        (10.0, 10.05, PushToTalk.Action.discardRecording(.tooShort)),
+        (10, 10.2, .discardRecording(.tooShort)),
+        (10, 10.29, .discardRecording(.tooShort)),
+        (0, PushToTalk.minimumHold, .finishRecording),
+        (10, 11.5, .finishRecording),
+    ])
+    func `finishes a hold of at least the minimum duration and discards a shorter one`(
+        pressedAt: TimeInterval,
+        releasedAt: TimeInterval,
+        expected: PushToTalk.Action,
+    ) {
+        #expect(handle([(.keyDown, pressedAt), (.keyUp, releasedAt)]) == [.startRecording, expected])
     }
 
     @Test
@@ -38,26 +32,37 @@ struct PushToTalkTests {
         ])
     }
 
-    @Test
-    func `starts a fresh recording after hands-free stops`() {
-        let actions = handle([
-            (.keyDown, 0),
-            (.keyUp, 0.1),
-            (.keyDown, 0.3),
-            (.keyUp, 0.4),
-            (.keyDown, 2),
-            (.keyUp, 2.1),
-            (.keyDown, 9),
-        ])
-
-        #expect(actions.last == .startRecording)
-    }
-
-    @Test
-    func `starts a recording on the next press when the key-up after hands-free is lost`() {
-        let actions = handle([(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.keyDown, 2), (.keyDown, 9)])
-
-        #expect(actions.suffix(2) == [.finishRecording, .startRecording])
+    @Test(arguments: [
+        (
+            [
+                (PushToTalk.Event.keyDown, 0.0),
+                (.keyUp, 0.1),
+                (.keyDown, 0.3),
+                (.keyUp, 0.4),
+                (.keyDown, 2),
+                (.keyUp, 2.1),
+                (.keyDown, 9),
+            ],
+            [
+                PushToTalk.Action.startRecording,
+                .discardRecording(.tooShort),
+                .startRecording,
+                .lockHandsFree,
+                .finishRecording,
+                nil,
+                .startRecording,
+            ],
+        ),
+        (
+            [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.keyDown, 2), (.keyDown, 9)],
+            [.startRecording, .discardRecording(.tooShort), .startRecording, .lockHandsFree, .finishRecording, .startRecording],
+        ),
+    ])
+    func `starts a recording on the next press after hands-free stops, with or without its key-up`(
+        steps: [(PushToTalk.Event, TimeInterval)],
+        expected: [PushToTalk.Action?],
+    ) {
+        #expect(handle(steps) == expected)
     }
 
     @Test

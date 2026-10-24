@@ -160,9 +160,10 @@ struct DictationControllerTests {
     }
 
     @Test
-    func `starts a new recording on the tap after a hands-free recording fails`() async throws {
+    func `starts a new recording on the tap after a hands-free recording fails`() async {
         settings.settings.dictationStart = .tap
-        let controller = await controller(watchdogInterval: 0)
+        let recordings = recordings(keyboardState: FakeKeyboardState(holdsKeys: true), watchdogInterval: 0)
+        let controller = await controller(recordings)
 
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.1)
@@ -173,7 +174,8 @@ struct DictationControllerTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
 
-        try await Task.sleep(for: .milliseconds(100))
+        #expect(await Poll.until(timeout: .seconds(5)) { recordings.recording == nil })
+
         await pressDictationKey(at: 1)
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.startedDevices.count == 2 })
@@ -212,18 +214,17 @@ extension DictationControllerTests {
         keyboardState: FakeKeyboardState = FakeKeyboardState(holdsKeys: true),
         watchdogInterval: TimeInterval = 60,
     ) async -> DictationController {
-        let recordings = RecordingController(
-            recorder: recorder,
-            focusTracker: FakeFocusTracker(),
-            keyboardState: keyboardState,
-            sounds: FakeFeedbackSoundPlayer(),
-            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume()),
-            settings: settings,
-            hud: hud,
-            hudDelay: .zero,
-            watchdogInterval: watchdogInterval,
-        )
+        let recordings = recordings(keyboardState: keyboardState, watchdogInterval: watchdogInterval)
 
+        return await controller(recordings, isSpeechModelReady: isSpeechModelReady, permissions: permissions, pro: pro)
+    }
+
+    private func controller(
+        _ recordings: RecordingController,
+        isSpeechModelReady: Bool = true,
+        permissions: PermissionMonitor = DictationControllerTests.permissions(microphone: .granted),
+        pro: ProModel = .unlicensed(),
+    ) async -> DictationController {
         let controller = await DictationController(
             keyEventMonitor: monitor,
             recordings: recordings,
@@ -240,6 +241,20 @@ extension DictationControllerTests {
         controller.start()
 
         return controller
+    }
+
+    private func recordings(keyboardState: FakeKeyboardState, watchdogInterval: TimeInterval) -> RecordingController {
+        RecordingController(
+            recorder: recorder,
+            focusTracker: FakeFocusTracker(),
+            keyboardState: keyboardState,
+            sounds: FakeFeedbackSoundPlayer(),
+            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume()),
+            settings: settings,
+            hud: hud,
+            hudDelay: .zero,
+            watchdogInterval: watchdogInterval,
+        )
     }
 
     private func speechModelController(isReady: Bool, pro: ProModel) async -> SpeechModelController {

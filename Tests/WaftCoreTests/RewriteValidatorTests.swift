@@ -24,13 +24,6 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: .cleanup(transcript)) == answer)
     }
 
-    @Test(arguments: ["", "   \n", "\" \"", "\"\"", "«»", "<transcript> </transcript>", "<transcript></transcript>"])
-    func `rejects an empty cleanup`(answer: String) {
-        #expect(throws: RewriteError.unreadableResponse) {
-            try RewriteValidator.validated(answer, for: .cleanup("hello there"))
-        }
-    }
-
     @Test(arguments: [
         (RewriteRequest.cleanup("hi"), 2 * 3 + 60),
         (.custom("tell him yes friday works"), 600),
@@ -99,13 +92,6 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: .custom(transcript, language: language)) == answer)
     }
 
-    @Test(arguments: ["", "  ", "\"\"", "<transcript></transcript>"])
-    func `rejects an empty custom answer`(answer: String) {
-        #expect(throws: RewriteError.unreadableResponse) {
-            try RewriteValidator.validated(answer, for: .custom("hello there"))
-        }
-    }
-
     @Test(arguments: [
         ("<text>Shorter.</text>", "Shorter."),
         ("<text>\nShorter.\n</text>", "Shorter."),
@@ -126,13 +112,6 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: .edit("make it shorter", selection: "word")) == answer)
     }
 
-    @Test(arguments: ["", "  ", "\" \"", "\"\"", "<text> </text>", "<text></text>"])
-    func `rejects an empty edit`(answer: String) {
-        #expect(throws: RewriteError.unreadableResponse) {
-            try RewriteValidator.validated(answer, for: .edit("make it shorter", selection: "Some text."))
-        }
-    }
-
     @Test(arguments: [("<text>\nHallo.\n</text>", "Hallo."), ("«Hallo.»", "Hallo."), ("Hallo.", "Hallo.")])
     func `unwraps the answer to a text task`(answer: String, expected: String) throws {
         let request = RewriteRequest.text("Hello.", task: .translate(from: nil, into: .german))
@@ -140,10 +119,34 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: request) == expected)
     }
 
-    @Test(arguments: ["", "  ", "\" \"", "\"\"", "<text> </text>", "<text></text>"])
-    func `rejects an empty answer to a text task`(answer: String) {
+    @Test(arguments: [
+        (RewriteRequest.cleanup("hello there"), ""),
+        (.cleanup("hello there"), "   \n"),
+        (.cleanup("hello there"), "\" \""),
+        (.cleanup("hello there"), "\"\""),
+        (.cleanup("hello there"), "«»"),
+        (.cleanup("hello there"), "<transcript> </transcript>"),
+        (.cleanup("hello there"), "<transcript></transcript>"),
+        (.custom("hello there"), ""),
+        (.custom("hello there"), "  "),
+        (.custom("hello there"), "\"\""),
+        (.custom("hello there"), "<transcript></transcript>"),
+        (.edit("make it shorter", selection: "Some text."), ""),
+        (.edit("make it shorter", selection: "Some text."), "  "),
+        (.edit("make it shorter", selection: "Some text."), "\" \""),
+        (.edit("make it shorter", selection: "Some text."), "\"\""),
+        (.edit("make it shorter", selection: "Some text."), "<text> </text>"),
+        (.edit("make it shorter", selection: "Some text."), "<text></text>"),
+        (.text("Hi.", task: .fix), ""),
+        (.text("Hi.", task: .fix), "  "),
+        (.text("Hi.", task: .fix), "\" \""),
+        (.text("Hi.", task: .fix), "\"\""),
+        (.text("Hi.", task: .fix), "<text> </text>"),
+        (.text("Hi.", task: .fix), "<text></text>"),
+    ])
+    func `rejects an empty answer to any request`(request: RewriteRequest, answer: String) {
         #expect(throws: RewriteError.unreadableResponse) {
-            try RewriteValidator.validated(answer, for: .text("Hi.", task: .fix))
+            try RewriteValidator.validated(answer, for: request)
         }
     }
 }

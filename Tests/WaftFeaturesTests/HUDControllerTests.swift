@@ -128,10 +128,13 @@ struct HUDControllerTests {
     }
 
     @Test(arguments: [HUDMessage.Kind.copied, .information, .warning])
-    func `ignores a click on a message with nothing to copy`(kind: HUDMessage.Kind) {
+    func `shows a message with nothing to copy in full and ignores a click on it`(kind: HUDMessage.Kind) {
         let hud = model()
 
         hud.show(HUDMessage(kind: kind, title: "Hi."))
+
+        #expect(!hud.showsCompactMessage)
+
         hud.copyMessage()
 
         #expect(!hud.canCopyMessage)
@@ -184,15 +187,6 @@ struct HUDControllerTests {
         hud.pointerMoved(to: .zero, isOver: true)
 
         #expect(hud.showsCompactMessage)
-    }
-
-    @Test(arguments: [HUDMessage.Kind.copied, .information, .warning])
-    func `shows a message with nothing to copy in full`(kind: HUDMessage.Kind) {
-        let hud = model()
-
-        hud.show(HUDMessage(kind: kind, title: "Hi."))
-
-        #expect(!hud.showsCompactMessage)
     }
 
     @Test

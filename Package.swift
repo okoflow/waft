@@ -16,9 +16,6 @@ let mainActorByDefault = strict + [.defaultIsolation(MainActor.self)]
 let package = Package(
     name: "Waft",
     platforms: [.macOS(.v14)],
-    products: [
-        .executable(name: "Waft", targets: ["Waft"]),
-    ],
     dependencies: [
         .package(url: "https://github.com/argmaxinc/argmax-oss-swift.git", exact: "1.1.1"),
         .package(url: "https://github.com/sparkle-project/Sparkle.git", exact: "2.10.0"),
