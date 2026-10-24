@@ -156,7 +156,7 @@
 "Keep at most" = "Saklama sınırı";
 "Keep dictations for" = "Saklama süresi";
 "Keep history" = "Geçmişi sakla";
-"Kept in the Keychain." = "Anahtar Zinciri’nde saklanır.";
+"Kept on this Mac, readable only by you." = "Bu Mac’te saklanır, yalnızca siz okuyabilirsiniz.";
 "Key %lld" = "Tuş %lld";
 "Key saved" = "Anahtar kaydedildi";
 "Language" = "Dil";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. “Geçmişi Sil” ikisini de siler.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft onu Anahtar Zinciri’nden siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft onu bu Mac’ten siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";
 "Waft keeps no dictations while Keep history is off." = "“Geçmişi sakla” kapalıyken Waft dikte saklamaz.";
 "Waft listens for these languages." = "Waft bu dilleri tanır.";

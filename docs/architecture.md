@@ -45,7 +45,7 @@ The tables list the folders whose names don't say enough.
 **`WaftPlatform`** implements the interfaces in a folder per area, such as `KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and `PasteboardInserter` in `Pasteboard`.
 
 - `Rewrite` holds `HTTPRewriter`, which sends a rewrite through an API description per service in `Providers` (`AnthropicAPI`, `OpenAIAPI`, and `ChatCompletionsAPI` for local servers) over the transport in `HTTP`, and `LocalServerBrowser`, which lists a local server's models.
-- `Storage` holds `JSONFileStore`, which keeps a copy of a file it can't read, so a later save doesn't destroy it. `ValueStore+Logging` in `WaftFeatures/Support` logs persistence failures.
+- `Storage` holds `JSONFileStore`, which keeps its folder and files owner-only and a copy of a file it can't read, so a later save doesn't destroy it. `SecretFileStore` keeps an API key or the license key in a `JSONFileStore` and moves a key an older version left in the keychain into it on first load through `KeychainStore`, which nothing else uses. `ValueStore+Logging` in `WaftFeatures/Support` logs persistence failures.
 - `Updates` holds `SparkleUpdater`, which turns itself off when `Info.plist` has no `SUFeedURL`. `scripts/bundle.sh` removes the key from debug bundles.
 
 **`WaftFeatures`** is grouped by feature:
@@ -110,5 +110,5 @@ To add a language:
 To add anything else:
 
 - **A mode.** Add a case to `Mode` with its title, summary, and the raw value it is stored under, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
-- **An AI provider.** Describe its API in `WaftPlatform/Rewrite/Providers` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its keychain account in `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its account in [Removing everything](privacy.md#removing-everything).
+- **An AI provider.** Describe its API in `WaftPlatform/Rewrite/Providers` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its key file in `SecretFileStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its file in [What Waft keeps](privacy.md#what-waft-keeps).
 - **An adapter.** Implement the interface in `WaftPlatform` and pass it in `AppDependencies.live()`.

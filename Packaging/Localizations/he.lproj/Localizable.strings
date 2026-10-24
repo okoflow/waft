@@ -156,7 +156,7 @@
 "Keep at most" = "שמירה של עד";
 "Keep dictations for" = "משך שמירת ההכתבות";
 "Keep history" = "שמירת היסטוריה";
-"Kept in the Keychain." = "נשמר בצרור המפתחות.";
+"Kept on this Mac, readable only by you." = "נשמר ב-Mac זה, וניתן לקריאה רק על ידך.";
 "Key %lld" = "מקש %lld";
 "Key saved" = "המפתח נשמר";
 "Language" = "שפה";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft ימחק אותו מצרור המפתחות. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft ימחק אותו מ-Mac זה. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
 "Waft keeps no dictations while Keep history is off." = "Waft לא שומר הכתבות כל עוד ״שמירת היסטוריה״ כבויה.";
 "Waft listens for these languages." = "אלה השפות ש-Waft מזהה.";

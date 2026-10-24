@@ -6,6 +6,10 @@ This page says what to do when something doesn't work, starting from what the HU
 
 When macOS says it can't verify that Waft is free of malware, allow it once with **Open Anyway**, as [Install](getting-started.md#1-install) shows.
 
+## macOS asks for your password for the keychain
+
+When macOS asks for your password because Waft wants to use confidential information stored in `com.okoflow.waft` in your keychain, Waft is moving an API key or the license key that an older version kept there into its file, as [What Waft keeps](privacy.md#what-waft-keeps) describes. Enter your password and click **Allow**: Waft deletes the item from the keychain and doesn't ask again. If you click **Deny**, the key stays in the keychain and Waft works as if it had none until you allow it or add the key again in Settings.
+
 ## The dictation or editing key does nothing
 
 | Symptom | Fix |

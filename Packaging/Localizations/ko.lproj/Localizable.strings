@@ -156,7 +156,7 @@
 "Keep at most" = "최대 보관 개수";
 "Keep dictations for" = "보관 기간";
 "Keep history" = "기록 보관";
-"Kept in the Keychain." = "키체인에 보관됩니다.";
+"Kept on this Mac, readable only by you." = "이 Mac에 보관되며 본인만 읽을 수 있습니다.";
 "Key %lld" = "키 %lld";
 "Key saved" = "키 저장됨";
 "Language" = "언어";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft가 이 파일을 읽을 수 없습니다.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft가 마이크를 사용할 수 없습니다. 설정 › 일반에서 허용하세요.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft가 저장된 기록을 읽지 못해 사본을 보관했습니다. ‘기록 지우기’를 누르면 둘 다 삭제됩니다.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft가 키체인에서 키를 삭제합니다. 키를 추가할 때까지 AI 모드는 ‘가벼운 정리’ 모드로 처리됩니다.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft가 이 Mac에서 키를 삭제합니다. 키를 추가할 때까지 AI 모드는 ‘가벼운 정리’ 모드로 처리됩니다.";
 "Waft is listening" = "Waft가 듣는 중";
 "Waft keeps no dictations while Keep history is off." = "‘기록 보관’이 꺼져 있는 동안에는 Waft가 받아쓰기를 보관하지 않습니다.";
 "Waft listens for these languages." = "Waft는 다음 언어를 인식합니다.";

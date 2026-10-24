@@ -8,6 +8,10 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
 
     private let url: URL
 
+    private var folder: URL {
+        url.deletingLastPathComponent()
+    }
+
     private var unreadableCopy: URL {
         url.deletingPathExtension().appendingPathExtension("unreadable.json")
     }
@@ -53,7 +57,12 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
 
-        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(
+            at: folder,
+            withIntermediateDirectories: true,
+            attributes: [.posixPermissions: 0o700],
+        )
+        restrict(folder, to: 0o700)
         try write(encoder.encode(value), to: url)
     }
 
@@ -78,9 +87,19 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     private func restrictToOwner() {
-        guard chmod(url.path, 0o600) != 0 else { return }
+        restrict(folder, to: 0o700)
+        restrict(url, to: 0o600)
+    }
 
-        Logger.storage.error("Couldn't restrict a file to its owner: \(Self.lastPOSIXError().logDescription, privacy: .public)")
+    private func restrict(_ item: URL, to permissions: mode_t) {
+        guard chmod(item.path, permissions) != 0 else { return }
+
+        let error = Self.lastPOSIXError()
+        let itemName = item.lastPathComponent
+
+        Logger.storage.error(
+            "Couldn't restrict \(itemName, privacy: .public) to its owner: \(error.logDescription, privacy: .public)",
+        )
     }
 
     private func keepUnreadableCopy(of data: Data) {

@@ -156,7 +156,7 @@
 "Keep at most" = "Höchstens behalten";
 "Keep dictations for" = "Diktate behalten";
 "Keep history" = "Verlauf speichern";
-"Kept in the Keychain." = "Im Schlüsselbund aufbewahrt.";
+"Kept on this Mac, readable only by you." = "Auf diesem Mac aufbewahrt, nur für dich lesbar.";
 "Key %lld" = "Taste %lld";
 "Key saved" = "Schlüssel gesichert";
 "Language" = "Sprache";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "Waft kann diese Datei nicht lesen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kann das Mikrofon nicht verwenden. Erlaube den Zugriff unter Einstellungen › Allgemein.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft konnte den gespeicherten Verlauf nicht lesen und hat eine Kopie davon behalten. „Verlauf löschen“ entfernt beides.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "Waft löscht ihn aus dem Schlüsselbund. Bis du einen Schlüssel hinzufügst, nutzen die KI-Modi den Modus „Leicht“.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft löscht ihn von diesem Mac. Bis du einen Schlüssel hinzufügst, nutzen die KI-Modi den Modus „Leicht“.";
 "Waft is listening" = "Waft hört zu";
 "Waft keeps no dictations while Keep history is off." = "Waft speichert keine Diktate, solange „Verlauf speichern“ deaktiviert ist.";
 "Waft listens for these languages." = "Waft erkennt diese Sprachen.";

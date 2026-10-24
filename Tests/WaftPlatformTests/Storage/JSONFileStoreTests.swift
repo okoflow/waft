@@ -16,7 +16,7 @@ struct JSONFileStoreTests {
     }
 
     @Test
-    func `saves into new folders as an owner-only file and loads the value back`() async throws {
+    func `saves into new owner-only folders as an owner-only file and loads the value back`() async throws {
         try await FileManager.withTemporaryDirectory { directory throws in
             let url = directory.appending(path: "nested/deeper/sample.json")
             let store = JSONFileStore<StoredSample>(name: "sample", url: url)
@@ -25,10 +25,12 @@ struct JSONFileStoreTests {
 
             let text = try String(contentsOf: url, encoding: .utf8)
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            let folderAttributes = try FileManager.default.attributesOfItem(atPath: url.deletingLastPathComponent().path)
             let leftovers = try FileManager.default.contentsOfDirectory(atPath: url.deletingLastPathComponent().path)
 
             #expect(store.exists())
             #expect(attributes[.posixPermissions] as? Int == 0o600)
+            #expect(folderAttributes[.posixPermissions] as? Int == 0o700)
             #expect(leftovers == ["sample.json"])
             #expect(try store.load() == Self.sample)
             #expect(text.contains("\"https://waft.okoflow.com\""))
@@ -64,6 +66,25 @@ struct JSONFileStoreTests {
 
             #expect(try store.load() == Self.sample)
             #expect(try FileManager.default.attributesOfItem(atPath: url.path)[.posixPermissions] as? Int == 0o600)
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func `restricts a folder that others could read to its owner`(isSaving: Bool) async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let folder = directory.appending(path: "Waft", directoryHint: .isDirectory)
+            let store = JSONFileStore<StoredSample>(name: "sample", url: folder.appending(path: "sample.json"))
+
+            try store.save(Self.sample)
+            try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: folder.path)
+
+            if isSaving {
+                try store.save(Self.sample)
+            } else {
+                #expect(try store.load() == Self.sample)
+            }
+
+            #expect(try FileManager.default.attributesOfItem(atPath: folder.path)[.posixPermissions] as? Int == 0o700)
         }
     }
 

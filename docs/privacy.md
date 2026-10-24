@@ -29,9 +29,13 @@ Raw and Light never use the network, and the translator detects languages on you
 | History, with the mode and app of each dictation and the recognized text before a mode rewrote it, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
-| Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |
+| Claude and OpenAI API keys and the Waft+ license key | `anthropic-api-key.json`, `openai-api-key.json`, and `license-key.json` in `~/Library/Application Support/Waft` |
 
-Only you can read the dictionary, statistics, and history files. If Waft can't read one of them, it keeps an `*.unreadable.json` copy beside it, which **Clear History…** in Settings › History also deletes for the history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared) says how to recover it.
+Only you can open the `~/Library/Application Support/Waft` folder and read the files in it. If Waft can't read the dictionary, statistics, or history file, it keeps an `*.unreadable.json` copy beside it, which **Clear History…** in Settings › History also deletes for the history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared) says how to recover it.
+
+During the beta, Waft keeps the API keys and the license key in these owner-only files instead of the keychain. Waft isn't signed with an Apple Developer ID yet, so macOS ties a keychain item to the exact build that saved it and would ask for your password to read the keys after every update. The files are safe from other users of this Mac, but any app or process that runs under your user account can read them, where the keychain would ask you first. Once Waft has a Developer ID, the keys move back to the keychain.
+
+An older version kept the keys in the login keychain under the service `com.okoflow.waft`. The first time Waft needs a key it finds there, it reads it once, which can make macOS ask for your password one last time, moves it into its file, and deletes it from the keychain; [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain) covers the prompt.
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, file transcriptions, and text that Waft kept out of a password field stay out of the history and the statistics.
 
@@ -53,7 +57,7 @@ rm -rf ~/Library/Application\ Support/Waft ~/Library/Caches/com.okoflow.waft \
 defaults delete com.okoflow.waft
 ```
 
-Either way, remove the API keys and the license key from the keychain, and the permissions you granted:
+Either way, remove the permissions you granted, and any API key or license key that an older version left in the keychain:
 
 ```sh
 security delete-generic-password -s com.okoflow.waft -a anthropic-api-key

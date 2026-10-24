@@ -156,7 +156,7 @@
 "Keep at most" = "Manter no máximo";
 "Keep dictations for" = "Manter ditados";
 "Keep history" = "Manter histórico";
-"Kept in the Keychain." = "Guardada no porta-chaves.";
+"Kept on this Mac, readable only by you." = "Guardada neste Mac, legível apenas por si.";
 "Key %lld" = "Tecla %lld";
 "Key saved" = "Chave guardada";
 "Language" = "Idioma";
@@ -417,7 +417,7 @@
 "Waft can't read this file." = "O Waft não consegue ler este ficheiro.";
 "Waft can't use the microphone. Allow it in Settings › General." = "O Waft não pode usar o microfone. Permita o acesso em Definições › Geral.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "O Waft não conseguiu ler o histórico guardado e manteve uma cópia. “Limpar histórico” apaga ambos.";
-"Waft deletes it from the Keychain. The AI modes use Light until you add a key." = "O Waft apaga-a do porta-chaves. Os modos de IA usam o modo “Leve” até adicionar uma chave.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "O Waft apaga-a deste Mac. Os modos de IA usam o modo “Leve” até adicionar uma chave.";
 "Waft is listening" = "O Waft está a ouvir";
 "Waft keeps no dictations while Keep history is off." = "O Waft não guarda ditados enquanto “Manter histórico” estiver desativado.";
 "Waft listens for these languages." = "O Waft reconhece estes idiomas.";

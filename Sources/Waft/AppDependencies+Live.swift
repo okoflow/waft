@@ -8,7 +8,7 @@ extension AppDependencies {
     static func live() -> AppDependencies {
         let focusTracker = AccessibilityFocusTracker()
         let keyboardState = SystemKeyboardState()
-        let apiKeyStores = PerProvider<any ValueStore<String>> { KeychainStore.apiKey(for: $0) }
+        let apiKeyStores = PerProvider<any ValueStore<String>> { SecretFileStore.apiKey(for: $0) }
 
         let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
         let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
@@ -42,7 +42,7 @@ extension AppDependencies {
             historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile),
             statisticsStore: JSONFileStore<DictationStatistics>(name: "statistics", url: statisticsFile),
             apiKeyStores: apiKeyStores,
-            licenseStore: KeychainStore.license(),
+            licenseStore: SecretFileStore.license(),
             trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),
             interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),

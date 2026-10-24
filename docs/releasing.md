@@ -83,4 +83,5 @@ When the Apple Developer account has a Developer ID:
 
 2. Release with `SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)"`. The script then signs with the hardened runtime, which needs the microphone entitlement in `Packaging/Waft.entitlements`, notarizes and staples the app and the disk image, and checks the image with `spctl`.
 3. Remove `postflight_steps` from `Packaging/Homebrew/waft.rb`, and the **Open Anyway** steps from [Install](getting-started.md#1-install), the README, and [Troubleshooting](troubleshooting.md#macos-wont-open-waft).
-4. Say in the release notes that macOS asks once more for the microphone and Accessibility, since the signature changed.
+4. Move the API keys and the license key back to the keychain: point `SecretFileStore` the other way, so it moves a key from its file into the keychain on first load and deletes the file, and update [What Waft keeps](privacy.md#what-waft-keeps), the key rows in Settings › AI Models, and [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain).
+5. Say in the release notes that macOS asks once more for the microphone and Accessibility, since the signature changed.
