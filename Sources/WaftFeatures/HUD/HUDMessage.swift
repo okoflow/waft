@@ -1,7 +1,7 @@
 import Foundation
 
-struct HUDMessage: Equatable, Sendable {
-    enum Kind: Sendable {
+struct HUDMessage: Equatable {
+    enum Kind {
         case pasted
         case copied
         case information
