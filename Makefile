@@ -1,5 +1,4 @@
 CONFIG         ?= debug
-INDEX_STORE     = $(if $(wildcard .build/out/v5),.build/out,.build/debug/index/store)
 STRINGS_DIR     = $(CURDIR)/.build/strings
 TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
 TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
@@ -57,7 +56,7 @@ secrets-staged: ## Scan the staged changes for secrets
 	$(GITLEAKS) --pre-commit --staged
 
 periphery: test ## Fail on unused code
-	periphery scan --index-store-path $(INDEX_STORE)
+	periphery scan --index-store-path .build/out
 
 strings: build ## Check every translation against the strings in the code
 	STRINGS_DIR=$(STRINGS_DIR) scripts/strings.sh check
