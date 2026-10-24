@@ -86,6 +86,7 @@
 "Copied" = "コピー済み";
 "Copied: press %@ to paste" = "コピーしました：%@でペーストできます";
 "Copy Last Dictation" = "直前の音声入力をコピー";
+"Copy Original Transcript" = "元の文字起こしをコピー";
 "Copy" = "コピー";
 "Corrects spelling, grammar, and punctuation in the selection." = "選択したテキストのスペル、文法、句読点を修正します。";
 "Couldn't edit the text" = "テキストを編集できませんでした";

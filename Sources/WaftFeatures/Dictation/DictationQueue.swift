@@ -133,7 +133,7 @@ final class DictationQueue {
 
         log(transcript, processed, for: job)
 
-        return await deliver(processed, for: job)
+        return await deliver(processed, transcribed: transcript.text, for: job)
     }
 
     private func edit(_ selection: String, following transcript: Transcript, for job: DictationJob) async -> DictationOutcome {
@@ -142,22 +142,26 @@ final class DictationQueue {
         do throws(RewriteError) {
             let edited = try await processor.edit(selection, following: transcript, setup: job.setup)
 
-            return await deliver(ProcessedText(text: edited, mode: job.mode), for: job)
+            return await deliver(ProcessedText(text: edited, mode: job.mode), transcribed: nil, for: job)
         } catch {
             return .editFailed(RewriteFallback(error).reason(for: job.setup.provider).sentenceCased())
         }
     }
 
-    private func deliver(_ processed: ProcessedText, for job: DictationJob) async -> DictationOutcome {
+    private func deliver(
+        _ processed: ProcessedText,
+        transcribed transcript: String?,
+        for job: DictationJob,
+    ) async -> DictationOutcome {
         guard !processed.text.isEmpty else { return .noSpeech }
 
         rememberLatest(processed.text)
 
-        guard job.pastes else { return copy(processed, for: job) }
+        guard job.pastes else { return copy(processed, transcribed: transcript, for: job) }
 
         switch await inserter.insert(processed.text, into: job.target, releasing: job.key) {
         case .pasted:
-            record(processed, for: job)
+            record(processed, transcribed: transcript, for: job)
 
             return .pasted(processed)
 
@@ -165,13 +169,13 @@ final class DictationQueue {
             return .blockedInPasswordField
 
         case .skipped:
-            return copy(processed, for: job)
+            return copy(processed, transcribed: transcript, for: job)
         }
     }
 
-    private func copy(_ processed: ProcessedText, for job: DictationJob) -> DictationOutcome {
+    private func copy(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) -> DictationOutcome {
         clipboard.copy(processed.text)
-        record(processed, for: job)
+        record(processed, transcribed: transcript, for: job)
 
         return .copied(processed)
     }
@@ -187,7 +191,7 @@ final class DictationQueue {
         }
     }
 
-    private func record(_ processed: ProcessedText, for job: DictationJob) {
+    private func record(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) {
         guard job.selection == nil else { return }
 
         let entry = DictationHistory.Entry(
@@ -195,6 +199,7 @@ final class DictationQueue {
             text: processed.text,
             mode: processed.mode,
             app: job.target.bundleIdentifier,
+            transcript: transcript,
         )
 
         statistics.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
@@ -202,12 +207,14 @@ final class DictationQueue {
     }
 
     private func log(_ transcript: Transcript, _ processed: ProcessedText, for job: DictationJob) {
-        Logger.dictation.info(
+        Logger.dictation.notice(
             """
             Recognized \(transcript.text.count) characters of \(transcript.language.rawValue, privacy: .public) \
+            from \(SpeechAudio.duration(of: job.samples), format: .fixed(precision: 1)) s of audio \
             in \(transcript.detectionDuration + transcript.decodingDuration, privacy: .public); \
             mode \(job.mode.rawValue, privacy: .public) ran as \(processed.mode.rawValue, privacy: .public), \
-            fallback \(Self.describe(processed.fallback), privacy: .public)
+            fallback \(Self.describe(processed.fallback), privacy: .public); \
+            processed \(processed.text.count) characters
             """,
         )
     }

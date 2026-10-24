@@ -86,6 +86,7 @@
 "Copied" = "Kopyalandı";
 "Copied: press %@ to paste" = "Kopyalandı: %@ ile yapıştırın";
 "Copy Last Dictation" = "Son Dikteyi Kopyala";
+"Copy Original Transcript" = "Orijinal Transkripti Kopyala";
 "Copy" = "Kopyala";
 "Corrects spelling, grammar, and punctuation in the selection." = "Seçimdeki yazım, dil bilgisi ve noktalama hatalarını düzeltir.";
 "Couldn't edit the text" = "Metin düzenlenemedi";

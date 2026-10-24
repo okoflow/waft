@@ -26,7 +26,7 @@ Raw and Light never use the network, and the translator detects languages on you
 | Settings, the app language, the trial start, and the updater's state | The `com.okoflow.waft` preferences domain |
 | Dictionary and snippets | `~/Library/Application Support/Waft/dictionary.json` |
 | Daily word, dictation, and time counts for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
-| History, with the mode and app of each dictation, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
+| History, with the mode and app of each dictation and the recognized text before a mode rewrote it, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |
 | Claude and OpenAI API keys and the Waft+ license key | The login keychain, service `com.okoflow.waft`, on this Mac only |

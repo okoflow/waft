@@ -36,6 +36,27 @@ struct RewriteValidatorTests {
         }
     }
 
+    @Test(arguments: [
+        (RewriteRequest.cleanup(String(repeating: "a", count: 200)), 80),
+        (.cleanup(String(repeating: "a", count: 501)), 201),
+    ])
+    func `rejects a cleanup that lost most of a long transcript`(request: RewriteRequest, minimum: Int) throws {
+        #expect(try RewriteValidator.validated(String(repeating: "a", count: minimum), for: request).count == minimum)
+        #expect(throws: RewriteError.unreadableResponse) {
+            try RewriteValidator.validated(String(repeating: "a", count: minimum - 1), for: request)
+        }
+    }
+
+    @Test(arguments: [
+        RewriteRequest.cleanup(String(repeating: "a", count: 199)),
+        .cleanup(String(repeating: "a", count: 400), target: .german),
+        .custom(String(repeating: "a", count: 400)),
+        .text(String(repeating: "a", count: 400), task: .fix),
+    ])
+    func `accepts a short answer to a short transcript, a translation, or another task`(request: RewriteRequest) throws {
+        #expect(try RewriteValidator.validated("Done.", for: request) == "Done.")
+    }
+
     @Test
     func `allows longer translations from compact scripts`() throws {
         let request = RewriteRequest.cleanup("こんにちは", language: .japanese, target: .english)

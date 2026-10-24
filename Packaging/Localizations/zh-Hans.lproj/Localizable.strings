@@ -86,6 +86,7 @@
 "Copied" = "已拷贝";
 "Copied: press %@ to paste" = "已拷贝：按%@粘贴";
 "Copy Last Dictation" = "拷贝上次听写";
+"Copy Original Transcript" = "拷贝原始转写文本";
 "Copy" = "拷贝";
 "Corrects spelling, grammar, and punctuation in the selection." = "更正所选内容中的拼写、语法和标点。";
 "Couldn't edit the text" = "无法编辑文本";

@@ -91,15 +91,31 @@ package actor WhisperTranscriber: Transcriber {
 
         let decodingStart = ContinuousClock.now
         let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
+        let tokenizer = loaded.whisper.tokenizer
 
-        let options = WhisperDecoding.decodingOptions(
-            for: spoken,
-            samples: samples,
-            prompt: prompt,
-            tokenizer: loaded.whisper.tokenizer,
+        let options = WhisperDecoding.decodingOptions(for: spoken, prompt: prompt, tokenizer: tokenizer)
+        let promptTokenCount = WhisperDecoding.promptTokens(for: prompt, tokenizer: tokenizer).count
+
+        let chunks = try await WhisperPieces.split(
+            samples,
+            maximumLength: WhisperDecoding.chunkSampleCount(promptTokenCount: promptTokenCount),
+        )
+        let pieces = chunks.map(\.audioSamples).filter(SpeechGate.containsSpeech)
+
+        Logger.speech.notice(
+            """
+            Split \(SpeechAudio.duration(of: samples), format: .fixed(precision: 1)) s of audio into \
+            \(chunks.count) pieces, \(pieces.count) with speech, after \(promptTokenCount) prompt tokens
+            """,
         )
 
-        let results = try await loaded.whisper.transcribe(audioArray: samples, decodeOptions: options)
+        let pieceResults = try await WhisperPieces.transcribe(pieces, with: options, on: loaded.whisper)
+
+        WhisperPieces.log(pieces, results: pieceResults, promptTokenCount: promptTokenCount) { segment in
+            WhisperDecoding.keepsSegment(segment, in: spoken, prompt: prompt, vocabulary: vocabulary)
+        }
+
+        let results = pieceResults.flatMap(\.self)
         guard let text = WhisperDecoding.acceptedText(of: results, language: spoken, prompt: prompt, vocabulary: vocabulary)
         else { return nil }
 
@@ -120,11 +136,7 @@ package actor WhisperTranscriber: Transcriber {
     ) async throws -> TimedTranscript? {
         guard let loaded else { throw TranscriberError.notLoaded }
 
-        let chunks = try await VADAudioChunker().chunkAll(
-            audioArray: samples,
-            maxChunkLength: WhisperDecoding.windowSampleCount,
-            decodeOptions: nil,
-        )
+        let chunks = try await WhisperPieces.split(samples, maximumLength: WhisperDecoding.windowSampleCount)
 
         var spoken = language
         var segments: [TimedSegment] = []
@@ -164,16 +176,15 @@ package actor WhisperTranscriber: Transcriber {
         let prompt = WhisperDecoding.filePrompt(for: language, variant: variant)
         let offset = Double(chunk.seekOffsetIndex) / SpeechAudio.sampleRate
 
-        let options = WhisperDecoding.decodingOptions(
-            for: language,
-            samples: chunk.audioSamples,
-            prompt: prompt,
-            tokenizer: whisper.tokenizer,
-        )
+        let options = WhisperDecoding.decodingOptions(for: language, prompt: prompt, tokenizer: whisper.tokenizer)
 
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
 
-        let segments = results.flatMap(\.segments).filter(WhisperDecoding.isConfident).compactMap { segment -> TimedSegment? in
+        let kept = results.flatMap(\.segments).filter { segment in
+            WhisperDecoding.keepsSegment(segment, in: language, prompt: prompt, vocabulary: [])
+        }
+
+        let segments = kept.compactMap { segment -> TimedSegment? in
             let text = segment.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return nil }
 

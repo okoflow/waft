@@ -86,6 +86,7 @@
 "Copied" = "Kopierad";
 "Copied: press %@ to paste" = "Kopierad: tryck på %@ för att klistra in";
 "Copy Last Dictation" = "Kopiera senaste dikteringen";
+"Copy Original Transcript" = "Kopiera ursprunglig transkribering";
 "Copy" = "Kopiera";
 "Corrects spelling, grammar, and punctuation in the selection." = "Rättar stavning, grammatik och skiljetecken i markeringen.";
 "Couldn't edit the text" = "Det gick inte att redigera texten";

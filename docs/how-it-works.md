@@ -33,8 +33,9 @@ Waft skips recordings without speech, such as silence, key clicks, or steady noi
 
 - **Language.** With a **Spoken language** chosen or one language enabled, Whisper decodes in it. Otherwise it detects the language first, among those you enabled.
 - **Prompt.** Whisper first reads a short example sentence in the spoken language, except in Japanese, Korean, and Thai, then up to 200 characters of your dictionary terms.
+- **Long dictations.** Waft splits the recording at pauses, measured against the room's own noise level, and makes each piece short enough that its text fits in what is left of Whisper's 224-token window after the prompt. The pieces run side by side, and a piece that fails stops the dictation with an error instead of leaving a gap.
 - **Writing system.** For Chinese and Serbian, Waft converts the result into the script you chose. Latin to Cyrillic goes letter by letter and leaves your dictionary terms, wherever the whole term appears, and words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API, in Latin letters.
-- **Made-up text.** Waft drops segments with low confidence or heavy repetition, results made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, and stock phrases such as "Thanks for watching" when they make up all or nearly all of the result.
+- **Made-up text.** Waft drops segments with low confidence or heavy repetition, and segments made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, or a stock phrase such as "Thanks for watching", so the rest of the dictation stays. It checks the whole result the same way once more.
 
 ## Cleanup
 
@@ -61,6 +62,7 @@ Clean, Formal, Translate, and your modes send the text, the spoken language, the
 Waft rejects an answer that is empty, cut off, or refused. It also rejects a dictation's answer that is:
 
 - Longer than three times what you said plus 60 characters, or five times plus 60 for a translation from Chinese, Japanese, or Korean.
+- Shorter than 40% of what you said, when you said 200 characters or more and the mode is Clean or Formal, so a model that dropped part of a long dictation doesn't cost you the rest.
 - Written mostly in another script than both the language you spoke and the transcript, or, for Translate, than the target language. A Chinese, Japanese, or Korean character counts as three letters here, so a brand name in Latin letters doesn't outweigh the text around it.
 
 Your modes may answer in any script and at up to ten times what you said or 600 characters, whichever is more. An edit has no other limit. A dictation whose answer is rejected or whose request fails gets the [Light](#light) text.

@@ -86,6 +86,7 @@
 "Copied" = "הועתק";
 "Copied: press %@ to paste" = "הועתק: יש ללחוץ על %@ כדי להדביק";
 "Copy Last Dictation" = "העתקת ההכתבה האחרונה";
+"Copy Original Transcript" = "העתקת התמלול המקורי";
 "Copy" = "העתקה";
 "Corrects spelling, grammar, and punctuation in the selection." = "מתקן איות, דקדוק וסימני פיסוק במלל שנבחר.";
 "Couldn't edit the text" = "לא ניתן היה לערוך את המלל";

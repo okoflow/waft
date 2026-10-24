@@ -6,10 +6,14 @@ enum RewriteValidator {
     private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
     private static let cleanupWrappers: [Wrapper] = [(PromptTag.transcript.open, PromptTag.transcript.close)] + quotes
     private static let editWrappers: [Wrapper] = [(PromptTag.text.open, PromptTag.text.close)] + quotes
+    private static let shortestMeasuredCleanup = 200
+    private static let shortestCleanupShare = 0.4
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
         let (text, maximumLength) = unwrapped(answer, for: request)
-        guard !text.isEmpty, text.count <= maximumLength else { throw .unreadableResponse }
+        guard !text.isEmpty, text.count <= maximumLength, text.count >= minimumLength(for: request) else {
+            throw .unreadableResponse
+        }
         guard case let .cleanup(_, target) = request.kind, let script = WritingScript.dominant(in: text) else { return text }
         guard expectedScripts(for: request.text, language: request.language, target: target).contains(script) else {
             throw .unreadableResponse
@@ -36,6 +40,12 @@ enum RewriteValidator {
         case .text:
             return (unwrapped(answer, input: input, from: editWrappers), input.count * 5 + 200)
         }
+    }
+
+    private static func minimumLength(for request: RewriteRequest) -> Int {
+        guard case .cleanup(_, nil) = request.kind, request.text.count >= shortestMeasuredCleanup else { return 0 }
+
+        return Int((Double(request.text.count) * shortestCleanupShare).rounded(.up))
     }
 
     private static func cleanupLengthFactor(target: Language?, language: Language) -> Int {

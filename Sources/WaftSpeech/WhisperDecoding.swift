@@ -5,11 +5,17 @@ import WaftCore
 enum WhisperDecoding {
     static let windowSampleCount = 30 * Int(SpeechAudio.sampleRate)
 
-    private static let maximumPromptTokens = 200
+    private static let maximumPromptTokens = 111
+    private static let decoderTokenLimit = 223
+    private static let prefillTokenCount = 5
+    private static let transcriptTokensPerSecond = 8
+    private static let shortestChunkSeconds = 10
+    private static let silenceFrameDuration = 0.1
+    private static let silenceMargin: Float = 2
+    private static let quietestSilenceThreshold: Float = 0.001
 
     static func decodingOptions(
         for language: Language,
-        samples: [Float],
         prompt: String?,
         tokenizer: (any WhisperTokenizer)?,
     ) -> DecodingOptions {
@@ -21,9 +27,27 @@ enum WhisperDecoding {
         options.detectLanguage = false
         options.skipSpecialTokens = true
         options.promptTokens = tokens.isEmpty ? nil : tokens
-        options.chunkingStrategy = samples.count > windowSampleCount ? .vad : nil
+        options.firstTokenLogProbThreshold = nil
 
         return options
+    }
+
+    static func chunkSampleCount(promptTokenCount: Int) -> Int {
+        let room = decoderTokenLimit - prefillTokenCount - promptTokenCount
+        let fittingSeconds = max(shortestChunkSeconds, room / transcriptTokensPerSecond)
+
+        return min(windowSampleCount, fittingSeconds * Int(SpeechAudio.sampleRate))
+    }
+
+    static func silenceThreshold(of samples: [Float]) -> Float {
+        let frameLength = Int(SpeechAudio.sampleRate * silenceFrameDuration)
+
+        let levels = stride(from: 0, to: samples.count, by: frameLength).map { start in
+            AudioLevel.rootMeanSquare(samples[start ..< min(start + frameLength, samples.count)])
+        }.sorted()
+        guard !levels.isEmpty else { return quietestSilenceThreshold }
+
+        return max(quietestSilenceThreshold, levels[levels.count / 10] * silenceMargin)
     }
 
     static func promptTokens(for prompt: String?, tokenizer: (any WhisperTokenizer)?) -> [Int] {
@@ -48,7 +72,8 @@ enum WhisperDecoding {
         prompt: String?,
         vocabulary: [String],
     ) -> String? {
-        let text = keptText(of: results).trimmingCharacters(in: .whitespacesAndNewlines)
+        let text = keptText(of: results, language: language, prompt: prompt, vocabulary: vocabulary)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty,
               !HallucinationFilter.isHallucination(text, in: language, prompt: prompt, vocabulary: vocabulary) else {
             return nil
@@ -57,11 +82,38 @@ enum WhisperDecoding {
         return text.capitalizedIfUnstyled(in: language)
     }
 
-    static func keptText(of results: [TranscriptionResult]) -> String {
+    static func keptText(
+        of results: [TranscriptionResult],
+        language: Language,
+        prompt: String?,
+        vocabulary: [String],
+    ) -> String {
         let segments = results.flatMap(\.segments)
         guard !segments.isEmpty else { return results.map(\.text).joined(separator: " ") }
 
-        return segments.filter(isConfident).map(\.text).joined()
+        let kept = segments.filter { keepsSegment($0, in: language, prompt: prompt, vocabulary: vocabulary) }
+
+        return kept.map(\.text).joined()
+    }
+
+    static func keepsSegment(
+        _ segment: TranscriptionSegment,
+        in language: Language,
+        prompt: String?,
+        vocabulary: [String],
+    ) -> Bool {
+        guard isConfident(segment) else { return false }
+
+        return !HallucinationFilter.isHallucination(segment.text, in: language, prompt: prompt, vocabulary: vocabulary)
+    }
+
+    static func reachesTokenLimit(_ segments: [TranscriptionSegment], promptTokenCount: Int) -> Bool {
+        let prefill = promptTokenCount == 0 ? 0 : promptTokenCount + 1
+        let windows = Dictionary(grouping: segments, by: \.seek).values
+
+        return windows.contains { window in
+            window.map(\.tokens.count).reduce(0, +) + prefill >= decoderTokenLimit
+        }
     }
 
     static func isConfident(_ segment: TranscriptionSegment) -> Bool {

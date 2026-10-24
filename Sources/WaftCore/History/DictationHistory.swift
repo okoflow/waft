@@ -6,6 +6,7 @@ package struct DictationHistory: Codable, Equatable, Sendable {
         package let text: String
         package let mode: Mode
         package let app: String?
+        package let transcript: String?
 
         package var preview: String {
             let line = String(text.map { $0.isNewline ? " " : $0 })
@@ -14,11 +15,12 @@ package struct DictationHistory: Codable, Equatable, Sendable {
             return String(line.prefix(49)) + "…"
         }
 
-        package init(date: Date, text: String, mode: Mode, app: String?) {
+        package init(date: Date, text: String, mode: Mode, app: String?, transcript: String? = nil) {
             self.date = date
             self.text = text
             self.mode = mode
             self.app = app
+            self.transcript = transcript == text ? nil : transcript
         }
     }
 

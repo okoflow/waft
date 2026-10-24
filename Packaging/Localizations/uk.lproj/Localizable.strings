@@ -86,6 +86,7 @@
 "Copied" = "Скопійовано";
 "Copied: press %@ to paste" = "Скопійовано: натисніть %@, щоб вставити";
 "Copy Last Dictation" = "Скопіювати останнє диктування";
+"Copy Original Transcript" = "Скопіювати початкову розшифровку";
 "Copy" = "Скопіювати";
 "Corrects spelling, grammar, and punctuation in the selection." = "Виправляє орфографію, граматику та пунктуацію у виділеному тексті.";
 "Couldn't edit the text" = "Не вдалося відредагувати текст";
