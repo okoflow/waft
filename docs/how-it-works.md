@@ -62,6 +62,7 @@ Clean, Formal, Translate, and your modes send the text, the spoken language, the
 Waft rejects an answer that is empty, cut off, or refused. It also rejects a dictation's answer that is:
 
 - Longer than three times what you said plus 60 characters, or five times plus 60 for a translation from Chinese, Japanese, or Korean.
+- Shorter than 40% of what you said, when you said 200 characters or more and the mode is Clean or Formal, so a model that dropped part of a long dictation doesn't cost you the rest.
 - Written mostly in another script than both the language you spoke and the transcript, or, for Translate, than the target language. A Chinese, Japanese, or Korean character counts as three letters here, so a brand name in Latin letters doesn't outweigh the text around it.
 
 Your modes may answer in any script and at up to ten times what you said or 600 characters, whichever is more. An edit has no other limit. A dictation whose answer is rejected or whose request fails gets the [Light](#light) text.
