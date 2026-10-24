@@ -3,6 +3,8 @@ import SwiftUI
 import WaftCore
 
 struct TranscriptionResultView: View {
+    private static let transcriptPadding: CGFloat = 12
+
     let model: FileTranscriptionModel
     let file: URL
     let transcript: TimedTranscript
@@ -38,7 +40,7 @@ struct TranscriptionResultView: View {
                         .textSelection(.enabled)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentDirection(of: transcript.text)
-                        .padding(Metrics.transcriptPadding)
+                        .padding(Self.transcriptPadding)
                 }
                 .frame(minHeight: 160, maxHeight: .infinity)
             }

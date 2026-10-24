@@ -58,7 +58,11 @@ let package = Package(
         ),
         .testTarget(
             name: "WaftSpeechTests",
-            dependencies: ["WaftCore", "WaftSpeech"],
+            dependencies: [
+                "WaftCore",
+                "WaftSpeech",
+                .product(name: "WhisperKit", package: "argmax-oss-swift"),
+            ],
             swiftSettings: strict,
         ),
         .testTarget(

@@ -11,6 +11,11 @@ struct PushToTalkKeyTests {
         #expect(PushToTalkKey(keyCode: keyCode) != nil)
     }
 
+    @Test
+    func `lists the Command, Shift, Option, and Control keys on both sides as modifier keys`() {
+        #expect(PushToTalkKey.modifierKeys.map(\.keyCode) == [54, 55, 56, 58, 59, 60, 61, 62])
+    }
+
     @Test(arguments: [Int64(0), 36, 49, 53, -1, 9999])
     func `rejects ordinary key codes`(keyCode: Int64) {
         #expect(PushToTalkKey(keyCode: keyCode) == nil)

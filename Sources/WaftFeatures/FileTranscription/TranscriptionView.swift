@@ -4,6 +4,8 @@ import UniformTypeIdentifiers
 import WaftCore
 
 struct TranscriptionView: View {
+    static let minimumSize = CGSize(width: 520, height: 480)
+
     let model: FileTranscriptionModel
     let showPro: () -> Void
 
@@ -50,9 +52,9 @@ struct TranscriptionView: View {
         .padding(.top, Metrics.titleBarHeight)
         .padding(.bottom, Metrics.windowPadding)
         .frame(
-            minWidth: Metrics.transcriptionMinimumSize.width,
+            minWidth: Self.minimumSize.width,
             maxWidth: .infinity,
-            minHeight: Metrics.transcriptionMinimumSize.height,
+            minHeight: Self.minimumSize.height,
             maxHeight: .infinity,
             alignment: .top,
         )
@@ -71,9 +73,11 @@ struct TranscriptionView: View {
 }
 
 private struct TranscriptionHeader: View {
+    private static let tileSize: CGFloat = 36
+
     var body: some View {
         HStack(spacing: Metrics.iconLabelSpacing) {
-            IconTile(symbolName: "waveform", tint: .red, size: Metrics.headerTileSize)
+            IconTile(symbolName: "waveform", tint: .red, size: Self.tileSize)
 
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                 Text("Transcribe File")
@@ -88,6 +92,8 @@ private struct TranscriptionHeader: View {
 }
 
 private struct DropZone: View {
+    private static let height: CGFloat = 220
+
     private static let mediaTypes: [UTType] = [.audio, .movie, .audiovisualContent]
 
     let model: FileTranscriptionModel
@@ -129,7 +135,7 @@ private struct DropZone: View {
                 .disabled(!canChooseFile)
                 .padding(.top, Metrics.controlSpacing)
         }
-        .frame(maxWidth: .infinity, minHeight: Metrics.dropZoneHeight)
+        .frame(maxWidth: .infinity, minHeight: Self.height)
         .background(isTargeted ? Palette.selection : Palette.card, in: shape)
         .overlay {
             shape.strokeBorder(

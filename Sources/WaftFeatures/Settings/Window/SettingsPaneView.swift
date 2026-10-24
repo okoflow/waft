@@ -64,7 +64,7 @@ struct SettingsPaneView: View {
                 pro: model.pro,
                 state: state,
             ) {
-                model.windows.showTranslator()
+                model.showTranslator()
             }
 
         case .aiModels:

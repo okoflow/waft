@@ -18,7 +18,7 @@ flowchart TD
 | Module | Isolation | What lives there |
 | --- | --- | --- |
 | `WaftCore` | Nonisolated | Domain types, text and recognition rules, state machines, and every interface between modules |
-| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the model files, and the language-restricted tokenizer |
+| `WaftSpeech` | Nonisolated | `WhisperTranscriber`, the decoding rules it runs with, the model files, and the language-restricted tokenizer |
 | `WaftPlatform` | Nonisolated | Adapters for audio, media files, the keyboard, Accessibility, the pasteboard, storage, language detection, the AI APIs, license signatures, updates, and the system |
 | `WaftFeatures` | Main actor | Observable models, the dictation flow, the HUD, the menu, Settings, onboarding, file transcription, and the translator |
 | `Waft` | Main actor | The app, its delegate, and `AppDependencies.live()` |
@@ -56,7 +56,7 @@ The tables list the folders whose names don't say enough.
 | `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and `HUDPanel`, the HUD at the notch, at the top of the screen, or below the menu bar when `ForeignWindow` finds another app's window over the notch; `Island` holds the views inside it |
-| `MenuBar` | The menu bar icon (the W mark) and the menu |
+| `MenuBar` | `MenuBarScene`, the menu bar icon (the W mark), and the menu |
 | `Settings` | `Window` holds the Settings window and its sidebar, a folder per pane holds that pane, and `Shared` holds what several panes or the setup guide use, such as `TryoutModel`, `AIModelSetup`, and `ShortcutRow` |
 | `Translator` | `Panel` holds `TranslatorModel` behind the translator; `TranslatorPanel`, the floating panel that opens over the app in front without activating Waft and closes when you leave it; and `CopyableText`, the translation that copies itself on a click. `Selection` holds `SelectionActions`, which reads the selected text through Accessibility, or copies it through the `TextInserter`, and translates or fixes it, and `TranslatorShortcuts`, which handles its three shortcuts |
 | `DesignSystem` | `Tokens` (colors, metrics, motion, and fonts), `Brand` (the icon and the Waft+ marks), `Controls`, `Rows` (the cards, sections, and rows of Settings and the setup guide), and view `Modifiers` |
@@ -109,6 +109,6 @@ To add a language:
 
 To add anything else:
 
-- **A mode.** Add a case to `Mode` with its title, summary, and storage key, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
+- **A mode.** Add a case to `Mode` with its title, summary, and the raw value it is stored under, and list it in `Mode.builtIn`. An AI mode needs its instruction in `RewritePrompt`.
 - **An AI provider.** Describe its API in `WaftPlatform/Rewrite/Providers` as a `RewriteAPI` with a model identifier for each `CloudModel`, add a `CloudProvider` case, a `PerProvider` property, the names of its models in `CloudProvider+Display`, and its keychain account in `KeychainStore.apiKey(for:)`, wire it in `Rewriters.http`, and list its account in [Removing everything](privacy.md#removing-everything).
 - **An adapter.** Implement the interface in `WaftPlatform` and pass it in `AppDependencies.live()`.

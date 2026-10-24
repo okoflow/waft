@@ -7,8 +7,6 @@ final class SelectionActions {
         case fix
     }
 
-    private static let shortcutKeys = [54, 55, 56, 58, 59, 60, 61, 62].compactMap { PushToTalkKey(keyCode: $0) }
-
     private var task: Task<Void, Never>?
 
     private let processor: TranscriptProcessor
@@ -150,7 +148,7 @@ final class SelectionActions {
 
     @discardableResult
     private func waitForShortcutRelease() async -> Bool {
-        let keys = Self.shortcutKeys
+        let keys = PushToTalkKey.modifierKeys
         let keyboardState = keyboardState
 
         return await Poll.until(timeout: releaseTimeout) { !keys.contains(where: keyboardState.isHeld) }
@@ -162,7 +160,7 @@ final class SelectionActions {
             hud.show(HUDMessage(kind: .pasted, title: text))
 
         case .skipped(.secureField):
-            hud.show(HUDMessage(kind: .warning, title: String(localized: "Not pasted into a password field")))
+            hud.show(.blockedInPasswordField())
 
         case .skipped:
             clipboard.copy(text)

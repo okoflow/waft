@@ -5,9 +5,7 @@ package final class AppModel {
     private static let modeSample = String(localized: "um so I think we should uh meet on Friday")
     private static let translatorSample = String(localized: "hey can u send me the report by friday? thanks")
 
-    package let settings: SettingsModel
-    package let windows = WindowPresenter()
-
+    let settings: SettingsModel
     let permissions: PermissionMonitor
     let speechModelController: SpeechModelController
     let history: HistoryModel
@@ -36,31 +34,19 @@ package final class AppModel {
     private let dictation: DictationController
     private let inserter: any TextInserter
     private let lifecycle: any AppLifecycle
+    private let windows = WindowPresenter()
 
     var status: AppStatus {
-        if dictation.isRecording {
-            return .recording
-        }
-
-        if lacksPermissions {
-            return .needsPermission
-        }
-
-        guard speechModelController.state.canTranscribe else { return .speechModel(speechModelController.state) }
-
-        return .ready
+        AppStatus.current(
+            isRecording: dictation.isRecording,
+            permissionsGranted: permissions.allGranted,
+            keyMonitor: keyMonitor.status,
+            speechModel: speechModelController.state,
+        )
     }
 
     var needsSetup: Bool {
-        guard settings.settings.hasCompletedSetup else { return true }
-
-        return !permissions.allGranted
-    }
-
-    private var lacksPermissions: Bool {
-        guard permissions.allGranted else { return true }
-
-        return keyMonitor.status == .unavailable
+        AppStatus.needsSetup(hasCompletedSetup: settings.settings.hasCompletedSetup, permissionsGranted: permissions.allGranted)
     }
 
     package init(dependencies: AppDependencies) {
@@ -103,7 +89,6 @@ package final class AppModel {
         inserter = dependencies.inserter
         lifecycle = dependencies.lifecycle
 
-        windows.model = self
         connectModels()
     }
 
@@ -136,7 +121,11 @@ package final class AppModel {
         pro.draft = key
         pro.activateDraft()
 
-        windows.showSettings(.pro)
+        showSettings(.pro)
+    }
+
+    package func showSettings(_ pane: SettingsPane? = nil) {
+        windows.showSettings(pane, for: self)
     }
 
     func showSetup() {
@@ -144,15 +133,19 @@ package final class AppModel {
             onboarding.resume()
         }
 
-        windows.showOnboarding()
+        windows.showOnboarding(for: self)
+    }
+
+    func showTranscription() {
+        windows.showTranscription(for: self)
+    }
+
+    func showTranslator() {
+        windows.showTranslator(for: self)
     }
 
     func quit() {
         lifecycle.quit()
-    }
-
-    func dictationTakesEscape(pressedAt time: TimeInterval) -> Bool {
-        dictation.takesEscape(pressedAt: time)
     }
 
     private func connectModels() {
@@ -165,7 +158,20 @@ package final class AppModel {
         speechModelController.onReady = { [weak self] in self?.speechModelDidBecomeReady() }
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
         updates.onShowingUpdateChange = { [weak self] in self?.windows.updateActivationPolicy() }
-        translatorShortcuts.onOpenTranslator = { [weak self] in self?.windows.showTranslator() }
+        translatorShortcuts.onOpenTranslator = { [weak self] in self?.showTranslator() }
+        connectWindows()
+    }
+
+    private func connectWindows() {
+        windows.onOnboardingClose = { [weak onboarding] in onboarding?.reset() }
+        windows.onSettingsClose = { [weak keyRecorder, weak shortcutRecorder] in
+            keyRecorder?.stop()
+            shortcutRecorder?.stop()
+        }
+        windows.onTranscriptionClose = { [weak transcription] in transcription?.cancel() }
+        windows.onTranslatorClose = { [weak translator] in translator?.stop() }
+        windows.isShowingUpdate = { [weak updates] in updates?.isShowingUpdate == true }
+        windows.dictationTakesEscape = { [weak dictation] time in dictation?.takesEscape(pressedAt: time) == true }
     }
 
     private func permissionsDidChange() {
@@ -181,113 +187,5 @@ package final class AppModel {
         settings.settings.hasCompletedSetup = true
 
         windows.closeOnboarding()
-    }
-}
-
-extension AppModel {
-    private static func makeSettings(_ dependencies: AppDependencies) -> SettingsModel {
-        SettingsModel(
-            store: dependencies.settingsStore,
-            loginItem: dependencies.loginItem,
-            audioInputs: dependencies.audioInputs,
-        )
-    }
-
-    private static func makePro(_ dependencies: AppDependencies) -> ProModel {
-        ProModel(
-            keyStore: dependencies.licenseStore,
-            trialStore: dependencies.trialStore,
-            checker: dependencies.licenseChecker,
-            urlOpener: dependencies.urlOpener,
-        )
-    }
-
-    private static func makeSpeechModelController(
-        _ dependencies: AppDependencies,
-        settings: SettingsModel,
-        pro: ProModel,
-    ) -> SpeechModelController {
-        SpeechModelController(
-            transcriber: dependencies.transcriber,
-            settings: settings,
-            pro: pro,
-            urlOpener: dependencies.urlOpener,
-        )
-    }
-
-    private static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
-        VocabularyModel(
-            store: dependencies.vocabularyStore,
-            fileURL: dependencies.vocabularyFile,
-            urlOpener: dependencies.urlOpener,
-        )
-    }
-
-    private static func makeQueue(
-        _ dependencies: AppDependencies,
-        history: HistoryModel,
-        statistics: StatisticsModel,
-        hud: HUDController,
-    ) -> DictationQueue {
-        DictationQueue(
-            transcriber: dependencies.transcriber,
-            rewriters: dependencies.rewriters,
-            inserter: dependencies.inserter,
-            clipboard: dependencies.clipboard,
-            history: history,
-            statistics: statistics,
-            hud: hud,
-        )
-    }
-
-    private static func makeRecordings(
-        _ dependencies: AppDependencies,
-        settings: SettingsModel,
-        hud: HUDController,
-    ) -> RecordingController {
-        RecordingController(
-            recorder: dependencies.recorder,
-            focusTracker: dependencies.focusTracker,
-            keyboardState: dependencies.keyboardState,
-            sounds: dependencies.sounds,
-            otherSounds: OtherSoundsLowering(outputVolume: dependencies.outputVolume),
-            settings: settings,
-            hud: hud,
-        )
-    }
-
-    private static func makeTryout(
-        _ dependencies: AppDependencies,
-        settings: SettingsModel,
-        pro: ProModel,
-        defaultSample: String,
-    ) -> TryoutModel {
-        TryoutModel(
-            rewriters: dependencies.rewriters,
-            detector: dependencies.languageDetector,
-            settings: settings,
-            pro: pro,
-            defaultSample: defaultSample,
-        )
-    }
-
-    private static func makeAPIKeys(_ dependencies: AppDependencies) -> PerProvider<APIKeyModel> {
-        PerProvider { APIKeyModel(store: dependencies.apiKeyStores[$0]) }
-    }
-
-    private static func makeTranscription(
-        _ dependencies: AppDependencies,
-        controller speechModelController: SpeechModelController,
-        settings: SettingsModel,
-        pro: ProModel,
-    ) -> FileTranscriptionModel {
-        FileTranscriptionModel(
-            transcriber: dependencies.transcriber,
-            decoder: dependencies.mediaDecoder,
-            speechModelController: speechModelController,
-            settings: settings,
-            pro: pro,
-            clipboard: dependencies.clipboard,
-        )
     }
 }

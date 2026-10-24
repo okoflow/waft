@@ -1,6 +1,14 @@
 import SwiftUI
 
 struct OnboardingStep<Hero: View, Content: View>: View {
+    private static var sectionSpacing: CGFloat {
+        28
+    }
+
+    private static var contentWidth: CGFloat {
+        480
+    }
+
     let title: LocalizedStringKey
     let message: LocalizedStringKey
     @ViewBuilder let hero: Hero
@@ -23,8 +31,8 @@ struct OnboardingStep<Hero: View, Content: View>: View {
                 .padding(.top, Metrics.controlSpacing)
 
             content
-                .padding(.top, Metrics.onboardingSectionSpacing)
+                .padding(.top, Self.sectionSpacing)
         }
-        .frame(maxWidth: Metrics.onboardingContentWidth)
+        .frame(maxWidth: Self.contentWidth)
     }
 }

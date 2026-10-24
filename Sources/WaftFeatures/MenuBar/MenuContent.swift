@@ -1,7 +1,7 @@
-package import SwiftUI
+import SwiftUI
 import WaftCore
 
-package struct MenuContent: View {
+struct MenuContent: View {
     private let model: AppModel
 
     private var translatorShortcut: KeyboardShortcut? {
@@ -10,11 +10,11 @@ package struct MenuContent: View {
         return combination.keyboardShortcut(in: model.shortcuts.layout)
     }
 
-    package init(model: AppModel) {
+    init(model: AppModel) {
         self.model = model
     }
 
-    package var body: some View {
+    var body: some View {
         Text(model.status.title(in: model.settings.settings))
 
         if model.needsSetup {
@@ -32,37 +32,37 @@ package struct MenuContent: View {
         Divider()
 
         ModeMenu(settings: model.settings, pro: model.pro, shortcutTitle: model.shortcuts.title(for: .modeCycle)) {
-            model.windows.showSettings(.pro)
+            model.showSettings(.pro)
         }
 
         if let app = model.frontmostApp.app {
-            AppModeMenu(app: app, settings: model.settings, pro: model.pro) { model.windows.showSettings(.pro) }
+            AppModeMenu(app: app, settings: model.settings, pro: model.pro) { model.showSettings(.pro) }
         }
 
-        LanguageMenu(settings: model.settings) { model.windows.showSettings(.dictation) }
+        LanguageMenu(settings: model.settings) { model.showSettings(.dictation) }
 
         Divider()
 
         Button("Copy Last Dictation", action: model.queue.copyLatestTranscript)
             .disabled(model.queue.latestTranscript == nil)
 
-        RecentMenu(history: model.history) { model.windows.showSettings(.history) }
+        RecentMenu(history: model.history) { model.showSettings(.history) }
 
         Button(model.transcription.isLocked ? "Transcribe File (Waft+)…" : "Transcribe File…") {
-            model.windows.showTranscription()
+            model.showTranscription()
         }
 
         Button(model.translator.isLocked ? "Translator (Waft+)…" : "Translator…") {
-            model.windows.showTranslator()
+            model.showTranslator()
         }
         .keyboardShortcut(translatorShortcut)
 
         Divider()
 
-        Button("Settings…") { model.windows.showSettings() }
+        Button("Settings…") { model.showSettings() }
             .keyboardShortcut(",")
 
-        ProMenuItem(pro: model.pro) { model.windows.showSettings(.pro) }
+        ProMenuItem(pro: model.pro) { model.showSettings(.pro) }
 
         if model.updates.isAvailable {
             Button("Check for Updates…") { model.updates.check() }

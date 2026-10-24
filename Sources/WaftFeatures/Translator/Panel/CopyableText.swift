@@ -2,9 +2,11 @@ import AppKit
 import SwiftUI
 
 struct CopyableText: NSViewRepresentable {
+    static let lineSpacing: CGFloat = 4
+
     private static var attributes: [NSAttributedString.Key: Any] {
         let paragraph = NSMutableParagraphStyle()
-        paragraph.lineSpacing = Metrics.translatorLineSpacing
+        paragraph.lineSpacing = Self.lineSpacing
         paragraph.baseWritingDirection = .natural
 
         return [

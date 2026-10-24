@@ -7,6 +7,31 @@ enum AppStatus: Equatable {
     case recording
     case ready
 
+    static func current(
+        isRecording: Bool,
+        permissionsGranted: Bool,
+        keyMonitor: KeyMonitorController.Status,
+        speechModel: SpeechModelState,
+    ) -> AppStatus {
+        if isRecording {
+            return .recording
+        }
+
+        if lacksPermissions(permissionsGranted: permissionsGranted, keyMonitor: keyMonitor) {
+            return .needsPermission
+        }
+
+        guard speechModel.canTranscribe else { return .speechModel(speechModel) }
+
+        return .ready
+    }
+
+    static func needsSetup(hasCompletedSetup: Bool, permissionsGranted: Bool) -> Bool {
+        guard hasCompletedSetup else { return true }
+
+        return !permissionsGranted
+    }
+
     static func readyMessage(in settings: Settings) -> String {
         let key = settings.pushToTalkKey.shortTitle
 
@@ -14,6 +39,12 @@ enum AppStatus: Equatable {
         case .tap: String(localized: "Ready: tap \(key) and speak")
         case .hold, .holdOrDoubleTap: String(localized: "Ready: hold \(key) and speak")
         }
+    }
+
+    private static func lacksPermissions(permissionsGranted: Bool, keyMonitor: KeyMonitorController.Status) -> Bool {
+        guard permissionsGranted else { return true }
+
+        return keyMonitor == .unavailable
     }
 
     func title(in settings: Settings) -> String {

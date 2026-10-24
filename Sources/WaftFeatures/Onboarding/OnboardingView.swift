@@ -2,6 +2,10 @@ import SwiftUI
 import WaftCore
 
 struct OnboardingView: View {
+    private static let topInset: CGFloat = 56
+    private static let sideInset: CGFloat = 72
+    private static let size = CGSize(width: 640, height: 540)
+
     private let model: AppModel
 
     init(model: AppModel) {
@@ -14,13 +18,13 @@ struct OnboardingView: View {
                 .id(model.onboarding.step)
                 .transition(StepTransition())
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.top, Metrics.onboardingTopInset)
-                .padding(.horizontal, Metrics.onboardingSideInset)
+                .padding(.top, Self.topInset)
+                .padding(.horizontal, Self.sideInset)
 
             OnboardingFooter(onboarding: model.onboarding)
         }
         .motion(Motion.page, value: model.onboarding.step)
-        .frame(width: Metrics.onboardingSize.width, height: Metrics.onboardingSize.height)
+        .frame(width: Self.size.width, height: Self.size.height)
         .windowChrome()
     }
 
@@ -42,6 +46,8 @@ struct OnboardingView: View {
 }
 
 private struct OnboardingFooter: View {
+    private static let horizontalInset: CGFloat = 28
+
     let onboarding: OnboardingModel
 
     private var primaryTitle: LocalizedStringKey {
@@ -74,7 +80,7 @@ private struct OnboardingFooter: View {
             }
         }
         .controlSize(.large)
-        .padding(.horizontal, Metrics.onboardingFooterInset)
+        .padding(.horizontal, Self.horizontalInset)
         .padding(.top, Metrics.accessorySpacing)
         .padding(.bottom, Metrics.windowPadding)
     }

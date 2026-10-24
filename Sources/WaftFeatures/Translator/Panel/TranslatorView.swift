@@ -2,6 +2,10 @@ import SwiftUI
 import WaftCore
 
 struct TranslatorView: View {
+    static let minimumSize = CGSize(width: 640, height: 340)
+
+    private static let top: CGFloat = 36
+
     let model: TranslatorModel
     let showPro: () -> Void
 
@@ -19,19 +23,19 @@ struct TranslatorView: View {
                 SourcePane(model: model)
 
                 SwapButton(model: model)
-                    .frame(width: Metrics.swapButtonSize + Metrics.rowSpacing)
+                    .frame(width: SwapButton.size + Metrics.rowSpacing)
 
                 TranslationPane(model: model)
             }
             .disabled(model.isLocked)
         }
         .padding(.horizontal, Metrics.rowSpacing)
-        .padding(.top, Metrics.translatorTop)
+        .padding(.top, Self.top)
         .padding(.bottom, Metrics.rowSpacing)
         .frame(
-            minWidth: Metrics.translatorMinimumSize.width,
+            minWidth: Self.minimumSize.width,
             maxWidth: .infinity,
-            minHeight: Metrics.translatorMinimumSize.height,
+            minHeight: Self.minimumSize.height,
             maxHeight: .infinity,
         )
         .windowChrome()
@@ -39,6 +43,8 @@ struct TranslatorView: View {
 }
 
 private struct SourcePane: View {
+    private static let textInset: CGFloat = 5
+
     @Bindable var model: TranslatorModel
 
     @FocusState private var isFocused: Bool
@@ -84,10 +90,10 @@ private struct SourcePane: View {
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $model.input)
                     .font(.translatorText)
-                    .lineSpacing(Metrics.translatorLineSpacing)
+                    .lineSpacing(CopyableText.lineSpacing)
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.never)
-                    .padding(.horizontal, -Metrics.textInset)
+                    .padding(.horizontal, -Self.textInset)
                     .focused($isFocused)
                     .contentDirection(of: model.input)
                     .accessibilityLabel("Text to translate")
@@ -195,7 +201,7 @@ private struct TranslationText: View {
             case .translating:
                 ShimmeringText(text: shimmeringText, color: .primary)
                     .font(.translatorText)
-                    .lineSpacing(Metrics.translatorLineSpacing)
+                    .lineSpacing(CopyableText.lineSpacing)
                     .contentDirection(of: model.output)
                     .transition(.opacity)
 

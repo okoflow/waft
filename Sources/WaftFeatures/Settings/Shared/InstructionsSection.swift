@@ -2,6 +2,8 @@ import SwiftUI
 import WaftCore
 
 struct InstructionsSection: View {
+    private static let editorHeight: CGFloat = 240
+
     let settings: SettingsModel
     let instructions: Binding<String>
 
@@ -17,7 +19,7 @@ struct InstructionsSection: View {
     var body: some View {
         SettingsGroup("Instructions", subtitle: note) {
             InputEditor(text: instructions)
-                .frame(height: Metrics.instructionsHeight)
+                .frame(height: Self.editorHeight)
         }
     }
 }

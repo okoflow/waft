@@ -18,11 +18,7 @@ enum DictationOutcome {
             .copied(processed.text, note: processed.fallback?.message(for: provider))
 
         case .blockedInPasswordField:
-            HUDMessage(
-                kind: .warning,
-                title: String(localized: "Not pasted into a password field"),
-                detail: String(localized: "Choose Copy Last Dictation in the Waft menu."),
-            )
+            .blockedInPasswordField(detail: String(localized: "Choose Copy Last Dictation in the Waft menu."))
 
         case .noSpeech:
             HUDMessage(kind: .information, title: String(localized: "Didn't catch that"))

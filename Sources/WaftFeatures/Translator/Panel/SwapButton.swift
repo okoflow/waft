@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SwapButton: View {
+    static let size: CGFloat = 36
+
     let model: TranslatorModel
 
     var body: some View {
@@ -8,7 +10,7 @@ struct SwapButton: View {
             Image(systemName: "arrow.left.arrow.right")
                 .font(.glyph)
                 .foregroundStyle(Palette.secondaryText)
-                .frame(width: Metrics.swapButtonSize, height: Metrics.swapButtonSize)
+                .frame(width: Self.size, height: Self.size)
                 .background(Palette.window, in: Circle())
                 .overlay {
                     Circle().strokeBorder(Palette.fieldBorder, lineWidth: 0.5)

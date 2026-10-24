@@ -10,6 +10,8 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
 
     package static let function = PushToTalkKey(known: 63)
 
+    package static let modifierKeys = modifiers.keys.filter { $0 != function.keyCode }.sorted().map(PushToTalkKey.init(known:))
+
     static let rightOption = PushToTalkKey(known: 61)
 
     private static let modifiers: [Int64: Modifier] = [

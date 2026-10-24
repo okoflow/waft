@@ -42,6 +42,9 @@ struct LanguagePicker: View {
 }
 
 private struct LanguageList: View {
+    private static let height: CGFloat = 300
+    private static let width: CGFloat = 260
+
     @Bindable var state: LanguagePickerState
 
     let selection: Language?
@@ -99,7 +102,7 @@ private struct LanguageList: View {
             }
         }
         .padding(Metrics.controlSpacing)
-        .frame(width: Metrics.languageListWidth, height: Metrics.languageListHeight)
+        .frame(width: Self.width, height: Self.height)
     }
 
     private func rows(for languages: [Language]) -> some View {

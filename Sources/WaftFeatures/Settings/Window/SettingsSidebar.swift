@@ -1,17 +1,24 @@
 import SwiftUI
 
 struct SettingsSidebar: View {
+    fileprivate static let rowInset: CGFloat = 6
+
+    private static let rowSpacing: CGFloat = 4
+    private static let groupSpacing: CGFloat = 12
+    private static let top: CGFloat = 48
+    private static let radius: CGFloat = 18
+
     let state: SettingsWindowState
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Metrics.sidebarRowSpacing) {
+        VStack(alignment: .leading, spacing: Self.rowSpacing) {
             ForEach(SidebarGroup.all, id: \.panes) { group in
                 if let title = group.title {
                     Text(title)
                         .font(.sidebarGroup)
                         .foregroundStyle(Palette.secondaryText)
-                        .padding(.leading, Metrics.sidebarRowInset)
-                        .padding(.top, Metrics.sidebarGroupSpacing)
+                        .padding(.leading, SettingsSidebar.rowInset)
+                        .padding(.top, Self.groupSpacing)
                         .accessibilityAddTraits(.isHeader)
                 }
 
@@ -26,11 +33,11 @@ struct SettingsSidebar: View {
             SidebarRow(pane: .about, state: state)
         }
         .padding(.horizontal, Metrics.rowPadding)
-        .padding(.top, Metrics.sidebarTop)
+        .padding(.top, Self.top)
         .padding(.bottom, Metrics.rowPadding)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background {
-            let shape = RoundedRectangle(cornerRadius: Metrics.sidebarRadius, style: .continuous)
+            let shape = RoundedRectangle(cornerRadius: Self.radius, style: .continuous)
 
             shape
                 .fill(Palette.sidebar)
@@ -51,6 +58,9 @@ struct SettingsSidebar: View {
 }
 
 private struct SidebarRow: View {
+    private static let radius: CGFloat = 9
+    private static let height: CGFloat = 36
+
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
     let pane: SettingsPane
@@ -67,7 +77,7 @@ private struct SidebarRow: View {
     }
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: Metrics.rowRadius, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: Self.radius, style: .continuous)
 
         Button {
             state.selection = pane
@@ -88,8 +98,8 @@ private struct SidebarRow: View {
                     ProBadge()
                 }
             }
-            .padding(.horizontal, Metrics.sidebarRowInset)
-            .frame(height: Metrics.sidebarRowHeight)
+            .padding(.horizontal, SettingsSidebar.rowInset)
+            .frame(height: Self.height)
             .background {
                 ZStack {
                     shape
