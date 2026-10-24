@@ -10,9 +10,6 @@ enum WhisperDecoding {
     private static let prefillTokenCount = 5
     private static let transcriptTokensPerSecond = 8
     private static let shortestChunkSeconds = 10
-    private static let silenceFrameDuration = 0.1
-    private static let silenceMargin: Float = 2
-    private static let quietestSilenceThreshold: Float = 0.001
 
     static func decodingOptions(for language: Language, promptTokens: [Int]) -> DecodingOptions {
         var options = DecodingOptions()
@@ -31,17 +28,6 @@ enum WhisperDecoding {
         let fittingSeconds = max(shortestChunkSeconds, room / transcriptTokensPerSecond)
 
         return min(windowSampleCount, fittingSeconds * Int(SpeechAudio.sampleRate))
-    }
-
-    static func silenceThreshold(of samples: [Float]) -> Float {
-        let frameLength = Int(SpeechAudio.sampleRate * silenceFrameDuration)
-
-        let levels = stride(from: 0, to: samples.count, by: frameLength).map { start in
-            AudioLevel.rootMeanSquare(samples[start ..< min(start + frameLength, samples.count)])
-        }.sorted()
-        guard !levels.isEmpty else { return quietestSilenceThreshold }
-
-        return max(quietestSilenceThreshold, levels[levels.count / 10] * silenceMargin)
     }
 
     static func promptTokens(for prompt: String?, tokenizer: (any WhisperTokenizer)?) -> [Int] {
