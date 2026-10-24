@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Builds, notarizes, and packages a release of Waft from origin/main: the
-# disk image, the signed appcast, and the Homebrew cask, in build/release.
+# Builds, signs, and packages a release of Waft from origin/main: the disk
+# image, the signed appcast, and the Homebrew cask, in build/release. A
+# Developer ID identity also notarizes the app and the disk image.
 
 set -euo pipefail
 
@@ -13,7 +14,8 @@ readonly WEBSITE='https://waft.okoflow.com'
 readonly NOTARY_PROFILE="${NOTARY_PROFILE:-waft-notary}"
 readonly SPARKLE_TOOLS='.build/artifacts/sparkle/Sparkle/bin'
 readonly CASK_TEMPLATE='Packaging/Homebrew/waft.rb'
-readonly USAGE='usage: SIGNING_IDENTITY="Developer ID Application: …" scripts/release.sh release-notes.md'
+readonly DEVELOPER_ID='Developer ID Application'
+readonly USAGE='usage: SIGNING_IDENTITY="Waft Release" scripts/release.sh release-notes.md'
 
 WORK_DIR=''
 
@@ -38,6 +40,10 @@ cleanup() {
   fi
 }
 
+is_developer_id() {
+  [[ ${SIGNING_IDENTITY} == "${DEVELOPER_ID}"* ]]
+}
+
 app_version() {
   plutil -extract CFBundleShortVersionString raw "Packaging/${PRODUCT}-Info.plist"
 }
@@ -60,10 +66,14 @@ check_tree() {
 check_prerequisites() {
   swift package resolve >&2
 
-  [[ ${SIGNING_IDENTITY:-} == 'Developer ID Application'* ]] \
-    || die 'set SIGNING_IDENTITY to your Developer ID Application identity'
+  [[ -n ${SIGNING_IDENTITY:-} ]] || die 'set SIGNING_IDENTITY to Waft Release or your Developer ID Application identity'
 
-  if ! xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null; then
+  local identities
+  identities=$(security find-identity -v -p codesigning)
+
+  [[ ${identities} == *"\"${SIGNING_IDENTITY}\""* ]] || die "\"${SIGNING_IDENTITY}\" isn't in the keychain"
+
+  if is_developer_id && ! xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null; then
     die "no notarytool profile \"${NOTARY_PROFILE}\": run xcrun notarytool store-credentials ${NOTARY_PROFILE}"
   fi
 
@@ -96,6 +106,13 @@ make_disk_image() {
   ln -s /Applications "${staging}/Applications"
 
   hdiutil create -volname "${PRODUCT}" -srcfolder "${staging}" -format UDZO -ov "${image}" >/dev/null
+
+  if ! is_developer_id; then
+    codesign --force --sign "${SIGNING_IDENTITY}" "${image}"
+
+    return
+  fi
+
   codesign --force --timestamp --sign "${SIGNING_IDENTITY}" "${image}"
   notarize "${image}"
   xcrun stapler staple "${image}"
@@ -162,7 +179,11 @@ main() {
   mkdir -p "${OUTPUT}"
 
   scripts/bundle.sh release
-  notarize_app
+
+  if is_developer_id; then
+    notarize_app
+  fi
+
   make_disk_image "${image}"
   make_appcast "${version}" "${notes}"
   write_cask "${version}" "${image}"

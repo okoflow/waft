@@ -8,10 +8,30 @@ This page takes you from installing Waft to your first dictation.
 
 Waft runs on a Mac with Apple silicon and macOS 14 or later, with free disk
 space for the speech model; [The speech model](how-it-works.md#the-speech-model)
-lists the sizes. Until the first notarized release brings Homebrew and a disk
-image, build Waft from source as
-[Development setup](../CONTRIBUTING.md#development-setup) describes. Building
-needs a newer macOS than running does.
+lists the sizes. Install it with [Homebrew](https://brew.sh):
+
+```sh
+brew install --cask okoflow/tap/waft
+```
+
+Or download `Waft-X.Y.Z.dmg` from the
+[latest release](https://github.com/okoflow/waft/releases/latest), open it,
+and drag Waft to Applications.
+
+Waft is signed by the project but not yet notarized by Apple, so macOS blocks
+a copy from the disk image the first time it opens. The Homebrew cask removes
+the quarantine flag behind that check, so a copy from Homebrew opens right
+away. To open a copy from the disk image:
+
+1. Open Waft, and click **Done** when macOS says it can't verify Waft.
+2. In System Settings › Privacy & Security, click **Open Anyway** next to
+   "Waft" was blocked, and confirm with your password or Touch ID.
+3. Click **Open Anyway** in the dialog that follows.
+
+You do this once: updates install from inside Waft, as
+[Updates](usage.md#updates) describes. To build Waft yourself instead, follow
+[Development setup](../CONTRIBUTING.md#development-setup); building needs a
+newer macOS than running does.
 
 ## 2. Set up
 

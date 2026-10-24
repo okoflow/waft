@@ -9,26 +9,34 @@ reaches `main`.
 
 | Artifact | Made by | Used by |
 | --- | --- | --- |
-| `Waft-X.Y.Z.dmg` | `scripts/release.sh`: Developer ID signature, hardened runtime, notarization, stapling | GitHub Releases, the Homebrew cask, and Sparkle |
+| `Waft-X.Y.Z.dmg` | `scripts/release.sh`: the Waft Release signature | GitHub Releases, the Homebrew cask, and Sparkle |
 | `appcast.xml` | Sparkle's `generate_appcast`, signed with the project's EdDSA key | Waft's updater, at `releases/latest/download/appcast.xml`, and the cask's `livecheck` |
 | `waft.rb` | `scripts/release.sh`, from `Packaging/Homebrew/waft.rb` | `Casks/waft.rb` in `okoflow/homebrew-tap` |
 
 Waft is not sandboxed, so the bundle ships Sparkle without its XPC services.
-The hardened runtime needs the microphone entitlement in
-`Packaging/Waft.entitlements`.
+
+Until the project has a Developer ID, releases are signed with Waft Release, a
+self-signed identity. macOS ties the permissions it grants to that
+certificate, so they survive updates, but Gatekeeper blocks the first launch
+until the user clicks **Open Anyway**. The cask's `postflight` removes the
+quarantine flag, so a copy from Homebrew opens right away.
+[Switching to a Developer ID](#switching-to-a-developer-id) lists what changes
+then.
 
 ## One-time setup
 
-1. Install a **Developer ID Application** certificate from the Apple
-   Developer account in the login keychain.
-2. Store a notarization profile in the keychain, using an app-specific
-   password for the Apple Account:
+1. Create the Waft Release identity in the login keychain; it asks for your
+   password to trust it:
 
    ```sh
-   xcrun notarytool store-credentials waft-notary --apple-id <apple-id> --team-id <team-id>
+   scripts/signing.sh 'Waft Release'
    ```
 
-3. Import the Sparkle signing key into the login keychain from its offline
+   Back it up with **Export** in Keychain Access and keep the file offline.
+   Every release must use this certificate: a new one makes macOS forget the
+   permissions of everyone who updates. On another Mac, import the backup
+   instead of creating a new identity.
+2. Import the Sparkle signing key into the login keychain from its offline
    backup with `generate_keys -f <file>`. `generate_keys -p` must then print
    the `SUPublicEDKey` of `Packaging/Waft-Info.plist`:
 
@@ -66,10 +74,10 @@ The hardened runtime needs the microphone entitlement in
    **Full changelog**: https://github.com/okoflow/waft/compare/vPREVIOUS...vX.Y.Z
    ```
 
-3. Build, notarize, and package `main`:
+3. Build, sign, and package `main`:
 
    ```sh
-   SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)" make release NOTES=../notes.md
+   SIGNING_IDENTITY='Waft Release' make release NOTES=../notes.md
    ```
 
    The script stops unless the working tree is clean, `HEAD` is
@@ -84,6 +92,7 @@ The hardened runtime needs the microphone entitlement in
 4. Publish the release with the command the script prints, which tags the
    commit it built. Releases are immutable: the tag, the files, and the notes
    embedded in the appcast can't change after publishing, so check them first.
+   Mount the disk image and run `codesign --verify --strict` on the app in it.
 
    ```sh
    gh release create vX.Y.Z build/release/Waft-X.Y.Z.dmg build/release/appcast.xml \
@@ -96,26 +105,25 @@ The hardened runtime needs the microphone entitlement in
 Installed copies find the update within a day, or at once with **Check for
 Updates…**.
 
-## Until the first notarized release
+## Switching to a Developer ID
 
-A release is source-only until a Developer ID certificate arrives:
+When the Apple Developer account has a Developer ID:
 
-- Skip steps 3 and 5 of [Cutting a release](#cutting-a-release).
-- In step 4, attach no files and set `--target` to the merge commit of the
-  release pull request.
-
-With the first notarized release:
-
-1. Create the Homebrew tap, a public repository with a `Casks` folder:
+1. Install the **Developer ID Application** certificate in the login keychain
+   and store a notarization profile, using an app-specific password for the
+   Apple Account:
 
    ```sh
-   gh repo create okoflow/homebrew-tap --public --clone
-   mkdir homebrew-tap/Casks
+   xcrun notarytool store-credentials waft-notary --apple-id <apple-id> --team-id <team-id>
    ```
 
-2. Switch [Install](getting-started.md#1-install), which the README's Install
-   link opens, from building from source to
-   `brew install --cask okoflow/tap/waft` and the disk image on GitHub
-   Releases, and add
-   `brew uninstall --zap --cask waft` to
-   [Removing everything](privacy.md#removing-everything).
+2. Release with
+   `SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)"`. The
+   script then signs with the hardened runtime, which needs the microphone
+   entitlement in `Packaging/Waft.entitlements`, notarizes and staples the app
+   and the disk image, and checks the image with `spctl`.
+3. Remove the `postflight` from `Packaging/Homebrew/waft.rb`, and the
+   **Open Anyway** steps from [Install](getting-started.md#1-install), the
+   README, and [Troubleshooting](troubleshooting.md#macos-wont-open-waft).
+4. Say in the release notes that macOS asks once more for the microphone and
+   Accessibility, since the signature changed.

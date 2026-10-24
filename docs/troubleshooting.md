@@ -5,6 +5,12 @@ HUD or the first line of the menu says. [Usage](usage.md) describes the
 settings named here, and [Privacy](privacy.md) the files Waft keeps. Quoted
 text is what the HUD shows.
 
+## macOS won't open Waft
+
+macOS says it can't verify that Waft is free of malware because Waft isn't
+notarized by Apple yet. [Install](getting-started.md#1-install) shows how to
+open it once with **Open Anyway**.
+
 ## The dictation or editing key does nothing
 
 | Symptom | Fix |

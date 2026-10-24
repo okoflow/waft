@@ -1,14 +1,15 @@
 #!/bin/bash
 #
-# Creates the self-signed Waft Dev code-signing identity in the login keychain
-# and trusts it, so local builds keep the permissions macOS granted them.
+# Creates a self-signed code-signing identity in the login keychain and trusts
+# it, so builds signed with it keep the permissions macOS granted them: Waft Dev
+# for local builds by default, or the name given, such as Waft Release.
 
 set -euo pipefail
 
-readonly NAME='Waft Dev'
+readonly NAME="${1:-Waft Dev}"
 readonly KEYCHAIN="${HOME}/Library/Keychains/login.keychain-db"
 readonly EXPORT_PASSWORD='waft'
-readonly USAGE='usage: scripts/signing.sh'
+readonly USAGE='usage: scripts/signing.sh [name]'
 
 WORK_DIR=''
 
@@ -95,7 +96,7 @@ trust_identity() {
 }
 
 main() {
-  [[ $# -eq 0 ]] || usage
+  [[ $# -le 1 ]] || usage
 
   if has_identity -v; then
     echo "\"${NAME}\" is already installed and trusted"
