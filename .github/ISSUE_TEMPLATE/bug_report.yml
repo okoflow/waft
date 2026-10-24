@@ -33,7 +33,7 @@ body:
     attributes:
       label: Version
       description: The version in Settings › About, or the commit you built from.
-      placeholder: 0.6.3
+      placeholder: 0.12.4
     validations:
       required: true
 
