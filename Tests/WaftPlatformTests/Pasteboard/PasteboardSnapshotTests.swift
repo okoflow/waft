@@ -3,6 +3,7 @@ import Testing
 import WaftCore
 @testable import WaftPlatform
 
+@MainActor
 struct PasteboardSnapshotTests {
     private static let privateType = NSPasteboard.PasteboardType("com.example.private")
 

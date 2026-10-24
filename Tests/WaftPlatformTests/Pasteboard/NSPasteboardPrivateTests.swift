@@ -3,6 +3,7 @@ import Testing
 import WaftCore
 @testable import WaftPlatform
 
+@MainActor
 struct NSPasteboardPrivateTests {
     @Test
     func `writes text as a plain string marked as private`() throws {
