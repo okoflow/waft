@@ -94,7 +94,7 @@ final class TryoutModel {
 
                 return .finished(text: reworked, note: nil)
             } catch {
-                return .finished(text: "", note: RewriteFallback(error).reason(for: setup.provider).sentenceCased())
+                return .finished(text: "", note: error.explanation(for: setup.provider))
             }
         }
     }

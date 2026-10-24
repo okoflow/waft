@@ -238,7 +238,7 @@ final class TranslatorModel {
         } catch {
             guard !Task.isCancelled else { return }
 
-            failure = RewriteFallback(error).reason(for: setup.provider).sentenceCased()
+            failure = error.explanation(for: setup.provider)
         }
 
         task = nil
