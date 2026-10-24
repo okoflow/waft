@@ -1,8 +1,4 @@
 #!/bin/bash
-#
-# Creates a self-signed code-signing identity in the login keychain and trusts
-# it, so builds signed with it keep the permissions macOS granted them: Waft Dev
-# for local builds by default, or the name given, such as Waft Release.
 
 set -euo pipefail
 

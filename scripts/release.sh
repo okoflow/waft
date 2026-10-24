@@ -1,8 +1,4 @@
 #!/bin/bash
-#
-# Builds, signs, and packages a release of Waft from origin/main: the disk
-# image, the signed appcast, and the Homebrew cask, in build/release. A
-# Developer ID identity also notarizes the app and the disk image.
 
 set -euo pipefail
 
