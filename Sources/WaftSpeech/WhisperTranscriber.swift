@@ -91,27 +91,25 @@ package actor WhisperTranscriber: Transcriber {
 
         let decodingStart = ContinuousClock.now
         let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
-        let tokenizer = loaded.whisper.tokenizer
-
-        let options = WhisperDecoding.decodingOptions(for: spoken, prompt: prompt, tokenizer: tokenizer)
-        let promptTokenCount = WhisperDecoding.promptTokens(for: prompt, tokenizer: tokenizer).count
+        let promptTokens = WhisperDecoding.promptTokens(for: prompt, tokenizer: loaded.whisper.tokenizer)
+        let options = WhisperDecoding.decodingOptions(for: spoken, promptTokens: promptTokens)
 
         let chunks = try await WhisperPieces.split(
             samples,
-            maximumLength: WhisperDecoding.chunkSampleCount(promptTokenCount: promptTokenCount),
+            maximumLength: WhisperDecoding.chunkSampleCount(promptTokenCount: promptTokens.count),
         )
         let pieces = chunks.map(\.audioSamples).filter(SpeechGate.containsSpeech)
 
         Logger.speech.notice(
             """
             Split \(SpeechAudio.duration(of: samples), format: .fixed(precision: 1)) s of audio into \
-            \(chunks.count) pieces, \(pieces.count) with speech, after \(promptTokenCount) prompt tokens
+            \(chunks.count) pieces, \(pieces.count) with speech, after \(promptTokens.count) prompt tokens
             """,
         )
 
         let pieceResults = try await WhisperPieces.transcribe(pieces, with: options, on: loaded.whisper)
 
-        WhisperPieces.log(pieces, results: pieceResults, promptTokenCount: promptTokenCount) { segment in
+        WhisperPieces.log(pieces, results: pieceResults, promptTokenCount: promptTokens.count) { segment in
             WhisperDecoding.keepsSegment(segment, in: spoken, prompt: prompt, vocabulary: vocabulary)
         }
 
@@ -176,7 +174,8 @@ package actor WhisperTranscriber: Transcriber {
         let prompt = WhisperDecoding.filePrompt(for: language, variant: variant)
         let offset = Double(chunk.seekOffsetIndex) / SpeechAudio.sampleRate
 
-        let options = WhisperDecoding.decodingOptions(for: language, prompt: prompt, tokenizer: whisper.tokenizer)
+        let promptTokens = WhisperDecoding.promptTokens(for: prompt, tokenizer: whisper.tokenizer)
+        let options = WhisperDecoding.decodingOptions(for: language, promptTokens: promptTokens)
 
         let results = try await whisper.transcribe(audioArray: chunk.audioSamples, decodeOptions: options)
 

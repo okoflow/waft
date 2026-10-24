@@ -14,19 +14,13 @@ enum WhisperDecoding {
     private static let silenceMargin: Float = 2
     private static let quietestSilenceThreshold: Float = 0.001
 
-    static func decodingOptions(
-        for language: Language,
-        prompt: String?,
-        tokenizer: (any WhisperTokenizer)?,
-    ) -> DecodingOptions {
-        let tokens = promptTokens(for: prompt, tokenizer: tokenizer)
-
+    static func decodingOptions(for language: Language, promptTokens: [Int]) -> DecodingOptions {
         var options = DecodingOptions()
 
         options.language = language.rawValue
         options.detectLanguage = false
         options.skipSpecialTokens = true
-        options.promptTokens = tokens.isEmpty ? nil : tokens
+        options.promptTokens = promptTokens.isEmpty ? nil : promptTokens
         options.firstTokenLogProbThreshold = nil
 
         return options
