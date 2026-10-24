@@ -82,8 +82,6 @@ final class LocalModelsModel {
             do throws(RewriteError) {
                 models = try await browser.models(at: LocalServer(baseURL: known.baseURL))
             } catch {
-                guard !Task.isCancelled else { return }
-
                 continue
             }
 
