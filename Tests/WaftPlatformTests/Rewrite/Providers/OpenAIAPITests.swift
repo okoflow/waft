@@ -7,6 +7,13 @@ struct OpenAIAPITests {
     private static let api = OpenAIAPI(apiKeyStore: FakeValueStore("sk-test"))
 
     @Test
+    func `needs an API key`() {
+        #expect(throws: RewriteError.missingKey) {
+            try OpenAIAPI(apiKeyStore: FakeValueStore<String>(nil)).call(for: .cleanup("hello"))
+        }
+    }
+
+    @Test
     func `calls the responses endpoint with a bearer token`() throws {
         let call = try Self.api.call(for: .cleanup("hello"))
 
