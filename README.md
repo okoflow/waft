@@ -82,20 +82,6 @@ brew install --cask okoflow/tap/waft
 
 Or download the disk image from the [latest release](https://github.com/okoflow/waft/releases/latest). [Install](docs/getting-started.md#1-install) lists the requirements and how to open a copy from the disk image the first time.
 
-## How it compares
-
-<picture>
-  <source
-    media="(prefers-color-scheme: dark)"
-    srcset=".github/screenshots/comparison-dark.jpg"
-  >
-  <img
-    src=".github/screenshots/comparison-light.jpg"
-    alt="Waft compared with Wispr Flow, Superwhisper, MacWhisper, VoiceInk,
-    Aqua Voice, and Apple Dictation"
-  >
-</picture>
-
 ## Documentation
 
 | Guide | What it covers |
