@@ -100,7 +100,7 @@ Waft reads the selection through Accessibility, or copies it with <kbd>⌘</kbd>
 
 Settings › Dictionary holds two lists:
 
-- **Terms** are names and words that come out wrong. Waft gives them to Whisper as a hint, then replaces the spellings Whisper still writes, which you list under **Heard as**, separated by commas. Replacements match whole words in any letter case and work in every mode.
+- **Terms** are names and words that come out wrong. Waft gives them to Whisper and to the AI modes as a hint, then replaces the spellings Whisper still writes, which you list under **Heard as**, separated by commas. Replacements match whole words in any letter case and work in every mode.
 - **Snippets** turn a phrase into text. Say the phrase on its own, and Waft pastes the text as written, without an AI model. The phrase inside a longer dictation is replaced too.
 
 **Open in Editor** opens both lists as `dictionary.json`. Edits apply from the next dictation.

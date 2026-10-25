@@ -10,7 +10,7 @@ extension RewriteRequest {
         RewriteRequest(
             text: text,
             language: .english,
-            kind: .cleanup(instructions: "Clean.", target: target),
+            kind: .cleanup(instructions: "Clean.", target: target, vocabulary: []),
             localServer: localServer,
             cloudModel: cloudModel,
             deadline: .seconds(3),

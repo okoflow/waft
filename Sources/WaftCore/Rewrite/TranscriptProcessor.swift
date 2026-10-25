@@ -5,14 +5,25 @@ package struct TranscriptProcessor: Sendable {
         self.rewriters = rewriters
     }
 
-    private static func kind(for mode: Mode, language: Language, setup: RewriteSetup) -> RewriteRequest.Kind {
+    private static func kind(
+        for mode: Mode,
+        language: Language,
+        vocabulary: [String],
+        setup: RewriteSetup,
+    ) -> RewriteRequest.Kind {
         switch mode {
         case .custom:
-            .custom(instructions: setup.instructions)
+            .custom(instructions: setup.instructions, vocabulary: vocabulary)
+
         case .translate:
-            .cleanup(instructions: setup.instructions, target: setup.translation.target(forSpoken: language))
+            .cleanup(
+                instructions: setup.instructions,
+                target: setup.translation.target(forSpoken: language),
+                vocabulary: vocabulary,
+            )
+
         case .raw, .light, .clean, .formal:
-            .cleanup(instructions: setup.instructions, target: nil)
+            .cleanup(instructions: setup.instructions, target: nil, vocabulary: vocabulary)
         }
     }
 
@@ -48,7 +59,9 @@ package struct TranscriptProcessor: Sendable {
             return ProcessedText(text: snippet, mode: .raw)
         }
 
-        let processed = await apply(mode, to: corrected, language: language, setup: setup, allowsAI: allowsAI)
+        let kind = allowsAI ? Self.kind(for: mode, language: language, vocabulary: vocabulary.promptTerms, setup: setup) : nil
+
+        let processed = await apply(mode, to: corrected, language: language, rewriting: kind, setup: setup)
 
         let variant = Self.writingVariant(of: transcript, after: processed, setup: setup)
 
@@ -94,8 +107,8 @@ package struct TranscriptProcessor: Sendable {
         _ mode: Mode,
         to text: String,
         language: Language,
+        rewriting kind: RewriteRequest.Kind?,
         setup: RewriteSetup,
-        allowsAI: Bool,
     ) async -> ProcessedText {
         switch mode {
         case .raw:
@@ -107,11 +120,9 @@ package struct TranscriptProcessor: Sendable {
         case .clean, .formal, .translate, .custom:
             let lightened = light(text, language: language)
             guard !lightened.isBlank else { return ProcessedText(text: lightened, mode: .light) }
-            guard allowsAI else { return ProcessedText(text: lightened, mode: .light, fallback: .needsPro) }
+            guard let kind else { return ProcessedText(text: lightened, mode: .light, fallback: .needsPro) }
 
             do throws(RewriteError) {
-                let kind = Self.kind(for: mode, language: language, setup: setup)
-
                 let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
 
                 return ProcessedText(text: rewritten, mode: mode)
