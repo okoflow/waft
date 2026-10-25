@@ -34,6 +34,22 @@ struct RewritePromptTests {
         #expect(RewritePrompt.userMessage(for: request) == expected)
     }
 
+    @Test(arguments: [
+        (RewriteRequest.cleanup("we ship weft", target: .german, vocabulary: ["Waft", " ", "API"]), "Translate into: German.\n"),
+        (.custom("we ship weft", vocabulary: ["Waft", " ", "API"]), ""),
+    ])
+    func `lists the dictionary of the speaker before the transcript`(request: RewriteRequest, translation: String) {
+        let expected = "Spoken language: English.\n" + translation + """
+        Speaker's dictionary: Waft, API.
+        <transcript>
+        we ship weft
+        </transcript>
+        Reply with the finished text alone.
+        """
+
+        #expect(RewritePrompt.userMessage(for: request) == expected)
+    }
+
     @Test
     func `gives an edit the instruction and the selected text`() {
         let request = RewriteRequest.edit("сделай короче", selection: "A long text.", language: .russian)

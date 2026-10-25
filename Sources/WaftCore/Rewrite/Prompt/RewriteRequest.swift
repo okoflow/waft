@@ -1,7 +1,7 @@
 package struct RewriteRequest: Sendable {
     package enum Kind: Sendable {
-        case cleanup(instructions: String, target: Language?)
-        case custom(instructions: String)
+        case cleanup(instructions: String, target: Language?, vocabulary: [String])
+        case custom(instructions: String, vocabulary: [String])
         case edit(selection: String)
         case text(TextTask, instructions: String)
     }

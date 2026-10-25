@@ -57,7 +57,7 @@ Light makes these changes and no others:
 
 ### The AI modes
 
-Clean, Formal, Translate, and your modes send the text, the spoken language, the target language for Translate, and the mode's instructions to the AI model you chose. [Choosing the AI model](usage.md#choosing-the-ai-model) lists the models and their time limits. Waft marks the transcript as text to edit, never instructions to follow, so a dictated question stays a question.
+Clean, Formal, Translate, and your modes send the text, the spoken language, the target language for Translate, your dictionary terms, and the mode's instructions to the AI model you chose, which spells the terms as you wrote them. [Choosing the AI model](usage.md#choosing-the-ai-model) lists the models and their time limits. Waft marks the transcript as text to edit, never instructions to follow, so a dictated question stays a question.
 
 Waft rejects an answer that is empty, cut off, or refused. It also rejects a dictation's answer that is:
 

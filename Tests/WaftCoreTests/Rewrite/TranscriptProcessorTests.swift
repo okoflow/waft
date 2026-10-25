@@ -34,7 +34,7 @@ struct TranscriptProcessorTests {
     }
 
     @Test
-    func `corrects terms before and after the rewrite`() async {
+    func `corrects terms before and after the rewrite and lists them for the model`() async throws {
         let log = RewriteLog()
         let vocabulary = Vocabulary(
             terms: [Vocabulary.Term(term: "Kubernetes", spoken: ["cube or netties", "kubernetis"])],
@@ -49,8 +49,11 @@ struct TranscriptProcessorTests {
             log: log,
         )
 
+        let request = try #require(await log.requests.first)
+
         #expect(processed == ProcessedText(text: "We use Kubernetes.", mode: .clean))
-        #expect(await log.requests.first?.text == "we use Kubernetes")
+        #expect(request.text == "we use Kubernetes")
+        #expect(RewritePrompt.userMessage(for: request).contains("Speaker's dictionary: Kubernetes."))
     }
 
     @Test

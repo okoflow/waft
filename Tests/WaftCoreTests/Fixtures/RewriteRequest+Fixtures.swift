@@ -6,12 +6,25 @@ extension RewriteRequest {
         language: Language = .english,
         target: Language? = nil,
         instructions: String = "Clean.",
+        vocabulary: [String] = [],
     ) -> RewriteRequest {
-        fixture(text, language: language, kind: .cleanup(instructions: instructions, target: target), deadline: .seconds(3))
+        let kind = RewriteRequest.Kind.cleanup(instructions: instructions, target: target, vocabulary: vocabulary)
+
+        return fixture(text, language: language, kind: kind, deadline: .seconds(3))
     }
 
-    static func custom(_ text: String, language: Language = .english, instructions: String = "Reply.") -> RewriteRequest {
-        fixture(text, language: language, kind: .custom(instructions: instructions), deadline: .seconds(3))
+    static func custom(
+        _ text: String,
+        language: Language = .english,
+        instructions: String = "Reply.",
+        vocabulary: [String] = [],
+    ) -> RewriteRequest {
+        fixture(
+            text,
+            language: language,
+            kind: .custom(instructions: instructions, vocabulary: vocabulary),
+            deadline: .seconds(3),
+        )
     }
 
     static func edit(_ instruction: String, selection: String, language: Language = .english) -> RewriteRequest {
