@@ -27,13 +27,20 @@
     src="https://img.shields.io/badge/macOS-14%2B-informational"
     alt="macOS 14 or later"
   >
+  <a
+    href="https://github.com/sponsors/imsvidskiy"
+  ><img
+    src="https://img.shields.io/github/sponsors/imsvidskiy?label=Sponsor&logo=GitHub&color=ea4aaa"
+    alt="Sponsor"
+  ></a>
 </p>
 
 <p align="center">
   <a href="https://waft.okoflow.com">Website</a> ·
   <a href="docs/getting-started.md#1-install">Install</a> ·
   <a href="docs/usage.md">Usage</a> ·
-  <a href="docs/privacy.md">Privacy</a>
+  <a href="docs/privacy.md">Privacy</a> ·
+  <a href="https://github.com/sponsors/imsvidskiy">Sponsor</a>
 </p>
 
 https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
@@ -96,6 +103,10 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 ## Waft+
 
 Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features and the Accurate speech model for a single payment of $13.99, and is free while Waft is in beta.
+
+## Sponsor
+
+Waft is open source. If it saves you time, you can support its development on [GitHub Sponsors](https://github.com/sponsors/imsvidskiy).
 
 ## Contributing
 
