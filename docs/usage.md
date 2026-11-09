@@ -70,7 +70,7 @@ Choose the **Provider** in Settings › AI Models, Claude by default.
 
 ## Editing by voice
 
-Set the **Editing key** in Settings › Dictation; there's none by default, and it always works by holding. Select text in any app, hold the key, say what to change, such as "make it shorter" or "translate into German", and let go. The AI model rewrites the selection and Waft pastes the result over it. A failed edit changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
+Set the **Editing key** in Settings › Dictation; there's none by default, and it always works by holding. Select text, hold the key, say what to change, such as "make it shorter" or "translate into German", and let go. The AI model rewrites the selection and Waft pastes the result over it. Waft reads the selection through Accessibility, so an edit doesn't work in an app that doesn't expose it there, such as Chrome or an Electron app. A failed edit changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
 
 ## Translator
 
@@ -124,7 +124,7 @@ Settings › Dictionary holds two lists:
 
 ## Shortcuts
 
-Four shortcuts work in any app. To change one, click it and press a key with Command, Control, or Option, or a function key, that no other Waft shortcut or key uses. The minus button next to it turns it off.
+Four shortcuts work in any app. To change one, click it and press a key with Command, Control, or Option, or a function key, that no other Waft shortcut or key uses. The minus button next to it turns it off, and the arrow button, which shows once the shortcut differs from its default, brings the default back.
 
 | Shortcut | Default | Where |
 | --- | --- | --- |
@@ -152,7 +152,7 @@ To hide the icon, turn off **Show in menu bar** in Settings › General. Dictati
 ## General settings
 
 - **Open at login** in Settings › General starts Waft when you log in.
-- **App language** switches Waft's interface between 23 languages, or **Same as macOS**. Arabic and Hebrew lay it out from right to left.
+- **App language** switches Waft's interface between 23 languages, or **Same as macOS**, once you click **Relaunch** next to it. Arabic and Hebrew lay it out from right to left.
 - **Play sounds**, on by default, plays a short chime when recording starts and another when it stops.
 - **Lower other sounds while recording**, on by default, turns the Mac's volume down to a quarter once recording starts and restores it afterward, unless you changed it meanwhile.
 

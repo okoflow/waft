@@ -102,7 +102,7 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 
 ## Waft+
 
-Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features and the Accurate speech model for a single payment of $13.99, and is free while Waft is in beta.
+Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features, file transcription, and the Accurate speech model for a single payment of $13.99, and is free while Waft is in beta.
 
 ## Sponsor
 
