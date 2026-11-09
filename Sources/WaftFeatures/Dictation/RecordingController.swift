@@ -133,11 +133,7 @@ final class RecordingController {
         ended.hudTask?.cancel()
         ended.watchdogTimer?.invalidate()
 
-        guard ended.isLive else {
-            hud.hideListening()
-
-            return nil
-        }
+        guard ended.isLive else { return nil }
 
         return ended
     }
