@@ -1,4 +1,4 @@
-package enum CloudProvider: String, CaseIterable, Codable, Sendable {
+package enum CloudProvider: String, CaseIterable, Sendable {
     case claude
     case openAI = "openai"
 

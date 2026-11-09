@@ -109,13 +109,6 @@ final class SelectionActions {
 
         let into = settings.settings.translator.target(forSource: detected)
 
-        let language =
-            if let detected {
-                detected
-            } else {
-                into
-            }
-
         let textTask: TextTask =
             switch action {
             case .translate: .translate(from: nil, into: into)
@@ -129,12 +122,7 @@ final class SelectionActions {
         defer { hud.setWorking(nil) }
 
         do throws(RewriteError) {
-            let reworked = try await processor.rework(
-                selection,
-                in: language,
-                as: textTask,
-                setup: setup,
-            )
+            let reworked = try await processor.rework(selection, as: textTask, setup: setup)
 
             await waitForShortcutRelease()
 

@@ -73,9 +73,11 @@ package enum HallucinationFilter {
 
             let rest = normalized.dropFirst(known.count)
 
-            guard language.hasLooseWordSpacing else { return rest.split(separator: " ").count <= phrase.trailingWords }
+            guard !language.hasLooseWordSpacing else { return rest.count <= phrase.trailingWords * 3 }
+            guard !rest.isEmpty else { return true }
+            guard rest.hasPrefix(" ") else { return false }
 
-            return rest.count <= phrase.trailingWords * 3
+            return rest.split(separator: " ").count <= phrase.trailingWords
         }
     }
 }

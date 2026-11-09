@@ -91,7 +91,7 @@ package final class KeyEventTap: KeyEventMonitor {
 }
 
 private let keyEventTapCallback: CGEventTapCallBack = { _, type, event, context in
-    guard let context, let kind = KeyEvent.Kind(type) else { return Unmanaged.passUnretained(event) }
+    guard let context, let kind = KeyEvent.Kind(type), !event.isFromOwnProcess else { return Unmanaged.passUnretained(event) }
 
     let timestamp = event.timestamp > 0 ? Double(event.timestamp) / 1_000_000_000 : Uptime.now
     let keyEvent = KeyEvent(

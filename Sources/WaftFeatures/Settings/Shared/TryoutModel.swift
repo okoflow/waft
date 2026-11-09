@@ -78,19 +78,13 @@ final class TryoutModel {
             case .fix: .fix
             case .translate: .translate(from: translator.trustedSource(detected: detected), into: target)
             }
-        let language =
-            if let source {
-                source
-            } else {
-                target
-            }
 
         let setup = settings.settings.translatorSetup(for: kind)
         let processor = processor
 
         start {
             do throws(RewriteError) {
-                let reworked = try await processor.rework(text, in: language, as: task, setup: setup)
+                let reworked = try await processor.rework(text, as: task, setup: setup)
 
                 return .finished(text: reworked, note: nil)
             } catch {

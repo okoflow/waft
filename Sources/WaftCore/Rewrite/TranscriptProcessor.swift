@@ -13,17 +13,18 @@ package struct TranscriptProcessor: Sendable {
     ) -> RewriteRequest.Kind {
         switch mode {
         case .custom:
-            .custom(instructions: setup.instructions, vocabulary: vocabulary)
+            .custom(instructions: setup.instructions, language: language, vocabulary: vocabulary)
 
         case .translate:
             .cleanup(
                 instructions: setup.instructions,
+                language: language,
                 target: setup.translation.target(forSpoken: language),
                 vocabulary: vocabulary,
             )
 
         case .raw, .light, .clean, .formal:
-            .cleanup(instructions: setup.instructions, target: nil, vocabulary: vocabulary)
+            .cleanup(instructions: setup.instructions, language: language, target: nil, vocabulary: vocabulary)
         }
     }
 
@@ -81,22 +82,16 @@ package struct TranscriptProcessor: Sendable {
     ) async throws(RewriteError) -> String {
         try await rewrite(
             instruction.text,
-            in: instruction.language,
-            as: .edit(selection: selection),
+            as: .edit(selection: selection, language: instruction.language),
             setup: setup,
             deadline: setup.editDeadline,
         )
     }
 
-    package func rework(
-        _ text: String,
-        in language: Language,
-        as task: TextTask,
-        setup: RewriteSetup,
-    ) async throws(RewriteError) -> String {
+    package func rework(_ text: String, as task: TextTask, setup: RewriteSetup) async throws(RewriteError) -> String {
         let kind = RewriteRequest.Kind.text(task, instructions: setup.instructions)
 
-        let reworked = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.editDeadline)
+        let reworked = try await rewrite(text, as: kind, setup: setup, deadline: setup.editDeadline)
 
         guard case let .translate(_, target) = task else { return reworked }
 
@@ -123,7 +118,7 @@ package struct TranscriptProcessor: Sendable {
             guard let kind else { return ProcessedText(text: lightened, mode: .light, fallback: .needsPro) }
 
             do throws(RewriteError) {
-                let rewritten = try await rewrite(text, in: language, as: kind, setup: setup, deadline: setup.deadline)
+                let rewritten = try await rewrite(text, as: kind, setup: setup, deadline: setup.deadline)
 
                 return ProcessedText(text: rewritten, mode: mode)
             } catch {
@@ -138,14 +133,12 @@ package struct TranscriptProcessor: Sendable {
 
     private func rewrite(
         _ text: String,
-        in language: Language,
         as kind: RewriteRequest.Kind,
         setup: RewriteSetup,
         deadline: Duration,
     ) async throws(RewriteError) -> String {
         let request = RewriteRequest(
             text: text,
-            language: language,
             kind: kind,
             localServer: setup.localServerInUse,
             cloudModel: setup.cloudModelInUse,

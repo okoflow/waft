@@ -16,9 +16,10 @@ final class ShortcutRecorder {
         (.command, .command),
     ]
 
-    private(set) var action: ShortcutAction?
     private(set) var rejection: Rejection?
     private(set) var rejections: [ShortcutAction: Int] = [:]
+
+    private var action: ShortcutAction?
 
     @ObservationIgnored private var monitor: Any?
 

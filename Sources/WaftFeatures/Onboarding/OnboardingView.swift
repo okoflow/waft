@@ -58,7 +58,7 @@ private struct OnboardingFooter: View {
 
     var body: some View {
         ZStack {
-            PageDots(count: OnboardingModel.Step.allCases.count, current: onboarding.step.rawValue)
+            PageDots(steps: onboarding.steps, current: onboarding.step)
 
             HStack {
                 Button("Back") { onboarding.goBack() }
@@ -83,23 +83,29 @@ private struct OnboardingFooter: View {
 }
 
 private struct PageDots: View {
-    let count: Int
-    let current: Int
+    let steps: [OnboardingModel.Step]
+    let current: OnboardingModel.Step
 
-    var body: some View {
-        HStack(spacing: Metrics.inlineSpacing) {
-            ForEach(0 ..< count, id: \.self) { index in
-                Capsule()
-                    .fill(fill(at: index))
-                    .frame(width: index == current ? 18 : 7, height: 7)
-            }
-        }
-        .accessibilityElement()
-        .accessibilityLabel("Step \(current + 1) of \(count)")
+    private var position: Int {
+        steps.prefix { $0 != current }.count + 1
     }
 
-    private func fill(at index: Int) -> AnyShapeStyle {
-        guard index == current else { return AnyShapeStyle(.quaternary) }
+    var body: some View {
+        if steps.count > 1 {
+            HStack(spacing: Metrics.inlineSpacing) {
+                ForEach(steps, id: \.self) { step in
+                    Capsule()
+                        .fill(fill(of: step))
+                        .frame(width: step == current ? 18 : 7, height: 7)
+                }
+            }
+            .accessibilityElement()
+            .accessibilityLabel("Step \(position) of \(steps.count)")
+        }
+    }
+
+    private func fill(of step: OnboardingModel.Step) -> AnyShapeStyle {
+        guard step == current else { return AnyShapeStyle(.quaternary) }
 
         return AnyShapeStyle(Palette.accent)
     }

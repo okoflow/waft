@@ -28,14 +28,6 @@ struct SettingsPaneView: View {
         case .overview:
             OverviewSettingsPane(statistics: model.statistics)
 
-        case .general:
-            GeneralSettingsPane(
-                settings: model.settings,
-                permissions: model.permissions,
-                interfaceLanguage: model.interfaceLanguage,
-                updates: model.updates,
-            )
-
         case .dictation:
             DictationSettingsPane(
                 settings: model.settings,
@@ -44,6 +36,9 @@ struct SettingsPaneView: View {
                 pro: model.pro,
                 state: state,
             )
+
+        case .dictionary:
+            DictionarySettingsPane(vocabulary: model.vocabulary)
 
         case .writing:
             WritingSettingsPane(
@@ -70,11 +65,16 @@ struct SettingsPaneView: View {
         case .aiModels:
             AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)
 
-        case .dictionary:
-            DictionarySettingsPane(vocabulary: model.vocabulary)
-
         case .history:
             HistorySettingsPane(settings: model.settings, history: model.history, state: state)
+
+        case .general:
+            GeneralSettingsPane(
+                settings: model.settings,
+                permissions: model.permissions,
+                interfaceLanguage: model.interfaceLanguage,
+                updates: model.updates,
+            )
 
         case .pro:
             ProSettingsPane(pro: model.pro)

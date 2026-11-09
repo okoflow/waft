@@ -14,8 +14,9 @@ enum RewriteValidator {
         guard !text.isEmpty, text.count <= maximumLength(for: request), text.count >= minimumLength(for: request) else {
             throw .unreadableResponse
         }
-        guard case let .cleanup(_, target, _) = request.kind, let script = WritingScript.dominant(in: text) else { return text }
-        guard expectedScripts(for: request.text, language: request.language, target: target).contains(script) else {
+        guard case let .cleanup(_, language, target, _) = request.kind,
+              let script = WritingScript.dominant(in: text) else { return text }
+        guard expectedScripts(for: request.text, language: language, target: target).contains(script) else {
             throw .unreadableResponse
         }
 
@@ -25,7 +26,7 @@ enum RewriteValidator {
     private static func unwrapped(_ answer: String, for request: RewriteRequest) -> String {
         switch request.kind {
         case .cleanup, .custom: unwrapped(answer, input: request.text, from: cleanupWrappers)
-        case let .edit(selection): unwrapped(answer, input: selection, from: editWrappers)
+        case let .edit(selection, _): unwrapped(answer, input: selection, from: editWrappers)
         case .text: unwrapped(answer, input: request.text, from: editWrappers)
         }
     }
@@ -34,7 +35,7 @@ enum RewriteValidator {
         let length = request.text.count
 
         return switch request.kind {
-        case let .cleanup(_, target, _): length * cleanupLengthFactor(target: target, language: request.language) + 60
+        case let .cleanup(_, language, target, _): length * cleanupLengthFactor(target: target, language: language) + 60
         case .custom: max(length * 10, 600)
         case .edit: .max
         case .text: length * 5 + 200
@@ -42,7 +43,7 @@ enum RewriteValidator {
     }
 
     private static func minimumLength(for request: RewriteRequest) -> Int {
-        guard case .cleanup(_, nil, _) = request.kind, request.text.count >= shortestMeasuredCleanup else { return 0 }
+        guard case .cleanup(_, _, nil, _) = request.kind, request.text.count >= shortestMeasuredCleanup else { return 0 }
 
         return Int((Double(request.text.count) * shortestCleanupShare).rounded(.up))
     }

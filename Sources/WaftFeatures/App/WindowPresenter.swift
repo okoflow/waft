@@ -3,7 +3,6 @@ import SwiftUI
 
 final class WindowPresenter: NSObject, NSWindowDelegate {
     private static let settingsSize = CGSize(width: 820, height: 660)
-    private static let settingsMinimumSize = CGSize(width: 760, height: 520)
     private static let transcriptionSize = CGSize(width: 600, height: 580)
     private static let translatorSize = CGSize(width: 900, height: 460)
 
@@ -136,7 +135,7 @@ final class WindowPresenter: NSObject, NSWindowDelegate {
         let window = makeWindow(
             SettingsWindowView(model: model, state: settingsState),
             size: Self.settingsSize,
-            minimumSize: Self.settingsMinimumSize,
+            minimumSize: SettingsWindowView.minimumSize,
             hasToolbar: true,
         )
 
