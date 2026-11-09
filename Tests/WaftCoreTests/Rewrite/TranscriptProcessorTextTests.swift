@@ -10,7 +10,7 @@ struct TranscriptProcessorTextTests {
 
         let processor = TranscriptProcessor.answering(.success("We meet on Friday."), log: log)
 
-        let fixed = try await processor.rework("we meat on friday", in: .english, as: .fix, setup: setup)
+        let fixed = try await processor.rework("we meat on friday", as: .fix, setup: setup)
         let request = try #require(await log.requests.first)
 
         #expect(fixed == "We meet on Friday.")
@@ -32,12 +32,7 @@ struct TranscriptProcessorTextTests {
         settings.writingVariants = WritingVariants([.serbian: .cyrillic])
         let processor = TranscriptProcessor.answering(.success(answer), log: RewriteLog())
 
-        let reworked = try await processor.rework(
-            "see you tomorrow",
-            in: .english,
-            as: task,
-            setup: settings.translatorSetup(for: task.kind),
-        )
+        let reworked = try await processor.rework("see you tomorrow", as: task, setup: settings.translatorSetup(for: task.kind))
 
         #expect(reworked == expected)
     }
@@ -48,7 +43,7 @@ struct TranscriptProcessorTextTests {
         let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Unused.")
 
         await #expect(throws: RewriteError.timeout) {
-            try await processor.rework("hi", in: .english, as: .fix, setup: setup)
+            try await processor.rework("hi", as: .fix, setup: setup)
         }
     }
 }

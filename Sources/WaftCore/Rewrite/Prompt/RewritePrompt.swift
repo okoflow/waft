@@ -53,27 +53,25 @@ package enum RewritePrompt {
 
     package static func system(for request: RewriteRequest) -> String {
         switch request.kind {
-        case let .cleanup(instructions, _, _), let .custom(instructions, _): instructions + "\n" + rules
+        case let .cleanup(instructions, _, _, _), let .custom(instructions, _, _): instructions + "\n" + rules
         case .edit: editInstructions
         case let .text(_, instructions): instructions + "\n" + textRules
         }
     }
 
     package static func userMessage(for request: RewriteRequest) -> String {
-        let spokenLanguage = "Spoken language: \(request.language.name)."
-
         let lines =
             switch request.kind {
-            case let .cleanup(_, target, vocabulary):
-                [spokenLanguage] + translation(into: target) + dictionary(vocabulary)
+            case let .cleanup(_, language, target, vocabulary):
+                spoken(language) + translation(into: target) + dictionary(vocabulary)
                     + PromptTag.transcript.wrapping(request.text) + [finishedTextReminder]
 
-            case let .custom(_, vocabulary):
-                [spokenLanguage] + dictionary(vocabulary) + PromptTag.transcript.wrapping(request.text)
+            case let .custom(_, language, vocabulary):
+                spoken(language) + dictionary(vocabulary) + PromptTag.transcript.wrapping(request.text)
                     + [finishedTextReminder]
 
-            case let .edit(selection):
-                [spokenLanguage] + PromptTag.instruction.wrapping(request.text) + PromptTag.text.wrapping(selection)
+            case let .edit(selection, language):
+                spoken(language) + PromptTag.instruction.wrapping(request.text) + PromptTag.text.wrapping(selection)
                     + [editedTextReminder]
 
             case let .text(task, _):
@@ -85,6 +83,10 @@ package enum RewritePrompt {
 
     static func customInstructions(_ instructions: String) -> String {
         ([customPreamble] + PromptTag.instructions.wrapping(instructions)).joined(separator: "\n")
+    }
+
+    private static func spoken(_ language: Language) -> [String] {
+        ["Spoken language: \(language.name)."]
     }
 
     private static func dictionary(_ vocabulary: [String]) -> [String] {

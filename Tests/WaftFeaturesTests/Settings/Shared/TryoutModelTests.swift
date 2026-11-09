@@ -44,7 +44,7 @@ struct TryoutModelTests {
 
         let request = try #require(rewriter.requests.first)
 
-        #expect(request.language == expected)
+        #expect(RewritePrompt.userMessage(for: request).hasPrefix("Spoken language: \(expected.name)."))
     }
 
     @Test(arguments: ["", " \n"])

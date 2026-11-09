@@ -210,25 +210,13 @@ final class TranslatorModel {
     private func translate(_ text: String) async {
         detected = detectedLanguage(of: text)
 
-        let into = effectiveTarget
-
-        let language =
-            if let knownSource {
-                knownSource
-            } else {
-                into
-            }
+        let textTask = TextTask.translate(from: trustedSource, into: effectiveTarget)
         let setup = settings.settings.translatorSetup(for: .translate)
 
         isTranslating = true
 
         do throws(RewriteError) {
-            let translated = try await processor.rework(
-                text,
-                in: language,
-                as: .translate(from: trustedSource, into: into),
-                setup: setup,
-            )
+            let translated = try await processor.rework(text, as: textTask, setup: setup)
 
             guard !Task.isCancelled else { return }
 
