@@ -1,6 +1,6 @@
 import Foundation
 
-package enum WritingVariant: String, CaseIterable, Codable, Sendable {
+package enum WritingVariant: String, Sendable {
     case simplified
     case traditional
     case latin
