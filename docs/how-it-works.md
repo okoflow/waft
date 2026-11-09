@@ -13,7 +13,7 @@ flowchart LR
 
 ## Key and recording
 
-A listen-only event tap watches the keyboard and never swallows a key press, so the dictation key keeps working everywhere else. Pressing it starts the microphone set as **Microphone** in Settings › Dictation, or the system default when that one isn't connected, and notes the focused app and text field, where the text goes later. The HUD never takes focus.
+A listen-only event tap watches the keyboard and never swallows a key press, so the dictation key keeps working everywhere else. It ignores the <kbd>⌘</kbd><kbd>V</kbd> and <kbd>⌘</kbd><kbd>C</kbd> that Waft presses itself, so a paste never starts, finishes, or cancels a recording. Pressing the dictation key starts the microphone set as **Microphone** in Settings › Dictation, or the system default when that one isn't connected, and notes the focused app and text field, where the text goes later. The HUD never takes focus.
 
 [The dictation key](usage.md#the-dictation-key) says what **How to start** does. The timings:
 
