@@ -53,13 +53,6 @@ struct WritingSettingsPane: View {
         }
         .onDisappear(perform: shortcutRecorder.stop)
 
-        TranslationSection(
-            title: "Translation",
-            subtitle: translationNote,
-            needsWaftPlus: true,
-            translation: $settings.settings.translation,
-        )
-
         SettingsSection("Apps", subtitle: "These apps get their own mode.") {
             if appIdentifiers.isEmpty {
                 EmptyRow("No apps yet")
@@ -73,6 +66,13 @@ struct WritingSettingsPane: View {
             Button("Add App…", action: chooseApp)
         }
         .motion(Motion.layout, value: appIdentifiers)
+
+        TranslationSection(
+            title: "Translation",
+            subtitle: translationNote,
+            needsWaftPlus: true,
+            translation: $settings.settings.translation,
+        )
 
         SettingsSection("Output") {
             ToggleRow(

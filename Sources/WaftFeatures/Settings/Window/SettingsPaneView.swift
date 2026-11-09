@@ -28,6 +28,9 @@ struct SettingsPaneView: View {
         case .overview:
             OverviewSettingsPane(statistics: model.statistics)
 
+        case .history:
+            HistorySettingsPane(settings: model.settings, history: model.history, state: state)
+
         case .dictation:
             DictationSettingsPane(
                 settings: model.settings,
@@ -64,9 +67,6 @@ struct SettingsPaneView: View {
 
         case .aiModels:
             AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)
-
-        case .history:
-            HistorySettingsPane(settings: model.settings, history: model.history, state: state)
 
         case .general:
             GeneralSettingsPane(

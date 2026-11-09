@@ -32,10 +32,6 @@ struct TranslatorSettingsPane: View {
             translation: $settings.settings.translator.translation,
         )
 
-        TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
-
-        TranslatorModelSection(settings: settings, apiKeys: apiKeys, state: state)
-
         SettingsSection("Shortcuts", subtitle: "They work in any app.") {
             shortcutRow(.translator)
             RowDivider()
@@ -46,6 +42,10 @@ struct TranslatorSettingsPane: View {
             Button("Open Translator", action: openTranslator)
         }
         .onDisappear(perform: shortcutRecorder.stop)
+
+        TranslatorModelSection(settings: settings, apiKeys: apiKeys, state: state)
+
+        TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
     }
 
     private func shortcutRow(_ action: ShortcutAction, description: LocalizedStringKey? = nil) -> some View {

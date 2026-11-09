@@ -125,6 +125,20 @@ struct DictationSettingsPane: View {
 
         SpeechModelSection(settings: settings, controller: speechModelController, pro: pro, state: state)
 
+        SettingsSection("Sounds") {
+            ToggleRow(
+                "Play sounds",
+                isOn: $settings.settings.playsSounds,
+                description: "A soft chime when recording starts and stops.",
+            )
+            RowDivider()
+            ToggleRow(
+                "Lower other sounds while recording",
+                isOn: $settings.settings.lowersOtherSounds,
+                description: "Turns the Mac's volume down to a quarter while you speak, then back up.",
+            )
+        }
+
         EditKeySection(settings: settings, keyRecorder: keyRecorder)
     }
 }
