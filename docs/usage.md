@@ -10,6 +10,8 @@ Hold the dictation key, speak, and let go. The HUD grows out of the notch, or dr
 - A recording ends after 5 minutes, and Waft pastes what you said.
 - You can dictate again while Waft recognizes the previous text; the texts arrive in order.
 - With **Paste into the focused field** off in Settings › Writing, Waft only copies the text.
+- **Play sounds** in Settings › Dictation, on by default, plays a short chime when recording starts and another when it stops.
+- **Lower other sounds while recording** there, on by default, turns the Mac's volume down to a quarter once recording starts and restores it afterward, unless you changed it meanwhile.
 
 ### The dictation key
 
@@ -153,8 +155,6 @@ To hide the icon, turn off **Show in menu bar** in Settings › General. Dictati
 
 - **Open at login** in Settings › General starts Waft when you log in.
 - **App language** switches Waft's interface between 23 languages, or **Same as macOS**, once you click **Relaunch** next to it. Arabic and Hebrew lay it out from right to left.
-- **Play sounds**, on by default, plays a short chime when recording starts and another when it stops.
-- **Lower other sounds while recording**, on by default, turns the Mac's volume down to a quarter once recording starts and restores it afterward, unless you changed it meanwhile.
 
 ## Updates
 

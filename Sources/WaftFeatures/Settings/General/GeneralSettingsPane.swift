@@ -22,28 +22,14 @@ struct GeneralSettingsPane: View {
         }
         .motion(Motion.layout, value: settings.settings.showsMenuBarIcon)
 
-        SettingsSection("Sounds") {
-            ToggleRow(
-                "Play sounds",
-                isOn: $settings.settings.playsSounds,
-                description: "A soft chime when recording starts and stops.",
-            )
-            RowDivider()
-            ToggleRow(
-                "Lower other sounds while recording",
-                isOn: $settings.settings.lowersOtherSounds,
-                description: "Turns the Mac's volume down to a quarter while you speak, then back up.",
-            )
-        }
-
-        if updates.isAvailable {
-            UpdatesSection(updates: updates)
-        }
-
         SettingsSection("Permissions", subtitle: "Waft needs both to type for you.") {
             DividedForEach(Permission.allCases, id: \.self) { permission in
                 PermissionRow(permission: permission, monitor: permissions, description: .verbatim(permission.purpose))
             }
+        }
+
+        if updates.isAvailable {
+            UpdatesSection(updates: updates)
         }
     }
 }
