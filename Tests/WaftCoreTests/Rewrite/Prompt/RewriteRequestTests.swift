@@ -2,24 +2,27 @@ import Testing
 import WaftCore
 
 struct RewriteRequestTests {
-    @Test(arguments: [
-        (RewriteRequest.cleanup(String(repeating: "a", count: 10)), 512),
-        (.cleanup(String(repeating: "a", count: 256)), 512),
-        (.cleanup(String(repeating: "a", count: 1000)), 2000),
-        (.cleanup(String(repeating: "a", count: 2048)), 4096),
-        (.cleanup(String(repeating: "a", count: 5000)), 4096),
-        (.custom(String(repeating: "a", count: 10)), 1024),
-        (.custom(String(repeating: "a", count: 256)), 1024),
-        (.custom(String(repeating: "a", count: 1000)), 4000),
-        (.custom(String(repeating: "a", count: 2000)), 4096),
-        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 10)), 1024),
-        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 1000)), 2000),
-        (.edit(String(repeating: "x", count: 4000), selection: String(repeating: "a", count: 3000)), 4096),
-        (.text(String(repeating: "a", count: 10), task: .fix), 1024),
-        (.text(String(repeating: "a", count: 1000), task: .fix), 3000),
-        (.text(String(repeating: "a", count: 2000), task: .fix), 4096),
-    ])
-    func `budgets output tokens by the kind of request`(request: RewriteRequest, budget: Int) {
-        #expect(request.outputTokenBudget == budget)
+    @Test(arguments: [(10, 512), (256, 512), (1000, 2000), (2048, 4096), (5000, 4096)])
+    func `budgets twice the length of a cleanup within its limits`(length: Int, budget: Int) {
+        #expect(RewriteRequest.cleanup(text(length)).outputTokenBudget == budget)
+    }
+
+    @Test(arguments: [(10, 1024), (256, 1024), (1000, 4000), (2000, 4096)])
+    func `budgets four times the length of a custom mode's transcript within its limits`(length: Int, budget: Int) {
+        #expect(RewriteRequest.custom(text(length)).outputTokenBudget == budget)
+    }
+
+    @Test(arguments: [(10, 1024), (1000, 2000), (3000, 4096)])
+    func `budgets twice the length of an edit's selection within its limits`(length: Int, budget: Int) {
+        #expect(RewriteRequest.edit(text(4000), selection: text(length)).outputTokenBudget == budget)
+    }
+
+    @Test(arguments: [(10, 1024), (1000, 3000), (2000, 4096)])
+    func `budgets three times the length of a text task within its limits`(length: Int, budget: Int) {
+        #expect(RewriteRequest.text(text(length), task: .fix).outputTokenBudget == budget)
+    }
+
+    private func text(_ length: Int) -> String {
+        String(repeating: "a", count: length)
     }
 }
