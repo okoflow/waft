@@ -9,25 +9,6 @@ enum LightModeRules {
 
     private static let sentenceEnds: Set<Character> = [".", "!", "?", "。", "！", "？", "؟", "۔", "।", "॥"]
 
-    private static let closingMarks: Set<Character> = [
-        ",",
-        ".",
-        "…",
-        "，",
-        "。",
-        "、",
-        "！",
-        "？",
-        "：",
-        "；",
-        "،",
-        "؛",
-        "؟",
-        "۔",
-        "।",
-        "॥",
-    ]
-
     private static let highMarks: Set<Character> = ["!", "?", ";", ":"]
 
     private static let hyphens: Set<Character> = ["-", "‐"]
@@ -65,8 +46,6 @@ enum LightModeRules {
     }
 
     private static func tidiedSpacing(_ text: String, language: Language) -> String {
-        let noSpaceBefore = language.spacesBeforeHighPunctuation ? closingMarks : closingMarks.union(highMarks)
-
         var result = ""
         var hasPendingSpace = false
 
@@ -77,7 +56,7 @@ enum LightModeRules {
                 continue
             }
 
-            if hasPendingSpace, let last = result.last, last != "\n", character != "\n", !noSpaceBefore.contains(character) {
+            if hasPendingSpace, let last = result.last, takesSpace(between: last, and: character, in: language) {
                 result.append(" ")
             }
 
@@ -87,5 +66,13 @@ enum LightModeRules {
         }
 
         return result.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private static func takesSpace(between last: Character, and next: Character, in language: Language) -> Bool {
+        guard last != "\n", next != "\n" else { return false }
+        guard next.isPauseMark else { return true }
+        guard language.spacesBeforeHighPunctuation else { return false }
+
+        return highMarks.contains(next)
     }
 }
