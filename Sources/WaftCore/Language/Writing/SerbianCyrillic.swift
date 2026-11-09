@@ -140,15 +140,13 @@ enum SerbianCyrillic {
     private static func converted(_ word: String) -> String {
         guard isSerbianLatin(word) else { return word }
 
-        let lowercased = word.lowercased()
+        let prefix = separatePrefix(of: word)
 
-        let keepsLettersApart = separateLetterPrefixes.contains { lowercased.hasPrefix($0) }
-
-        var remaining = Substring(word)
-        var result = ""
+        var remaining = word.dropFirst(prefix.count)
+        var result = String(prefix.map { letters[$0, default: $0] })
 
         while let first = remaining.first {
-            if !keepsLettersApart, let digraph = digraphs.first(where: { remaining.hasPrefix($0.latin) }) {
+            if let digraph = digraphs.first(where: { remaining.hasPrefix($0.latin) }) {
                 result += digraph.cyrillic
                 remaining = remaining.dropFirst(digraph.latin.count)
 
@@ -160,6 +158,13 @@ enum SerbianCyrillic {
         }
 
         return result
+    }
+
+    private static func separatePrefix(of word: String) -> Substring {
+        let lowercased = word.lowercased()
+        guard let known = separateLetterPrefixes.first(where: lowercased.hasPrefix) else { return word.prefix(0) }
+
+        return word.prefix(known.count)
     }
 
     private static func isSerbianLatin(_ word: String) -> Bool {

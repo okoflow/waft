@@ -8,6 +8,7 @@ struct WritingVariantTests {
         (.latin, "Србија, љубав, џеп, ЉУБАВ и ђак", "Srbija, ljubav, džep, LJUBAV i đak"),
         (.cyrillic, "Srbija, ljubav, džep, LJUBAV i đak", "Србија, љубав, џеп, ЉУБАВ и ђак"),
         (.cyrillic, "Njujork i nadživeti", "Њујорк и надживети"),
+        (.cyrillic, "Konjugovanje i nadživljavanje", "Конјуговање и надживљавање"),
     ])
     func `converts the text into its script`(variant: WritingVariant, text: String, expected: String) {
         #expect(variant.converting(text) == expected)
