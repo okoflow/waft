@@ -74,10 +74,7 @@ struct DictationSettingsPane: View {
             }
         }
         .onAppear(perform: settings.refreshMicrophones)
-
-        SpeechModelSection(settings: settings, controller: speechModelController, pro: pro, state: state)
-
-        EditKeySection(settings: settings, keyRecorder: keyRecorder)
+        .onDisappear(perform: keyRecorder.stop)
 
         SettingsSection("Languages", subtitle: "Waft listens for these languages.") {
             ForEach(selection.languages, id: \.self) { language in
@@ -125,7 +122,10 @@ struct DictationSettingsPane: View {
             .disabled(addableLanguages.isEmpty)
         }
         .motion(Motion.layout, value: selection.languages)
-        .onDisappear(perform: keyRecorder.stop)
+
+        SpeechModelSection(settings: settings, controller: speechModelController, pro: pro, state: state)
+
+        EditKeySection(settings: settings, keyRecorder: keyRecorder)
     }
 }
 
