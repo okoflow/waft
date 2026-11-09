@@ -37,7 +37,7 @@ package final class CurrentKeyboardLayout: KeyboardLayout {
             UInt16(kUCKeyActionDisplay),
             modifierState,
             keyboardType,
-            OptionBits(kUCKeyTranslateNoDeadKeysBit),
+            OptionBits(kUCKeyTranslateNoDeadKeysMask),
             &deadKeyState,
             maximumLength,
             &length,
