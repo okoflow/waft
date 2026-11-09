@@ -12,25 +12,11 @@ struct SettingsSidebar: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Self.rowSpacing) {
-            ForEach(SidebarGroup.all, id: \.panes) { group in
-                if let title = group.title {
-                    Text(title)
-                        .font(.sidebarGroup)
-                        .foregroundStyle(Palette.secondaryText)
-                        .padding(.leading, Self.rowInset)
-                        .padding(.top, Self.groupSpacing)
-                        .accessibilityAddTraits(.isHeader)
-                }
-
-                ForEach(group.panes, id: \.self) { pane in
-                    SidebarRow(pane: pane, state: state)
-                }
-            }
+            ForEach(SidebarGroup.top, id: \.panes, content: rows)
 
             Spacer(minLength: 0)
 
-            SidebarRow(pane: .pro, state: state)
-            SidebarRow(pane: .about, state: state)
+            rows(of: SidebarGroup.bottom)
         }
         .padding(.horizontal, Metrics.rowPadding)
         .padding(.top, Self.top)
@@ -53,6 +39,22 @@ struct SettingsSidebar: View {
             case .down: state.move(by: 1)
             default: break
             }
+        }
+    }
+
+    @ViewBuilder
+    private func rows(of group: SidebarGroup) -> some View {
+        if let title = group.title {
+            Text(title)
+                .font(.sidebarGroup)
+                .foregroundStyle(Palette.secondaryText)
+                .padding(.leading, Self.rowInset)
+                .padding(.top, Self.groupSpacing)
+                .accessibilityAddTraits(.isHeader)
+        }
+
+        ForEach(group.panes, id: \.self) { pane in
+            SidebarRow(pane: pane, state: state)
         }
     }
 }

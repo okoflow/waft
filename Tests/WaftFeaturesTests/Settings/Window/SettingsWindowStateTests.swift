@@ -7,7 +7,7 @@ struct SettingsWindowStateTests {
         (SettingsPane.dictation, 1, SettingsPane.dictionary),
         (.overview, -1, .overview),
         (.about, 1, .about),
-        (.overview, 3, .writing),
+        (.overview, 3, .dictionary),
     ])
     func `moves the selection by an offset within the panes`(selected: SettingsPane, offset: Int, moved: SettingsPane) {
         let state = SettingsWindowState()
