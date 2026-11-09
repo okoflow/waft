@@ -19,17 +19,25 @@ final class OnboardingModel {
         }
     }
 
-    private(set) var step = Step.welcome
+    private(set) var step = Step.welcome {
+        didSet { visitedSteps.insert(step) }
+    }
+
     var practiceText = ""
 
     @ObservationIgnored var onFinish: (() -> Void)?
     @ObservationIgnored private(set) var advanceTask: Task<Void, Never>?
 
     private var isResuming = false
+    private var visitedSteps: Set<Step> = [.welcome]
 
     private let permissions: PermissionMonitor
     private let grantedPause: Duration
     private let waitForPause: (Duration) async -> Bool
+
+    var steps: [Step] {
+        Step.allCases.filter(lists)
+    }
 
     var canGoBack: Bool {
         previousStep != nil
@@ -88,6 +96,7 @@ final class OnboardingModel {
 
         guard let firstStep = Step.allCases.first(where: shows) else { return }
 
+        visitedSteps = []
         step = firstStep
     }
 
@@ -119,12 +128,19 @@ final class OnboardingModel {
     func reset() {
         cancelAdvance()
         step = .welcome
+        visitedSteps = [.welcome]
         practiceText = ""
         isResuming = false
     }
 
     private func isMissing(_ permission: Permission) -> Bool {
         !permissions.status(of: permission).isGranted
+    }
+
+    private func lists(_ step: Step) -> Bool {
+        guard !visitedSteps.contains(step) else { return true }
+
+        return shows(step)
     }
 
     private func shows(_ step: Step) -> Bool {
