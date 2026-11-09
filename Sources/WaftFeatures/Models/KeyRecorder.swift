@@ -9,9 +9,10 @@ final class KeyRecorder {
         case taken
     }
 
-    private(set) var purpose: RecordingPurpose?
     private(set) var rejection: Rejection?
     private(set) var rejections: [RecordingPurpose: Int] = [:]
+
+    private var purpose: RecordingPurpose?
 
     @ObservationIgnored private var monitor: Any?
     @ObservationIgnored private var takenKey: PushToTalkKey?
