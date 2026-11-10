@@ -114,6 +114,24 @@ struct ProModelTests {
         #expect(keyStore.value == Self.key)
     }
 
+    @Test
+    func `reports a key that cannot be removed until a removal works`() {
+        let keyStore = FakeValueStore(Self.key, failsDeleting: true)
+        let pro = model(keyStore: keyStore)
+
+        #expect(!pro.hasFailedRemoval)
+
+        pro.deactivate()
+
+        #expect(pro.hasFailedRemoval)
+
+        keyStore.failsDeleting = false
+        pro.deactivate()
+
+        #expect(!pro.hasFailedRemoval)
+        #expect(pro.license == nil)
+    }
+
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))
     func `starts no trial and hides the license section during the beta`() {
         let trialStore = FakeValueStore<Date>()

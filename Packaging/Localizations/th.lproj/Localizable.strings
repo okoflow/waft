@@ -429,6 +429,7 @@
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
+"Waft couldn't remove the license key." = "Waft ไม่สามารถเอาคีย์ใบอนุญาตออกได้";
 "Waft couldn't save the license key." = "Waft ไม่สามารถบันทึกคีย์ใบอนุญาตได้";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจาก Mac เครื่องนี้ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
 "Waft is listening" = "Waft กำลังฟัง";

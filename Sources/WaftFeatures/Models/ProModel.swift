@@ -19,6 +19,7 @@ final class ProModel {
 
     private(set) var license: License?
     private(set) var activationProblem: ActivationProblem?
+    private(set) var hasFailedRemoval = false
 
     var draft = "" {
         didSet { activationProblem = nil }
@@ -117,7 +118,8 @@ final class ProModel {
     }
 
     func deactivate() {
-        guard keyStore.remove() else { return }
+        hasFailedRemoval = !keyStore.remove()
+        guard !hasFailedRemoval else { return }
 
         license = nil
 

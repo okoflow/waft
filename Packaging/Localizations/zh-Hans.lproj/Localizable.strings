@@ -429,6 +429,7 @@
 "Waft can't read this file." = "Waft无法读取此文件。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft无法使用麦克风。请在“设置”›“通用”中允许。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft无法读取已保存的历史记录，已保留一份副本。“清除历史记录”会同时删除两者。";
+"Waft couldn't remove the license key." = "Waft无法移除许可证密钥。";
 "Waft couldn't save the license key." = "Waft无法存储许可证密钥。";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft会将其从此Mac上删除。在你添加密钥之前，AI模式将使用“轻度”模式。";
 "Waft is listening" = "Waft正在聆听";

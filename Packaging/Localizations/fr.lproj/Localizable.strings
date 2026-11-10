@@ -429,6 +429,7 @@
 "Waft can't read this file." = "Waft ne peut pas lire ce fichier.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ne peut pas utiliser le micro. Autorisez-le dans Réglages › Général.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
+"Waft couldn't remove the license key." = "Waft n’a pas pu supprimer la clé de licence.";
 "Waft couldn't save the license key." = "Waft n’a pas pu enregistrer la clé de licence.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft la supprime de ce Mac. Les modes IA utilisent le mode Léger jusqu’à ce que vous ajoutiez une clé.";
 "Waft is listening" = "Waft écoute";

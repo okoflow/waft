@@ -429,6 +429,7 @@
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
+"Waft couldn't remove the license key." = "לא ניתן היה להסיר את מפתח הרישיון.";
 "Waft couldn't save the license key." = "לא ניתן היה לשמור את מפתח הרישיון.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "היישום Waft ימחק אותו מ-Mac זה. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
