@@ -4,6 +4,26 @@ import WaftCore
 @preconcurrency import WhisperKit
 
 enum WhisperPieces {
+    struct Recognition<Value> {
+        let results: [[Value]]
+        let failure: (any Error)?
+
+        var isIncomplete: Bool {
+            failure != nil
+        }
+
+        init(results: [[Value]], failure: (any Error)? = nil) {
+            self.results = results
+            self.failure = failure
+        }
+
+        func textOrFailure(_ accepted: String?) throws -> String? {
+            guard accepted == nil, let failure else { return accepted }
+
+            throw failure
+        }
+    }
+
     private static let silenceFrameDuration = 0.1
     private static let silenceMargin: Float = 2
     private static let quietestSilenceThreshold: Float = 0.001
@@ -34,7 +54,7 @@ enum WhisperPieces {
         _ pieces: [[Float]],
         with options: DecodingOptions,
         on whisper: WhisperKit,
-    ) async throws -> [[TranscriptionResult]] {
+    ) async throws -> Recognition<TranscriptionResult> {
         let outcomes = await whisper.transcribeWithOptions(
             audioArrays: pieces,
             decodeOptionsArray: Array(repeating: options, count: pieces.count),
@@ -43,14 +63,14 @@ enum WhisperPieces {
         return try recognized(in: outcomes)
     }
 
-    static func recognized<Value>(in outcomes: [Result<[Value], any Error>]) throws -> [[Value]] {
+    static func recognized<Value>(in outcomes: [Result<[Value], any Error>]) throws -> Recognition<Value> {
         let failures = outcomes.compactMap { outcome -> (any Error)? in
             guard case let .failure(error) = outcome else { return nil }
 
             return error
         }
 
-        guard let firstFailure = failures.first else { return try outcomes.map { try $0.get() } }
+        guard let firstFailure = failures.first else { return try Recognition(results: outcomes.map { try $0.get() }) }
         guard failures.count < outcomes.count else { throw firstFailure }
 
         Logger.speech.error(
@@ -60,11 +80,13 @@ enum WhisperPieces {
             """,
         )
 
-        return outcomes.map { outcome in
+        let results = outcomes.map { outcome -> [Value] in
             guard case let .success(results) = outcome else { return [] }
 
             return results
         }
+
+        return Recognition(results: results, failure: firstFailure)
     }
 
     static func log(

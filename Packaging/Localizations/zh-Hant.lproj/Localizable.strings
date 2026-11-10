@@ -67,6 +67,7 @@
 "Checking…" = "正在檢查⋯";
 "Choose File…" = "選擇檔案⋯";
 "Choose Languages…" = "選擇語言⋯";
+"Choose Retry Last Dictation in the Waft menu." = "請在Waft選單中選擇「重試上次聽寫」。";
 "Choose" = "選擇";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "以你自己的金鑰使用Claude或OpenAI，或使用Mac上的本機模型。";
 "Clean and Formal" = "「潤飾」和「正式」模式";
@@ -227,6 +228,7 @@
 "Open the translator" = "打開翻譯工具";
 "Output" = "輸出";
 "Overview" = "概覽";
+"Part of the dictation is missing" = "部分聽寫內容遺失";
 "Paste into the focused field" = "貼到目前的文字欄位";
 "Pasted" = "已貼上";
 "Permissions" = "權限";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft無法讀取此檔案。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft無法使用麥克風。請在「設定」›「一般」中允許。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft無法讀取已儲存的記錄，已保留一份副本。「清除記錄」會同時刪除兩者。";
+"Waft couldn't remove the license key." = "Waft無法移除授權碼。";
 "Waft couldn't save the license key." = "Waft無法儲存授權碼。";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft會將其從此Mac上刪除。在你加入金鑰之前，AI模式會使用「輕度」模式。";
 "Waft is listening" = "Waft正在聆聽";

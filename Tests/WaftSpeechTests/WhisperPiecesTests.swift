@@ -31,15 +31,41 @@ struct WhisperPiecesTests {
             .success(["there", "friend"]),
         ]
 
-        #expect(try WhisperPieces.recognized(in: outcomes) == [["Hello"], [], ["there", "friend"]])
+        let recognition = try WhisperPieces.recognized(in: outcomes)
+
+        #expect(recognition.results == [["Hello"], [], ["there", "friend"]])
+        #expect(recognition.isIncomplete)
     }
 
     @Test
     func `keeps every piece when none failed`() throws {
         let outcomes: [Result<[String], any Error>] = [.success(["Hello"]), .success([])]
 
-        #expect(try WhisperPieces.recognized(in: outcomes) == [["Hello"], []])
-        #expect(try WhisperPieces.recognized(in: [Result<[String], any Error>]()).isEmpty)
+        let recognition = try WhisperPieces.recognized(in: outcomes)
+
+        #expect(recognition.results == [["Hello"], []])
+        #expect(!recognition.isIncomplete)
+        #expect(try WhisperPieces.recognized(in: [Result<[String], any Error>]()).results.isEmpty)
+    }
+
+    @Test
+    func `reports the failure of a piece when the other pieces gave no text`() throws {
+        let outcomes: [Result<[String], any Error>] = [.success([]), .failure(CocoaError(.coderInvalidValue))]
+
+        let recognition = try WhisperPieces.recognized(in: outcomes)
+
+        #expect(try recognition.textOrFailure("Hello") == "Hello")
+
+        #expect(throws: CocoaError(.coderInvalidValue)) {
+            try recognition.textOrFailure(nil)
+        }
+    }
+
+    @Test(arguments: ["Hello", nil])
+    func `passes the accepted text on when no piece failed`(text: String?) throws {
+        let recognition = WhisperPieces.Recognition(results: [["Hello"]])
+
+        #expect(try recognition.textOrFailure(text) == text)
     }
 
     @Test

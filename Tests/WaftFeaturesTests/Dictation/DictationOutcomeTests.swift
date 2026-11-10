@@ -8,6 +8,7 @@ struct DictationOutcomeTests {
     @Test(arguments: [
         (DictationOutcome.noSpeech, HUDMessage.Kind.information, "Didn't catch that", String?.none),
         (.failed("The model crashed."), .warning, "Transcription failed", "The model crashed."),
+        (.partFailed, .warning, "Part of the dictation is missing", "Choose Retry Last Dictation in the Waft menu."),
         (.editFailed("You're offline"), .warning, "Couldn't edit the text", "You're offline"),
     ])
     func `maps each failure to its HUD message`(

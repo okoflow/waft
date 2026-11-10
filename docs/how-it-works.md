@@ -13,7 +13,7 @@ A press shorter than 0.3 seconds is a tap, and with **Hold or double-tap**, a se
 Waft skips recordings without speech, such as silence, key clicks, or steady noise. The rest goes to the speech model you chose, run on Core ML by [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
 - Whisper gets your dictionary terms as a hint, as many as fit in 200 characters.
-- Waft splits a long recording at pauses and recognizes it piece by piece. A piece that fails leaves a gap, and the dictation fails only when every piece does.
+- Waft splits a long recording at pauses and recognizes it piece by piece. A piece that fails leaves a gap: Waft delivers the rest, shows "Part of the dictation is missing", and keeps the recording for **Retry Last Dictation** in the menu. The dictation fails only when the other pieces give no text.
 - A conversion into your writing system leaves your dictionary terms as you wrote them. Serbian converted from Latin to Cyrillic also keeps in Latin letters words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API.
 - Waft drops segments that Whisper is unsure of, that repeat themselves, or that hold only a tag such as `[music]` or a stock phrase such as "Thanks for watching", and keeps the rest of the dictation.
 

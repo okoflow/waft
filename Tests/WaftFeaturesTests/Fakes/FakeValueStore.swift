@@ -8,18 +8,23 @@ final nonisolated class FakeValueStore<Value: Sendable>: ValueStore {
     private let stored: OSAllocatedUnfairLock<Value?>
     private let isBroken: Bool
     private let failsSaving: Bool
-    private let failsDeleting: Bool
+    private let deletionFails: OSAllocatedUnfairLock<Bool>
 
     var value: Value? {
         get { stored.withLock { $0 } }
         set { stored.withLock { $0 = newValue } }
     }
 
+    var failsDeleting: Bool {
+        get { deletionFails.withLock { $0 } }
+        set { deletionFails.withLock { $0 = newValue } }
+    }
+
     init(_ value: Value? = nil, isBroken: Bool = false, failsSaving: Bool = false, failsDeleting: Bool = false) {
         stored = OSAllocatedUnfairLock(initialState: value)
         self.isBroken = isBroken
         self.failsSaving = failsSaving
-        self.failsDeleting = failsDeleting
+        deletionFails = OSAllocatedUnfairLock(initialState: failsDeleting)
     }
 
     func load() throws -> Value? {

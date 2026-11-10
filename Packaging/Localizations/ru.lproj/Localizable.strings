@@ -67,6 +67,7 @@
 "Checking…" = "Проверка…";
 "Choose File…" = "Выбрать файл…";
 "Choose Languages…" = "Выбрать языки…";
+"Choose Retry Last Dictation in the Waft menu." = "Выберите «Повторить последнюю диктовку» в меню Waft.";
 "Choose" = "Выбрать";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude или OpenAI с вашим ключом либо локальная модель на вашем Mac.";
 "Clean and Formal" = "«Чистовой» и «Деловой»";
@@ -227,6 +228,7 @@
 "Open the translator" = "Открыть переводчик";
 "Output" = "Вставка";
 "Overview" = "Обзор";
+"Part of the dictation is missing" = "Часть диктовки пропущена";
 "Paste into the focused field" = "Вставлять в активное поле";
 "Pasted" = "Вставлено";
 "Permissions" = "Разрешения";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft не может прочитать этот файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не может использовать микрофон. Разрешите доступ в Настройках › Основные.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не смог прочитать сохранённую историю и оставил её копию. «Очистить историю» удалит обе.";
+"Waft couldn't remove the license key." = "Не удалось удалить лицензионный ключ.";
 "Waft couldn't save the license key." = "Не удалось сохранить лицензионный ключ.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft удалит его с этого Mac. Пока вы не добавите ключ, вместо ИИ-режимов применяется режим «Лёгкий».";
 "Waft is listening" = "Waft слушает";
