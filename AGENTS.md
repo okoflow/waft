@@ -15,6 +15,7 @@ The Swift package splits into `WaftCore` (domain and every interface between mod
 ## Rules that are easy to miss
 
 - No comments in code ([Naming and files](CONTRIBUTING.md#naming-and-files)), and no `??` or `try?` that hides a failure ([Control flow](CONTRIBUTING.md#control-flow)).
+- Blank lines separate the steps of a function and every block or closure of several lines, which no formatter adds for you: [Layout](CONTRIBUTING.md#layout).
 - No `@State`, `@Entry`, `@Animatable`, or `#Preview`, and `package import` only where a signature needs it: [Platform](CONTRIBUTING.md#platform).
 - Every user-facing string goes into every table under `Packaging/Localizations`, and Swift file names stay unique across `Sources`, since `make strings` finds strings by file name: [Text and translations](CONTRIBUTING.md#text-and-translations).
 - Never log dictated text, audio, or clipboard contents: [Invariants](docs/architecture.md#invariants).
