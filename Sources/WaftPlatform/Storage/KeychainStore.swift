@@ -2,7 +2,7 @@ import Foundation
 import Security
 import WaftCore
 
-struct KeychainStore: ValueStore {
+struct KeychainStore: LegacySecretStore {
     private enum KeychainError: CustomNSError {
         case unexpectedStatus(OSStatus)
         case unreadableItem
@@ -62,31 +62,8 @@ struct KeychainStore: ValueStore {
         return SecItemCopyMatching(search as CFDictionary, nil) == errSecSuccess
     }
 
-    func save(_ value: String) throws {
-        let data = Data(value.utf8)
-        let status = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
-
-        switch status {
-        case errSecSuccess:
-            break
-        case errSecItemNotFound:
-            try add(data)
-        default:
-            throw KeychainError.unexpectedStatus(status)
-        }
-    }
-
     func delete() throws {
         let status = SecItemDelete(query as CFDictionary)
         guard [errSecSuccess, errSecItemNotFound].contains(status) else { throw KeychainError.unexpectedStatus(status) }
-    }
-
-    private func add(_ data: Data) throws {
-        var item = query
-        item[kSecValueData as String] = data
-        item[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-
-        let status = SecItemAdd(item as CFDictionary, nil)
-        guard status == errSecSuccess else { throw KeychainError.unexpectedStatus(status) }
     }
 }
