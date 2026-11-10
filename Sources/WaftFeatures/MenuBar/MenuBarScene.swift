@@ -21,7 +21,8 @@ package struct MenuBarScene: Scene {
         MenuBarExtra(isInserted: isInserted) {
             MenuContent(model: model)
         } label: {
-            MenuBarIcon()
+            Image(nsImage: WaftMark.image)
+                .accessibilityLabel("Waft")
         }
         .menuBarExtraStyle(.menu)
     }
