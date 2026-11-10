@@ -115,7 +115,7 @@ struct DictationQueueTests {
 
     @Test
     func `transcribes in the job's forced language with the dictionary's prompt terms`() async {
-        let transcriber = FakeTranscriber(.success(.spoken("Hallo Welt", in: .german)))
+        let transcriber = FakeTranscriber(.success(.spoken("Hallo Welt")))
         let vocabulary = Vocabulary(terms: [Vocabulary.Term(term: "Okoflow", spoken: ["oko flow"])], snippets: [])
         let queue = queue(transcriber)
 

@@ -202,9 +202,8 @@ struct TranslatorModelTests {
 extension TranslatorModelTests {
     private func model(
         _ rewriter: FakeTextRewriter,
-        detects language: Language? = nil,
+        detects language: Language,
         pro: ProModel = .unlicensed(),
-        typingPause: Duration = .zero,
     ) -> TranslatorModel {
         .translating(
             with: rewriter,
@@ -212,7 +211,6 @@ extension TranslatorModelTests {
             detector: FakeLanguageDetector(language: language),
             pro: pro,
             clipboard: clipboard,
-            typingPause: typingPause,
         )
     }
 }
