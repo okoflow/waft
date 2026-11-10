@@ -27,7 +27,7 @@ The dictation key is <kbd>right ⌥</kbd>. To change it, click **Dictation key**
 
 ![Settings with the languages](../.github/screenshots/languages.jpg)
 
-Waft understands 45 languages. Add the ones you speak with **Add Language** in Settings › Dictation, and Waft detects which you speak each time; fewer languages detect faster and more accurately. To skip detection, choose a **Spoken language** there or in the **Language** menu.
+Waft understands 45 languages. Add the ones you speak with **Add Language** in Settings › Dictation, and Waft detects which one you speak each time; fewer languages detect faster and more accurately. To skip detection, choose a **Spoken language** there or in the **Language** menu.
 
 - Languages that sound alike get mixed up when enabled together, such as Russian and Ukrainian, Danish and Norwegian, Indonesian and Malay, or Serbian, Croatian, and Bosnian. Choose the one you speak as the **Spoken language**.
 - Chinese and Serbian have a **Writing system** in Settings › Dictation: Simplified or Traditional characters, and Latin or Cyrillic letters. Waft converts what you dictate, transcribe, or translate into that language into it, but not what your own modes, an edit by voice, or a fix of selected text return.
@@ -72,7 +72,9 @@ Choose the **Provider** in Settings › AI Models, Claude by default.
 
 ## Editing by voice
 
-Set the **Editing key** in Settings › Dictation; there's none by default, and it always works by holding. Select text, hold the key, say what to change, such as "make it shorter" or "translate into German", and let go. The AI model rewrites the selection and Waft pastes the result over it. Waft reads the selection through Accessibility, so an edit doesn't work in an app that doesn't expose it there, such as Chrome or an Electron app. A failed edit changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
+Set the **Editing key** in Settings › Dictation; there's none by default, and it always works by holding. Select text, hold the key, say what to change, such as "make it shorter" or "translate into German", and let go. The AI model rewrites the selection, and Waft pastes the result over it.
+
+Waft reads the selection through Accessibility, so an edit doesn't work in an app that doesn't expose it there, such as Chrome or an Electron app. A failed edit changes nothing; [The text isn't pasted](troubleshooting.md#the-text-isnt-pasted) lists what the HUD says then.
 
 ## Translator
 
@@ -122,7 +124,7 @@ Settings › Dictionary holds two lists:
 ## History and statistics
 
 - Settings › Overview shows your statistics for the last 7 days and of all time, with the time saved counted against typing at 40 words a minute. **Reset Statistics…** sets the counts to zero.
-- Settings › History lists your dictations with the time, mode, and app. **Copy** next to one copies it, and **Copy Original Transcript** in its Control-click menu copies what Whisper heard before a mode rewrote it. They stay for a month and up to 1,000 unless you change **Keep dictations for** or **Keep at most**. Turn off **Keep history** to stop saving; **Clear History…** deletes them all.
+- Settings › History lists your dictations with the time, mode, and app. **Copy** next to one copies it, and **Copy Original Transcript** in its Control-click menu copies what Whisper heard before a mode rewrote it. They stay for a month and up to 1,000 unless you change **Keep dictations for** or **Keep at most**. To stop saving, turn off **Keep history**; **Clear History…** deletes them all.
 
 ## Shortcuts
 
@@ -151,7 +153,7 @@ To hide the icon, turn off **Show in menu bar** in Settings › General. Dictati
 
 ## Updates
 
-Waft checks for updates once a day and asks before installing one. Turn off **Check for updates automatically** in Settings › General to check only with **Check Now** there or **Check for Updates…** in the menu. Waft installs only an update signed with the project's key.
+Waft checks for updates once a day and asks before installing one. To check only with **Check Now** in Settings › General or **Check for Updates…** in the menu, turn off **Check for updates automatically** there. Waft installs only an update signed with the project's key.
 
 ## Waft+
 

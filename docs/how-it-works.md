@@ -15,13 +15,12 @@ flowchart LR
 
 Waft only listens to the keyboard and never swallows a key press, so the dictation key keeps working everywhere else. Pressing it starts the microphone set as **Microphone** in Settings › Dictation, or the system default when that one isn't connected, and notes the focused app and text field, where the text goes later. The HUD never takes focus.
 
-[The dictation key](usage.md#the-dictation-key) says what **How to start** does. The timings:
+[The dictation key](usage.md#the-dictation-key) says what **How to start** does and when a recording ends. The timings behind it:
 
 | Timing | Value | Effect |
 | --- | --- | --- |
 | Minimum hold | 0.3 s | A shorter press is a tap |
 | Double-tap window | 0.4 s | With **Hold or double-tap**, a second tap within it starts hands-free dictation |
-| Maximum recording | 300 s | Waft ends the recording and pastes it |
 | HUD delay | 0.3 s | The HUD appears after it |
 
 ## Recognition
@@ -75,7 +74,12 @@ Waft pastes through the clipboard rather than typing key by key:
 
 So text that Waft recognized is always either pasted or on the clipboard. If the microphone stops in the middle of a dictation, such as when headphones disconnect, Waft recognizes what it recorded until then. If you quit Waft while it works on a dictation, it finishes that one first, for up to 20 seconds.
 
-Waft puts a space before the text unless it sees no character before the cursor, that character is a space, a line break, an opening bracket, a quote, or a slash, or the text on either side of the cursor is Chinese or Japanese.
+Waft puts a space before the text, except when:
+
+- It sees no character before the cursor.
+- That character is a space, a line break, an opening bracket, a quote, or a slash.
+- That character or the start of the text is Chinese or Japanese.
+- The text starts with a line break.
 
 ## The speech model
 

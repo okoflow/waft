@@ -1,6 +1,6 @@
 # Troubleshooting
 
-This page says what to do when something doesn't work, starting from what the HUD or the first line of the menu says. [Usage](usage.md) describes the settings named here, and [Privacy](privacy.md) the files Waft keeps. Quoted text is what the HUD shows.
+This page says what to do when something doesn't work, starting from what the first line of the menu or the HUD, quoted here, says. [Usage](usage.md) describes the settings named here, and [Privacy](privacy.md) the files Waft keeps.
 
 ## macOS won't open Waft
 
@@ -31,7 +31,7 @@ When macOS asks for your password because Waft wants to use confidential informa
 | Symptom | Cause and fix |
 | --- | --- |
 | The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
-| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> and "Not pasted into a password field" | The focused field is a password field, or Waft can't read it and its app holds secure keyboard input. The text is on the clipboard: press <kbd>⌘</kbd><kbd>V</kbd> where you want it |
+| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> and "Not pasted into a password field" | The focused field is a password field, as [Pasting](how-it-works.md#pasting) defines one. The text is on the clipboard: press <kbd>⌘</kbd><kbd>V</kbd> where you want it |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
 | "Recording stopped early" | The microphone stopped in the middle of a dictation, and the line below says why. Waft still recognizes and delivers what it recorded until then |

@@ -56,6 +56,8 @@ An older version kept the keys in the login keychain under the service `com.okof
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, file transcriptions, and text that Waft kept out of a password field stay out of the history and the statistics.
 
+## The clipboard
+
 Waft marks the text it puts on the clipboard as transient and concealed, so clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org) conventions don't store it, and Universal Clipboard skips it.
 
 When the [shortcuts on selected text](usage.md#selected-text) copy the selection with <kbd>⌘</kbd><kbd>C</kbd>, the app, not Waft, puts it on the clipboard, so a clipboard manager may store it.
