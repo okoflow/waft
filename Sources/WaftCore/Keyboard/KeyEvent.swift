@@ -8,7 +8,7 @@ package struct KeyEvent: Sendable {
         case monitorDisabled
     }
 
-    private static let escapeKeyCode: Int64 = 53
+    package static let escapeKeyCode: Int64 = 53
 
     package let kind: Kind
     package let keyCode: Int64

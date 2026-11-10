@@ -33,6 +33,13 @@ struct PushToTalkKeyTests {
         #expect(key.shortTitle == shortTitle)
     }
 
+    @Test
+    func `names every modifier key with its symbol`() {
+        let keys = PushToTalkKey.modifierKeys + [.function]
+
+        #expect(keys.allSatisfy { $0.title.hasSuffix(")") })
+    }
+
     @Test(arguments: [
         (PushToTalkKey?.some(.rightOption), KeyEvent.rightOptionFlag | optionMask, true),
         (.rightOption, leftOptionFlag, false),

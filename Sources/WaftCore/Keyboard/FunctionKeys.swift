@@ -21,4 +21,10 @@ enum FunctionKeys {
         80: 19,
         90: 20,
     ]
+
+    static func title(forKeyCode keyCode: Int64) -> String? {
+        guard let number = numbers[keyCode] else { return nil }
+
+        return "F\(number)"
+    }
 }
