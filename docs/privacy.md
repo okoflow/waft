@@ -18,7 +18,7 @@ Waft connects to these services, and only for these reasons:
 | Your local server | Settings › AI Models lists its models, and **Detect** looks for one on ports 11434, 1234, 8080, and 1337 of this Mac | Requests for its list of models, sent only to the address you set or those ports |
 | Waft's usage service at `api.waft.okoflow.com` | When Waft starts and every six hours while it runs, only after you agree to share usage data | The counts that [Usage data](#usage-data) lists |
 
-Raw and Light never use the network, and the translator detects languages on your Mac. Waft asks OpenAI not to store the response (`store: false`). Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's [API data controls](https://developers.openai.com/api/docs/guides/your-data) describe how each handles the text.
+Raw and Light never use the network, and the translator detects languages on your Mac. Requests to the AI provider, your local server, and the usage service name their sender only as `Waft` and their language as `en`, not your macOS version or the languages of your Mac. Waft asks OpenAI not to store the response (`store: false`). Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's [API data controls](https://developers.openai.com/api/docs/guides/your-data) describe how each handles the text.
 
 ## Usage data
 
