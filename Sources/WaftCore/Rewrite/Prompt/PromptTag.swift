@@ -3,6 +3,7 @@ enum PromptTag: String {
     case instruction
     case instructions
     case text
+    case reply
 
     var open: String {
         "<\(rawValue)>"

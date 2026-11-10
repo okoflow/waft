@@ -151,6 +151,24 @@ struct RewritePromptTests {
         let instructions = RewritePrompt.defaultTextInstructions(for: kind)
 
         #expect(instructions.hasPrefix(role))
-        #expect(!instructions.contains("<text>"))
+        #expect(!instructions.contains("<text> tags"))
+    }
+
+    @Test(arguments: [
+        (RewritePrompt.defaultInstructions(for: .clean), "<transcript>", "<text>"),
+        (RewritePrompt.defaultInstructions(for: .formal), "<transcript>", "<text>"),
+        (RewritePrompt.defaultInstructions(for: .translate), "<transcript>", "<text>"),
+        (RewritePrompt.defaultTextInstructions(for: .fix), "<text>", "<transcript>"),
+        (RewritePrompt.defaultTextInstructions(for: .translate), "<text>", "<transcript>"),
+    ])
+    func `gives the examples of the default instructions in the tag of their request`(
+        instructions: String,
+        tag: String,
+        otherTag: String,
+    ) {
+        #expect(instructions.contains("<examples>\n<example>\n"))
+        #expect(instructions.hasSuffix("</reply>\n</example>\n</examples>"))
+        #expect(instructions.contains(tag))
+        #expect(!instructions.contains(otherTag))
     }
 }

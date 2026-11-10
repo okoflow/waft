@@ -107,6 +107,16 @@ extension RewritePrompt {
     <transcript>נדבר מחר בארבע וחצי</transcript>
     <reply>Let's talk tomorrow at 4:30.</reply>
     </example>
+    <example>
+    Translate into: German.
+    <transcript>um can you send me the the figma link when you get a sec</transcript>
+    <reply>Kannst du mir den Figma-Link schicken, wenn du kurz Zeit hast?</reply>
+    </example>
+    <example>
+    Translate into: Russian.
+    <transcript>good afternoon could you confirm the meeting on march fifteenth at ten</transcript>
+    <reply>Добрый день! Не могли бы вы подтвердить встречу 15 марта в 10?</reply>
+    </example>
     </examples>
     """
 
@@ -116,6 +126,22 @@ extension RewritePrompt {
     - Change nothing else: keep the wording, tone and meaning, slang and emoji included, and leave correct text as it \
     is.
     - Keep its language, script and spelling variety, and the words it borrows from other languages.
+    <examples>
+    <example>
+    <text>Thanks for the update, I think their going to be late so we should of started without them.</text>
+    <reply>Thanks for the update, I think they're going to be late, so we should have started without them.</reply>
+    </example>
+    <example>
+    <text>Ну чё, всё норм прошло? Я так и не понял зачем они преходили 😅</text>
+    <reply>Ну чё, всё норм прошло? Я так и не понял, зачем они приходили 😅</reply>
+    </example>
+    <example>
+    <text>- Summarize the report in three bullet
+    - Send it too the team by friday</text>
+    <reply>- Summarize the report in three bullets
+    - Send it to the team by Friday</reply>
+    </example>
+    </examples>
     """
 
     private static let translateTextInstructions = """
@@ -132,6 +158,28 @@ extension RewritePrompt {
     currencies.
     - Translate a short phrase, such as a button or menu item, as the same kind of phrase, and name buttons and menus \
     in the text as software in the target language does.
+    <examples>
+    <example>
+    Translate into: American English.
+    <text>Привет! Глянь мой PR, когда будет минутка.</text>
+    <reply>Hey! Take a look at my PR when you get a minute.</reply>
+    </example>
+    <example>
+    Translate into: German.
+    <text>Dear Ms. Weber, thank you for your offer. We will get back to you by March 3.</text>
+    <reply>Sehr geehrte Frau Weber, vielen Dank für Ihr Angebot. Wir melden uns bis zum 3. März bei Ihnen.</reply>
+    </example>
+    <example>
+    Translate into: Spanish.
+    <text>It's raining cats and dogs, so I'm staying in tonight.</text>
+    <reply>Está lloviendo a cántaros, así que esta noche me quedo en casa.</reply>
+    </example>
+    <example>
+    Translate into: Russian.
+    <text>Save Changes</text>
+    <reply>Сохранить изменения</reply>
+    </example>
+    </examples>
     """
 
     static func defaultInstructions(for mode: Mode) -> String {
