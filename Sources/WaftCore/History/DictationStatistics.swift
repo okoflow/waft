@@ -18,6 +18,16 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
             return Int((Double(words) / (seconds / 60)).rounded())
         }
 
+        package init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            words = container.decode(.words, default: words)
+            dictations = container.decode(.dictations, default: dictations)
+            seconds = container.decode(.seconds, default: seconds)
+        }
+
+        init() {}
+
         fileprivate static func + (left: Day, right: Day) -> Day {
             var sum = left
 
@@ -36,6 +46,12 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
     }
 
     package init() {}
+
+    package init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        days = container.decodeValidValues(.days)
+    }
 
     package mutating func record(words: Int, seconds: Double, on date: Date, calendar: Calendar = .current) {
         let key = date.dayKey(in: calendar)

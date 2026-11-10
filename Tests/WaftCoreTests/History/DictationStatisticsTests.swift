@@ -107,6 +107,29 @@ struct DictationStatisticsTests {
         #expect(day.seconds == 6.5)
     }
 
+    @Test
+    func `decodes the readable days and counts a missing number as zero`() throws {
+        let json = #"""
+        {"days":{"2026-10-11":{"words":7,"dictations":1},"2026-10-12":"bogus","2026-10-13":{"words":"many","seconds":2.5}},
+         "added":true}
+        """#
+
+        let statistics = try JSONDecoder().decode(DictationStatistics.self, from: Data(json.utf8))
+
+        let partial = try #require(statistics.days["2026-10-13"])
+
+        #expect(statistics.days.keys.sorted() == ["2026-10-11", "2026-10-13"])
+        #expect(statistics.allTime.words == 7)
+        #expect(statistics.allTime.dictations == 1)
+        #expect(partial.words == 0)
+        #expect(partial.seconds == 2.5)
+    }
+
+    @Test(arguments: [#"{}"#, #"{"days":"bogus"}"#])
+    func `decodes a file without readable days as empty`(json: String) throws {
+        #expect(try JSONDecoder().decode(DictationStatistics.self, from: Data(json.utf8)) == DictationStatistics())
+    }
+
     private func date(_ year: Int, _ month: Int, _ day: Int, hour: Int = 0) throws -> Date {
         try #require(Calendar.gmt.date(from: DateComponents(year: year, month: month, day: day, hour: hour)))
     }
