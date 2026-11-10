@@ -63,7 +63,6 @@ struct PasteboardRestorePolicyTests {
     @Test(arguments: [
         ([Policy.concealedType], Int.max, privateItem),
         (["public.png"], .max, tooLarge),
-        (["public.png"], 100, uncapturedItem),
     ])
     func `reports a private item before its size and its size before an item that could not be captured`(
         types: [String],

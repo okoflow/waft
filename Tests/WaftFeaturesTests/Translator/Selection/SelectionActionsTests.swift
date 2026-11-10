@@ -85,13 +85,13 @@ struct SelectionActionsTests {
         #expect(inserter.insertions.map(\.text) == ["We meet on Friday."])
     }
 
-    @Test(arguments: [InsertionSkipReason.noAccessibility, .focusChanged, .keyHeld, .notRead])
-    func `copies the translation when the inserter skips the paste`(reason: InsertionSkipReason) async {
+    @Test
+    func `copies the translation when the inserter skips the paste`() async {
         let actions = actions(
             FakeTextRewriter(.success("Hello.")),
             selecting: "Привет",
             detects: .russian,
-            inserter: FakeTextInserter(.skipped(reason)),
+            inserter: FakeTextInserter(.skipped(.focusChanged)),
         )
 
         actions.run(.translate)

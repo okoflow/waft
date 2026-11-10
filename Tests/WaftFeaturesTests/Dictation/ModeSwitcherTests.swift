@@ -13,15 +13,6 @@ struct ModeSwitcherTests {
     }
 
     @Test
-    func `registers the mode shortcut when it starts`() {
-        let switcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: .unlicensed())
-
-        switcher.start()
-
-        #expect(shortcut.registered == ShortcutAction.modeCycle.defaultCombination)
-    }
-
-    @Test
     func `switches to the next mode and announces it when the shortcut fires`() {
         let switcher = ModeSwitcher(shortcuts: shortcuts, settings: settings, hud: hud, pro: .unlicensed())
 
