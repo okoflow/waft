@@ -6,6 +6,7 @@ import WaftCore
 @MainActor
 struct PasteboardSnapshotTests {
     private static let privateType = NSPasteboard.PasteboardType("com.example.private")
+    private static let promiseType = NSPasteboard.PasteboardType("com.apple.pasteboard.promised-file-url")
 
     private static func item(_ contents: [NSPasteboard.PasteboardType: Data]) -> NSPasteboardItem {
         let item = NSPasteboardItem()
@@ -18,7 +19,7 @@ struct PasteboardSnapshotTests {
     }
 
     @Test
-    func `restores the restorable types of every item and drops the rest`() throws {
+    func `restores every type of every item`() throws {
         try NSPasteboard.withTemporary { pasteboard in
             pasteboard.clearContents()
             pasteboard.writeObjects([
@@ -34,9 +35,95 @@ struct PasteboardSnapshotTests {
 
             let items = try #require(pasteboard.pasteboardItems)
 
-            #expect(items.map { Set($0.types) } == [[.string], [.html]])
-            #expect(items.map { $0.string(forType: .string) } == ["Hello.", nil])
-            #expect(items.map { $0.string(forType: .html) } == [nil, "<p>Hi.</p>"])
+            #expect(snapshot.plan == .restore)
+            #expect(items.map { Set($0.types) } == [[.string, Self.privateType], [Self.privateType], [.html]])
+            #expect(items.map { $0.string(forType: .string) } == ["Hello.", nil, nil])
+            #expect(items.map { $0.data(forType: Self.privateType) } == [Data([1]), Data([2]), nil])
+            #expect(items.map { $0.string(forType: .html) } == [nil, nil, "<p>Hi.</p>"])
+        }
+    }
+
+    @Test
+    func `restores the types of an item in the order the app declared them`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            let copied = NSPasteboardItem()
+            copied.setData(Data([1]), forType: Self.privateType)
+            copied.setString("<p>Hi.</p>", forType: .html)
+            copied.setString("Hi.", forType: .string)
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects([copied])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(items.map(\.types) == [[Self.privateType, .html, .string]])
+        }
+    }
+
+    @Test
+    func `leaves out a type it cannot read and a promise nobody could keep`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            let provider = FakePasteboardItemDataProvider()
+            let copied = Self.item([.string: Data("Hello.".utf8), Self.promiseType: Data([1])])
+            copied.setDataProvider(provider, forTypes: [Self.privateType])
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects([copied])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(snapshot.plan == .restore)
+            #expect(items.map(\.types) == [[.string]])
+            #expect(pasteboard.string(forType: .string) == "Hello.")
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func `keeps the dictated text rather than a clipboard that lost an item`(hasReadableItem: Bool) {
+        NSPasteboard.withTemporary { pasteboard in
+            let provider = FakePasteboardItemDataProvider()
+            let unreadable = NSPasteboardItem()
+            unreadable.setDataProvider(provider, forTypes: [Self.privateType])
+
+            let readable = hasReadableItem ? [Self.item([.string: Data("Hello.".utf8)])] : []
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects(readable + [unreadable])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            #expect(snapshot.plan == .skip(reason: .uncapturedItem))
+            #expect(pasteboard.string(forType: .string) == "Dictated.")
+        }
+    }
+
+    @Test
+    func `restores an empty clipboard as empty`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            pasteboard.clearContents()
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(snapshot.plan == .restore)
+            #expect(items.isEmpty)
         }
     }
 
@@ -71,4 +158,47 @@ struct PasteboardSnapshotTests {
             #expect((snapshot.plan == .restore) == isRestored)
         }
     }
+
+    @Test
+    func `drops the other types that do not fit the size limit and restores the ones every app reads`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            let overLimit = Data(count: PasteboardRestorePolicy.maximumSnapshotBytes + 1)
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects([Self.item([.string: Data("Hello.".utf8), Self.privateType: overLimit])])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(snapshot.plan == .restore)
+            #expect(items.map(\.types) == [[.string]])
+            #expect(pasteboard.string(forType: .string) == "Hello.")
+        }
+    }
+
+    @Test
+    func `keeps the dictated text rather than an item whose only type does not fit the size limit`() {
+        NSPasteboard.withTemporary { pasteboard in
+            let overLimit = Data(count: PasteboardRestorePolicy.maximumSnapshotBytes + 1)
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects([Self.item([Self.privateType: overLimit])])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            #expect(snapshot.plan == .skip(reason: .uncapturedItem))
+            #expect(pasteboard.string(forType: .string) == "Dictated.")
+        }
+    }
+}
+
+private final class FakePasteboardItemDataProvider: NSObject, NSPasteboardItemDataProvider {
+    func pasteboard(_: NSPasteboard?, item _: NSPasteboardItem, provideDataForType _: NSPasteboard.PasteboardType) {}
 }
