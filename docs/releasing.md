@@ -57,7 +57,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
    SIGNING_IDENTITY='Waft Release' make release NOTES=../notes.md
    ```
 
-   The script stops unless the working tree is clean, `HEAD` is `origin/main`, the version's tag isn't on `origin` yet, and [One-time setup](#one-time-setup) is done. It writes the disk image, the appcast with the notes embedded, and the cask with the disk image's checksum into `build/release`.
+   The script stops unless the working tree is clean, `HEAD` is `origin/main`, the version's tag isn't on `origin` yet, and the keychain holds the signing identity and a Sparkle key; it doesn't compare that key with `SUPublicEDKey`, which [One-time setup](#one-time-setup) covers. It writes the disk image, the appcast with the notes embedded, and the cask with the disk image's checksum into `build/release`.
 
    Don't edit `appcast.xml`, since its signature covers the notes. To change it, rerun `generate_appcast` with the arguments of `make_appcast` in `scripts/release.sh`.
 4. Publish the release with the command the script prints, which tags the commit it built. Releases are immutable: the tag, the files, and the notes embedded in the appcast can't change after publishing, so check them first. Mount the disk image and run `codesign --verify --strict` on the app in it.

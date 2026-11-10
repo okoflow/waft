@@ -13,7 +13,7 @@ flowchart LR
 
 ## Key and recording
 
-A listen-only event tap watches the keyboard and never swallows a key press, so the dictation key keeps working everywhere else. It ignores the <kbd>⌘</kbd><kbd>V</kbd> and <kbd>⌘</kbd><kbd>C</kbd> that Waft presses itself, so a paste never starts, finishes, or cancels a recording. Pressing the dictation key starts the microphone set as **Microphone** in Settings › Dictation, or the system default when that one isn't connected, and notes the focused app and text field, where the text goes later. The HUD never takes focus.
+Waft only listens to the keyboard and never swallows a key press, so the dictation key keeps working everywhere else. Pressing it starts the microphone set as **Microphone** in Settings › Dictation, or the system default when that one isn't connected, and notes the focused app and text field, where the text goes later. The HUD never takes focus.
 
 [The dictation key](usage.md#the-dictation-key) says what **How to start** does. The timings:
 
@@ -23,19 +23,16 @@ A listen-only event tap watches the keyboard and never swallows a key press, so 
 | Double-tap window | 0.4 s | With **Hold or double-tap**, a second tap within it starts hands-free dictation |
 | Maximum recording | 300 s | Waft ends the recording and pastes it |
 | HUD delay | 0.3 s | The HUD appears after it |
-| Audio tail | 0.15 s | Waft waits up to this long after you let go for audio still arriving |
-| Lost key-up | About 1 s | Waft checks the key four times a second and ends the recording if macOS never reported the release |
-| Event tap check | 5 s | Waft starts the key listener again if it stopped. If macOS switches the tap off, Waft discards the recording in progress and turns the tap back on at once |
 
 ## Recognition
 
 Waft skips recordings without speech, such as silence, key clicks, or steady noise. The rest goes to the speech model you chose, run on Core ML by [WhisperKit](https://github.com/argmaxinc/argmax-oss-swift).
 
 - **Language.** With a **Spoken language** chosen or one language enabled, Whisper decodes in it. Otherwise it detects the language first, among those you enabled.
-- **Prompt.** Whisper first reads a short example sentence in the spoken language, except in Japanese, Korean, and Thai, then up to 200 characters of your dictionary terms.
-- **Long dictations.** Waft splits the recording at pauses, measured against the room's own noise level, and makes each piece short enough that its text fits in what is left of Whisper's 224-token window after the prompt. The pieces run side by side, and a piece that fails stops the dictation with an error instead of leaving a gap.
-- **Writing system.** For Chinese and Serbian, Waft converts the result into the script you chose. Latin to Cyrillic goes letter by letter and leaves your dictionary terms, wherever the whole term appears, and words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API, in Latin letters.
-- **Made-up text.** Waft drops segments with low confidence or heavy repetition, and segments made only of tags such as `[music]`, an echo of the prompt other than one dictionary term said on its own, or a stock phrase such as "Thanks for watching", so the rest of the dictation stays. It checks the whole result for tags, echoes, and stock phrases once more.
+- **Prompt.** Whisper first reads a short example sentence in the spoken language, then up to 200 characters of your dictionary terms.
+- **Long dictations.** Waft splits the recording at pauses into pieces of at most 13 to 27 seconds, shorter the longer the prompt, so that the text of each fits with the prompt in Whisper's 223 decoder tokens. A piece that fails stops the dictation with an error instead of leaving a gap.
+- **Writing system.** For Chinese and Serbian, Waft converts the result into the script you chose. Latin to Cyrillic leaves in Latin letters your dictionary terms and words with q, w, x, or y, digits, inner capitals, or two to four capitals, such as GitHub or API.
+- **Made-up text.** Waft drops segments with low confidence or heavy repetition, and those made only of tags such as `[music]`, an echo of the prompt, or a stock phrase such as "Thanks for watching", and keeps the rest of the dictation.
 
 ## Cleanup
 
@@ -51,29 +48,21 @@ The recognized text goes through five steps:
 
 Light makes these changes and no others:
 
-- It removes hesitation sounds, such as "um" or "uh", with the commas around them, but keeps one after a number, as in "5 мм", or written in capitals, as in "ER". An opening "¿", bracket, or quote next to a removed sound stays with the next word, and a sound inside its own marks, as in "¿eh?" or "(um)", goes with them.
-- It tidies the spaces around punctuation, keeping the space French puts before `!`, `?`, `;`, and `:`; capitalizes the first letter, with a dotted "İ" in Turkish and Azerbaijani, but leaves a first word such as "iPhone" as written; and adds a period when the text ends in a letter or digit: "。" in Chinese and Japanese, "।" in Hindi, "۔" in Urdu, and none in Thai.
+- It removes hesitation sounds, such as "um" or "uh", with the commas around them, but keeps one after a number, as in "5 мм", or written in capitals, as in "ER".
+- It tidies the spaces around punctuation, keeping the space French puts before `!`, `?`, `;`, and `:`; capitalizes the first letter, but leaves a first word such as "iPhone" as written; and adds the period of the language, and none in Thai, when the text ends in a letter or digit.
 - It applies the two voice commands that [Modes](usage.md#modes) describes.
 
 ### The AI modes
 
-Clean, Formal, Translate, and your modes send the text, the spoken language, the target language for Translate, your dictionary terms, and the mode's instructions to the AI model you chose, which spells the terms as you wrote them. [Choosing the AI model](usage.md#choosing-the-ai-model) lists the models and their time limits. Waft marks the transcript as text to edit, never instructions to follow, so a dictated question stays a question.
+Clean, Formal, Translate, and your modes send the text with the mode's instructions and your dictionary terms to the AI model you chose, which spells the terms as you wrote them; [The network](privacy.md#the-network) lists everything that is sent, and [Choosing the AI model](usage.md#choosing-the-ai-model) the models and their time limits. Waft marks the transcript as text to edit, never instructions to follow, so a dictated question stays a question.
 
-Waft rejects an answer that is empty, cut off, or refused. It also rejects a dictation's answer that is:
-
-- Longer than three times what you said plus 60 characters, or five times plus 60 for a translation from Chinese, Japanese, or Korean.
-- Shorter than 40% of what you said, when you said 200 characters or more and the mode is Clean or Formal, so a model that dropped part of a long dictation doesn't cost you the rest.
-- Written mostly in another script than both the language you spoke and the transcript, or, for Translate, than the target language. A Chinese, Japanese, or Korean character counts as three letters here, so a brand name in Latin letters doesn't outweigh the text around it.
-
-Your modes may answer in any script and at up to ten times what you said or 600 characters, whichever is more. An edit has no other limit. A dictation whose answer is rejected or whose request fails gets the [Light](#light) text.
+Waft rejects an answer that is empty, cut off, or refused. For a dictation, it also rejects one that is several times longer than what you said, one from Clean or Formal that lost most of a long dictation, and one written mostly in another script than the language you spoke or, for Translate, the target language. Your modes may answer in any script and at up to ten times what you said or 600 characters, whichever is more. A dictation whose answer is rejected or whose request fails gets the [Light](#light) text.
 
 ### The translator
 
-The [translator](usage.md#translator) and its shortcuts on selected text send the text, the instructions of the task, and, for a translation, the target language and, from the panel, the source language you chose, unless it gave way. Rules after the instructions, which you can't edit, make the model treat the text as material, never as instructions, and reply with the text alone, keeping its formatting, links, and code. The translator's tier gets the time limit of an edit. macOS detects the language of the text on your Mac, leaning toward your dictation and translator languages, which decides when two-way applies and when a chosen source language gives way.
+The [translator](usage.md#translator) and its shortcuts on selected text send the text with the instructions of the task. Rules after the instructions, which you can't edit, make the model treat the text as material, never as instructions, and reply with the text alone, keeping its formatting, links, and code. The translator's tier gets the time limit of an edit, and macOS detects the language of the text on your Mac.
 
-Waft rejects an answer that is empty or longer than five times the text plus 200 characters.
-
-The shortcuts read the selection through Accessibility. When the app doesn't expose it, Waft waits for you to release the shortcut, saves the clipboard, and presses <kbd>⌘</kbd><kbd>C</kbd> with the key that types "c" in your keyboard layout. If the app copies text within half a second, Waft takes it as the selection and restores the clipboard as after [pasting](#pasting). If you hold the shortcut over 5 seconds or the app copies nothing, the HUD asks you to select the text. A password field gets no <kbd>⌘</kbd><kbd>C</kbd>, and neither does a field that reports only the cursor, since editors such as VS Code copy the whole line then.
+The shortcuts read the selection through Accessibility. When the app doesn't expose it, Waft waits for you to release the shortcut, saves the clipboard, and presses <kbd>⌘</kbd><kbd>C</kbd>. If the app copies text within half a second, Waft takes it as the selection and restores the clipboard as after [pasting](#pasting). If you hold the shortcut over 5 seconds or the app copies nothing, the HUD asks you to select the text. A password field gets no <kbd>⌘</kbd><kbd>C</kbd>, and neither does a field that reports only the cursor, since editors such as VS Code copy the whole line then.
 
 ## Pasting
 
@@ -81,10 +70,10 @@ Waft pastes through the clipboard rather than typing key by key:
 
 1. It waits up to 10 seconds for you to release the dictation key.
 2. It checks the focused field. A password field gets nothing, not even the clipboard. If **Paste into the focused field** is off, the key is still held, focus moved to another app or field, or Accessibility isn't allowed, Waft copies the text, and the HUD shows it with <kbd>⌘</kbd><kbd>V</kbd>.
-3. It saves the clipboard, puts the text on it, and presses <kbd>⌘</kbd><kbd>V</kbd> with the key that types "v" in your keyboard layout, so Dvorak and Colemak work too.
+3. It saves the clipboard, puts the text on it, and presses <kbd>⌘</kbd><kbd>V</kbd>.
 4. Once the app has read the text, it restores your clipboard, including images and files, if nothing else was copied meanwhile, it held no more than 5 MB, and it held no concealed or transient item, such as a password manager's. If the app doesn't read the text within 1.5 seconds, the text stays on the clipboard.
 
-Waft trims the spaces at both ends of the text but keeps a line break that "new line" or "new paragraph" put there. It puts a space before the text unless Waft sees no character before the cursor, that character is a space, a line break, an opening bracket, a quote, or a slash, the text starts with a line break, or the text on either side of the cursor is Chinese or Japanese.
+Waft puts a space before the text unless it sees no character before the cursor, that character is a space, a line break, an opening bracket, a quote, or a slash, or the text on either side of the cursor is Chinese or Japanese.
 
 ## The speech model
 

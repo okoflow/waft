@@ -1,11 +1,10 @@
 # Contributing
 
-This page covers the setup, the checks a change passes, and the rules for code, tests, scripts, docs, commits, and pull requests. [Architecture](docs/architecture.md) maps the code, and [Releasing](docs/releasing.md) covers releases. Everyone who takes part follows the Code of Conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+This page covers the setup, the checks a change passes, and the rules for code, tests, scripts, docs, commits, and pull requests. [Architecture](docs/architecture.md) maps the code, and [Releasing](docs/releasing.md) covers releases. Everyone who takes part follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Ways to contribute
 
-- **Report a bug** with the bug report form.
-- **Propose a feature** with the feature request form.
+- **Report a bug or propose a feature** with the issue forms.
 - **Report a vulnerability** privately, as described in [SECURITY.md](SECURITY.md).
 - **Send a pull request** for an open issue. Comment on the issue first for anything larger than a fix, so the approach is agreed before the work.
 
@@ -24,33 +23,33 @@ make run
 
 `make signing` creates the Waft Dev code-signing identity in your login keychain once and asks for your password to trust it. Without it, every build is signed ad hoc and macOS forgets the permissions you granted; if that happened, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security after you rebuild, and allow them again. `make run` builds the debug configuration, signs it, and opens `build/Waft.app`; add `CONFIG=release` for an optimized build. A debug build doesn't update itself: pull and run `make run` again.
 
-To change the code, install the tools the checks use and the pre-commit hook:
+To change the code, install the [Homebrew](https://brew.sh) tools the checks use, which the [Brewfile](Brewfile) lists, and the pre-commit hook:
 
 ```sh
 brew bundle
 make hooks
 ```
 
-The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the checks use. The hook runs `format-check`, `lint`, and `shellcheck` when the commit touches files they check, and always runs `spelling` and `secrets-staged`, which scans the staged changes for secrets. `make help` lists every target.
+`make help` lists every target.
 
 ## Checks
 
-`make check` runs the checks below in this order, except `bundle`, which re-signs the app you run. Run it before you push. CI runs `make check` and then `make bundle` with the Command Line Tools for Xcode 27 on every pull request and every push to `main`, and runs `make test` with the Command Line Tools for Xcode 26 in a second job. GitHub's CodeQL also scans the Swift code, the cask, and the workflows.
+`make check` runs the checks below in this order, except `bundle`, which re-signs the app you run. Run it before you push. CI runs `make check` and `make bundle` with the Command Line Tools for Xcode 27, and `make test` with those for Xcode 26, on every pull request and every push to `main`.
 
-| Target | Tool | Fails on |
-| --- | --- | --- |
-| `format-check` | SwiftFormat, shfmt, plutil | Any formatting difference; `make format` fixes it |
-| `lint` | SwiftLint | Any violation, including comments in code, `??`, and an unbound `try?` |
-| `shellcheck` | ShellCheck | Any problem in `scripts/*.sh` |
-| `spelling` | typos | Spelling mistakes in code and docs |
-| `secrets` | gitleaks | Secrets anywhere in the git history |
-| `build` | Swift | Any warning, since warnings are errors |
-| `test` | Swift Testing | A failing test |
-| `periphery` | Periphery | Unused code |
-| `strings` | `scripts/strings.sh` | A translation missing a string from the code, keeping one the code dropped, changing a placeholder, or lacking the microphone prompt in `InfoPlist.strings` |
-| `bundle` | `scripts/bundle.sh` | The app can't be assembled or signed |
+| Target | What it runs |
+| --- | --- |
+| `format-check` | SwiftFormat, shfmt, and plutil; `make format` fixes what they report |
+| `lint` | SwiftLint, which also fails on comments in code, `??`, and an unbound `try?` |
+| `shellcheck` | ShellCheck on `scripts/*.sh` |
+| `spelling` | typos on code and docs |
+| `secrets` | gitleaks on the whole git history |
+| `build` | The build, where warnings are errors |
+| `test` | The tests |
+| `periphery` | Periphery, which fails on unused code |
+| `strings` | `scripts/strings.sh`, which fails on a translation missing a string from the code, keeping one the code dropped, changing a placeholder, or lacking the microphone prompt in `InfoPlist.strings` |
+| `bundle` | `scripts/bundle.sh`, which assembles and signs the app |
 
-The linters and formatters read their settings from dotfiles at the root, such as `.swiftlint.yml`, `.swiftformat`, and `.typos.toml`. Fix the code rather than the rule. A rule that is wrong for one line gets a targeted `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>` directive.
+Fix the code rather than the rule; a rule that is wrong for one line gets a `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>` directive.
 
 ## Code
 
@@ -60,7 +59,7 @@ The linters and formatters read their settings from dotfiles at the root, such a
 - Write names in full words, without abbreviations: `statisticsFile`, not `statsFile`; `message`, not `msg`.
 - One main type per file, named after it. An extension that adds to another type goes into `<Type>+<Topic>.swift`, such as `String+Capitalization.swift`.
 - Keep the names of Swift files unique across `Sources`: `make strings` finds each file's extracted strings by its name.
-- Give every declaration the narrowest access level that works, and leave nothing unused; Periphery fails on unused code.
+- Give every declaration the narrowest access level that works, and leave nothing unused.
 
 ### Control flow
 
@@ -72,9 +71,12 @@ The linters and formatters read their settings from dotfiles at the root, such a
 
 ### Layout
 
-- Separate the steps of a function with one blank line: the guards, the values it prepares, the work, and the result. A `return`, `throw`, `break`, or `continue` that does not open its scope gets a blank line before it, which the `blank_line_before_exit` rule checks. Statements of one kind stay together.
+- Separate the steps of a function with one blank line: the guards, the values it prepares, the work, and the result. Statements of one kind stay together.
+- A block of several lines, such as an `if`, a `switch`, a loop, a `do`/`catch`, or a closure, gets a blank line before and after it, unless it is first or last in its body.
+- A `return`, `throw`, `break`, or `continue` that does not open its scope gets a blank line before it, which the `blank_line_before_exit` rule checks.
 - A `guard` that checks a value declared on the single line directly above it stays under it without a blank line, and consecutive `guard`s stay together, as SwiftFormat requires. After any other statement of several lines, leave a blank line before the `guard`.
-- SwiftFormat orders declarations by kind (nested types, static properties, instance properties, initializers, static methods, instance methods) and each kind from the most to the least visible.
+- Never leave two blank lines in a row, or one right after `{` or right before `}`; SwiftFormat removes them.
+- SwiftFormat orders declarations by kind and each kind from the most to the least visible.
 
 ### Platform
 
@@ -119,7 +121,7 @@ Scripts follow the [Google Shell Style Guide](https://google.github.io/styleguid
 - Options go before operands, long options are used where the tool has them, and argument lists that change go in an array.
 - A guard reads `[[ … ]] || die …`; anything longer is an `if`.
 
-A `make` target runs each script. shfmt formats them with the settings in `.editorconfig`, and ShellCheck checks them with those in `.shellcheckrc`.
+A `make` target runs each script.
 
 ## Documentation
 
