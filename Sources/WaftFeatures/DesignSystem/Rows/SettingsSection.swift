@@ -63,7 +63,7 @@ extension SettingsSection where Accessory == EmptyView, Footer == EmptyView {
 
 extension SettingsSection where Accessory == EmptyView {
     init(
-        _ title: LocalizedStringKey?,
+        _ title: LocalizedStringKey,
         subtitle: LocalizedStringKey? = nil,
         needsWaftPlus: Bool = false,
         @ViewBuilder content: () -> Content,

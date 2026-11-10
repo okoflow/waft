@@ -71,9 +71,8 @@ extension SettingsGroup where Accessory == EmptyView {
     init(
         _ title: LocalizedStringKey,
         subtitle: LocalizedStringKey? = nil,
-        needsWaftPlus: Bool = false,
         @ViewBuilder content: () -> Content,
     ) {
-        self.init(title: title, subtitle: subtitle, needsWaftPlus: needsWaftPlus, accessory: nil, content: content)
+        self.init(title: title, subtitle: subtitle, needsWaftPlus: false, accessory: nil, content: content)
     }
 }

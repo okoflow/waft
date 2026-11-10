@@ -5,7 +5,6 @@ struct HUDIsland: View {
     fileprivate static let compactInset: CGFloat = 14
     fileprivate static let cardInset: CGFloat = 18
     fileprivate static let bottomInset: CGFloat = 14
-    fileprivate static let orbSize: CGFloat = 34
 
     let content: HUDContent?
     let hud: HUDController
@@ -80,7 +79,7 @@ private struct WorkingCard: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            IslandOrb(size: HUDIsland.orbSize, appearedAt: appearedAt, pulsedAt: steppedAt)
+            IslandOrb(appearedAt: appearedAt, pulsedAt: steppedAt)
 
             ShimmeringText(text: label)
                 .font(.hudCaption)
