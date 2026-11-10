@@ -186,6 +186,7 @@ final class DictationQueue {
         recentTranscripts.remember(text, at: Date())
 
         transcriptExpiry?.cancel()
+
         transcriptExpiry = Task { [weak self] in
             guard await Task.slept(for: .seconds(RecentTranscripts.lifetime)) else { return }
 

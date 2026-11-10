@@ -8,12 +8,14 @@ struct SpeechModelControllerTests {
     func `starts the current model when the choice changes during the installation check`(isChosenInstalled: Bool) async {
         let (queries, queryContinuation) = AsyncStream.makeStream(of: SpeechModel.self)
         let (releases, releaseContinuation) = AsyncStream.makeStream(of: Void.self)
+
         defer {
             queryContinuation.finish()
             releaseContinuation.finish()
         }
 
         let installed: Set<SpeechModel> = isChosenInstalled ? [.fast, .accurate] : [.fast]
+
         let transcriber = FakeTranscriber(installed: installed, beforeInstallationCheck: { model in
             guard model == .fast else { return }
 
@@ -125,6 +127,7 @@ struct SpeechModelControllerTests {
             var iterator = releases.makeAsyncIterator()
             _ = await iterator.next()
         })
+
         let (controller, settings) = make(transcriber)
         releaseContinuation.yield(())
 

@@ -69,6 +69,7 @@ private struct InterfaceLanguageRow: View {
             MenuPicker("App language", selection: $model.chosen, current: current) {
                 Text("Same as macOS").tag(String?.none)
                 Divider()
+
                 ForEach(model.languages, id: \.self) { identifier in
                     Text(InterfaceLanguageModel.name(of: identifier)).tag(String?.some(identifier))
                 }
@@ -85,6 +86,7 @@ private struct UpdatesSection: View {
         SettingsSection("Updates") {
             ToggleRow("Check for updates automatically", isOn: $updates.checksAutomatically)
             RowDivider()
+
             SettingsRow(.verbatim(AppVersion.title)) {
                 Button("Check Now", action: updates.check)
             }

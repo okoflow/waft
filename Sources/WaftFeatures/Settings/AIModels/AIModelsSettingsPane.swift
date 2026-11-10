@@ -20,6 +20,7 @@ struct AIModelsSettingsPane: View {
             ) {
                 Text(ModelProvider.localServer.title).tag(ModelProvider.localServer)
                 Divider()
+
                 ForEach(CloudProvider.allCases, id: \.self) { provider in
                     Text(provider.title).tag(ModelProvider.cloud(provider))
                 }

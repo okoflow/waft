@@ -65,9 +65,12 @@ struct DictationSettingsPane: View {
                     settings.settings.pushToTalkKey = key
                 }
             }
+
             RowDivider()
+
             PickerRow("Microphone", selection: $settings.settings.microphoneID, current: microphoneName) {
                 Text("System default").tag(String?.none)
+
                 ForEach(settings.microphones) { microphone in
                     Text(microphone.name).tag(String?.some(microphone.id))
                 }
@@ -82,6 +85,7 @@ struct DictationSettingsPane: View {
                     settings.settings.languages = selection.removing(language)
                 }
                 .rowTransition()
+
                 RowDivider()
                     .rowTransition()
             }
@@ -94,6 +98,7 @@ struct DictationSettingsPane: View {
             ) {
                 Text("Automatic").tag(Language?.none)
                 Divider()
+
                 ForEach(selection.languages, id: \.self) { language in
                     Text(language.displayName).tag(Language?.some(language))
                 }

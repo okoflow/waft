@@ -12,6 +12,7 @@ final class OtherSoundsLowering {
 
     func lower(while isWanted: @escaping () -> Bool) {
         task?.cancel()
+
         task = Task { [weak self, delay] in
             guard await Task.slept(for: delay), let self, isWanted() else { return }
 

@@ -31,6 +31,7 @@ final class KeyMonitorController {
 
         guard monitor.start() else {
             status = .unavailable
+
             retryTimer = .scheduledInCommonModes(every: retryInterval, repeats: false) { [weak self] in
                 self?.start()
             }

@@ -21,10 +21,13 @@ struct TranslationSection: View {
                     Text(language.displayName).tag(language)
                 }
             }
+
             RowDivider()
+
             PickerRow("Two-way with", selection: $translation.twoWayLanguage, current: twoWayTitle) {
                 Text("Off").tag(Language?.none)
                 Divider()
+
                 ForEach(Language.allByDisplayName.filter { $0 != translation.target }, id: \.self) { language in
                     Text(language.displayName).tag(Language?.some(language))
                 }

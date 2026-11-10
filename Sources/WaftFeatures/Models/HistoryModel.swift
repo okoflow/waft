@@ -133,6 +133,7 @@ final class HistoryModel {
 
     func expireOldEntries(every interval: Duration = .seconds(3600)) {
         expiry?.cancel()
+
         expiry = Task { [weak self] in
             while await Task.slept(for: interval) {
                 guard let self else { return }

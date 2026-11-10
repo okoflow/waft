@@ -55,6 +55,7 @@ enum CommandKeystroke {
         guard let eventSource = CGEventSource(stateID: .combinedSessionState) else { return fallbackKeyCode }
 
         let keyboardType = UInt32(eventSource.keyboardType)
+
         let keyCode = CurrentKeyboardLayout.withCurrentLayout { layout in
             (UInt16(0) ..< 128).first { keyCode in
                 let typed = CurrentKeyboardLayout.translate(

@@ -57,6 +57,7 @@ final class PermissionMonitor {
 
     private func schedulePolling() {
         timer?.invalidate()
+
         timer = .scheduledInCommonModes(every: currentPollInterval, repeats: true) { [weak self] in
             self?.poll()
         }

@@ -156,6 +156,7 @@ struct DictationQueueTests {
         label: String,
     ) async {
         let rewriter = FakeTextRewriter(.success("Hello world."), holdsRequests: true)
+
         let job = job(selection: selection) { settings in
             settings.mode = mode
             settings.modelProvider = provider

@@ -120,6 +120,7 @@ final class TryoutModel {
     private func start(_ work: @escaping () async -> Phase) {
         task?.cancel()
         phase = .running
+
         task = Task {
             let finished = await work()
 

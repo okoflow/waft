@@ -23,6 +23,7 @@ struct DoneStep: View {
 
                 if needsAIModel {
                     RowDivider()
+
                     SettingsRow(
                         "AI modes",
                         description: "Clean, Formal, and Translate need an AI model.",
