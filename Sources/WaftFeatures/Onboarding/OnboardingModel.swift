@@ -13,9 +13,9 @@ final class OnboardingModel {
 
         var permission: Permission? {
             switch self {
+            case .welcome, .practice, .usage, .done: nil
             case .microphone: .microphone
             case .accessibility: .accessibility
-            case .welcome, .practice, .usage, .done: nil
             }
         }
     }

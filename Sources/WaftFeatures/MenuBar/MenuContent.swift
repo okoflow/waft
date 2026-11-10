@@ -217,11 +217,11 @@ private struct ProMenuItem: View {
 
     var body: some View {
         switch pro.access.status {
-        case .trial, .expired:
-            Button("Unlock Waft+…", action: showPro)
-
         case .licensed, .beta:
             EmptyView()
+
+        case .trial, .expired:
+            Button("Unlock Waft+…", action: showPro)
         }
     }
 }
