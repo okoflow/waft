@@ -137,7 +137,6 @@ update() {
   local keys="${WORK_DIR}/keys"
 
   code_keys "${keys}"
-  mkdir -p "$(dirname "${SOURCE_TABLE}")"
 
   local key
 
@@ -145,7 +144,7 @@ update() {
     printf '%s = %s;\n' "${key}" "${key}"
   done <"${keys}" >"${SOURCE_TABLE}"
 
-  echo "${SOURCE_TABLE}"
+  echo "strings: rewrote ${SOURCE_TABLE}"
 }
 
 main() {

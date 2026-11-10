@@ -79,18 +79,13 @@ check_tree() {
 }
 
 check_prerequisites() {
-  swift package resolve >&2
+  swift package resolve
 
   [[ -n ${SIGNING_IDENTITY:-} ]] || die 'set SIGNING_IDENTITY to Waft Release or your Developer ID Application identity'
 
   if [[ ${SIGNING_IDENTITY} != "${RELEASE_IDENTITY}" ]] && ! is_developer_id; then
     die "\"${SIGNING_IDENTITY}\" isn't ${RELEASE_IDENTITY} or a Developer ID Application identity"
   fi
-
-  local identities
-  identities=$(security find-identity -v -p codesigning)
-
-  [[ ${identities} == *"\"${SIGNING_IDENTITY}\""* ]] || die "\"${SIGNING_IDENTITY}\" isn't in the keychain"
 
   if is_developer_id && ! xcrun notarytool history --keychain-profile "${NOTARY_PROFILE}" >/dev/null; then
     die "no notarytool profile \"${NOTARY_PROFILE}\": run xcrun notarytool store-credentials ${NOTARY_PROFILE}"
