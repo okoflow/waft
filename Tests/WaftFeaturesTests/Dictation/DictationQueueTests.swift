@@ -239,6 +239,23 @@ struct DictationQueueTests {
 
         #expect(clipboard.copied == ["Hello world"])
     }
+
+    @Test
+    func `forgets the latest transcript when its lifetime ends`() async {
+        let inserter = FakeTextInserter()
+
+        let queue = DictationQueue.transcribing(
+            with: FakeTranscriber(.success(.spoken("Hello world"))),
+            hud: hud,
+            inserter: inserter,
+            transcriptLifetime: .zero,
+        )
+
+        queue.submit(.recorded())
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !inserter.insertions.isEmpty })
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.latestTranscript == nil })
+    }
 }
 
 extension DictationQueueTests {

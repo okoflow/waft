@@ -18,7 +18,8 @@ final class DictationQueue {
 
     @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
 
-    private var recentTranscripts = RecentTranscripts()
+    private(set) var latestTranscript: String?
+
     private var failedJob: DictationJob?
 
     @ObservationIgnored private var pendingCount = 0
@@ -32,11 +33,8 @@ final class DictationQueue {
     private let history: HistoryModel
     private let statistics: StatisticsModel
     private let hud: HUDController
+    private let transcriptLifetime: Duration
     private let continuation: AsyncStream<DictationJob>.Continuation
-
-    var latestTranscript: String? {
-        recentTranscripts.latest(at: Date())
-    }
 
     var canRetry: Bool {
         failedJob != nil
@@ -50,6 +48,7 @@ final class DictationQueue {
         history: HistoryModel,
         statistics: StatisticsModel,
         hud: HUDController,
+        transcriptLifetime: Duration = .seconds(600),
     ) {
         self.transcriber = transcriber
         processor = TranscriptProcessor(rewriters: rewriters)
@@ -58,6 +57,7 @@ final class DictationQueue {
         self.history = history
         self.statistics = statistics
         self.hud = hud
+        self.transcriptLifetime = transcriptLifetime
 
         let (jobs, continuation) = AsyncStream.makeStream(of: DictationJob.self)
         self.continuation = continuation
@@ -200,14 +200,14 @@ final class DictationQueue {
     }
 
     private func rememberLatest(_ text: String) {
-        recentTranscripts.remember(text, at: Date())
+        latestTranscript = text
 
         transcriptExpiry?.cancel()
 
-        transcriptExpiry = Task { [weak self] in
-            guard await Task.slept(for: .seconds(RecentTranscripts.lifetime)) else { return }
+        transcriptExpiry = Task { [weak self, transcriptLifetime] in
+            guard await Task.slept(for: transcriptLifetime) else { return }
 
-            self?.recentTranscripts = RecentTranscripts()
+            self?.latestTranscript = nil
         }
     }
 
