@@ -4,6 +4,18 @@ import os
 import WaftCore
 
 package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
+    private static var staleTemporaryAge: TimeInterval {
+        60
+    }
+
+    private static var temporarySuffix: String {
+        ".tmp"
+    }
+
+    private static var legacyTemporaryPrefix: String {
+        "."
+    }
+
     package let name: String
 
     private let url: URL
@@ -16,6 +28,10 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         url.deletingPathExtension().appendingPathExtension("unreadable.json")
     }
 
+    private var temporaryPrefixes: [String] {
+        [url, unreadableCopy].map(Self.temporaryPrefix) + [Self.legacyTemporaryPrefix]
+    }
+
     package init(name: String, url: URL) {
         self.name = name
         self.url = url
@@ -26,6 +42,23 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
             try FileManager.default.removeItem(at: file)
         } catch {
             Logger.storage.error("Couldn't remove a temporary file: \(error.logDescription, privacy: .public)")
+        }
+    }
+
+    private static func temporaryPrefix(of file: URL) -> String {
+        ".\(file.lastPathComponent)."
+    }
+
+    private static func isOlder(_ file: URL, than age: TimeInterval) -> Bool {
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: file.path)
+            guard let modified = attributes[.modificationDate] as? Date else { return false }
+
+            return modified.timeIntervalSinceNow <= -age
+        } catch {
+            Logger.storage.error("Couldn't read the age of a temporary file: \(error.logDescription, privacy: .public)")
+
+            return false
         }
     }
 
@@ -61,6 +94,7 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
             attributes: [.posixPermissions: 0o700],
         )
         restrict(folder, to: 0o700)
+        removeTemporaryFiles(olderThan: Self.staleTemporaryAge)
         try write(encoder.encode(value), to: url)
     }
 
@@ -69,6 +103,8 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
     }
 
     package func delete() throws {
+        removeTemporaryFiles(olderThan: 0)
+
         var failures: [any Error] = []
 
         for file in [url, unreadableCopy] where FileManager.default.fileExists(atPath: file.path) {
@@ -108,8 +144,42 @@ package struct JSONFileStore<Value: Codable & Sendable>: ValueStore {
         }
     }
 
+    private func removeTemporaryFiles(olderThan age: TimeInterval) {
+        let names: [String]
+
+        do {
+            names = try FileManager.default.contentsOfDirectory(atPath: folder.path)
+        } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
+            return
+        } catch {
+            Logger.storage.error("Couldn't look for temporary files: \(error.logDescription, privacy: .public)")
+
+            return
+        }
+
+        for name in names where isTemporary(name) {
+            let file = folder.appending(path: name)
+            guard Self.isOlder(file, than: age) else { continue }
+
+            Self.removeTemporary(file)
+        }
+    }
+
+    private func isTemporary(_ name: String) -> Bool {
+        guard name.hasSuffix(Self.temporarySuffix) else { return false }
+
+        return temporaryPrefixes.contains { prefix in
+            guard name.hasPrefix(prefix) else { return false }
+
+            let identifier = name.dropFirst(prefix.count).dropLast(Self.temporarySuffix.count)
+
+            return UUID(uuidString: String(identifier)) != nil
+        }
+    }
+
     private func write(_ data: Data, to file: URL) throws {
-        let temporary = file.deletingLastPathComponent().appending(path: ".\(UUID().uuidString).tmp")
+        let temporaryName = Self.temporaryPrefix(of: file) + UUID().uuidString + Self.temporarySuffix
+        let temporary = file.deletingLastPathComponent().appending(path: temporaryName)
         let descriptor = open(temporary.path, O_WRONLY | O_CREAT | O_EXCL, 0o600)
         guard descriptor >= 0 else { throw Self.lastPOSIXError() }
 
