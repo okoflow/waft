@@ -27,6 +27,7 @@ package final class AppModel {
     let translator: TranslatorModel
     let translatorTryout: TryoutModel
 
+    private let usage: UsageReporter
     private let modeSwitcher: ModeSwitcher
     private let translatorShortcuts: TranslatorShortcuts
     private let hud: HUDController
@@ -58,6 +59,7 @@ package final class AppModel {
         shortcuts = GlobalShortcutController(shortcuts: dependencies.shortcuts, settings: settings)
         shortcutRecorder = ShortcutRecorder(settings: settings, shortcuts: shortcuts)
         statistics = StatisticsModel(store: dependencies.statisticsStore)
+        usage = Self.makeUsage(dependencies, settings: settings, pro: pro)
         history = HistoryModel(store: dependencies.historyStore, settings: settings, clipboard: dependencies.clipboard)
         vocabulary = Self.makeVocabulary(dependencies)
         queue = Self.makeQueue(dependencies, history: history, statistics: statistics, hud: hud)
@@ -82,7 +84,7 @@ package final class AppModel {
         translator = Self.makeTranslator(dependencies, settings: settings, pro: pro)
         translatorTryout = Self.makeTryout(dependencies, settings: settings, pro: pro, defaultSample: Self.translatorSample)
         translatorShortcuts = Self.makeTranslatorShortcuts(dependencies, shortcuts, settings: settings, pro: pro, hud: hud)
-        onboarding = OnboardingModel(permissions: permissions)
+        onboarding = OnboardingModel(permissions: permissions, settings: settings)
         transcription = Self.makeTranscription(dependencies, controller: speechModelController, settings: settings, pro: pro)
         updates = UpdatesModel(updater: dependencies.updater)
         interfaceLanguage = InterfaceLanguageModel(store: dependencies.interfaceLanguageStore, lifecycle: dependencies.lifecycle)
@@ -102,9 +104,10 @@ package final class AppModel {
         frontmostApp.start()
         updates.start()
         history.expireOldEntries()
+        usage.start()
         hud.prepareWindow()
 
-        if needsSetup {
+        if [needsSetup, settings.settings.usageSharing == .undecided].contains(true) {
             showSetup()
         }
     }
@@ -159,7 +162,18 @@ package final class AppModel {
         onboarding.onFinish = { [weak self] in self?.finishOnboarding() }
         updates.onShowingUpdateChange = { [weak self] in self?.windows.updateActivationPolicy() }
         translatorShortcuts.onOpenTranslator = { [weak self] in self?.showTranslator() }
+        connectUsage()
         connectWindows()
+    }
+
+    private func connectUsage() {
+        let record: (UsageEvent) -> Void = { [weak usage] in usage?.record($0) }
+
+        settings.onUsageSharingChange = { [weak usage] in usage?.start() }
+        queue.onUsage = record
+        translator.onUsage = record
+        translatorShortcuts.onUsage = record
+        transcription.onUsage = record
     }
 
     private func connectWindows() {

@@ -35,6 +35,8 @@ struct OnboardingView: View {
             PermissionStep(permission: .accessibility, monitor: model.permissions)
         case .practice:
             PracticeStep(model: model)
+        case .usage:
+            UsageStep()
         case .done:
             DoneStep(model: model)
         }
@@ -52,7 +54,7 @@ private struct OnboardingFooter: View {
         case (.denied, _): "Open System Settings"
         case (_, .welcome): "Get Started"
         case (_, .done): "Done"
-        case (_, .microphone), (_, .accessibility), (_, .practice): "Continue"
+        case (_, .microphone), (_, .accessibility), (_, .practice), (_, .usage): "Continue"
         }
     }
 
@@ -68,17 +70,27 @@ private struct OnboardingFooter: View {
 
                 Spacer()
 
-                Button(primaryTitle) {
-                    Task { await onboarding.proceed() }
-                }
-                .buttonStyle(PushButtonStyle(isProminent: true))
-                .keyboardShortcut(.defaultAction)
+                actions
             }
         }
         .controlSize(.large)
         .padding(.horizontal, Self.horizontalInset)
         .padding(.top, Metrics.accessorySpacing)
         .padding(.bottom, Metrics.windowPadding)
+    }
+
+    @ViewBuilder
+    private var actions: some View {
+        if onboarding.step == .usage {
+            Button("Don't Share") { onboarding.answerUsage(shares: false) }
+            Button("Share") { onboarding.answerUsage(shares: true) }
+        } else {
+            Button(primaryTitle) {
+                Task { await onboarding.proceed() }
+            }
+            .buttonStyle(PushButtonStyle(isProminent: true))
+            .keyboardShortcut(.defaultAction)
+        }
     }
 }
 

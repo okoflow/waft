@@ -206,7 +206,11 @@ struct OnboardingModelTests {
     }
 
     private func model(_ permissions: FakePermissionProvider) -> OnboardingModel {
-        OnboardingModel(permissions: PermissionMonitor(provider: permissions), grantedPause: .zero)
+        OnboardingModel(
+            permissions: PermissionMonitor(provider: permissions),
+            settings: .inMemory(usageSharing: .declined),
+            grantedPause: .zero,
+        )
     }
 
     private func navigate(_ navigation: Navigation, in model: OnboardingModel) async {
@@ -237,7 +241,12 @@ private struct OnboardingSetup {
         self.provider = provider
         self.permissions = permissions
         self.pause = pause
-        model = OnboardingModel(permissions: permissions, grantedPause: .zero, waitForPause: pause.wait)
+        model = OnboardingModel(
+            permissions: permissions,
+            settings: .inMemory(usageSharing: .declined),
+            grantedPause: .zero,
+            waitForPause: pause.wait,
+        )
     }
 
     func setStatus(_ status: PermissionStatus, for permission: Permission, refreshesMonitor: Bool = true) {

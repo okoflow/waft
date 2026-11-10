@@ -13,6 +13,8 @@ struct SelectionActionsTests {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let inserter = FakeTextInserter()
         let actions = actions(rewriter, selecting: "Привет", detects: .russian, inserter: inserter)
+        var usage: [UsageEvent] = []
+        actions.onUsage = { usage.append($0) }
 
         actions.run(.translate)
 
@@ -25,6 +27,7 @@ struct SelectionActionsTests {
         #expect(inserter.insertions.map(\.text) == ["Hello."])
         #expect(inserter.copyCount == 0)
         #expect(hud.content == .message(HUDMessage(kind: .pasted, title: "Hello.")))
+        #expect(usage == [.selectionAction])
     }
 
     @Test

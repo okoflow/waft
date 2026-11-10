@@ -45,6 +45,7 @@
 "Allow microphone access" = "อนุญาตการเข้าถึงไมโครโฟน";
 "Allowed" = "อนุญาตแล้ว";
 "Allow…" = "อนุญาต…";
+"Anonymous usage data shows which features to work on next." = "ข้อมูลการใช้งานแบบไม่ระบุตัวตนช่วยให้รู้ว่าควรพัฒนาคุณสมบัติใดต่อไป";
 "Any AI model" = "โมเดล AI ใดก็ได้";
 "App language" = "ภาษาของแอป";
 "App" = "แอป";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "หากซื้อ Waft+ แล้ว ให้วางคีย์จากอีเมลใบเสร็จของคุณ";
 "Buy for %@" = "ซื้อในราคา %@";
 "Cancel" = "ยกเลิก";
+"Change it anytime in Settings › General." = "เปลี่ยนได้ทุกเมื่อในการตั้งค่า › ทั่วไป";
 "Check Now" = "ตรวจหาตอนนี้";
 "Check for Updates…" = "ตรวจหารายการอัปเดต…";
 "Check for updates automatically" = "ตรวจหารายการอัปเดตโดยอัตโนมัติ";
@@ -110,6 +112,7 @@
 "Dictionary file" = "ไฟล์พจนานุกรม";
 "Dictionary" = "พจนานุกรม";
 "Didn't catch that" = "ไม่ได้ยินคำพูด";
+"Don't Share" = "ไม่แชร์";
 "Done" = "เสร็จสิ้น";
 "Double-tap for hands-free" = "กดสองครั้งเพื่อใช้แบบแฮนด์ฟรี";
 "Downloading the speech model… %@" = "กำลังดาวน์โหลดโมเดลจำเสียงพูด… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "รับคีย์ API";
 "Hands-free" = "แฮนด์ฟรี";
 "Heard as" = "ได้ยินเป็น";
+"Help improve Waft" = "ช่วยปรับปรุง Waft";
 "History" = "ประวัติ";
 "Hold %@ to dictate" = "กด %@ ค้างไว้เพื่อป้อนตามคำบอก";
 "Hold %@" = "กด %@ ค้างไว้";
 "Hold or double-tap" = "กดค้างหรือกดสองครั้ง";
 "Hold" = "กดค้าง";
+"How often you use each feature, never your words or audio." = "ความถี่ที่คุณใช้แต่ละคุณสมบัติ ไม่มีคำพูดหรือเสียงของคุณ";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "ความถี่ที่คุณใช้แต่ละคุณสมบัติ เวอร์ชันของ Waft และ macOS และ ID แบบสุ่ม";
 "How to start" = "วิธีเริ่ม";
 "Included" = "รวมอยู่แล้ว";
 "Install Update…" = "ติดตั้งรายการอัปเดต…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "กดปุ่มที่จะใช้ หรือกด Esc เพื่อยกเลิก";
 "Press the shortcut to use, or Esc to cancel" = "กดปุ่มลัดที่จะใช้ หรือกด Esc เพื่อยกเลิก";
 "Previous page" = "หน้าก่อนนี้";
+"Privacy" = "ความเป็นส่วนตัว";
 "Provider" = "ผู้ให้บริการ";
 "Quit Waft" = "ออกจาก Waft";
 "Raw" = "ต้นฉบับ";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ในการตั้งค่าระบบ › แป้นพิมพ์ ให้ตั้ง “กดปุ่ม 🌐 เพื่อ” เป็น “ไม่ดำเนินการใดๆ”";
 "Settings…" = "การตั้งค่า…";
 "Setup needed" = "ต้องตั้งค่า";
+"Share anonymous usage data" = "แชร์ข้อมูลการใช้งานแบบไม่ระบุตัวตน";
+"Share" = "แชร์";
 "Shortcut" = "ปุ่มลัด";
 "Shortcuts" = "ปุ่มลัด";
 "Show History" = "แสดงประวัติ";
@@ -435,6 +444,8 @@
 "Website" = "เว็บไซต์";
 "Welcome to Waft" = "ยินดีต้อนรับสู่ Waft";
 "What Waft+ adds" = "สิ่งที่ Waft+ เพิ่มให้";
+"What is sent" = "สิ่งที่ส่ง";
+"What stays on this Mac" = "สิ่งที่อยู่บน Mac เครื่องนี้";
 "What the AI model is told to do with your text." = "สิ่งที่โมเดล AI ได้รับคำสั่งให้ทำกับข้อความของคุณ";
 "When off, Waft copies the text and you paste it yourself." = "ถ้าปิดตัวเลือกนี้ Waft จะคัดลอกข้อความไว้ให้คุณวางเอง";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "เมื่อโมเดลจำเสียงพูดพร้อมแล้ว ให้คลิกในช่อง กด %@ ค้างไว้ แล้วพูดว่า “สวัสดี Waft”";
@@ -450,12 +461,14 @@
 "You write" = "คุณเขียนว่า";
 "You're all set" = "พร้อมใช้งานแล้ว";
 "Your changes to these instructions are deleted." = "การเปลี่ยนแปลงที่คุณทำกับคำสั่งเหล่านี้จะถูกลบ";
+"Your choice" = "คุณเป็นผู้เลือก";
 "Your free trial has ended." = "ช่วงทดลองใช้ฟรีของคุณสิ้นสุดแล้ว";
 "Your mode" = "โหมดของคุณ";
 "Your modes" = "โหมดของคุณ";
 "Your own modes" = "โหมดของคุณเอง";
 "Your speech is recognized on this Mac." = "Mac เครื่องนี้แปลงเสียงพูดของคุณเป็นข้อความ";
 "Your words appear here" = "คำพูดของคุณจะปรากฏที่นี่";
+"Your words, audio, dictionary, and the names of apps and files." = "คำพูด เสียง พจนานุกรม และชื่อแอปและไฟล์ของคุณ";
 "add your %@ API key in Settings › AI Models" = "เพิ่มคีย์ API ของ %@ ในการตั้งค่า › โมเดล AI";
 "choose a local server and model in Settings › AI Models" = "เลือกเซิร์ฟเวอร์ในเครื่องและโมเดลในการตั้งค่า › โมเดล AI";
 "days in a row" = "วันติดต่อกัน";

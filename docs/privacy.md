@@ -16,8 +16,24 @@ Waft connects to these services, and only for these reasons:
 | GitHub | Checking for updates, unless you turn it off, and downloading them | A request for the update feed that names the Waft version |
 | The AI provider you chose: Claude, OpenAI, or your local server | Clean, Formal, Translate, your modes, **Try it**, edits by voice, and the translator | The recognized text, the selected text for an edit, or the text you translate or fix; the instructions; the spoken, source, and target languages that apply; your dictionary terms with a dictation; and the Claude or OpenAI API key |
 | Your local server | Settings › AI Models lists its models, and **Detect** looks for one on ports 11434, 1234, 8080, and 1337 of this Mac | Requests for its list of models, sent only to the address you set or those ports |
+| Waft's usage service at `api.waft.okoflow.com` | When Waft starts and every six hours while it runs, only after you agree to share usage data | The counts that [Usage data](#usage-data) lists |
 
 Raw and Light never use the network, and the translator detects languages on your Mac. Waft asks OpenAI not to store the response (`store: false`). Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's [API data controls](https://developers.openai.com/api/docs/guides/your-data) describe how each handles the text.
+
+## Usage data
+
+Waft asks once, in the setup guide, whether to share anonymous usage data, and sends nothing until you click **Share**. **Share anonymous usage data** in Settings › General changes the answer at any time.
+
+While sharing is on, Waft counts on your Mac how often you use each feature and sends each day's counts to its usage service. A report holds:
+
+- A random ID that Waft makes when you agree. It tells one installation from another and comes from nothing on your Mac, your license, or your accounts.
+- The day, the Waft version, the macOS version, and the app language.
+- The speech model, the AI provider (Claude, OpenAI, or a local server, without its address), and whether Waft+ is licensed, free in the beta, on trial, or expired.
+- How many dictations each mode ran, with all your own modes counted together, and how many edits by voice, shortcuts on selected text, translations in the translator, and file transcriptions.
+
+A report never holds what you said or typed, audio, dictionary terms, the names of apps or files, an API key, the license key, or your email. The service stores a report without the address it came from; Cloudflare, which hosts the service, handles that address to deliver the request and to limit how many one address sends.
+
+The counts wait in `usage.json` for a week at most. Turning sharing off deletes that file and the ID in it, so turning it on again starts a new ID. Reports that were already sent stay on the service, and with the ID gone from your Mac, nothing ties them to it.
 
 ## What Waft keeps
 
@@ -26,6 +42,7 @@ Raw and Light never use the network, and the translator detects languages on you
 | Settings, the app language, the trial start, and the updater's state | The `com.okoflow.waft` preferences domain |
 | Dictionary and snippets | `~/Library/Application Support/Waft/dictionary.json` |
 | Daily word, dictation, and time counts for the statistics, no text | `~/Library/Application Support/Waft/stats.json` |
+| The usage counts that wait to be sent and the random ID, only while you share [usage data](#usage-data) | `~/Library/Application Support/Waft/usage.json` |
 | History, with the mode and app of each dictation and the recognized text before a mode rewrote it, as long as **Keep dictations for** allows | `~/Library/Application Support/Waft/history.json` |
 | Speech model | `~/Library/Application Support/Waft/Models` |
 | The model compiled for your chip, and cached responses and cookies from update checks and model downloads | `~/Library/Caches/com.okoflow.waft`, `~/Library/HTTPStorages/com.okoflow.waft`, and `~/Library/HTTPStorages/com.okoflow.waft.binarycookies` |

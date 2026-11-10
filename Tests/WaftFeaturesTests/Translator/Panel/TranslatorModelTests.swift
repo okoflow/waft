@@ -11,12 +11,16 @@ struct TranslatorModelTests {
     func `translates the text after a pause in typing into the chosen language`() async throws {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian)
+        var usage: [UsageEvent] = []
+        translator.onUsage = { usage.append($0) }
 
         translator.input = "Привет"
 
         #expect(await Poll.until(timeout: .seconds(5)) { translator.output == "Hello." })
 
         let request = try #require(rewriter.requests.first)
+
+        #expect(usage == [.translation])
 
         #expect(rewriter.requests.count == 1)
         #expect(request.text == "Привет")

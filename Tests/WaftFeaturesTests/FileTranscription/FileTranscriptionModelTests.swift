@@ -19,15 +19,19 @@ struct FileTranscriptionModelTests {
     func `transcribes a file and reports progress until it finishes`() async {
         let transcriber = FakeTranscriber(file: .success(Self.transcript), holdsRequests: true)
         let transcription = await model(transcriber)
+        var usage: [UsageEvent] = []
+        transcription.onUsage = { usage.append($0) }
 
         transcription.transcribe(Self.file)
 
         #expect(transcription.phase == .reading(Self.file))
         #expect(await Poll.until(timeout: .seconds(5)) { transcription.phase == .transcribing(Self.file, 0.5) })
+        #expect(usage.isEmpty)
 
         transcriber.release()
 
         #expect(await Poll.until(timeout: .seconds(5)) { transcription.phase == .finished(Self.file, Self.transcript) })
+        #expect(usage == [.fileTranscription])
     }
 
     @Test

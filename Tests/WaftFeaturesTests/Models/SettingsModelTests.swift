@@ -29,4 +29,18 @@ struct SettingsModelTests {
 
         #expect(changeCount == 1)
     }
+
+    @Test
+    func `reports a change to sharing usage data`() {
+        var changeCount = 0
+        let settings = SettingsModel.inMemory()
+        settings.onUsageSharingChange = { changeCount += 1 }
+
+        settings.sharesUsage = false
+        settings.sharesUsage = false
+        settings.sharesUsage = true
+
+        #expect(changeCount == 2)
+        #expect(settings.settings.usageSharing == .allowed)
+    }
 }

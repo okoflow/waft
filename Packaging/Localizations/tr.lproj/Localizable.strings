@@ -45,6 +45,7 @@
 "Allow microphone access" = "Mikrofon erişimine izin verin";
 "Allowed" = "İzin verildi";
 "Allow…" = "İzin Ver…";
+"Anonymous usage data shows which features to work on next." = "Anonim kullanım verileri, bundan sonra hangi özellikler üzerinde çalışılacağını gösterir.";
 "Any AI model" = "İstediğiniz YZ modeli";
 "App language" = "Uygulama dili";
 "App" = "Uygulama";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Waft+’ı satın aldınız mı? Makbuz e-postanızdaki anahtarı yapıştırın.";
 "Buy for %@" = "Satın Al: %@";
 "Cancel" = "Vazgeç";
+"Change it anytime in Settings › General." = "Bunu istediğiniz zaman Ayarlar › Genel bölümünden değiştirebilirsiniz.";
 "Check Now" = "Şimdi Denetle";
 "Check for Updates…" = "Güncellemeleri Denetle…";
 "Check for updates automatically" = "Güncellemeleri otomatik olarak denetle";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Sözlük dosyası";
 "Dictionary" = "Sözlük";
 "Didn't catch that" = "Anlaşılamadı";
+"Don't Share" = "Paylaşma";
 "Done" = "Bitti";
 "Double-tap for hands-free" = "Eller serbest kullanım için iki kez basın";
 "Downloading the speech model… %@" = "Konuşma modeli indiriliyor… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "API anahtarı alın";
 "Hands-free" = "Eller serbest";
 "Heard as" = "Duyulan biçim";
+"Help improve Waft" = "Waft’ın gelişmesine yardım edin";
 "History" = "Geçmiş";
 "Hold %@ to dictate" = "Dikte için %@ tuşunu basılı tutun";
 "Hold %@" = "%@ tuşunu basılı tutun";
 "Hold or double-tap" = "Basılı tut ya da iki kez bas";
 "Hold" = "Basılı tut";
+"How often you use each feature, never your words or audio." = "Her özelliği ne sıklıkta kullandığınız; sözleriniz veya sesiniz asla.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Her özelliği ne sıklıkta kullandığınız, Waft ve macOS sürümleri ve rastgele bir kimlik.";
 "How to start" = "Başlatma yöntemi";
 "Included" = "Dahil";
 "Install Update…" = "Güncellemeyi Yükle…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Kullanılacak tuşa ya da vazgeçmek için Esc tuşuna basın";
 "Press the shortcut to use, or Esc to cancel" = "Kullanılacak kısayola ya da vazgeçmek için Esc tuşuna basın";
 "Previous page" = "Önceki sayfa";
+"Privacy" = "Gizlilik";
 "Provider" = "Sağlayıcı";
 "Quit Waft" = "Waft’tan Çık";
 "Raw" = "Ham";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sistem Ayarları › Klavye bölümünde “🌐 tuşuna basıldığında” ayarını “Hiçbir Şey Yapma” olarak belirleyin.";
 "Settings…" = "Ayarlar…";
 "Setup needed" = "Kurulum gerekli";
+"Share anonymous usage data" = "Anonim kullanım verilerini paylaş";
+"Share" = "Paylaş";
 "Shortcut" = "Kısayol";
 "Shortcuts" = "Kısayollar";
 "Show History" = "Geçmişi Göster";
@@ -435,6 +444,8 @@
 "Website" = "Web sitesi";
 "Welcome to Waft" = "Waft’a hoş geldiniz";
 "What Waft+ adds" = "Waft+ ile gelenler";
+"What is sent" = "Neler gönderilir";
+"What stays on this Mac" = "Bu Mac’te neler kalır";
 "What the AI model is told to do with your text." = "YZ modeline metninizle ne yapacağı söylenir.";
 "When off, Waft copies the text and you paste it yourself." = "Kapalıyken Waft metni kopyalar, siz de kendiniz yapıştırırsınız.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Konuşma modeli hazır olduğunda kutuyu tıklayın, %@ tuşunu basılı tutun ve “Merhaba, Waft” deyin.";
@@ -450,12 +461,14 @@
 "You write" = "Yazdığınız";
 "You're all set" = "Her şey hazır";
 "Your changes to these instructions are deleted." = "Bu talimatlarda yaptığınız değişiklikler silinir.";
+"Your choice" = "Seçim sizin";
 "Your free trial has ended." = "Ücretsiz deneme süreniz sona erdi.";
 "Your mode" = "Modunuz";
 "Your modes" = "Modlarınız";
 "Your own modes" = "Kendi modlarınız";
 "Your speech is recognized on this Mac." = "Konuşmanız bu Mac’te tanınır.";
 "Your words appear here" = "Sözcükleriniz burada görünür";
+"Your words, audio, dictionary, and the names of apps and files." = "Sözleriniz, sesiniz, sözlüğünüz ve uygulama ile dosya adları.";
 "add your %@ API key in Settings › AI Models" = "Ayarlar › YZ Modelleri bölümünde %@ API anahtarınızı ekleyin";
 "choose a local server and model in Settings › AI Models" = "Ayarlar › YZ Modelleri bölümünde yerel sunucu ve model seçin";
 "days in a row" = "gün üst üste";

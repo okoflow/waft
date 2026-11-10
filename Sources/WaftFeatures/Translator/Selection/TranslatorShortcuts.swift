@@ -6,6 +6,11 @@ final class TranslatorShortcuts {
     private let shortcuts: GlobalShortcutController
     private let selectionActions: SelectionActions
 
+    var onUsage: ((UsageEvent) -> Void)? {
+        get { selectionActions.onUsage }
+        set { selectionActions.onUsage = newValue }
+    }
+
     init(shortcuts: GlobalShortcutController, selectionActions: SelectionActions) {
         self.shortcuts = shortcuts
         self.selectionActions = selectionActions

@@ -45,6 +45,7 @@
 "Allow microphone access" = "Gi tilgang til mikrofonen";
 "Allowed" = "Tillatt";
 "Allow…" = "Tillat…";
+"Anonymous usage data shows which features to work on next." = "Anonyme bruksdata viser hvilke funksjoner det bør jobbes med videre.";
 "Any AI model" = "Valgfri KI-modell";
 "App language" = "Appspråk";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Har du kjøpt Waft+? Lim inn nøkkelen fra kvitteringen på e-post.";
 "Buy for %@" = "Kjøp for %@";
 "Cancel" = "Avbryt";
+"Change it anytime in Settings › General." = "Du kan endre dette når som helst i Innstillinger › Generelt.";
 "Check Now" = "Søk nå";
 "Check for Updates…" = "Søk etter oppdateringer…";
 "Check for updates automatically" = "Søk etter oppdateringer automatisk";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Ordbokfil";
 "Dictionary" = "Ordbok";
 "Didn't catch that" = "Ingen tale oppfattet";
+"Don't Share" = "Ikke del";
 "Done" = "Ferdig";
 "Double-tap for hands-free" = "Dobbelttrykk for håndfri bruk";
 "Downloading the speech model… %@" = "Laster ned talemodellen… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Skaff en API-nøkkel";
 "Hands-free" = "Håndfri";
 "Heard as" = "Oppfattet som";
+"Help improve Waft" = "Hjelp til med å forbedre Waft";
 "History" = "Logg";
 "Hold %@ to dictate" = "Hold nede %@ for å diktere";
 "Hold %@" = "Hold nede %@";
 "Hold or double-tap" = "Hold nede eller dobbelttrykk";
 "Hold" = "Hold nede";
+"How often you use each feature, never your words or audio." = "Hvor ofte du bruker hver funksjon, aldri ordene dine eller lyd.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Hvor ofte du bruker hver funksjon, versjonene av Waft og macOS og en tilfeldig ID.";
 "How to start" = "Slik starter du";
 "Included" = "Inkludert";
 "Install Update…" = "Installer oppdatering…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Trykk på tasten du vil bruke, eller Esc for å avbryte";
 "Press the shortcut to use, or Esc to cancel" = "Trykk på snarveien du vil bruke, eller Esc for å avbryte";
 "Previous page" = "Forrige side";
+"Privacy" = "Personvern";
 "Provider" = "Leverandør";
 "Quit Waft" = "Avslutt Waft";
 "Raw" = "Ordrett";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Sett «Trykk på 🌐-tasten for å» til «Ikke gjøre noe» i Systeminnstillinger › Tastatur.";
 "Settings…" = "Innstillinger…";
 "Setup needed" = "Oppsett kreves";
+"Share anonymous usage data" = "Del anonyme bruksdata";
+"Share" = "Del";
 "Shortcut" = "Snarvei";
 "Shortcuts" = "Snarveier";
 "Show History" = "Vis logg";
@@ -435,6 +444,8 @@
 "Website" = "Nettsted";
 "Welcome to Waft" = "Velkommen til Waft";
 "What Waft+ adds" = "Dette får du med Waft+";
+"What is sent" = "Hva som sendes";
+"What stays on this Mac" = "Hva som blir på denne Macen";
 "What the AI model is told to do with your text." = "Hva KI-modellen får beskjed om å gjøre med teksten din.";
 "When off, Waft copies the text and you paste it yourself." = "Når dette er slått av, kopierer Waft teksten, og du limer den inn selv.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Når talemodellen er klar, klikker du i feltet, holder nede %@ og sier «Hei, Waft».";
@@ -450,12 +461,14 @@
 "You write" = "Du skriver";
 "You're all set" = "Alt er klart";
 "Your changes to these instructions are deleted." = "Endringene dine i disse instruksjonene slettes.";
+"Your choice" = "Ditt valg";
 "Your free trial has ended." = "Den gratis prøveperioden er over.";
 "Your mode" = "Din modus";
 "Your modes" = "Dine moduser";
 "Your own modes" = "Egne moduser";
 "Your speech is recognized on this Mac." = "Talen din gjenkjennes på denne Macen.";
 "Your words appear here" = "Ordene dine vises her";
+"Your words, audio, dictionary, and the names of apps and files." = "Ordene dine, lyd, ordboken og navnene på apper og filer.";
 "add your %@ API key in Settings › AI Models" = "legg til API-nøkkelen for %@ i Innstillinger › KI-modeller";
 "choose a local server and model in Settings › AI Models" = "velg en lokal tjener og en modell i Innstillinger › KI-modeller";
 "days in a row" = "dager på rad";

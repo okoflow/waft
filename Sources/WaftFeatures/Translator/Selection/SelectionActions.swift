@@ -7,6 +7,8 @@ final class SelectionActions {
         case fix
     }
 
+    var onUsage: ((UsageEvent) -> Void)?
+
     private var task: Task<Void, Never>?
 
     private let processor: TranscriptProcessor
@@ -127,6 +129,8 @@ final class SelectionActions {
             await waitForShortcutRelease()
 
             await deliver(reworked, into: target)
+
+            onUsage?(.selectionAction)
         } catch {
             let reason = error.explanation(for: setup.provider)
 

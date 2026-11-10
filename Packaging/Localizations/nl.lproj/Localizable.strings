@@ -45,6 +45,7 @@
 "Allow microphone access" = "Geef toegang tot de microfoon";
 "Allowed" = "Toegestaan";
 "Allow…" = "Sta toe…";
+"Anonymous usage data shows which features to work on next." = "Anonieme gebruiksgegevens laten zien aan welke functies als volgende gewerkt moet worden.";
 "Any AI model" = "Elk AI-model";
 "App language" = "Taal van app";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Waft+ gekocht? Plak de sleutel uit je aankoopbevestiging.";
 "Buy for %@" = "Koop voor %@";
 "Cancel" = "Annuleer";
+"Change it anytime in Settings › General." = "Je kunt dit altijd wijzigen in Instellingen › Algemeen.";
 "Check Now" = "Zoek nu";
 "Check for Updates…" = "Zoek naar updates…";
 "Check for updates automatically" = "Zoek automatisch naar updates";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Woordenboekbestand";
 "Dictionary" = "Woordenboek";
 "Didn't catch that" = "Niets verstaan";
+"Don't Share" = "Deel niet";
 "Done" = "Gereed";
 "Double-tap for hands-free" = "Druk tweemaal voor handsfree";
 "Downloading the speech model… %@" = "Spraakmodel downloaden… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Vraag een API-sleutel aan";
 "Hands-free" = "Handsfree";
 "Heard as" = "Herkend als";
+"Help improve Waft" = "Help Waft te verbeteren";
 "History" = "Geschiedenis";
 "Hold %@ to dictate" = "Houd %@ ingedrukt om te dicteren";
 "Hold %@" = "Houd %@ ingedrukt";
 "Hold or double-tap" = "Houden of tweemaal drukken";
 "Hold" = "Ingedrukt houden";
+"How often you use each feature, never your words or audio." = "Hoe vaak je elke functie gebruikt, nooit je woorden of audio.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Hoe vaak je elke functie gebruikt, de versies van Waft en macOS en een willekeurige ID.";
 "How to start" = "Zo start je";
 "Included" = "Inbegrepen";
 "Install Update…" = "Installeer update…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Druk op de gewenste toets of op Esc om te annuleren";
 "Press the shortcut to use, or Esc to cancel" = "Druk op de gewenste sneltoets of op Esc om te annuleren";
 "Previous page" = "Vorige pagina";
+"Privacy" = "Privacy";
 "Provider" = "Aanbieder";
 "Quit Waft" = "Stop Waft";
 "Raw" = "Letterlijk";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Zet in Systeeminstellingen › Toetsenbord ‘Druk op 🌐-toets’ op ‘Doe niets’.";
 "Settings…" = "Instellingen…";
 "Setup needed" = "Configuratie vereist";
+"Share anonymous usage data" = "Deel anonieme gebruiksgegevens";
+"Share" = "Deel";
 "Shortcut" = "Sneltoets";
 "Shortcuts" = "Sneltoetsen";
 "Show History" = "Toon geschiedenis";
@@ -435,6 +444,8 @@
 "Website" = "Website";
 "Welcome to Waft" = "Welkom bij Waft";
 "What Waft+ adds" = "Wat Waft+ toevoegt";
+"What is sent" = "Wat wordt verstuurd";
+"What stays on this Mac" = "Wat op deze Mac blijft";
 "What the AI model is told to do with your text." = "Wat het AI-model met je tekst moet doen.";
 "When off, Waft copies the text and you paste it yourself." = "Als dit uit staat, kopieert Waft de tekst en plak je hem zelf.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Zodra het spraakmodel gereed is, klik je in het veld, houd je %@ ingedrukt en zeg je ‘Hallo, Waft’.";
@@ -450,12 +461,14 @@
 "You write" = "Jij schrijft";
 "You're all set" = "Alles is klaar";
 "Your changes to these instructions are deleted." = "Je wijzigingen in deze instructies worden verwijderd.";
+"Your choice" = "Jouw keuze";
 "Your free trial has ended." = "Je gratis proefperiode is afgelopen.";
 "Your mode" = "Eigen modus";
 "Your modes" = "Eigen modi";
 "Your own modes" = "Eigen modi";
 "Your speech is recognized on this Mac." = "Je spraak wordt op deze Mac herkend.";
 "Your words appear here" = "Je woorden verschijnen hier";
+"Your words, audio, dictionary, and the names of apps and files." = "Je woorden, audio, woordenboek en de namen van apps en bestanden.";
 "add your %@ API key in Settings › AI Models" = "voeg je API-sleutel van %@ toe in Instellingen › AI-modellen";
 "choose a local server and model in Settings › AI Models" = "kies een lokale server en een model in Instellingen › AI-modellen";
 "days in a row" = "dagen op rij";

@@ -45,6 +45,7 @@
 "Allow microphone access" = "اسمح بالوصول إلى الميكروفون";
 "Allowed" = "مسموح به";
 "Allow…" = "السماح…";
+"Anonymous usage data shows which features to work on next." = "تُظهر بيانات الاستخدام المجهولة الميزات التي ينبغي العمل عليها لاحقًا.";
 "Any AI model" = "أي نموذج ذكاء اصطناعي";
 "App language" = "لغة التطبيق";
 "App" = "التطبيق";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "هل اشتريت Waft+‎؟ الصق المفتاح من رسالة الإيصال.";
 "Buy for %@" = "شراء مقابل %@";
 "Cancel" = "إلغاء";
+"Change it anytime in Settings › General." = "يمكنك تغيير ذلك في أي وقت من الإعدادات › عام.";
 "Check Now" = "التحقق الآن";
 "Check for Updates…" = "التحقق من وجود تحديثات…";
 "Check for updates automatically" = "التحقق من وجود تحديثات تلقائيًا";
@@ -110,6 +112,7 @@
 "Dictionary file" = "ملف القاموس";
 "Dictionary" = "القاموس";
 "Didn't catch that" = "لم يُسمع أي كلام";
+"Don't Share" = "عدم المشاركة";
 "Done" = "تم";
 "Double-tap for hands-free" = "اضغط مرتين للإملاء دون استخدام اليدين";
 "Downloading the speech model… %@" = "يجري تنزيل نموذج الكلام… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "الحصول على مفتاح API";
 "Hands-free" = "دون استخدام اليدين";
 "Heard as" = "يُسمع على أنه";
+"Help improve Waft" = "ساعد في تحسين Waft";
 "History" = "سجل التاريخ";
 "Hold %@ to dictate" = "اضغط مطولًا على %@ للإملاء";
 "Hold %@" = "اضغط مطولًا على %@";
 "Hold or double-tap" = "الضغط مطولًا أو مرتين";
 "Hold" = "الضغط مطولًا";
+"How often you use each feature, never your words or audio." = "عدد مرات استخدامك لكل ميزة، وليس كلماتك أو صوتك أبدًا.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "عدد مرات استخدامك لكل ميزة، وإصدارا Waft و macOS، ومعرّف عشوائي.";
 "How to start" = "طريقة البدء";
 "Included" = "مُضمَّن";
 "Install Update…" = "تثبيت التحديث…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "اضغط على المفتاح المراد استخدامه، أو على Esc للإلغاء";
 "Press the shortcut to use, or Esc to cancel" = "اضغط على الاختصار المراد استخدامه، أو على Esc للإلغاء";
 "Previous page" = "الصفحة السابقة";
+"Privacy" = "الخصوصية";
 "Provider" = "المزود";
 "Quit Waft" = "إنهاء Waft";
 "Raw" = "حرفي";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "في إعدادات النظام › لوحة المفاتيح، اضبط \"بالضغط على مفتاح 🌐، يتم\" على \"عدم القيام بأي إجراء\".";
 "Settings…" = "الإعدادات…";
 "Setup needed" = "يلزم الإعداد";
+"Share anonymous usage data" = "مشاركة بيانات الاستخدام المجهولة";
+"Share" = "مشاركة";
 "Shortcut" = "الاختصار";
 "Shortcuts" = "الاختصارات";
 "Show History" = "إظهار سجل التاريخ";
@@ -435,6 +444,8 @@
 "Website" = "موقع الويب";
 "Welcome to Waft" = "مرحبًا بك في Waft";
 "What Waft+ adds" = "ما يضيفه Waft+‎";
+"What is sent" = "ما يتم إرساله";
+"What stays on this Mac" = "ما يبقى على هذا الـ Mac";
 "What the AI model is told to do with your text." = "ما يُطلب من نموذج الذكاء الاصطناعي فعله بنصك.";
 "When off, Waft copies the text and you paste it yourself." = "عند الإيقاف، ينسخ Waft النص لتلصقه بنفسك.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "عندما يصبح نموذج الكلام جاهزًا، انقر على الحقل، واضغط مطولًا على %@، وقل \"مرحبًا يا Waft\".";
@@ -450,12 +461,14 @@
 "You write" = "ما تكتبه";
 "You're all set" = "كل شيء جاهز";
 "Your changes to these instructions are deleted." = "سيتم حذف التغييرات التي أجريتها على هذه التعليمات.";
+"Your choice" = "القرار لك";
 "Your free trial has ended." = "انتهت تجربتك المجانية.";
 "Your mode" = "نمطك";
 "Your modes" = "أنماطك";
 "Your own modes" = "أنماطك الخاصة";
 "Your speech is recognized on this Mac." = "يتعرف هذا الـ Mac على كلامك.";
 "Your words appear here" = "ستظهر كلماتك هنا";
+"Your words, audio, dictionary, and the names of apps and files." = "كلماتك وصوتك وقاموسك وأسماء التطبيقات والملفات.";
 "add your %@ API key in Settings › AI Models" = "أضف مفتاح API من %@ في الإعدادات › نماذج الذكاء الاصطناعي";
 "choose a local server and model in Settings › AI Models" = "اختر خادمًا محليًا ونموذجًا في الإعدادات › نماذج الذكاء الاصطناعي";
 "days in a row" = "الأيام المتتالية";

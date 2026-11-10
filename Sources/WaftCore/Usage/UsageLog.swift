@@ -1,0 +1,64 @@
+package import Foundation
+
+package struct UsageLog: Codable, Equatable, Sendable {
+    package struct Day: Codable, Equatable, Sendable {
+        package fileprivate(set) var counts = UsageCounts()
+        package fileprivate(set) var isSent = false
+    }
+
+    private static let keptDays = 7
+
+    package let installation: UUID
+    package private(set) var days: [String: Day] = [:]
+
+    package var unsentDays: [String] {
+        days.filter { !$0.value.isSent }.keys.sorted()
+    }
+
+    package init(installation: UUID) {
+        self.installation = installation
+    }
+
+    private static func oldestKey(on date: Date, calendar: Calendar) -> String {
+        guard let oldest = calendar.date(byAdding: .day, value: -keptDays, to: date) else { return date.dayKey(in: calendar) }
+
+        return oldest.dayKey(in: calendar)
+    }
+
+    private static func keeps(_ day: Day, of key: String, today: String, oldest: String) -> Bool {
+        guard key >= oldest else { return false }
+        guard key != today else { return true }
+
+        return !day.isSent
+    }
+
+    package mutating func startDay(on date: Date, calendar: Calendar = .current) {
+        let today = date.dayKey(in: calendar)
+        let oldest = Self.oldestKey(on: date, calendar: calendar)
+
+        days = days.filter { Self.keeps($0.value, of: $0.key, today: today, oldest: oldest) }
+
+        if days[today] == nil {
+            days[today] = Day()
+        }
+    }
+
+    package mutating func record(_ event: UsageEvent, on date: Date, calendar: Calendar = .current) {
+        let key = date.dayKey(in: calendar)
+
+        var day = days[key, default: Day()]
+
+        day.counts.count(event)
+        day.isSent = false
+
+        days[key] = day
+    }
+
+    package mutating func markSent(_ key: String, with counts: UsageCounts) {
+        guard var day = days[key], day.counts == counts else { return }
+
+        day.isSent = true
+
+        days[key] = day
+    }
+}

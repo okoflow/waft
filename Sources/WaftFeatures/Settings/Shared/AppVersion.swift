@@ -1,11 +1,13 @@
 import Foundation
 
 enum AppVersion {
-    static var title: String {
-        guard let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
-            return String(localized: "Development build")
-        }
+    static var number: String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
 
-        return String(localized: "Version \(version)")
+    static var title: String {
+        guard let number else { return String(localized: "Development build") }
+
+        return String(localized: "Version \(number)")
     }
 }

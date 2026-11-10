@@ -4,7 +4,11 @@ import WaftCore
 
 struct OnboardingModelStepsTests {
     @Test(arguments: [
-        ([Permission: PermissionStatus](), false, OnboardingModel.Step.allCases),
+        (
+            [Permission: PermissionStatus](),
+            false,
+            [.welcome, .microphone, .accessibility, .practice, .done] as [OnboardingModel.Step],
+        ),
         ([.microphone: .granted, .accessibility: .granted], false, [.welcome, .practice, .done]),
         ([.accessibility: .granted], true, [.microphone]),
     ])
@@ -41,6 +45,6 @@ struct OnboardingModelStepsTests {
     }
 
     private func model(_ permissions: FakePermissionProvider) -> OnboardingModel {
-        OnboardingModel(permissions: PermissionMonitor(provider: permissions))
+        OnboardingModel(permissions: PermissionMonitor(provider: permissions), settings: .inMemory(usageSharing: .declined))
     }
 }

@@ -29,6 +29,7 @@ package struct Settings: Codable, Equatable, Sendable {
         case showsMenuBarIcon
         case microphoneID
         case hasCompletedSetup
+        case usageSharing
     }
 
     package var mode = Mode.light
@@ -56,6 +57,7 @@ package struct Settings: Codable, Equatable, Sendable {
     package var showsMenuBarIcon = true
     package var microphoneID: String?
     package var hasCompletedSetup = false
+    package var usageSharing = UsageSharing.undecided
 
     package init(languages: LanguageSelection) {
         self.languages = languages
@@ -101,6 +103,7 @@ package struct Settings: Codable, Equatable, Sendable {
         showsMenuBarIcon = container.decode(.showsMenuBarIcon, default: showsMenuBarIcon)
         microphoneID = container.decodeIfValid(.microphoneID)
         hasCompletedSetup = container.decode(.hasCompletedSetup, default: hasCompletedSetup)
+        usageSharing = container.decode(.usageSharing, default: usageSharing)
 
         dropMissingCustomModes()
     }

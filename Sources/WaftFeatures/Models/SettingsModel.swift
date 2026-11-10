@@ -15,6 +15,7 @@ final class SettingsModel {
     @ObservationIgnored var onSpeechModelChange: (() -> Void)?
     @ObservationIgnored var onHistoryLimitsChange: (() -> Void)?
     @ObservationIgnored var onShortcutsChange: (() -> Void)?
+    @ObservationIgnored var onUsageSharingChange: (() -> Void)?
 
     private var isLoginItemEnabled: Bool
 
@@ -67,6 +68,10 @@ final class SettingsModel {
 
         if settings.shortcuts != oldValue.shortcuts {
             onShortcutsChange?()
+        }
+
+        if settings.usageSharing != oldValue.usageSharing {
+            onUsageSharingChange?()
         }
     }
 }

@@ -45,6 +45,7 @@
 "Allow microphone access" = "マイクへのアクセスを許可";
 "Allowed" = "許可済み";
 "Allow…" = "許可…";
+"Anonymous usage data shows which features to work on next." = "匿名の使用状況データは、次に取り組むべき機能を知る手がかりになります。";
 "Any AI model" = "お好みのAIモデル";
 "App language" = "アプリの言語";
 "App" = "アプリ";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Waft+を購入済みの場合は、領収書メールに記載されたキーをペーストしてください。";
 "Buy for %@" = "%@で購入";
 "Cancel" = "キャンセル";
+"Change it anytime in Settings › General." = "「設定」›「一般」でいつでも変更できます。";
 "Check Now" = "今すぐ確認";
 "Check for Updates…" = "アップデートを確認…";
 "Check for updates automatically" = "アップデートを自動的に確認";
@@ -110,6 +112,7 @@
 "Dictionary file" = "辞書ファイル";
 "Dictionary" = "辞書";
 "Didn't catch that" = "聞き取れませんでした";
+"Don't Share" = "共有しない";
 "Done" = "完了";
 "Double-tap for hands-free" = "2回押してハンズフリー";
 "Downloading the speech model… %@" = "音声認識モデルをダウンロード中… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "APIキーを取得";
 "Hands-free" = "ハンズフリー";
 "Heard as" = "聞き間違い";
+"Help improve Waft" = "Waftの改善に協力";
 "History" = "履歴";
 "Hold %@ to dictate" = "%@キーを押したまま音声入力";
 "Hold %@" = "%@キーを押し続ける";
 "Hold or double-tap" = "長押しまたは2回押し";
 "Hold" = "長押し";
+"How often you use each feature, never your words or audio." = "各機能の使用回数のみ。話した内容や音声は含まれません。";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "各機能の使用回数、WaftとmacOSのバージョン、ランダムなID。";
 "How to start" = "開始方法";
 "Included" = "利用可能";
 "Install Update…" = "アップデートをインストール…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "使用するキーを押すか、Escでキャンセルします";
 "Press the shortcut to use, or Esc to cancel" = "使用するショートカットを押すか、Escでキャンセルします";
 "Previous page" = "前のページ";
+"Privacy" = "プライバシー";
 "Provider" = "プロバイダ";
 "Quit Waft" = "Waftを終了";
 "Raw" = "そのまま";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "「システム設定」›「キーボード」で「🌐キーを押して」を「何もしない」に設定してください。";
 "Settings…" = "設定…";
 "Setup needed" = "セットアップが必要です";
+"Share anonymous usage data" = "匿名の使用状況データを共有";
+"Share" = "共有";
 "Shortcut" = "ショートカット";
 "Shortcuts" = "ショートカット";
 "Show History" = "履歴を表示";
@@ -435,6 +444,8 @@
 "Website" = "Webサイト";
 "Welcome to Waft" = "Waftへようこそ";
 "What Waft+ adds" = "Waft+で追加される機能";
+"What is sent" = "送信されるもの";
+"What stays on this Mac" = "このMacに残るもの";
 "What the AI model is told to do with your text." = "テキストをどう扱うかをAIモデルに伝える指示です。";
 "When off, Waft copies the text and you paste it yourself." = "オフにすると、Waftはテキストをコピーするだけになり、ペーストは手動で行います。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "音声認識モデルの準備ができたら、入力欄をクリックし、%@キーを押したまま「こんにちは、Waft」と話してください。";
@@ -450,12 +461,14 @@
 "You write" = "入力した内容";
 "You're all set" = "準備ができました";
 "Your changes to these instructions are deleted." = "この指示への変更は削除されます。";
+"Your choice" = "選ぶのはあなた";
 "Your free trial has ended." = "無料トライアルは終了しました。";
 "Your mode" = "自分のモード";
 "Your modes" = "自分のモード";
 "Your own modes" = "自分だけのモード";
 "Your speech is recognized on this Mac." = "音声はこのMac上で認識されます。";
 "Your words appear here" = "話した言葉がここに表示されます";
+"Your words, audio, dictionary, and the names of apps and files." = "話した内容、音声、辞書、アプリやファイルの名前。";
 "add your %@ API key in Settings › AI Models" = "「設定」›「AIモデル」で%@のAPIキーを追加してください";
 "choose a local server and model in Settings › AI Models" = "「設定」›「AIモデル」でローカルサーバとモデルを選択してください";
 "days in a row" = "連続日数";

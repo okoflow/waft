@@ -45,6 +45,7 @@
 "Allow microphone access" = "Дозвольте доступ до мікрофона";
 "Allowed" = "Дозволено";
 "Allow…" = "Дозволити…";
+"Anonymous usage data shows which features to work on next." = "Анонімні дані про використання показують, над якими функціями працювати далі.";
 "Any AI model" = "Будь-яка модель ШІ";
 "App language" = "Мова програми";
 "App" = "Програма";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Уже придбали Waft+? Вставте ключ із листа з квитанцією.";
 "Buy for %@" = "Купити за %@";
 "Cancel" = "Скасувати";
+"Change it anytime in Settings › General." = "Це можна змінити будь-коли в Параметрах › Загальні.";
 "Check Now" = "Перевірити зараз";
 "Check for Updates…" = "Перевірити наявність оновлень…";
 "Check for updates automatically" = "Перевіряти оновлення автоматично";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Файл словника";
 "Dictionary" = "Словник";
 "Didn't catch that" = "Не вдалося розчути";
+"Don't Share" = "Не ділитися";
 "Done" = "Готово";
 "Double-tap for hands-free" = "Двічі натисніть, щоб диктувати без рук";
 "Downloading the speech model… %@" = "Викачування моделі мовлення… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Отримати ключ API";
 "Hands-free" = "Без рук";
 "Heard as" = "Розпізнається як";
+"Help improve Waft" = "Допоможіть покращити Waft";
 "History" = "Історія";
 "Hold %@ to dictate" = "Утримуйте %@, щоб диктувати";
 "Hold %@" = "Утримуйте %@";
 "Hold or double-tap" = "Утримувати або двічі натиснути";
 "Hold" = "Утримувати";
+"How often you use each feature, never your words or audio." = "Лише те, як часто ви користуєтеся кожною функцією. Ваші слова й аудіо не передаються.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Як часто ви користуєтеся кожною функцією, версії Waft і macOS та випадковий ідентифікатор.";
 "How to start" = "Як почати";
 "Included" = "Доступно";
 "Install Update…" = "Інсталювати оновлення…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Натисніть потрібну клавішу або Esc, щоб скасувати";
 "Press the shortcut to use, or Esc to cancel" = "Натисніть потрібну комбінацію клавіш або Esc, щоб скасувати";
 "Previous page" = "Попередня сторінка";
+"Privacy" = "Приватність";
 "Provider" = "Постачальник";
 "Quit Waft" = "Завершити Waft";
 "Raw" = "Як є";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "У Системних параметрах › Клавіатура для «Натискати клавішу 🌐, щоб» виберіть «нічого не робити».";
 "Settings…" = "Параметри…";
 "Setup needed" = "Потрібне налаштування";
+"Share anonymous usage data" = "Ділитися анонімними даними про використання";
+"Share" = "Ділитися";
 "Shortcut" = "Комбінація клавіш";
 "Shortcuts" = "Комбінації клавіш";
 "Show History" = "Показати історію";
@@ -435,6 +444,8 @@
 "Website" = "Вебсайт";
 "Welcome to Waft" = "Вітаємо в Waft";
 "What Waft+ adds" = "Що дає Waft+";
+"What is sent" = "Що надсилається";
+"What stays on this Mac" = "Що залишається на цьому Mac";
 "What the AI model is told to do with your text." = "Що модель ШІ має робити з вашим текстом.";
 "When off, Waft copies the text and you paste it yourself." = "Якщо вимкнено, Waft копіює текст, а вставляєте його ви.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Коли модель мовлення буде готова, клацніть у полі, утримуйте %@ і скажіть «Привіт, Waft».";
@@ -450,12 +461,14 @@
 "You write" = "Ви пишете";
 "You're all set" = "Усе готово";
 "Your changes to these instructions are deleted." = "Ваші зміни в цих інструкціях буде видалено.";
+"Your choice" = "Вибір за вами";
 "Your free trial has ended." = "Безкоштовний пробний період закінчився.";
 "Your mode" = "Ваш режим";
 "Your modes" = "Ваші режими";
 "Your own modes" = "Власні режими";
 "Your speech is recognized on this Mac." = "Мовлення розпізнається на цьому Mac.";
 "Your words appear here" = "Тут зʼявляться ваші слова";
+"Your words, audio, dictionary, and the names of apps and files." = "Ваші слова, аудіо, словник, назви програм і файлів.";
 "add your %@ API key in Settings › AI Models" = "додайте ключ API %@ у Параметрах › Моделі ШІ";
 "choose a local server and model in Settings › AI Models" = "виберіть локальний сервер і модель у Параметрах › Моделі ШІ";
 "days in a row" = "дн. поспіль";

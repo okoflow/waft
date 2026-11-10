@@ -45,6 +45,7 @@
 "Allow microphone access" = "מתן גישה למיקרופון";
 "Allowed" = "מאושר";
 "Allow…" = "אישור…";
+"Anonymous usage data shows which features to work on next." = "נתוני שימוש אנונימיים מראים על אילו תכונות כדאי לעבוד בהמשך.";
 "Any AI model" = "כל מודל בינה מלאכותית";
 "App language" = "שפת היישום";
 "App" = "יישום";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "כבר רכשת את Waft+‎? יש להדביק את המפתח מהקבלה שנשלחה בדוא״ל.";
 "Buy for %@" = "רכישה תמורת %@";
 "Cancel" = "ביטול";
+"Change it anytime in Settings › General." = "אפשר לשנות זאת בכל עת ב״הגדרות״ › ״כללי״.";
 "Check Now" = "חיפוש כעת";
 "Check for Updates…" = "חיפוש עדכונים…";
 "Check for updates automatically" = "חיפוש עדכונים באופן אוטומטי";
@@ -110,6 +112,7 @@
 "Dictionary file" = "קובץ המילון";
 "Dictionary" = "מילון";
 "Didn't catch that" = "לא זוהה דיבור";
+"Don't Share" = "לא לשתף";
 "Done" = "סיום";
 "Double-tap for hands-free" = "לחיצה כפולה להכתבה ללא ידיים";
 "Downloading the speech model… %@" = "מוריד את מודל זיהוי הדיבור… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "קבלת מפתח API";
 "Hands-free" = "ללא ידיים";
 "Heard as" = "מזוהה בתור";
+"Help improve Waft" = "עזרו לשפר את Waft";
 "History" = "היסטוריה";
 "Hold %@ to dictate" = "יש להחזיק את %@ כדי להכתיב";
 "Hold %@" = "לחיצה ארוכה על %@";
 "Hold or double-tap" = "לחיצה ארוכה או כפולה";
 "Hold" = "לחיצה ארוכה";
+"How often you use each feature, never your words or audio." = "באיזו תדירות נעשה שימוש בכל תכונה, לעולם לא המילים או השמע שלך.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "באיזו תדירות נעשה שימוש בכל תכונה, גרסאות Waft ו-macOS ומזהה אקראי.";
 "How to start" = "אופן ההפעלה";
 "Included" = "כלול";
 "Install Update…" = "התקנת העדכון…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "יש ללחוץ על המקש הרצוי, או על Esc לביטול";
 "Press the shortcut to use, or Esc to cancel" = "יש ללחוץ על הקיצור הרצוי, או על Esc לביטול";
 "Previous page" = "העמוד הקודם";
+"Privacy" = "פרטיות";
 "Provider" = "ספק";
 "Quit Waft" = "סיום Waft";
 "Raw" = "גולמי";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "ב״הגדרות המערכת״ › ״מקלדת״ יש להגדיר את ״לחיצה על המקש 🌐״ לאפשרות ״לא לבצע כל פעולה״.";
 "Settings…" = "הגדרות…";
 "Setup needed" = "נדרשת הגדרה";
+"Share anonymous usage data" = "שיתוף נתוני שימוש אנונימיים";
+"Share" = "שיתוף";
 "Shortcut" = "קיצור";
 "Shortcuts" = "קיצורים";
 "Show History" = "הצגת ההיסטוריה";
@@ -435,6 +444,8 @@
 "Website" = "אתר אינטרנט";
 "Welcome to Waft" = "ברוכים הבאים אל Waft";
 "What Waft+ adds" = "מה Waft+‎ מוסיף";
+"What is sent" = "מה נשלח";
+"What stays on this Mac" = "מה נשאר ב-Mac זה";
 "What the AI model is told to do with your text." = "מה מודל הבינה המלאכותית מתבקש לעשות עם המלל שלך.";
 "When off, Waft copies the text and you paste it yourself." = "כשהאפשרות כבויה, Waft מעתיק את המלל ויש להדביק אותו ידנית.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "כשמודל זיהוי הדיבור יהיה מוכן, יש ללחוץ על התיבה, להחזיק את %@ ולומר ״שלום, Waft״.";
@@ -450,12 +461,14 @@
 "You write" = "המלל שלך";
 "You're all set" = "הכול מוכן";
 "Your changes to these instructions are deleted." = "השינויים שלך בהוראות אלה יימחקו.";
+"Your choice" = "הבחירה שלך";
 "Your free trial has ended." = "תקופת הניסיון ללא תשלום הסתיימה.";
 "Your mode" = "המצב שלך";
 "Your modes" = "המצבים שלך";
 "Your own modes" = "מצבים משלך";
 "Your speech is recognized on this Mac." = "הדיבור שלך מזוהה ב-Mac זה.";
 "Your words appear here" = "המילים שלך יופיעו כאן";
+"Your words, audio, dictionary, and the names of apps and files." = "המילים, השמע, המילון ושמות היישומים והקבצים שלך.";
 "add your %@ API key in Settings › AI Models" = "יש להוסיף את מפתח ה-API של %@ ב״הגדרות״ › ״מודלי בינה מלאכותית״";
 "choose a local server and model in Settings › AI Models" = "יש לבחור שרת מקומי ומודל ב״הגדרות״ › ״מודלי בינה מלאכותית״";
 "days in a row" = "ימים ברצף";

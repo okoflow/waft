@@ -45,6 +45,7 @@
 "Allow microphone access" = "마이크 접근 허용";
 "Allowed" = "허용됨";
 "Allow…" = "허용…";
+"Anonymous usage data shows which features to work on next." = "익명 사용 데이터는 다음에 어떤 기능을 개선할지 알려 줍니다.";
 "Any AI model" = "원하는 AI 모델";
 "App language" = "앱 언어";
 "App" = "앱";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Waft+를 구입하셨나요? 영수증 이메일에 있는 키를 붙여넣으세요.";
 "Buy for %@" = "%@에 구입";
 "Cancel" = "취소";
+"Change it anytime in Settings › General." = "설정 › 일반에서 언제든지 변경할 수 있습니다.";
 "Check Now" = "지금 확인";
 "Check for Updates…" = "업데이트 확인…";
 "Check for updates automatically" = "자동으로 업데이트 확인";
@@ -110,6 +112,7 @@
 "Dictionary file" = "사전 파일";
 "Dictionary" = "사전";
 "Didn't catch that" = "알아듣지 못했습니다";
+"Don't Share" = "공유 안 함";
 "Done" = "완료";
 "Double-tap for hands-free" = "두 번 눌러 핸즈프리로 사용";
 "Downloading the speech model… %@" = "음성 인식 모델을 다운로드하는 중… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "API 키 받기";
 "Hands-free" = "핸즈프리";
 "Heard as" = "잘못 인식된 표기";
+"Help improve Waft" = "Waft 개선에 참여";
 "History" = "기록";
 "Hold %@ to dictate" = "%@ 키를 길게 눌러 받아쓰기";
 "Hold %@" = "%@ 키 길게 누르기";
 "Hold or double-tap" = "길게 또는 두 번 누르기";
 "Hold" = "길게 누르기";
+"How often you use each feature, never your words or audio." = "각 기능의 사용 횟수만 보내며, 말한 내용이나 오디오는 보내지 않습니다.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "각 기능의 사용 횟수, Waft 및 macOS 버전, 임의의 ID.";
 "How to start" = "시작 방법";
 "Included" = "사용 가능";
 "Install Update…" = "업데이트 설치…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "사용할 키를 누르거나 Esc를 눌러 취소하세요";
 "Press the shortcut to use, or Esc to cancel" = "사용할 단축키를 누르거나 Esc를 눌러 취소하세요";
 "Previous page" = "이전 페이지";
+"Privacy" = "개인정보 보호";
 "Provider" = "제공업체";
 "Quit Waft" = "Waft 종료";
 "Raw" = "원문";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "시스템 설정 › 키보드에서 ‘🌐 키를 누를 때 실행할 동작’을 ‘안 함’으로 설정하세요.";
 "Settings…" = "설정…";
 "Setup needed" = "설정 필요";
+"Share anonymous usage data" = "익명 사용 데이터 공유";
+"Share" = "공유";
 "Shortcut" = "단축키";
 "Shortcuts" = "단축키";
 "Show History" = "기록 보기";
@@ -435,6 +444,8 @@
 "Website" = "웹사이트";
 "Welcome to Waft" = "Waft에 오신 것을 환영합니다";
 "What Waft+ adds" = "Waft+로 추가되는 기능";
+"What is sent" = "전송되는 항목";
+"What stays on this Mac" = "이 Mac에 남는 항목";
 "What the AI model is told to do with your text." = "AI 모델이 텍스트로 무엇을 할지 알려 주는 지시문입니다.";
 "When off, Waft copies the text and you paste it yourself." = "끄면 Waft가 텍스트를 복사만 하며, 붙여넣기는 직접 해야 합니다.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "음성 인식 모델이 준비되면 입력란을 클릭하고 %@ 키를 길게 누른 채 “안녕하세요, Waft”라고 말하세요.";
@@ -450,12 +461,14 @@
 "You write" = "입력한 내용";
 "You're all set" = "모든 준비가 끝났습니다";
 "Your changes to these instructions are deleted." = "이 지시문에 대한 변경 사항이 삭제됩니다.";
+"Your choice" = "선택은 사용자의 몫";
 "Your free trial has ended." = "무료 체험이 종료되었습니다.";
 "Your mode" = "나만의 모드";
 "Your modes" = "나만의 모드";
 "Your own modes" = "나만의 모드";
 "Your speech is recognized on this Mac." = "음성은 이 Mac에서 인식됩니다.";
 "Your words appear here" = "여기에 말한 내용이 나타납니다";
+"Your words, audio, dictionary, and the names of apps and files." = "말한 내용, 오디오, 사전, 앱 및 파일 이름.";
 "add your %@ API key in Settings › AI Models" = "설정 › AI 모델에서 %@ API 키를 추가하세요";
 "choose a local server and model in Settings › AI Models" = "설정 › AI 모델에서 로컬 서버와 모델을 선택하세요";
 "days in a row" = "연속 일수";
