@@ -201,7 +201,7 @@ final class HUDController {
         messageTask?.cancel()
 
         messageTask = Task { [weak self] in
-            guard await Task.slept(for: duration) else { return }
+            guard await Task.slept(for: duration), !Task.isCancelled else { return }
 
             self?.messageDidExpire()
         }

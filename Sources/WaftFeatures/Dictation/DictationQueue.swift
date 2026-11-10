@@ -195,7 +195,7 @@ final class DictationQueue {
         transcriptExpiry?.cancel()
 
         transcriptExpiry = Task { [weak self, transcriptLifetime] in
-            guard await Task.slept(for: transcriptLifetime) else { return }
+            guard await Task.slept(for: transcriptLifetime), !Task.isCancelled else { return }
 
             self?.latestTranscript = nil
         }
@@ -249,7 +249,7 @@ extension DictationQueue {
         failedJobExpiry?.cancel()
 
         failedJobExpiry = Task { [weak self] in
-            guard await Task.slept(for: Self.retryLifetime) else { return }
+            guard await Task.slept(for: Self.retryLifetime), !Task.isCancelled else { return }
 
             self?.failedJob = nil
         }

@@ -203,7 +203,7 @@ final class TranslatorModel {
         }
 
         task = Task { [weak self] in
-            guard await Task.slept(for: pause) else { return }
+            guard await Task.slept(for: pause), !Task.isCancelled else { return }
 
             await self?.translate(text)
         }
