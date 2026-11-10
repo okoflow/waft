@@ -7,12 +7,6 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
     private let accessory: Accessory?
     private let content: Content
 
-    private var hasHeader: Bool {
-        guard title == nil, subtitle == nil else { return true }
-
-        return accessory != nil
-    }
-
     init(
         title: LocalizedStringKey?,
         subtitle: LocalizedStringKey?,
@@ -29,26 +23,24 @@ struct SettingsGroup<Content: View, Accessory: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Metrics.groupSpacing) {
-            if hasHeader {
-                header
+            if let title {
+                header(title)
             }
 
             content
         }
     }
 
-    private var header: some View {
+    private func header(_ title: LocalizedStringKey) -> some View {
         HStack(spacing: Metrics.rowSpacing) {
             VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
-                if let title {
-                    HStack(spacing: Metrics.inlineSpacing) {
-                        Text(title)
-                            .font(.sectionTitle)
-                            .accessibilityAddTraits(.isHeader)
+                HStack(spacing: Metrics.inlineSpacing) {
+                    Text(title)
+                        .font(.sectionTitle)
+                        .accessibilityAddTraits(.isHeader)
 
-                        if needsWaftPlus {
-                            ProBadge()
-                        }
+                    if needsWaftPlus {
+                        ProBadge()
                     }
                 }
 
