@@ -32,7 +32,7 @@ make hooks
 
 ## Checks
 
-Run `make check` before you push. It runs `format-check`, which `make format` fixes, `lint`, `shellcheck`, `spelling`, `secrets`, `build` with warnings as errors, `test`, `periphery` for unused code, and `strings` for the translations. It leaves out `bundle`, which re-signs the app you run. CI runs `make check` and `make bundle` on every pull request and push to `main` with the Command Line Tools for Xcode 27, and `make test` with those for Xcode 26.
+Run `make check` before you push. It runs `format-check`, which `make format` fixes, `lint`, `shellcheck`, `spelling`, `secrets`, `build` with warnings as errors, `test`, `periphery` for unused code, and `strings` for the translations. It leaves out `bundle`, which re-signs the app you run. CI runs `make check` and `make bundle` on every pull request and push to `main` with the Command Line Tools for Xcode 27, launches the bundled app on macOS 15, the oldest system GitHub hosts, and runs `make test` with the tools for Xcode 26.
 
 Fix the code rather than the rule. A rule that is wrong for one line gets a `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>` directive.
 

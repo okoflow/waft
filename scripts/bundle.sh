@@ -138,7 +138,12 @@ main() {
     die "\"${IDENTITY}\" isn't in the keychain"
   fi
 
-  swift build --configuration "${configuration}" --product "${PRODUCT}"
+  local minimum_system sdk
+  minimum_system=$(plutil -extract LSMinimumSystemVersion raw "Packaging/${PRODUCT}-Info.plist")
+  sdk=$(xcrun --show-sdk-version)
+
+  swift build --configuration "${configuration}" --product "${PRODUCT}" \
+    -Xlinker -platform_version -Xlinker macos -Xlinker "${minimum_system}" -Xlinker "${sdk}"
 
   local binary_dir
   binary_dir=$(swift build --configuration "${configuration}" --show-bin-path)
