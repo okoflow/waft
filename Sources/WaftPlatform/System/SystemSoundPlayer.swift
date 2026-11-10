@@ -1,6 +1,7 @@
 package import WaftCore
 import AudioToolbox
 import Foundation
+import os
 
 @MainActor
 package final class SystemSoundPlayer: FeedbackSoundPlayer {
@@ -25,10 +26,19 @@ package final class SystemSoundPlayer: FeedbackSoundPlayer {
             return soundID
         }
 
-        guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else { return nil }
+        guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else {
+            Logger.audio.error("The app has no sound named \(name, privacy: .public)")
+
+            return nil
+        }
 
         var soundID: SystemSoundID = 0
-        guard AudioServicesCreateSystemSoundID(url as CFURL, &soundID) == kAudioServicesNoError else { return nil }
+        let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundID)
+        guard status == kAudioServicesNoError else {
+            Logger.audio.error("Couldn't load the sound \(name, privacy: .public): OSStatus \(status, privacy: .public)")
+
+            return nil
+        }
 
         soundIDs[name] = soundID
 

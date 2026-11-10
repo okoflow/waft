@@ -2,6 +2,7 @@ package import WaftCore
 import AppKit
 import ApplicationServices
 import AVFoundation
+import os
 
 @MainActor
 package final class SystemPermissions: PermissionProvider {
@@ -39,14 +40,16 @@ package final class SystemPermissions: PermissionProvider {
     }
 
     private func openSystemSettings(for permission: Permission) {
-        let anchor =
+        let pane =
             switch permission {
-            case .microphone: "Privacy_Microphone"
-            case .accessibility: "Privacy_Accessibility"
+            case .microphone: URL(literal: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")
+            case .accessibility: URL(literal: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")
             }
 
-        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?\(anchor)") {
-            NSWorkspace.shared.open(url)
-        }
+        guard !NSWorkspace.shared.open(pane) else { return }
+
+        let name = String(describing: permission)
+
+        Logger.system.error("Couldn't open System Settings for the \(name, privacy: .public) permission")
     }
 }
