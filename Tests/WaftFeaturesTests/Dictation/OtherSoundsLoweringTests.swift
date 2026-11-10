@@ -17,11 +17,17 @@ struct OtherSoundsLoweringTests {
 
     @Test
     func `skips lowering once the recording is no longer wanted`() async {
+        var askCount = 0
         let lowering = OtherSoundsLowering(outputVolume: outputVolume, delay: .zero)
 
-        lowering.lower { false }
+        lowering.lower {
+            askCount += 1
 
-        #expect(await !Poll.until(timeout: .milliseconds(300)) { !outputVolume.loweredFractions.isEmpty })
+            return false
+        }
+
+        #expect(await Poll.until(timeout: .seconds(5)) { askCount == 1 })
+        #expect(outputVolume.loweredFractions.isEmpty)
     }
 
     @Test

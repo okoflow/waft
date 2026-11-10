@@ -184,17 +184,16 @@ struct SelectionActionsTests {
         let element = FakeFocusedElement(selectedText: selection, hasEmptySelection: showsOnlyCaret)
         let focus = FocusTarget.app("com.example.notes", element: element)
 
-        return SelectionActions(
-            rewriters: .all(rewriter),
+        return .acting(
+            settings: settings,
+            rewriter: rewriter,
             detector: FakeLanguageDetector(language: language),
             focusTracker: FakeFocusTracker(focus),
             keyboardState: FakeKeyboardState(holdsKeys: holdsKeys),
             inserter: inserter,
             clipboard: clipboard,
-            settings: settings,
             pro: pro,
             hud: hud,
-            releaseTimeout: .zero,
         )
     }
 }

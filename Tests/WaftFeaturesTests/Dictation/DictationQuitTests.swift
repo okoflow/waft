@@ -55,14 +55,10 @@ struct DictationQuitTests {
             watchdogInterval: 60,
         )
 
-        let queue = DictationQueue(
-            transcriber: FakeTranscriber(.success(.spoken("Hello world"))),
-            rewriters: .all(FakeTextRewriter()),
-            inserter: inserter,
-            clipboard: FakeClipboard(),
-            history: HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settings, clipboard: FakeClipboard()),
-            statistics: StatisticsModel(store: FakeValueStore<DictationStatistics>()),
+        let queue = DictationQueue.transcribing(
+            with: FakeTranscriber(.success(.spoken("Hello world"))),
             hud: hud,
+            inserter: inserter,
         )
 
         let controller = await DictationController(

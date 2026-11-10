@@ -170,7 +170,7 @@ struct DictationControllerTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
 
-        recorder.send(.failed(RecordingID.none.next, .deviceUnavailable))
+        recorder.send(.failed(.first, .deviceUnavailable))
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
 
@@ -235,7 +235,7 @@ extension DictationControllerTests {
             keyRecorder: keyRecorder,
             shortcutRecorder: ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings)),
             pro: pro,
-            queue: queue(),
+            queue: .transcribing(with: transcriber, hud: hud, inserter: inserter),
         )
 
         controller.start()
@@ -254,18 +254,6 @@ extension DictationControllerTests {
             hud: hud,
             hudDelay: .zero,
             watchdogInterval: watchdogInterval,
-        )
-    }
-
-    private func queue() -> DictationQueue {
-        DictationQueue(
-            transcriber: transcriber,
-            rewriters: .all(FakeTextRewriter()),
-            inserter: inserter,
-            clipboard: FakeClipboard(),
-            history: HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settings, clipboard: FakeClipboard()),
-            statistics: StatisticsModel(store: FakeValueStore<DictationStatistics>()),
-            hud: hud,
         )
     }
 

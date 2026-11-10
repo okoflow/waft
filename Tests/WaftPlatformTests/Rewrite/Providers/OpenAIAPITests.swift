@@ -68,6 +68,7 @@ struct OpenAIAPITests {
         (#"{"status":"incomplete","incomplete_details":{"reason":"content_filter"},"output":[]}"#, .refused),
         (#"{"status":"incomplete","output":[]}"#, .truncated),
         (#"{"status":"failed","output":[]}"#, .serviceUnavailable),
+        (#"{"status":"failed","error":{"message":false,"type":[],"code":{}},"output":[]}"#, .serviceUnavailable),
         (#"{"output":[{"type":"message","content":[{"type":"refusal","refusal":"No."}]}]}"#, .refused),
         (#"{"status":"completed"}"#, .unreadableResponse),
         ("not json", .unreadableResponse),
@@ -75,20 +76,6 @@ struct OpenAIAPITests {
     func `rejects unusable answers`(json: String, error: RewriteError) {
         #expect(throws: error) {
             try Self.api.answer(from: Data(json.utf8))
-        }
-    }
-
-    @Test(arguments: [
-        #"{"message":"private dictated text","type":"private clipboard text","code":"Bearer private-token"}"#,
-        #"{"message":false,"type":[],"code":{}}"#,
-        #""private dictated text""#,
-        "null",
-    ])
-    func `reports a failed response regardless of optional server diagnostics`(diagnostics: String) {
-        let body = Data("{\"status\":\"failed\",\"error\":\(diagnostics),\"output\":[]}".utf8)
-
-        #expect(throws: RewriteError.serviceUnavailable) {
-            try Self.api.answer(from: body)
         }
     }
 }

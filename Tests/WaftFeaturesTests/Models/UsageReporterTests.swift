@@ -10,13 +10,11 @@ struct UsageReporterTests {
     private let sender = FakeUsageReportSender()
 
     @Test(arguments: [UsageSharing.undecided, .declined])
-    func `keeps no log and sends nothing without an agreement`(sharing: UsageSharing) async {
+    func `keeps no log and sends nothing without an agreement`(sharing: UsageSharing) {
         let reporter = reporter(settings: .inMemory(usageSharing: sharing))
 
         reporter.start()
         reporter.record(.voiceEdit)
-
-        await Task.yield()
 
         #expect(store.value == nil)
         #expect(sender.reports.isEmpty)
@@ -71,15 +69,19 @@ struct UsageReporterTests {
 
     @Test
     func `keeps a day unsent when sending fails`() async {
-        let reporter = reporter(settings: .inMemory(usageSharing: .allowed), sender: FakeUsageReportSender(fails: true))
+        var finishedRounds = 0
+
+        let reporter = reporter(settings: .inMemory(usageSharing: .allowed), sender: FakeUsageReportSender(fails: true)) { _ in
+            finishedRounds += 1
+
+            return false
+        }
 
         reporter.start()
         reporter.record(.translation)
 
-        #expect(await Poll.until(timeout: .seconds(5)) { store.value?.days.values.first?.counts.translations == 1 })
-
-        await Task.yield()
-
+        #expect(await Poll.until(timeout: .seconds(5)) { finishedRounds == 1 })
+        #expect(store.value?.days.values.map(\.counts.translations) == [1])
         #expect(store.value?.unsentDays.count == 1)
     }
 
@@ -115,6 +117,7 @@ struct UsageReporterTests {
         settings: SettingsModel,
         sender: FakeUsageReportSender,
         host: UsageHost? = host,
+        waitForInterval: @escaping (Duration) async -> Bool = { _ in false },
     ) -> UsageReporter {
         UsageReporter(
             store: store,
@@ -122,7 +125,8 @@ struct UsageReporterTests {
             settings: settings,
             pro: .unlicensed(),
             host: host,
-        ) { _ in false }
+            waitForInterval: waitForInterval,
+        )
     }
 
     private func report(of log: UsageLog, day: String, counts: UsageCounts, settings: SettingsModel) -> UsageReport {
