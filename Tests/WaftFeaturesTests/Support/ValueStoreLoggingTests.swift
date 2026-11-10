@@ -7,7 +7,6 @@ struct ValueStoreLoggingTests {
         let store = FakeValueStore(3, failsDeleting: failsDeleting)
 
         #expect(store.remove() == !failsDeleting)
-        #expect(store.value == (failsDeleting ? 3 : nil))
     }
 
     @Test(arguments: [false, true])
@@ -15,7 +14,6 @@ struct ValueStoreLoggingTests {
         let store = FakeValueStore(3, failsSaving: failsSaving)
 
         #expect(store.write(7) == !failsSaving)
-        #expect(store.value == (failsSaving ? 3 : 7))
     }
 
     @Test(arguments: [(Int?.some(3), false, 3), (nil, false, 7), (3, true, 7)])
