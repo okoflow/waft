@@ -15,11 +15,12 @@ final class TranslatorModel {
     }
 
     private(set) var output = ""
-    private(set) var detected: Language?
     private(set) var isTranslating = false
     private(set) var failure: String?
 
     @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
+
+    private var detected: Language?
 
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var hasDroppedTranslation = false
