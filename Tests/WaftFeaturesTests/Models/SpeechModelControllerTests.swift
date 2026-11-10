@@ -163,18 +163,19 @@ struct SpeechModelControllerTests {
         controller.start()
 
         #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.fast), .delete(.accurate)] })
-        #expect(controller.modelDirectory == transcriber.modelDirectory(for: .fast))
+        #expect(controller.chosenModel == .fast)
     }
 
     @Test
     func `reveals the folder of the model it uses`() {
         let transcriber = FakeTranscriber()
         let urlOpener = FakeURLOpener()
-        let (controller, _) = make(transcriber, urlOpener: urlOpener)
+        let (controller, settings) = make(transcriber, urlOpener: urlOpener)
+        settings.settings.speechModel = .accurate
 
         controller.revealInFinder()
 
-        #expect(urlOpener.revealed == [transcriber.modelDirectory(for: controller.chosenModel)])
+        #expect(urlOpener.revealed == [transcriber.modelDirectory(for: .accurate)])
     }
 
     @Test

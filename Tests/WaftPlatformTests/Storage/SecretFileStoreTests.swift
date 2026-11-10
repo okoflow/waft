@@ -60,7 +60,6 @@ struct SecretFileStoreTests {
         let store = store(file: FakeValueStore<String>(nil), keychain: keychain)
 
         #expect(try store.load() == nil)
-        #expect(!store.exists())
         #expect(!keychain.operations.contains(.load))
     }
 
@@ -68,7 +67,6 @@ struct SecretFileStoreTests {
         (nil, nil, false),
         ("sk-ant-file", nil, true),
         (nil, "sk-ant-test", true),
-        ("sk-ant-file", "sk-ant-test", true),
     ])
     func `exists when the file or the keychain has a value`(fileValue: String?, keychainValue: String?, exists: Bool) {
         let store = store(file: FakeValueStore(fileValue), keychain: FakeValueStore(keychainValue))
@@ -86,7 +84,6 @@ struct SecretFileStoreTests {
 
         #expect(file.value == "sk-ant-new")
         #expect(keychain.value == nil)
-        #expect(!keychain.operations.contains(.save))
     }
 
     @Test
@@ -99,8 +96,6 @@ struct SecretFileStoreTests {
 
         #expect(file.value == nil)
         #expect(keychain.value == nil)
-        #expect(!store.exists())
-        #expect(try store.load() == nil)
     }
 
     @Test

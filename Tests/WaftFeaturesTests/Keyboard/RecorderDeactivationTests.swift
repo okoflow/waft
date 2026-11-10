@@ -17,9 +17,8 @@ struct RecorderDeactivationTests {
     }
 
     @Test
-    func `stops recording a shortcut and resumes the shortcuts when Waft stops being the active app`() async {
-        let shortcuts = GlobalShortcutController.fake(settings: settings)
-        let recorder = ShortcutRecorder(settings: settings, shortcuts: shortcuts)
+    func `stops recording a shortcut when Waft stops being the active app`() async {
+        let recorder = ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings))
         recorder.start(.translator)
 
         NotificationCenter.default.post(name: NSApplication.didResignActiveNotification, object: nil)

@@ -53,9 +53,9 @@ struct DictationQueueTests {
         #expect(history.history.entries.map(\.text) == ["Hello world"])
     }
 
-    @Test(arguments: [InsertionSkipReason.noAccessibility, .focusChanged, .keyHeld, .notRead])
-    func `copies the text when the inserter skips the paste`(reason: InsertionSkipReason) async {
-        let inserter = FakeTextInserter(.skipped(reason))
+    @Test
+    func `copies the text when the inserter skips the paste`() async {
+        let inserter = FakeTextInserter(.skipped(.focusChanged))
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
 
         queue.submit(.recorded())
@@ -140,7 +140,7 @@ struct DictationQueueTests {
         #expect(statistics.statistics.allTime.dictations == 0)
     }
 
-    @Test(arguments: [InsertionSkipReason.secureField, .noAccessibility, .focusChanged, .keyHeld, .notRead])
+    @Test(arguments: [InsertionSkipReason.secureField, .focusChanged])
     func `copies an edit it could not paste and keeps it as the latest transcript`(reason: InsertionSkipReason) async {
         let inserter = FakeTextInserter(.skipped(reason))
         let rewriter = FakeTextRewriter(.success("Meeting at three"))

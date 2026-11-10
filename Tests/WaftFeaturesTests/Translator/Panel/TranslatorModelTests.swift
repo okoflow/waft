@@ -25,7 +25,7 @@ struct TranslatorModelTests {
         #expect(rewriter.requests.count == 1)
         #expect(request.text == "Привет")
         #expect(request.textTask == .translate(from: nil, into: .english))
-        #expect(translator.detected == .russian)
+        #expect(translator.knownSource == .russian)
         #expect(!translator.isTranslating)
     }
 
@@ -86,7 +86,7 @@ struct TranslatorModelTests {
         translator.clear()
 
         #expect(translator.output.isEmpty)
-        #expect(translator.detected == nil)
+        #expect(translator.knownSource == nil)
         #expect(rewriter.requests.count == 1)
     }
 

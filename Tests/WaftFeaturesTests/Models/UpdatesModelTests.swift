@@ -11,16 +11,16 @@ struct UpdatesModelTests {
         updates.onShowingUpdateChange = { sessionChangeCount += 1 }
 
         updates.start()
-        updater.report(isPending: true, isShowing: true)
+        updater.report(isPending: true, isShowing: false)
 
         #expect(updates.hasPendingUpdate)
-        #expect(updates.isShowingUpdate)
+        #expect(!updates.isShowingUpdate)
         #expect(sessionChangeCount == 1)
 
-        updater.report(isPending: false, isShowing: false)
+        updater.report(isPending: false, isShowing: true)
 
         #expect(!updates.hasPendingUpdate)
-        #expect(!updates.isShowingUpdate)
+        #expect(updates.isShowingUpdate)
         #expect(sessionChangeCount == 2)
     }
 }

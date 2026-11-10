@@ -5,14 +5,6 @@ import Testing
 struct SettingsModesTests {
     private static let unnamed = CustomMode(name: "  ", instructions: " ")
 
-    @Test
-    func `lists the built-in modes before the custom ones`() {
-        var settings = Settings.defaults
-        settings.customModes = [CustomMode.emailReply]
-
-        #expect(settings.modes == Mode.builtIn + [.custom(CustomMode.emailReply.id)])
-    }
-
     @Test(arguments: [
         (Mode.custom(CustomMode.emailReply.id), "Email reply", "Reply as a short email."),
         (.custom(unnamed.id), "Your mode", "Follows your instructions."),

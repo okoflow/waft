@@ -17,10 +17,6 @@ final class SpeechModelController {
     private let pro: ProModel
     private let urlOpener: any URLOpener
 
-    var modelDirectory: URL {
-        transcriber.modelDirectory(for: chosenModel)
-    }
-
     var chosenModel: SpeechModel {
         settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
@@ -37,7 +33,7 @@ final class SpeechModelController {
     }
 
     func revealInFinder() {
-        urlOpener.reveal(modelDirectory)
+        urlOpener.reveal(transcriber.modelDirectory(for: chosenModel))
     }
 
     func start() {

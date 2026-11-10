@@ -150,11 +150,12 @@ struct ProModelTests {
     }
 
     @Test
-    func `ends the trial three days after the stored start`() {
-        let started = Date().addingTimeInterval(-10 * 86400)
+    func `ends the trial three days after the stored start`() throws {
+        let started = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 10, hour: 15)))
+        let end = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 13)))
         let pro = model(trialStore: FakeValueStore(started))
 
-        #expect(pro.trialEnds == ProAccess.trialEnd(startedOn: started, now: Date()))
+        #expect(pro.trialEnds == end)
     }
 
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))

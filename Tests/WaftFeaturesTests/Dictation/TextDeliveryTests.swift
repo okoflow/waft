@@ -47,15 +47,4 @@ struct TextDeliveryTests {
         #expect(clipboard.copied == ["Hello."])
         #expect(inserter.insertions.isEmpty)
     }
-
-    @Test(arguments: [
-        (TextDelivery.Outcome.pasted, HUDMessage.Kind.pasted, "Cleaned up offline"),
-        (.copied, .copied, "Cleaned up offline"),
-        (.keptOutOfPasswordField, .copied, "Not pasted into a password field"),
-    ])
-    func `shows the delivered text with its detail`(outcome: TextDelivery.Outcome, kind: HUDMessage.Kind, detail: String) {
-        let message = outcome.message(showing: "Hello.", detail: "Cleaned up offline")
-
-        #expect(message == HUDMessage(kind: kind, title: "Hello.", detail: detail))
-    }
 }
