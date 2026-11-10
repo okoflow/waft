@@ -39,6 +39,10 @@ struct MenuContent: View {
 
         Divider()
 
+        if model.queue.canRetry {
+            Button("Retry Last Dictation", action: model.queue.retryFailedDictation)
+        }
+
         Button("Copy Last Dictation", action: model.queue.copyLatestTranscript)
             .disabled(model.queue.latestTranscript == nil)
 

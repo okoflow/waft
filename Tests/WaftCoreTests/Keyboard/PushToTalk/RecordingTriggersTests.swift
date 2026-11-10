@@ -56,7 +56,7 @@ struct RecordingTriggersTests {
     }
 
     @Test
-    func `discards both recordings when the key monitor stops`() {
+    func `keeps both recordings when the key monitor stops`() {
         var triggers = RecordingTriggers()
         var settings = Settings.defaults
         settings.editKey = PushToTalkKey(keyCode: KeyEvent.f5KeyCode)
@@ -65,8 +65,7 @@ struct RecordingTriggersTests {
         _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
         let fired = triggers.handle(.monitorDisabled, settings: settings)
 
-        #expect(fired.map(\.purpose) == [.dictation, .edit])
-        #expect(fired.map(\.action) == [.discardRecording(.interrupted), .discardRecording(.interrupted)])
+        #expect(fired.isEmpty)
     }
 
     @Test

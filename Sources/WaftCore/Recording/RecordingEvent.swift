@@ -1,4 +1,4 @@
 package enum RecordingEvent: Sendable {
-    case started(RecordingID, deviceName: String)
+    case started(RecordingID)
     case failed(RecordingID, RecordingFailure)
 }

@@ -51,7 +51,7 @@ struct PushToTalkKeyTests {
         (.keyDown(0, flags: KeyEvent.rightOptionFlag), .otherKeyDown),
         (.keyDown(53), .escapeDown),
         (.keyUp(0), nil),
-        (.monitorDisabled, .monitorDisabled),
+        (.monitorDisabled, nil),
     ])
     func `maps events for a modifier key`(keyEvent: KeyEvent, expected: PushToTalk.Event?) {
         #expect(PushToTalkKey.rightOption.event(for: keyEvent) == expected)
@@ -64,7 +64,7 @@ struct PushToTalkKeyTests {
         (.keyDown(53), .escapeDown),
         (.keyUp(97), nil),
         (.modifiersChanged(96), nil),
-        (.monitorDisabled, .monitorDisabled),
+        (.monitorDisabled, nil),
     ])
     func `maps events for a function key`(keyEvent: KeyEvent, expected: PushToTalk.Event?) throws {
         let key = try #require(PushToTalkKey(keyCode: KeyEvent.f5KeyCode))

@@ -1,4 +1,5 @@
 import Foundation
+import WaftCore
 
 struct HUDMessage: Equatable {
     enum Kind {
@@ -10,12 +11,23 @@ struct HUDMessage: Equatable {
 
     private static let glanceTime = 5.0
 
+    static var recordingReachedLimit: HUDMessage {
+        recordingCutShort(String(localized: "Waft records up to \(Int(PushToTalk.maximumHold / 60)) minutes at a time."))
+    }
+
     let kind: Kind
     let title: String
     let detail: String?
 
     var isCopyable: Bool {
         kind == .pasted
+    }
+
+    var isWorthRepeating: Bool {
+        switch kind {
+        case .pasted, .information: false
+        case .copied, .warning: true
+        }
     }
 
     var duration: Duration {

@@ -104,7 +104,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
         case .keyUp:
             isOwnFunctionKey(keyEvent) ? .keyUp : nil
         case .monitorDisabled:
-            .monitorDisabled
+            nil
         }
     }
 

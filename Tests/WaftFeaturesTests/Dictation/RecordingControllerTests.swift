@@ -38,7 +38,7 @@ struct RecordingControllerTests {
         let recordings = model()
 
         recordings.begin(Self.dictation)
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
+        recorder.send(.started(Self.first))
 
         if playsSounds {
             #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
@@ -58,9 +58,9 @@ struct RecordingControllerTests {
         recordings.begin(Self.dictation)
         recordings.discard(because: .tooShort)
         recordings.begin(Self.dictation)
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
+        recorder.send(.started(Self.first))
         recorder.send(.failed(Self.first, .deviceUnavailable))
-        recorder.send(.started(Self.second, deviceName: "Built-in Microphone"))
+        recorder.send(.started(Self.second))
 
         #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
         #expect(recordings.isRecording)
@@ -141,7 +141,7 @@ struct RecordingControllerTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
 
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
+        recorder.send(.started(Self.first))
         recorder.send(.failed(Self.first, .deviceUnavailable))
 
         let reacted = await Poll.until(timeout: .milliseconds(300)) { !sounds.played.isEmpty }

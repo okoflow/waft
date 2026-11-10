@@ -91,6 +91,23 @@ struct RecordingFailureTests {
         #expect(deliveryCount == 0)
     }
 
+    @Test
+    func `says so when the time limit ends the recording, and still delivers it`() async {
+        var deliveries: [[Float]] = []
+        let recordings = model()
+        recordings.onFinish = { _, _, samples in deliveries.append(samples) }
+
+        recordings.begin(Self.dictation)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
+
+        recordings.finish(releasedAt: 2, reachedLimit: true)
+        await recordings.waitUntilDelivered()
+
+        #expect(deliveries == [[0.1, 0.2]])
+        #expect(hud.content == .message(.recordingReachedLimit))
+    }
+
     private func model() -> RecordingController {
         model(recorder: recorder)
     }

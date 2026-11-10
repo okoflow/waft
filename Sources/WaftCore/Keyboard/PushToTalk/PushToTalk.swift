@@ -1,4 +1,4 @@
-import Foundation
+package import Foundation
 
 package struct PushToTalk: Sendable {
     package enum Event: Equatable, Sendable {
@@ -6,7 +6,6 @@ package struct PushToTalk: Sendable {
         case keyUp
         case otherKeyDown
         case escapeDown
-        case monitorDisabled
         case tick
     }
 
@@ -14,6 +13,7 @@ package struct PushToTalk: Sendable {
         case startRecording
         case lockHandsFree
         case finishRecording
+        case finishRecordingAtLimit
         case discardRecording(DiscardReason)
     }
 
@@ -30,8 +30,10 @@ package struct PushToTalk: Sendable {
         case handsFree(since: TimeInterval)
     }
 
+    package static let maximumHold: TimeInterval = 300
+
     static let minimumHold: TimeInterval = 0.3
-    static let maximumHold: TimeInterval = 300
+    static let otherKeyCancelWindow: TimeInterval = 2
 
     private static let doubleTapWindow: TimeInterval = 0.4
 
@@ -59,9 +61,9 @@ package struct PushToTalk: Sendable {
              let (.handsFree(since), .tick) where time - since >= Self.maximumHold:
             state = .idle
 
-            return .finishRecording
+            return .finishRecordingAtLimit
 
-        case (.holding, .otherKeyDown):
+        case let (.holding(since), .otherKeyDown) where time - since < Self.otherKeyCancelWindow:
             state = .idle
 
             return .discardRecording(.otherKeyPressed)
@@ -70,11 +72,6 @@ package struct PushToTalk: Sendable {
             state = .idle
 
             return .discardRecording(.cancelled)
-
-        case (.holding, .monitorDisabled), (.handsFree, .monitorDisabled):
-            state = .idle
-
-            return .discardRecording(.interrupted)
 
         default:
             return nil

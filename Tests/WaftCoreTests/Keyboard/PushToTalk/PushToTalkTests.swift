@@ -93,6 +93,13 @@ struct PushToTalkTests {
         #expect(actions == [.startRecording, .discardRecording(.otherKeyPressed), nil, .startRecording])
     }
 
+    @Test
+    func `keeps a hold going when another key is pressed after its first two seconds`() {
+        let actions = handle([(.keyDown, 0), (.otherKeyDown, PushToTalk.otherKeyCancelWindow), (.keyUp, 3)])
+
+        #expect(actions == [.startRecording, nil, .finishRecording])
+    }
+
     @Test(arguments: [
         [(PushToTalk.Event.keyDown, 0.0), (.escapeDown, 1)],
         [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.escapeDown, 3)],
@@ -108,15 +115,7 @@ struct PushToTalkTests {
         #expect(actions.last == .startRecording)
     }
 
-    @Test(arguments: [
-        [(PushToTalk.Event.keyDown, 0.0), (.monitorDisabled, 1)],
-        [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.monitorDisabled, 3)],
-    ])
-    func `discards the recording when the key monitor stops`(steps: [(PushToTalk.Event, TimeInterval)]) {
-        #expect(handle(steps).last == .discardRecording(.interrupted))
-    }
-
-    @Test(arguments: [PushToTalk.Event.keyUp, .otherKeyDown, .escapeDown, .monitorDisabled, .tick])
+    @Test(arguments: [PushToTalk.Event.keyUp, .otherKeyDown, .escapeDown, .tick])
     func `ignores events while idle`(event: PushToTalk.Event) {
         #expect(handle([(event, 1)]) == [nil])
     }
@@ -151,7 +150,7 @@ struct PushToTalkTests {
     func `finishes a hold that reaches the maximum duration`() {
         let actions = handle([(.keyDown, 0), (.tick, PushToTalk.maximumHold), (.keyUp, 301), (.keyDown, 302)])
 
-        #expect(actions == [.startRecording, .finishRecording, nil, .startRecording])
+        #expect(actions == [.startRecording, .finishRecordingAtLimit, nil, .startRecording])
     }
 
     @Test
@@ -165,7 +164,7 @@ struct PushToTalkTests {
             (.keyDown, 301),
         ])
 
-        #expect(actions.suffix(2) == [.finishRecording, .startRecording])
+        #expect(actions.suffix(2) == [.finishRecordingAtLimit, .startRecording])
     }
 
     private func handle(

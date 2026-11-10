@@ -68,8 +68,21 @@ final class DictationController {
         return triggers.cancelledRecording(byEscapeAt: time)
     }
 
-    func prepareToQuit() {
-        recordings.discard(because: .interrupted)
+    func prepareToQuit() async {
+        finishOrDiscardRecording()
+
+        await recordings.waitUntilDelivered()
+    }
+
+    private func finishOrDiscardRecording() {
+        guard let recording = recordings.recording, recording.isLive, recording.purpose == .dictation else {
+            recordings.discard(because: .interrupted)
+
+            return
+        }
+
+        triggers.reset(recording.purpose)
+        recordings.finish(releasedAt: Uptime.now)
     }
 
     private func handle(_ keyEvent: KeyEvent) {
@@ -115,6 +128,11 @@ final class DictationController {
             guard owns(trigger) else { return }
 
             recordings.finish(releasedAt: time)
+
+        case .finishRecordingAtLimit:
+            guard owns(trigger) else { return }
+
+            recordings.finish(releasedAt: time, reachedLimit: true)
 
         case let .discardRecording(reason):
             guard owns(trigger) else { return }
