@@ -67,6 +67,7 @@
 "Checking…" = "Checking…";
 "Choose File…" = "Choose File…";
 "Choose Languages…" = "Choose Languages…";
+"Choose Retry Last Dictation in the Waft menu." = "Choose Retry Last Dictation in the Waft menu.";
 "Choose" = "Choose";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude or OpenAI with your own key, or a local model on your Mac.";
 "Clean and Formal" = "Clean and Formal";
@@ -227,6 +228,7 @@
 "Open the translator" = "Open the translator";
 "Output" = "Output";
 "Overview" = "Overview";
+"Part of the dictation is missing" = "Part of the dictation is missing";
 "Paste into the focused field" = "Paste into the focused field";
 "Pasted" = "Pasted";
 "Permissions" = "Permissions";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft can't read this file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft can't use the microphone. Allow it in Settings › General.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.";
+"Waft couldn't remove the license key." = "Waft couldn't remove the license key.";
 "Waft couldn't save the license key." = "Waft couldn't save the license key.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft deletes it from this Mac. The AI modes use Light until you add a key.";
 "Waft is listening" = "Waft is listening";

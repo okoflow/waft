@@ -39,7 +39,41 @@ jobs:
       - name: Bundle
         run: make bundle
 
+      - name: Archive the app
+        run: ditto -c -k --keepParent build/Waft.app Waft.zip
+
+      - name: Upload the app
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: app
+          path: Waft.zip
+          retention-days: 1
+
     timeout-minutes: 30
+
+  launch:
+    name: Launch on macOS 15
+    needs: check
+    runs-on: macos-15
+
+    steps:
+      - name: Download the app
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: app
+
+      - name: Launch
+        run: |
+          ditto -x -k Waft.zip .
+          sw_vers -productVersion
+
+          Waft.app/Contents/MacOS/Waft &
+          app=$!
+
+          sleep 15
+          kill "${app}"
+
+    timeout-minutes: 10
 
   compat:
     name: Command Line Tools 26

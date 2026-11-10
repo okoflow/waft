@@ -67,6 +67,7 @@
 "Checking…" = "Denetleniyor…";
 "Choose File…" = "Dosya Seç…";
 "Choose Languages…" = "Dilleri Seç…";
+"Choose Retry Last Dictation in the Waft menu." = "Waft menüsünden “Son Dikteyi Yeniden Dene” komutunu seçin.";
 "Choose" = "Seç";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Kendi anahtarınızla Claude veya OpenAI ya da Mac’inizde yerel bir model.";
 "Clean and Formal" = "“Temiz” ve “Resmî”";
@@ -227,6 +228,7 @@
 "Open the translator" = "Çevirmeni aç";
 "Output" = "Çıktı";
 "Overview" = "Genel Bakış";
+"Part of the dictation is missing" = "Diktenin bir bölümü eksik";
 "Paste into the focused field" = "Etkin alana yapıştır";
 "Pasted" = "Yapıştırıldı";
 "Permissions" = "İzinler";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. “Geçmişi Sil” ikisini de siler.";
+"Waft couldn't remove the license key." = "Waft lisans anahtarını kaldıramadı.";
 "Waft couldn't save the license key." = "Waft lisans anahtarını kaydedemedi.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft onu bu Mac’ten siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";

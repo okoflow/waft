@@ -67,6 +67,7 @@
 "Checking…" = "กำลังตรวจสอบ…";
 "Choose File…" = "เลือกไฟล์…";
 "Choose Languages…" = "เลือกภาษา…";
+"Choose Retry Last Dictation in the Waft menu." = "เลือก “ลองการป้อนตามคำบอกล่าสุดอีกครั้ง” ในเมนู Waft";
 "Choose" = "เลือก";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude หรือ OpenAI ด้วยคีย์ของคุณเอง หรือโมเดลที่ทำงานบน Mac ของคุณ";
 "Clean and Formal" = "โหมด “เรียบเรียง” และ “ทางการ”";
@@ -227,6 +228,7 @@
 "Open the translator" = "เปิดตัวแปลภาษา";
 "Output" = "การวางข้อความ";
 "Overview" = "ภาพรวม";
+"Part of the dictation is missing" = "การป้อนตามคำบอกบางส่วนหายไป";
 "Paste into the focused field" = "วางลงในช่องที่ใช้งานอยู่";
 "Pasted" = "วางแล้ว";
 "Permissions" = "สิทธิ์การเข้าถึง";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
+"Waft couldn't remove the license key." = "Waft ไม่สามารถเอาคีย์ใบอนุญาตออกได้";
 "Waft couldn't save the license key." = "Waft ไม่สามารถบันทึกคีย์ใบอนุญาตได้";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจาก Mac เครื่องนี้ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
 "Waft is listening" = "Waft กำลังฟัง";

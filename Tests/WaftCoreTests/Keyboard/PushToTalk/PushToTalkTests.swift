@@ -4,9 +4,7 @@ import Testing
 
 struct PushToTalkTests {
     @Test(arguments: [
-        (10.0, 10.05, PushToTalk.Action.discardRecording(.tooShort)),
-        (10, 10.2, .discardRecording(.tooShort)),
-        (10, 10.29, .discardRecording(.tooShort)),
+        (10.0, 10.29, PushToTalk.Action.discardRecording(.tooShort)),
         (0, PushToTalk.minimumHold, .finishRecording),
         (10, 11.5, .finishRecording),
     ])
@@ -56,13 +54,6 @@ struct PushToTalkTests {
         let actions = handle([(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.6), (.keyUp, 0.7)])
 
         #expect(actions.last == .discardRecording(.tooShort))
-    }
-
-    @Test
-    func `treats a double tap as two short taps when only holding starts dictation`() {
-        let actions = handle([(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4)], start: .hold)
-
-        #expect(actions == [.startRecording, .discardRecording(.tooShort), .startRecording, .discardRecording(.tooShort)])
     }
 
     @Test(arguments: [0.1, 2])

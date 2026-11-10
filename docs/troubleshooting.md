@@ -30,6 +30,7 @@ When macOS asks for your password because Waft wants to use confidential informa
 | The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | Waft copied the text instead of pasting it: press <kbd>⌘</kbd><kbd>V</kbd> where you want it. "Not pasted into a password field" says why; [Pasting](how-it-works.md#pasting) lists the other reasons |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Transcription failed" | The speech model failed; the line below says why. The recording is kept for 10 minutes: choose **Retry Last Dictation** in the menu once the cause is fixed |
+| "Part of the dictation is missing" | The speech model failed on a piece of a long recording, and Waft delivered the rest. The recording is kept for 10 minutes: choose **Retry Last Dictation** in the menu to copy the whole text |
 | "Recording stopped early" | The microphone stopped in the middle of a dictation, or the recording reached 5 minutes; the line below says which. Waft still recognizes and delivers what it recorded until then |
 | "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
 | "Select the text to edit, then hold the key and say what to change." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |

@@ -58,7 +58,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
      --target <commit> --title vX.Y.Z --notes-file ../notes.md
    ```
 
-6. Copy `build/release/waft.rb` to `Casks/waft.rb` in your clone of `okoflow/homebrew-tap`, then commit and push it.
+6. Copy `build/release/waft.rb` to `Casks/waft.rb` in your clone of `okoflow/homebrew-tap`, commit it as `feat: update waft to X.Y.Z`, and push it.
 
 ## Switching to a Developer ID
 

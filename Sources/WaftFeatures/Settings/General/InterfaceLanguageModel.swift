@@ -25,7 +25,6 @@ final class InterfaceLanguageModel {
         launchedWith = chosen
 
         languages = Bundle.main.localizations
-            .filter { $0 != "Base" }
             .sorted { Self.name(of: $0).localizedStandardCompare(Self.name(of: $1)) == .orderedAscending }
     }
 

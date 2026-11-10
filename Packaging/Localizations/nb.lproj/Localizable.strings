@@ -67,6 +67,7 @@
 "Checking…" = "Kontrollerer…";
 "Choose File…" = "Velg fil…";
 "Choose Languages…" = "Velg språk…";
+"Choose Retry Last Dictation in the Waft menu." = "Velg Prøv siste diktering på nytt i Waft-menyen.";
 "Choose" = "Velg";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude eller OpenAI med din egen nøkkel, eller en lokal modell på Macen din.";
 "Clean and Formal" = "«Ryddig» og «Formell»";
@@ -227,6 +228,7 @@
 "Open the translator" = "Åpne oversetteren";
 "Output" = "Innliming";
 "Overview" = "Oversikt";
+"Part of the dictation is missing" = "En del av dikteringen mangler";
 "Paste into the focused field" = "Lim inn i det aktive feltet";
 "Pasted" = "Limt inn";
 "Permissions" = "Tillatelser";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft kan ikke lese denne filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruke mikrofonen. Gi tilgang i Innstillinger › Generelt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunne ikke lese den lagrede loggen og har tatt vare på en kopi av den. Tøm logg sletter begge.";
+"Waft couldn't remove the license key." = "Waft kunne ikke fjerne lisensnøkkelen.";
 "Waft couldn't save the license key." = "Waft kunne ikke lagre lisensnøkkelen.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft sletter den fra denne Macen. KI-modusene bruker «Lett» til du legger til en nøkkel.";
 "Waft is listening" = "Waft lytter";

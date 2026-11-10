@@ -67,6 +67,7 @@
 "Checking…" = "Controleren…";
 "Choose File…" = "Kies bestand…";
 "Choose Languages…" = "Kies talen…";
+"Choose Retry Last Dictation in the Waft menu." = "Kies ‘Probeer laatste dictaat opnieuw’ in het Waft-menu.";
 "Choose" = "Kies";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude of OpenAI met je eigen sleutel, of een lokaal model op je Mac.";
 "Clean and Formal" = "‘Netjes’ en ‘Formeel’";
@@ -227,6 +228,7 @@
 "Open the translator" = "Open de vertaler";
 "Output" = "Uitvoer";
 "Overview" = "Overzicht";
+"Part of the dictation is missing" = "Een deel van het dictaat ontbreekt";
 "Paste into the focused field" = "Plak in het actieve veld";
 "Pasted" = "Geplakt";
 "Permissions" = "Toestemmingen";
@@ -427,6 +429,7 @@
 "Waft can't read this file." = "Waft kan dit bestand niet lezen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan de microfoon niet gebruiken. Geef toegang in Instellingen › Algemeen.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kon de bewaarde geschiedenis niet lezen en heeft er een kopie van bewaard. ‘Wis geschiedenis’ verwijdert beide.";
+"Waft couldn't remove the license key." = "Waft kon de licentiesleutel niet verwijderen.";
 "Waft couldn't save the license key." = "Waft kon de licentiesleutel niet bewaren.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft verwijdert hem van deze Mac. De AI-modi gebruiken ‘Licht’ totdat je een sleutel toevoegt.";
 "Waft is listening" = "Waft luistert";

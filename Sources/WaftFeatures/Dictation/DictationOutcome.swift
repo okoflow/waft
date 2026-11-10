@@ -5,6 +5,7 @@ enum DictationOutcome {
     case delivered(TextDelivery.Outcome, ProcessedText)
     case noSpeech
     case failed(String)
+    case partFailed
     case editFailed(String)
 
     func message(for provider: ModelProvider) -> HUDMessage {
@@ -17,6 +18,9 @@ enum DictationOutcome {
 
         case let .failed(reason):
             HUDMessage(kind: .warning, title: String(localized: "Transcription failed"), detail: reason)
+
+        case .partFailed:
+            .missingPart
 
         case let .editFailed(reason):
             HUDMessage(kind: .warning, title: String(localized: "Couldn't edit the text"), detail: reason)

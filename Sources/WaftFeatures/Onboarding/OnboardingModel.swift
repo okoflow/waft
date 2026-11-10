@@ -131,7 +131,7 @@ final class OnboardingModel {
 
             permissions.refresh()
 
-            guard !Task.isCancelled, step == grantedStep, !isMissing(permission) else { return }
+            guard !Task.isCancelled, !isMissing(permission) else { return }
 
             advanceTask = nil
             advance()

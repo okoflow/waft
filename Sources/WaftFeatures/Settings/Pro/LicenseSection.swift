@@ -4,7 +4,7 @@ import WaftCore
 struct LicenseSection: View {
     @Bindable var pro: ProModel
 
-    private var problem: LocalizedStringKey? {
+    private var activationProblem: LocalizedStringKey? {
         switch pro.activationProblem {
         case .unreadable: "That doesn't look like a Waft license key."
         case .invalid: "This license key isn't valid."
@@ -13,16 +13,22 @@ struct LicenseSection: View {
         }
     }
 
+    private var removalProblem: LocalizedStringKey? {
+        guard pro.hasFailedRemoval else { return nil }
+
+        return "Waft couldn't remove the license key."
+    }
+
     var body: some View {
         if let license = pro.license {
-            SettingsSection("License") {
+            SettingsSection("License", subtitle: removalProblem) {
                 SettingsRow(.verbatim(license.holder), description: .verbatim(license.email)) {
                     Button("Remove License…", role: .destructive, action: confirmRemoval)
                 }
             }
         } else {
             SettingsSection("License", subtitle: "Bought Waft+? Paste the key from your receipt email.") {
-                SettingsRow("License key", description: problem, labelsAccessory: true) {
+                SettingsRow("License key", description: activationProblem, labelsAccessory: true) {
                     InputField("License key", prompt: .verbatim("WFT1…"), text: $pro.draft)
                         .frame(width: 220)
 

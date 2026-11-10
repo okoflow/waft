@@ -114,6 +114,24 @@ struct ProModelTests {
         #expect(keyStore.value == Self.key)
     }
 
+    @Test
+    func `reports a key that cannot be removed until a removal works`() {
+        let keyStore = FakeValueStore(Self.key, failsDeleting: true)
+        let pro = model(keyStore: keyStore)
+
+        #expect(!pro.hasFailedRemoval)
+
+        pro.deactivate()
+
+        #expect(pro.hasFailedRemoval)
+
+        keyStore.failsDeleting = false
+        pro.deactivate()
+
+        #expect(!pro.hasFailedRemoval)
+        #expect(pro.license == nil)
+    }
+
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))
     func `starts no trial and hides the license section during the beta`() {
         let trialStore = FakeValueStore<Date>()
@@ -132,11 +150,12 @@ struct ProModelTests {
     }
 
     @Test
-    func `ends the trial three days after the stored start`() {
-        let started = Date().addingTimeInterval(-10 * 86400)
+    func `ends the trial three days after the stored start`() throws {
+        let started = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 10, hour: 15)))
+        let end = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 13)))
         let pro = model(trialStore: FakeValueStore(started))
 
-        #expect(pro.trialEnds == ProAccess.trialEnd(startedOn: started, now: Date()))
+        #expect(pro.trialEnds == end)
     }
 
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))

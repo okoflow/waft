@@ -1,5 +1,4 @@
 import Foundation
-import os
 import WaftCore
 
 protocol HTTPTransport: Sendable {
@@ -8,6 +7,10 @@ protocol HTTPTransport: Sendable {
 
 extension HTTPTransport {
     func body(for request: URLRequest, from service: String) async throws(RewriteError) -> Data {
+        try await reply(to: request, from: service).body(from: service)
+    }
+
+    func reply(to request: URLRequest, from service: String) async throws(RewriteError) -> HTTPReply {
         let data: Data
         let response: URLResponse
 
@@ -19,13 +22,6 @@ extension HTTPTransport {
 
         guard let http = response as? HTTPURLResponse else { throw .unreadableResponse }
 
-        let status = http.statusCode
-        guard (200 ..< 300).contains(status) else {
-            Logger.network.error("\(service, privacy: .public) answered HTTP \(status, privacy: .public)")
-
-            throw RewriteError(httpStatus: status)
-        }
-
-        return data
+        return HTTPReply(status: http.statusCode, data: data)
     }
 }

@@ -40,6 +40,18 @@ struct HTTPRewriterTests {
 
         #expect(transport.requests.isEmpty)
     }
+
+    @Test
+    func `sends one request when the API has no call for after the status`() async {
+        let transport = FakeHTTPTransport(.status(400), .status(200))
+        let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
+
+        await #expect(throws: RewriteError.serviceUnavailable) {
+            try await rewriter.rewrite(.cleanup("hello"))
+        }
+
+        #expect(transport.requests.count == 1)
+    }
 }
 
 private struct FakeRewriteAPI: RewriteAPI {
