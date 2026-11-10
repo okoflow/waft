@@ -19,7 +19,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
 1. Create the Waft Release identity in the login keychain; it asks for your password to trust it:
 
    ```sh
-   scripts/signing.sh 'Waft Release'
+   make signing NAME='Waft Release'
    ```
 
    Back it up with **Export** in Keychain Access and keep the file offline. Every release must use this certificate: a new one makes macOS forget the permissions of everyone who updates. On another Mac, import the backup instead of creating a new identity.
@@ -57,7 +57,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
    SIGNING_IDENTITY='Waft Release' make release NOTES=../notes.md
    ```
 
-   The script stops unless the working tree is clean, `HEAD` is `origin/main`, the version's tag isn't on `origin` yet, and the keychain holds the signing identity and a Sparkle key; it doesn't compare that key with `SUPublicEDKey`, which [One-time setup](#one-time-setup) covers. It writes the disk image, the appcast with the notes embedded, and the cask with the disk image's checksum into `build/release`.
+   The script stops unless the working tree is clean, `HEAD` is `origin/main`, the version's tag isn't on `origin` yet, `CFBundleVersion` is above the published one, the signing identity is Waft Release or a Developer ID, and the keychain holds it and the Sparkle key that matches `SUPublicEDKey`. It verifies the signature of the built app and writes the disk image, the appcast with the notes embedded, and the cask with the disk image's checksum into `build/release`.
 
    Don't edit `appcast.xml`, since its signature covers the notes. To change it, rerun `generate_appcast` with the arguments of `make_appcast` in `scripts/release.sh`.
 4. Check the files before you publish them. Releases are immutable: the tag, the files, and the notes embedded in the appcast can't change after publishing. Mount the disk image and run `codesign --verify --strict` on the app in it.

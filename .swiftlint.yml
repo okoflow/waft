@@ -41,7 +41,6 @@ opt_in_rules:
   - fatal_error_message
   - file_name
   - file_types_order
-  - first_where
   - flatmap_over_map_reduce
   - force_unwrapping
   - function_default_parameter_at_end
@@ -54,7 +53,6 @@ opt_in_rules:
   - lower_acl_than_parent
   - optional_enum_case_matching
   - override_in_extension
-  - prefer_key_path
   - prefer_self_type_over_type_of_self
   - prefer_zero_over_explicit_init
   - reduce_into
@@ -69,7 +67,6 @@ opt_in_rules:
   - unneeded_escaping
   - unneeded_throws_rethrows
   - unowned_variable_capture
-  - untyped_error_in_catch
   - unused_parameter
   - weak_delegate
 
