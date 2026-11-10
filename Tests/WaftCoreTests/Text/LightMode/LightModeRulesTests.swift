@@ -101,6 +101,10 @@ struct LightModeRulesTests {
         ("Эммм, да", .russian, "Да."),
         ("Ε, καλά", .greek, "Καλά."),
         ("I went to the ER", .english, "I went to the ER."),
+        ("to err is human", .english, "To err is human."),
+        ("er, fine", .english, "Fine."),
+        ("errr, fine", .english, "Fine."),
+        ("uhh, ummm, fine", .english, "Fine."),
         ("um, hello", .japanese, "um, hello。"),
     ])
     func `recognizes hesitations by the rules of the language`(text: String, language: Language, expected: String) {

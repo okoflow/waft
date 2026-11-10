@@ -106,9 +106,7 @@ struct HesitationRemover {
 
         let letters = word.folded(in: language).filter { !Self.hyphens.contains($0) }
 
-        let runs = HesitationPattern.runs(of: letters)
-
-        return HesitationPattern.patterns(for: language).contains { $0.matches(runs) }
+        return HesitationPattern.isHesitation(letters, in: language)
     }
 
     private func endsSentence(_ mark: Character) -> Bool {
