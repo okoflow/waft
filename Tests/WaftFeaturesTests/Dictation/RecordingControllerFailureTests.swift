@@ -3,18 +3,8 @@ import Testing
 import WaftCore
 @testable import WaftFeatures
 
-struct RecordingFailureTests {
-    private static let first = RecordingID.none.next
-    private nonisolated static let dictation = RecordingTrigger(purpose: .dictation, key: .function, action: .startRecording)
-    private nonisolated static let edit = RecordingTrigger(purpose: .edit, key: .function, action: .startRecording)
-
+struct RecordingControllerFailureTests {
     private let recorder = FakeAudioRecorder()
-
-    private let focusTracker = FakeFocusTracker(.app(
-        "com.example.notes",
-        element: FakeFocusedElement(selectedText: "Meeting at noon"),
-    ))
-
     private let hud = HUDController.offscreen()
 
     @Test
@@ -24,8 +14,8 @@ struct RecordingFailureTests {
         let recordings = model(recorder: recorder)
         recordings.onFinish = { _, _, _ in deliveryCount += 1 }
 
-        recordings.begin(Self.dictation)
-        recorder.send(.failed(Self.first, .deviceUnavailable))
+        recordings.begin(.dictation)
+        recorder.send(.failed(.first, .deviceUnavailable))
 
         #expect(await Poll.until(timeout: .seconds(5)) {
             hud.content == .message(.recordingFailed(RecordingFailure.deviceUnavailable.message))
@@ -41,11 +31,11 @@ struct RecordingFailureTests {
         let recordings = model()
         recordings.onFinish = { _, target, samples in delivery = (target.bundleIdentifier, samples) }
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
 
-        recorder.send(.failed(Self.first, .stoppedAfterDeviceChange))
+        recorder.send(.failed(.first, .stoppedAfterDeviceChange))
 
         #expect(await Poll.until(timeout: .seconds(5)) { delivery != nil })
         #expect(delivery?.app == "com.example.notes")
@@ -60,11 +50,11 @@ struct RecordingFailureTests {
         let recordings = model()
         recordings.onFinish = { _, _, _ in deliveryCount += 1 }
 
-        recordings.begin(Self.edit)
+        recordings.begin(.edit)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Edit", isHandsFree: false) })
 
-        recorder.send(.failed(Self.first, .formatChanged))
+        recorder.send(.failed(.first, .formatChanged))
 
         #expect(await Poll.until(timeout: .seconds(5)) {
             hud.content == .message(.recordingFailed(RecordingFailure.formatChanged.message))
@@ -84,7 +74,7 @@ struct RecordingFailureTests {
         let recordings = model(recorder: FakeAudioRecorder(samples: [], failure: failure))
         recordings.onFinish = { _, _, _ in deliveryCount += 1 }
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
         recordings.finish(releasedAt: 2)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(.recordingFailed(detail)) })
@@ -96,20 +86,6 @@ struct RecordingFailureTests {
     }
 
     private func model(recorder: FakeAudioRecorder) -> RecordingController {
-        let recordings = RecordingController(
-            recorder: recorder,
-            focusTracker: focusTracker,
-            keyboardState: FakeKeyboardState(holdsKeys: true),
-            sounds: FakeFeedbackSoundPlayer(),
-            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume(), delay: .zero),
-            settings: .inMemory(),
-            hud: hud,
-            hudDelay: .zero,
-            watchdogInterval: 60,
-        )
-
-        recordings.start()
-
-        return recordings
+        .started(recorder: recorder, focusTracker: FakeFocusTracker(.notesWithSelection), hud: hud)
     }
 }

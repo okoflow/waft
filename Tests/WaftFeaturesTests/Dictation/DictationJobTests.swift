@@ -15,7 +15,7 @@ struct DictationJobTests {
 
         let job = DictationJob(
             samples: [],
-            recording: ActiveRecording(id: RecordingID.none.next, purpose: .dictation, key: .function),
+            recording: ActiveRecording(id: .first, purpose: .dictation, key: .function),
             target: .app("com.example.mail"),
             settings: settings,
             vocabulary: .empty,

@@ -4,19 +4,12 @@ import WaftCore
 @testable import WaftFeatures
 
 struct RecordingControllerTests {
-    private static let first = RecordingID.none.next
-    private static let second = first.next
-    private nonisolated static let dictation = RecordingTrigger(purpose: .dictation, key: .function, action: .startRecording)
-    private nonisolated static let edit = RecordingTrigger(purpose: .edit, key: .function, action: .startRecording)
+    private static let second = RecordingID.first.next
 
     private let recorder = FakeAudioRecorder()
-
-    private let focusTracker = FakeFocusTracker(.app(
-        "com.example.notes",
-        element: FakeFocusedElement(selectedText: "Meeting at noon"),
-    ))
-
+    private let focusTracker = FakeFocusTracker(.notesWithSelection)
     private let sounds = FakeFeedbackSoundPlayer()
+    private let outputVolume = FakeOutputVolume()
     private let settings = SettingsModel.inMemory()
     private let hud = HUDController.offscreen()
 
@@ -25,7 +18,7 @@ struct RecordingControllerTests {
         settings.settings.microphoneID = "usb-microphone"
         let recordings = model()
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
 
         #expect(recordings.isRecording)
         #expect(await Poll.until(timeout: .seconds(5)) { !recorder.startedDevices.isEmpty })
@@ -35,16 +28,13 @@ struct RecordingControllerTests {
     @Test(arguments: [(true, [FeedbackSound.recordingStarted, .recordingFinished]), (false, [])])
     func `plays the start and finish sounds only while sounds are on`(playsSounds: Bool, played: [FeedbackSound]) async {
         settings.settings.playsSounds = playsSounds
+        settings.settings.lowersOtherSounds = true
         let recordings = model()
 
-        recordings.begin(Self.dictation)
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
+        recordings.begin(.dictation)
+        recorder.send(.started(.first, deviceName: "Built-in Microphone"))
 
-        if playsSounds {
-            #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
-        } else {
-            #expect(await !Poll.until(timeout: .milliseconds(300)) { !sounds.played.isEmpty })
-        }
+        #expect(await Poll.until(timeout: .seconds(5)) { outputVolume.isLowered })
 
         recordings.finish(releasedAt: 2)
 
@@ -55,11 +45,11 @@ struct RecordingControllerTests {
     func `ignores recorder events for an earlier recording`() async {
         let recordings = model()
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
         recordings.discard(because: .tooShort)
-        recordings.begin(Self.dictation)
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
-        recorder.send(.failed(Self.first, .deviceUnavailable))
+        recordings.begin(.dictation)
+        recorder.send(.started(.first, deviceName: "Built-in Microphone"))
+        recorder.send(.failed(.first, .deviceUnavailable))
         recorder.send(.started(Self.second, deviceName: "Built-in Microphone"))
 
         #expect(await Poll.until(timeout: .seconds(5)) { sounds.played == [.recordingStarted] })
@@ -73,7 +63,7 @@ struct RecordingControllerTests {
         let recordings = model()
         recordings.onFinish = { _, target, samples in delivery = (target.bundleIdentifier, samples) }
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
 
@@ -91,7 +81,7 @@ struct RecordingControllerTests {
     func `hides the listening HUD and stops the recorder without a release time on discard`() async {
         let recordings = model()
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
 
@@ -106,7 +96,7 @@ struct RecordingControllerTests {
     func `refuses a trigger with its reason and ends it silently`() {
         let recordings = model()
 
-        recordings.refuse(Self.dictation, because: "The speech model isn't ready yet.")
+        recordings.refuse(.dictation, because: "The speech model isn't ready yet.")
 
         #expect(!recordings.isRecording)
         #expect(hud.content == .message(HUDMessage(kind: .information, title: "The speech model isn't ready yet.")))
@@ -124,7 +114,7 @@ struct RecordingControllerTests {
         focusTracker.lookupDuration = focusLookup
         let recordings = model(recorder: recorder, hudDelay: .milliseconds(10))
 
-        recordings.begin(Self.edit)
+        recordings.begin(.edit)
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
         #expect(!recordings.isRecording)
@@ -137,12 +127,12 @@ struct RecordingControllerTests {
         focusTracker.focus = .app("com.example.notes", element: FakeFocusedElement(selectedText: nil))
         let recordings = model()
 
-        recordings.begin(Self.edit)
+        recordings.begin(.edit)
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
 
-        recorder.send(.started(Self.first, deviceName: "Built-in Microphone"))
-        recorder.send(.failed(Self.first, .deviceUnavailable))
+        recorder.send(.started(.first, deviceName: "Built-in Microphone"))
+        recorder.send(.failed(.first, .deviceUnavailable))
 
         let reacted = await Poll.until(timeout: .milliseconds(300)) { !sounds.played.isEmpty }
 
@@ -155,17 +145,17 @@ struct RecordingControllerTests {
     func `keeps the selected text for an edit`() async {
         let recordings = model()
 
-        recordings.begin(Self.edit)
+        recordings.begin(.edit)
 
         #expect(await Poll.until(timeout: .seconds(5)) { recordings.recording?.selection == "Meeting at noon" })
         #expect(recordings.isRecording)
     }
 
     @Test(arguments: [
-        (Self.dictation, Mode?.none, "Light"),
-        (Self.dictation, .clean, "Clean"),
-        (Self.dictation, .custom(CustomMode.emailReply.id), "Email reply"),
-        (Self.edit, .clean, "Edit"),
+        (RecordingTrigger.dictation, Mode?.none, "Light"),
+        (.dictation, .clean, "Clean"),
+        (.dictation, .custom(CustomMode.emailReply.id), "Email reply"),
+        (.edit, .clean, "Edit"),
     ])
     func `shows the listening HUD with the target app's mode as its badge`(
         trigger: RecordingTrigger,
@@ -185,7 +175,7 @@ struct RecordingControllerTests {
     func `skips the listening HUD for a recording that ends before the delay`() async {
         let recordings = model()
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
         recordings.discard(because: .tooShort)
 
         #expect(await Poll.until(timeout: .seconds(5)) { !recorder.releaseTimes.isEmpty })
@@ -196,7 +186,7 @@ struct RecordingControllerTests {
     func `shows the listening HUD hands-free for a recording locked before it appears`() async {
         let recordings = model()
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
         recordings.lockHandsFree()
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
@@ -208,7 +198,7 @@ struct RecordingControllerTests {
         let recordings = model(recorder: recorder, keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         recordings.onPoll = { polls.append(($0, $1)) }
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
 
         #expect(await Poll.until(timeout: .seconds(5)) { polls.contains { $0.event == .keyUp } })
 
@@ -226,7 +216,7 @@ struct RecordingControllerTests {
         let recordings = model(recorder: recorder, keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         recordings.onPoll = { event, _ in events.append(event) }
 
-        recordings.begin(Self.dictation)
+        recordings.begin(.dictation)
         recordings.lockHandsFree()
 
         #expect(await Poll.until(timeout: .seconds(5)) { events.count >= 8 })
@@ -248,20 +238,16 @@ extension RecordingControllerTests {
         hudDelay: Duration = .zero,
         watchdogInterval: TimeInterval = 60,
     ) -> RecordingController {
-        let recordings = RecordingController(
+        .started(
             recorder: recorder,
             focusTracker: focusTracker,
+            hud: hud,
             keyboardState: keyboardState,
             sounds: sounds,
-            otherSounds: OtherSoundsLowering(outputVolume: FakeOutputVolume(), delay: .zero),
+            outputVolume: outputVolume,
             settings: settings,
-            hud: hud,
             hudDelay: hudDelay,
             watchdogInterval: watchdogInterval,
         )
-
-        recordings.start()
-
-        return recordings
     }
 }
