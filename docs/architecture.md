@@ -55,7 +55,7 @@ The tables list the folders whose names don't say enough.
 | --- | --- |
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; and `WindowPresenter`, which opens the windows and shows the Dock icon while one needs it |
 | `Models` | The observable state that several features share; a model that one screen uses lives with that screen. `UsageReporter` counts and sends only while `Settings.usageSharing` is `.allowed` and the build has a version |
-| `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
+| `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along. `TextDelivery` pastes a text or copies it when it can't paste, for a dictation and for the translator's shortcuts |
 | `Keyboard` | `KeyMonitorController`, which starts the `KeyEventMonitor` and restarts it when it stops; `GlobalShortcutController`, which registers the global shortcuts; and `KeyRecorder` and `ShortcutRecorder`, which capture a new key or shortcut in Settings |
 | `HUD` | `HUDController` and `HUDPanel`, which floats below the menu bar when `ForeignWindow` finds another app's window over the notch; `Island` holds the views inside it |
 | `Settings` | `Window` holds the Settings window, its sidebar, and `SettingsPage`, the page every pane sits in; a folder per pane holds that pane; and `Shared` holds what several panes or the setup guide use |
