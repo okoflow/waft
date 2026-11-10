@@ -13,9 +13,9 @@ package final class SystemPermissions: PermissionProvider {
         switch permission {
         case .microphone:
             switch AVCaptureDevice.authorizationStatus(for: .audio) {
-            case .authorized: .granted
             case .notDetermined: .notDetermined
-            case .denied, .restricted: .denied
+            case .restricted, .denied: .denied
+            case .authorized: .granted
             @unknown default: .denied
             }
 
