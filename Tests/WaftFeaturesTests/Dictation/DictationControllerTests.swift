@@ -24,8 +24,11 @@ struct DictationControllerTests {
     private let keyRecorder = KeyRecorder()
     private let start = Uptime.now
 
-    private static func permissions(microphone: PermissionStatus, answer: PermissionStatus = .granted) -> PermissionMonitor {
-        let provider = FakePermissionProvider([.microphone: microphone, .accessibility: .granted], answers: [.microphone: answer])
+    private static func permissions(microphone: PermissionStatus) -> PermissionMonitor {
+        let provider = FakePermissionProvider(
+            [.microphone: microphone, .accessibility: .granted],
+            answers: [.microphone: .granted],
+        )
 
         return PermissionMonitor(provider: provider)
     }
@@ -144,7 +147,7 @@ struct DictationControllerTests {
     @Test
     func `starts a recording on the tap after a refused one`() async {
         settings.settings.dictationStart = .tap
-        let permissions = Self.permissions(microphone: .denied, answer: .granted)
+        let permissions = Self.permissions(microphone: .denied)
         let controller = await controller(permissions: permissions)
 
         await pressDictationKey(at: 0)

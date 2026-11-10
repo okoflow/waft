@@ -7,8 +7,6 @@ struct HUDInterruptedMessageTests {
     private static let warning = HUDMessage(kind: .warning, title: "Recording stopped early")
     private static let information = HUDMessage(kind: .information, title: "Didn't catch that")
 
-    private let window = FakeHUDWindow()
-
     @Test(arguments: [HUDMessage.Kind.copied, .warning])
     func `shows a warning or a copied text again after the recording that interrupted it`(kind: HUDMessage.Kind) {
         let hud = model()
@@ -62,12 +60,6 @@ struct HUDInterruptedMessageTests {
     }
 
     private func model(expiring: [HUDMessage] = []) -> HUDController {
-        HUDController(
-            messageDuration: { expiring.contains($0) ? .zero : .seconds(60) },
-            orderOutPause: .zero,
-            copiedPause: .zero,
-            copy: { _ in },
-            makeWindow: { [window] _ in window },
-        )
+        .offscreen { expiring.contains($0) ? .zero : .seconds(60) }
     }
 }

@@ -97,7 +97,7 @@ final class ShortcutRecorder {
     }
 
     func handle(_ event: NSEvent) {
-        guard let action, event.type == .keyDown else { return }
+        guard let action else { return }
         guard !event.isEscape else {
             stop()
 

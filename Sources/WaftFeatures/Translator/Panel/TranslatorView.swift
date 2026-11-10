@@ -215,7 +215,6 @@ private struct TranslationText: View {
                     .accessibilityLabel("Translation")
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .motion(Motion.fade, value: model.isTranslating)
         .motion(Motion.fade, value: model.failure)
     }

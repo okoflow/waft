@@ -112,7 +112,7 @@ struct RecordingControllerTests {
         let message = HUDMessage(kind: .information, title: "Select the text to edit, then hold the key and say what to change.")
         focusTracker.focus = .app("com.example.notes", element: FakeFocusedElement(selectedText: nil))
         focusTracker.lookupDuration = focusLookup
-        let recordings = model(recorder: recorder, hudDelay: .milliseconds(10))
+        let recordings = model(hudDelay: .milliseconds(10))
 
         recordings.begin(.edit)
 
@@ -195,7 +195,7 @@ struct RecordingControllerTests {
     @Test
     func `reports a key-up from the first released poll when the key-up event never arrives`() async throws {
         var polls: [(event: PushToTalk.Event, time: TimeInterval)] = []
-        let recordings = model(recorder: recorder, keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
+        let recordings = model(keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         recordings.onPoll = { polls.append(($0, $1)) }
 
         recordings.begin(.dictation)
@@ -213,7 +213,7 @@ struct RecordingControllerTests {
     @Test
     func `keeps a hands-free recording going without the key held`() async {
         var events: [PushToTalk.Event] = []
-        let recordings = model(recorder: recorder, keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
+        let recordings = model(keyboardState: FakeKeyboardState(holdsKeys: false), watchdogInterval: 0)
         recordings.onPoll = { event, _ in events.append(event) }
 
         recordings.begin(.dictation)
@@ -228,12 +228,7 @@ struct RecordingControllerTests {
 }
 
 extension RecordingControllerTests {
-    private func model() -> RecordingController {
-        model(recorder: recorder)
-    }
-
     private func model(
-        recorder: FakeAudioRecorder,
         keyboardState: FakeKeyboardState = FakeKeyboardState(holdsKeys: true),
         hudDelay: Duration = .zero,
         watchdogInterval: TimeInterval = 60,
