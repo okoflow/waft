@@ -12,8 +12,10 @@ struct RewriteValidatorTests {
         ("\"<transcript>So the meeting is on Friday.</transcript>\"", "So the meeting is on Friday."),
         ("«So the meeting is on Friday.»", "So the meeting is on Friday."),
         ("«\"So the meeting is on Friday.\"»", "So the meeting is on Friday."),
+        ("<reply>So the meeting is on Friday.</reply>", "So the meeting is on Friday."),
+        ("<reply>\n\"So the meeting is on Friday.\"\n</reply>", "So the meeting is on Friday."),
     ])
-    func `unwraps quotes and transcript tags around a cleanup`(answer: String, expected: String) throws {
+    func `unwraps quotes and tags around a cleanup`(answer: String, expected: String) throws {
         #expect(try RewriteValidator.validated(answer, for: .cleanup("um so the meeting is on friday")) == expected)
     }
 
@@ -116,6 +118,7 @@ struct RewriteValidatorTests {
     @Test(arguments: [
         ("<text>Shorter.</text>", "Shorter."),
         ("<text>\nShorter.\n</text>", "Shorter."),
+        ("<reply>Shorter.</reply>", "Shorter."),
         ("Короче.", "Короче."),
     ])
     func `unwraps an edit`(answer: String, expected: String) throws {
@@ -144,6 +147,16 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: request) == answer)
     }
 
+    @Test(arguments: [
+        (RewriteRequest.cleanup("<transcript>hi there</transcript>"), "<transcript>Hi there.</transcript>"),
+        (.custom("<reply>hi there</reply>"), "<reply>Hi there.</reply>"),
+        (.edit("fix it", selection: "<text>hi there</text>"), "<text>Hi there.</text>"),
+        (.text("<reply>hi there</reply>", task: .fix), "<reply>Hi there.</reply>"),
+    ])
+    func `keeps the tags around an answer to a text that starts with them`(request: RewriteRequest, answer: String) throws {
+        #expect(try RewriteValidator.validated(answer, for: request) == answer)
+    }
+
     @Test
     func `does not limit the length of an edit`() throws {
         let answer = String(repeating: "word ", count: 500).trimmingCharacters(in: .whitespaces)
@@ -151,7 +164,12 @@ struct RewriteValidatorTests {
         #expect(try RewriteValidator.validated(answer, for: .edit("make it shorter", selection: "word")) == answer)
     }
 
-    @Test(arguments: [("<text>\nHallo.\n</text>", "Hallo."), ("«Hallo.»", "Hallo."), ("Hallo.", "Hallo.")])
+    @Test(arguments: [
+        ("<text>\nHallo.\n</text>", "Hallo."),
+        ("<reply>Hallo.</reply>", "Hallo."),
+        ("«Hallo.»", "Hallo."),
+        ("Hallo.", "Hallo."),
+    ])
     func `unwraps the answer to a text task`(answer: String, expected: String) throws {
         let request = RewriteRequest.text("Hello.", task: .translate(from: nil, into: .german))
 

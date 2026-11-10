@@ -26,16 +26,14 @@ enum RewriteValidator {
 
     private static func wrappers(for request: RewriteRequest) -> [Wrapper] {
         switch request.kind {
-        case .cleanup, .custom: addedTag(.transcript, to: request.text) + addedQuotes(to: request.text)
-        case let .edit(selection, _): addedTag(.text, to: selection)
-        case .text: addedTag(.text, to: request.text) + addedQuotes(to: request.text)
+        case .cleanup, .custom: addedTags([.transcript, .reply], to: request.text) + addedQuotes(to: request.text)
+        case let .edit(selection, _): addedTags([.text, .reply], to: selection)
+        case .text: addedTags([.text, .reply], to: request.text) + addedQuotes(to: request.text)
         }
     }
 
-    private static func addedTag(_ tag: PromptTag, to input: String) -> [Wrapper] {
-        guard !input.hasPrefix(tag.open) else { return [] }
-
-        return [(tag.open, tag.close)]
+    private static func addedTags(_ tags: [PromptTag], to input: String) -> [Wrapper] {
+        tags.filter { !input.hasPrefix($0.open) }.map { ($0.open, $0.close) }
     }
 
     private static func addedQuotes(to input: String) -> [Wrapper] {
