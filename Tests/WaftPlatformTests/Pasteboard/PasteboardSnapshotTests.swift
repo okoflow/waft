@@ -6,6 +6,7 @@ import WaftCore
 @MainActor
 struct PasteboardSnapshotTests {
     private static let privateType = NSPasteboard.PasteboardType("com.example.private")
+    private static let otherPrivateType = NSPasteboard.PasteboardType("com.example.other-private")
     private static let promiseType = NSPasteboard.PasteboardType("com.apple.pasteboard.promised-file-url")
 
     private static func item(_ contents: [NSPasteboard.PasteboardType: Data]) -> NSPasteboardItem {
@@ -28,7 +29,7 @@ struct PasteboardSnapshotTests {
                 Self.item([.html: Data("<p>Hi.</p>".utf8)]),
             ])
 
-            let snapshot = PasteboardSnapshot.take(from: pasteboard)
+            let snapshot = PasteboardSnapshot.take(from: pasteboard, rareTypesTimeBudget: .seconds(60))
 
             pasteboard.writePrivately("Dictated.")
             snapshot.restore(to: pasteboard)
@@ -189,6 +190,46 @@ struct PasteboardSnapshotTests {
             pasteboard.writeObjects([Self.item([Self.privateType: overLimit])])
 
             let snapshot = PasteboardSnapshot.take(from: pasteboard)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            #expect(snapshot.plan == .skip(reason: .uncapturedItem))
+            #expect(pasteboard.string(forType: .string) == "Dictated.")
+        }
+    }
+
+    @Test
+    func `leaves out the other types once reading them has taken longer than the time budget`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            let copied = NSPasteboardItem()
+            copied.setData(Data([1]), forType: Self.privateType)
+            copied.setData(Data([2]), forType: Self.otherPrivateType)
+            copied.setString("Hello.", forType: .string)
+
+            pasteboard.clearContents()
+            pasteboard.writeObjects([copied])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard, rareTypesTimeBudget: .zero)
+
+            pasteboard.writePrivately("Dictated.")
+            snapshot.restore(to: pasteboard)
+
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(snapshot.plan == .restore)
+            #expect(items.map(\.types) == [[Self.privateType, .string]])
+            #expect(pasteboard.string(forType: .string) == "Hello.")
+        }
+    }
+
+    @Test
+    func `keeps the dictated text rather than an item whose only type came after the time budget`() {
+        NSPasteboard.withTemporary { pasteboard in
+            pasteboard.clearContents()
+            pasteboard.writeObjects([Self.item([Self.privateType: Data([1])]), Self.item([Self.privateType: Data([2])])])
+
+            let snapshot = PasteboardSnapshot.take(from: pasteboard, rareTypesTimeBudget: .zero)
 
             pasteboard.writePrivately("Dictated.")
             snapshot.restore(to: pasteboard)
