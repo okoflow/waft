@@ -1,4 +1,5 @@
 import Foundation
+import os
 import WaftCore
 
 struct ChatCompletionsAPI: RewriteAPI {
@@ -7,15 +8,15 @@ struct ChatCompletionsAPI: RewriteAPI {
     let service = "The local server"
 
     func call(for request: RewriteRequest) throws(RewriteError) -> APICall<ChatCompletionsRequest> {
-        guard let server = request.localServer, server.isConfigured else { throw .unavailable }
+        try call(for: request, maximumTokens: request.outputTokenLimitWithThinking)
+    }
 
-        let body = ChatCompletionsRequest(
-            model: server.model,
-            messages: [.system(RewritePrompt.system(for: request)), .user(RewritePrompt.userMessage(for: request))],
-            maximumTokens: request.outputTokenLimitWithThinking,
-        )
+    func call(for request: RewriteRequest, afterStatus status: Int) throws(RewriteError) -> APICall<ChatCompletionsRequest>? {
+        guard status == 400 else { return nil }
 
-        return try APICall(url: server.url(appending: "/chat/completions"), headers: [:], body: body)
+        Logger.network.notice("\(service, privacy: .public) answered HTTP 400; asking again with the plain token limit")
+
+        return try call(for: request, maximumTokens: request.outputTokenBudget)
     }
 
     func answer(from data: Data) throws(RewriteError) -> String {
@@ -30,6 +31,18 @@ struct ChatCompletionsAPI: RewriteAPI {
         guard let content = choice.message.content else { throw .unreadableResponse }
 
         return content.replacingOccurrences(of: Self.reasoningPattern, with: "", options: .regularExpression)
+    }
+
+    private func call(for request: RewriteRequest, maximumTokens: Int) throws(RewriteError) -> APICall<ChatCompletionsRequest> {
+        guard let server = request.localServer, server.isConfigured else { throw .unavailable }
+
+        let body = ChatCompletionsRequest(
+            model: server.model,
+            messages: [.system(RewritePrompt.system(for: request)), .user(RewritePrompt.userMessage(for: request))],
+            maximumTokens: maximumTokens,
+        )
+
+        return try APICall(url: server.url(appending: "/chat/completions"), headers: [:], body: body)
     }
 }
 

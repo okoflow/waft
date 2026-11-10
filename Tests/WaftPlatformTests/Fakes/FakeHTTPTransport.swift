@@ -9,23 +9,27 @@ final class FakeHTTPTransport: HTTPTransport {
         case failure(URLError)
     }
 
-    private let reply: Reply
+    private let replies: [Reply]
     private let sent = OSAllocatedUnfairLock<[URLRequest]>(initialState: [])
 
     var requests: [URLRequest] {
         sent.withLock { $0 }
     }
 
-    init(_ reply: Reply) {
-        self.reply = reply
+    init(_ firstReply: Reply, _ laterReplies: Reply...) {
+        replies = [firstReply] + laterReplies
     }
 
     func data(for request: URLRequest) throws -> (Data, URLResponse) {
-        sent.withLock { $0.append(request) }
+        let earlierRequestCount = sent.withLock { requests in
+            requests.append(request)
+
+            return requests.count - 1
+        }
 
         guard let url = request.url else { throw URLError(.badURL) }
 
-        switch reply {
+        switch replies[min(earlierRequestCount, replies.count - 1)] {
         case let .status(status, body):
             guard let response = HTTPURLResponse(url: url, statusCode: status, httpVersion: nil, headerFields: nil) else {
                 throw URLError(.badServerResponse)

@@ -6,6 +6,13 @@ import WaftCore
 struct ChatCompletionsAPITests {
     private static let api = ChatCompletionsAPI()
     private static let server = LocalServer(baseURL: "http://localhost:1234/v1/", model: "qwen")
+    private static let answer = Data(#"{"choices":[{"message":{"content":"Hello."},"finish_reason":"stop"}]}"#.utf8)
+
+    private static func jsonBody(of request: URLRequest) throws -> [String: Any] {
+        let body = try #require(request.httpBody)
+
+        return try #require(JSONSerialization.jsonObject(with: body) as? [String: Any])
+    }
 
     @Test(arguments: [LocalServer?.none, LocalServer(model: ""), LocalServer(baseURL: "", model: "qwen")])
     func `needs a configured local server`(server: LocalServer?) {
@@ -36,6 +43,61 @@ struct ChatCompletionsAPITests {
             ["role": "system", "content": RewritePrompt.system(for: request)],
             ["role": "user", "content": RewritePrompt.userMessage(for: request)],
         ])
+    }
+
+    @Test
+    func `sends the request again with the plain token budget when the server answers 400`() async throws {
+        let request = RewriteRequest.cleanup("hello", localServer: Self.server)
+        let transport = FakeHTTPTransport(.status(400), .status(200, body: Self.answer))
+        let rewriter = HTTPRewriter(api: Self.api, transport: transport)
+
+        let answer = try await rewriter.rewrite(request)
+
+        let bodies = try transport.requests.map(Self.jsonBody)
+        let otherFields = Set(bodies.map { NSDictionary(dictionary: $0.filter { $0.key != "max_tokens" }) })
+
+        #expect(answer == "Hello.")
+        #expect(Set(transport.requests.map(\.url?.absoluteString)) == ["http://localhost:1234/v1/chat/completions"])
+        #expect(bodies.map { $0["max_tokens"] as? Int } == [request.outputTokenBudget + 4096, request.outputTokenBudget])
+        #expect(otherFields.count == 1)
+    }
+
+    @Test
+    func `fails when the server answers 400 to the plain token budget too`() async {
+        let transport = FakeHTTPTransport(.status(400))
+        let rewriter = HTTPRewriter(api: Self.api, transport: transport)
+
+        await #expect(throws: RewriteError.serviceUnavailable) {
+            try await rewriter.rewrite(.cleanup("hello", localServer: Self.server))
+        }
+
+        #expect(transport.requests.count == 2)
+    }
+
+    @Test(arguments: [
+        (401, RewriteError.rejectedKey),
+        (404, .unavailable),
+        (429, .rateLimited),
+        (500, .serviceUnavailable),
+    ])
+    func `sends the request once when the server fails with another status`(status: Int, error: RewriteError) async {
+        let transport = FakeHTTPTransport(.status(status), .status(200, body: Self.answer))
+        let rewriter = HTTPRewriter(api: Self.api, transport: transport)
+
+        await #expect(throws: error) {
+            try await rewriter.rewrite(.cleanup("hello", localServer: Self.server))
+        }
+
+        #expect(transport.requests.count == 1)
+    }
+
+    @Test
+    func `sends the request once when the server answers`() async throws {
+        let transport = FakeHTTPTransport(.status(200, body: Self.answer), .status(400))
+        let rewriter = HTTPRewriter(api: Self.api, transport: transport)
+
+        #expect(try await rewriter.rewrite(.cleanup("hello", localServer: Self.server)) == "Hello.")
+        #expect(transport.requests.count == 1)
     }
 
     @Test(arguments: [

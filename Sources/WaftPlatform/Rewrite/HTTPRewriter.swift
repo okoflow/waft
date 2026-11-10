@@ -25,9 +25,19 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
     }
 
     func rewrite(_ request: RewriteRequest) async throws(RewriteError) -> String {
-        let call = try api.call(for: request)
+        let reply = try await send(api.call(for: request), within: request.deadline)
 
-        var urlRequest = URLRequest(url: call.url, timeoutInterval: request.deadline / .seconds(1))
+        guard let secondCall = try api.call(for: request, afterStatus: reply.status) else {
+            return try api.answer(from: reply.body(from: api.service))
+        }
+
+        let secondReply = try await send(secondCall, within: request.deadline)
+
+        return try api.answer(from: secondReply.body(from: api.service))
+    }
+
+    private func send(_ call: APICall<API.Body>, within deadline: Duration) async throws(RewriteError) -> HTTPReply {
+        var urlRequest = URLRequest(url: call.url, timeoutInterval: deadline / .seconds(1))
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = try Self.encoded(call.body)
         urlRequest.setValue("application/json", forHTTPHeaderField: "content-type")
@@ -36,8 +46,6 @@ struct HTTPRewriter<API: RewriteAPI>: TextRewriter {
             urlRequest.setValue(value, forHTTPHeaderField: field)
         }
 
-        let data = try await transport.body(for: urlRequest, from: api.service)
-
-        return try api.answer(from: data)
+        return try await transport.reply(to: urlRequest, from: api.service)
     }
 }

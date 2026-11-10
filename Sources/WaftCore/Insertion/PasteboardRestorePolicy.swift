@@ -11,6 +11,7 @@ package enum PasteboardRestorePolicy {
     }
 
     package static let maximumSnapshotBytes = 5 * 1024 * 1024
+    package static let rareTypesTimeBudget = Duration.milliseconds(200)
     package static let waftType = "com.okoflow.waft.transcript"
     package static let markerTypes = [transientType, concealedType, waftType]
 
