@@ -1,6 +1,6 @@
 # Troubleshooting
 
-This page says what to do when something doesn't work, starting from what the first line of the menu or the HUD, quoted here, says. [Usage](usage.md) describes the settings named here, and [Privacy](privacy.md) the files Waft keeps.
+This page says what to do when something doesn't work, starting from what the first line of the menu or the HUD says. A message that names its own fix isn't listed.
 
 ## macOS won't open Waft
 
@@ -15,10 +15,7 @@ When macOS asks for your password because Waft wants to use confidential informa
 | Symptom | Fix |
 | --- | --- |
 | The menu says "Setup needed" | Choose **Finish Setup…** or click **Allow…** in Settings › General |
-| "Waft can't use the microphone. Allow it in Settings › General." | Click **Allow…** next to Microphone |
-| "Editing by voice is part of Waft+." or "Translating and fixing text is part of Waft+." | Add a license in Settings › Waft+ |
 | The menu or the HUD shows the speech model downloading or preparing | Wait; [The speech model](how-it-works.md#the-speech-model) says how long it takes |
-| The menu says "Speech model failed" | See [The speech model fails](#the-speech-model-fails) |
 | The editing key shows "None" | There's none by default: set **Editing key** in Settings › Dictation |
 | Another key is set | The first line of the menu and **Dictation key** in Settings › Dictation show which one |
 | <kbd>🌐</kbd> opens emoji or dictation | Set **Press 🌐 key to** to **Do Nothing** in System Settings › Keyboard |
@@ -30,10 +27,8 @@ When macOS asks for your password because Waft wants to use confidential informa
 
 | Symptom | Cause and fix |
 | --- | --- |
-| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
-| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> and "Not pasted into a password field" | The focused field is a password field, as [Pasting](how-it-works.md#pasting) defines one. The text is on the clipboard: press <kbd>⌘</kbd><kbd>V</kbd> where you want it |
+| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | Waft copied the text instead of pasting it: press <kbd>⌘</kbd><kbd>V</kbd> where you want it. "Not pasted into a password field" says why; [Pasting](how-it-works.md#pasting) lists the other reasons |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
-| "Recording failed" | The microphone failed; the line below says why |
 | "Transcription failed" | The speech model failed; the line below says why. The recording is kept for 10 minutes: choose **Retry Last Dictation** in the menu once the cause is fixed |
 | "Recording stopped early" | The microphone stopped in the middle of a dictation, or the recording reached 5 minutes; the line below says which. Waft still recognizes and delivers what it recorded until then |
 | "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
@@ -52,25 +47,22 @@ When macOS asks for your password because Waft wants to use confidential informa
 
 ## The AI modes use Light
 
-The HUD shows "Without AI" next to the check mark. Pointing at it shows the text with "Used Light mode:" and a reason, as does the text Waft couldn't paste, with your provider's name in place of *provider*. The next dictation tries the AI model again. The `network` log category records the HTTP status or the connection error of a failed request, as [Logs](#logs) shows.
+The HUD shows "Without AI"; point at it to see "Used Light mode:" and a reason, with your provider's name in place of *provider*. The next dictation tries the AI model again. The `network` category of the [log](#logs) records the HTTP status or the connection error of a failed request.
 
 | The reason | Fix |
 | --- | --- |
-| add your *provider* API key in Settings › AI Models | Add the key there |
-| choose a local server and model in Settings › AI Models | Choose both there; if both are set, choose a model the server lists under **Model** |
-| AI modes need Waft+ | Add a license in Settings › Waft+ |
-| you're offline | Check your connection |
+| choose a local server and model in Settings › AI Models | If both are set, choose a model the server lists under **Model** |
 | the local server isn't running | Start it, then click **Check** in Settings › AI Models |
 | *provider* didn't answer in time | Choose a quicker model if it keeps happening; [Choosing the AI model](usage.md#choosing-the-ai-model) lists each time limit |
 | *provider* is rate-limiting requests | Wait a moment; with OpenAI, the account may be out of credit |
 | *provider* rejected the API key | Create a new key as [Choosing the AI model](usage.md#choosing-the-ai-model) describes |
 | *provider* isn't available | The model doesn't exist, or the secure connection failed |
 | *provider* returned an error | With Claude, the usual cause is a key created outside a workspace |
-| *provider*'s answer couldn't be used | The answer was empty, cut off, refused, too long, too short, or in another script; dictate again. If one of your modes always fails, its instructions ask for more than [The AI modes](how-it-works.md#the-ai-modes) allows |
+| *provider*'s answer couldn't be used | Dictate again. If one of your modes always fails, its instructions ask for more than [The AI modes](how-it-works.md#the-ai-modes) allows |
 
 ## The speech model fails
 
-**Retry Speech Model** in the menu resumes a failed download or loads the model again; if the load fails twice, the next retry deletes the model and downloads it anew. A download also fails without enough free space; [The speech model](how-it-works.md#the-speech-model) says how much. To start over by hand, quit Waft and remove the model and its compiled copy, which [What Waft keeps](privacy.md#what-waft-keeps) locates:
+**Retry Speech Model** in the menu resumes a failed download or loads the model again; if the load fails twice, the next retry deletes the model and downloads it anew. A download also fails without enough free space; [The speech model](how-it-works.md#the-speech-model) says how much. To start over by hand, quit Waft and remove the model and its compiled copy:
 
 ```sh
 rm -r ~/Library/Application\ Support/Waft/Models ~/Library/Caches/com.okoflow.waft
@@ -89,6 +81,4 @@ Waft logs what it did and how long it took, and why an AI mode fell back to Ligh
 /usr/bin/log show --last 10m --info --predicate 'subsystem == "com.okoflow.waft"'
 ```
 
-When a dictation lost words, the `dictation` category gives the seconds of audio and the characters Whisper recognized and the mode returned, and the `speech` category says how many pieces Waft split the recording into and which piece gave no text, ran out of decoder tokens, or had segments dropped as unsure or made up.
-
-Attach the lines around the problem to a bug report.
+When a dictation lost words, the `dictation` and `speech` categories show how much audio there was, how much text Whisper and the mode returned, and which piece of the recording gave none. Attach the lines around the problem to a bug report.

@@ -1,6 +1,6 @@
 # Getting started
 
-This page takes you from installing Waft to your first dictation. [Usage](usage.md) covers everything after that, and [Troubleshooting](troubleshooting.md) helps when something doesn't work.
+This page takes you from installing Waft to your first dictation.
 
 ## 1. Install
 
@@ -24,18 +24,16 @@ On first launch, a short guide opens, and Waft downloads the speech model in the
 
 ![The setup guide](../.github/screenshots/onboarding.jpg)
 
-1. **Welcome to Waft** shows the gesture: hold the key, speak, let go.
-2. **Allow microphone access**: click **Allow Access…**, then **Allow** in the macOS prompt.
-3. **Allow Accessibility access**: click **Open System Settings** and turn on Waft, so it can notice the key and paste the text.
-4. **Try it**: dictate into the box, as [First dictation](#3-first-dictation) describes.
-5. **Help improve Waft**: click **Share** to send anonymous usage data or **Don't Share** to send nothing. [Usage data](privacy.md#usage-data) lists what a report holds.
-6. **You're all set**: choose whether Waft opens at login, then click **Done**. If no AI model is set up, **Set Up…** next to **AI modes** opens Settings › AI Models.
+1. **Allow microphone access**: click **Allow Access…**, then **Allow** in the macOS prompt.
+2. **Allow Accessibility access**: click **Open System Settings** and turn on Waft, so it can notice the key and paste the text.
+3. **Try it**: dictate into the box, as [First dictation](#3-first-dictation) describes.
+4. **Help improve Waft**: click **Share** to send anonymous usage data or **Don't Share** to send nothing. [Usage data](privacy.md#usage-data) lists what a report holds.
 
-The guide moves on by itself once a permission is allowed and skips one you allowed before. If you close it early, **Finish Setup…** in the menu brings it back. If you set Waft up before it asked about usage data, the guide opens with that question alone each time Waft starts, until you answer.
+If you close the guide early, **Finish Setup…** in the menu brings it back. If you set Waft up before it asked about usage data, the guide opens with that question alone each time Waft starts, until you answer.
 
 ## 3. First dictation
 
-1. Click into a text field: a message, a document, a prompt for an AI. In the guide, click the box in **Try it**; while the speech model downloads, the line under it shows its progress.
+1. Click into a text field: a message, a document, a prompt for an AI.
 2. Hold <kbd>right ⌥</kbd> and say "Hello, Waft". The HUD at the top of the screen shows that Waft is listening.
 3. Let go. The text appears at the cursor.
 

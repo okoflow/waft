@@ -1,6 +1,6 @@
 # Privacy
 
-This page lists what Waft keeps on your Mac, where, and when it uses the network. [How it works](how-it-works.md) follows a dictation step by step, and [Troubleshooting](troubleshooting.md) shows how to read the log.
+This page lists what Waft keeps on your Mac, where, and when it uses the network.
 
 ## Audio
 
