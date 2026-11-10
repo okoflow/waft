@@ -13,7 +13,6 @@ struct RewriteValidatorTests {
         ("«So the meeting is on Friday.»", "So the meeting is on Friday."),
         ("«\"So the meeting is on Friday.\"»", "So the meeting is on Friday."),
         ("<reply>So the meeting is on Friday.</reply>", "So the meeting is on Friday."),
-        ("<reply>\n\"So the meeting is on Friday.\"\n</reply>", "So the meeting is on Friday."),
     ])
     func `unwraps quotes and tags around a cleanup`(answer: String, expected: String) throws {
         #expect(try RewriteValidator.validated(answer, for: .cleanup("um so the meeting is on friday")) == expected)

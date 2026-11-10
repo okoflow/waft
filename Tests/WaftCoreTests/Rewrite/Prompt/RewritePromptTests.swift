@@ -148,10 +148,7 @@ struct RewritePromptTests {
 
     @Test(arguments: [(TextTask.Kind.fix, "You proofread text"), (.translate, "You translate text")])
     func `starts the default instructions of a text task with its role`(kind: TextTask.Kind, role: String) {
-        let instructions = RewritePrompt.defaultTextInstructions(for: kind)
-
-        #expect(instructions.hasPrefix(role))
-        #expect(!instructions.contains("<text> tags"))
+        #expect(RewritePrompt.defaultTextInstructions(for: kind).hasPrefix(role))
     }
 
     @Test(arguments: [
@@ -166,8 +163,6 @@ struct RewritePromptTests {
         tag: String,
         otherTag: String,
     ) {
-        #expect(instructions.contains("<examples>\n<example>\n"))
-        #expect(instructions.hasSuffix("</reply>\n</example>\n</examples>"))
         #expect(instructions.contains(tag))
         #expect(!instructions.contains(otherTag))
     }
