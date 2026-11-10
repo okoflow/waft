@@ -23,7 +23,7 @@ struct EditKeySection: View {
         KeyRecorderField(
             purpose: .edit,
             key: settings.settings.editKey,
-            takenKey: settings.settings.pushToTalkKey,
+            settings: settings.settings,
             recorder: keyRecorder,
         ) { key in
             settings.settings.editKey = key

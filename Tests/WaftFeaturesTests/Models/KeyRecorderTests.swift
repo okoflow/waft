@@ -15,7 +15,7 @@ struct KeyRecorderTests {
     @Test(arguments: [(NSEvent.EventType.flagsChanged, UInt16(61), rightOptionPressed), (.keyDown, functionKey, 0)])
     func `records a pressed modifier or function key and stops`(type: NSEvent.EventType, keyCode: UInt16, flags: UInt) throws {
         var recorded: [PushToTalkKey] = []
-        recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+        recorder.start(.dictation, excluding: { _ in false }, { recorded.append($0) })
 
         try recorder.handle(event(type, keyCode: keyCode, flags: flags))
 
@@ -25,7 +25,7 @@ struct KeyRecorderTests {
 
     @Test
     func `rejects a key that types text and counts the rejection for its purpose`() throws {
-        recorder.start(.edit, excluding: nil) { _ in }
+        recorder.start(.edit, excluding: { _ in false }, { _ in })
 
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
@@ -37,7 +37,7 @@ struct KeyRecorderTests {
 
     @Test
     func `rejects the key already used for the other purpose`() throws {
-        recorder.start(.edit, excluding: PushToTalkKey(keyCode: Int64(Self.functionKey))) { _ in }
+        recorder.start(.edit, excluding: { $0.keyCode == Int64(Self.functionKey) }, { _ in })
 
         try recorder.handle(event(.keyDown, keyCode: Self.functionKey))
 
@@ -48,7 +48,7 @@ struct KeyRecorderTests {
     @Test
     func `cancels on Escape`() throws {
         var recorded: [PushToTalkKey] = []
-        recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+        recorder.start(.dictation, excluding: { _ in false }, { recorded.append($0) })
 
         try recorder.handle(event(.keyDown, keyCode: Self.escape))
 
@@ -60,7 +60,7 @@ struct KeyRecorderTests {
     @Test
     func `ignores a modifier being released`() throws {
         var recorded: [PushToTalkKey] = []
-        recorder.start(.dictation, excluding: nil) { recorded.append($0) }
+        recorder.start(.dictation, excluding: { _ in false }, { recorded.append($0) })
 
         try recorder.handle(event(.flagsChanged, keyCode: 61))
 
@@ -71,10 +71,10 @@ struct KeyRecorderTests {
 
     @Test
     func `clears the previous rejection when it starts again`() throws {
-        recorder.start(.dictation, excluding: nil) { _ in }
+        recorder.start(.dictation, excluding: { _ in false }, { _ in })
         try recorder.handle(event(.keyDown, keyCode: Self.letterA))
 
-        recorder.start(.dictation, excluding: nil) { _ in }
+        recorder.start(.dictation, excluding: { _ in false }, { _ in })
 
         #expect(recorder.rejection == nil)
         #expect(recorder.rejections == [.dictation: 1])
@@ -91,7 +91,7 @@ struct KeyRecorderTests {
         purpose: RecordingPurpose,
         note: String?,
     ) throws {
-        recorder.start(.dictation, excluding: PushToTalkKey(keyCode: Int64(Self.functionKey))) { _ in }
+        recorder.start(.dictation, excluding: { $0.keyCode == Int64(Self.functionKey) }, { _ in })
 
         for keyCode in pressed {
             try recorder.handle(event(.keyDown, keyCode: keyCode))

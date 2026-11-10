@@ -8,6 +8,7 @@ struct LicenseSection: View {
         switch pro.activationProblem {
         case .unreadable: "That doesn't look like a Waft license key."
         case .invalid: "This license key isn't valid."
+        case .notSaved: "Waft couldn't save the license key."
         case nil: nil
         }
     }

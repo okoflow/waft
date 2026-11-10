@@ -22,6 +22,7 @@ final class ShortcutRecorder {
     private var action: ShortcutAction?
 
     @ObservationIgnored private var monitor: Any?
+    @ObservationIgnored private var deactivationObserver: (any NSObjectProtocol)?
 
     private let settings: SettingsModel
     private let shortcuts: GlobalShortcutController
@@ -55,6 +56,11 @@ final class ShortcutRecorder {
 
             return nil
         }
+
+        deactivationObserver = NotificationCenter.default
+            .addObserver(forName: NSApplication.didResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.stop() }
+            }
     }
 
     func stop() {
@@ -64,7 +70,12 @@ final class ShortcutRecorder {
             NSEvent.removeMonitor(monitor)
         }
 
+        if let deactivationObserver {
+            NotificationCenter.default.removeObserver(deactivationObserver)
+        }
+
         monitor = nil
+        deactivationObserver = nil
         action = nil
         shortcuts.resume()
     }

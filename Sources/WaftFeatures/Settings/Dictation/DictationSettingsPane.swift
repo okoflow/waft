@@ -59,7 +59,7 @@ struct DictationSettingsPane: View {
                 KeyRecorderField(
                     purpose: .dictation,
                     key: settings.settings.pushToTalkKey,
-                    takenKey: settings.settings.editKey,
+                    settings: settings.settings,
                     recorder: keyRecorder,
                 ) { key in
                     settings.settings.pushToTalkKey = key

@@ -103,7 +103,7 @@ struct DictationControllerTests {
     @Test
     func `ignores key events while the key recorder records a new key`() async {
         let controller = await controller()
-        keyRecorder.start(.dictation, excluding: nil) { _ in }
+        keyRecorder.start(.dictation, excluding: { _ in false }, { _ in })
 
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.5)
