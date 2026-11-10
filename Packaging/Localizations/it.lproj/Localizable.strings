@@ -32,7 +32,7 @@
 "Accurate" = "Preciso";
 "Activate" = "Attiva";
 "Add App…" = "Aggiungi app…";
-"Add Command, Control, or Option, or press a function key." = "Aggiungi Comando, Control o Opzione, oppure premi un tasto funzione.";
+"Add Command, Control, or Option, or press a function key." = "Aggiungi Comando, Ctrl o Opzione, oppure premi un tasto funzione.";
 "Add Language" = "Aggiungi lingua";
 "Add Snippet" = "Aggiungi frammento";
 "Add Term" = "Aggiungi termine";
@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Controlla automaticamente gli aggiornamenti";
 "Check" = "Verifica";
 "Checking…" = "Verifica in corso…";
-"Choose Copy Last Dictation in the Waft menu." = "Scegli “Copia l’ultima dettatura” nel menu di Waft.";
 "Choose File…" = "Scegli file…";
 "Choose Languages…" = "Scegli le lingue…";
 "Choose" = "Scegli";
@@ -170,7 +169,7 @@
 "Languages" = "Lingue";
 "Last %lld days" = "Ultimi %lld giorni";
 "Left Command" = "Comando a sinistra";
-"Left Control" = "Control a sinistra";
+"Left Control" = "Ctrl a sinistra";
 "Left Option" = "Opzione a sinistra";
 "Left Shift" = "Maiuscole a sinistra";
 "Let go" = "Rilascia";
@@ -218,7 +217,7 @@
 "Off" = "Nessuna";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX o Jan sul server a questo indirizzo; il testo va solo lì.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX o Jan su questo Mac; il testo non ne esce mai.";
-"On macOS 27, it's under Device Control and Data Access." = "Su macOS 27, l’impostazione si trova nella sezione dedicata al controllo del dispositivo e all’accesso ai dati.";
+"On macOS 27, it's under Device Control and Data Access." = "Su macOS 27, si trova in Controllo del dispositivo e accesso ai dati.";
 "On-device dictation for macOS with AI cleanup." = "Dettatura sul dispositivo per macOS, con rifinitura tramite IA.";
 "Open System Settings" = "Apri Impostazioni di Sistema";
 "Open Translator" = "Apri il traduttore";
@@ -235,8 +234,8 @@
 "Play sounds" = "Riproduci suoni";
 "Preparing the speech model, about a minute the first time…" = "Preparazione del modello vocale, circa un minuto la prima volta…";
 "Preparing the speech model…" = "Preparazione del modello vocale…";
-"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Premi Opzione, Comando, Maiuscole o Control (a sinistra o a destra), Fn o un tasto funzione. Esc annulla.";
-"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Premi un tasto insieme a Comando, Control o Opzione, oppure un tasto funzione. Esc annulla.";
+"Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Premi Opzione, Comando, Maiuscole o Ctrl (a sinistra o a destra), Fn o un tasto funzione. Esc annulla.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Premi un tasto insieme a Comando, Ctrl o Opzione, oppure un tasto funzione. Esc annulla.";
 "Press a key…" = "Premi un tasto…";
 "Press a shortcut…" = "Premi una scorciatoia…";
 "Press the key to use, or Esc to cancel" = "Premi il tasto da usare o Esc per annullare";
@@ -254,6 +253,7 @@
 "Recent" = "Recenti";
 "Recognizes speech more accurately, especially outside English." = "Riconosce la voce con più precisione, soprattutto nelle lingue diverse dall’inglese.";
 "Recording failed" = "Registrazione non riuscita";
+"Recording stopped early" = "Registrazione interrotta";
 "Recording" = "Registrazione";
 "Recordings and videos become text and subtitles, right on your Mac." = "Registrazioni e video diventano testo e sottotitoli, direttamente sul tuo Mac.";
 "Recordings and videos become text and subtitles." = "Registrazioni e video diventano testo e sottotitoli.";
@@ -279,10 +279,11 @@
 "Reset to Default" = "Ripristina testo predefinito";
 "Reset to Default…" = "Ripristina testo predefinito…";
 "Reset your dictation statistics?" = "Vuoi azzerare le statistiche di dettatura?";
+"Retry Last Dictation" = "Riprova l’ultima dettatura";
 "Retry Speech Model" = "Ricarica il modello vocale";
 "Retry" = "Riprova";
 "Right Command" = "Comando a destra";
-"Right Control" = "Control a destra";
+"Right Control" = "Ctrl a destra";
 "Right Option" = "Opzione a destra";
 "Right Shift" = "Maiuscole a destra";
 "Run Again" = "Esegui di nuovo";
@@ -309,7 +310,7 @@
 "Sent to %@ with your text." = "Inviate a %@ insieme al tuo testo.";
 "Server address" = "Indirizzo del server";
 "Set Up…" = "Configura…";
-"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "In Impostazioni di Sistema › Tastiera, imposta “Premi il tasto 🌐 per” su “Non fare nulla”.";
+"Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "In Impostazioni di Sistema › Tastiera, imposta “Premi il tasto 🌐 per” su “Nessuna azione”.";
 "Settings…" = "Impostazioni…";
 "Setup needed" = "Configurazione necessaria";
 "Share anonymous usage data" = "Condividi dati di utilizzo anonimi";
@@ -351,7 +352,7 @@
 "Text" = "Testo";
 "That doesn't look like a Waft license key." = "Non sembra una chiave di licenza di Waft.";
 "That key is already in use. Choose another one." = "Questo tasto è già in uso. Scegline un altro.";
-"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Questo tasto inserisce testo. Premi Opzione, Comando, Maiuscole, Control, Fn o un tasto funzione.";
+"That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Questo tasto inserisce testo. Premi Opzione, Comando, Maiuscole, Ctrl, Fn o un tasto funzione.";
 "That shortcut is already used for “%@”. Choose another one." = "Questa scorciatoia è già usata per “%@”. Scegline un’altra.";
 "The chosen microphone can't be used." = "Non è possibile usare il microfono scelto.";
 "The file has no sound to transcribe." = "Il file non contiene audio da trascrivere.";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft non riesce a leggere questo file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft non può usare il microfono. Consenti l’accesso in Impostazioni › Generali.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft non è riuscito a leggere la cronologia salvata e ne ha conservato una copia. “Cancella cronologia” elimina entrambe.";
+"Waft couldn't save the license key." = "Waft non è riuscito a salvare la chiave di licenza.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft la elimina da questo Mac. Le modalità IA usano la modalità “Leggera” finché non aggiungi una chiave.";
 "Waft is listening" = "Waft è in ascolto";
 "Waft keeps no dictations while Keep history is off." = "Waft non conserva le dettature finché “Salva la cronologia” è disattivato.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft si trova nella barra dei menu.";
 "Waft needs both to type for you." = "Waft ha bisogno di entrambe per scrivere al posto tuo.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft ne ha bisogno per rilevare il tasto e incollare il tuo testo. Attiva Waft nell’elenco che si apre.";
+"Waft records up to %lld minutes at a time." = "Waft registra fino a %lld minuti alla volta.";
 "Waft starts listening." = "Waft inizia ad ascoltare.";
 "Waft writes" = "Waft scrive";
 "Waft" = "Waft";
@@ -458,7 +461,7 @@
 "Writing system" = "Sistema di scrittura";
 "Writing" = "Scrittura";
 "You say" = "Tu dici";
-"You write" = "Scrivi tu";
+"You write" = "Tu scrivi";
 "You're all set" = "Tutto pronto";
 "Your changes to these instructions are deleted." = "Le modifiche a queste istruzioni verranno eliminate.";
 "Your choice" = "La scelta è tua";

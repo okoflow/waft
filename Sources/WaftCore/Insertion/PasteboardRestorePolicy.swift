@@ -7,6 +7,7 @@ package enum PasteboardRestorePolicy {
     package enum SkipReason: String, Sendable {
         case privateItem
         case tooLarge
+        case uncapturedItem
     }
 
     package static let maximumSnapshotBytes = 5 * 1024 * 1024
@@ -16,7 +17,7 @@ package enum PasteboardRestorePolicy {
     static let concealedType = "org.nspasteboard.ConcealedType"
     static let transientType = "org.nspasteboard.TransientType"
 
-    private static let restorableTypes: Set<String> = [
+    private static let standardTypes: Set<String> = [
         "public.utf8-plain-text",
         "public.utf16-plain-text",
         "public.utf16-external-plain-text",
@@ -36,14 +37,17 @@ package enum PasteboardRestorePolicy {
     ]
 
     package static func typesToSave(from types: [String]) -> [String] {
-        guard types.contains("public.png") else { return types.filter(restorableTypes.contains) }
+        let kept = types.filter { !$0.lowercased().contains("promise") }
+        guard kept.contains("public.png") else { return kept }
 
-        let saved = restorableTypes.subtracting(["public.tiff"])
-
-        return types.filter(saved.contains)
+        return kept.filter { $0 != "public.tiff" }
     }
 
-    package static func plan(currentTypes: [String], snapshotBytes: Int) -> Plan {
+    package static func isStandard(_ type: String) -> Bool {
+        standardTypes.contains(type)
+    }
+
+    package static func plan(currentTypes: [String], snapshotBytes: Int, hasUncapturedItem: Bool) -> Plan {
         let isWaftItem = currentTypes.contains(waftType)
         let isPrivateItem = [concealedType, transientType].contains(where: currentTypes.contains)
 
@@ -53,6 +57,10 @@ package enum PasteboardRestorePolicy {
 
         if snapshotBytes > maximumSnapshotBytes {
             return .skip(reason: .tooLarge)
+        }
+
+        if hasUncapturedItem {
+            return .skip(reason: .uncapturedItem)
         }
 
         return .restore

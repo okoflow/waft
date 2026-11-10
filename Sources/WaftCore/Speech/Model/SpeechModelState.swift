@@ -1,4 +1,3 @@
-
 package struct SpeechModelState: Equatable, Sendable {
     package enum Phase: Equatable, Sendable {
         case notInstalled

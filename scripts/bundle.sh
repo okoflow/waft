@@ -122,7 +122,7 @@ sign_app() {
   sign "${identity}" "${FRAMEWORK}"
   sign "${identity}" --entitlements "${ENTITLEMENTS}" "${APP}"
 
-  echo "signed ${APP} with \"${identity}\"" >&2
+  echo "signed ${APP} with \"${identity}\""
 }
 
 main() {
@@ -138,15 +138,13 @@ main() {
     die "\"${IDENTITY}\" isn't in the keychain"
   fi
 
-  swift build --configuration "${configuration}" --product "${PRODUCT}" >&2
+  swift build --configuration "${configuration}" --product "${PRODUCT}"
 
   local binary_dir
   binary_dir=$(swift build --configuration "${configuration}" --show-bin-path)
 
   assemble_app "${configuration}" "${binary_dir}"
   sign_app
-
-  echo "${APP}"
 }
 
 main "$@"

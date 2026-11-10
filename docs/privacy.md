@@ -1,10 +1,10 @@
 # Privacy
 
-This page lists what Waft keeps on your Mac, where, and when it uses the network. [How it works](how-it-works.md) follows a dictation step by step, and [Troubleshooting](troubleshooting.md) shows how to read the log.
+This page lists what Waft keeps on your Mac, where, and when it uses the network.
 
 ## Audio
 
-Waft records only while you hold the dictation or editing key or while hands-free dictation runs, and keeps the audio in memory until Whisper has recognized it. It then discards the audio and never writes it to disk or sends it anywhere, in any mode; files you transcribe stay where they are.
+Waft records only while you hold the dictation or editing key or while hands-free dictation runs, and keeps the audio in memory until Whisper has recognized it, or for 10 minutes after a recognition that failed, so you can retry it. It then discards the audio and never writes it to disk or sends it anywhere, in any mode; files you transcribe stay where they are.
 
 ## The network
 
@@ -18,7 +18,7 @@ Waft connects to these services, and only for these reasons:
 | Your local server | Settings › AI Models lists its models, and **Detect** looks for one on ports 11434, 1234, 8080, and 1337 of this Mac | Requests for its list of models, sent only to the address you set or those ports |
 | Waft's usage service at `api.waft.okoflow.com` | When Waft starts and every six hours while it runs, only after you agree to share usage data | The counts that [Usage data](#usage-data) lists |
 
-Raw and Light never use the network, and the translator detects languages on your Mac. Waft asks OpenAI not to store the response (`store: false`). Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's [API data controls](https://developers.openai.com/api/docs/guides/your-data) describe how each handles the text.
+Raw and Light never use the network, and the translator detects languages on your Mac. Requests to the AI provider, your local server, and the usage service name their sender only as `Waft` and their language as `en`, not your macOS version or the languages of your Mac. Waft asks OpenAI not to store the response (`store: false`). Anthropic's [privacy policy](https://www.anthropic.com/legal/privacy) and OpenAI's [API data controls](https://developers.openai.com/api/docs/guides/your-data) describe how each handles the text.
 
 ## Usage data
 
@@ -55,6 +55,8 @@ During the beta, Waft keeps the API keys and the license key in these owner-only
 An older version kept the keys in the login keychain under the service `com.okoflow.waft`. The first time Waft needs a key it finds there, it reads it once, which can make macOS ask for your password one last time, moves it into its file, and deletes it from the keychain; [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain) covers the prompt.
 
 **Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, file transcriptions, and text that Waft kept out of a password field stay out of the history and the statistics.
+
+## The clipboard
 
 Waft marks the text it puts on the clipboard as transient and concealed, so clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org) conventions don't store it, and Universal Clipboard skips it.
 

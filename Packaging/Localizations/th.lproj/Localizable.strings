@@ -65,7 +65,6 @@
 "Check for updates automatically" = "ตรวจหารายการอัปเดตโดยอัตโนมัติ";
 "Check" = "ตรวจสอบ";
 "Checking…" = "กำลังตรวจสอบ…";
-"Choose Copy Last Dictation in the Waft menu." = "เลือก “คัดลอกการป้อนตามคำบอกล่าสุด” ในเมนู Waft";
 "Choose File…" = "เลือกไฟล์…";
 "Choose Languages…" = "เลือกภาษา…";
 "Choose" = "เลือก";
@@ -216,7 +215,7 @@
 "Not running at this address" = "ที่อยู่นี้ไม่มีเซิร์ฟเวอร์ทำงานอยู่";
 "Notices the dictation key and pastes the text where you type." = "ตรวจจับปุ่มป้อนตามคำบอกและวางข้อความในตำแหน่งที่คุณพิมพ์";
 "Off" = "ปิด";
-"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX หรือ Jan บนเซิร์ฟเวอร์ที่อยู่นี้ ข้อความจะส่งไปที่นั่นเท่านั้น";
+"Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX หรือ Jan บนเซิร์ฟเวอร์ตามที่อยู่นี้ ข้อความจะส่งไปที่นั่นเท่านั้น";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX หรือ Jan บน Mac เครื่องนี้ ข้อความจะไม่ออกไปนอกเครื่อง";
 "On macOS 27, it's under Device Control and Data Access." = "ใน macOS 27 จะอยู่ใน “การควบคุมอุปกรณ์และการเข้าถึงข้อมูล”";
 "On-device dictation for macOS with AI cleanup." = "การป้อนตามคำบอกบนอุปกรณ์สำหรับ macOS พร้อมการเกลาข้อความด้วย AI";
@@ -254,6 +253,7 @@
 "Recent" = "ล่าสุด";
 "Recognizes speech more accurately, especially outside English." = "จำเสียงพูดได้แม่นยำกว่า โดยเฉพาะภาษาอื่นที่ไม่ใช่ภาษาอังกฤษ";
 "Recording failed" = "บันทึกเสียงไม่สำเร็จ";
+"Recording stopped early" = "การบันทึกเสียงหยุดก่อนเวลา";
 "Recording" = "การบันทึกเสียง";
 "Recordings and videos become text and subtitles, right on your Mac." = "แปลงไฟล์บันทึกเสียงและวิดีโอเป็นข้อความและคำบรรยายบน Mac ของคุณเอง";
 "Recordings and videos become text and subtitles." = "แปลงไฟล์บันทึกเสียงและวิดีโอเป็นข้อความและคำบรรยาย";
@@ -279,6 +279,7 @@
 "Reset to Default" = "รีเซ็ตเป็นค่าเริ่มต้น";
 "Reset to Default…" = "รีเซ็ตเป็นค่าเริ่มต้น…";
 "Reset your dictation statistics?" = "รีเซ็ตสถิติการป้อนตามคำบอกของคุณหรือไม่";
+"Retry Last Dictation" = "ลองการป้อนตามคำบอกล่าสุดอีกครั้ง";
 "Retry Speech Model" = "ลองโหลดโมเดลจำเสียงพูดอีกครั้ง";
 "Retry" = "ลองอีกครั้ง";
 "Right Command" = "Command ขวา";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft ไม่สามารถอ่านไฟล์นี้ได้";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ไม่สามารถใช้ไมโครโฟนได้ ให้อนุญาตในการตั้งค่า › ทั่วไป";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft อ่านประวัติที่บันทึกไว้ไม่ได้ จึงเก็บสำเนาไว้ “ล้างประวัติ” จะลบทั้งสองอย่าง";
+"Waft couldn't save the license key." = "Waft ไม่สามารถบันทึกคีย์ใบอนุญาตได้";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft จะลบคีย์ออกจาก Mac เครื่องนี้ โหมด AI จะใช้โหมด “ปรับเล็กน้อย” จนกว่าคุณจะเพิ่มคีย์";
 "Waft is listening" = "Waft กำลังฟัง";
 "Waft keeps no dictations while Keep history is off." = "Waft จะไม่เก็บการป้อนตามคำบอกไว้ขณะที่ “เก็บประวัติ” ปิดอยู่";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft อยู่ในแถบเมนู";
 "Waft needs both to type for you." = "Waft ต้องได้รับทั้งสองสิทธิ์จึงจะพิมพ์แทนคุณได้";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft ต้องใช้สิทธิ์นี้เพื่อตรวจจับปุ่มและวางข้อความของคุณ เปิดใช้ Waft ในรายการที่เปิดขึ้น";
+"Waft records up to %lld minutes at a time." = "Waft บันทึกได้ครั้งละไม่เกิน %lld นาที";
 "Waft starts listening." = "Waft เริ่มฟัง";
 "Waft writes" = "Waft เขียนว่า";
 "Waft" = "Waft";

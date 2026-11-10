@@ -7,7 +7,7 @@ package final class CoreAudioOutputVolume: OutputVolume {
     private struct Lowered {
         let deviceID: AudioDeviceID
         let original: Float32
-        let applied: Float32
+        let expected: [Float32]
     }
 
     private static let tolerance: Float32 = 0.02
@@ -50,10 +50,12 @@ package final class CoreAudioOutputVolume: OutputVolume {
               original > 0
         else { return }
 
-        let applied = original * fraction
-        guard Self.setVolume(applied, of: deviceID) else { return }
+        let requested = original * fraction
+        guard Self.setVolume(requested, of: deviceID) else { return }
 
-        lowered = Lowered(deviceID: deviceID, original: original, applied: applied)
+        let expected = [requested, Self.volume(of: deviceID)].compactMap(\.self)
+
+        lowered = Lowered(deviceID: deviceID, original: original, expected: expected)
     }
 
     package func restore() {
@@ -61,9 +63,9 @@ package final class CoreAudioOutputVolume: OutputVolume {
 
         self.lowered = nil
 
-        guard let current = Self.volume(of: lowered.deviceID), abs(current - lowered.applied) <= Self.tolerance else {
-            return
-        }
+        guard let current = Self.volume(of: lowered.deviceID),
+              lowered.expected.contains(where: { abs(current - $0) <= Self.tolerance })
+        else { return }
 
         Self.setVolume(lowered.original, of: lowered.deviceID)
     }

@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Buscar actualizaciones automáticamente";
 "Check" = "Comprobar";
 "Checking…" = "Comprobando…";
-"Choose Copy Last Dictation in the Waft menu." = "Elige «Copiar último dictado» en el menú de Waft.";
 "Choose File…" = "Elegir archivo…";
 "Choose Languages…" = "Elegir idiomas…";
 "Choose" = "Elegir";
@@ -218,7 +217,7 @@
 "Off" = "Ninguno";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX o Jan en el servidor de esta dirección; el texto solo va allí.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX o Jan en este Mac; el texto nunca sale de él.";
-"On macOS 27, it's under Device Control and Data Access." = "En macOS 27, está en la sección de control del dispositivo y acceso a datos.";
+"On macOS 27, it's under Device Control and Data Access." = "En macOS 27, está en Control de dispositivos y acceso a datos.";
 "On-device dictation for macOS with AI cleanup." = "Dictado en el dispositivo para macOS con limpieza por IA.";
 "Open System Settings" = "Abrir Ajustes del Sistema";
 "Open Translator" = "Abrir traductor";
@@ -254,6 +253,7 @@
 "Recent" = "Recientes";
 "Recognizes speech more accurately, especially outside English." = "Reconoce la voz con más precisión, sobre todo en idiomas distintos del inglés.";
 "Recording failed" = "No se ha podido grabar";
+"Recording stopped early" = "La grabación se ha detenido antes de tiempo";
 "Recording" = "Grabación";
 "Recordings and videos become text and subtitles, right on your Mac." = "Tus grabaciones y vídeos se convierten en texto y subtítulos en tu propio Mac.";
 "Recordings and videos become text and subtitles." = "Tus grabaciones y vídeos se convierten en texto y subtítulos.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Restaurar valores por omisión";
 "Reset to Default…" = "Restaurar valores por omisión…";
 "Reset your dictation statistics?" = "¿Restablecer las estadísticas de dictado?";
+"Retry Last Dictation" = "Reintentar último dictado";
 "Retry Speech Model" = "Volver a cargar el modelo de voz";
 "Retry" = "Reintentar";
 "Right Command" = "Comando derecha";
@@ -317,7 +318,7 @@
 "Shortcut" = "Atajo";
 "Shortcuts" = "Atajos";
 "Show History" = "Mostrar historial";
-"Show in Finder" = "Mostrar en Finder";
+"Show in Finder" = "Mostrar en el Finder";
 "Show in menu bar" = "Mostrar en la barra de menús";
 "Snippets" = "Fragmentos";
 "Sounds" = "Sonidos";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft no puede leer este archivo.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft no puede usar el micrófono. Permite el acceso en Ajustes › General.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft no ha podido leer el historial guardado y ha conservado una copia. «Borrar historial» elimina ambos.";
+"Waft couldn't save the license key." = "Waft no ha podido guardar la clave de licencia.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft la elimina de este Mac. Los modos de IA usarán el modo «Ligero» hasta que añadas una clave.";
 "Waft is listening" = "Waft está escuchando";
 "Waft keeps no dictations while Keep history is off." = "Waft no guarda dictados mientras «Guardar historial» esté desactivado.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft está en la barra de menús.";
 "Waft needs both to type for you." = "Waft necesita ambos para escribir por ti.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft lo necesita para detectar la tecla y pegar tu texto. Activa Waft en la lista que se abre.";
+"Waft records up to %lld minutes at a time." = "Waft graba hasta %lld minutos seguidos.";
 "Waft starts listening." = "Waft empieza a escuchar.";
 "Waft writes" = "Waft escribe";
 "Waft" = "Waft";

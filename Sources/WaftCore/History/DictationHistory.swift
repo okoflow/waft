@@ -52,8 +52,13 @@ package struct DictationHistory: Codable, Equatable, Sendable {
         entries.removeAll()
     }
 
-    package mutating func prune(keeping retention: HistoryRetention, limit: Int, now: Date) {
-        if let cutoff = retention.cutoff(before: now) {
+    package mutating func prune(
+        keeping retention: HistoryRetention,
+        limit: Int,
+        now: Date,
+        calendar: Calendar = .current,
+    ) {
+        if let cutoff = retention.cutoff(before: now, calendar: calendar) {
             entries.removeAll { $0.date < cutoff }
         }
 

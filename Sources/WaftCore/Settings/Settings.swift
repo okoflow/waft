@@ -85,7 +85,7 @@ package struct Settings: Codable, Equatable, Sendable {
         speechModel = container.decode(.speechModel, default: speechModel)
         appModes = container.decode(.appModes, default: appModes)
         modelProvider = container.decode(.modelProvider, default: modelProvider)
-        cloudModels = container.decode(.cloudModels, default: cloudModels)
+        cloudModels = container.decodeEachProvider(.cloudModels, default: cloudModels)
         localServer = container.decode(.localServer, default: localServer)
         instructions = container.decode(.instructions, default: instructions)
         translation = container.decode(.translation, default: translation)

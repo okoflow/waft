@@ -51,8 +51,8 @@ package struct KeyCombination: Hashable, Sendable {
     }
 
     private var fixedKeyName: String? {
-        if let number = functionKeyNumber {
-            return "F\(number)"
+        if let title = FunctionKeys.title(forKeyCode: keyCode) {
+            return title
         }
 
         if keyCode == 49 {

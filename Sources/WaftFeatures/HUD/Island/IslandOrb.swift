@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct IslandOrb: View {
+    private static let size: CGFloat = 34
     private static let dotCount = 80
     private static let assemblyDuration: TimeInterval = 0.6
     private static let pulseDuration: TimeInterval = 0.45
@@ -8,7 +9,6 @@ struct IslandOrb: View {
 
     @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
-    let size: CGFloat
     let appearedAt: Date
     let pulsedAt: Date
 
@@ -19,10 +19,9 @@ struct IslandOrb: View {
             Canvas { canvas, area in
                 draw(in: &canvas, area: area, date: date)
             }
-            .frame(width: size + Self.overflow, height: size + Self.overflow)
+            .frame(width: Self.size + Self.overflow, height: Self.size + Self.overflow)
         }
-        .frame(width: size, height: size)
-        .accessibilityHidden(true)
+        .frame(width: Self.size, height: Self.size)
     }
 
     private static func progress(since start: Date, at date: Date, over duration: TimeInterval) -> Double {
@@ -39,14 +38,14 @@ struct IslandOrb: View {
         let assembly = assembly(at: date)
         let pulse = pulse(at: date)
 
-        let radius = (size / 2 - 1) * Self.overshoot(assembly) * (1 + 0.06 * pulse)
+        let radius = (Self.size / 2 - 1) * Self.overshoot(assembly) * (1 + 0.06 * pulse)
 
         let rotation = date.timeIntervalSinceReferenceDate * 0.9
 
         for dot in OrbDot.sphere(count: Self.dotCount, rotation: rotation) {
             let front = (dot.depth + 1) / 2
 
-            let diameter = (0.6 + 0.9 * front) * (1 + 0.2 * pulse) * size / 18
+            let diameter = (0.6 + 0.9 * front) * (1 + 0.2 * pulse) * Self.size / 18
 
             let bounds = CGRect(
                 x: area.width / 2 + dot.horizontal * radius - diameter / 2,

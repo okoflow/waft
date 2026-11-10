@@ -143,10 +143,10 @@ struct TryoutModelTests {
         detects language: Language? = nil,
         pro: ProModel = .unlicensed(),
     ) -> TryoutModel {
-        TryoutModel(
-            rewriters: .all(rewriter),
-            detector: FakeLanguageDetector(language: language),
+        .trying(
+            with: rewriter,
             settings: settings,
+            detector: FakeLanguageDetector(language: language),
             pro: pro,
             defaultSample: Self.defaultSample,
         )

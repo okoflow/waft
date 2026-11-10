@@ -16,7 +16,7 @@ final class SelectionActions {
     private let focusTracker: any FocusTracker
     private let keyboardState: any KeyboardState
     private let inserter: any TextInserter
-    private let clipboard: any Clipboard
+    private let delivery: TextDelivery
     private let settings: SettingsModel
     private let pro: ProModel
     private let hud: HUDController
@@ -39,7 +39,7 @@ final class SelectionActions {
         self.focusTracker = focusTracker
         self.keyboardState = keyboardState
         self.inserter = inserter
-        self.clipboard = clipboard
+        delivery = TextDelivery(inserter: inserter, clipboard: clipboard)
         self.settings = settings
         self.pro = pro
         self.hud = hud
@@ -147,16 +147,8 @@ final class SelectionActions {
     }
 
     private func deliver(_ text: String, into target: FocusTarget) async {
-        switch await inserter.insert(text, into: target, releasing: settings.settings.pushToTalkKey) {
-        case .pasted:
-            hud.show(HUDMessage(kind: .pasted, title: text))
+        let outcome = await delivery.deliver(text, into: target, releasing: settings.settings.pushToTalkKey)
 
-        case .skipped(.secureField):
-            hud.show(.blockedInPasswordField())
-
-        case .skipped:
-            clipboard.copy(text)
-            hud.show(HUDMessage(kind: .copied, title: text))
-        }
+        hud.show(outcome.message(showing: text))
     }
 }

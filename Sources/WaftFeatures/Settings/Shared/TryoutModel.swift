@@ -75,8 +75,8 @@ final class TryoutModel {
 
         let task: TextTask =
             switch kind {
-            case .fix: .fix
             case .translate: .translate(from: translator.trustedSource(detected: detected), into: target)
+            case .fix: .fix
             }
 
         let setup = settings.settings.translatorSetup(for: kind)

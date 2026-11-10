@@ -65,7 +65,6 @@
 "Check for updates automatically" = "自动检查更新";
 "Check" = "检查";
 "Checking…" = "正在检查…";
-"Choose Copy Last Dictation in the Waft menu." = "请从Waft菜单中选取“拷贝上次听写”。";
 "Choose File…" = "选取文件…";
 "Choose Languages…" = "选取语言…";
 "Choose" = "选取";
@@ -254,6 +253,7 @@
 "Recent" = "最近";
 "Recognizes speech more accurately, especially outside English." = "更准确地识别语音，尤其是英语以外的语言。";
 "Recording failed" = "录音失败";
+"Recording stopped early" = "录音提前停止";
 "Recording" = "录音";
 "Recordings and videos become text and subtitles, right on your Mac." = "直接在你的Mac上将录音和视频转换为文本和字幕。";
 "Recordings and videos become text and subtitles." = "将录音和视频转换为文本和字幕。";
@@ -279,6 +279,7 @@
 "Reset to Default" = "还原为默认";
 "Reset to Default…" = "还原为默认…";
 "Reset your dictation statistics?" = "要重置听写统计吗？";
+"Retry Last Dictation" = "重试上次听写";
 "Retry Speech Model" = "重试语音识别模型";
 "Retry" = "重试";
 "Right Command" = "右Command键";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft无法读取此文件。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft无法使用麦克风。请在“设置”›“通用”中允许。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft无法读取已保存的历史记录，已保留一份副本。“清除历史记录”会同时删除两者。";
+"Waft couldn't save the license key." = "Waft无法存储许可证密钥。";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft会将其从此Mac上删除。在你添加密钥之前，AI模式将使用“轻度”模式。";
 "Waft is listening" = "Waft正在聆听";
 "Waft keeps no dictations while Keep history is off." = "“保留历史记录”关闭时，Waft不会保留任何听写。";
@@ -434,7 +436,8 @@
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft常驻在菜单栏中。按%@可切换到下一个模式。";
 "Waft lives in the menu bar." = "Waft常驻在菜单栏中。";
 "Waft needs both to type for you." = "Waft需要这两项权限才能替你输入。";
-"Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此权限来检测按键并粘贴你的文本。请在打开的列表中打开Waft。";
+"Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此权限来检测按键并粘贴你的文本。请在打开的列表中开启Waft。";
+"Waft records up to %lld minutes at a time." = "Waft每次最多录音%lld分钟。";
 "Waft starts listening." = "Waft开始聆听。";
 "Waft writes" = "Waft写出";
 "Waft" = "Waft";
@@ -456,7 +459,7 @@
 "Words" = "字词";
 "Write instructions once and dictate in your own style." = "指令只需写一次，即可按你的风格听写。";
 "Writing system" = "书写系统";
-"Writing" = "书写";
+"Writing" = "写作";
 "You say" = "你说";
 "You write" = "你写";
 "You're all set" = "一切就绪";

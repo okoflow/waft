@@ -10,7 +10,7 @@ struct DictationJob {
     let target: FocusTarget
     let selection: String?
     let key: PushToTalkKey
-    let pastes: Bool
+    private(set) var pastes: Bool
     let allowsAI: Bool
 
     init(
@@ -34,5 +34,12 @@ struct DictationJob {
         key = recording.key
         pastes = settings.pastesIntoFocusedField
         self.allowsAI = allowsAI
+    }
+
+    func copyingInsteadOfPasting() -> DictationJob {
+        var job = self
+        job.pastes = false
+
+        return job
     }
 }

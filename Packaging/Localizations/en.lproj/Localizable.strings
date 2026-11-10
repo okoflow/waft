@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Check for updates automatically";
 "Check" = "Check";
 "Checking…" = "Checking…";
-"Choose Copy Last Dictation in the Waft menu." = "Choose Copy Last Dictation in the Waft menu.";
 "Choose File…" = "Choose File…";
 "Choose Languages…" = "Choose Languages…";
 "Choose" = "Choose";
@@ -254,6 +253,7 @@
 "Recent" = "Recent";
 "Recognizes speech more accurately, especially outside English." = "Recognizes speech more accurately, especially outside English.";
 "Recording failed" = "Recording failed";
+"Recording stopped early" = "Recording stopped early";
 "Recording" = "Recording";
 "Recordings and videos become text and subtitles, right on your Mac." = "Recordings and videos become text and subtitles, right on your Mac.";
 "Recordings and videos become text and subtitles." = "Recordings and videos become text and subtitles.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Reset to Default";
 "Reset to Default…" = "Reset to Default…";
 "Reset your dictation statistics?" = "Reset your dictation statistics?";
+"Retry Last Dictation" = "Retry Last Dictation";
 "Retry Speech Model" = "Retry Speech Model";
 "Retry" = "Retry";
 "Right Command" = "Right Command";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft can't read this file.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft can't use the microphone. Allow it in Settings › General.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.";
+"Waft couldn't save the license key." = "Waft couldn't save the license key.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft deletes it from this Mac. The AI modes use Light until you add a key.";
 "Waft is listening" = "Waft is listening";
 "Waft keeps no dictations while Keep history is off." = "Waft keeps no dictations while Keep history is off.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft lives in the menu bar.";
 "Waft needs both to type for you." = "Waft needs both to type for you.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens.";
+"Waft records up to %lld minutes at a time." = "Waft records up to %lld minutes at a time.";
 "Waft starts listening." = "Waft starts listening.";
 "Waft writes" = "Waft writes";
 "Waft" = "Waft";

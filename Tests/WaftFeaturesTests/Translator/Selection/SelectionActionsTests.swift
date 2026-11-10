@@ -101,7 +101,7 @@ struct SelectionActionsTests {
     }
 
     @Test
-    func `keeps the translation out of a password field and the clipboard`() async {
+    func `copies the translation instead of pasting it into a password field`() async {
         let actions = actions(
             FakeTextRewriter(.success("Hello.")),
             selecting: "Привет",
@@ -112,9 +112,9 @@ struct SelectionActionsTests {
         actions.run(.translate)
 
         #expect(await Poll.until(timeout: .seconds(5)) {
-            hud.content == .message(HUDMessage(kind: .warning, title: "Not pasted into a password field"))
+            hud.content == .message(.keptOutOfPasswordField("Hello."))
         })
-        #expect(clipboard.copied.isEmpty)
+        #expect(clipboard.copied == ["Hello."])
     }
 
     @Test(arguments: [(String?.none, String?.none), (" \n", nil), (nil, " \n")])
@@ -184,17 +184,16 @@ struct SelectionActionsTests {
         let element = FakeFocusedElement(selectedText: selection, hasEmptySelection: showsOnlyCaret)
         let focus = FocusTarget.app("com.example.notes", element: element)
 
-        return SelectionActions(
-            rewriters: .all(rewriter),
+        return .acting(
+            settings: settings,
+            rewriter: rewriter,
             detector: FakeLanguageDetector(language: language),
             focusTracker: FakeFocusTracker(focus),
             keyboardState: FakeKeyboardState(holdsKeys: holdsKeys),
             inserter: inserter,
             clipboard: clipboard,
-            settings: settings,
             pro: pro,
             hud: hud,
-            releaseTimeout: .zero,
         )
     }
 }

@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Søg automatisk efter opdateringer";
 "Check" = "Kontroller";
 "Checking…" = "Kontrollerer…";
-"Choose Copy Last Dictation in the Waft menu." = "Vælg “Kopier seneste diktering” i Waft-menuen.";
 "Choose File…" = "Vælg arkiv…";
 "Choose Languages…" = "Vælg sprog…";
 "Choose" = "Vælg";
@@ -254,6 +253,7 @@
 "Recent" = "Seneste";
 "Recognizes speech more accurately, especially outside English." = "Genkender tale mere præcist, især på andre sprog end engelsk.";
 "Recording failed" = "Optagelsen mislykkedes";
+"Recording stopped early" = "Optagelsen stoppede for tidligt";
 "Recording" = "Optagelse";
 "Recordings and videos become text and subtitles, right on your Mac." = "Optagelser og videoer bliver til tekst og undertekster direkte på din Mac.";
 "Recordings and videos become text and subtitles." = "Optagelser og videoer bliver til tekst og undertekster.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Nulstil til standard";
 "Reset to Default…" = "Nulstil til standard…";
 "Reset your dictation statistics?" = "Nulstil din dikteringsstatistik?";
+"Retry Last Dictation" = "Prøv seneste diktering igen";
 "Retry Speech Model" = "Indlæs talemodel igen";
 "Retry" = "Prøv igen";
 "Right Command" = "Højre Kommando";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft kan ikke læse dette arkiv.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruge mikrofonen. Tillad adgang i Indstillinger › Generelt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunne ikke læse den gemte historik og har gemt en kopi af den. Ryd historik sletter begge.";
+"Waft couldn't save the license key." = "Waft kunne ikke gemme licensnøglen.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft sletter den fra denne Mac. AI-tilstandene bruger “Let”, indtil du tilføjer en nøgle.";
 "Waft is listening" = "Waft lytter";
 "Waft keeps no dictations while Keep history is off." = "Waft gemmer ingen dikteringer, så længe “Gem historik” er slået fra.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft findes på menulinjen.";
 "Waft needs both to type for you." = "Waft skal bruge begge dele for at skrive for dig.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft skal bruge adgangen til at registrere tasten og sætte din tekst ind. Slå Waft til på den liste, der åbnes.";
+"Waft records up to %lld minutes at a time." = "Waft optager op til %lld minutter ad gangen.";
 "Waft starts listening." = "Waft begynder at lytte.";
 "Waft writes" = "Waft skriver";
 "Waft" = "Waft";

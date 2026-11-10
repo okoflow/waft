@@ -39,6 +39,10 @@ struct MenuContent: View {
 
         Divider()
 
+        if model.queue.canRetry {
+            Button("Retry Last Dictation", action: model.queue.retryFailedDictation)
+        }
+
         Button("Copy Last Dictation", action: model.queue.copyLatestTranscript)
             .disabled(model.queue.latestTranscript == nil)
 
@@ -68,156 +72,5 @@ struct MenuContent: View {
 
         Button("Quit Waft") { model.quit() }
             .keyboardShortcut("q")
-    }
-}
-
-private struct ModeMenu: View {
-    let settings: SettingsModel
-    let pro: ProModel
-    let shortcutTitle: String?
-    let showPro: () -> Void
-
-    private var mode: Binding<Mode> {
-        Binding(
-            get: { settings.settings.mode },
-            set: { mode in
-                guard !pro.locks(mode) else {
-                    showPro()
-
-                    return
-                }
-
-                settings.settings.mode = mode
-            },
-        )
-    }
-
-    var body: some View {
-        Menu("Mode: \(settings.settings.title(of: settings.settings.mode))") {
-            Picker("Mode", selection: mode) {
-                ForEach(settings.settings.modes, id: \.self) { mode in
-                    pro.optionTitle(of: mode, in: settings.settings).tag(mode)
-                }
-            }
-            .pickerStyle(.inline)
-            .labelsHidden()
-
-            if let shortcutTitle {
-                Divider()
-
-                Text("Next mode: \(shortcutTitle)")
-            }
-        }
-    }
-}
-
-private struct AppModeMenu: View {
-    let app: RunningApp
-    let settings: SettingsModel
-    let pro: ProModel
-    let showPro: () -> Void
-
-    private var ownMode: Mode? {
-        settings.settings.appModes.mode(for: app.bundleIdentifier)
-    }
-
-    private var ownModeTitle: String {
-        guard let ownMode else { return String(localized: "Default") }
-
-        return settings.settings.title(of: ownMode)
-    }
-
-    private var mode: Binding<Mode?> {
-        Binding(
-            get: { ownMode },
-            set: { mode in
-                if let mode, pro.locks(mode) {
-                    showPro()
-
-                    return
-                }
-
-                settings.settings.appModes.set(mode, for: app.bundleIdentifier)
-            },
-        )
-    }
-
-    var body: some View {
-        Menu("Mode in \(app.name): \(ownModeTitle)") {
-            Picker("Mode in \(app.name)", selection: mode) {
-                Text("Default (\(settings.settings.title(of: settings.settings.mode)))").tag(Mode?.none)
-
-                ForEach(settings.settings.modes, id: \.self) { mode in
-                    pro.optionTitle(of: mode, in: settings.settings).tag(Mode?.some(mode))
-                }
-            }
-            .pickerStyle(.inline)
-            .labelsHidden()
-        }
-    }
-}
-
-private struct LanguageMenu: View {
-    let settings: SettingsModel
-    let chooseLanguages: () -> Void
-
-    private var languageNames: String {
-        settings.settings.languages.languages.map(\.displayName).formatted(.list(type: .and, width: .narrow))
-    }
-
-    var body: some View {
-        Menu("Language: \(settings.pinnedLanguageTitle)") {
-            Picker("Language", selection: settings.pinnedLanguage) {
-                Text("Automatic (\(languageNames))").tag(Language?.none)
-
-                ForEach(settings.settings.languages.languages, id: \.self) { language in
-                    Text(language.displayName).tag(Language?.some(language))
-                }
-            }
-            .pickerStyle(.inline)
-            .labelsHidden()
-
-            Divider()
-
-            Button("Choose Languages…", action: chooseLanguages)
-        }
-    }
-}
-
-private struct RecentMenu: View {
-    let history: HistoryModel
-    let showHistory: () -> Void
-
-    var body: some View {
-        Menu("Recent Dictations") {
-            let entries = history.recentEntries
-
-            if entries.isEmpty {
-                Text("No dictations yet")
-            }
-
-            ForEach(entries, id: \.date) { entry in
-                Button(entry.preview) { history.copy(entry) }
-            }
-
-            Divider()
-
-            Button("Show History", action: showHistory)
-        }
-    }
-}
-
-private struct ProMenuItem: View {
-    let pro: ProModel
-    let showPro: () -> Void
-
-    var body: some View {
-        switch pro.access.status {
-        case .trial, .expired:
-            Button("Unlock Waft+…", action: showPro)
-
-        case .licensed, .beta:
-            EmptyView()
-        }
     }
 }

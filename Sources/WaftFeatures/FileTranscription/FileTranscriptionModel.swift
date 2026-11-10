@@ -61,8 +61,8 @@ final class FileTranscriptionModel {
 
     private var isWorking: Bool {
         switch phase {
-        case .reading, .transcribing: true
         case .idle, .finished, .failed: false
+        case .reading, .transcribing: true
         }
     }
 

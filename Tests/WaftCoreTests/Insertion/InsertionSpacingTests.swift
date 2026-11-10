@@ -43,4 +43,34 @@ struct InsertionSpacingTests {
     func `adds a space before spaced scripts`(text: String, previous: Character) {
         #expect(InsertionSpacing.prepared(text, after: previous) == " " + text)
     }
+
+    @Test(arguments: [("unknown", Character("-")), ("    return total\n", "a"), (" spaced ", ".")])
+    func `leaves the text that replaces a selection as it is`(text: String, previous: Character) {
+        let element = FakeFocusedElement(characterBeforeCaret: previous, hasEmptySelection: false)
+
+        #expect(InsertionSpacing.prepared(text, for: element) == text)
+    }
+
+    @Test(arguments: [(Character?.some("a"), " hello"), (" ", "hello"), (nil, "hello")])
+    func `spaces the text at a caret by the character before it`(previous: Character?, expected: String) {
+        let element = FakeFocusedElement(characterBeforeCaret: previous, hasEmptySelection: true)
+
+        #expect(InsertionSpacing.prepared(" hello ", for: element) == expected)
+    }
+
+    @Test
+    func `trims the text for a field it cannot read`() {
+        #expect(InsertionSpacing.prepared(" hello ", for: nil) == "hello")
+    }
+}
+
+private struct FakeFocusedElement: FocusedElement {
+    let secureFieldState = SecureFieldState.notSecure
+    let characterBeforeCaret: Character?
+    let selectedText: String? = nil
+    let hasEmptySelection: Bool
+
+    func isDifferent(from _: any FocusedElement) -> Bool {
+        false
+    }
 }

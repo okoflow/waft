@@ -103,7 +103,9 @@ package actor AudioEngineRecorder: AudioRecorder {
         let continuation = continuation
 
         let sink = AudioSampleSink(inputFormat: format, meter: meter) {
-            continuation.yield(.started(recording, deviceName: deviceName))
+            Logger.audio.info("Recording from \(deviceName)")
+
+            continuation.yield(.started(recording))
         }
 
         guard let sink else {

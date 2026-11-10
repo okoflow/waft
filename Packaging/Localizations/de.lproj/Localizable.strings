@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Automatisch nach Updates suchen";
 "Check" = "Prüfen";
 "Checking…" = "Wird geprüft …";
-"Choose Copy Last Dictation in the Waft menu." = "Wähle „Letztes Diktat kopieren“ im Waft-Menü.";
 "Choose File…" = "Datei auswählen …";
 "Choose Languages…" = "Sprachen auswählen …";
 "Choose" = "Auswählen";
@@ -209,7 +208,7 @@
 "No modes yet" = "Noch keine Modi";
 "No snippets yet" = "Noch keine Textbausteine";
 "No terms yet" = "Noch keine Begriffe";
-"None" = "Keine";
+"None" = "Ohne";
 "Not allowed yet" = "Noch nicht erlaubt";
 "Not checked yet" = "Noch nicht geprüft";
 "Not pasted into a password field" = "Nicht in ein Passwortfeld eingesetzt";
@@ -254,6 +253,7 @@
 "Recent" = "Zuletzt verwendet";
 "Recognizes speech more accurately, especially outside English." = "Erkennt Sprache genauer, vor allem in anderen Sprachen als Englisch.";
 "Recording failed" = "Aufnahme fehlgeschlagen";
+"Recording stopped early" = "Aufnahme vorzeitig beendet";
 "Recording" = "Aufnahme";
 "Recordings and videos become text and subtitles, right on your Mac." = "Aufnahmen und Videos werden zu Text und Untertiteln – direkt auf deinem Mac.";
 "Recordings and videos become text and subtitles." = "Aufnahmen und Videos werden zu Text und Untertiteln.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Standard wiederherstellen";
 "Reset to Default…" = "Standard wiederherstellen …";
 "Reset your dictation statistics?" = "Diktierstatistik zurücksetzen?";
+"Retry Last Dictation" = "Letztes Diktat erneut versuchen";
 "Retry Speech Model" = "Spracherkennungsmodell erneut laden";
 "Retry" = "Erneut versuchen";
 "Right Command" = "Befehlstaste rechts";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft kann diese Datei nicht lesen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kann das Mikrofon nicht verwenden. Erlaube den Zugriff unter Einstellungen › Allgemein.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft konnte den gespeicherten Verlauf nicht lesen und hat eine Kopie davon behalten. „Verlauf löschen“ entfernt beides.";
+"Waft couldn't save the license key." = "Waft konnte den Lizenzschlüssel nicht speichern.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft löscht ihn von diesem Mac. Bis du einen Schlüssel hinzufügst, nutzen die KI-Modi den Modus „Leicht“.";
 "Waft is listening" = "Waft hört zu";
 "Waft keeps no dictations while Keep history is off." = "Waft speichert keine Diktate, solange „Verlauf speichern“ deaktiviert ist.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft findest du in der Menüleiste.";
 "Waft needs both to type for you." = "Waft braucht beide, um für dich zu tippen.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft braucht diesen Zugriff, um die Taste zu erkennen und deinen Text einzusetzen. Aktiviere Waft in der Liste, die sich öffnet.";
+"Waft records up to %lld minutes at a time." = "Waft nimmt bis zu %lld Minuten am Stück auf.";
 "Waft starts listening." = "Waft beginnt zuzuhören.";
 "Waft writes" = "Waft schreibt";
 "Waft" = "Waft";

@@ -6,9 +6,9 @@ package struct SecretFileStore: ValueStore {
     package let name: String
 
     private let file: any ValueStore<String>
-    private let keychain: any ValueStore<String>
+    private let keychain: any LegacySecretStore
 
-    init(name: String, file: any ValueStore<String>, keychain: any ValueStore<String>) {
+    init(name: String, file: any ValueStore<String>, keychain: any LegacySecretStore) {
         self.name = name
         self.file = file
         self.keychain = keychain
@@ -51,9 +51,9 @@ package struct SecretFileStore: ValueStore {
     package func delete() throws {
         var failures: [any Error] = []
 
-        for store in [file, keychain] {
+        for delete in [file.delete, keychain.delete] {
             do {
-                try store.delete()
+                try delete()
             } catch {
                 failures.append(error)
             }

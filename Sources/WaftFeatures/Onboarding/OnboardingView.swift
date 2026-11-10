@@ -50,11 +50,11 @@ private struct OnboardingFooter: View {
 
     private var primaryTitle: LocalizedStringKey {
         switch (onboarding.pendingStatus, onboarding.step) {
-        case (.notDetermined, _): "Allow Access…"
         case (.denied, _): "Open System Settings"
+        case (.notDetermined, _): "Allow Access…"
         case (_, .welcome): "Get Started"
-        case (_, .done): "Done"
         case (_, .microphone), (_, .accessibility), (_, .practice), (_, .usage): "Continue"
+        case (_, .done): "Done"
         }
     }
 

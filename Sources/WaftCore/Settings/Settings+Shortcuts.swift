@@ -12,4 +12,24 @@ extension Settings {
 
         return .key(.edit)
     }
+
+    package func conflict(with key: PushToTalkKey, recording purpose: RecordingPurpose) -> ShortcutConflict? {
+        if let other = recordingPurpose(of: key), other != purpose {
+            return .key(other)
+        }
+
+        guard let action = shortcuts.action(usingKeyCode: key.keyCode) else { return nil }
+
+        return .shortcut(action)
+    }
+
+    private func recordingPurpose(of key: PushToTalkKey) -> RecordingPurpose? {
+        if key == pushToTalkKey {
+            return .dictation
+        }
+
+        guard key == editKey else { return nil }
+
+        return .edit
+    }
 }

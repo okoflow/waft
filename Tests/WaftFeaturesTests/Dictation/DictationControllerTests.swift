@@ -24,8 +24,11 @@ struct DictationControllerTests {
     private let keyRecorder = KeyRecorder()
     private let start = Uptime.now
 
-    private static func permissions(microphone: PermissionStatus, answer: PermissionStatus = .granted) -> PermissionMonitor {
-        let provider = FakePermissionProvider([.microphone: microphone, .accessibility: .granted], answers: [.microphone: answer])
+    private static func permissions(microphone: PermissionStatus) -> PermissionMonitor {
+        let provider = FakePermissionProvider(
+            [.microphone: microphone, .accessibility: .granted],
+            answers: [.microphone: .granted],
+        )
 
         return PermissionMonitor(provider: provider)
     }
@@ -103,7 +106,7 @@ struct DictationControllerTests {
     @Test
     func `ignores key events while the key recorder records a new key`() async {
         let controller = await controller()
-        keyRecorder.start(.dictation, excluding: nil) { _ in }
+        keyRecorder.start(.dictation, excluding: { _ in false }, { _ in })
 
         await pressDictationKey(at: 0)
         await releaseDictationKey(at: 0.5)
@@ -144,7 +147,7 @@ struct DictationControllerTests {
     @Test
     func `starts a recording on the tap after a refused one`() async {
         settings.settings.dictationStart = .tap
-        let permissions = Self.permissions(microphone: .denied, answer: .granted)
+        let permissions = Self.permissions(microphone: .denied)
         let controller = await controller(permissions: permissions)
 
         await pressDictationKey(at: 0)
@@ -170,7 +173,7 @@ struct DictationControllerTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: true) })
 
-        recorder.send(.failed(RecordingID.none.next, .deviceUnavailable))
+        recorder.send(.failed(.first, .deviceUnavailable))
 
         #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
 
@@ -235,7 +238,7 @@ extension DictationControllerTests {
             keyRecorder: keyRecorder,
             shortcutRecorder: ShortcutRecorder(settings: settings, shortcuts: .fake(settings: settings)),
             pro: pro,
-            queue: queue(),
+            queue: .transcribing(with: transcriber, hud: hud, inserter: inserter),
         )
 
         controller.start()
@@ -254,18 +257,6 @@ extension DictationControllerTests {
             hud: hud,
             hudDelay: .zero,
             watchdogInterval: watchdogInterval,
-        )
-    }
-
-    private func queue() -> DictationQueue {
-        DictationQueue(
-            transcriber: transcriber,
-            rewriters: .all(FakeTextRewriter()),
-            inserter: inserter,
-            clipboard: FakeClipboard(),
-            history: HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settings, clipboard: FakeClipboard()),
-            statistics: StatisticsModel(store: FakeValueStore<DictationStatistics>()),
-            hud: hud,
         )
     }
 

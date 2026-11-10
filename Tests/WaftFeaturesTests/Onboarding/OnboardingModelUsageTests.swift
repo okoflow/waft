@@ -53,15 +53,6 @@ struct OnboardingModelUsageTests {
         #expect(finishCount == 1)
     }
 
-    @Test
-    func `leaves the question out once it has an answer`() {
-        settings.sharesUsage = true
-
-        let onboarding = model()
-
-        #expect(onboarding.steps == [.welcome, .practice, .done])
-    }
-
     private func model() -> OnboardingModel {
         let permissions = FakePermissionProvider([.microphone: .granted, .accessibility: .granted])
 

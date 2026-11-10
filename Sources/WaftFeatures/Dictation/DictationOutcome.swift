@@ -2,23 +2,15 @@ import Foundation
 import WaftCore
 
 enum DictationOutcome {
-    case pasted(ProcessedText)
-    case copied(ProcessedText)
-    case blockedInPasswordField
+    case delivered(TextDelivery.Outcome, ProcessedText)
     case noSpeech
     case failed(String)
     case editFailed(String)
 
     func message(for provider: ModelProvider) -> HUDMessage {
         switch self {
-        case let .pasted(processed):
-            HUDMessage(kind: .pasted, title: processed.text, detail: processed.fallback?.message(for: provider))
-
-        case let .copied(processed):
-            HUDMessage(kind: .copied, title: processed.text, detail: processed.fallback?.message(for: provider))
-
-        case .blockedInPasswordField:
-            .blockedInPasswordField(detail: String(localized: "Choose Copy Last Dictation in the Waft menu."))
+        case let .delivered(delivery, processed):
+            delivery.message(showing: processed.text, detail: processed.fallback?.message(for: provider))
 
         case .noSpeech:
             HUDMessage(kind: .information, title: String(localized: "Didn't catch that"))

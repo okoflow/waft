@@ -1,34 +1,25 @@
 import Foundation
 
 package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
-    private struct Modifier {
-        let name: String
-        let shortName: String
-        let symbol: String
-        let flag: UInt64
-    }
-
     package static let function = PushToTalkKey(known: 63)
 
-    package static let modifierKeys = modifiers.keys.filter { $0 != function.keyCode }.sorted().map(PushToTalkKey.init(known:))
+    package static let modifierKeys = modifierFlags.keys
+        .filter { $0 != function.keyCode }
+        .sorted()
+        .map(PushToTalkKey.init(known:))
 
     static let rightOption = PushToTalkKey(known: 61)
 
-    private static let modifiers: [Int64: Modifier] = [
-        54: Modifier(name: String(localized: "Right Command"), shortName: String(localized: "right ⌘"), symbol: "⌘", flag: 0x10),
-        55: Modifier(name: String(localized: "Left Command"), shortName: String(localized: "left ⌘"), symbol: "⌘", flag: 0x08),
-        56: Modifier(name: String(localized: "Left Shift"), shortName: String(localized: "left ⇧"), symbol: "⇧", flag: 0x02),
-        60: Modifier(name: String(localized: "Right Shift"), shortName: String(localized: "right ⇧"), symbol: "⇧", flag: 0x04),
-        58: Modifier(name: String(localized: "Left Option"), shortName: String(localized: "left ⌥"), symbol: "⌥", flag: 0x20),
-        61: Modifier(name: String(localized: "Right Option"), shortName: String(localized: "right ⌥"), symbol: "⌥", flag: 0x40),
-        59: Modifier(name: String(localized: "Left Control"), shortName: String(localized: "left ⌃"), symbol: "⌃", flag: 0x01),
-        62: Modifier(
-            name: String(localized: "Right Control"),
-            shortName: String(localized: "right ⌃"),
-            symbol: "⌃",
-            flag: 0x2000,
-        ),
-        63: Modifier(name: String(localized: "Fn"), shortName: "Fn", symbol: "🌐", flag: 0x800000),
+    private static let modifierFlags: [Int64: UInt64] = [
+        54: 0x10,
+        55: 0x08,
+        56: 0x02,
+        60: 0x04,
+        58: 0x20,
+        61: 0x40,
+        59: 0x01,
+        62: 0x2000,
+        63: 0x800000,
     ]
 
     package let keyCode: Int64
@@ -38,26 +29,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     package var modifierFlag: UInt64? {
-        Self.modifiers[keyCode]?.flag
-    }
-
-    package var title: String {
-        guard let modifier = Self.modifiers[keyCode] else { return functionKeyTitle }
-
-        return String(
-            localized: "\(modifier.name) (\(modifier.symbol))",
-            comment: "A key name and its symbol, such as Right Option (⌥)",
-        )
-    }
-
-    package var shortTitle: String {
-        guard let modifier = Self.modifiers[keyCode] else { return functionKeyTitle }
-
-        return modifier.shortName
-    }
-
-    private var functionKeyTitle: String {
-        "F\(FunctionKeys.numbers[keyCode, default: 0])"
+        Self.modifierFlags[keyCode]
     }
 
     package init?(keyCode: Int64) {
@@ -75,7 +47,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
     }
 
     private static func isKnown(_ keyCode: Int64) -> Bool {
-        guard modifiers[keyCode] == nil else { return true }
+        guard modifierFlags[keyCode] == nil else { return true }
 
         return FunctionKeys.numbers[keyCode] != nil
     }
@@ -104,7 +76,7 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
         case .keyUp:
             isOwnFunctionKey(keyEvent) ? .keyUp : nil
         case .monitorDisabled:
-            .monitorDisabled
+            nil
         }
     }
 

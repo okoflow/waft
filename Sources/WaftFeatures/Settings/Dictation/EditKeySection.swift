@@ -11,7 +11,7 @@ struct EditKeySection: View {
             subtitle: "Select text, hold the key, and say what to change, like “make it shorter”.",
             needsWaftPlus: true,
         ) {
-            SettingsRow("Editing key", description: keyRecorder.note(for: .edit)) {
+            SettingsRow("Editing key", description: keyRecorder.note(for: .edit), labelsAccessory: true) {
                 recorder
             }
             .motion(Motion.feedback, value: settings.settings.editKey)
@@ -23,7 +23,7 @@ struct EditKeySection: View {
         KeyRecorderField(
             purpose: .edit,
             key: settings.settings.editKey,
-            takenKey: settings.settings.pushToTalkKey,
+            settings: settings.settings,
             recorder: keyRecorder,
         ) { key in
             settings.settings.editKey = key

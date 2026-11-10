@@ -15,18 +15,23 @@ final class KeyRecorder {
     private var purpose: RecordingPurpose?
 
     @ObservationIgnored private var monitor: Any?
-    @ObservationIgnored private var takenKey: PushToTalkKey?
+    @ObservationIgnored private var deactivationObserver: (any NSObjectProtocol)?
+    @ObservationIgnored private var isTaken: ((PushToTalkKey) -> Bool)?
     @ObservationIgnored private var record: ((PushToTalkKey) -> Void)?
 
     var isRecording: Bool {
         purpose != nil
     }
 
-    func start(_ purpose: RecordingPurpose, excluding takenKey: PushToTalkKey?, _ record: @escaping (PushToTalkKey) -> Void) {
+    func start(
+        _ purpose: RecordingPurpose,
+        excluding isTaken: @escaping (PushToTalkKey) -> Bool,
+        _ record: @escaping (PushToTalkKey) -> Void,
+    ) {
         stop()
 
         self.purpose = purpose
-        self.takenKey = takenKey
+        self.isTaken = isTaken
         self.record = record
         rejection = nil
 
@@ -35,6 +40,11 @@ final class KeyRecorder {
 
             return nil
         }
+
+        deactivationObserver = NotificationCenter.default
+            .addObserver(forName: NSApplication.didResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.stop() }
+            }
     }
 
     func stop() {
@@ -42,7 +52,13 @@ final class KeyRecorder {
             NSEvent.removeMonitor(monitor)
         }
 
+        if let deactivationObserver {
+            NotificationCenter.default.removeObserver(deactivationObserver)
+        }
+
         monitor = nil
+        deactivationObserver = nil
+        isTaken = nil
         record = nil
         purpose = nil
     }
@@ -70,7 +86,7 @@ final class KeyRecorder {
             return
         }
         guard isPress(of: key, in: event) else { return }
-        guard key != takenKey else {
+        guard isTaken?(key) != true else {
             reject(.taken, for: purpose)
 
             return

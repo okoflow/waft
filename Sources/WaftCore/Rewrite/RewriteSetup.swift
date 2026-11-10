@@ -35,10 +35,10 @@ package struct RewriteSetup: Sendable {
     init(
         provider: ModelProvider,
         instructions: String,
-        cloudModels: PerProvider<CloudModel> = CloudModel.defaultChoices,
-        translation: Translation = Translation(),
-        writingVariants: WritingVariants = WritingVariants(),
-        localServer: LocalServer = LocalServer(),
+        cloudModels: PerProvider<CloudModel>,
+        translation: Translation,
+        writingVariants: WritingVariants,
+        localServer: LocalServer,
     ) {
         self.provider = provider
         self.instructions = instructions

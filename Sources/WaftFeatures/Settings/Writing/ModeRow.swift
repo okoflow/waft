@@ -75,10 +75,22 @@ private struct ModeLabel: View {
         settings.modelProvider
     }
 
-    private var processingNote: Text {
-        guard provider.isCloud else { return Text("Runs on this Mac with \(provider.title)") }
+    private var staysOnThisMac: Bool {
+        guard !provider.isCloud else { return false }
 
-        return Text("Sends the recognized text to \(provider.title)")
+        return settings.localServer.isOnThisMac
+    }
+
+    private var processingNote: Text {
+        guard staysOnThisMac else { return Text("Sends the recognized text to \(provider.title)") }
+
+        return Text("Runs on this Mac with \(provider.title)")
+    }
+
+    private var processingSymbol: String {
+        guard !staysOnThisMac else { return "cpu" }
+
+        return provider.isCloud ? "cloud" : "network"
     }
 
     private var isBuiltIn: Bool {
@@ -98,7 +110,7 @@ private struct ModeLabel: View {
                     .font(.rowTitle)
 
                 if mode.usesAI {
-                    Image(systemName: provider.isCloud ? "cloud" : "cpu")
+                    Image(systemName: processingSymbol)
                         .font(.glyph)
                         .foregroundStyle(Palette.secondaryText)
                         .help(processingNote)

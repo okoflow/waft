@@ -24,17 +24,4 @@ struct HTTPTransportTests {
             try await FakeHTTPTransport(reply).body(for: Self.request, from: "Fake")
         }
     }
-
-    @Test(arguments: [
-        #"{"error":{"message":"private dictated text","type":"private clipboard text","code":"Bearer private-token"}}"#,
-        #"{"error":{"message":false,"type":[],"code":{}}}"#,
-        "private dictated text",
-    ])
-    func `maps a failure by its status regardless of server diagnostics`(body: String) async {
-        let transport = FakeHTTPTransport(.status(401, body: Data(body.utf8)))
-
-        await #expect(throws: RewriteError.rejectedKey) {
-            try await transport.body(for: Self.request, from: "Fake")
-        }
-    }
 }

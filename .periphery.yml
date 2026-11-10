@@ -1,3 +1,5 @@
+index_store_path:
+  - .build/out
 quiet: true
 retain_encodable_properties: true
 strict: true

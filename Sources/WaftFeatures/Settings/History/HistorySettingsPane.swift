@@ -105,7 +105,7 @@ private struct HistoryRow: View {
     private var details: String {
         let time = entry.date.formatted(date: .abbreviated, time: .shortened)
 
-        return [time, modeTitle, appName].compactMap(\.self).map { "\u{2068}\($0)\u{2069}" }.joined(separator: " · ")
+        return .caption(joining: [time, modeTitle, appName].compactMap(\.self))
     }
 
     var body: some View {

@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Automatycznie sprawdzaj uaktualnienia";
 "Check" = "Sprawdź";
 "Checking…" = "Sprawdzam…";
-"Choose Copy Last Dictation in the Waft menu." = "Wybierz „Kopiuj ostatnie dyktowanie” z menu Waft.";
 "Choose File…" = "Wybierz plik…";
 "Choose Languages…" = "Wybierz języki…";
 "Choose" = "Wybierz";
@@ -254,6 +253,7 @@
 "Recent" = "Ostatnio używane";
 "Recognizes speech more accurately, especially outside English." = "Dokładniej rozpoznaje mowę, zwłaszcza w językach innych niż angielski.";
 "Recording failed" = "Błąd nagrywania";
+"Recording stopped early" = "Nagrywanie przerwane";
 "Recording" = "Nagrywanie";
 "Recordings and videos become text and subtitles, right on your Mac." = "Nagrania i filmy zamieniają się w tekst i napisy – bezpośrednio na Twoim Macu.";
 "Recordings and videos become text and subtitles." = "Nagrania i filmy zamieniają się w tekst i napisy.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Przywróć domyślne";
 "Reset to Default…" = "Przywróć domyślne…";
 "Reset your dictation statistics?" = "Wyzerować statystyki dyktowania?";
+"Retry Last Dictation" = "Ponów ostatnie dyktowanie";
 "Retry Speech Model" = "Ponów wczytywanie modelu mowy";
 "Retry" = "Ponów";
 "Right Command" = "Command po prawej";
@@ -335,7 +336,7 @@
 "Suggested" = "Sugerowane";
 "Swap languages" = "Zamień języki";
 "Switch to the next mode" = "Przełącz na następny tryb";
-"System default" = "Domyślne systemowe";
+"System default" = "Domyślny systemowy";
 "Talk while holding the key" = "Mów, trzymając klawisz";
 "Tap %@ to dictate" = "Naciśnij %@, aby dyktować";
 "Tap %@" = "Naciśnij %@";
@@ -376,7 +377,7 @@
 "The translator is part of Waft+" = "Tłumacz jest częścią Waft+";
 "The translator needs a %@ API key." = "Tłumacz wymaga klucza API %@.";
 "The translator needs a local server and model." = "Tłumacz wymaga serwera lokalnego i modelu.";
-"There's no speech in this file." = "W tym pliku nie ma mowy.";
+"There's no speech in this file." = "Ten plik nie zawiera mowy.";
 "These apps get their own mode." = "Te aplikacje mają własny tryb.";
 "They work in any app." = "Działają w każdej aplikacji.";
 "This deletes every saved dictation. It can't be undone." = "Wszystkie zachowane dyktowania zostaną usunięte. Tej czynności nie można cofnąć.";
@@ -398,7 +399,7 @@
 "Translate" = "Tłumaczenie";
 "Translates in its own window, and translates or fixes selected text in any app." = "Tłumaczy w osobnym oknie i tłumaczy lub poprawia zaznaczony tekst w każdej aplikacji.";
 "Translates what you said into another language." = "Tłumaczy to, co mówisz, na inny język.";
-"Translating and fixing text is part of Waft+." = "Tłumaczenie i poprawianie tekstu jest częścią Waft+.";
+"Translating and fixing text is part of Waft+." = "Tłumaczenie i poprawianie tekstu są częścią Waft+.";
 "Translating…" = "Tłumaczę…";
 "Translation" = "Tłumaczenie";
 "Translator (Waft+)…" = "Tłumacz (Waft+)…";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft nie może odczytać tego pliku.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft nie może używać mikrofonu. Pozwól na to w Ustawieniach › Ogólne.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft nie mógł odczytać zapisanej historii i zachował jej kopię. „Wymaż historię” usuwa obie.";
+"Waft couldn't save the license key." = "Waft nie mógł zapisać klucza licencyjnego.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft usunie go z tego Maca. Dopóki nie dodasz klucza, tryby AI będą używać trybu „Lekki”.";
 "Waft is listening" = "Waft słucha";
 "Waft keeps no dictations while Keep history is off." = "Waft nie zachowuje dyktowań, gdy opcja „Zachowuj historię” jest wyłączona.";
@@ -435,11 +437,12 @@
 "Waft lives in the menu bar." = "Waft znajdziesz na pasku menu.";
 "Waft needs both to type for you." = "Waft potrzebuje obu, aby pisać za Ciebie.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft potrzebuje go, aby wykrywać klawisz i wklejać Twój tekst. Włącz Waft na liście, która się otworzy.";
+"Waft records up to %lld minutes at a time." = "Waft nagrywa jednorazowo do %lld minut.";
 "Waft starts listening." = "Waft zaczyna słuchać.";
 "Waft writes" = "Waft pisze";
 "Waft" = "Waft";
 "Waft+ feature" = "Funkcja Waft+";
-"Waft+ features stop working here until you enter the key again." = "Funkcje Waft+ przestaną działać na tym Macu, dopóki ponownie nie wpiszesz klucza.";
+"Waft+ features stop working here until you enter the key again." = "Funkcje Waft+ nie będą działać na tym Macu, dopóki ponownie nie wpiszesz klucza.";
 "Waft+" = "Waft+";
 "Website" = "Witryna";
 "Welcome to Waft" = "Witamy w aplikacji Waft";

@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Procurar atualizações automaticamente";
 "Check" = "Verificar";
 "Checking…" = "A verificar…";
-"Choose Copy Last Dictation in the Waft menu." = "Escolha “Copiar último ditado” no menu do Waft.";
 "Choose File…" = "Escolher ficheiro…";
 "Choose Languages…" = "Escolher idiomas…";
 "Choose" = "Escolher";
@@ -254,6 +253,7 @@
 "Recent" = "Recentes";
 "Recognizes speech more accurately, especially outside English." = "Reconhece a fala com mais precisão, sobretudo em idiomas que não o inglês.";
 "Recording failed" = "Falha na gravação";
+"Recording stopped early" = "A gravação parou antes do tempo";
 "Recording" = "Gravação";
 "Recordings and videos become text and subtitles, right on your Mac." = "Gravações e vídeos tornam-se texto e legendas, no seu próprio Mac.";
 "Recordings and videos become text and subtitles." = "Gravações e vídeos tornam-se texto e legendas.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Repor predefinições";
 "Reset to Default…" = "Repor predefinições…";
 "Reset your dictation statistics?" = "Repor as estatísticas de ditado?";
+"Retry Last Dictation" = "Tentar último ditado novamente";
 "Retry Speech Model" = "Recarregar modelo de fala";
 "Retry" = "Voltar a tentar";
 "Right Command" = "Comando da direita";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "O Waft não consegue ler este ficheiro.";
 "Waft can't use the microphone. Allow it in Settings › General." = "O Waft não pode usar o microfone. Permita o acesso em Definições › Geral.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "O Waft não conseguiu ler o histórico guardado e manteve uma cópia. “Limpar histórico” apaga ambos.";
+"Waft couldn't save the license key." = "O Waft não conseguiu guardar a chave de licença.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "O Waft apaga-a deste Mac. Os modos de IA usam o modo “Leve” até adicionar uma chave.";
 "Waft is listening" = "O Waft está a ouvir";
 "Waft keeps no dictations while Keep history is off." = "O Waft não guarda ditados enquanto “Manter histórico” estiver desativado.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "O Waft fica na barra de menus.";
 "Waft needs both to type for you." = "O Waft precisa de ambas para escrever por si.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "O Waft precisa deste acesso para detetar a tecla e colar o seu texto. Ative o Waft na lista que se abre.";
+"Waft records up to %lld minutes at a time." = "O Waft grava até %lld minutos de cada vez.";
 "Waft starts listening." = "O Waft começa a ouvir.";
 "Waft writes" = "O que o Waft escreve";
 "Waft" = "Waft";
@@ -468,7 +471,7 @@
 "Your own modes" = "Os seus próprios modos";
 "Your speech is recognized on this Mac." = "A sua fala é reconhecida neste Mac.";
 "Your words appear here" = "As suas palavras aparecem aqui";
-"Your words, audio, dictionary, and the names of apps and files." = "As suas palavras, o áudio, o dicionário e os nomes de apps e ficheiros.";
+"Your words, audio, dictionary, and the names of apps and files." = "As suas palavras, o áudio, o dicionário e os nomes de aplicações e ficheiros.";
 "add your %@ API key in Settings › AI Models" = "adicione a sua chave de API de %@ em Definições › Modelos de IA";
 "choose a local server and model in Settings › AI Models" = "escolha um servidor local e um modelo em Definições › Modelos de IA";
 "days in a row" = "dias seguidos";

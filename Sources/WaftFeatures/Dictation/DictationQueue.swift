@@ -5,6 +5,9 @@ import WaftCore
 
 @Observable
 final class DictationQueue {
+    private static let idleTimeout = Duration.seconds(60)
+    private static let retryLifetime = Duration.seconds(600)
+
     static var transcribingLabel: String {
         String(localized: "Transcribing…")
     }
@@ -15,22 +18,26 @@ final class DictationQueue {
 
     @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
 
-    private var recentTranscripts = RecentTranscripts()
+    private(set) var latestTranscript: String?
+
+    private var failedJob: DictationJob?
 
     @ObservationIgnored private var pendingCount = 0
     @ObservationIgnored private var transcriptExpiry: Task<Void, Never>?
+    @ObservationIgnored private var failedJobExpiry: Task<Void, Never>?
 
     private let transcriber: any Transcriber
     private let processor: TranscriptProcessor
-    private let inserter: any TextInserter
+    private let delivery: TextDelivery
     private let clipboard: any Clipboard
     private let history: HistoryModel
     private let statistics: StatisticsModel
     private let hud: HUDController
+    private let transcriptLifetime: Duration
     private let continuation: AsyncStream<DictationJob>.Continuation
 
-    var latestTranscript: String? {
-        recentTranscripts.latest(at: Date())
+    var canRetry: Bool {
+        failedJob != nil
     }
 
     init(
@@ -41,14 +48,16 @@ final class DictationQueue {
         history: HistoryModel,
         statistics: StatisticsModel,
         hud: HUDController,
+        transcriptLifetime: Duration = .seconds(600),
     ) {
         self.transcriber = transcriber
         processor = TranscriptProcessor(rewriters: rewriters)
-        self.inserter = inserter
+        delivery = TextDelivery(inserter: inserter, clipboard: clipboard)
         self.clipboard = clipboard
         self.history = history
         self.statistics = statistics
         self.hud = hud
+        self.transcriptLifetime = transcriptLifetime
 
         let (jobs, continuation) = AsyncStream.makeStream(of: DictationJob.self)
         self.continuation = continuation
@@ -86,6 +95,10 @@ final class DictationQueue {
         clipboard.copy(latestTranscript)
     }
 
+    func waitUntilIdle() async {
+        await Poll.until(timeout: Self.idleTimeout) { pendingCount == 0 }
+    }
+
     private func run(_ job: DictationJob) async {
         let outcome = await outcome(of: job)
 
@@ -107,6 +120,8 @@ final class DictationQueue {
             )
         } catch {
             Logger.dictation.error("Transcription failed: \(error.logDescription, privacy: .public)")
+
+            keepForRetry(job)
 
             return .failed(error.localizedDescription)
         }
@@ -159,38 +174,30 @@ final class DictationQueue {
 
         rememberLatest(processed.text)
 
-        guard job.pastes else { return copy(processed, transcribed: transcript, for: job) }
+        let outcome = await pasteOrCopy(processed.text, for: job)
 
-        switch await inserter.insert(processed.text, into: job.target, releasing: job.key) {
-        case .pasted:
+        if outcome != .keptOutOfPasswordField {
             record(processed, transcribed: transcript, for: job)
-
-            return .pasted(processed)
-
-        case .skipped(.secureField):
-            return .blockedInPasswordField
-
-        case .skipped:
-            return copy(processed, transcribed: transcript, for: job)
         }
+
+        return .delivered(outcome, processed)
     }
 
-    private func copy(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) -> DictationOutcome {
-        clipboard.copy(processed.text)
-        record(processed, transcribed: transcript, for: job)
+    private func pasteOrCopy(_ text: String, for job: DictationJob) async -> TextDelivery.Outcome {
+        guard job.pastes else { return delivery.copy(text) }
 
-        return .copied(processed)
+        return await delivery.deliver(text, into: job.target, releasing: job.key)
     }
 
     private func rememberLatest(_ text: String) {
-        recentTranscripts.remember(text, at: Date())
+        latestTranscript = text
 
         transcriptExpiry?.cancel()
 
-        transcriptExpiry = Task { [weak self] in
-            guard await Task.slept(for: .seconds(RecentTranscripts.lifetime)) else { return }
+        transcriptExpiry = Task { [weak self, transcriptLifetime] in
+            guard await Task.slept(for: transcriptLifetime), !Task.isCancelled else { return }
 
-            self?.recentTranscripts = RecentTranscripts()
+            self?.latestTranscript = nil
         }
     }
 
@@ -225,5 +232,32 @@ final class DictationQueue {
             processed \(processed.text.count) characters
             """,
         )
+    }
+}
+
+extension DictationQueue {
+    func retryFailedDictation() {
+        guard let failedJob else { return }
+
+        forgetFailedJob()
+        submit(failedJob.copyingInsteadOfPasting())
+    }
+
+    private func keepForRetry(_ job: DictationJob) {
+        failedJob = job
+
+        failedJobExpiry?.cancel()
+
+        failedJobExpiry = Task { [weak self] in
+            guard await Task.slept(for: Self.retryLifetime), !Task.isCancelled else { return }
+
+            self?.failedJob = nil
+        }
+    }
+
+    private func forgetFailedJob() {
+        failedJob = nil
+
+        failedJobExpiry?.cancel()
     }
 }

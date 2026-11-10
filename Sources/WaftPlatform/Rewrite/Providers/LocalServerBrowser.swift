@@ -8,7 +8,7 @@ package struct LocalServerBrowser: LocalServerBrowsing {
     private let transport: any HTTPTransport
 
     package init() {
-        self.init(transport: URLSession(configuration: .ephemeral))
+        self.init(transport: URLSession(configuration: .anonymous))
     }
 
     init(transport: any HTTPTransport) {

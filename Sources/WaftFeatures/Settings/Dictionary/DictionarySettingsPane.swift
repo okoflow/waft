@@ -3,6 +3,8 @@ import SwiftUI
 struct DictionarySettingsPane: View {
     @Bindable var vocabulary: VocabularyModel
 
+    @Environment(\.controlActiveState) private var windowState
+
     var body: some View {
         SettingsSection("Terms", subtitle: "Names and words that come out wrong.") {
             if vocabulary.terms.isEmpty {
@@ -25,6 +27,8 @@ struct DictionarySettingsPane: View {
             Button("Add Term", action: vocabulary.addTerm)
         }
         .motion(Motion.layout, value: vocabulary.terms.count)
+        .onAppear { vocabulary.reloadFromDisk() }
+        .onChange(of: windowState) { vocabulary.reloadFromDisk() }
 
         SettingsSection("Snippets", subtitle: "Say the phrase on its own to paste the text.") {
             if vocabulary.snippets.isEmpty {

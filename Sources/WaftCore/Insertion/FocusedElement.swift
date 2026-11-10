@@ -1,5 +1,5 @@
 package protocol FocusedElement: Sendable {
-    var isSecureTextField: Bool { get }
+    var secureFieldState: SecureFieldState { get }
     var characterBeforeCaret: Character? { get }
     var selectedText: String? { get }
     var hasEmptySelection: Bool { get }

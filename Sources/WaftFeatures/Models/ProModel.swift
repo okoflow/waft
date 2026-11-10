@@ -8,6 +8,7 @@ final class ProModel {
     enum ActivationProblem: Equatable {
         case unreadable
         case invalid
+        case notSaved
     }
 
     static let price = (Decimal(1399) / 100).formatted(.currency(code: "USD"))
@@ -103,8 +104,12 @@ final class ProModel {
 
             return
         }
+        guard keyStore.write(draft.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            activationProblem = .notSaved
 
-        keyStore.write(draft.trimmingCharacters(in: .whitespacesAndNewlines))
+            return
+        }
+
         license = key.license
         draft = ""
 
@@ -112,7 +117,8 @@ final class ProModel {
     }
 
     func deactivate() {
-        keyStore.remove()
+        guard keyStore.remove() else { return }
+
         license = nil
 
         onAccessChange?()

@@ -8,11 +8,12 @@ struct PhraseReplacer {
 
     private struct Rule {
         let segments: [TextSegment]
+        let leadingMarks: String
         let replacement: String
     }
 
     private struct Match {
-        let replacement: String
+        let rule: Rule
         let lastSegment: Int
         let rest: String
     }
@@ -33,8 +34,20 @@ struct PhraseReplacer {
         guard let first = segments.first, first.isWord else { return nil }
 
         let normalized = segments.map { normalizedWord($0, in: language) }
+        let marks = leadingMarks(of: replacement.replacement)
 
-        return Rule(segments: normalized, replacement: replacement.replacement)
+        return Rule(
+            segments: normalized,
+            leadingMarks: marks,
+            replacement: String(replacement.replacement.dropFirst(marks.count)),
+        )
+    }
+
+    private static func leadingMarks(of replacement: String) -> String {
+        let segments = TextSegment.split(replacement)
+        guard let first = segments.first, !first.isWord, segments.count > 1 else { return "" }
+
+        return first.text
     }
 
     private static func normalizedWord(_ segment: TextSegment, in language: Language) -> TextSegment {
@@ -66,7 +79,7 @@ struct PhraseReplacer {
 
         while index < segments.count {
             if segments[index].isWord, let match = match(at: index, in: segments) {
-                result += match.replacement + match.rest
+                result += replacement(of: match.rule, after: result) + match.rest
                 index = match.lastSegment + 1
 
                 continue
@@ -77,6 +90,14 @@ struct PhraseReplacer {
         }
 
         return result
+    }
+
+    private func replacement(of rule: Rule, after written: String) -> String {
+        guard !rule.leadingMarks.isEmpty, written.hasSuffix(rule.leadingMarks) else {
+            return rule.leadingMarks + rule.replacement
+        }
+
+        return rule.replacement
     }
 
     private func match(at start: Int, in segments: [TextSegment]) -> Match? {
@@ -90,7 +111,7 @@ struct PhraseReplacer {
         let leadingSegmentsMatch = zip(segments[start ..< end], rule.segments).allSatisfy(isMatch)
         guard leadingSegmentsMatch, let rest = unmatchedRest(of: segments[end], after: last) else { return nil }
 
-        return Match(replacement: rule.replacement, lastSegment: end, rest: rest)
+        return Match(rule: rule, lastSegment: end, rest: rest)
     }
 
     private func isMatch(_ segment: TextSegment, _ expected: TextSegment) -> Bool {

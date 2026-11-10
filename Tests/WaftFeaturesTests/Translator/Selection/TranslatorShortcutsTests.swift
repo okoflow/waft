@@ -13,7 +13,7 @@ struct TranslatorShortcutsTests {
             [.translator: window, .translateSelection: translate, .fixSelection: fix],
             settings: settings,
         )
-        let shortcuts = TranslatorShortcuts(shortcuts: controller, selectionActions: selectionActions(settings: settings))
+        let shortcuts = TranslatorShortcuts(shortcuts: controller, selectionActions: .acting(settings: settings))
         var opens = 0
         shortcuts.onOpenTranslator = { opens += 1 }
         shortcuts.start()
@@ -24,19 +24,5 @@ struct TranslatorShortcutsTests {
         #expect(window.registered == ShortcutAction.translator.defaultCombination)
         #expect(translate.registered == ShortcutAction.translateSelection.defaultCombination)
         #expect(fix.registered == ShortcutAction.fixSelection.defaultCombination)
-    }
-
-    private func selectionActions(settings: SettingsModel) -> SelectionActions {
-        SelectionActions(
-            rewriters: .all(FakeTextRewriter()),
-            detector: FakeLanguageDetector(),
-            focusTracker: FakeFocusTracker(),
-            keyboardState: FakeKeyboardState(holdsKeys: false),
-            inserter: FakeTextInserter(),
-            clipboard: FakeClipboard(),
-            settings: settings,
-            pro: .unlicensed(),
-            hud: HUDController.offscreen(),
-        )
     }
 }

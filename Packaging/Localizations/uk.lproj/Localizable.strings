@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Перевіряти оновлення автоматично";
 "Check" = "Перевірити";
 "Checking…" = "Перевірка…";
-"Choose Copy Last Dictation in the Waft menu." = "Виберіть «Скопіювати останнє диктування» в меню Waft.";
 "Choose File…" = "Вибрати файл…";
 "Choose Languages…" = "Вибрати мови…";
 "Choose" = "Вибрати";
@@ -73,7 +72,7 @@
 "Clean and Formal" = "«Чистовий» і «Діловий»";
 "Clean" = "Чистовий";
 "Clean, Formal, and Translate need an AI model." = "Для режимів «Чистовий», «Діловий» і «Переклад» потрібна модель ШІ.";
-"Cleaning up…" = "Очищення…";
+"Cleaning up…" = "Обробка…";
 "Clear History" = "Очистити історію";
 "Clear History…" = "Очистити історію…";
 "Clear the dictation history?" = "Очистити історію диктування?";
@@ -254,6 +253,7 @@
 "Recent" = "Нещодавні";
 "Recognizes speech more accurately, especially outside English." = "Точніше розпізнає мовлення, особливо не англійською.";
 "Recording failed" = "Не вдалося записати";
+"Recording stopped early" = "Запис перервався";
 "Recording" = "Запис";
 "Recordings and videos become text and subtitles, right on your Mac." = "Записи й відео перетворюються на текст і субтитри прямо на вашому Mac.";
 "Recordings and videos become text and subtitles." = "Записи й відео перетворюються на текст і субтитри.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Скинути до типових";
 "Reset to Default…" = "Скинути до типових…";
 "Reset your dictation statistics?" = "Скинути статистику диктування?";
+"Retry Last Dictation" = "Повторити останнє диктування";
 "Retry Speech Model" = "Повторити завантаження моделі мовлення";
 "Retry" = "Повторити";
 "Right Command" = "Command справа";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft не може прочитати цей файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не може використовувати мікрофон. Надайте доступ у Параметрах › Загальні.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не зміг прочитати збережену історію й залишив її копію. «Очистити історію» видалить обидві.";
+"Waft couldn't save the license key." = "Не вдалося зберегти ліцензійний ключ.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft видалить його з цього Mac. Поки ви не додасте ключ, замість режимів ШІ застосовується режим «Легкий».";
 "Waft is listening" = "Waft слухає";
 "Waft keeps no dictations while Keep history is off." = "Поки перемикач «Зберігати історію» вимкнений, Waft не зберігає диктувань.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft живе на смузі меню.";
 "Waft needs both to type for you." = "Без них Waft не зможе друкувати за вас.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Він потрібен Waft, щоб відстежувати клавішу та вставляти ваш текст. Увімкніть Waft у списку, що відкриється.";
+"Waft records up to %lld minutes at a time." = "Waft записує не довше %lld хвилин поспіль.";
 "Waft starts listening." = "Waft починає слухати.";
 "Waft writes" = "Waft напише";
 "Waft" = "Waft";

@@ -55,11 +55,11 @@ struct DictationSettingsPane: View {
         DictationStartSection(settings: settings)
 
         SettingsSection("Recording") {
-            SettingsRow("Dictation key", description: keyNote) {
+            SettingsRow("Dictation key", description: keyNote, labelsAccessory: true) {
                 KeyRecorderField(
                     purpose: .dictation,
                     key: settings.settings.pushToTalkKey,
-                    takenKey: settings.settings.editKey,
+                    settings: settings.settings,
                     recorder: keyRecorder,
                 ) { key in
                     settings.settings.pushToTalkKey = key

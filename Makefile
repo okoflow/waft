@@ -1,9 +1,11 @@
 CONFIG         ?= debug
 STRINGS_DIR     = $(CURDIR)/.build/strings
-TOOLCHAIN_DIR   = $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
+TOOLCHAIN_DIR  := $(shell xcrun --find swift | sed 's|/usr/bin/swift$$||')
 TESTING_PLUGINS = $(TOOLCHAIN_DIR)/usr/lib/swift/host/plugins/testing
 TESTING_LIBS    = $(TOOLCHAIN_DIR)/Library/Developer
 GITLEAKS        = gitleaks git --no-banner --redact
+
+.NOTPARALLEL:
 
 .PHONY: help build test bundle run release format check format-check lint shellcheck spelling secrets secrets-staged periphery strings strings-update hooks signing clean
 
@@ -56,7 +58,7 @@ secrets-staged: ## Scan the staged changes for secrets
 	$(GITLEAKS) --pre-commit --staged
 
 periphery: test ## Fail on unused code
-	periphery scan --index-store-path .build/out
+	periphery scan
 
 strings: build ## Check every translation against the strings in the code
 	STRINGS_DIR=$(STRINGS_DIR) scripts/strings.sh check
@@ -68,7 +70,7 @@ hooks: ## Install the pre-commit hook
 	lefthook install
 
 signing: ## Create the stable code-signing identity once
-	scripts/signing.sh
+	scripts/signing.sh $(if $(NAME),'$(NAME)')
 
 clean: ## Remove the build output
 	rm -rf .build build

@@ -40,7 +40,7 @@
 "All Languages" = "Toutes les langues";
 "All languages" = "Toutes les langues";
 "All time" = "Depuis le début";
-"Allow Accessibility access" = "Autorisez l’accès aux fonctionnalités d’accessibilité";
+"Allow Accessibility access" = "Autorisez l’accès à l’accessibilité";
 "Allow Access…" = "Autoriser l’accès…";
 "Allow microphone access" = "Autorisez l’accès au micro";
 "Allowed" = "Autorisé";
@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Rechercher automatiquement les mises à jour";
 "Check" = "Vérifier";
 "Checking…" = "Vérification…";
-"Choose Copy Last Dictation in the Waft menu." = "Choisissez « Copier la dernière dictée » dans le menu de Waft.";
 "Choose File…" = "Choisir un fichier…";
 "Choose Languages…" = "Choisir les langues…";
 "Choose" = "Choisir";
@@ -254,6 +253,7 @@
 "Recent" = "Récentes";
 "Recognizes speech more accurately, especially outside English." = "Reconnaît mieux la parole, surtout dans les langues autres que l’anglais.";
 "Recording failed" = "Échec de l’enregistrement";
+"Recording stopped early" = "Enregistrement interrompu";
 "Recording" = "Enregistrement";
 "Recordings and videos become text and subtitles, right on your Mac." = "Vos enregistrements et vidéos deviennent du texte et des sous-titres, directement sur votre Mac.";
 "Recordings and videos become text and subtitles." = "Vos enregistrements et vidéos deviennent du texte et des sous-titres.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Rétablir le texte par défaut";
 "Reset to Default…" = "Rétablir le texte par défaut…";
 "Reset your dictation statistics?" = "Réinitialiser vos statistiques de dictée ?";
+"Retry Last Dictation" = "Réessayer la dernière dictée";
 "Retry Speech Model" = "Recharger le modèle vocal";
 "Retry" = "Réessayer";
 "Right Command" = "Commande droite";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft ne peut pas lire ce fichier.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft ne peut pas utiliser le micro. Autorisez-le dans Réglages › Général.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft n’a pas pu lire l’historique enregistré et en a gardé une copie. « Effacer l’historique » supprime les deux.";
+"Waft couldn't save the license key." = "Waft n’a pas pu enregistrer la clé de licence.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft la supprime de ce Mac. Les modes IA utilisent le mode Léger jusqu’à ce que vous ajoutiez une clé.";
 "Waft is listening" = "Waft écoute";
 "Waft keeps no dictations while Keep history is off." = "Waft ne conserve aucune dictée tant que « Conserver l’historique » est désactivé.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft se trouve dans la barre des menus.";
 "Waft needs both to type for you." = "Waft a besoin des deux pour écrire à votre place.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft en a besoin pour détecter la touche et coller votre texte. Activez Waft dans la liste qui s’ouvre.";
+"Waft records up to %lld minutes at a time." = "Waft enregistre jusqu’à %lld minutes d’affilée.";
 "Waft starts listening." = "Waft commence à écouter.";
 "Waft writes" = "Waft écrit";
 "Waft" = "Waft";

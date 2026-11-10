@@ -8,6 +8,7 @@ struct LicenseSection: View {
         switch pro.activationProblem {
         case .unreadable: "That doesn't look like a Waft license key."
         case .invalid: "This license key isn't valid."
+        case .notSaved: "Waft couldn't save the license key."
         case nil: nil
         }
     }
@@ -21,7 +22,7 @@ struct LicenseSection: View {
             }
         } else {
             SettingsSection("License", subtitle: "Bought Waft+? Paste the key from your receipt email.") {
-                SettingsRow("License key", description: problem) {
+                SettingsRow("License key", description: problem, labelsAccessory: true) {
                     InputField("License key", prompt: .verbatim("WFT1…"), text: $pro.draft)
                         .frame(width: 220)
 

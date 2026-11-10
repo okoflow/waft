@@ -81,6 +81,38 @@ struct UsageLogTests {
         #expect(decoded == log)
     }
 
+    @Test
+    func `decodes a log saved with other counters and keeps its installation and days`() throws {
+        let installation = UUID()
+
+        let json = #"""
+        {"installation":"\#(installation.uuidString)","days":{
+         "2026-10-10":{"counts":{"cleanDictations":2,"retiredCounter":9},"isSent":true},
+         "2026-10-11":{"counts":{"voiceEdits":"many","translations":1}},
+         "2026-10-12":"bogus"}}
+        """#
+
+        let log = try JSONDecoder().decode(UsageLog.self, from: Data(json.utf8))
+
+        let sent = try #require(log.days["2026-10-10"])
+        let unsent = try #require(log.days["2026-10-11"])
+
+        #expect(log.installation == installation)
+        #expect(log.days.keys.sorted() == ["2026-10-10", "2026-10-11"])
+        #expect(log.unsentDays == ["2026-10-11"])
+        #expect(sent.counts.cleanDictations == 2)
+        #expect(sent.counts.fileTranscriptions == 0)
+        #expect(unsent.counts.voiceEdits == 0)
+        #expect(unsent.counts.translations == 1)
+    }
+
+    @Test
+    func `rejects a log without its installation`() {
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(UsageLog.self, from: Data(#"{"days":{}}"#.utf8))
+        }
+    }
+
     private func date(_ year: Int, _ month: Int, _ day: Int, hour: Int = 0) throws -> Date {
         try #require(Calendar.gmt.date(from: DateComponents(year: year, month: month, day: day, hour: hour)))
     }

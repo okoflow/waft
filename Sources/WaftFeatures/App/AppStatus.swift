@@ -36,8 +36,8 @@ enum AppStatus: Equatable {
         let key = settings.pushToTalkKey.shortTitle
 
         return switch settings.dictationStart {
-        case .tap: String(localized: "Ready: tap \(key) and speak")
         case .hold, .holdOrDoubleTap: String(localized: "Ready: hold \(key) and speak")
+        case .tap: String(localized: "Ready: tap \(key) and speak")
         }
     }
 

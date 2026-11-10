@@ -26,7 +26,7 @@
 "AI modes" = "ИИ-режимы";
 "AI modes, editing by voice, and the translator use this model." = "ИИ-режимы, правка голосом и переводчик используют эту модель.";
 "API key" = "Ключ API";
-"About" = "О программе";
+"About" = "О приложении";
 "Accessibility" = "Универсальный доступ";
 "Accurate speech model" = "Точная модель речи";
 "Accurate" = "Точная";
@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Проверять обновления автоматически";
 "Check" = "Проверить";
 "Checking…" = "Проверка…";
-"Choose Copy Last Dictation in the Waft menu." = "Выберите «Скопировать последнюю диктовку» в меню Waft.";
 "Choose File…" = "Выбрать файл…";
 "Choose Languages…" = "Выбрать языки…";
 "Choose" = "Выбрать";
@@ -73,7 +72,7 @@
 "Clean and Formal" = "«Чистовой» и «Деловой»";
 "Clean" = "Чистовой";
 "Clean, Formal, and Translate need an AI model." = "Для режимов «Чистовой», «Деловой» и «Перевод» нужна ИИ-модель.";
-"Cleaning up…" = "Очищаю…";
+"Cleaning up…" = "Обрабатываю…";
 "Clear History" = "Очистить историю";
 "Clear History…" = "Очистить историю…";
 "Clear the dictation history?" = "Очистить историю диктовок?";
@@ -95,7 +94,7 @@
 "Couldn't fix the text" = "Не удалось исправить текст";
 "Couldn't transcribe %@" = "Не удалось расшифровать «%@»";
 "Couldn't translate the text" = "Не удалось перевести текст";
-"Counted on this Mac: words and time, never the text." = "Считается на этом Mac: слова и время, но не сам текст.";
+"Counted on this Mac: words and time, never the text." = "Подсчитываются на этом Mac: слова и время, но не сам текст.";
 "Day" = "День";
 "Default (%@)" = "По умолчанию (%@)";
 "Default" = "По умолчанию";
@@ -254,6 +253,7 @@
 "Recent" = "Недавние";
 "Recognizes speech more accurately, especially outside English." = "Точнее распознаёт речь, особенно не на английском.";
 "Recording failed" = "Запись не удалась";
+"Recording stopped early" = "Запись прервалась";
 "Recording" = "Запись";
 "Recordings and videos become text and subtitles, right on your Mac." = "Записи и видео превращаются в текст и субтитры прямо на вашем Mac.";
 "Recordings and videos become text and subtitles." = "Записи и видео превращаются в текст и субтитры.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Сбросить изменения";
 "Reset to Default…" = "Сбросить изменения…";
 "Reset your dictation statistics?" = "Сбросить статистику диктовки?";
+"Retry Last Dictation" = "Повторить последнюю диктовку";
 "Retry Speech Model" = "Повторить загрузку модели речи";
 "Retry" = "Повторить";
 "Right Command" = "Правый Command";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft не может прочитать этот файл.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft не может использовать микрофон. Разрешите доступ в Настройках › Основные.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft не смог прочитать сохранённую историю и оставил её копию. «Очистить историю» удалит обе.";
+"Waft couldn't save the license key." = "Не удалось сохранить лицензионный ключ.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft удалит его с этого Mac. Пока вы не добавите ключ, вместо ИИ-режимов применяется режим «Лёгкий».";
 "Waft is listening" = "Waft слушает";
 "Waft keeps no dictations while Keep history is off." = "Пока переключатель «Сохранять историю» выключен, Waft не сохраняет диктовки.";
@@ -435,11 +437,12 @@
 "Waft lives in the menu bar." = "Waft находится в строке меню.";
 "Waft needs both to type for you." = "Без них Waft не сможет печатать за вас.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Он нужен Waft, чтобы следить за клавишей и вставлять текст. Включите Waft в открывшемся списке.";
+"Waft records up to %lld minutes at a time." = "Waft записывает не дольше %lld минут подряд.";
 "Waft starts listening." = "Waft начинает слушать.";
 "Waft writes" = "Waft напишет";
 "Waft" = "Waft";
 "Waft+ feature" = "Функция Waft+";
-"Waft+ features stop working here until you enter the key again." = "Функции Waft+ на этом Mac перестанут работать, пока вы снова не введёте ключ.";
+"Waft+ features stop working here until you enter the key again." = "Функции Waft+ на этом Mac не будут работать, пока вы снова не введёте ключ.";
 "Waft+" = "Waft+";
 "Website" = "Сайт";
 "Welcome to Waft" = "Добро пожаловать в Waft";

@@ -31,7 +31,7 @@ struct ChatCompletionsAPITests {
         #expect(body["model"] as? String == "qwen")
         #expect(body["temperature"] as? Double == 0.2)
         #expect(body["stream"] as? Bool == false)
-        #expect(body["max_tokens"] as? Int == request.outputTokenBudget)
+        #expect(body["max_tokens"] as? Int == request.outputTokenBudget + 4096)
         #expect(messages == [
             ["role": "system", "content": RewritePrompt.system(for: request)],
             ["role": "user", "content": RewritePrompt.userMessage(for: request)],

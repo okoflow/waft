@@ -4,6 +4,15 @@ package struct UsageLog: Codable, Equatable, Sendable {
     package struct Day: Codable, Equatable, Sendable {
         package fileprivate(set) var counts = UsageCounts()
         package fileprivate(set) var isSent = false
+
+        package init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            counts = container.decode(.counts, default: counts)
+            isSent = container.decode(.isSent, default: isSent)
+        }
+
+        fileprivate init() {}
     }
 
     private static let keptDays = 7
@@ -17,6 +26,13 @@ package struct UsageLog: Codable, Equatable, Sendable {
 
     package init(installation: UUID) {
         self.installation = installation
+    }
+
+    package init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        installation = try container.decode(UUID.self, forKey: .installation)
+        days = container.decodeValidValues(.days)
     }
 
     private static func oldestKey(on date: Date, calendar: Calendar) -> String {

@@ -15,18 +15,7 @@ struct LanguagePicker: View {
         Button {
             state.isPresented = true
         } label: {
-            HStack(spacing: Metrics.inlineSpacing) {
-                Text(title)
-                    .font(.cardTitle)
-                    .foregroundStyle(.primary)
-
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.menuChevron)
-                    .foregroundStyle(Palette.secondaryText)
-                    .frame(width: 18, height: 18)
-                    .background(Palette.control, in: Circle())
-            }
-            .widenedHitTarget()
+            PickerLabel(title: title, font: .cardTitle)
         }
         .buttonStyle(.plain)
         .fixedSize()

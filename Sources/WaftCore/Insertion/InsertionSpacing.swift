@@ -3,6 +3,13 @@ import Foundation
 package enum InsertionSpacing {
     private static let openingCharacters: Set<Character> = ["(", "[", "{", "<", "\"", "'", "‘", "“", "«", "„", "/"]
 
+    package static func prepared(_ text: String, for element: (any FocusedElement)?) -> String {
+        guard let element else { return prepared(text, after: nil) }
+        guard element.hasEmptySelection else { return text }
+
+        return prepared(text, after: element.characterBeforeCaret)
+    }
+
     package static func prepared(_ text: String, after characterBeforeCaret: Character?) -> String {
         let trimmed = text.trimmingCharacters(in: .whitespaces)
         guard let first = trimmed.first,

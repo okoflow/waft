@@ -89,6 +89,7 @@ final class VocabularyModel {
         urlOpener.reveal(fileURL)
     }
 
+    @discardableResult
     func reloadFromDisk() -> Vocabulary {
         if let latest = store.read(), latest != current {
             loadDrafts(from: latest)

@@ -66,6 +66,29 @@ struct LightModeRulesTests {
     }
 
     @Test(arguments: [
+        ("I use .NET daily", Language.english, "I use .NET daily."),
+        ("open the .env file", .english, "Open the .env file."),
+        ("then type :wq", .english, "Then type :wq."),
+        ("it costs .5 dollars", .english, "It costs .5 dollars."),
+        ("voilà .NET", .french, "Voilà .NET."),
+        ("我用 .NET 开发", .chinese, "我用 .NET 开发。"),
+    ])
+    func `keeps the space before a word that starts with a mark`(text: String, language: Language, expected: String) {
+        #expect(LightModeRules.apply(text, language: language) == expected)
+    }
+
+    @Test(arguments: [
+        ("hello , world .", Language.english, "Hello, world."),
+        ("привет , мир .", .russian, "Привет, мир."),
+        ("你好 ，世界 。", .chinese, "你好，世界。"),
+        ("今日は 、晴れです", .japanese, "今日は、晴れです。"),
+        ("नमस्ते , दोस्तों ।", .hindi, "नमस्ते, दोस्तों।"),
+    ])
+    func `drops the space before a pause mark in every script`(text: String, language: Language, expected: String) {
+        #expect(LightModeRules.apply(text, language: language) == expected)
+    }
+
+    @Test(arguments: [
         ("bonjour ! ça va ?", "Bonjour ! ça va ?"),
         ("attendez ; voilà : fini", "Attendez ; voilà : fini."),
         ("euh, d'accord , merci", "D'accord, merci."),
@@ -101,6 +124,10 @@ struct LightModeRulesTests {
         ("Эммм, да", .russian, "Да."),
         ("Ε, καλά", .greek, "Καλά."),
         ("I went to the ER", .english, "I went to the ER."),
+        ("to err is human", .english, "To err is human."),
+        ("er, fine", .english, "Fine."),
+        ("errr, fine", .english, "Fine."),
+        ("uhh, ummm, fine", .english, "Fine."),
         ("um, hello", .japanese, "um, hello。"),
     ])
     func `recognizes hesitations by the rules of the language`(text: String, language: Language, expected: String) {

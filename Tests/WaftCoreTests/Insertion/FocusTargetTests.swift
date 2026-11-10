@@ -32,6 +32,49 @@ struct FocusTargetTests {
         #expect(target.isSameFocus(as: now) == isSame)
     }
 
+    @Test(arguments: [(true, SecureInputHolder.nobody), (false, .process(7)), (true, .process(8))])
+    func `takes a readable field's own word on whether it is a password field`(isSecure: Bool, holder: SecureInputHolder) {
+        let element = FakeFocusedElement(differs: false, secureFieldState: isSecure ? .secure : .notSecure)
+        let target = FocusTarget(processID: 7, bundleIdentifier: nil, element: element)
+
+        #expect(target.isSecureField(secureInput: holder) == isSecure)
+    }
+
+    @Test(arguments: [
+        (Int32?.some(7), SecureInputHolder.nobody, false),
+        (7, .process(8), false),
+        (7, .process(7), true),
+        (7, .unknown, true),
+        (nil, .process(7), false),
+    ])
+    func `treats a field that did not answer as a password field only while its own app may hold secure input`(
+        processID: Int32?,
+        holder: SecureInputHolder,
+        isSecure: Bool,
+    ) {
+        let element = FakeFocusedElement(differs: false, secureFieldState: .unreadable)
+        let target = FocusTarget(processID: processID, bundleIdentifier: nil, element: element)
+
+        #expect(target.isSecureField(secureInput: holder) == isSecure)
+    }
+
+    @Test(arguments: [
+        (Int32?.some(7), SecureInputHolder.nobody, false),
+        (7, .process(8), false),
+        (7, .process(7), true),
+        (7, .unknown, true),
+        (nil, .process(7), false),
+    ])
+    func `treats an unreadable field as a password field only while its own app may hold secure input`(
+        processID: Int32?,
+        holder: SecureInputHolder,
+        isSecure: Bool,
+    ) {
+        let target = FocusTarget(processID: processID, bundleIdentifier: nil, element: nil)
+
+        #expect(target.isSecureField(secureInput: holder) == isSecure)
+    }
+
     @Test(arguments: [("com.apple.mail", "com.apple.mail"), (nil, "an unknown app")])
     func `describes the app`(bundleIdentifier: String?, description: String) {
         #expect(FocusTarget(processID: 1, bundleIdentifier: bundleIdentifier, element: nil).appDescription == description)
@@ -40,7 +83,7 @@ struct FocusTargetTests {
 
 private struct FakeFocusedElement: FocusedElement {
     let differs: Bool
-    let isSecureTextField = false
+    var secureFieldState = SecureFieldState.notSecure
     let characterBeforeCaret: Character? = nil
     let selectedText: String? = nil
     let hasEmptySelection = false

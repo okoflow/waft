@@ -1,11 +1,11 @@
 import AppKit
+import WaftCore
 
 extension NSEvent {
-    private static let escapeKeyCode: UInt16 = 53
     private static let shortcutModifiers: NSEvent.ModifierFlags = [.command, .option, .control, .shift]
 
     var isEscape: Bool {
-        keyCode == Self.escapeKeyCode
+        Int64(keyCode) == KeyEvent.escapeKeyCode
     }
 
     var isPlainEscape: Bool {

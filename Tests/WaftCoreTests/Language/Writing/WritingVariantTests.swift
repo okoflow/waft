@@ -11,7 +11,7 @@ struct WritingVariantTests {
         (.cyrillic, "Konjugovanje i nadživljavanje", "Конјуговање и надживљавање"),
     ])
     func `converts the text into its script`(variant: WritingVariant, text: String, expected: String) {
-        #expect(variant.converting(text) == expected)
+        #expect(variant.converting(text, keeping: []) == expected)
     }
 
     @Test
@@ -19,6 +19,21 @@ struct WritingVariantTests {
         let text = "Pusti GitHub, API i x264 na serveru Waft"
 
         #expect(WritingVariant.cyrillic.converting(text, keeping: ["Waft"]) == "Пусти GitHub, API и x264 на серверу Waft")
+    }
+
+    @Test(arguments: [
+        (WritingVariant.latin, "Отвори Яндекс и Waft", ["Яндекс"], "Otvori Яндекс i Waft"),
+        (.simplified, "我去臺灣開會", ["臺灣"], "我去臺灣开会"),
+        (.traditional, "我用头条看新闻", ["头条"], "我用头条看新聞"),
+        (.simplified, "臺灣的臺北", ["臺灣", "臺北"], "臺灣的臺北"),
+    ])
+    func `keeps a dictionary term as written in every variant`(
+        variant: WritingVariant,
+        text: String,
+        terms: [String],
+        expected: String,
+    ) {
+        #expect(variant.converting(text, keeping: terms) == expected)
     }
 
     @Test(arguments: [

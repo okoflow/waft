@@ -29,4 +29,21 @@ struct SettingsShortcutsTests {
 
         #expect(settings.conflict(with: Self.shiftF5, recording: .translator) == conflict)
     }
+
+    @Test
+    func `reports the other key or a shortcut on the key being recorded`() throws {
+        let functionKey = try #require(PushToTalkKey(keyCode: KeyEvent.f5KeyCode))
+        var settings = Settings.defaults
+        settings.shortcuts[.translator] = Self.shiftF5
+
+        #expect(settings.conflict(with: settings.pushToTalkKey, recording: .dictation) == nil)
+        #expect(settings.conflict(with: settings.pushToTalkKey, recording: .edit) == .key(.dictation))
+        #expect(settings.conflict(with: functionKey, recording: .dictation) == .shortcut(.translator))
+
+        settings.shortcuts[.translator] = nil
+        settings.editKey = functionKey
+
+        #expect(settings.conflict(with: functionKey, recording: .dictation) == .key(.edit))
+        #expect(settings.conflict(with: functionKey, recording: .edit) == nil)
+    }
 }

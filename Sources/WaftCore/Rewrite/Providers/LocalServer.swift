@@ -10,6 +10,8 @@ package struct LocalServer: Codable, Equatable, Sendable {
 
     package static let defaultBaseURL = "http://localhost:11434/v1"
 
+    static let schemes: Set = ["http", "https"]
+
     private static let loopbackHosts: Set = ["localhost", "127.0.0.1", "::1", "[::1]", "0.0.0.0"]
 
     package var baseURL: String
@@ -20,11 +22,17 @@ package struct LocalServer: Codable, Equatable, Sendable {
     }
 
     package var isOnThisMac: Bool {
-        let address = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let host = URLComponents(string: address)?.host?.lowercased(),
               !Self.loopbackHosts.contains(host) else { return true }
 
         return host.hasSuffix(".localhost")
+    }
+
+    var address: String {
+        let typed = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !typed.isEmpty, !typed.contains("://") else { return typed }
+
+        return "http://" + typed
     }
 
     package init(baseURL: String = defaultBaseURL, model: String = "") {

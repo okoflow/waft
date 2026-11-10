@@ -54,4 +54,8 @@ package struct ShortcutSettings: Codable, Equatable, Sendable {
     func action(using combination: KeyCombination) -> ShortcutAction? {
         ShortcutAction.allCases.first { combinations[$0] == combination }
     }
+
+    func action(usingKeyCode keyCode: Int64) -> ShortcutAction? {
+        ShortcutAction.allCases.first { combinations[$0]?.keyCode == keyCode }
+    }
 }

@@ -1,7 +1,6 @@
 package import WaftCore
 import AppKit
 import ApplicationServices
-import Carbon.HIToolbox
 import os
 
 @MainActor
@@ -29,7 +28,7 @@ package final class PasteboardInserter: TextInserter {
         let current = focusTracker.currentFocus()
 
         let decision = InsertionDecision.decide(
-            isSecureField: isSecureField(current),
+            isSecureField: current.isSecureField(secureInput: SecureInput.holder),
             canPostKeys: AXIsProcessTrusted(),
             isFocusOnTarget: target.isSameFocus(as: current),
             isKeyHeld: !wasReleased,
@@ -41,7 +40,7 @@ package final class PasteboardInserter: TextInserter {
             return .skipped(reason)
         }
 
-        let prepared = InsertionSpacing.prepared(text, after: current.element?.characterBeforeCaret)
+        let prepared = InsertionSpacing.prepared(text, for: current.element)
 
         let outcome = await paste(prepared, releasing: key)
         guard outcome == .pasted else { return outcome }
@@ -56,7 +55,10 @@ package final class PasteboardInserter: TextInserter {
         defer { activeInsertions -= 1 }
 
         let current = focusTracker.currentFocus()
-        guard AXIsProcessTrusted(), !isSecureField(current), target.isSameFocus(as: current) else { return nil }
+        guard AXIsProcessTrusted(),
+              !current.isSecureField(secureInput: SecureInput.holder),
+              target.isSameFocus(as: current)
+        else { return nil }
 
         let snapshot = await Task.detached { PasteboardSnapshot.take(from: .general) }.value
         let changeCount = NSPasteboard.general.changeCount
@@ -83,12 +85,6 @@ package final class PasteboardInserter: TextInserter {
 
     package func waitUntilIdle() async {
         await Poll.until(timeout: Self.idleTimeout) { activeInsertions == 0 }
-    }
-
-    private func isSecureField(_ focus: FocusTarget) -> Bool {
-        guard let element = focus.element else { return IsSecureEventInputEnabled() }
-
-        return element.isSecureTextField
     }
 
     private func paste(_ text: String, releasing key: PushToTalkKey) async -> InsertionOutcome {

@@ -74,6 +74,8 @@ final class HUDController {
     }
 
     func showListening(badge: String, isHandsFree: Bool, level: @escaping @MainActor () -> Float) {
+        keepInterruptedMessage()
+
         messageTask?.cancel()
 
         levels = [Float](repeating: 0, count: Self.barCount)
@@ -137,6 +139,8 @@ final class HUDController {
     }
 
     func show(_ message: HUDMessage) {
+        guard message != queuedMessages.last else { return }
+
         queuedMessages.append(message)
 
         showNext()
@@ -146,6 +150,12 @@ final class HUDController {
         guard window == nil else { return }
 
         window = makeWindow(self)
+    }
+
+    private func keepInterruptedMessage() {
+        guard case let .message(message) = content, message.isWorthRepeating, !hasCopied else { return }
+
+        queuedMessages.insert(message, at: 0)
     }
 
     private func showNext() {
@@ -191,7 +201,7 @@ final class HUDController {
         messageTask?.cancel()
 
         messageTask = Task { [weak self] in
-            guard await Task.slept(for: duration) else { return }
+            guard await Task.slept(for: duration), !Task.isCancelled else { return }
 
             self?.messageDidExpire()
         }

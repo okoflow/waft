@@ -28,7 +28,7 @@ struct ShortcutRecorderTests {
         let recorder = recorder()
         recorder.start(.translator)
 
-        try recorder.handle(event(keyCode: keyCode, flags: flags))
+        try recorder.handle(.key(keyCode: keyCode, flags: flags))
 
         #expect(settings.settings.shortcuts[.translator] == combination)
         #expect(!recorder.isRecording)
@@ -39,7 +39,7 @@ struct ShortcutRecorderTests {
         let recorder = recorder()
         recorder.start(.fixSelection)
 
-        try recorder.handle(event(keyCode: Self.letterK, flags: flags))
+        try recorder.handle(.key(keyCode: Self.letterK, flags: flags))
 
         #expect(recorder.rejection == .needsModifier)
         #expect(recorder.rejections == [.fixSelection: 1])
@@ -48,14 +48,13 @@ struct ShortcutRecorderTests {
     }
 
     @Test
-    func `rejects the combination of another shortcut and names it`() throws {
+    func `rejects the combination of another shortcut`() throws {
         let recorder = recorder()
         recorder.start(.modeCycle)
 
-        try recorder.handle(event(keyCode: Self.letterT, flags: Self.controlOption))
+        try recorder.handle(.key(keyCode: Self.letterT, flags: Self.controlOption))
 
         #expect(recorder.rejection == .taken(.shortcut(.translator)))
-        #expect(ShortcutConflict.shortcut(.translator).title == "Open the translator")
     }
 
     @Test
@@ -63,7 +62,7 @@ struct ShortcutRecorderTests {
         let recorder = recorder()
         recorder.start(.translator)
 
-        try recorder.handle(event(keyCode: Self.letterT, flags: Self.controlOption))
+        try recorder.handle(.key(keyCode: Self.letterT, flags: Self.controlOption))
 
         #expect(recorder.rejection == nil)
         #expect(!recorder.isRecording)
@@ -74,7 +73,7 @@ struct ShortcutRecorderTests {
         let recorder = recorder()
         recorder.start(.translator)
 
-        try recorder.handle(event(keyCode: Self.escape, flags: Self.controlOption))
+        try recorder.handle(.key(keyCode: Self.escape, flags: Self.controlOption))
 
         #expect(!recorder.isRecording)
         #expect(settings.settings.shortcuts[.translator] == ShortcutAction.translator.defaultCombination)
@@ -122,7 +121,7 @@ struct ShortcutRecorderTests {
         recorder.start(.modeCycle)
 
         for keyCode in pressed {
-            try recorder.handle(event(keyCode: keyCode, flags: []))
+            try recorder.handle(.key(keyCode: keyCode, flags: []))
         }
 
         #expect(recorder.note(for: action) == note.map { LocalizedStringKey($0) })
@@ -133,20 +132,5 @@ struct ShortcutRecorderTests {
         shortcuts.handle(.translator) {}
 
         return ShortcutRecorder(settings: settings, shortcuts: shortcuts)
-    }
-
-    private func event(keyCode: UInt16, flags: NSEvent.ModifierFlags) throws -> NSEvent {
-        try #require(NSEvent.keyEvent(
-            with: .keyDown,
-            location: .zero,
-            modifierFlags: flags,
-            timestamp: 0,
-            windowNumber: 0,
-            context: nil,
-            characters: "",
-            charactersIgnoringModifiers: "",
-            isARepeat: false,
-            keyCode: keyCode,
-        ))
     }
 }

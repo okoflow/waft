@@ -24,18 +24,31 @@ package enum WritingVariant: String, Sendable {
         }
     }
 
-    private static func transformed(_ text: String, by transform: String) -> String {
-        guard let result = text.applyingTransform(StringTransform(transform), reverse: false) else { return text }
+    private static func transformed(_ text: Substring, by transform: String) -> String {
+        guard let result = text.applyingTransform(StringTransform(transform), reverse: false) else { return String(text) }
 
         return result
     }
 
-    func converting(_ text: String, keeping terms: [String] = []) -> String {
+    func converting(_ text: String, keeping terms: [String]) -> String {
+        var result = ""
+        var start = text.startIndex
+
+        for range in text.rangesOfWholeTerms(terms) {
+            result += converting(text[start ..< range.lowerBound])
+            result += text[range]
+            start = range.upperBound
+        }
+
+        return result + converting(text[start...])
+    }
+
+    private func converting(_ text: Substring) -> String {
         switch self {
         case .simplified: Self.transformed(text, by: "Hant-Hans")
         case .traditional: Self.transformed(text, by: "Hans-Hant")
         case .latin: Self.transformed(text, by: "Serbian-Latin/BGN")
-        case .cyrillic: SerbianCyrillic.converting(text, keeping: terms)
+        case .cyrillic: SerbianCyrillic.converting(text)
         }
     }
 }

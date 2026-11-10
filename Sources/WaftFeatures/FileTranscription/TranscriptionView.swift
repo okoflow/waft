@@ -67,7 +67,7 @@ struct TranscriptionView: View {
 
             return true
         } isTargeted: { isTargeted in
-            model.isDropTargeted = isTargeted
+            model.isDropTargeted = model.acceptsFiles ? isTargeted : false
         }
     }
 }

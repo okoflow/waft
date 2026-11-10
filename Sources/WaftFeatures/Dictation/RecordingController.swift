@@ -12,6 +12,7 @@ final class RecordingController {
 
     @ObservationIgnored private var watchdog = ReleaseWatchdog()
     @ObservationIgnored private var lastRecordingID = RecordingID.none
+    @ObservationIgnored private var delivery: Task<Void, Never>?
 
     private let recorder: any AudioRecorder
     private let focusTracker: any FocusTracker
@@ -85,16 +86,24 @@ final class RecordingController {
         hud.lockHandsFree()
     }
 
-    func finish(releasedAt time: TimeInterval) {
+    func finish(releasedAt time: TimeInterval, reachedLimit: Bool = false) {
         guard let ended = end() else { return }
 
         hud.hideListening(handingOverTo: DictationQueue.transcribingLabel)
+
+        if reachedLimit {
+            hud.show(.recordingReachedLimit)
+        }
 
         if settings.settings.playsSounds {
             sounds.play(.recordingFinished)
         }
 
-        Task { await deliver(ended, releasedAt: time) }
+        delivery = Task { await deliver(ended, releasedAt: time) }
+    }
+
+    func waitUntilDelivered() async {
+        await delivery?.value
     }
 
     func discard(because reason: PushToTalk.DiscardReason) {
@@ -141,9 +150,7 @@ final class RecordingController {
 
     private func handle(_ event: RecordingEvent) {
         switch event {
-        case let .started(id, deviceName) where recording?.isLive(withID: id) == true:
-            Logger.dictation.info("Recording from \(deviceName)")
-
+        case let .started(id) where recording?.isLive(withID: id) == true:
             if settings.settings.playsSounds {
                 sounds.play(.recordingStarted)
             }
@@ -158,19 +165,6 @@ final class RecordingController {
         case .started, .failed:
             break
         }
-    }
-
-    private func fail(with failure: RecordingFailure) {
-        guard var failed = recording else { return }
-
-        failed.hasFailed = true
-        recording = failed
-        otherSounds.restore()
-
-        hud.hideListening()
-        hud.show(.recordingFailed(failure.message))
-
-        stopRecorder(failed.id)
     }
 
     private func stopRecorder(_ id: RecordingID) {
@@ -236,16 +230,6 @@ final class RecordingController {
         onFinish?(ended, focus(of: ended), samples)
     }
 
-    private func reportMissingAudio(for recording: ActiveRecording) async {
-        guard let failure = await recorder.failure(for: recording.id) else {
-            hud.show(.recordingFailed(String(localized: "No audio was captured.")))
-
-            return
-        }
-
-        hud.show(.recordingFailed(failure.message))
-    }
-
     private func focus(of recording: ActiveRecording) -> FocusTarget {
         guard let target = recording.target else { return focusTracker.currentFocus() }
 
@@ -272,5 +256,42 @@ final class RecordingController {
 
             onPoll?(.keyUp, since)
         }
+    }
+}
+
+extension RecordingController {
+    private func fail(with failure: RecordingFailure) {
+        guard var failed = recording else { return }
+
+        failed.hasFailed = true
+        recording = failed
+        otherSounds.restore()
+
+        hud.hideListening()
+
+        delivery = Task { await salvage(failed, after: failure) }
+    }
+
+    private func salvage(_ failed: ActiveRecording, after failure: RecordingFailure) async {
+        let samples = await recorder.stop(failed.id, releasedAt: nil)
+        guard failed.purpose == .dictation, !samples.isEmpty else {
+            hud.show(.recordingFailed(failure.message))
+
+            return
+        }
+
+        hud.show(.recordingCutShort(failure.message))
+
+        onFinish?(failed, focus(of: failed), samples)
+    }
+
+    private func reportMissingAudio(for recording: ActiveRecording) async {
+        guard let failure = await recorder.failure(for: recording.id) else {
+            hud.show(.recordingFailed(String(localized: "No audio was captured.")))
+
+            return
+        }
+
+        hud.show(.recordingFailed(failure.message))
     }
 }

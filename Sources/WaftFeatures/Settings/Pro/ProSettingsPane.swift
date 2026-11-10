@@ -44,8 +44,8 @@ private struct ProHero: View {
 
     private var isForSale: Bool {
         switch pro.access.status {
-        case .trial, .expired: true
         case .licensed, .beta: false
+        case .trial, .expired: true
         }
     }
 

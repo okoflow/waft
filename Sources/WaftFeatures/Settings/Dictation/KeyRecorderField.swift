@@ -4,7 +4,7 @@ import WaftCore
 struct KeyRecorderField: View {
     let purpose: RecordingPurpose
     let key: PushToTalkKey?
-    let takenKey: PushToTalkKey?
+    let settings: WaftCore.Settings
     let recorder: KeyRecorder
     let record: (PushToTalkKey) -> Void
 
@@ -30,7 +30,7 @@ struct KeyRecorderField: View {
             if isRecording {
                 recorder.stop()
             } else {
-                recorder.start(purpose, excluding: takenKey, record)
+                recorder.start(purpose, excluding: { settings.conflict(with: $0, recording: purpose) != nil }, record)
             }
         }
     }

@@ -53,17 +53,6 @@ struct WhisperDecodingTests {
         #expect(WhisperDecoding.filePrompt(for: .chinese, variant: .traditional) == "你好！這是一段示例文本，包含逗號和句號。")
     }
 
-    @Test(arguments: [(-1.0, 2.0, true), (-1.75, 1.0, false), (-0.5, 2.5, false)])
-    func `trusts a segment with enough probability and little repetition`(
-        averageLogProbability: Float,
-        compressionRatio: Float,
-        isConfident: Bool,
-    ) {
-        let segment = TranscriptionSegment(avgLogprob: averageLogProbability, compressionRatio: compressionRatio)
-
-        #expect(WhisperDecoding.isConfident(segment) == isConfident)
-    }
-
     @Test(arguments: [(112, 111, true), (145, 22, false), (222, 0, false), (223, 0, true)])
     func `notices a window that filled the decoder before its end`(
         tokenCount: Int,
@@ -85,6 +74,7 @@ struct WhisperDecodingTests {
             result(" Hello", segments: [
                 TranscriptionSegment(text: " Hello", avgLogprob: -0.5),
                 TranscriptionSegment(text: " la la la", compressionRatio: 3),
+                TranscriptionSegment(text: " maybe", avgLogprob: -1.75),
             ]),
             result(" world", segments: [TranscriptionSegment(text: " world", avgLogprob: -0.2)]),
         ]

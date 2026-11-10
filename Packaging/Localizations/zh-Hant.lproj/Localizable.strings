@@ -65,7 +65,6 @@
 "Check for updates automatically" = "自動檢查更新項目";
 "Check" = "檢查";
 "Checking…" = "正在檢查⋯";
-"Choose Copy Last Dictation in the Waft menu." = "請從Waft選單中選擇「拷貝上次聽寫」。";
 "Choose File…" = "選擇檔案⋯";
 "Choose Languages…" = "選擇語言⋯";
 "Choose" = "選擇";
@@ -223,7 +222,7 @@
 "Open System Settings" = "打開「系統設定」";
 "Open Translator" = "打開翻譯工具";
 "Open Waft again to get to Settings." = "再次打開Waft即可前往「設定」。";
-"Open at login" = "登入時打開";
+"Open at login" = "在登入時打開";
 "Open in Editor" = "在編輯器中打開";
 "Open the translator" = "打開翻譯工具";
 "Output" = "輸出";
@@ -254,6 +253,7 @@
 "Recent" = "最近";
 "Recognizes speech more accurately, especially outside English." = "辨識語音更精準，尤其是英文以外的語言。";
 "Recording failed" = "錄音失敗";
+"Recording stopped early" = "錄音提前停止";
 "Recording" = "錄音";
 "Recordings and videos become text and subtitles, right on your Mac." = "直接在Mac上將錄音和影片轉成文字和字幕。";
 "Recordings and videos become text and subtitles." = "將錄音和影片轉成文字和字幕。";
@@ -279,6 +279,7 @@
 "Reset to Default" = "重置為預設值";
 "Reset to Default…" = "重置為預設值⋯";
 "Reset your dictation statistics?" = "要重置聽寫統計資料嗎？";
+"Retry Last Dictation" = "重試上次聽寫";
 "Retry Speech Model" = "重新載入語音辨識模型";
 "Retry" = "再試一次";
 "Right Command" = "右側Command鍵";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft無法讀取此檔案。";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft無法使用麥克風。請在「設定」›「一般」中允許。";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft無法讀取已儲存的記錄，已保留一份副本。「清除記錄」會同時刪除兩者。";
+"Waft couldn't save the license key." = "Waft無法儲存授權碼。";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft會將其從此Mac上刪除。在你加入金鑰之前，AI模式會使用「輕度」模式。";
 "Waft is listening" = "Waft正在聆聽";
 "Waft keeps no dictations while Keep history is off." = "「保留記錄」關閉時，Waft不會保留任何聽寫。";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft常駐在選單列中。";
 "Waft needs both to type for you." = "Waft需要這兩項權限才能替你輸入。";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此權限來偵測按鍵並貼上你的文字。請在打開的列表中開啟Waft。";
+"Waft records up to %lld minutes at a time." = "Waft每次最多錄音%lld分鐘。";
 "Waft starts listening." = "Waft開始聆聽。";
 "Waft writes" = "Waft輸出";
 "Waft" = "Waft";

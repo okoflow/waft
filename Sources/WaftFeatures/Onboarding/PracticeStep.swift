@@ -10,14 +10,14 @@ struct PracticeStep: View {
         let key = model.settings.settings.pushToTalkKey.title
 
         return switch (model.settings.settings.dictationStart, model.speechModelController.state.isReady) {
-        case (.tap, true):
-            "Click the box, tap \(key), say “Hello, Waft”, and tap it again."
-        case (.tap, false):
-            "When the speech model is ready, click the box, tap \(key), say “Hello, Waft”, and tap it again."
         case (.hold, true), (.holdOrDoubleTap, true):
             "Click the box, hold \(key), and say “Hello, Waft”."
         case (.hold, false), (.holdOrDoubleTap, false):
             "When the speech model is ready, click the box, hold \(key), and say “Hello, Waft”."
+        case (.tap, true):
+            "Click the box, tap \(key), say “Hello, Waft”, and tap it again."
+        case (.tap, false):
+            "When the speech model is ready, click the box, tap \(key), say “Hello, Waft”, and tap it again."
         }
     }
 

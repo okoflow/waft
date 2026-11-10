@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Güncellemeleri otomatik olarak denetle";
 "Check" = "Denetle";
 "Checking…" = "Denetleniyor…";
-"Choose Copy Last Dictation in the Waft menu." = "Waft menüsünden “Son Dikteyi Kopyala” komutunu seçin.";
 "Choose File…" = "Dosya Seç…";
 "Choose Languages…" = "Dilleri Seç…";
 "Choose" = "Seç";
@@ -83,7 +82,7 @@
 "Click the box, tap %@, say “Hello, Waft”, and tap it again." = "Kutuyu tıklayın, %@ tuşuna basın, “Merhaba, Waft” deyin ve tuşa yeniden basın.";
 "Click to copy, or select a part" = "Kopyalamak için tıklayın veya bir bölüm seçin";
 "Click, then press the key to use" = "Tıklayın, ardından kullanılacak tuşa basın";
-"Click, then press the shortcut to use" = "Tıklayın, ardından kullanılacak kısayola basın";
+"Click, then press the shortcut to use" = "Tıklayın, ardından kullanılacak kestirmeye basın";
 "Continue" = "Sürdür";
 "Copied" = "Kopyalandı";
 "Copied: press %@ to paste" = "Kopyalandı: %@ ile yapıştırın";
@@ -144,7 +143,7 @@
 "Free while Waft is in beta." = "Waft beta aşamasındayken ücretsiz.";
 "General" = "Genel";
 "Get Started" = "Başla";
-"Get an API key" = "API anahtarı alın";
+"Get an API key" = "API anahtarı al";
 "Hands-free" = "Eller serbest";
 "Heard as" = "Duyulan biçim";
 "Help improve Waft" = "Waft’ın gelişmesine yardım edin";
@@ -238,9 +237,9 @@
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Sağ veya sol Option, Komut, Shift ya da Kontrol tuşuna, Fn tuşuna veya bir işlev tuşuna basın. Esc ile vazgeçebilirsiniz.";
 "Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Komut, Kontrol ya da Option ile birlikte bir tuşa veya bir işlev tuşuna basın. Esc ile vazgeçebilirsiniz.";
 "Press a key…" = "Bir tuşa basın…";
-"Press a shortcut…" = "Bir kısayola basın…";
+"Press a shortcut…" = "Bir kestirmeye basın…";
 "Press the key to use, or Esc to cancel" = "Kullanılacak tuşa ya da vazgeçmek için Esc tuşuna basın";
-"Press the shortcut to use, or Esc to cancel" = "Kullanılacak kısayola ya da vazgeçmek için Esc tuşuna basın";
+"Press the shortcut to use, or Esc to cancel" = "Kullanılacak kestirmeye ya da vazgeçmek için Esc tuşuna basın";
 "Previous page" = "Önceki sayfa";
 "Privacy" = "Gizlilik";
 "Provider" = "Sağlayıcı";
@@ -254,6 +253,7 @@
 "Recent" = "Son kullanılanlar";
 "Recognizes speech more accurately, especially outside English." = "Konuşmayı daha doğru tanır, özellikle İngilizce dışındaki dillerde.";
 "Recording failed" = "Kayıt yapılamadı";
+"Recording stopped early" = "Kayıt erken durdu";
 "Recording" = "Kayıt";
 "Recordings and videos become text and subtitles, right on your Mac." = "Kayıtlar ve videolar doğrudan Mac’inizde metne ve altyazıya dönüşür.";
 "Recordings and videos become text and subtitles." = "Kayıtlar ve videolar metne ve altyazıya dönüşür.";
@@ -279,6 +279,7 @@
 "Reset to Default" = "Saptanmışa Dön";
 "Reset to Default…" = "Saptanmışa Dön…";
 "Reset your dictation statistics?" = "Dikte istatistikleriniz sıfırlansın mı?";
+"Retry Last Dictation" = "Son Dikteyi Yeniden Dene";
 "Retry Speech Model" = "Konuşma Modelini Yeniden Dene";
 "Retry" = "Yeniden Dene";
 "Right Command" = "Sağ Komut";
@@ -303,7 +304,7 @@
 "Search" = "Ara";
 "Select text and say what to change." = "Metni seçin ve neyin değişeceğini söyleyin.";
 "Select text, hold the key, and say what to change, like “make it shorter”." = "Metni seçin, tuşu basılı tutun ve neyin değişeceğini söyleyin, örneğin “kısalt”.";
-"Select the text first, then press the shortcut." = "Önce metni seçin, ardından kısayola basın.";
+"Select the text first, then press the shortcut." = "Önce metni seçin, ardından kestirmeye basın.";
 "Select the text to edit, then hold the key and say what to change." = "Düzenlenecek metni seçin, ardından tuşu basılı tutun ve neyin değişeceğini söyleyin.";
 "Sends the recognized text to %@" = "Tanınan metni %@ hizmetine gönderir";
 "Sent to %@ with your text." = "Metninizle birlikte %@ hizmetine gönderilir.";
@@ -314,8 +315,8 @@
 "Setup needed" = "Kurulum gerekli";
 "Share anonymous usage data" = "Anonim kullanım verilerini paylaş";
 "Share" = "Paylaş";
-"Shortcut" = "Kısayol";
-"Shortcuts" = "Kısayollar";
+"Shortcut" = "Kestirme";
+"Shortcuts" = "Kestirmeler";
 "Show History" = "Geçmişi Göster";
 "Show in Finder" = "Finder’da Göster";
 "Show in menu bar" = "Menü çubuğunda göster";
@@ -352,7 +353,7 @@
 "That doesn't look like a Waft license key." = "Bu bir Waft lisans anahtarına benzemiyor.";
 "That key is already in use. Choose another one." = "Bu tuş zaten kullanılıyor. Başka bir tuş seçin.";
 "That key types text. Press Option, Command, Shift, Control, Fn, or a function key." = "Bu tuş metin yazar. Option, Komut, Shift, Kontrol, Fn ya da bir işlev tuşuna basın.";
-"That shortcut is already used for “%@”. Choose another one." = "Bu kısayol zaten “%@” için kullanılıyor. Başka bir kısayol seçin.";
+"That shortcut is already used for “%@”. Choose another one." = "Bu kestirme zaten “%@” için kullanılıyor. Başka bir kestirme seçin.";
 "The chosen microphone can't be used." = "Seçilen mikrofon kullanılamıyor.";
 "The file has no sound to transcribe." = "Dosyada yazıya çevrilecek ses yok.";
 "The languages you chose in Settings › Dictation." = "Ayarlar › Dikte bölümünde seçtiğiniz diller.";
@@ -364,7 +365,7 @@
 "The microphone's audio format changed during the recording." = "Kayıt sırasında mikrofonun ses biçimi değişti.";
 "The microphone's audio format isn't supported." = "Mikrofonun ses biçimi desteklenmiyor.";
 "The quickest and cheapest." = "En hızlı ve en ucuz.";
-"The shortcut that fixes selected text." = "Seçili metni düzelten kısayol.";
+"The shortcut that fixes selected text." = "Seçili metni düzelten kestirme.";
 "The speech model %@ isn't downloaded." = "%@ konuşma modeli indirilmemiş.";
 "The speech model doesn't know one of the chosen languages." = "Konuşma modeli seçilen dillerden birini desteklemiyor.";
 "The speech model has no tokenizer." = "Konuşma modelinde belirteçleyici yok.";
@@ -372,7 +373,7 @@
 "The speech model isn't loaded." = "Konuşma modeli yüklü değil.";
 "The speech model isn't ready yet." = "Konuşma modeli henüz hazır değil.";
 "The text appears at the cursor." = "Metin imlecin olduğu yerde görünür.";
-"The translator and the shortcut that translates selected text." = "Çevirmen ve seçili metni çeviren kısayol.";
+"The translator and the shortcut that translates selected text." = "Çevirmen ve seçili metni çeviren kestirme.";
 "The translator is part of Waft+" = "Çevirmen bir Waft+ özelliğidir";
 "The translator needs a %@ API key." = "Çevirmen için %@ API anahtarı gerekir.";
 "The translator needs a local server and model." = "Çevirmen için yerel sunucu ve model gerekir.";
@@ -406,18 +407,18 @@
 "Translator…" = "Çevirmen…";
 "Try it" = "Deneyin";
 "Turn off editing by voice" = "Sesle düzenlemeyi kapat";
-"Turn off this shortcut" = "Bu kısayolu kapat";
+"Turn off this shortcut" = "Bu kestirmeyi kapat";
 "Turns the Mac's volume down to a quarter while you speak, then back up." = "Siz konuşurken Mac’in ses düzeyini dörtte bire indirir, ardından eski haline getirir.";
 "Two-way with" = "İki yönlü çeviri";
 "Two-way" = "İki yönlü";
 "Type something to try" = "Denemek için bir şey yazın";
 "Type, paste, or hold %@ and speak" = "Yazın, yapıştırın ya da %@ tuşunu basılı tutup konuşun";
 "Type, paste, or tap %@ and speak" = "Yazın, yapıştırın ya da %@ tuşuna basıp konuşun";
-"Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kısayolu kullanıyor. Başka bir kısayol seçin.";
+"Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kestirmeyi kullanıyor. Başka bir kestirme seçin.";
 "Unlock Waft+…" = "Waft+’ın Kilidini Aç…";
 "Updates" = "Güncellemeler";
 "Use the default mode in this app" = "Bu uygulamada saptanmış modu kullan";
-"Use the default shortcut" = "Saptanmış kısayolu kullan";
+"Use the default shortcut" = "Saptanmış kestirmeyi kullan";
 "Used Light mode: %@" = "“Hafif” modu kullanıldı: %@";
 "Used by %@ on this Mac." = "Bu Mac’te %@ tarafından kullanılır.";
 "Uses your own API key. Only the text goes to %@, never the audio." = "Kendi API anahtarınızı kullanır. %@ hizmetine yalnızca metin gider, ses asla gitmez.";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. “Geçmişi Sil” ikisini de siler.";
+"Waft couldn't save the license key." = "Waft lisans anahtarını kaydedemedi.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft onu bu Mac’ten siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";
 "Waft keeps no dictations while Keep history is off." = "“Geçmişi sakla” kapalıyken Waft dikte saklamaz.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft menü çubuğunda bulunur.";
 "Waft needs both to type for you." = "Waft’ın sizin yerinize yazabilmesi için ikisi de gerekir.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft’ın tuşu algılaması ve metninizi yapıştırması için bu izin gerekir. Açılan listede Waft’ı açın.";
+"Waft records up to %lld minutes at a time." = "Waft bir seferde en fazla %lld dakika kayıt yapar.";
 "Waft starts listening." = "Waft dinlemeye başlar.";
 "Waft writes" = "Waft’ın yazdığı";
 "Waft" = "Waft";
@@ -483,7 +486,7 @@
 "right ⌃" = "sağ ⌃";
 "right ⌘" = "sağ ⌘";
 "right ⌥" = "sağ ⌥";
-"saved over typing" = "yazmaya göre kazanılan";
+"saved over typing" = "yazmaya göre kazanılan süre";
 "the local server isn't running" = "yerel sunucu çalışmıyor";
 "um so I think we should uh meet on Friday" = "eee şey bence ııı cuma günü buluşmalıyız";
 "words a minute" = "sözcük/dakika";

@@ -5,6 +5,14 @@ package struct AppModeOverrides: Codable, Equatable, Sendable {
         modes.keys.sorted()
     }
 
+    package init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        modes = container.decodeValidValues(.modes)
+    }
+
+    init() {}
+
     package func mode(for bundleIdentifier: String?) -> Mode? {
         bundleIdentifier.flatMap { modes[$0] }
     }

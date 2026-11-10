@@ -1,4 +1,9 @@
 package struct PerProvider<Value> {
+    enum CodingKeys: String, CodingKey {
+        case claude
+        case openAI
+    }
+
     package var claude: Value
     package var openAI: Value
 
