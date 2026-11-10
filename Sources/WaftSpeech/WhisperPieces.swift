@@ -40,7 +40,31 @@ enum WhisperPieces {
             decodeOptionsArray: Array(repeating: options, count: pieces.count),
         )
 
-        return try outcomes.map { try $0.get() }
+        return try recognized(in: outcomes)
+    }
+
+    static func recognized<Value>(in outcomes: [Result<[Value], any Error>]) throws -> [[Value]] {
+        let failures = outcomes.compactMap { outcome -> (any Error)? in
+            guard case let .failure(error) = outcome else { return nil }
+
+            return error
+        }
+
+        guard let firstFailure = failures.first else { return try outcomes.map { try $0.get() } }
+        guard failures.count < outcomes.count else { throw firstFailure }
+
+        Logger.speech.error(
+            """
+            Couldn't recognize \(failures.count) of \(outcomes.count) pieces and kept the rest: \
+            \(firstFailure.logDescription, privacy: .public)
+            """,
+        )
+
+        return outcomes.map { outcome in
+            guard case let .success(results) = outcome else { return [] }
+
+            return results
+        }
     }
 
     static func log(

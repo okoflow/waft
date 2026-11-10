@@ -3,7 +3,7 @@ import Foundation
 
 extension Rewriters {
     package static func http(apiKeys: PerProvider<any ValueStore<String>>) -> Rewriters {
-        let session = URLSession(configuration: .ephemeral)
+        let session = URLSession(configuration: .anonymous)
 
         return Rewriters(
             cloud: PerProvider(

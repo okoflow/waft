@@ -120,3 +120,5 @@ struct SecretFileStoreTests {
         SecretFileStore(name: "Claude API key", file: file, keychain: keychain)
     }
 }
+
+extension FakeValueStore: LegacySecretStore where Value == String {}

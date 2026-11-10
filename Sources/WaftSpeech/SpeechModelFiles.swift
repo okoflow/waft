@@ -88,6 +88,14 @@ struct SpeechModelFiles {
         try FileManager.default.removeItem(at: url)
     }
 
+    func createBaseDirectory() throws {
+        try FileManager.default.createDirectory(
+            at: baseDirectory,
+            withIntermediateDirectories: true,
+            attributes: [.posixPermissions: 0o700],
+        )
+    }
+
     func markComplete() throws {
         try Data().write(to: folder.appending(path: Self.completionMarker))
 

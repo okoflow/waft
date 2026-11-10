@@ -63,6 +63,20 @@ struct SpeechModelFilesTests {
         }
     }
 
+    @Test
+    func `creates its folder and the new ones above it for the owner only`() throws {
+        try withTemporaryDirectory { directory in
+            let support = directory.appending(path: "Waft", directoryHint: .isDirectory)
+            let files = SpeechModelFiles(.fast, baseDirectory: support.appending(path: "Models", directoryHint: .isDirectory))
+
+            try files.createBaseDirectory()
+
+            for folder in [support, files.baseDirectory] {
+                #expect(try FileManager.default.attributesOfItem(atPath: folder.path)[.posixPermissions] as? Int == 0o700)
+            }
+        }
+    }
+
     private func withTemporaryDirectory(_ body: (URL) throws -> Void) throws {
         let directory = FileManager.default.temporaryDirectory.appending(
             path: "WaftTests-\(UUID().uuidString)",

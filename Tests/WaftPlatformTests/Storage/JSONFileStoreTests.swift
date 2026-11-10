@@ -148,6 +148,68 @@ struct JSONFileStoreTests {
         }
     }
 
+    @Test(arguments: [
+        ".history.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp",
+        ".history.unreadable.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp",
+        ".5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp",
+    ])
+    func `removes a temporary file that an interrupted save of its file left`(leftover: String) async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let store = JSONFileStore<StoredSample>(name: "history", url: directory.appending(path: "history.json"))
+            let file = directory.appending(path: leftover)
+
+            try temporaryFile(at: file, age: 3600)
+            try store.save(Self.sample)
+
+            #expect(!FileManager.default.fileExists(atPath: file.path))
+            #expect(try store.load() == Self.sample)
+        }
+    }
+
+    @Test(arguments: [
+        (".history.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp", TimeInterval(0)),
+        (".settings.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp", 3600),
+        (".history.json.backup.tmp", 3600),
+        (".history.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp.txt", 3600),
+        ("history.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp", 3600),
+    ])
+    func `keeps a temporary file that a save may still write or another file owns`(
+        other: String,
+        age: TimeInterval,
+    ) async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let store = JSONFileStore<StoredSample>(name: "history", url: directory.appending(path: "history.json"))
+            let file = directory.appending(path: other)
+
+            try temporaryFile(at: file, age: age)
+            try store.save(Self.sample)
+
+            #expect(FileManager.default.fileExists(atPath: file.path))
+        }
+    }
+
+    @Test
+    func `deletes the temporary files of its file whatever their age and leaves another file's`() async throws {
+        try await FileManager.withTemporaryDirectory { directory throws in
+            let store = JSONFileStore<StoredSample>(name: "history", url: directory.appending(path: "history.json"))
+            let own = directory.appending(path: ".history.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp")
+            let foreign = directory.appending(path: ".settings.json.5B0E6F0C-9C1B-4E55-8E7A-0D1F6C2A9B34.tmp")
+
+            try store.save(Self.sample)
+            try temporaryFile(at: own, age: 0)
+            try temporaryFile(at: foreign, age: 0)
+            try store.delete()
+
+            #expect(!FileManager.default.fileExists(atPath: own.path))
+            #expect(FileManager.default.fileExists(atPath: foreign.path))
+        }
+    }
+
+    private func temporaryFile(at file: URL, age: TimeInterval) throws {
+        try Data("secret".utf8).write(to: file)
+        try FileManager.default.setAttributes([.modificationDate: Date(timeIntervalSinceNow: -age)], ofItemAtPath: file.path)
+    }
+
     private func withImmutableFiles(_ files: [URL], performing body: () throws -> Void) throws {
         defer {
             for file in files {

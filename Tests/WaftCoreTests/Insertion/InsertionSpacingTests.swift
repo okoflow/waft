@@ -65,7 +65,7 @@ struct InsertionSpacingTests {
 }
 
 private struct FakeFocusedElement: FocusedElement {
-    let isSecureTextField = false
+    let secureFieldState = SecureFieldState.notSecure
     let characterBeforeCaret: Character?
     let selectedText: String? = nil
     let hasEmptySelection: Bool
