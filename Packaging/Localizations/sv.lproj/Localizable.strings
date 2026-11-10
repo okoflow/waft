@@ -185,7 +185,7 @@
 "MP3, M4A, WAV, MP4, MOV, and more" = "MP3, M4A, WAV, MP4, MOV med flera";
 "Make modes with your own instructions, or tune the built-in ones." = "Skapa lägen med egna instruktioner eller finjustera de inbyggda.";
 "Makes fewer mistakes and is still quick." = "Gör färre fel och är ändå snabb.";
-"Makes the fewest mistakes, but is slower and pricier." = "Gör minst fel, men är långsammare och dyrare.";
+"Makes the fewest mistakes, but is slower and pricier." = "Gör färst fel, men är långsammare och dyrare.";
 "Microphone" = "Mikrofon";
 "Mode in %@" = "Läge i %@";
 "Mode in %@: %@" = "Läge i %@: %@";
@@ -322,7 +322,7 @@
 "Snippets" = "Textsnuttar";
 "Sounds" = "Ljud";
 "Source code" = "Källkod";
-"Space" = "Blanksteg";
+"Space" = "Mellanslag";
 "Speak %@ to get %@, and %@ to get %@." = "Tala %@ för att få %@ och %@ för att få %@.";
 "Speak any of %lld languages and get another, one way or both." = "Tala något av %lld språk och få ett annat, åt ena hållet eller båda.";
 "Speak" = "Tala";

@@ -434,7 +434,7 @@
 "Waft lives in the menu bar. %@ switches to the next mode." = "Waft常驻在菜单栏中。按%@可切换到下一个模式。";
 "Waft lives in the menu bar." = "Waft常驻在菜单栏中。";
 "Waft needs both to type for you." = "Waft需要这两项权限才能替你输入。";
-"Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此权限来检测按键并粘贴你的文本。请在打开的列表中打开Waft。";
+"Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft需要此权限来检测按键并粘贴你的文本。请在打开的列表中开启Waft。";
 "Waft starts listening." = "Waft开始聆听。";
 "Waft writes" = "Waft写出";
 "Waft" = "Waft";
@@ -456,7 +456,7 @@
 "Words" = "字词";
 "Write instructions once and dictate in your own style." = "指令只需写一次，即可按你的风格听写。";
 "Writing system" = "书写系统";
-"Writing" = "书写";
+"Writing" = "写作";
 "You say" = "你说";
 "You write" = "你写";
 "You're all set" = "一切就绪";

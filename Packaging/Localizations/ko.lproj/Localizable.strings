@@ -32,7 +32,7 @@
 "Accurate" = "정확함";
 "Activate" = "활성화";
 "Add App…" = "앱 추가…";
-"Add Command, Control, or Option, or press a function key." = "Command, Control, Option 키를 함께 누르거나 기능 키를 누르세요.";
+"Add Command, Control, or Option, or press a function key." = "Command, Control 또는 Option 키를 함께 누르거나 기능 키를 누르세요.";
 "Add Language" = "언어 추가";
 "Add Snippet" = "상용구 추가";
 "Add Term" = "용어 추가";
@@ -56,7 +56,7 @@
 "Automatic" = "자동";
 "Back" = "뒤로";
 "Both lists are saved as a JSON file you can edit." = "두 목록 모두 편집할 수 있는 JSON 파일로 저장됩니다.";
-"Bought Waft+? Paste the key from your receipt email." = "Waft+를 구입하셨나요? 영수증 이메일에 있는 키를 붙여넣으세요.";
+"Bought Waft+? Paste the key from your receipt email." = "Waft+를 구입하셨습니까? 영수증 이메일에 있는 키를 붙여넣으세요.";
 "Buy for %@" = "%@에 구입";
 "Cancel" = "취소";
 "Change it anytime in Settings › General." = "설정 › 일반에서 언제든지 변경할 수 있습니다.";
@@ -110,7 +110,7 @@
 "Dictations" = "받아쓰기";
 "Dictionary file" = "사전 파일";
 "Dictionary" = "사전";
-"Didn't catch that" = "알아듣지 못했습니다";
+"Didn't catch that" = "알아듣지 못함";
 "Don't Share" = "공유 안 함";
 "Done" = "완료";
 "Double-tap for hands-free" = "두 번 눌러 핸즈프리로 사용";
@@ -204,7 +204,7 @@
 "No dictations in the last %lld days" = "최근 %lld일 동안 받아쓰기가 없습니다";
 "No dictations yet" = "아직 받아쓰기가 없습니다";
 "No languages found" = "일치하는 언어 없음";
-"No matches" = "일치하는 항목 없음";
+"No matches" = "일치하는 항목이 없습니다";
 "No modes yet" = "아직 모드가 없습니다";
 "No snippets yet" = "아직 상용구가 없습니다";
 "No terms yet" = "아직 용어가 없습니다";
@@ -235,7 +235,7 @@
 "Preparing the speech model, about a minute the first time…" = "음성 인식 모델을 준비하는 중(처음에는 1분 정도)…";
 "Preparing the speech model…" = "음성 인식 모델을 준비하는 중…";
 "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels." = "Option, Command, Shift, Control 키(좌우 모두 가능), Fn 키 또는 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
-"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Command, Control, Option 키와 함께 다른 키를 누르거나 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
+"Press a key with Command, Control, or Option, or a function key. Esc cancels." = "Command, Control 또는 Option 키와 함께 다른 키를 누르거나 기능 키를 누르세요. Esc를 누르면 취소됩니다.";
 "Press a key…" = "키를 누르세요…";
 "Press a shortcut…" = "단축키를 누르세요…";
 "Press the key to use, or Esc to cancel" = "사용할 키를 누르거나 Esc를 눌러 취소하세요";
@@ -333,7 +333,7 @@
 "Spoken language" = "말하는 언어";
 "Step %lld of %lld" = "%lld단계(총 %lld단계)";
 "Suggested" = "제안된 언어";
-"Swap languages" = "언어 바꾸기";
+"Swap languages" = "언어 서로 바꾸기";
 "Switch to the next mode" = "다음 모드로 전환";
 "System default" = "시스템 기본";
 "Talk while holding the key" = "키를 누르고 있는 동안 말하기";
@@ -365,7 +365,7 @@
 "The microphone's audio format isn't supported." = "마이크의 오디오 형식을 지원하지 않습니다.";
 "The quickest and cheapest." = "가장 빠르고 저렴합니다.";
 "The shortcut that fixes selected text." = "선택한 텍스트를 교정하는 단축키입니다.";
-"The speech model %@ isn't downloaded." = "%@ 음성 인식 모델이 다운로드되지 않았습니다.";
+"The speech model %@ isn't downloaded." = "‘%@’ 음성 인식 모델이 다운로드되지 않았습니다.";
 "The speech model doesn't know one of the chosen languages." = "음성 인식 모델이 선택한 언어 중 하나를 지원하지 않습니다.";
 "The speech model has no tokenizer." = "음성 인식 모델에 토크나이저가 없습니다.";
 "The speech model isn't available. Retry from the menu." = "음성 인식 모델을 사용할 수 없습니다. 메뉴에서 다시 시도하세요.";

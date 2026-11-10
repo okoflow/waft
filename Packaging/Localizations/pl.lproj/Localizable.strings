@@ -335,7 +335,7 @@
 "Suggested" = "Sugerowane";
 "Swap languages" = "Zamień języki";
 "Switch to the next mode" = "Przełącz na następny tryb";
-"System default" = "Domyślne systemowe";
+"System default" = "Domyślny systemowy";
 "Talk while holding the key" = "Mów, trzymając klawisz";
 "Tap %@ to dictate" = "Naciśnij %@, aby dyktować";
 "Tap %@" = "Naciśnij %@";
@@ -376,7 +376,7 @@
 "The translator is part of Waft+" = "Tłumacz jest częścią Waft+";
 "The translator needs a %@ API key." = "Tłumacz wymaga klucza API %@.";
 "The translator needs a local server and model." = "Tłumacz wymaga serwera lokalnego i modelu.";
-"There's no speech in this file." = "W tym pliku nie ma mowy.";
+"There's no speech in this file." = "Ten plik nie zawiera mowy.";
 "These apps get their own mode." = "Te aplikacje mają własny tryb.";
 "They work in any app." = "Działają w każdej aplikacji.";
 "This deletes every saved dictation. It can't be undone." = "Wszystkie zachowane dyktowania zostaną usunięte. Tej czynności nie można cofnąć.";
@@ -398,7 +398,7 @@
 "Translate" = "Tłumaczenie";
 "Translates in its own window, and translates or fixes selected text in any app." = "Tłumaczy w osobnym oknie i tłumaczy lub poprawia zaznaczony tekst w każdej aplikacji.";
 "Translates what you said into another language." = "Tłumaczy to, co mówisz, na inny język.";
-"Translating and fixing text is part of Waft+." = "Tłumaczenie i poprawianie tekstu jest częścią Waft+.";
+"Translating and fixing text is part of Waft+." = "Tłumaczenie i poprawianie tekstu są częścią Waft+.";
 "Translating…" = "Tłumaczę…";
 "Translation" = "Tłumaczenie";
 "Translator (Waft+)…" = "Tłumacz (Waft+)…";
@@ -439,7 +439,7 @@
 "Waft writes" = "Waft pisze";
 "Waft" = "Waft";
 "Waft+ feature" = "Funkcja Waft+";
-"Waft+ features stop working here until you enter the key again." = "Funkcje Waft+ przestaną działać na tym Macu, dopóki ponownie nie wpiszesz klucza.";
+"Waft+ features stop working here until you enter the key again." = "Funkcje Waft+ nie będą działać na tym Macu, dopóki ponownie nie wpiszesz klucza.";
 "Waft+" = "Waft+";
 "Website" = "Witryna";
 "Welcome to Waft" = "Witamy w aplikacji Waft";

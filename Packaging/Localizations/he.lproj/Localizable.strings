@@ -45,7 +45,7 @@
 "Allow microphone access" = "מתן גישה למיקרופון";
 "Allowed" = "מאושר";
 "Allow…" = "אישור…";
-"Anonymous usage data shows which features to work on next." = "נתוני שימוש אנונימיים מראים על אילו תכונות כדאי לעבוד בהמשך.";
+"Anonymous usage data shows which features to work on next." = "נתוני שימוש אנונימיים מראים על אילו מאפיינים כדאי לעבוד בהמשך.";
 "Any AI model" = "כל מודל בינה מלאכותית";
 "App language" = "שפת היישום";
 "App" = "יישום";
@@ -127,7 +127,7 @@
 "Editing…" = "עורך…";
 "Exactly what was heard." = "בדיוק מה שנשמע.";
 "Fast" = "מהיר";
-"Feature counts, the Waft and macOS versions, and a random ID." = "כמה נעשה שימוש בכל תכונה, גרסאות Waft ו-macOS ומזהה אקראי.";
+"Feature counts, the Waft and macOS versions, and a random ID." = "כמה נעשה שימוש בכל מאפיין, גרסאות Waft ו-macOS ומזהה אקראי.";
 "File transcription is part of Waft+" = "תמלול קבצים כלול ב-Waft+‎";
 "File transcription" = "תמלול קבצים";
 "File" = "קובץ";
@@ -146,13 +146,13 @@
 "Get an API key" = "קבלת מפתח API";
 "Hands-free" = "ללא ידיים";
 "Heard as" = "מזוהה בתור";
-"Help improve Waft" = "עזרו לשפר את Waft";
+"Help improve Waft" = "סיוע בשיפור Waft";
 "History" = "היסטוריה";
 "Hold %@ to dictate" = "יש להחזיק את %@ כדי להכתיב";
 "Hold %@" = "לחיצה ארוכה על %@";
 "Hold or double-tap" = "לחיצה ארוכה או כפולה";
 "Hold" = "לחיצה ארוכה";
-"How often you use each feature, never your words or audio." = "באיזו תדירות נעשה שימוש בכל תכונה, לעולם לא המילים או השמע שלך.";
+"How often you use each feature, never your words or audio." = "באיזו תדירות נעשה שימוש בכל מאפיין, לעולם לא המילים או השמע שלך.";
 "How to start" = "אופן ההפעלה";
 "Included" = "כלול";
 "Install Update…" = "התקנת העדכון…";
@@ -426,9 +426,9 @@
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
-"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft ימחק אותו מ-Mac זה. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
+"Waft deletes it from this Mac. The AI modes use Light until you add a key." = "היישום Waft ימחק אותו מ-Mac זה. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
-"Waft keeps no dictations while Keep history is off." = "Waft לא שומר הכתבות כל עוד ״שמירת היסטוריה״ כבויה.";
+"Waft keeps no dictations while Keep history is off." = "היישום Waft לא שומר הכתבות כל עוד ״שמירת היסטוריה״ כבויה.";
 "Waft listens for these languages." = "אלה השפות ש-Waft מזהה.";
 "Waft listens only while you dictate, and the audio stays on your Mac." = "ההאזנה פעילה רק בזמן ההכתבה, והשמע נשאר ב-Mac שלך.";
 "Waft lives in the menu bar. %@ switches to the next mode." = "ניתן למצוא את Waft בשורת התפריטים. הקיצור %@ מעביר למצב הבא.";

@@ -217,7 +217,7 @@
 "Off" = "Ninguno";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on the server at this address; the text goes only there." = "Ollama, LM Studio, llama.cpp, MLX o Jan en el servidor de esta dirección; el texto solo va allí.";
 "Ollama, LM Studio, llama.cpp, MLX, or Jan on this Mac; the text never leaves it." = "Ollama, LM Studio, llama.cpp, MLX o Jan en este Mac; el texto nunca sale de él.";
-"On macOS 27, it's under Device Control and Data Access." = "En macOS 27, está en la sección de control del dispositivo y acceso a datos.";
+"On macOS 27, it's under Device Control and Data Access." = "En macOS 27, está en Control de dispositivos y acceso a datos.";
 "On-device dictation for macOS with AI cleanup." = "Dictado en el dispositivo para macOS con limpieza por IA.";
 "Open System Settings" = "Abrir Ajustes del Sistema";
 "Open Translator" = "Abrir traductor";
@@ -317,7 +317,7 @@
 "Shortcut" = "Atajo";
 "Shortcuts" = "Atajos";
 "Show History" = "Mostrar historial";
-"Show in Finder" = "Mostrar en Finder";
+"Show in Finder" = "Mostrar en el Finder";
 "Show in menu bar" = "Mostrar en la barra de menús";
 "Snippets" = "Fragmentos";
 "Sounds" = "Sonidos";

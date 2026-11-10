@@ -26,7 +26,7 @@
 "AI modes" = "ИИ-режимы";
 "AI modes, editing by voice, and the translator use this model." = "ИИ-режимы, правка голосом и переводчик используют эту модель.";
 "API key" = "Ключ API";
-"About" = "О программе";
+"About" = "О приложении";
 "Accessibility" = "Универсальный доступ";
 "Accurate speech model" = "Точная модель речи";
 "Accurate" = "Точная";
@@ -72,7 +72,7 @@
 "Clean and Formal" = "«Чистовой» и «Деловой»";
 "Clean" = "Чистовой";
 "Clean, Formal, and Translate need an AI model." = "Для режимов «Чистовой», «Деловой» и «Перевод» нужна ИИ-модель.";
-"Cleaning up…" = "Очищаю…";
+"Cleaning up…" = "Обрабатываю…";
 "Clear History" = "Очистить историю";
 "Clear History…" = "Очистить историю…";
 "Clear the dictation history?" = "Очистить историю диктовок?";
@@ -94,7 +94,7 @@
 "Couldn't fix the text" = "Не удалось исправить текст";
 "Couldn't transcribe %@" = "Не удалось расшифровать «%@»";
 "Couldn't translate the text" = "Не удалось перевести текст";
-"Counted on this Mac: words and time, never the text." = "Считается на этом Mac: слова и время, но не сам текст.";
+"Counted on this Mac: words and time, never the text." = "Подсчитываются на этом Mac: слова и время, но не сам текст.";
 "Day" = "День";
 "Default (%@)" = "По умолчанию (%@)";
 "Default" = "По умолчанию";
@@ -439,7 +439,7 @@
 "Waft writes" = "Waft напишет";
 "Waft" = "Waft";
 "Waft+ feature" = "Функция Waft+";
-"Waft+ features stop working here until you enter the key again." = "Функции Waft+ на этом Mac перестанут работать, пока вы снова не введёте ключ.";
+"Waft+ features stop working here until you enter the key again." = "Функции Waft+ на этом Mac не будут работать, пока вы снова не введёте ключ.";
 "Waft+" = "Waft+";
 "Website" = "Сайт";
 "Welcome to Waft" = "Добро пожаловать в Waft";
