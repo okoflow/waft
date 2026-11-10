@@ -19,7 +19,11 @@ package struct FocusTarget: Sendable {
     package func isSecureField(secureInput holder: SecureInputHolder) -> Bool {
         guard let element else { return mayHoldSecureInput(holder) }
 
-        return element.isSecureTextField
+        return switch element.secureFieldState {
+        case .secure: true
+        case .notSecure: false
+        case .unreadable: mayHoldSecureInput(holder)
+        }
     }
 
     package func isSameFocus(as current: FocusTarget) -> Bool {

@@ -6,8 +6,11 @@ struct AccessibilityElement: FocusedElement, @unchecked Sendable {
 
     private let element: AXUIElement
 
-    var isSecureTextField: Bool {
-        string(kAXSubroleAttribute) == kAXSecureTextFieldSubrole
+    var secureFieldState: SecureFieldState {
+        var value: CFTypeRef?
+        let status = AXUIElementCopyAttributeValue(element, kAXSubroleAttribute as CFString, &value)
+
+        return SecureFieldState(subrole: value as? String, status: status)
     }
 
     var selectedText: String? {
