@@ -37,12 +37,8 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
 
     package init() {}
 
-    private static func key(for date: Date, calendar: Calendar) -> String {
-        date.formatted(Date.ISO8601FormatStyle(timeZone: calendar.timeZone).year().month().day())
-    }
-
     package mutating func record(words: Int, seconds: Double, on date: Date, calendar: Calendar = .current) {
-        let key = Self.key(for: date, calendar: calendar)
+        let key = date.dayKey(in: calendar)
 
         var day = days[key, default: Day()]
 
@@ -58,7 +54,7 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
 
         return (0 ..< count).reversed().compactMap { offset in
             calendar.date(byAdding: .day, value: -offset, to: end)
-                .map { ($0, days[Self.key(for: $0, calendar: calendar), default: Day()]) }
+                .map { ($0, days[$0.dayKey(in: calendar), default: Day()]) }
         }
     }
 
@@ -87,6 +83,6 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
     }
 
     private func hasDictated(on date: Date, calendar: Calendar) -> Bool {
-        days[Self.key(for: date, calendar: calendar), default: Day()].dictations > 0
+        days[date.dayKey(in: calendar), default: Day()].dictations > 0
     }
 }

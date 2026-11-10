@@ -45,6 +45,7 @@
 "Allow microphone access" = "Consenti l’accesso al microfono";
 "Allowed" = "Consentito";
 "Allow…" = "Consenti…";
+"Anonymous usage data shows which features to work on next." = "I dati di utilizzo anonimi mostrano su quali funzioni lavorare in futuro.";
 "Any AI model" = "Qualsiasi modello di IA";
 "App language" = "Lingua dell’app";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Hai acquistato Waft+? Incolla la chiave dall’email della ricevuta.";
 "Buy for %@" = "Acquista a %@";
 "Cancel" = "Annulla";
+"Change it anytime in Settings › General." = "Puoi cambiare idea in qualsiasi momento in Impostazioni › Generali.";
 "Check Now" = "Controlla ora";
 "Check for Updates…" = "Controlla aggiornamenti…";
 "Check for updates automatically" = "Controlla automaticamente gli aggiornamenti";
@@ -110,6 +112,7 @@
 "Dictionary file" = "File del dizionario";
 "Dictionary" = "Dizionario";
 "Didn't catch that" = "Nessuna parola riconosciuta";
+"Don't Share" = "Non condividere";
 "Done" = "Fine";
 "Double-tap for hands-free" = "Mani libere con doppia pressione";
 "Downloading the speech model… %@" = "Download del modello vocale in corso… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Ottieni una chiave API";
 "Hands-free" = "Mani libere";
 "Heard as" = "Sentito come";
+"Help improve Waft" = "Aiuta a migliorare Waft";
 "History" = "Cronologia";
 "Hold %@ to dictate" = "Tieni premuto %@ per dettare";
 "Hold %@" = "Tieni premuto %@";
 "Hold or double-tap" = "Premi a lungo o due volte";
 "Hold" = "Premi a lungo";
+"How often you use each feature, never your words or audio." = "Quanto spesso usi ogni funzione, mai le tue parole o l’audio.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Quanto spesso usi ogni funzione, le versioni di Waft e di macOS e un ID casuale.";
 "How to start" = "Avvio della dettatura";
 "Included" = "Incluso";
 "Install Update…" = "Installa aggiornamento…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Premi il tasto da usare o Esc per annullare";
 "Press the shortcut to use, or Esc to cancel" = "Premi la scorciatoia da usare o Esc per annullare";
 "Previous page" = "Pagina precedente";
+"Privacy" = "Privacy";
 "Provider" = "Fornitore";
 "Quit Waft" = "Esci da Waft";
 "Raw" = "Grezza";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "In Impostazioni di Sistema › Tastiera, imposta “Premi il tasto 🌐 per” su “Non fare nulla”.";
 "Settings…" = "Impostazioni…";
 "Setup needed" = "Configurazione necessaria";
+"Share anonymous usage data" = "Condividi dati di utilizzo anonimi";
+"Share" = "Condividi";
 "Shortcut" = "Scorciatoia";
 "Shortcuts" = "Scorciatoie";
 "Show History" = "Mostra cronologia";
@@ -435,6 +444,8 @@
 "Website" = "Sito web";
 "Welcome to Waft" = "Ti diamo il benvenuto in Waft";
 "What Waft+ adds" = "Cosa offre Waft+";
+"What is sent" = "Cosa viene inviato";
+"What stays on this Mac" = "Cosa resta su questo Mac";
 "What the AI model is told to do with your text." = "Cosa deve fare il modello di IA con il tuo testo.";
 "When off, Waft copies the text and you paste it yourself." = "Se disattivata, Waft copia il testo e lo incolli tu.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Quando il modello vocale sarà pronto, fai clic nel campo, tieni premuto %@ e di’ “Ciao, Waft”.";
@@ -450,12 +461,14 @@
 "You write" = "Scrivi tu";
 "You're all set" = "Tutto pronto";
 "Your changes to these instructions are deleted." = "Le modifiche a queste istruzioni verranno eliminate.";
+"Your choice" = "La scelta è tua";
 "Your free trial has ended." = "La prova gratuita è terminata.";
 "Your mode" = "La tua modalità";
 "Your modes" = "Le tue modalità";
 "Your own modes" = "Modalità personalizzate";
 "Your speech is recognized on this Mac." = "La tua voce viene riconosciuta su questo Mac.";
 "Your words appear here" = "Le tue parole appariranno qui";
+"Your words, audio, dictionary, and the names of apps and files." = "Le tue parole, l’audio, il dizionario e i nomi di app e file.";
 "add your %@ API key in Settings › AI Models" = "aggiungi la tua chiave API di %@ in Impostazioni › Modelli di IA";
 "choose a local server and model in Settings › AI Models" = "scegli un server locale e un modello in Impostazioni › Modelli di IA";
 "days in a row" = "giorni di fila";

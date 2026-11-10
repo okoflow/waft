@@ -16,6 +16,12 @@ struct SettingsTests {
         #expect(settings.historyLimit == DictationHistory.defaultLimit)
         #expect(settings.editKey == nil)
         #expect(settings.shortcuts == ShortcutSettings())
+        #expect(settings.usageSharing == .undecided)
+    }
+
+    @Test(arguments: [("allowed", UsageSharing.allowed), ("declined", .declined), ("bogus", .undecided)])
+    func `keeps the answer about usage data and asks again after an unknown one`(stored: String, expected: UsageSharing) throws {
+        #expect(try decode(#"{"usageSharing":"\#(stored)"}"#).usageSharing == expected)
     }
 
     @Test
@@ -126,6 +132,7 @@ struct SettingsTests {
         settings.showsMenuBarIcon = false
         settings.microphoneID = "usb-mic"
         settings.hasCompletedSetup = true
+        settings.usageSharing = .allowed
 
         #expect(try JSONDecoder().decode(Settings.self, from: JSONEncoder().encode(settings)) == settings)
     }

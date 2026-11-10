@@ -30,9 +30,10 @@ On first launch, a short guide opens, and Waft downloads the speech model in the
 2. **Allow microphone access**: click **Allow Access…**, then **Allow** in the macOS prompt.
 3. **Allow Accessibility access**: click **Open System Settings** and turn on Waft, so it can notice the key and paste the text.
 4. **Try it**: dictate into the box, as the next section describes.
-5. **You're all set**: choose whether Waft opens at login, then click **Done**. If no AI model is set up, **Set Up…** next to **AI modes** opens Settings › AI Models.
+5. **Help improve Waft**: click **Share** to send anonymous usage data or **Don't Share** to send nothing. [Usage data](privacy.md#usage-data) lists what a report holds.
+6. **You're all set**: choose whether Waft opens at login, then click **Done**. If no AI model is set up, **Set Up…** next to **AI modes** opens Settings › AI Models.
 
-The guide moves on by itself once a permission is allowed and skips one you allowed before. If you close it early, **Finish Setup…** in the menu brings it back.
+The guide moves on by itself once a permission is allowed and skips one you allowed before. If you close it early, **Finish Setup…** in the menu brings it back. If you set Waft up before it asked about usage data, the guide opens with that question alone each time Waft starts, until you answer.
 
 ## 3. First dictation
 

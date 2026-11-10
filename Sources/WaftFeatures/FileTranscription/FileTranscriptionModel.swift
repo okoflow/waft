@@ -17,6 +17,7 @@ final class FileTranscriptionModel {
     private(set) var phase = Phase.idle
     var isDropTargeted = false
 
+    @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
     @ObservationIgnored private(set) var task: Task<Void, Never>?
 
     private var chosenLanguage: Language?
@@ -151,6 +152,10 @@ final class FileTranscriptionModel {
         guard current == run else { return }
 
         phase = next
+
+        if case .finished = next {
+            onUsage?(.fileTranscription)
+        }
     }
 
     private func update(_ progress: Double, in current: Int) {

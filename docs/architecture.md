@@ -40,12 +40,14 @@ The tables list the folders whose names don't say enough.
 | `Translator` | `TextTask`, the work the translator does on typed text, and `TranslatorSettings`: the translator's languages and recent languages, when a chosen source gives way, where text goes and how a swap turns the pair, its model tier, and the edited instructions of each `TextTask` |
 | `Insertion` | The `TextInserter` interface, and whether and how to paste: focus comparison, spacing, and restoring the clipboard |
 | `Storage` | The `ValueStore` interface and, in `KeyedDecodingContainer+Defaults`, the lenient decoding that keeps one bad field from resetting the rest |
+| `Usage` | `UsageSharing`, the user's answer in `Settings`; `UsageEvent` and `UsageCounts`, what is counted; `UsageLog`, the days that wait to be sent with the installation's random ID; `UsageReport`, the body the usage service accepts; and the `UsageReportSender` interface |
 | `Support` | `Poll`, `Task.slept`, `Uptime`, and the other helpers that every module uses, such as `Error.logDescription` |
 
 **`WaftPlatform`** implements the interfaces in a folder per area, such as `KeyEventTap` in `Keyboard`, `AudioEngineRecorder` in `Audio`, and `PasteboardInserter` in `Pasteboard`.
 
 - `Rewrite` holds `HTTPRewriter`, which sends a rewrite through an API description per service in `Providers` (`AnthropicAPI`, `OpenAIAPI`, and `ChatCompletionsAPI` for local servers) over the transport in `HTTP`, and `LocalServerBrowser`, which lists a local server's models.
 - `Storage` holds `JSONFileStore`, which keeps its folder and files owner-only and a copy of a file it can't read, so a later save doesn't destroy it. `SecretFileStore` keeps an API key or the license key in a `JSONFileStore` and moves a key an older version left in the keychain into it on first load through `KeychainStore`, which nothing else uses. `ValueStore+Logging` in `WaftFeatures/Support` logs persistence failures.
+- `Usage` holds `HTTPUsageReportSender`, which posts a `UsageReport` to the usage service of `okoflow/waft-server`.
 - `Updates` holds `SparkleUpdater`, which turns itself off when `Info.plist` has no `SUFeedURL`. `scripts/bundle.sh` removes the key from debug bundles.
 
 **`WaftFeatures`** is grouped by feature:
@@ -53,7 +55,7 @@ The tables list the folders whose names don't say enough.
 | Folder | What lives there |
 | --- | --- |
 | `App` | `AppDependencies`; `AppModel`, which builds every model from them and wires the models together; `WindowPresenter`, which opens Settings, the setup guide, file transcription, and the translator, and gives Waft a Dock icon while one of the first three is open or Sparkle shows an update |
-| `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change; a model that one screen uses lives with that screen |
+| `Models` | The observable state that several features share, including `PermissionMonitor` and `GlobalShortcutController`, which registers the global shortcuts again when they change, and `UsageReporter`, which counts events into the `UsageLog` and sends its unsent days, both only while `Settings.usageSharing` is `.allowed` and the build has a version; a model that one screen uses lives with that screen |
 | `Dictation` | The controllers of [the dictation flow](#the-dictation-flow) and the values they pass along |
 | `HUD` | `HUDController` and `HUDPanel`, the HUD at the notch, at the top of the screen, or below the menu bar when `ForeignWindow` finds another app's window over the notch; `Island` holds the views inside it |
 | `MenuBar` | `MenuBarScene`, the menu bar icon (the W mark), and the menu |
@@ -83,6 +85,7 @@ The tables list the folders whose names don't say enough.
 - Rules that need no system access are value types in `WaftCore`.
 - `WhisperTranscriber`, `AudioEngineRecorder`, and `MediaAudioReader` are actors, so recognition, audio, and media files stay off the main actor. The last two run on serial dispatch queues of their own, so their blocking calls never hold a thread of the cooperative pool.
 - Audio, dictated text, and clipboard contents never reach the log or the disk, apart from the history the user keeps.
+- A `UsageReport` holds counts, versions, and the names of settings, never text, audio, or the name of an app or a file, and nothing is counted or sent before the user agrees. A new field goes into [Usage data](privacy.md#usage-data) and `parseUsageReport` in `okoflow/waft-server` in the same release.
 - User-facing strings use `String(localized:)` or `LocalizedStringKey`, even the names of domain values in `WaftCore`. Choosing a language in Waft writes `AppleTextDirection` next to `AppleLanguages`, so Arabic and Hebrew lay out right to left.
 
 ## Third-party packages

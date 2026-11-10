@@ -45,6 +45,7 @@
 "Allow microphone access" = "Разрешите доступ к микрофону";
 "Allowed" = "Разрешено";
 "Allow…" = "Разрешить…";
+"Anonymous usage data shows which features to work on next." = "Анонимные данные об использовании показывают, над какими функциями работать дальше.";
 "Any AI model" = "Любая ИИ-модель";
 "App language" = "Язык приложения";
 "App" = "Приложение";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Уже купили Waft+? Вставьте ключ из письма с чеком.";
 "Buy for %@" = "Купить за %@";
 "Cancel" = "Отменить";
+"Change it anytime in Settings › General." = "Это можно изменить в любой момент в Настройках › Основные.";
 "Check Now" = "Проверить";
 "Check for Updates…" = "Проверить обновления…";
 "Check for updates automatically" = "Проверять обновления автоматически";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Файл словаря";
 "Dictionary" = "Словарь";
 "Didn't catch that" = "Не удалось расслышать";
+"Don't Share" = "Не делиться";
 "Done" = "Готово";
 "Double-tap for hands-free" = "Двойное нажатие — без рук";
 "Downloading the speech model… %@" = "Загрузка модели речи… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Получить ключ API";
 "Hands-free" = "Без рук";
 "Heard as" = "Распознаётся как";
+"Help improve Waft" = "Помогите улучшить Waft";
 "History" = "История";
 "Hold %@ to dictate" = "Удерживайте %@ для диктовки";
 "Hold %@" = "Удерживайте %@";
 "Hold or double-tap" = "Удерживать или дважды нажать";
 "Hold" = "Удерживать";
+"How often you use each feature, never your words or audio." = "Только то, как часто вы используете каждую функцию. Ваши слова и аудио не передаются.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Как часто вы используете каждую функцию, версии Waft и macOS и случайный идентификатор.";
 "How to start" = "Как начинать";
 "Included" = "Доступно";
 "Install Update…" = "Установить обновление…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Нажмите нужную клавишу или Esc для отмены";
 "Press the shortcut to use, or Esc to cancel" = "Нажмите нужное сочетание клавиш или Esc для отмены";
 "Previous page" = "Предыдущая страница";
+"Privacy" = "Конфиденциальность";
 "Provider" = "Провайдер";
 "Quit Waft" = "Завершить Waft";
 "Raw" = "Как есть";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "В Системных настройках › Клавиатура для «Нажатие клавиши 🌐» выберите «действие не требуется».";
 "Settings…" = "Настройки…";
 "Setup needed" = "Нужна настройка";
+"Share anonymous usage data" = "Делиться анонимными данными об использовании";
+"Share" = "Делиться";
 "Shortcut" = "Сочетание клавиш";
 "Shortcuts" = "Сочетания клавиш";
 "Show History" = "Показать историю";
@@ -435,6 +444,8 @@
 "Website" = "Сайт";
 "Welcome to Waft" = "Добро пожаловать в Waft";
 "What Waft+ adds" = "Что даёт Waft+";
+"What is sent" = "Что отправляется";
+"What stays on this Mac" = "Что остаётся на этом Mac";
 "What the AI model is told to do with your text." = "Что ИИ-модель должна делать с вашим текстом.";
 "When off, Waft copies the text and you paste it yourself." = "Если выключено, Waft копирует текст, а вставляете вы сами.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Когда модель речи будет готова, нажмите на поле, удерживайте %@ и скажите «Привет, Waft».";
@@ -450,12 +461,14 @@
 "You write" = "Вы пишете";
 "You're all set" = "Всё готово";
 "Your changes to these instructions are deleted." = "Ваши изменения в этих инструкциях будут удалены.";
+"Your choice" = "Выбор за вами";
 "Your free trial has ended." = "Пробный период закончился.";
 "Your mode" = "Ваш режим";
 "Your modes" = "Ваши режимы";
 "Your own modes" = "Свои режимы";
 "Your speech is recognized on this Mac." = "Речь распознаётся на этом Mac.";
 "Your words appear here" = "Здесь появятся ваши слова";
+"Your words, audio, dictionary, and the names of apps and files." = "Ваши слова, аудио, словарь, названия приложений и файлов.";
 "add your %@ API key in Settings › AI Models" = "добавьте ключ API %@ в Настройках › ИИ-модели";
 "choose a local server and model in Settings › AI Models" = "выберите локальный сервер и модель в Настройках › ИИ-модели";
 "days in a row" = "дн. подряд";

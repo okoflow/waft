@@ -45,6 +45,7 @@
 "Allow microphone access" = "Allow microphone access";
 "Allowed" = "Allowed";
 "Allow…" = "Allow…";
+"Anonymous usage data shows which features to work on next." = "Anonymous usage data shows which features to work on next.";
 "Any AI model" = "Any AI model";
 "App language" = "App language";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Bought Waft+? Paste the key from your receipt email.";
 "Buy for %@" = "Buy for %@";
 "Cancel" = "Cancel";
+"Change it anytime in Settings › General." = "Change it anytime in Settings › General.";
 "Check Now" = "Check Now";
 "Check for Updates…" = "Check for Updates…";
 "Check for updates automatically" = "Check for updates automatically";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Dictionary file";
 "Dictionary" = "Dictionary";
 "Didn't catch that" = "Didn't catch that";
+"Don't Share" = "Don't Share";
 "Done" = "Done";
 "Double-tap for hands-free" = "Double-tap for hands-free";
 "Downloading the speech model… %@" = "Downloading the speech model… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Get an API key";
 "Hands-free" = "Hands-free";
 "Heard as" = "Heard as";
+"Help improve Waft" = "Help improve Waft";
 "History" = "History";
 "Hold %@ to dictate" = "Hold %@ to dictate";
 "Hold %@" = "Hold %@";
 "Hold or double-tap" = "Hold or double-tap";
 "Hold" = "Hold";
+"How often you use each feature, never your words or audio." = "How often you use each feature, never your words or audio.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "How often you use each feature, the Waft and macOS versions, and a random ID.";
 "How to start" = "How to start";
 "Included" = "Included";
 "Install Update…" = "Install Update…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Press the key to use, or Esc to cancel";
 "Press the shortcut to use, or Esc to cancel" = "Press the shortcut to use, or Esc to cancel";
 "Previous page" = "Previous page";
+"Privacy" = "Privacy";
 "Provider" = "Provider";
 "Quit Waft" = "Quit Waft";
 "Raw" = "Raw";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard.";
 "Settings…" = "Settings…";
 "Setup needed" = "Setup needed";
+"Share anonymous usage data" = "Share anonymous usage data";
+"Share" = "Share";
 "Shortcut" = "Shortcut";
 "Shortcuts" = "Shortcuts";
 "Show History" = "Show History";
@@ -435,6 +444,8 @@
 "Website" = "Website";
 "Welcome to Waft" = "Welcome to Waft";
 "What Waft+ adds" = "What Waft+ adds";
+"What is sent" = "What is sent";
+"What stays on this Mac" = "What stays on this Mac";
 "What the AI model is told to do with your text." = "What the AI model is told to do with your text.";
 "When off, Waft copies the text and you paste it yourself." = "When off, Waft copies the text and you paste it yourself.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”.";
@@ -450,12 +461,14 @@
 "You write" = "You write";
 "You're all set" = "You're all set";
 "Your changes to these instructions are deleted." = "Your changes to these instructions are deleted.";
+"Your choice" = "Your choice";
 "Your free trial has ended." = "Your free trial has ended.";
 "Your mode" = "Your mode";
 "Your modes" = "Your modes";
 "Your own modes" = "Your own modes";
 "Your speech is recognized on this Mac." = "Your speech is recognized on this Mac.";
 "Your words appear here" = "Your words appear here";
+"Your words, audio, dictionary, and the names of apps and files." = "Your words, audio, dictionary, and the names of apps and files.";
 "add your %@ API key in Settings › AI Models" = "add your %@ API key in Settings › AI Models";
 "choose a local server and model in Settings › AI Models" = "choose a local server and model in Settings › AI Models";
 "days in a row" = "days in a row";

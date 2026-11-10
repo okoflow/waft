@@ -8,13 +8,14 @@ final class OnboardingModel {
         case microphone
         case accessibility
         case practice
+        case usage
         case done
 
         var permission: Permission? {
             switch self {
             case .microphone: .microphone
             case .accessibility: .accessibility
-            case .welcome, .practice, .done: nil
+            case .welcome, .practice, .usage, .done: nil
             }
         }
     }
@@ -29,9 +30,11 @@ final class OnboardingModel {
     @ObservationIgnored private(set) var advanceTask: Task<Void, Never>?
 
     private var isResuming = false
+    private var asksAboutUsage: Bool
     private var visitedSteps: Set<Step> = [.welcome]
 
     private let permissions: PermissionMonitor
+    private let settings: SettingsModel
     private let grantedPause: Duration
     private let waitForPause: (Duration) async -> Bool
 
@@ -65,10 +68,13 @@ final class OnboardingModel {
 
     init(
         permissions: PermissionMonitor,
+        settings: SettingsModel,
         grantedPause: Duration = .milliseconds(600),
         waitForPause: @escaping (Duration) async -> Bool = { await Task.slept(for: $0) },
     ) {
         self.permissions = permissions
+        self.settings = settings
+        asksAboutUsage = settings.settings.usageSharing == .undecided
         self.grantedPause = grantedPause
         self.waitForPause = waitForPause
     }
@@ -90,9 +96,16 @@ final class OnboardingModel {
         await permissions.request(pendingPermission)
     }
 
+    func answerUsage(shares: Bool) {
+        settings.sharesUsage = shares
+
+        advance()
+    }
+
     func resume() {
         cancelAdvance()
         isResuming = true
+        asksAboutUsage = settings.settings.usageSharing == .undecided
 
         guard let firstStep = Step.allCases.first(where: shows) else { return }
 
@@ -131,6 +144,7 @@ final class OnboardingModel {
         visitedSteps = [.welcome]
         practiceText = ""
         isResuming = false
+        asksAboutUsage = settings.settings.usageSharing == .undecided
     }
 
     private func isMissing(_ permission: Permission) -> Bool {
@@ -144,9 +158,12 @@ final class OnboardingModel {
     }
 
     private func shows(_ step: Step) -> Bool {
-        guard let permission = step.permission else { return !isResuming }
-
-        return isMissing(permission)
+        switch step {
+        case .welcome, .practice, .done: !isResuming
+        case .microphone: isMissing(.microphone)
+        case .accessibility: isMissing(.accessibility)
+        case .usage: asksAboutUsage
+        }
     }
 
     private func advance() {

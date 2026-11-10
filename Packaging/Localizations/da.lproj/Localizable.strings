@@ -45,6 +45,7 @@
 "Allow microphone access" = "Tillad adgang til mikrofonen";
 "Allowed" = "Tilladt";
 "Allow…" = "Tillad…";
+"Anonymous usage data shows which features to work on next." = "Anonyme brugsdata viser, hvilke funktioner der skal arbejdes på som de næste.";
 "Any AI model" = "Valgfri AI-model";
 "App language" = "Appens sprog";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "Har du købt Waft+? Sæt nøglen fra din kvitteringsmail ind.";
 "Buy for %@" = "Køb for %@";
 "Cancel" = "Annuller";
+"Change it anytime in Settings › General." = "Du kan altid ændre det i Indstillinger › Generelt.";
 "Check Now" = "Søg nu";
 "Check for Updates…" = "Søg efter opdateringer…";
 "Check for updates automatically" = "Søg automatisk efter opdateringer";
@@ -110,6 +112,7 @@
 "Dictionary file" = "Ordbogsarkiv";
 "Dictionary" = "Ordbog";
 "Didn't catch that" = "Ingen tale opfattet";
+"Don't Share" = "Del ikke";
 "Done" = "OK";
 "Double-tap for hands-free" = "Tryk to gange for håndfri brug";
 "Downloading the speech model… %@" = "Henter talemodellen… %@";
@@ -143,11 +146,14 @@
 "Get an API key" = "Få en API-nøgle";
 "Hands-free" = "Håndfri";
 "Heard as" = "Opfattes som";
+"Help improve Waft" = "Hjælp med at forbedre Waft";
 "History" = "Historik";
 "Hold %@ to dictate" = "Hold %@ nede for at diktere";
 "Hold %@" = "Hold %@ nede";
 "Hold or double-tap" = "Hold nede eller tryk to gange";
 "Hold" = "Hold nede";
+"How often you use each feature, never your words or audio." = "Hvor ofte du bruger hver funktion, aldrig dine ord eller lyd.";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "Hvor ofte du bruger hver funktion, versionerne af Waft og macOS og et tilfældigt id.";
 "How to start" = "Sådan starter du";
 "Included" = "Inkluderet";
 "Install Update…" = "Installer opdatering…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "Tryk på den ønskede tast eller på esc for at annullere";
 "Press the shortcut to use, or Esc to cancel" = "Tryk på den ønskede genvej eller på esc for at annullere";
 "Previous page" = "Forrige side";
+"Privacy" = "Anonymitet";
 "Provider" = "Udbyder";
 "Quit Waft" = "Slut Waft";
 "Raw" = "Ordret";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "Indstil “Tryk på 🌐-tasten for at” til “Gøre ingenting” i Systemindstillinger › Tastatur.";
 "Settings…" = "Indstillinger…";
 "Setup needed" = "Skal indstilles";
+"Share anonymous usage data" = "Del anonyme brugsdata";
+"Share" = "Del";
 "Shortcut" = "Genvej";
 "Shortcuts" = "Genveje";
 "Show History" = "Vis historik";
@@ -435,6 +444,8 @@
 "Website" = "Websted";
 "Welcome to Waft" = "Velkommen til Waft";
 "What Waft+ adds" = "Det får du med Waft+";
+"What is sent" = "Hvad der sendes";
+"What stays on this Mac" = "Hvad der bliver på denne Mac";
 "What the AI model is told to do with your text." = "Hvad AI-modellen får besked på at gøre med din tekst.";
 "When off, Waft copies the text and you paste it yourself." = "Når den er slået fra, kopierer Waft teksten, og du sætter den selv ind.";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "Når talemodellen er klar, skal du klikke i feltet, holde %@ nede og sige “Hej, Waft”.";
@@ -450,12 +461,14 @@
 "You write" = "Du skriver";
 "You're all set" = "Du er klar";
 "Your changes to these instructions are deleted." = "Dine ændringer af disse instruktioner slettes.";
+"Your choice" = "Dit valg";
 "Your free trial has ended." = "Din gratis prøveperiode er slut.";
 "Your mode" = "Din tilstand";
 "Your modes" = "Dine tilstande";
 "Your own modes" = "Dine egne tilstande";
 "Your speech is recognized on this Mac." = "Din tale genkendes på denne Mac.";
 "Your words appear here" = "Dine ord vises her";
+"Your words, audio, dictionary, and the names of apps and files." = "Dine ord, lyd, ordbogen og navnene på apps og arkiver.";
 "add your %@ API key in Settings › AI Models" = "tilføj din API-nøgle til %@ i Indstillinger › AI-modeller";
 "choose a local server and model in Settings › AI Models" = "vælg en lokal server og en model i Indstillinger › AI-modeller";
 "days in a row" = "dage i træk";

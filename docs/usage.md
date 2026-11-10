@@ -154,6 +154,7 @@ To hide the icon, turn off **Show in menu bar** in Settings › General. Dictati
 ## General settings
 
 - **Open at login** in Settings › General starts Waft when you log in.
+- **Share anonymous usage data** sends daily counts of the features you use and nothing you say or type. **What is sent** under it opens [Usage data](privacy.md#usage-data), which lists every field.
 - **App language** switches Waft's interface between 23 languages, or **Same as macOS**, once you click **Relaunch** next to it. Arabic and Hebrew lay it out from right to left.
 
 ## Updates

@@ -13,6 +13,8 @@ final class DictationQueue {
         String(localized: "Editing…")
     }
 
+    @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
+
     private var recentTranscripts = RecentTranscripts()
 
     @ObservationIgnored private var pendingCount = 0
@@ -192,7 +194,11 @@ final class DictationQueue {
     }
 
     private func record(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) {
-        guard job.selection == nil else { return }
+        guard job.selection == nil else {
+            onUsage?(.voiceEdit)
+
+            return
+        }
 
         let entry = DictationHistory.Entry(
             date: Date(),
@@ -204,6 +210,7 @@ final class DictationQueue {
 
         statistics.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
         history.add(entry)
+        onUsage?(.dictation(processed.mode))
     }
 
     private func log(_ transcript: Transcript, _ processed: ProcessedText, for job: DictationJob) {

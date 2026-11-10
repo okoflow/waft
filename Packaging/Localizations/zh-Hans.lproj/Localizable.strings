@@ -45,6 +45,7 @@
 "Allow microphone access" = "允许访问麦克风";
 "Allowed" = "已允许";
 "Allow…" = "允许…";
+"Anonymous usage data shows which features to work on next." = "匿名使用数据可以显示接下来该改进哪些功能。";
 "Any AI model" = "任意AI模型";
 "App language" = "App语言";
 "App" = "App";
@@ -58,6 +59,7 @@
 "Bought Waft+? Paste the key from your receipt email." = "已购买Waft+？请粘贴收据邮件中的密钥。";
 "Buy for %@" = "以%@购买";
 "Cancel" = "取消";
+"Change it anytime in Settings › General." = "可随时在“设置”›“通用”中更改。";
 "Check Now" = "立即检查";
 "Check for Updates…" = "检查更新…";
 "Check for updates automatically" = "自动检查更新";
@@ -110,6 +112,7 @@
 "Dictionary file" = "词典文件";
 "Dictionary" = "词典";
 "Didn't catch that" = "没有听清";
+"Don't Share" = "不共享";
 "Done" = "完成";
 "Double-tap for hands-free" = "连按两下可免提听写";
 "Downloading the speech model… %@" = "正在下载语音识别模型…%@";
@@ -143,11 +146,14 @@
 "Get an API key" = "获取API密钥";
 "Hands-free" = "免提";
 "Heard as" = "误识别为";
+"Help improve Waft" = "帮助改进Waft";
 "History" = "历史记录";
 "Hold %@ to dictate" = "按住%@键进行听写";
 "Hold %@" = "按住%@";
 "Hold or double-tap" = "按住或连按两下";
 "Hold" = "按住";
+"How often you use each feature, never your words or audio." = "仅包含各项功能的使用次数，绝不包含你说的内容或音频。";
+"How often you use each feature, the Waft and macOS versions, and a random ID." = "各项功能的使用次数、Waft和macOS的版本，以及一个随机ID。";
 "How to start" = "开始方式";
 "Included" = "已包含";
 "Install Update…" = "安装更新…";
@@ -236,6 +242,7 @@
 "Press the key to use, or Esc to cancel" = "按下要使用的键，或按Esc键取消";
 "Press the shortcut to use, or Esc to cancel" = "按下要使用的快捷键，或按Esc键取消";
 "Previous page" = "上一页";
+"Privacy" = "隐私";
 "Provider" = "提供商";
 "Quit Waft" = "退出Waft";
 "Raw" = "原文";
@@ -305,6 +312,8 @@
 "Set “Press 🌐 key to” to Do Nothing in System Settings › Keyboard." = "在“系统设置”›“键盘”中将“按下🌐键时”设为“不执行任何操作”。";
 "Settings…" = "设置…";
 "Setup needed" = "需要设置";
+"Share anonymous usage data" = "共享匿名使用数据";
+"Share" = "共享";
 "Shortcut" = "快捷键";
 "Shortcuts" = "快捷键";
 "Show History" = "显示历史记录";
@@ -435,6 +444,8 @@
 "Website" = "网站";
 "Welcome to Waft" = "欢迎使用Waft";
 "What Waft+ adds" = "Waft+新增功能";
+"What is sent" = "发送的内容";
+"What stays on this Mac" = "留在此Mac上的内容";
 "What the AI model is told to do with your text." = "告诉AI模型如何处理你的文本。";
 "When off, Waft copies the text and you paste it yourself." = "关闭后，Waft只会拷贝文本，需要你自行粘贴。";
 "When the speech model is ready, click the box, hold %@, and say “Hello, Waft”." = "语音识别模型就绪后，点按输入框，按住%@，然后说“你好，Waft”。";
@@ -450,12 +461,14 @@
 "You write" = "你写";
 "You're all set" = "一切就绪";
 "Your changes to these instructions are deleted." = "你对这些指令所做的更改将被删除。";
+"Your choice" = "由你决定";
 "Your free trial has ended." = "免费试用已结束。";
 "Your mode" = "自定义模式";
 "Your modes" = "自定义模式";
 "Your own modes" = "自定义模式";
 "Your speech is recognized on this Mac." = "语音在此Mac上识别。";
 "Your words appear here" = "你说的话会显示在这里";
+"Your words, audio, dictionary, and the names of apps and files." = "你说的内容、音频、词典，以及App和文件的名称。";
 "add your %@ API key in Settings › AI Models" = "请在“设置”›“AI模型”中添加%@ API密钥";
 "choose a local server and model in Settings › AI Models" = "请在“设置”›“AI模型”中选择本地服务器和模型";
 "days in a row" = "连续天数";

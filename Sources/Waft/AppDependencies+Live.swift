@@ -10,9 +10,7 @@ extension AppDependencies {
         let keyboardState = SystemKeyboardState()
         let apiKeyStores = PerProvider<any ValueStore<String>> { SecretFileStore.apiKey(for: $0) }
 
-        let vocabularyFile = AppIdentity.supportDirectory.appending(path: "dictionary.json")
-        let historyFile = AppIdentity.supportDirectory.appending(path: "history.json")
-        let statisticsFile = AppIdentity.supportDirectory.appending(path: "stats.json")
+        let vocabularyFile = supportFile("dictionary.json")
 
         return AppDependencies(
             recorder: AudioEngineRecorder(),
@@ -39,13 +37,19 @@ extension AppDependencies {
             settingsStore: UserDefaultsStore<Settings>(name: "settings", key: "settings"),
             vocabularyStore: JSONFileStore<Vocabulary>(name: "dictionary", url: vocabularyFile),
             vocabularyFile: vocabularyFile,
-            historyStore: JSONFileStore<DictationHistory>(name: "history", url: historyFile),
-            statisticsStore: JSONFileStore<DictationStatistics>(name: "statistics", url: statisticsFile),
+            historyStore: JSONFileStore<DictationHistory>(name: "history", url: supportFile("history.json")),
+            statisticsStore: JSONFileStore<DictationStatistics>(name: "statistics", url: supportFile("stats.json")),
+            usageStore: JSONFileStore<UsageLog>(name: "usage log", url: supportFile("usage.json")),
+            usageSender: HTTPUsageReportSender(),
             apiKeyStores: apiKeyStores,
             licenseStore: SecretFileStore.license(),
             trialStore: UserDefaultsStore<Date>(name: "trial start", key: "trialStarted"),
             interfaceLanguageStore: InterfaceLanguageStore(),
             licenseChecker: Ed25519SignatureChecker(),
         )
+    }
+
+    private static func supportFile(_ name: String) -> URL {
+        AppIdentity.supportDirectory.appending(path: name)
     }
 }

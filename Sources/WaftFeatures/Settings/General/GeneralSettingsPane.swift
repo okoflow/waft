@@ -2,6 +2,8 @@ import SwiftUI
 import WaftCore
 
 struct GeneralSettingsPane: View {
+    private static let usageDetails = URL(literal: "https://github.com/okoflow/waft/blob/main/docs/privacy.md#usage-data")
+
     @Bindable var settings: SettingsModel
 
     let permissions: PermissionMonitor
@@ -26,6 +28,16 @@ struct GeneralSettingsPane: View {
             DividedForEach(Permission.allCases, id: \.self) { permission in
                 PermissionRow(permission: permission, monitor: permissions, description: .verbatim(permission.purpose))
             }
+        }
+
+        SettingsSection("Privacy") {
+            ToggleRow(
+                "Share anonymous usage data",
+                isOn: $settings.sharesUsage,
+                description: "How often you use each feature, never your words or audio.",
+            )
+            RowDivider()
+            LinkRow(title: "What is sent", detail: "github.com/okoflow/waft", url: Self.usageDetails)
         }
 
         if updates.isAvailable {

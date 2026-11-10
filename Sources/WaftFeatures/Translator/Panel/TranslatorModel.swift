@@ -19,6 +19,8 @@ final class TranslatorModel {
     private(set) var isTranslating = false
     private(set) var failure: String?
 
+    @ObservationIgnored var onUsage: ((UsageEvent) -> Void)?
+
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var hasDroppedTranslation = false
     @ObservationIgnored private var translatedInput = ""
@@ -223,6 +225,8 @@ final class TranslatorModel {
             output = translated
             translatedInput = text
             failure = nil
+
+            onUsage?(.translation)
         } catch {
             guard !Task.isCancelled else { return }
 

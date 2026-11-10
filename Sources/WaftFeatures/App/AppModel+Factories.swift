@@ -32,6 +32,16 @@ extension AppModel {
         )
     }
 
+    static func makeUsage(_ dependencies: AppDependencies, settings: SettingsModel, pro: ProModel) -> UsageReporter {
+        UsageReporter(
+            store: dependencies.usageStore,
+            sender: dependencies.usageSender,
+            settings: settings,
+            pro: pro,
+            host: .current,
+        )
+    }
+
     static func makeVocabulary(_ dependencies: AppDependencies) -> VocabularyModel {
         VocabularyModel(
             store: dependencies.vocabularyStore,

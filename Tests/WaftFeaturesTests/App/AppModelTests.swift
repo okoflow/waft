@@ -82,6 +82,8 @@ struct AppModelTests {
             vocabularyFile: URL(filePath: "/tmp/Vocabulary.json"),
             historyStore: FakeValueStore<DictationHistory>(),
             statisticsStore: FakeValueStore<DictationStatistics>(),
+            usageStore: FakeValueStore<UsageLog>(),
+            usageSender: FakeUsageReportSender(),
             apiKeyStores: PerProvider(claude: FakeValueStore<String>(), openAI: FakeValueStore<String>()),
             licenseStore: FakeValueStore<String>(),
             trialStore: FakeValueStore<Date>(),
