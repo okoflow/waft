@@ -55,8 +55,9 @@ package enum SettingsPane: CaseIterable {
         case .writing: .teal
         case .translator: .blue
         case .aiModels: .purple
-        case .general, .about: .gray
+        case .general: .gray
         case .pro: .purple
+        case .about: .gray
         }
     }
 }

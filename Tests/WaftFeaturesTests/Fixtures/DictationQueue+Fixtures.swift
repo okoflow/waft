@@ -10,6 +10,7 @@ extension DictationQueue {
         clipboard: FakeClipboard = FakeClipboard(),
         history: HistoryModel = .inMemory(),
         statistics: StatisticsModel = StatisticsModel(store: FakeValueStore<DictationStatistics>()),
+        transcriptLifetime: Duration = .seconds(600),
     ) -> DictationQueue {
         DictationQueue(
             transcriber: transcriber,
@@ -19,6 +20,7 @@ extension DictationQueue {
             history: history,
             statistics: statistics,
             hud: hud,
+            transcriptLifetime: transcriptLifetime,
         )
     }
 }

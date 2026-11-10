@@ -14,7 +14,7 @@ struct TranscriptionResultView: View {
             .time(pattern: transcript.duration >= 3600 ? .hourMinuteSecond : .minuteSecond),
         )
 
-        return [duration, transcript.language.displayName].joined(separator: " · ")
+        return .caption(joining: [duration, transcript.language.displayName])
     }
 
     var body: some View {

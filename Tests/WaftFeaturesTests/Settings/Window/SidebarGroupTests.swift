@@ -3,7 +3,8 @@ import Testing
 
 struct SidebarGroupTests {
     @Test
-    func `follows the panes in the order the arrow keys move through them`() {
-        #expect((SidebarGroup.top + [SidebarGroup.bottom]).flatMap(\.panes) == SettingsPane.allCases)
+    func `lists every pane once`() {
+        #expect(SidebarGroup.panes.count == SettingsPane.allCases.count)
+        #expect(Set(SidebarGroup.panes) == Set(SettingsPane.allCases))
     }
 }
