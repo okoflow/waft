@@ -56,6 +56,7 @@ struct SettingsPage<Content: View, Accessory: View>: View {
             HStack(spacing: Metrics.inlineSpacing) {
                 Text(title)
                     .font(.pageTitle)
+                    .lineLimit(1)
                     .accessibilityAddTraits(.isHeader)
 
                 if needsWaftPlus {

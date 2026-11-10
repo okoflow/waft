@@ -33,7 +33,7 @@ struct ShortcutRow: View {
     }
 
     var body: some View {
-        SettingsRow(.verbatim(action.title), description: note) {
+        SettingsRow(.verbatim(action.title), description: note, labelsAccessory: true) {
             RecorderField(
                 title: combination?.title(in: shortcuts.layout),
                 isRecording: isRecording,
