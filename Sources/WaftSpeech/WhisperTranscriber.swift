@@ -27,7 +27,7 @@ package actor WhisperTranscriber: Transcriber {
     package func downloadModel(_ model: SpeechModel, progress: @escaping @Sendable (Double) -> Void) async throws {
         let files = SpeechModelFiles(model)
 
-        try FileManager.default.createDirectory(at: files.baseDirectory, withIntermediateDirectories: true)
+        try files.createBaseDirectory()
 
         _ = try await WhisperKit.download(
             variant: files.variant,
