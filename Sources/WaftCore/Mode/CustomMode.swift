@@ -5,8 +5,8 @@ package struct CustomMode: Codable, Equatable, Identifiable, Sendable {
     package var name: String
     package var instructions: String
 
-    package init(name: String, instructions: String, id: UUID = UUID()) {
-        self.id = id
+    package init(name: String, instructions: String) {
+        id = UUID()
         self.name = name
         self.instructions = instructions
     }

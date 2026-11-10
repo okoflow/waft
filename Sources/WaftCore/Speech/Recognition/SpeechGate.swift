@@ -24,7 +24,7 @@ package enum SpeechGate {
     }
 
     private static func windowLevels(of samples: [Float]) -> [Float] {
-        let windowSize = max(1, Int(SpeechAudio.sampleRate * windowDuration))
+        let windowSize = Int(SpeechAudio.sampleRate * windowDuration)
 
         return stride(from: 0, to: samples.count, by: windowSize).map { start in
             let window = samples[start ..< min(start + windowSize, samples.count)]
