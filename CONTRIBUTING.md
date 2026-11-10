@@ -72,8 +72,11 @@ The linters and formatters read their settings from dotfiles at the root, such a
 
 ### Layout
 
-- Separate the steps of a function with one blank line: the guards, the values it prepares, the work, and the result. A `return`, `throw`, `break`, or `continue` that does not open its scope gets a blank line before it, which the `blank_line_before_exit` rule checks. Statements of one kind stay together.
+- Separate the steps of a function with one blank line: the guards, the values it prepares, the work, and the result. Statements of one kind stay together.
+- A block of several lines, such as an `if`, a `switch`, a loop, a `do`/`catch`, or a closure, gets a blank line before and after it, unless it is first or last in its body.
+- A `return`, `throw`, `break`, or `continue` that does not open its scope gets a blank line before it, which the `blank_line_before_exit` rule checks.
 - A `guard` that checks a value declared on the single line directly above it stays under it without a blank line, and consecutive `guard`s stay together, as SwiftFormat requires. After any other statement of several lines, leave a blank line before the `guard`.
+- Never leave two blank lines in a row, or one right after `{` or right before `}`; SwiftFormat removes them.
 - SwiftFormat orders declarations by kind (nested types, static properties, instance properties, initializers, static methods, instance methods) and each kind from the most to the least visible.
 
 ### Platform
