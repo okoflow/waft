@@ -3,6 +3,8 @@ import Testing
 import WaftCore
 
 struct RecordingTriggersTests {
+    private static let escapeKeyCode: Int64 = 53
+
     @Test
     func `starts a dictation with the push-to-talk key`() {
         var triggers = RecordingTriggers()
@@ -46,7 +48,7 @@ struct RecordingTriggersTests {
         let settings = Settings.defaults
 
         _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
-        let fired = triggers.handle(.keyDown(KeyEvent.escapeKeyCode, flags: KeyEvent.rightOptionFlag, at: 5), settings: settings)
+        let fired = triggers.handle(.keyDown(Self.escapeKeyCode, flags: KeyEvent.rightOptionFlag, at: 5), settings: settings)
 
         #expect(fired.map(\.action) == [.discardRecording(.cancelled)])
         #expect(triggers.cancelledRecording(byEscapeAt: 5))

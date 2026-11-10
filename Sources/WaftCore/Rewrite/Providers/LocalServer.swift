@@ -8,7 +8,8 @@ package struct LocalServer: Codable, Equatable, Sendable {
         ("Jan", "http://localhost:1337/v1"),
     ]
 
-    private static let defaultBaseURL = "http://localhost:11434/v1"
+    package static let defaultBaseURL = "http://localhost:11434/v1"
+
     private static let loopbackHosts: Set = ["localhost", "127.0.0.1", "::1", "[::1]", "0.0.0.0"]
 
     package var baseURL: String

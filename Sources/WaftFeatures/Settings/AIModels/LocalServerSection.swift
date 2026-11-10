@@ -36,7 +36,7 @@ struct LocalServerSection: View {
             HStack(spacing: Metrics.controlSpacing) {
                 InputField(
                     "Server address",
-                    prompt: .verbatim("http://localhost:11434/v1"),
+                    prompt: .verbatim(LocalServer.defaultBaseURL),
                     text: $settings.settings.localServer.baseURL,
                 )
                 .onSubmit(localModels.refresh)

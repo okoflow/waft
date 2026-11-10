@@ -22,7 +22,7 @@ struct ProAccessTests {
     }
 
     @Test(
-        .disabled(if: ProAccess.isFreeDuringBeta),
+        .enabled(if: !ProAccess.isFreeDuringBeta),
         arguments: [(3600.0, ProAccess.Status.trial, true), (4 * 86400, .expired, false)],
     )
     func `runs a trial without a license once the beta ends`(elapsed: TimeInterval, status: ProAccess.Status, isUnlocked: Bool) {

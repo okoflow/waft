@@ -24,6 +24,7 @@ enum WhisperPieces {
         let levels = stride(from: 0, to: samples.count, by: frameLength).map { start in
             AudioLevel.rootMeanSquare(samples[start ..< min(start + frameLength, samples.count)])
         }.sorted()
+
         guard !levels.isEmpty else { return quietestSilenceThreshold }
 
         return max(quietestSilenceThreshold, levels[levels.count / 10] * silenceMargin)

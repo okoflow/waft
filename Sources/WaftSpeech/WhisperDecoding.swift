@@ -54,6 +54,7 @@ enum WhisperDecoding {
     ) -> String? {
         let text = keptText(of: results, language: language, prompt: prompt, vocabulary: vocabulary)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+
         guard !text.isEmpty,
               !HallucinationFilter.isHallucination(text, in: language, prompt: prompt, vocabulary: vocabulary) else {
             return nil
