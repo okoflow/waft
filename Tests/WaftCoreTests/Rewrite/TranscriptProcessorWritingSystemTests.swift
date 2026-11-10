@@ -11,7 +11,7 @@ struct TranscriptProcessorWritingSystemTests {
     func `keeps each translation as answered`(spoken: Language, variant: WritingVariant?, text: String, answer: String) async {
         let translation = Translation(target: .english, twoWayLanguage: .russian)
 
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
+        let setup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Translate.", translation: translation)
         let reply = Result<String, RewriteError>.success(answer)
 
         let processed = await process(text, mode: .translate, language: spoken, variant: variant, setup: setup, answer: reply)
@@ -94,7 +94,7 @@ extension TranscriptProcessorWritingSystemTests {
         mode: Mode,
         language: Language,
         variant: WritingVariant?,
-        setup: RewriteSetup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean."),
+        setup: RewriteSetup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Clean."),
         answer: Result<String, RewriteError> = .success("Unused."),
         vocabulary: Vocabulary = .empty,
     ) async -> ProcessedText {

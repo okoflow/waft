@@ -6,7 +6,7 @@ struct TranscriptProcessorTextTests {
     @Test
     func `reworks text with the edit time limit and the instructions of the setup`() async throws {
         let log = RewriteLog()
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Fix only the typos.")
+        let setup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Fix only the typos.")
 
         let processor = TranscriptProcessor.answering(.success("We meet on Friday."), log: log)
 
@@ -40,7 +40,7 @@ struct TranscriptProcessorTextTests {
     @Test
     func `throws the model failure`() async {
         let processor = TranscriptProcessor.answering(.failure(.timeout), log: RewriteLog())
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Unused.")
+        let setup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Unused.")
 
         await #expect(throws: RewriteError.timeout) {
             try await processor.rework("hi", as: .fix, setup: setup)
