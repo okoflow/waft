@@ -67,6 +67,7 @@
 "Checking…" = "확인 중…";
 "Choose File…" = "파일 선택…";
 "Choose Languages…" = "언어 선택…";
+"Choose Retry Last Dictation in the Waft menu." = "Waft 메뉴에서 ‘마지막 받아쓰기 재시도’를 선택하세요.";
 "Choose" = "선택";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "본인 키로 사용하는 Claude나 OpenAI, 또는 Mac의 로컬 모델.";
 "Clean and Formal" = "‘정리’와 ‘격식체’";
@@ -227,6 +228,7 @@
 "Open the translator" = "번역기 열기";
 "Output" = "출력";
 "Overview" = "개요";
+"Part of the dictation is missing" = "받아쓰기 일부가 누락됨";
 "Paste into the focused field" = "현재 입력란에 붙여넣기";
 "Pasted" = "붙여넣음";
 "Permissions" = "권한";

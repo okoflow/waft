@@ -67,6 +67,7 @@
 "Checking…" = "Kontrollerer…";
 "Choose File…" = "Vælg arkiv…";
 "Choose Languages…" = "Vælg sprog…";
+"Choose Retry Last Dictation in the Waft menu." = "Vælg Prøv seneste diktering igen i Waft-menuen.";
 "Choose" = "Vælg";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude eller OpenAI med din egen nøgle eller en lokal model på din Mac.";
 "Clean and Formal" = "“Renskrevet” og “Formel”";
@@ -227,6 +228,7 @@
 "Open the translator" = "Åbn oversætteren";
 "Output" = "Indsættelse";
 "Overview" = "Oversigt";
+"Part of the dictation is missing" = "En del af dikteringen mangler";
 "Paste into the focused field" = "Sæt ind i det aktive felt";
 "Pasted" = "Indsat";
 "Permissions" = "Tilladelser";

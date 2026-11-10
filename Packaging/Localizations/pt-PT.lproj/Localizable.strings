@@ -67,6 +67,7 @@
 "Checking…" = "A verificar…";
 "Choose File…" = "Escolher ficheiro…";
 "Choose Languages…" = "Escolher idiomas…";
+"Choose Retry Last Dictation in the Waft menu." = "Escolha “Tentar último ditado novamente” no menu do Waft.";
 "Choose" = "Escolher";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude ou OpenAI com a sua própria chave, ou um modelo local no seu Mac.";
 "Clean and Formal" = "Modos “Limpo” e “Formal”";
@@ -227,6 +228,7 @@
 "Open the translator" = "Abrir o tradutor";
 "Output" = "Saída";
 "Overview" = "Visão geral";
+"Part of the dictation is missing" = "Falta uma parte do ditado";
 "Paste into the focused field" = "Colar no campo ativo";
 "Pasted" = "Colado";
 "Permissions" = "Permissões";

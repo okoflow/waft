@@ -15,6 +15,14 @@ struct HUDMessage: Equatable {
         recordingCutShort(String(localized: "Waft records up to \(Int(PushToTalk.maximumHold / 60)) minutes at a time."))
     }
 
+    static var missingPart: HUDMessage {
+        HUDMessage(
+            kind: .warning,
+            title: String(localized: "Part of the dictation is missing"),
+            detail: String(localized: "Choose Retry Last Dictation in the Waft menu."),
+        )
+    }
+
     let kind: Kind
     let title: String
     let detail: String?

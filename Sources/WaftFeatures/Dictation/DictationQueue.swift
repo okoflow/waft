@@ -132,6 +132,15 @@ final class DictationQueue {
             return .noSpeech
         }
 
+        let outcome = await outcome(of: transcript, for: job)
+        guard transcript.isIncomplete else { return outcome }
+
+        keepForRetry(job)
+
+        return reportingMissingPart(before: outcome)
+    }
+
+    private func outcome(of transcript: Transcript, for job: DictationJob) async -> DictationOutcome {
         if let selection = job.selection {
             return await edit(selection, following: transcript, for: job)
         }
@@ -253,6 +262,16 @@ extension DictationQueue {
 
             self?.failedJob = nil
         }
+    }
+
+    private func reportingMissingPart(before outcome: DictationOutcome) -> DictationOutcome {
+        guard case .noSpeech = outcome else {
+            hud.show(.missingPart)
+
+            return outcome
+        }
+
+        return .partFailed
     }
 
     private func forgetFailedJob() {

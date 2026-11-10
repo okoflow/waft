@@ -107,15 +107,15 @@ package actor WhisperTranscriber: Transcriber {
             """,
         )
 
-        let pieceResults = try await WhisperPieces.transcribe(pieces, with: options, on: loaded.whisper)
+        let recognition = try await WhisperPieces.transcribe(pieces, with: options, on: loaded.whisper)
 
-        WhisperPieces.log(pieces, results: pieceResults, promptTokenCount: promptTokens.count) { segment in
+        WhisperPieces.log(pieces, results: recognition.results, promptTokenCount: promptTokens.count) { segment in
             WhisperDecoding.keepsSegment(segment, in: spoken, prompt: prompt, vocabulary: vocabulary)
         }
 
-        let results = pieceResults.flatMap(\.self)
-        guard let text = WhisperDecoding.acceptedText(of: results, language: spoken, prompt: prompt, vocabulary: vocabulary)
-        else { return nil }
+        let results = recognition.results.flatMap(\.self)
+        let accepted = WhisperDecoding.acceptedText(of: results, language: spoken, prompt: prompt, vocabulary: vocabulary)
+        guard let text = try recognition.textOrFailure(accepted) else { return nil }
 
         return Transcript(
             text: text.written(in: variant, keeping: vocabulary),
@@ -123,6 +123,7 @@ package actor WhisperTranscriber: Transcriber {
             detectionDuration: decodingStart - detectionStart,
             decodingDuration: ContinuousClock.now - decodingStart,
             variant: variant,
+            isIncomplete: recognition.isIncomplete,
         )
     }
 

@@ -67,6 +67,7 @@
 "Checking…" = "確認中…";
 "Choose File…" = "ファイルを選択…";
 "Choose Languages…" = "言語を選択…";
+"Choose Retry Last Dictation in the Waft menu." = "Waftメニューで「直前の音声入力を再試行」を選択してください。";
 "Choose" = "選択";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "自分のキーで使うClaudeやOpenAI、またはMac上のローカルモデル。";
 "Clean and Formal" = "「清書」と「フォーマル」";
@@ -227,6 +228,7 @@
 "Open the translator" = "翻訳ツールを開く";
 "Output" = "出力";
 "Overview" = "概要";
+"Part of the dictation is missing" = "音声入力の一部が欠けています";
 "Paste into the focused field" = "選択中の入力欄にペースト";
 "Pasted" = "ペースト済み";
 "Permissions" = "アクセス許可";

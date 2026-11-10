@@ -67,6 +67,7 @@
 "Checking…" = "Перевірка…";
 "Choose File…" = "Вибрати файл…";
 "Choose Languages…" = "Вибрати мови…";
+"Choose Retry Last Dictation in the Waft menu." = "Виберіть «Повторити останнє диктування» в меню Waft.";
 "Choose" = "Вибрати";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude чи OpenAI з вашим ключем або локальна модель на вашому Mac.";
 "Clean and Formal" = "«Чистовий» і «Діловий»";
@@ -227,6 +228,7 @@
 "Open the translator" = "Відкрити перекладач";
 "Output" = "Вставлення";
 "Overview" = "Огляд";
+"Part of the dictation is missing" = "Частину диктування пропущено";
 "Paste into the focused field" = "Вставляти в активне поле";
 "Pasted" = "Вставлено";
 "Permissions" = "Дозволи";

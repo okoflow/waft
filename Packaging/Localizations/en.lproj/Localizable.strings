@@ -67,6 +67,7 @@
 "Checking…" = "Checking…";
 "Choose File…" = "Choose File…";
 "Choose Languages…" = "Choose Languages…";
+"Choose Retry Last Dictation in the Waft menu." = "Choose Retry Last Dictation in the Waft menu.";
 "Choose" = "Choose";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude or OpenAI with your own key, or a local model on your Mac.";
 "Clean and Formal" = "Clean and Formal";
@@ -227,6 +228,7 @@
 "Open the translator" = "Open the translator";
 "Output" = "Output";
 "Overview" = "Overview";
+"Part of the dictation is missing" = "Part of the dictation is missing";
 "Paste into the focused field" = "Paste into the focused field";
 "Pasted" = "Pasted";
 "Permissions" = "Permissions";

@@ -67,6 +67,7 @@
 "Checking…" = "正在檢查⋯";
 "Choose File…" = "選擇檔案⋯";
 "Choose Languages…" = "選擇語言⋯";
+"Choose Retry Last Dictation in the Waft menu." = "請在Waft選單中選擇「重試上次聽寫」。";
 "Choose" = "選擇";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "以你自己的金鑰使用Claude或OpenAI，或使用Mac上的本機模型。";
 "Clean and Formal" = "「潤飾」和「正式」模式";
@@ -227,6 +228,7 @@
 "Open the translator" = "打開翻譯工具";
 "Output" = "輸出";
 "Overview" = "概覽";
+"Part of the dictation is missing" = "部分聽寫內容遺失";
 "Paste into the focused field" = "貼到目前的文字欄位";
 "Pasted" = "已貼上";
 "Permissions" = "權限";

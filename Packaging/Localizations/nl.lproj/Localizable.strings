@@ -67,6 +67,7 @@
 "Checking…" = "Controleren…";
 "Choose File…" = "Kies bestand…";
 "Choose Languages…" = "Kies talen…";
+"Choose Retry Last Dictation in the Waft menu." = "Kies ‘Probeer laatste dictaat opnieuw’ in het Waft-menu.";
 "Choose" = "Kies";
 "Claude or OpenAI with your own key, or a local model on your Mac." = "Claude of OpenAI met je eigen sleutel, of een lokaal model op je Mac.";
 "Clean and Formal" = "‘Netjes’ en ‘Formeel’";
@@ -227,6 +228,7 @@
 "Open the translator" = "Open de vertaler";
 "Output" = "Uitvoer";
 "Overview" = "Overzicht";
+"Part of the dictation is missing" = "Een deel van het dictaat ontbreekt";
 "Paste into the focused field" = "Plak in het actieve veld";
 "Pasted" = "Geplakt";
 "Permissions" = "Toestemmingen";
