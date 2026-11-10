@@ -20,13 +20,21 @@ struct DictationOutcomeTests {
     }
 
     @Test(arguments: [
-        (DictationOutcome.pasted(ProcessedText(text: "Hi.", mode: .clean)), HUDMessage.Kind.pasted, String?.none),
-        (.pasted(ProcessedText(text: "Hi.", mode: .light, fallback: .timeout)), .pasted, fallback),
-        (.copied(ProcessedText(text: "Hi.", mode: .clean)), .copied, nil),
-        (.copied(ProcessedText(text: "Hi.", mode: .light, fallback: .timeout)), .copied, fallback),
-        (.keptOutOfPasswordField(ProcessedText(text: "Hi.", mode: .clean)), .copied, "Not pasted into a password field"),
+        (TextDelivery.Outcome.pasted, RewriteFallback?.none, HUDMessage.Kind.pasted, String?.none),
+        (.pasted, .timeout, .pasted, fallback),
+        (.copied, nil, .copied, nil),
+        (.copied, .timeout, .copied, fallback),
+        (.keptOutOfPasswordField, nil, .copied, "Not pasted into a password field"),
+        (.keptOutOfPasswordField, .timeout, .copied, "Not pasted into a password field"),
     ])
-    func `shows the delivered text with its detail`(outcome: DictationOutcome, kind: HUDMessage.Kind, detail: String?) {
+    func `shows the delivered text with its detail`(
+        delivery: TextDelivery.Outcome,
+        reason: RewriteFallback?,
+        kind: HUDMessage.Kind,
+        detail: String?,
+    ) {
+        let outcome = DictationOutcome.delivered(delivery, ProcessedText(text: "Hi.", mode: .light, fallback: reason))
+
         #expect(outcome.message(for: .cloud(.claude)) == HUDMessage(kind: kind, title: "Hi.", detail: detail))
     }
 }

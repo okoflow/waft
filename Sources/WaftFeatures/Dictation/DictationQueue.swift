@@ -28,7 +28,7 @@ final class DictationQueue {
 
     private let transcriber: any Transcriber
     private let processor: TranscriptProcessor
-    private let inserter: any TextInserter
+    private let delivery: TextDelivery
     private let clipboard: any Clipboard
     private let history: HistoryModel
     private let statistics: StatisticsModel
@@ -52,7 +52,7 @@ final class DictationQueue {
     ) {
         self.transcriber = transcriber
         processor = TranscriptProcessor(rewriters: rewriters)
-        self.inserter = inserter
+        delivery = TextDelivery(inserter: inserter, clipboard: clipboard)
         self.clipboard = clipboard
         self.history = history
         self.statistics = statistics
@@ -174,29 +174,19 @@ final class DictationQueue {
 
         rememberLatest(processed.text)
 
-        guard job.pastes else { return copy(processed, transcribed: transcript, for: job) }
+        let outcome = await pasteOrCopy(processed.text, for: job)
 
-        switch await inserter.insert(processed.text, into: job.target, releasing: job.key) {
-        case .pasted:
+        if outcome != .keptOutOfPasswordField {
             record(processed, transcribed: transcript, for: job)
-
-            return .pasted(processed)
-
-        case .skipped(.secureField):
-            clipboard.copy(processed.text)
-
-            return .keptOutOfPasswordField(processed)
-
-        case .skipped:
-            return copy(processed, transcribed: transcript, for: job)
         }
+
+        return .delivered(outcome, processed)
     }
 
-    private func copy(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) -> DictationOutcome {
-        clipboard.copy(processed.text)
-        record(processed, transcribed: transcript, for: job)
+    private func pasteOrCopy(_ text: String, for job: DictationJob) async -> TextDelivery.Outcome {
+        guard job.pastes else { return delivery.copy(text) }
 
-        return .copied(processed)
+        return await delivery.deliver(text, into: job.target, releasing: job.key)
     }
 
     private func rememberLatest(_ text: String) {

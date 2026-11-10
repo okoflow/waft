@@ -25,7 +25,7 @@ struct DictationQueueTests {
         #expect(history.history.entries.map(\.text) == ["Hello world"])
         #expect(statistics.statistics.allTime.words == 2)
         #expect(statistics.statistics.allTime.seconds == 1)
-        #expect(hud.content == shown(.pasted(Self.hello)))
+        #expect(hud.content == shown(.delivered(.pasted, Self.hello)))
     }
 
     @Test
@@ -47,7 +47,7 @@ struct DictationQueueTests {
 
         queue.submit(.recorded { $0.pastesIntoFocusedField = false })
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.copied(Self.hello)) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.delivered(.copied, Self.hello)) })
         #expect(clipboard.copied == ["Hello world"])
         #expect(inserter.insertions.isEmpty)
         #expect(history.history.entries.map(\.text) == ["Hello world"])
@@ -60,7 +60,7 @@ struct DictationQueueTests {
 
         queue.submit(.recorded())
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.copied(Self.hello)) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.delivered(.copied, Self.hello)) })
         #expect(clipboard.copied == ["Hello world"])
         #expect(queue.latestTranscript == "Hello world")
         #expect(history.history.entries.map(\.text) == ["Hello world"])
@@ -73,7 +73,7 @@ struct DictationQueueTests {
 
         queue.submit(.recorded())
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.keptOutOfPasswordField(Self.hello)) })
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.delivered(.keptOutOfPasswordField, Self.hello)) })
         #expect(clipboard.copied == ["Hello world"])
         #expect(history.history.entries.isEmpty)
         #expect(statistics.statistics.allTime.dictations == 0)
