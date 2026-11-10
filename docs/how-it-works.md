@@ -72,7 +72,7 @@ Waft pastes through the clipboard rather than typing key by key:
 3. It saves the clipboard, puts the text on it, and presses <kbd>⌘</kbd><kbd>V</kbd>.
 4. Once the app has read the text, it restores your clipboard, including images and files, if nothing else was copied meanwhile, it held no more than 5 MB, and it held no concealed or transient item, such as a password manager's. If the app doesn't read the text within 1.5 seconds, the text stays on the clipboard.
 
-So text that Waft recognized is always either pasted or on the clipboard. If the microphone stops in the middle of a dictation, such as when headphones disconnect, Waft recognizes what it recorded until then. If you quit Waft while it works on a dictation, it finishes that one first, for up to 20 seconds.
+So text that Waft recognized is always either pasted or on the clipboard. If the microphone stops in the middle of a dictation, such as when headphones disconnect, Waft recognizes what it recorded until then. If recognition fails, Waft keeps the recording in memory for 10 minutes, and **Retry Last Dictation** in the menu recognizes it again and copies the text. If you quit Waft while it records or works on a dictation, it finishes that one first, for up to a minute.
 
 Waft puts a space before the text, except when:
 

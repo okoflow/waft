@@ -6,8 +6,8 @@ This page covers dictating, the modes, and every other feature and setting of Wa
 
 Hold the dictation key, speak, and let go. The HUD at the top of the screen shows the time and a level meter while you speak, then the step Waft is on. After pasting, it shows "Pasted" for a few seconds; point at it to see the text, and click to copy it again.
 
-- Cancel a recording with <kbd>Esc</kbd>, which still reaches the app in front, or by pressing another key while you hold the dictation key.
-- A recording ends after 5 minutes, and Waft pastes what you said.
+- Cancel a recording with <kbd>Esc</kbd>, which still reaches the app in front, or by pressing another key in the first 2 seconds of holding the dictation key. After that, other keys leave the recording alone, so a shortcut pressed late doesn't cost you what you said.
+- A recording ends after 5 minutes; Waft says so and pastes what you said.
 - You can dictate again while Waft recognizes the previous text; the texts arrive in order.
 - With **Paste into the focused field** off in Settings › Writing, Waft only copies the text.
 - **Play sounds** in Settings › Dictation, on by default, plays a chime when recording starts and another when it stops.
@@ -141,7 +141,7 @@ Four shortcuts work in any app. To change one, click it and press a key with Com
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
-Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. The first line of the menu says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed". **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, and **Recent Dictations** one of your last five.
+Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. The first line of the menu says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed". **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, **Retry Last Dictation** appears for 10 minutes after a recognition that failed and copies its text, and **Recent Dictations** one of your last five.
 
 To hide the icon, turn off **Show in menu bar** in Settings › General. Dictation and the shortcuts keep working, and opening Waft again brings up Settings.
 

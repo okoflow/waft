@@ -4,7 +4,7 @@ This page lists what Waft keeps on your Mac, where, and when it uses the network
 
 ## Audio
 
-Waft records only while you hold the dictation or editing key or while hands-free dictation runs, and keeps the audio in memory until Whisper has recognized it. It then discards the audio and never writes it to disk or sends it anywhere, in any mode; files you transcribe stay where they are.
+Waft records only while you hold the dictation or editing key or while hands-free dictation runs, and keeps the audio in memory until Whisper has recognized it, or for 10 minutes after a recognition that failed, so you can retry it. It then discards the audio and never writes it to disk or sends it anywhere, in any mode; files you transcribe stay where they are.
 
 ## The network
 
