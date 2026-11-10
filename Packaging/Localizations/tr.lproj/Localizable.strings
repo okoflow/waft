@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Güncellemeleri otomatik olarak denetle";
 "Check" = "Denetle";
 "Checking…" = "Denetleniyor…";
-"Choose Copy Last Dictation in the Waft menu." = "Waft menüsünden “Son Dikteyi Kopyala” komutunu seçin.";
 "Choose File…" = "Dosya Seç…";
 "Choose Languages…" = "Dilleri Seç…";
 "Choose" = "Seç";
@@ -254,6 +253,7 @@
 "Recent" = "Son kullanılanlar";
 "Recognizes speech more accurately, especially outside English." = "Konuşmayı daha doğru tanır, özellikle İngilizce dışındaki dillerde.";
 "Recording failed" = "Kayıt yapılamadı";
+"Recording stopped early" = "Kayıt erken durdu";
 "Recording" = "Kayıt";
 "Recordings and videos become text and subtitles, right on your Mac." = "Kayıtlar ve videolar doğrudan Mac’inizde metne ve altyazıya dönüşür.";
 "Recordings and videos become text and subtitles." = "Kayıtlar ve videolar metne ve altyazıya dönüşür.";

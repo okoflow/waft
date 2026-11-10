@@ -115,6 +115,7 @@ package final class AppModel {
     package func prepareToQuit() async {
         dictation.prepareToQuit()
 
+        await queue.waitUntilIdle()
         await inserter.waitUntilIdle()
     }
 

@@ -31,9 +31,10 @@ When macOS asks for your password because Waft wants to use confidential informa
 | Symptom | Cause and fix |
 | --- | --- |
 | The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> | **Paste into the focused field** is off in Settings › Writing, focus moved, Accessibility isn't allowed, the app was slow to take the text, or you held the key over 10 seconds; [Pasting](how-it-works.md#pasting) has the details |
-| "Not pasted into a password field" | A password field, or an app that holds secure keyboard input so Waft can't see the field; **Copy Last Dictation** in the menu gets a dictation back within 10 minutes |
+| The HUD shows the text with <kbd>⌘</kbd><kbd>V</kbd> and "Not pasted into a password field" | The focused field is a password field, or Waft can't read it and its app holds secure keyboard input. The text is on the clipboard: press <kbd>⌘</kbd><kbd>V</kbd> where you want it |
 | "Didn't catch that" | The recording held no speech or only hesitations, or Whisper's result looked made up |
 | "Recording failed" or "Transcription failed" | The microphone or the speech model failed; the line below says why |
+| "Recording stopped early" | The microphone stopped in the middle of a dictation, and the line below says why. Waft still recognizes and delivers what it recorded until then |
 | "Couldn't edit the text", "Couldn't translate the text", or "Couldn't fix the text" | The selection stays as it was; the line below is a reason from [The AI modes use Light](#the-ai-modes-use-light) |
 | "Select the text to edit, then hold the key and say what to change." | Nothing is selected, or the app, such as a web view, doesn't expose it to Accessibility |
 | "Select the text first, then press the shortcut." | Nothing is selected, or the app didn't copy the selection when Waft pressed <kbd>⌘</kbd><kbd>C</kbd>; [The translator](how-it-works.md#the-translator) has the details |

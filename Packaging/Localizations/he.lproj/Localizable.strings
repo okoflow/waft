@@ -65,7 +65,6 @@
 "Check for updates automatically" = "חיפוש עדכונים באופן אוטומטי";
 "Check" = "בדיקה";
 "Checking…" = "בודק…";
-"Choose Copy Last Dictation in the Waft menu." = "יש לבחור ב״העתקת ההכתבה האחרונה״ בתפריט של Waft.";
 "Choose File…" = "בחירת קובץ…";
 "Choose Languages…" = "בחירת שפות…";
 "Choose" = "בחירה";
@@ -254,6 +253,7 @@
 "Recent" = "אחרונות";
 "Recognizes speech more accurately, especially outside English." = "מזהה דיבור בדיוק רב יותר, במיוחד בשפות שאינן אנגלית.";
 "Recording failed" = "ההקלטה נכשלה";
+"Recording stopped early" = "ההקלטה נעצרה מוקדם מדי";
 "Recording" = "הקלטה";
 "Recordings and videos become text and subtitles, right on your Mac." = "הקלטות וסרטונים הופכים למלל ולכתוביות, ישירות ב-Mac שלך.";
 "Recordings and videos become text and subtitles." = "הקלטות וסרטונים הופכים למלל ולכתוביות.";

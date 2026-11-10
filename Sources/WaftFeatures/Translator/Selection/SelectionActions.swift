@@ -152,7 +152,8 @@ final class SelectionActions {
             hud.show(HUDMessage(kind: .pasted, title: text))
 
         case .skipped(.secureField):
-            hud.show(.blockedInPasswordField())
+            clipboard.copy(text)
+            hud.show(.keptOutOfPasswordField(text))
 
         case .skipped:
             clipboard.copy(text)

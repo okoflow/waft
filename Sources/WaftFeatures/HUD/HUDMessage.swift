@@ -34,12 +34,16 @@ struct HUDMessage: Equatable {
         self.detail = detail
     }
 
-    static func blockedInPasswordField(detail: String? = nil) -> HUDMessage {
-        HUDMessage(kind: .warning, title: String(localized: "Not pasted into a password field"), detail: detail)
+    static func keptOutOfPasswordField(_ text: String) -> HUDMessage {
+        HUDMessage(kind: .copied, title: text, detail: String(localized: "Not pasted into a password field"))
     }
 
     static func recordingFailed(_ detail: String) -> HUDMessage {
         HUDMessage(kind: .warning, title: String(localized: "Recording failed"), detail: detail)
+    }
+
+    static func recordingCutShort(_ detail: String) -> HUDMessage {
+        HUDMessage(kind: .warning, title: String(localized: "Recording stopped early"), detail: detail)
     }
 
     private static func readingTime(of texts: [String?]) -> Double {

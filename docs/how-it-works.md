@@ -69,9 +69,11 @@ The shortcuts read the selection through Accessibility. When the app doesn't exp
 Waft pastes through the clipboard rather than typing key by key:
 
 1. It waits up to 10 seconds for you to release the dictation key.
-2. It checks the focused field. A password field gets nothing, not even the clipboard. If **Paste into the focused field** is off, the key is still held, focus moved to another app or field, or Accessibility isn't allowed, Waft copies the text, and the HUD shows it with <kbd>⌘</kbd><kbd>V</kbd>.
+2. It checks the focused field. If the field is a password field, **Paste into the focused field** is off, the key is still held, focus moved to another app or field, or Accessibility isn't allowed, Waft copies the text instead, and the HUD shows it with <kbd>⌘</kbd><kbd>V</kbd>. A field counts as a password field when it says so through Accessibility or, when Waft can't read it, when its own app holds secure keyboard input; another app that holds it, such as a browser left on a login page, changes nothing.
 3. It saves the clipboard, puts the text on it, and presses <kbd>⌘</kbd><kbd>V</kbd>.
 4. Once the app has read the text, it restores your clipboard, including images and files, if nothing else was copied meanwhile, it held no more than 5 MB, and it held no concealed or transient item, such as a password manager's. If the app doesn't read the text within 1.5 seconds, the text stays on the clipboard.
+
+So text that Waft recognized is always either pasted or on the clipboard. If the microphone stops in the middle of a dictation, such as when headphones disconnect, Waft recognizes what it recorded until then. If you quit Waft while it works on a dictation, it finishes that one first, for up to 20 seconds.
 
 Waft puts a space before the text unless it sees no character before the cursor, that character is a space, a line break, an opening bracket, a quote, or a slash, or the text on either side of the cursor is Chinese or Japanese.
 

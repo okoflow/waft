@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Check for updates automatically";
 "Check" = "Check";
 "Checking…" = "Checking…";
-"Choose Copy Last Dictation in the Waft menu." = "Choose Copy Last Dictation in the Waft menu.";
 "Choose File…" = "Choose File…";
 "Choose Languages…" = "Choose Languages…";
 "Choose" = "Choose";
@@ -254,6 +253,7 @@
 "Recent" = "Recent";
 "Recognizes speech more accurately, especially outside English." = "Recognizes speech more accurately, especially outside English.";
 "Recording failed" = "Recording failed";
+"Recording stopped early" = "Recording stopped early";
 "Recording" = "Recording";
 "Recordings and videos become text and subtitles, right on your Mac." = "Recordings and videos become text and subtitles, right on your Mac.";
 "Recordings and videos become text and subtitles." = "Recordings and videos become text and subtitles.";

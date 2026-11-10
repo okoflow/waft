@@ -65,7 +65,6 @@
 "Check for updates automatically" = "Søg automatisk efter opdateringer";
 "Check" = "Kontroller";
 "Checking…" = "Kontrollerer…";
-"Choose Copy Last Dictation in the Waft menu." = "Vælg “Kopier seneste diktering” i Waft-menuen.";
 "Choose File…" = "Vælg arkiv…";
 "Choose Languages…" = "Vælg sprog…";
 "Choose" = "Vælg";
@@ -254,6 +253,7 @@
 "Recent" = "Seneste";
 "Recognizes speech more accurately, especially outside English." = "Genkender tale mere præcist, især på andre sprog end engelsk.";
 "Recording failed" = "Optagelsen mislykkedes";
+"Recording stopped early" = "Optagelsen stoppede for tidligt";
 "Recording" = "Optagelse";
 "Recordings and videos become text and subtitles, right on your Mac." = "Optagelser og videoer bliver til tekst og undertekster direkte på din Mac.";
 "Recordings and videos become text and subtitles." = "Optagelser og videoer bliver til tekst og undertekster.";

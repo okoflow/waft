@@ -5,6 +5,8 @@ import WaftCore
 
 @Observable
 final class DictationQueue {
+    private static let idleTimeout = Duration.seconds(20)
+
     static var transcribingLabel: String {
         String(localized: "Transcribing…")
     }
@@ -84,6 +86,10 @@ final class DictationQueue {
         guard let latestTranscript else { return }
 
         clipboard.copy(latestTranscript)
+    }
+
+    func waitUntilIdle() async {
+        await Poll.until(timeout: Self.idleTimeout) { pendingCount == 0 }
     }
 
     private func run(_ job: DictationJob) async {
@@ -168,7 +174,9 @@ final class DictationQueue {
             return .pasted(processed)
 
         case .skipped(.secureField):
-            return .blockedInPasswordField
+            clipboard.copy(processed.text)
+
+            return .keptOutOfPasswordField(processed)
 
         case .skipped:
             return copy(processed, transcribed: transcript, for: job)

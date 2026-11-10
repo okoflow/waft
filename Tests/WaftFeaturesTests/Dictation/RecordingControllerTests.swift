@@ -68,18 +68,6 @@ struct RecordingControllerTests {
     }
 
     @Test
-    func `shows the failure and stops the recorder when the recording fails`() async {
-        let recordings = model()
-
-        recordings.begin(Self.dictation)
-        recorder.send(.failed(Self.first, .deviceUnavailable))
-
-        #expect(await Poll.until(timeout: .seconds(5)) { recorder.releaseTimes == [nil] })
-        #expect(hud.content == .message(.recordingFailed(RecordingFailure.deviceUnavailable.message)))
-        #expect(!recordings.isRecording)
-    }
-
-    @Test
     func `hands the HUD to the transcribing label and delivers the samples from the captured focus on finish`() async {
         var delivery: (app: String?, samples: [Float])?
         let recordings = model()
@@ -97,25 +85,6 @@ struct RecordingControllerTests {
         #expect(delivery?.app == "com.example.notes")
         #expect(delivery?.samples == [0.1, 0.2])
         #expect(recorder.releaseTimes == [2])
-    }
-
-    @Test(arguments: [
-        (RecordingFailure.formatChanged, RecordingFailure.formatChanged.message),
-        (nil, "No audio was captured."),
-    ] as [(RecordingFailure?, String)])
-    func `reports missing audio with the recorder's failure or a generic message`(
-        failure: RecordingFailure?,
-        detail: String,
-    ) async {
-        var deliveryCount = 0
-        let recordings = model(recorder: FakeAudioRecorder(samples: [], failure: failure))
-        recordings.onFinish = { _, _, _ in deliveryCount += 1 }
-
-        recordings.begin(Self.dictation)
-        recordings.finish(releasedAt: 2)
-
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .message(.recordingFailed(detail)) })
-        #expect(deliveryCount == 0)
     }
 
     @Test

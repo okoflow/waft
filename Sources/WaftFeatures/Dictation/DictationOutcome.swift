@@ -4,7 +4,7 @@ import WaftCore
 enum DictationOutcome {
     case pasted(ProcessedText)
     case copied(ProcessedText)
-    case blockedInPasswordField
+    case keptOutOfPasswordField(ProcessedText)
     case noSpeech
     case failed(String)
     case editFailed(String)
@@ -17,8 +17,8 @@ enum DictationOutcome {
         case let .copied(processed):
             HUDMessage(kind: .copied, title: processed.text, detail: processed.fallback?.message(for: provider))
 
-        case .blockedInPasswordField:
-            .blockedInPasswordField(detail: String(localized: "Choose Copy Last Dictation in the Waft menu."))
+        case let .keptOutOfPasswordField(processed):
+            .keptOutOfPasswordField(processed.text)
 
         case .noSpeech:
             HUDMessage(kind: .information, title: String(localized: "Didn't catch that"))

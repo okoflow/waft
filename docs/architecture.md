@@ -66,11 +66,11 @@ The tables list the folders whose names don't say enough.
 ## The dictation flow
 
 1. `PermissionMonitor` polls the microphone and Accessibility status. A change moves onboarding on and makes `KeyMonitorController` start the `KeyEventMonitor`, which it also restarts when the monitor stops.
-2. `DictationController` feeds the monitor's key events to `RecordingTriggers` and hands finished recordings to the queue. `RecordingController` starts and stops the `AudioRecorder`, polls `ReleaseWatchdog` for a lost key-up, and captures the focus target.
+2. `DictationController` feeds the monitor's key events to `RecordingTriggers` and hands finished recordings to the queue. `RecordingController` starts and stops the `AudioRecorder`, polls `ReleaseWatchdog` for a lost key-up, and captures the focus target. When the recording of a dictation fails after it captured audio, the controller hands that audio to the queue too.
 3. `DictationQueue` runs finished recordings one at a time: the `Transcriber` recognizes them, `TranscriptProcessor` applies the dictionary, snippets, and the mode, and the `TextInserter` pastes the result.
 4. An AI mode runs the `TextRewriter` under the deadline of the chosen `CloudModel` or the local server, validates the answer with `RewriteValidator`, and on any `RewriteError` falls back to Light with a `RewriteFallback` that says why.
 5. An edit by voice gives Whisper the dictionary terms but skips their replacements, the snippets, and the mode: `TranscriptProcessor.edit` sends the selection read at the key press and the spoken instruction to the `TextRewriter`, and the answer replaces the selection. A failure pastes nothing.
-6. The outcome becomes a `HUDMessage`. The text becomes the latest transcript, even in a password field, and text that is pasted or copied becomes a history entry unless it came from an edit.
+6. The outcome becomes a `HUDMessage`. The text becomes the latest transcript and is either pasted or copied, so none is dropped: a password field gets a copy instead of a paste. Text that is pasted or copied becomes a history entry unless it came from an edit or was kept out of a password field.
 
 ## Invariants
 

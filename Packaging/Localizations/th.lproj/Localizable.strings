@@ -65,7 +65,6 @@
 "Check for updates automatically" = "ตรวจหารายการอัปเดตโดยอัตโนมัติ";
 "Check" = "ตรวจสอบ";
 "Checking…" = "กำลังตรวจสอบ…";
-"Choose Copy Last Dictation in the Waft menu." = "เลือก “คัดลอกการป้อนตามคำบอกล่าสุด” ในเมนู Waft";
 "Choose File…" = "เลือกไฟล์…";
 "Choose Languages…" = "เลือกภาษา…";
 "Choose" = "เลือก";
@@ -254,6 +253,7 @@
 "Recent" = "ล่าสุด";
 "Recognizes speech more accurately, especially outside English." = "จำเสียงพูดได้แม่นยำกว่า โดยเฉพาะภาษาอื่นที่ไม่ใช่ภาษาอังกฤษ";
 "Recording failed" = "บันทึกเสียงไม่สำเร็จ";
+"Recording stopped early" = "การบันทึกเสียงหยุดก่อนเวลา";
 "Recording" = "การบันทึกเสียง";
 "Recordings and videos become text and subtitles, right on your Mac." = "แปลงไฟล์บันทึกเสียงและวิดีโอเป็นข้อความและคำบรรยายบน Mac ของคุณเอง";
 "Recordings and videos become text and subtitles." = "แปลงไฟล์บันทึกเสียงและวิดีโอเป็นข้อความและคำบรรยาย";

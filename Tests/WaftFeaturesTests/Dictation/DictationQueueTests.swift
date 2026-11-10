@@ -71,17 +71,28 @@ struct DictationQueueTests {
     }
 
     @Test
-    func `keeps a password field's text out of the clipboard and history but offers it as the latest transcript`() async {
+    func `copies a password field's text instead of pasting it and keeps it out of history`() async {
         let inserter = FakeTextInserter(.skipped(.secureField))
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
 
         queue.submit(job())
 
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.blockedInPasswordField) })
-        #expect(clipboard.copied.isEmpty)
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.keptOutOfPasswordField(Self.hello)) })
+        #expect(clipboard.copied == ["Hello world"])
         #expect(history.history.entries.isEmpty)
         #expect(statistics.statistics.allTime.dictations == 0)
         #expect(queue.latestTranscript == "Hello world")
+    }
+
+    @Test
+    func `stays busy until a submitted dictation is delivered`() async {
+        let inserter = FakeTextInserter()
+        let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: inserter)
+
+        queue.submit(job())
+        await queue.waitUntilIdle()
+
+        #expect(inserter.insertions.map(\.text) == ["Hello world"])
     }
 
     @Test(arguments: [nil, Transcript.spoken("")])
@@ -220,7 +231,9 @@ struct DictationQueueTests {
 
         #expect(clipboard.copied == ["Hello world"])
     }
+}
 
+extension DictationQueueTests {
     private func queue(
         _ transcriber: FakeTranscriber,
         inserter: FakeTextInserter = FakeTextInserter(),
