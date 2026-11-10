@@ -32,7 +32,10 @@ struct PickerCard<Preview: View>: View {
                 preview
                     .frame(maxWidth: .infinity)
                     .frame(height: Metrics.pickerPreviewHeight)
-                    .background(Palette.field, in: RoundedRectangle(cornerRadius: Metrics.editorRadius, style: .continuous))
+                    .background(
+                        Palette.field,
+                        in: RoundedRectangle(cornerRadius: Metrics.pickerPreviewRadius, style: .continuous),
+                    )
 
                 VStack(alignment: .leading, spacing: Metrics.labelSpacing) {
                     HStack(spacing: Metrics.inlineSpacing) {

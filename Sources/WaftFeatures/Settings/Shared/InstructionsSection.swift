@@ -17,9 +17,10 @@ struct InstructionsSection: View {
     }
 
     var body: some View {
-        SettingsGroup("Instructions", subtitle: note) {
+        SettingsSection("Instructions", subtitle: note) {
             InputEditor(text: instructions)
                 .frame(height: Self.editorHeight)
+                .settingsRowPadding()
         }
     }
 }

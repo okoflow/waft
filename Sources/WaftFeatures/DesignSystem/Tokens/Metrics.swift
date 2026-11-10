@@ -30,10 +30,10 @@ enum Metrics {
     static let recorderWidth: CGFloat = 160
     static let controlRadius: CGFloat = 7
     static let largeControlRadius: CGFloat = 9
-    static let editorRadius: CGFloat = 8
     static let pickerCardPadding: CGFloat = 8
     static let pickerCardSpacing: CGFloat = 9
     static let pickerPreviewHeight: CGFloat = 62
+    static let pickerPreviewRadius: CGFloat = 8
     static let badgeHorizontalPadding: CGFloat = 6
     static let badgeVerticalPadding: CGFloat = 1
     static let windowPadding: CGFloat = 24
