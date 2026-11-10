@@ -207,6 +207,20 @@ struct DictationControllerTests {
         #expect(transcriber.requests.map(\.vocabulary) == [["Okoflow"]])
         #expect(!controller.isRecording)
     }
+
+    @Test
+    func `finishes and delivers a dictation that is still recording when Waft quits`() async {
+        let controller = await controller()
+
+        await pressDictationKey(at: 0)
+
+        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == .listening(badge: "Light", isHandsFree: false) })
+
+        await controller.prepareToQuit()
+
+        #expect(!controller.isRecording)
+        #expect(await Poll.until(timeout: .seconds(5)) { inserter.insertions.map(\.text) == ["Hello world."] })
+    }
 }
 
 extension DictationControllerTests {
