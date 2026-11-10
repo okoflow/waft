@@ -1,6 +1,6 @@
 # Contributing
 
-This page covers the setup, the checks a change passes, and the rules for code, tests, scripts, docs, commits, and pull requests. [Architecture](docs/architecture.md) maps the code, and [Releasing](docs/releasing.md) covers releases. Everyone who takes part follows the Code of Conduct in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+This page covers the setup, the checks a change passes, and the rules for code, tests, scripts, docs, commits, and pull requests. [Architecture](docs/architecture.md) maps the code, and [Releasing](docs/releasing.md) covers releases. Everyone who takes part follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Ways to contribute
 
@@ -24,14 +24,14 @@ make run
 
 `make signing` creates the Waft Dev code-signing identity in your login keychain once and asks for your password to trust it. Without it, every build is signed ad hoc and macOS forgets the permissions you granted; if that happened, remove the old Waft entries under Microphone and Accessibility in System Settings › Privacy & Security after you rebuild, and allow them again. `make run` builds the debug configuration, signs it, and opens `build/Waft.app`; add `CONFIG=release` for an optimized build. A debug build doesn't update itself: pull and run `make run` again.
 
-To change the code, install the tools the checks use and the pre-commit hook:
+To change the code, install the [Homebrew](https://brew.sh) tools the checks use, which the [Brewfile](Brewfile) lists, and the pre-commit hook:
 
 ```sh
 brew bundle
 make hooks
 ```
 
-The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the checks use. The hook runs `format-check`, `lint`, and `shellcheck` when the commit touches files they check, and always runs `spelling` and `secrets-staged`, which scans the staged changes for secrets. `make help` lists every target.
+The hook runs `format-check`, `lint`, and `shellcheck` when the commit touches files they check, and always runs `spelling` and `secrets-staged`. `make help` lists every target.
 
 ## Checks
 
@@ -50,7 +50,7 @@ The [Brewfile](Brewfile) lists every [Homebrew](https://brew.sh) tool the checks
 | `strings` | `scripts/strings.sh` | A translation missing a string from the code, keeping one the code dropped, changing a placeholder, or lacking the microphone prompt in `InfoPlist.strings` |
 | `bundle` | `scripts/bundle.sh` | The app can't be assembled or signed |
 
-The linters and formatters read their settings from dotfiles at the root, such as `.swiftlint.yml`, `.swiftformat`, and `.typos.toml`. Fix the code rather than the rule. A rule that is wrong for one line gets a targeted `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>` directive.
+The tools read their settings from dotfiles at the root, such as `.swiftlint.yml`, `.swiftformat`, and `.typos.toml`. Fix the code rather than the rule; a rule that is wrong for one line gets a `// swiftlint:disable:next <rule>` or `// swiftformat:disable:next <rule>` directive.
 
 ## Code
 

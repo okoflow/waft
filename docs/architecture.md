@@ -64,7 +64,7 @@ The tables list the folders whose names don't say enough.
 | `DesignSystem` | `Tokens` (colors, metrics, motion, and fonts), `Brand` (the icon and the Waft+ marks), `Controls`, `Rows` (the cards, sections, and rows of Settings and the setup guide), and view `Modifiers` |
 | `Support` | Logging, timers, and display helpers that several features share |
 
-**`Tests`** has a Swift Testing target for every module but `Waft`, with its suites in the folders of `Sources` and its shared doubles and fixtures in `Fakes` and `Fixtures`; see [Tests](../CONTRIBUTING.md#tests).
+**`Tests`** has a Swift Testing target for every module but `Waft`, laid out as [Tests](../CONTRIBUTING.md#tests) describes.
 
 **`Packaging`** holds the rest of the app bundle: `Waft-Info.plist`, the entitlements, the icon, the translations, the start and stop sounds, and the Homebrew cask template. **`scripts`** holds the shell scripts that `make` runs.
 
@@ -90,7 +90,7 @@ The tables list the folders whose names don't say enough.
 
 ## Third-party packages
 
-The package depends only on WhisperKit, from `argmax-oss-swift`, and Sparkle, pinned to exact versions in `Package.swift`, with every resolved package recorded in `Package.resolved`. Dependabot proposes updates for them and for the GitHub Actions. These candidates were rejected:
+The package depends only on WhisperKit, from `argmax-oss-swift`, and Sparkle, pinned to exact versions in `Package.swift`. These candidates were rejected:
 
 | Package | Why not |
 | --- | --- |

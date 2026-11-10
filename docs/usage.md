@@ -4,7 +4,7 @@ This page covers dictating, the modes, and every other feature and setting of Wa
 
 ## Dictating
 
-Hold the dictation key, speak, and let go. The HUD grows out of the notch, or drops from the top edge of a screen without one. When another app already draws over the notch, such as Alcove or NotchNook, the HUD floats just below the menu bar instead, above that app. It shows the time and a level meter while you speak, with a lock instead of the microphone when you dictate hands-free. While Waft works, a dotted orb shows the step under it: "Transcribing…", then "Cleaning up…" or "Translating…" in an AI mode, or "Editing…" when you edit by voice. After pasting, it shows "Pasted" with a check mark for a few seconds; point at it to see the text, up to three lines, and click to copy the whole text again.
+Hold the dictation key, speak, and let go. The HUD grows out of the notch, or drops from the top edge of a screen without one; when another app draws over the notch, such as Alcove or NotchNook, it floats just below the menu bar. It shows the time and a level meter while you speak, with a lock instead of the microphone when you dictate hands-free. While Waft works, it names the step: "Transcribing…", then "Cleaning up…" or "Translating…" in an AI mode, or "Editing…" when you edit by voice. After pasting, it shows "Pasted" with a check mark for a few seconds; point at it to see the text, up to three lines, and click to copy the whole text again.
 
 - Cancel a recording with <kbd>Esc</kbd>, which still reaches the app in front, or by pressing another key while you hold the dictation key. Nothing is pasted.
 - A recording ends after 5 minutes, and Waft pastes what you said.

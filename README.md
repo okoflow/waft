@@ -106,7 +106,7 @@ Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features, file transc
 
 ## Sponsor
 
-Waft is open source. If it saves you time, you can support its development on [GitHub Sponsors](https://github.com/sponsors/imsvidskiy).
+If Waft saves you time, you can support its development on [GitHub Sponsors](https://github.com/sponsors/imsvidskiy).
 
 ## Contributing
 

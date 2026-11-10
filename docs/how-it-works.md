@@ -51,7 +51,7 @@ The recognized text goes through five steps:
 
 Light makes these changes and no others:
 
-- It removes hesitation sounds, such as "um" or "uh", with the commas around them, but keeps one after a number, as in "5 мм", or written in capitals, as in "ER". An opening "¿", bracket, or quote next to a removed sound stays with the next word, and a sound inside its own marks, as in "¿eh?" or "(um)", goes with them.
+- It removes hesitation sounds, such as "um" or "uh", with the commas around them, but keeps one after a number, as in "5 мм", or written in capitals, as in "ER".
 - It tidies the spaces around punctuation, keeping the space French puts before `!`, `?`, `;`, and `:`; capitalizes the first letter, with a dotted "İ" in Turkish and Azerbaijani, but leaves a first word such as "iPhone" as written; and adds a period when the text ends in a letter or digit: "。" in Chinese and Japanese, "।" in Hindi, "۔" in Urdu, and none in Thai.
 - It applies the two voice commands that [Modes](usage.md#modes) describes.
 
