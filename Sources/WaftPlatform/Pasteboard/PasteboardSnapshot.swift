@@ -62,7 +62,9 @@ struct PasteboardSnapshot: Sendable {
         }
 
         for request in requests.filter({ !PasteboardRestorePolicy.isStandard($0.type) }) where byteCount <= limit {
-            guard rareTypesDuration <= rareTypesTimeBudget else { break }
+            if rareTypesDuration > rareTypesTimeBudget, !contents[request.index].isEmpty {
+                continue
+            }
 
             let start = clock.now
             let data = sources[request.index].data(forType: NSPasteboard.PasteboardType(request.type))

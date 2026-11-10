@@ -224,18 +224,28 @@ struct PasteboardSnapshotTests {
     }
 
     @Test
-    func `keeps the dictated text rather than an item whose only type came after the time budget`() {
-        NSPasteboard.withTemporary { pasteboard in
+    func `saves one type of an item that has no other, even after the time budget`() throws {
+        try NSPasteboard.withTemporary { pasteboard in
+            let first = NSPasteboardItem()
+            first.setData(Data([1]), forType: Self.privateType)
+
+            let second = NSPasteboardItem()
+            second.setData(Data([2]), forType: Self.privateType)
+            second.setData(Data([3]), forType: Self.otherPrivateType)
+
             pasteboard.clearContents()
-            pasteboard.writeObjects([Self.item([Self.privateType: Data([1])]), Self.item([Self.privateType: Data([2])])])
+            pasteboard.writeObjects([first, second])
 
             let snapshot = PasteboardSnapshot.take(from: pasteboard, rareTypesTimeBudget: .zero)
 
             pasteboard.writePrivately("Dictated.")
             snapshot.restore(to: pasteboard)
 
-            #expect(snapshot.plan == .skip(reason: .uncapturedItem))
-            #expect(pasteboard.string(forType: .string) == "Dictated.")
+            let items = try #require(pasteboard.pasteboardItems)
+
+            #expect(snapshot.plan == .restore)
+            #expect(items.map(\.types) == [[Self.privateType], [Self.privateType]])
+            #expect(items.map { $0.data(forType: Self.privateType) } == [Data([1]), Data([2])])
         }
     }
 }
