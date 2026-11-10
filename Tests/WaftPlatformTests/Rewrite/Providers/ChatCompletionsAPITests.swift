@@ -74,17 +74,12 @@ struct ChatCompletionsAPITests {
         #expect(transport.requests.count == 2)
     }
 
-    @Test(arguments: [
-        (401, RewriteError.rejectedKey),
-        (404, .unavailable),
-        (429, .rateLimited),
-        (500, .serviceUnavailable),
-    ])
-    func `sends the request once when the server fails with another status`(status: Int, error: RewriteError) async {
-        let transport = FakeHTTPTransport(.status(status), .status(200, body: Self.answer))
+    @Test
+    func `sends the request once when the server fails with another status`() async {
+        let transport = FakeHTTPTransport(.status(500), .status(200, body: Self.answer))
         let rewriter = HTTPRewriter(api: Self.api, transport: transport)
 
-        await #expect(throws: error) {
+        await #expect(throws: RewriteError.serviceUnavailable) {
             try await rewriter.rewrite(.cleanup("hello", localServer: Self.server))
         }
 

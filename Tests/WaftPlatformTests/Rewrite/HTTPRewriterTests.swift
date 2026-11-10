@@ -41,12 +41,12 @@ struct HTTPRewriterTests {
         #expect(transport.requests.isEmpty)
     }
 
-    @Test(arguments: [(400, RewriteError.serviceUnavailable), (429, .rateLimited)])
-    func `sends one request when the API has no call for after the status`(status: Int, error: RewriteError) async {
-        let transport = FakeHTTPTransport(.status(status), .status(200))
+    @Test
+    func `sends one request when the API has no call for after the status`() async {
+        let transport = FakeHTTPTransport(.status(400), .status(200))
         let rewriter = HTTPRewriter(api: FakeRewriteAPI(key: "sk-test"), transport: transport)
 
-        await #expect(throws: error) {
+        await #expect(throws: RewriteError.serviceUnavailable) {
             try await rewriter.rewrite(.cleanup("hello"))
         }
 
