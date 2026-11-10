@@ -4,7 +4,7 @@ nonisolated struct IslandShape: Shape {
     static let ear: CGFloat = 6
 
     var radius: CGFloat
-    var isFloating = false
+    let isFloating: Bool
 
     var animatableData: CGFloat {
         get { radius }

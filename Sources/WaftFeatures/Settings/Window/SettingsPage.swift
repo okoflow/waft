@@ -87,7 +87,7 @@ struct SettingsPage<Content: View, Accessory: View>: View {
 }
 
 extension SettingsPage where Accessory == EmptyView {
-    init(_ title: LocalizedStringKey, needsWaftPlus: Bool = false, @ViewBuilder content: () -> Content) {
+    init(_ title: LocalizedStringKey, needsWaftPlus: Bool, @ViewBuilder content: () -> Content) {
         self.title = title
         self.needsWaftPlus = needsWaftPlus
         back = nil

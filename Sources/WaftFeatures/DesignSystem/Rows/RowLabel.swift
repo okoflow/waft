@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RowLabel: View {
     let title: LocalizedStringKey
-    var description: LocalizedStringKey?
+    let description: LocalizedStringKey?
     var isTitleAccessible = true
 
     var body: some View {
