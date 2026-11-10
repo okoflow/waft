@@ -128,6 +128,7 @@
 "Editing…" = "Redigerar…";
 "Exactly what was heard." = "Exakt det som hördes.";
 "Fast" = "Snabb";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Användning per funktion, Waft- och macOS-version, ett slumpmässigt ID.";
 "File transcription is part of Waft+" = "Filtranskribering ingår i Waft+";
 "File transcription" = "Filtranskribering";
 "File" = "Fil";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Håll ned eller tryck två gånger";
 "Hold" = "Håll ned";
 "How often you use each feature, never your words or audio." = "Hur ofta du använder varje funktion, aldrig dina ord eller ljud.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "Hur ofta du använder varje funktion, versionerna av Waft och macOS och ett slumpmässigt ID.";
 "How to start" = "Så startar du";
 "Included" = "Ingår";
 "Install Update…" = "Installera uppdatering…";

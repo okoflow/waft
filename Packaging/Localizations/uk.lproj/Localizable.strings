@@ -45,7 +45,7 @@
 "Allow microphone access" = "Дозвольте доступ до мікрофона";
 "Allowed" = "Дозволено";
 "Allow…" = "Дозволити…";
-"Anonymous usage data shows which features to work on next." = "Анонімні дані про використання показують, над якими функціями працювати далі.";
+"Anonymous usage data shows which features to work on next." = "Анонімні дані показують, над якими функціями працювати далі.";
 "Any AI model" = "Будь-яка модель ШІ";
 "App language" = "Мова програми";
 "App" = "Програма";
@@ -128,6 +128,7 @@
 "Editing…" = "Редагування…";
 "Exactly what was heard." = "Саме те, що прозвучало.";
 "Fast" = "Швидка";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Як часто використовуються функції, версії Waft і macOS, випадковий ID.";
 "File transcription is part of Waft+" = "Розпізнавання файлів входить до Waft+";
 "File transcription" = "Розпізнавання файлів";
 "File" = "Файл";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Утримувати або двічі натиснути";
 "Hold" = "Утримувати";
 "How often you use each feature, never your words or audio." = "Лише те, як часто ви користуєтеся кожною функцією. Ваші слова й аудіо не передаються.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "Як часто ви користуєтеся кожною функцією, версії Waft і macOS та випадковий ідентифікатор.";
 "How to start" = "Як почати";
 "Included" = "Доступно";
 "Install Update…" = "Інсталювати оновлення…";

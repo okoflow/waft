@@ -128,6 +128,7 @@
 "Editing…" = "Editando…";
 "Exactly what was heard." = "Exatamente o que foi ouvido.";
 "Fast" = "Rápido";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Uso de cada recurso, versões do Waft e do macOS e um ID aleatório.";
 "File transcription is part of Waft+" = "A transcrição de arquivos faz parte do Waft+";
 "File transcription" = "Transcrição de arquivos";
 "File" = "Arquivo";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Manter ou pressionar duas vezes";
 "Hold" = "Manter pressionado";
 "How often you use each feature, never your words or audio." = "Com que frequência você usa cada recurso, nunca suas palavras nem o áudio.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "Com que frequência você usa cada recurso, as versões do Waft e do macOS e um ID aleatório.";
 "How to start" = "Como começar";
 "Included" = "Incluído";
 "Install Update…" = "Instalar Atualização…";

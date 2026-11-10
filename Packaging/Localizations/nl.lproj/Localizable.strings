@@ -45,7 +45,7 @@
 "Allow microphone access" = "Geef toegang tot de microfoon";
 "Allowed" = "Toegestaan";
 "Allow…" = "Sta toe…";
-"Anonymous usage data shows which features to work on next." = "Anonieme gebruiksgegevens laten zien aan welke functies als volgende gewerkt moet worden.";
+"Anonymous usage data shows which features to work on next." = "Anonieme gebruiksgegevens laten zien waaraan we hierna moeten werken.";
 "Any AI model" = "Elk AI-model";
 "App language" = "Taal van app";
 "App" = "App";
@@ -128,6 +128,7 @@
 "Editing…" = "Bewerken…";
 "Exactly what was heard." = "Precies wat er werd gehoord.";
 "Fast" = "Snel";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Gebruik per functie, de versies van Waft en macOS en een willekeurige ID.";
 "File transcription is part of Waft+" = "Bestanden transcriberen hoort bij Waft+";
 "File transcription" = "Bestanden transcriberen";
 "File" = "Bestand";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Houden of tweemaal drukken";
 "Hold" = "Ingedrukt houden";
 "How often you use each feature, never your words or audio." = "Hoe vaak je elke functie gebruikt, nooit je woorden of audio.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "Hoe vaak je elke functie gebruikt, de versies van Waft en macOS en een willekeurige ID.";
 "How to start" = "Zo start je";
 "Included" = "Inbegrepen";
 "Install Update…" = "Installeer update…";

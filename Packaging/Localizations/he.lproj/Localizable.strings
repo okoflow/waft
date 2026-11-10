@@ -128,6 +128,7 @@
 "Editing…" = "עורך…";
 "Exactly what was heard." = "בדיוק מה שנשמע.";
 "Fast" = "מהיר";
+"Feature counts, the Waft and macOS versions, and a random ID." = "כמה נעשה שימוש בכל תכונה, גרסאות Waft ו-macOS ומזהה אקראי.";
 "File transcription is part of Waft+" = "תמלול קבצים כלול ב-Waft+‎";
 "File transcription" = "תמלול קבצים";
 "File" = "קובץ";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "לחיצה ארוכה או כפולה";
 "Hold" = "לחיצה ארוכה";
 "How often you use each feature, never your words or audio." = "באיזו תדירות נעשה שימוש בכל תכונה, לעולם לא המילים או השמע שלך.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "באיזו תדירות נעשה שימוש בכל תכונה, גרסאות Waft ו-macOS ומזהה אקראי.";
 "How to start" = "אופן ההפעלה";
 "Included" = "כלול";
 "Install Update…" = "התקנת העדכון…";

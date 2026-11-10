@@ -128,6 +128,7 @@
 "Editing…" = "編集中…";
 "Exactly what was heard." = "聞き取ったとおりに入力します。";
 "Fast" = "高速";
+"Feature counts, the Waft and macOS versions, and a random ID." = "各機能の使用回数、WaftとmacOSのバージョン、ランダムなID。";
 "File transcription is part of Waft+" = "ファイルの文字起こしはWaft+の機能です";
 "File transcription" = "ファイルの文字起こし";
 "File" = "ファイル";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "長押しまたは2回押し";
 "Hold" = "長押し";
 "How often you use each feature, never your words or audio." = "各機能の使用回数のみ。話した内容や音声は含まれません。";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "各機能の使用回数、WaftとmacOSのバージョン、ランダムなID。";
 "How to start" = "開始方法";
 "Included" = "利用可能";
 "Install Update…" = "アップデートをインストール…";
@@ -461,7 +461,7 @@
 "You write" = "入力した内容";
 "You're all set" = "準備ができました";
 "Your changes to these instructions are deleted." = "この指示への変更は削除されます。";
-"Your choice" = "選ぶのはあなた";
+"Your choice" = "あなたの選択";
 "Your free trial has ended." = "無料トライアルは終了しました。";
 "Your mode" = "自分のモード";
 "Your modes" = "自分のモード";
