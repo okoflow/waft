@@ -1,18 +1,8 @@
 # Releasing
 
-This page describes how you turn `main` into a release that users get from GitHub Releases, Homebrew, and in-app updates. [Checks](../CONTRIBUTING.md#checks) lists what every change passes before it reaches `main`.
+This page describes how you turn `main` into a release: the disk image on GitHub Releases, the `appcast.xml` that Waft's updater reads, and the Homebrew cask.
 
-## What a release is made of
-
-| Artifact | Made by | Used by |
-| --- | --- | --- |
-| `Waft-X.Y.Z.dmg` | `scripts/release.sh`, signed with Waft Release | GitHub Releases, the Homebrew cask, and Sparkle |
-| `appcast.xml` | Sparkle's `generate_appcast`, signed with the project's EdDSA key | Waft's updater, at `releases/latest/download/appcast.xml`, and the cask's `livecheck` |
-| `waft.rb` | `scripts/release.sh`, from `Packaging/Homebrew/waft.rb` | `Casks/waft.rb` in `okoflow/homebrew-tap` |
-
-Waft is not sandboxed, so the bundle ships Sparkle without its XPC services.
-
-Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity. macOS ties the permissions it grants to that certificate, so they survive updates, but Gatekeeper blocks the first launch of a copy from the disk image until the user clicks **Open Anyway**, as [Install](getting-started.md#1-install) shows. The cask's `postflight_steps` remove the quarantine flag, so a copy from Homebrew opens right away. [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
+Until the project has a Developer ID, releases are signed with Waft Release, a self-signed identity, and [Switching to a Developer ID](#switching-to-a-developer-id) lists what changes then.
 
 ## One-time setup
 
@@ -60,7 +50,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
    The script stops unless the working tree is clean, `HEAD` is `origin/main`, the version's tag isn't on `origin` yet, `CFBundleVersion` is above the published one, the signing identity is Waft Release or a Developer ID, and the keychain holds it and the Sparkle key that matches `SUPublicEDKey`. It verifies the signature of the built app and writes the disk image, the appcast with the notes embedded, and the cask with the disk image's checksum into `build/release`.
 
    Don't edit `appcast.xml`, since its signature covers the notes. To change it, rerun `generate_appcast` with the arguments of `make_appcast` in `scripts/release.sh`.
-4. Check the files before you publish them. Releases are immutable: the tag, the files, and the notes embedded in the appcast can't change after publishing. Mount the disk image and run `codesign --verify --strict` on the app in it.
+4. Check the files before you publish them, since the tag, the files, and the notes embedded in the appcast can't change afterward. Mount the disk image and run `codesign --verify --strict` on the app in it.
 5. Publish the release with the command the script prints, which tags the commit it built:
 
    ```sh
@@ -69,8 +59,6 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
    ```
 
 6. Copy `build/release/waft.rb` to `Casks/waft.rb` in your clone of `okoflow/homebrew-tap`, then commit and push it.
-
-Installed copies then find the update, as [Updates](usage.md#updates) describes.
 
 ## Switching to a Developer ID
 
@@ -82,7 +70,7 @@ When the Apple Developer account has a Developer ID:
    xcrun notarytool store-credentials waft-notary --apple-id <apple-id> --team-id <team-id>
    ```
 
-2. Release with `SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)"`. The script then signs with the hardened runtime, which needs the microphone entitlement in `Packaging/Waft.entitlements`, notarizes and staples the app and the disk image, and checks the image with `spctl`.
-3. Remove `postflight_steps` from `Packaging/Homebrew/waft.rb`, the **Open Anyway** steps from [Install](getting-started.md#1-install) and [Troubleshooting](troubleshooting.md#macos-wont-open-waft), and the sentence about the first launch of the disk image's copy from [README.md](../README.md).
+2. Release with `SIGNING_IDENTITY="Developer ID Application: <name> (<team-id>)"`. The script then signs with the hardened runtime, notarizes and staples the app and the disk image, and checks the image with `spctl`.
+3. Remove `postflight_steps`, which take the quarantine flag off a copy from Homebrew, from `Packaging/Homebrew/waft.rb`, the **Open Anyway** steps from [Install](getting-started.md#1-install) and [Troubleshooting](troubleshooting.md#macos-wont-open-waft), and the sentence about the first launch of the disk image's copy from [README.md](../README.md).
 4. Move the API keys and the license key back to the keychain: point `SecretFileStore` the other way, so it moves a key from its file into the keychain on first load and deletes the file, and update [What Waft keeps](privacy.md#what-waft-keeps), the key rows in Settings › AI Models, and [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain).
 5. Say in the release notes that macOS asks once more for the microphone and Accessibility, since the signature changed.

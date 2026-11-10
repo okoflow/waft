@@ -1,17 +1,16 @@
 # Usage
 
-This page covers dictating, the modes, and every other feature and setting of Waft. [Getting started](getting-started.md) covers the first launch, and [How it works](how-it-works.md) what happens behind the scenes.
+This page covers every feature and setting of Waft.
 
 ## Dictating
 
-Hold the dictation key, speak, and let go. The HUD at the top of the screen shows the time and a level meter while you speak, then the step Waft is on. After pasting, it shows "Pasted" for a few seconds; point at it to see the text, and click to copy it again.
+Hold the dictation key, speak, and let go. After pasting, the HUD at the top of the screen shows "Pasted" for a few seconds: point at it to see the text, and click to copy it again.
 
-- Cancel a recording with <kbd>Esc</kbd>, which still reaches the app in front, or by pressing another key in the first 2 seconds of holding the dictation key. After that, other keys leave the recording alone, so a shortcut pressed late doesn't cost you what you said.
+- Cancel a recording with <kbd>Esc</kbd>, or by pressing another key in the first 2 seconds of holding the dictation key. After that, other keys leave the recording alone.
 - A recording ends after 5 minutes; Waft says so and pastes what you said.
 - You can dictate again while Waft recognizes the previous text; the texts arrive in order.
 - With **Paste into the focused field** off in Settings › Writing, Waft only copies the text.
-- **Play sounds** in Settings › Dictation, on by default, plays a chime when recording starts and another when it stops.
-- **Lower other sounds while recording** there, on by default, turns the Mac's volume down to a quarter while you record.
+- **Play sounds** and **Lower other sounds while recording** in Settings › Dictation are on by default; the second turns the Mac's volume down to a quarter while you record.
 
 ### The dictation key
 
@@ -78,7 +77,7 @@ Waft reads the selection through Accessibility, so an edit doesn't work in an ap
 
 ## Translator
 
-**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> in any app, opens a floating panel over the app you're in, with your text on the left and its translation on the right. Type or paste up to 5,000 characters, or dictate; the AI model translates when you stop typing.
+**Translator…** in the menu, or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> in any app, opens a floating panel with your text on the left and its translation on the right. Type or paste up to 5,000 characters, or dictate; the AI model translates when you stop typing.
 
 - The left half detects the language unless you choose one. The right half translates into **Translate into**, English by default, and text already in that language into **Two-way with**, as Translate does. Change **Translate into** in the panel, and both in Settings › Translator.
 - When the text is in one of the two languages on the right, Waft goes by that instead of the language you chose on the left and shows "detected" next to it.
@@ -141,14 +140,14 @@ Four shortcuts work in any app. To change one, click it and press a key with Com
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
-Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. The first line of the menu says what Waft is doing, such as which key to hold or tap, "Listening…", or "Setup needed". **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, **Retry Last Dictation** appears for 10 minutes after a recognition that failed and copies its text, and **Recent Dictations** one of your last five.
+Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, **Retry Last Dictation** appears for 10 minutes after a recognition that failed and copies its text, and **Recent Dictations** one of your last five.
 
 To hide the icon, turn off **Show in menu bar** in Settings › General. Dictation and the shortcuts keep working, and opening Waft again brings up Settings.
 
 ## General settings
 
 - **Open at login** in Settings › General starts Waft when you log in.
-- **Share anonymous usage data** sends daily counts of the features you use and nothing you say or type. **What is sent** under it opens [Usage data](privacy.md#usage-data), which lists every field.
+- **Share anonymous usage data** sends daily counts of the features you use and nothing you say or type; [Usage data](privacy.md#usage-data) lists every field.
 - **App language** switches Waft's interface between 23 languages, or **Same as macOS**, once you click **Relaunch** next to it.
 
 ## Updates
