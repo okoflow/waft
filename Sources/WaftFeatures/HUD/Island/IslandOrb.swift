@@ -22,7 +22,6 @@ struct IslandOrb: View {
             .frame(width: Self.size + Self.overflow, height: Self.size + Self.overflow)
         }
         .frame(width: Self.size, height: Self.size)
-        .accessibilityHidden(true)
     }
 
     private static func progress(since start: Date, at date: Date, over duration: TimeInterval) -> Double {
