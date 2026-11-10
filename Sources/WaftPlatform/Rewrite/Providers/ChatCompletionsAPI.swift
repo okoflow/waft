@@ -12,7 +12,7 @@ struct ChatCompletionsAPI: RewriteAPI {
         let body = ChatCompletionsRequest(
             model: server.model,
             messages: [.system(RewritePrompt.system(for: request)), .user(RewritePrompt.userMessage(for: request))],
-            maximumTokens: request.outputTokenBudget,
+            maximumTokens: request.outputTokenLimitWithThinking,
         )
 
         return try APICall(url: server.url(appending: "/chat/completions"), headers: [:], body: body)
