@@ -156,7 +156,8 @@ write_cask() {
 
   sed -e "s/VERSION/${version}/" -e "s/SHA256/${checksum}/" "${CASK_TEMPLATE}" >"${OUTPUT}/waft.rb"
 
-  if grep --quiet -e '"VERSION"' -e '"SHA256"' "${OUTPUT}/waft.rb"; then
+  if ! grep --quiet --fixed-strings "\"${version}\"" "${OUTPUT}/waft.rb" \
+    || ! grep --quiet --fixed-strings "\"${checksum}\"" "${OUTPUT}/waft.rb"; then
     die "${CASK_TEMPLATE} no longer has the VERSION and SHA256 placeholders this script fills"
   fi
 }
@@ -170,7 +171,7 @@ Release artifacts are in ${OUTPUT}. To publish v${version}:
   gh release create v${version} ${image} ${OUTPUT}/appcast.xml --target ${commit} --title v${version} --notes-file ${notes}
   cp ${OUTPUT}/waft.rb <okoflow/homebrew-tap>/Casks/waft.rb
 
-Then commit and push the cask in the tap.
+Then commit the cask in the tap as "feat: update waft to ${version}" and push it.
 STEPS
 }
 
