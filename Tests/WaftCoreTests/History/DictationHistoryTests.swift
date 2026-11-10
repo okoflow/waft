@@ -41,6 +41,22 @@ struct DictationHistoryTests {
         #expect(history.entries.map(\.text) == kept)
     }
 
+    @Test(arguments: [("America/New_York", [String]()), ("GMT", ["Yesterday."])])
+    func `measures the retention in the days of the calendar`(timeZone: String, kept: [String]) throws {
+        var calendar = Calendar.gmt
+        calendar.timeZone = try #require(TimeZone(identifier: timeZone))
+
+        let afterClockChange = try #require(Calendar.gmt.date(from: DateComponents(year: 2027, month: 3, day: 14, hour: 16)))
+        let yesterday = afterClockChange.addingTimeInterval(-23.5 * 60 * 60)
+
+        var history = DictationHistory()
+        history.add(DictationHistory.Entry(date: yesterday, text: "Yesterday.", mode: .light, app: nil))
+
+        history.prune(keeping: .day, limit: 100, now: afterClockChange, calendar: calendar)
+
+        #expect(history.entries.map(\.text) == kept)
+    }
+
     @Test(arguments: [(2, ["4", "5"]), (5, ["1", "2", "3", "4", "5"]), (0, [])])
     func `keeps only the newest entries within the limit`(limit: Int, kept: [String]) {
         var history = DictationHistory()

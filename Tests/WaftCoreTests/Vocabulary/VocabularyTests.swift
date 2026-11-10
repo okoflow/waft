@@ -55,6 +55,31 @@ struct VocabularyTests {
         #expect(vocabulary.correcting(text, language: .english) == expected)
     }
 
+    @Test(arguments: [
+        ("ping waft", "ping @waft"),
+        ("ping @waft", "ping @waft"),
+        ("post it in general", "post it in #general"),
+        ("post it in #general", "post it in #general"),
+        ("I use net daily", "I use .NET daily"),
+        ("I use .NET daily", "I use .NET daily"),
+        ("waft, net", "@waft, .NET"),
+    ])
+    func `corrects a term that starts with a mark the same way each time`(text: String, expected: String) {
+        let vocabulary = Vocabulary(
+            terms: [
+                Vocabulary.Term(term: "@waft", spoken: ["waft"]),
+                Vocabulary.Term(term: "#general", spoken: ["general"]),
+                Vocabulary.Term(term: ".NET", spoken: ["net"]),
+            ],
+            snippets: [],
+        )
+
+        let corrected = vocabulary.correcting(text, language: .english)
+
+        #expect(corrected == expected)
+        #expect(vocabulary.correcting(corrected, language: .english) == corrected)
+    }
+
     @Test
     func `matches a term with the letter case rules of the language`() {
         let vocabulary = Vocabulary(terms: [Vocabulary.Term(term: "İstanbul", spoken: [])], snippets: [])

@@ -60,8 +60,10 @@ struct SettingsTests {
 
     @Test(arguments: [
         (#"{"claude":"smartest","openAI":"fastest"}"#, PerProvider(claude: CloudModel.smartest, openAI: .fastest)),
-        (#"{"claude":"huge","openAI":"fastest"}"#, PerProvider(claude: .balanced, openAI: .balanced)),
-        (#"{"claude":"fastest"}"#, PerProvider(claude: .balanced, openAI: .balanced)),
+        (#"{"claude":"huge","openAI":"fastest"}"#, PerProvider(claude: .balanced, openAI: .fastest)),
+        (#"{"claude":"fastest"}"#, PerProvider(claude: .fastest, openAI: .balanced)),
+        (#"{"claude":"fastest","gemini":"smartest"}"#, PerProvider(claude: .fastest, openAI: .balanced)),
+        (#""bogus""#, PerProvider(claude: .balanced, openAI: .balanced)),
     ])
     func `decodes the cloud models`(stored: String, expected: PerProvider<CloudModel>) throws {
         #expect(try decode(#"{"cloudModels":\#(stored)}"#).cloudModels == expected)

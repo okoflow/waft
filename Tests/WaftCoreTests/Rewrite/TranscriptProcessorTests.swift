@@ -3,7 +3,7 @@ import Testing
 @testable import WaftCore
 
 struct TranscriptProcessorTests {
-    private static let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean.")
+    private static let setup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Clean.")
 
     @Test
     func `pastes the raw transcript in raw mode`() async {
@@ -128,7 +128,7 @@ struct TranscriptProcessorTests {
         editDeadline: Duration,
     ) async throws {
         let log = RewriteLog()
-        let setup = RewriteSetup(
+        let setup = RewriteSetup.fixture(
             provider: .cloud(.openAI),
             instructions: "Clean.",
             cloudModels: PerProvider(claude: .fastest, openAI: model),
@@ -148,7 +148,7 @@ struct TranscriptProcessorTests {
         let log = RewriteLog()
         let server = LocalServer(baseURL: "http://localhost:1234/v1", model: "qwen")
 
-        let setup = RewriteSetup(provider: .localServer, instructions: "Clean.", localServer: server)
+        let setup = RewriteSetup.fixture(provider: .localServer, instructions: "Clean.", localServer: server)
 
         let processed = await process("hello", mode: .formal, setup: setup, answer: .success("From Claude."), log: log)
         let edited = try await edit("Text.", following: "shorter", answer: .failure(.offline), setup: setup, log: log)
@@ -164,7 +164,11 @@ struct TranscriptProcessorTests {
     @Test
     func `asks for the translation target`() async throws {
         let log = RewriteLog()
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Translate.", translation: Translation(target: .german))
+        let setup = RewriteSetup.fixture(
+            provider: .cloud(.claude),
+            instructions: "Translate.",
+            translation: Translation(target: .german),
+        )
 
         let processed = await process(
             "see you tomorrow",
@@ -183,7 +187,11 @@ struct TranscriptProcessorTests {
     @Test(arguments: [Mode.clean, .formal, .custom(UUID())])
     func `does not translate outside translate mode`(mode: Mode) async throws {
         let log = RewriteLog()
-        let setup = RewriteSetup(provider: .cloud(.claude), instructions: "Clean.", translation: Translation(target: .german))
+        let setup = RewriteSetup.fixture(
+            provider: .cloud(.claude),
+            instructions: "Clean.",
+            translation: Translation(target: .german),
+        )
         _ = await process("hello", mode: mode, setup: setup, answer: .success("Hello."), log: log)
 
         let request = try #require(await log.requests.first)

@@ -116,14 +116,32 @@ struct RewriteValidatorTests {
     @Test(arguments: [
         ("<text>Shorter.</text>", "Shorter."),
         ("<text>\nShorter.\n</text>", "Shorter."),
-        ("<text>\"Shorter.\"</text>", "Shorter."),
-        ("\"Shorter.\"", "Shorter."),
-        ("\"<text>Shorter.</text>\"", "Shorter."),
         ("Короче.", "Короче."),
     ])
     func `unwraps an edit`(answer: String, expected: String) throws {
         #expect(try RewriteValidator
             .validated(answer, for: .edit("make it shorter", selection: "A much longer text.")) == expected)
+    }
+
+    @Test(arguments: ["\"Hello world\"", "«Hello world»", "<text>\"Hello world\"</text>"])
+    func `keeps the quotes that an edit asked for`(answer: String) throws {
+        let request = RewriteRequest.edit("put it in quotes", selection: "Hello world")
+        let expected = answer.replacingOccurrences(of: "<text>", with: "").replacingOccurrences(of: "</text>", with: "")
+
+        #expect(try RewriteValidator.validated(answer, for: request) == expected)
+    }
+
+    @Test(arguments: [
+        (RewriteRequest.text("„Hallo Welt“", task: .translate(from: nil, into: .english)), "\"Hello world\""),
+        (.text("«Привет»", task: .translate(from: nil, into: .english)), "\"Hello\""),
+        (.text("  “hi there”", task: .fix), "\"Hi there\""),
+        (.text("「こんにちは」", task: .translate(from: nil, into: .french)), "«Bonjour»"),
+        (.cleanup("‘hello’"), "\"Hello\""),
+        (.cleanup("«привет»", language: .russian), "«Привет»"),
+        (.custom("\"hello\""), "\"Hello\""),
+    ])
+    func `keeps the quotes around an answer to a quoted text`(request: RewriteRequest, answer: String) throws {
+        #expect(try RewriteValidator.validated(answer, for: request) == answer)
     }
 
     @Test

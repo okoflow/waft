@@ -1,5 +1,5 @@
 struct HesitationPattern: Sendable {
-    struct Run: Sendable {
+    private struct Run: Sendable {
         let letter: Character
         let count: Int
 
@@ -21,11 +21,15 @@ struct HesitationPattern: Sendable {
         runs = Self.runs(of: shortestSpelling.folded(in: language))
     }
 
-    static func patterns(for language: Language) -> [HesitationPattern] {
-        patternsByLanguage[language, default: []]
+    static func isHesitation(_ letters: String, in language: Language) -> Bool {
+        guard !wordsSpelledLikeHesitations[language, default: []].contains(letters) else { return false }
+
+        let spoken = runs(of: letters)
+
+        return patternsByLanguage[language, default: []].contains { $0.matches(spoken) }
     }
 
-    static func runs(of text: String) -> [Run] {
+    private static func runs(of text: String) -> [Run] {
         var runs: [Run] = []
 
         for letter in text {
@@ -39,7 +43,7 @@ struct HesitationPattern: Sendable {
         return runs
     }
 
-    func matches(_ runs: [Run]) -> Bool {
+    private func matches(_ runs: [Run]) -> Bool {
         guard self.runs.count == runs.count else { return false }
 
         return zip(self.runs, runs).allSatisfy { $0.accepts($1) }
@@ -47,6 +51,8 @@ struct HesitationPattern: Sendable {
 }
 
 extension HesitationPattern {
+    private static let wordsSpelledLikeHesitations: [Language: Set<String>] = [.english: ["err"]]
+
     private static let shortestSpellings: [Language: [String]] = [
         .arabic: ["إمم", "امم", "ممم"],
         .azerbaijani: ["əə", "hm", "mm"],

@@ -40,7 +40,7 @@ package final class PasteboardInserter: TextInserter {
             return .skipped(reason)
         }
 
-        let prepared = InsertionSpacing.prepared(text, after: current.element?.characterBeforeCaret)
+        let prepared = InsertionSpacing.prepared(text, for: current.element)
 
         let outcome = await paste(prepared, releasing: key)
         guard outcome == .pasted else { return outcome }

@@ -1,17 +1,7 @@
 import Foundation
 
 enum LightModeRules {
-    static let framingMarks: Set<Character> = [",", "，", "、", "،", "…", "-", "–", "—"]
-
-    static let openingMarks: Set<Character> = ["¿", "¡", "(", "[", "«", "„", "“", "\"", "「", "『", "（", "《"]
-
-    static let groupClosingMarks: Set<Character> = ["?", "!", ")", "]", "»", "“", "”", "\"", "」", "』", "）", "》"]
-
-    private static let sentenceEnds: Set<Character> = [".", "!", "?", "。", "！", "？", "؟", "۔", "।", "॥"]
-
     private static let highMarks: Set<Character> = ["!", "?", ";", ":"]
-
-    private static let hyphens: Set<Character> = ["-", "‐"]
 
     private static let inlineSpaces: Set<Character> = [" ", "\t"]
 
@@ -23,40 +13,22 @@ enum LightModeRules {
         return tidy.capitalizingFirstLetter(in: language).endingWithFullStop(in: language)
     }
 
-    static func isHesitation(_ word: String, in language: Language) -> Bool {
-        guard !isAbbreviation(word) else { return false }
-
-        let letters = word.folded(in: language).filter { !hyphens.contains($0) }
-
-        let runs = HesitationPattern.runs(of: letters)
-
-        return HesitationPattern.patterns(for: language).contains { $0.matches(runs) }
-    }
-
-    static func endsSentence(_ mark: Character, in language: Language) -> Bool {
-        guard !sentenceEnds.contains(mark) else { return true }
-
-        return mark == language.questionMark
-    }
-
-    private static func isAbbreviation(_ word: String) -> Bool {
-        guard word.count(where: \.isUppercase) > 1 else { return false }
-
-        return !word.contains(where: \.isLowercase)
-    }
-
     private static func tidiedSpacing(_ text: String, language: Language) -> String {
+        let followers = text.dropFirst().map(Optional.some) + [nil]
+
         var result = ""
         var hasPendingSpace = false
 
-        for character in text {
+        for (character, follower) in zip(text, followers) {
             if inlineSpaces.contains(character) {
                 hasPendingSpace = true
 
                 continue
             }
 
-            if hasPendingSpace, let last = result.last, takesSpace(between: last, and: character, in: language) {
+            if hasPendingSpace,
+               let last = result.last,
+               takesSpace(between: last, and: character, before: follower, in: language) {
                 result.append(" ")
             }
 
@@ -68,11 +40,22 @@ enum LightModeRules {
         return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private static func takesSpace(between last: Character, and next: Character, in language: Language) -> Bool {
+    private static func takesSpace(
+        between last: Character,
+        and next: Character,
+        before follower: Character?,
+        in language: Language,
+    ) -> Bool {
         guard last != "\n", next != "\n" else { return false }
-        guard next.isPauseMark else { return true }
+        guard next.isPauseMark, !startsWord(next, before: follower) else { return true }
         guard language.spacesBeforeHighPunctuation else { return false }
 
         return highMarks.contains(next)
+    }
+
+    private static func startsWord(_ mark: Character, before follower: Character?) -> Bool {
+        guard mark.isASCII, let follower else { return false }
+
+        return follower.isLetterOrNumber
     }
 }

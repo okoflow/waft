@@ -80,18 +80,21 @@ package struct TranscriptProcessor: Sendable {
         following instruction: Transcript,
         setup: RewriteSetup,
     ) async throws(RewriteError) -> String {
-        try await rewrite(
+        let edited = try await rewrite(
             instruction.text,
             as: .edit(selection: selection, language: instruction.language),
             setup: setup,
             deadline: setup.editDeadline,
         )
+
+        return edited.withOuterWhitespace(of: selection)
     }
 
     package func rework(_ text: String, as task: TextTask, setup: RewriteSetup) async throws(RewriteError) -> String {
         let kind = RewriteRequest.Kind.text(task, instructions: setup.instructions)
 
         let reworked = try await rewrite(text, as: kind, setup: setup, deadline: setup.editDeadline)
+            .withOuterWhitespace(of: text)
 
         guard case let .translate(_, target) = task else { return reworked }
 

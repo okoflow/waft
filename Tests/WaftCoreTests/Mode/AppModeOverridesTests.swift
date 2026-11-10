@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 @testable import WaftCore
 
@@ -30,6 +31,28 @@ struct AppModeOverridesTests {
         overrides.add(.raw, for: "com.apple.Notes")
 
         #expect(overrides.mode(for: "com.apple.Notes") == .formal)
+    }
+
+    @Test(arguments: [
+        (#"{"modes":{"com.apple.mail":"formal","com.apple.Notes":"bogus","com.apple.dt.Xcode":7}}"#, ["com.apple.mail"]),
+        (#"{"modes":"bogus"}"#, [String]()),
+        (#"{}"#, []),
+    ])
+    func `decodes the apps whose mode it knows`(json: String, apps: [String]) throws {
+        let overrides = try JSONDecoder().decode(AppModeOverrides.self, from: Data(json.utf8))
+
+        #expect(overrides.bundleIdentifiers == apps)
+    }
+
+    @Test
+    func `survives an encoding round trip`() throws {
+        var overrides = AppModeOverrides()
+        overrides.set(.formal, for: "com.apple.mail")
+        overrides.set(.raw, for: "com.apple.Terminal")
+
+        let data = try JSONEncoder().encode(overrides)
+
+        #expect(try JSONDecoder().decode(AppModeOverrides.self, from: data) == overrides)
     }
 
     @Test

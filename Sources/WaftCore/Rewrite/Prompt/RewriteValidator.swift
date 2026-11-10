@@ -4,14 +4,15 @@ enum RewriteValidator {
     private typealias Wrapper = (open: String, close: String)
 
     private static let quotes: [Wrapper] = [("\"", "\""), ("«", "»")]
-    private static let cleanupWrappers: [Wrapper] = [(PromptTag.transcript.open, PromptTag.transcript.close)] + quotes
-    private static let editWrappers: [Wrapper] = [(PromptTag.text.open, PromptTag.text.close)] + quotes
+    private static let openingQuotes: Set<Character> = ["\"", "«", "„", "“", "‘", "「"]
     private static let shortestMeasuredCleanup = 200
     private static let shortestCleanupShare = 0.4
 
     static func validated(_ answer: String, for request: RewriteRequest) throws(RewriteError) -> String {
-        let text = unwrapped(answer, for: request)
-        guard !text.isEmpty, text.count <= maximumLength(for: request), text.count >= minimumLength(for: request) else {
+        let text = unwrapped(answer, from: wrappers(for: request))
+        guard !unwrapped(text, from: quotes).isEmpty,
+              text.count <= maximumLength(for: request),
+              text.count >= minimumLength(for: request) else {
             throw .unreadableResponse
         }
         guard case let .cleanup(_, language, target, _) = request.kind,
@@ -23,12 +24,24 @@ enum RewriteValidator {
         return text
     }
 
-    private static func unwrapped(_ answer: String, for request: RewriteRequest) -> String {
+    private static func wrappers(for request: RewriteRequest) -> [Wrapper] {
         switch request.kind {
-        case .cleanup, .custom: unwrapped(answer, input: request.text, from: cleanupWrappers)
-        case let .edit(selection, _): unwrapped(answer, input: selection, from: editWrappers)
-        case .text: unwrapped(answer, input: request.text, from: editWrappers)
+        case .cleanup, .custom: addedTag(.transcript, to: request.text) + addedQuotes(to: request.text)
+        case let .edit(selection, _): addedTag(.text, to: selection)
+        case .text: addedTag(.text, to: request.text) + addedQuotes(to: request.text)
         }
+    }
+
+    private static func addedTag(_ tag: PromptTag, to input: String) -> [Wrapper] {
+        guard !input.hasPrefix(tag.open) else { return [] }
+
+        return [(tag.open, tag.close)]
+    }
+
+    private static func addedQuotes(to input: String) -> [Wrapper] {
+        guard let first = input.first(where: { !$0.isWhitespace }), openingQuotes.contains(first) else { return quotes }
+
+        return []
     }
 
     private static func maximumLength(for request: RewriteRequest) -> Int {
@@ -64,12 +77,10 @@ enum RewriteValidator {
         return language.scripts.union([transcriptScript])
     }
 
-    private static func unwrapped(_ answer: String, input: String, from wrappers: [Wrapper]) -> String {
-        let applicable = wrappers.filter { !input.hasPrefix($0.open) }
-
+    private static func unwrapped(_ answer: String, from wrappers: [Wrapper]) -> String {
         var text = answer.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        while let wrapper = applicable.first(where: { isWrapped(text, in: $0) }) {
+        while let wrapper = wrappers.first(where: { isWrapped(text, in: $0) }) {
             text = String(text.dropFirst(wrapper.open.count).dropLast(wrapper.close.count))
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         }
