@@ -45,7 +45,7 @@
 "Allow microphone access" = "Autorisez l’accès au micro";
 "Allowed" = "Autorisé";
 "Allow…" = "Autoriser…";
-"Anonymous usage data shows which features to work on next." = "Les données d’utilisation anonymes montrent sur quelles fonctionnalités travailler ensuite.";
+"Anonymous usage data shows which features to work on next." = "Les données d’utilisation anonymes montrent quoi améliorer ensuite.";
 "Any AI model" = "N’importe quel modèle d’IA";
 "App language" = "Langue de l’app";
 "App" = "App";
@@ -128,6 +128,7 @@
 "Editing…" = "Édition…";
 "Exactly what was heard." = "Exactement ce qui a été entendu.";
 "Fast" = "Rapide";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Usage des fonctionnalités, versions de Waft et de macOS et ID aléatoire.";
 "File transcription is part of Waft+" = "La transcription de fichiers fait partie de Waft+";
 "File transcription" = "Transcription de fichiers";
 "File" = "Fichier";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Maintien ou double appui";
 "Hold" = "Maintien";
 "How often you use each feature, never your words or audio." = "La fréquence d’utilisation de chaque fonctionnalité, jamais vos paroles ni l’audio.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "La fréquence d’utilisation de chaque fonctionnalité, les versions de Waft et de macOS, et un identifiant aléatoire.";
 "How to start" = "Comment démarrer";
 "Included" = "Inclus";
 "Install Update…" = "Installer la mise à jour…";

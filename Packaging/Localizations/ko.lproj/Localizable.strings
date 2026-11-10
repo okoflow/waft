@@ -128,6 +128,7 @@
 "Editing…" = "편집 중…";
 "Exactly what was heard." = "들린 그대로 입력합니다.";
 "Fast" = "빠름";
+"Feature counts, the Waft and macOS versions, and a random ID." = "각 기능의 사용 횟수, Waft 및 macOS 버전, 임의의 ID.";
 "File transcription is part of Waft+" = "파일 전사는 Waft+ 기능입니다";
 "File transcription" = "파일 전사";
 "File" = "파일";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "길게 또는 두 번 누르기";
 "Hold" = "길게 누르기";
 "How often you use each feature, never your words or audio." = "각 기능의 사용 횟수만 보내며, 말한 내용이나 오디오는 보내지 않습니다.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "각 기능의 사용 횟수, Waft 및 macOS 버전, 임의의 ID.";
 "How to start" = "시작 방법";
 "Included" = "사용 가능";
 "Install Update…" = "업데이트 설치…";

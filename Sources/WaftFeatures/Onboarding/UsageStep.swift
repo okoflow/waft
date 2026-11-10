@@ -10,7 +10,7 @@ struct UsageStep: View {
                     symbolName: "number",
                     tint: .blue,
                     title: "What is sent",
-                    detail: "How often you use each feature, the Waft and macOS versions, and a random ID.",
+                    detail: "Feature counts, the Waft and macOS versions, and a random ID.",
                 )
                 RowDivider()
                 TileRow(

@@ -128,6 +128,7 @@
 "Editing…" = "正在編輯⋯";
 "Exactly what was heard." = "完全照聽到的內容輸出。";
 "Fast" = "快速";
+"Feature counts, the Waft and macOS versions, and a random ID." = "各項功能的使用次數、Waft和macOS的版本，以及一個隨機ID。";
 "File transcription is part of Waft+" = "「檔案轉錄」是Waft+的功能";
 "File transcription" = "檔案轉錄";
 "File" = "檔案";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "按住或按兩下";
 "Hold" = "按住";
 "How often you use each feature, never your words or audio." = "僅包含各項功能的使用次數，絕不包含你說的內容或音訊。";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "各項功能的使用次數、Waft和macOS的版本，以及一個隨機ID。";
 "How to start" = "啟動方式";
 "Included" = "已包含";
 "Install Update…" = "安裝更新項目⋯";

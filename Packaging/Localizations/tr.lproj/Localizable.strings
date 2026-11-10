@@ -45,7 +45,7 @@
 "Allow microphone access" = "Mikrofon erişimine izin verin";
 "Allowed" = "İzin verildi";
 "Allow…" = "İzin Ver…";
-"Anonymous usage data shows which features to work on next." = "Anonim kullanım verileri, bundan sonra hangi özellikler üzerinde çalışılacağını gösterir.";
+"Anonymous usage data shows which features to work on next." = "Anonim kullanım verileri, sırada neyin geliştirileceğini gösterir.";
 "Any AI model" = "İstediğiniz YZ modeli";
 "App language" = "Uygulama dili";
 "App" = "Uygulama";
@@ -128,6 +128,7 @@
 "Editing…" = "Düzenleniyor…";
 "Exactly what was heard." = "Duyulanın aynısı.";
 "Fast" = "Hızlı";
+"Feature counts, the Waft and macOS versions, and a random ID." = "Özelliklerin kullanım sayıları, Waft ve macOS sürümleri ve rastgele bir kimlik.";
 "File transcription is part of Waft+" = "Dosyaları yazıya çevirme bir Waft+ özelliğidir";
 "File transcription" = "Dosyaları yazıya çevirme";
 "File" = "Dosya";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "Basılı tut ya da iki kez bas";
 "Hold" = "Basılı tut";
 "How often you use each feature, never your words or audio." = "Her özelliği ne sıklıkta kullandığınız; sözleriniz veya sesiniz asla.";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "Her özelliği ne sıklıkta kullandığınız, Waft ve macOS sürümleri ve rastgele bir kimlik.";
 "How to start" = "Başlatma yöntemi";
 "Included" = "Dahil";
 "Install Update…" = "Güncellemeyi Yükle…";

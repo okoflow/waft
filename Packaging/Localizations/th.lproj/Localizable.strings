@@ -128,6 +128,7 @@
 "Editing…" = "กำลังแก้ไข…";
 "Exactly what was heard." = "ตรงตามที่ได้ยินทุกคำ";
 "Fast" = "เร็ว";
+"Feature counts, the Waft and macOS versions, and a random ID." = "จำนวนครั้งที่ใช้แต่ละคุณสมบัติ เวอร์ชันของ Waft และ macOS และ ID แบบสุ่ม";
 "File transcription is part of Waft+" = "การถอดเสียงไฟล์เป็นส่วนหนึ่งของ Waft+";
 "File transcription" = "การถอดเสียงไฟล์";
 "File" = "ไฟล์";
@@ -153,7 +154,6 @@
 "Hold or double-tap" = "กดค้างหรือกดสองครั้ง";
 "Hold" = "กดค้าง";
 "How often you use each feature, never your words or audio." = "ความถี่ที่คุณใช้แต่ละคุณสมบัติ ไม่มีคำพูดหรือเสียงของคุณ";
-"How often you use each feature, the Waft and macOS versions, and a random ID." = "ความถี่ที่คุณใช้แต่ละคุณสมบัติ เวอร์ชันของ Waft และ macOS และ ID แบบสุ่ม";
 "How to start" = "วิธีเริ่ม";
 "Included" = "รวมอยู่แล้ว";
 "Install Update…" = "ติดตั้งรายการอัปเดต…";
