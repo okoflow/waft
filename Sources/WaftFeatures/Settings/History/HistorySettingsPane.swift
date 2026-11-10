@@ -14,6 +14,7 @@ struct HistorySettingsPane: View {
             if settings.settings.keepsHistory {
                 RowDivider()
                     .rowTransition()
+
                 PickerRow(
                     "Keep dictations for",
                     selection: $settings.settings.historyRetention,
@@ -24,8 +25,10 @@ struct HistorySettingsPane: View {
                     }
                 }
                 .rowTransition()
+
                 RowDivider()
                     .rowTransition()
+
                 PickerRow(
                     "Keep at most",
                     selection: $settings.settings.historyLimit,

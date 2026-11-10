@@ -82,6 +82,7 @@ final class HUDController {
         present(.listening(badge: badge, isHandsFree: isHandsFree))
 
         levelTimer?.invalidate()
+
         levelTimer = .scheduledInCommonModes(every: Self.levelRefreshInterval, repeats: true) { [weak self] in
             self?.pushLevel(level())
         }
@@ -168,6 +169,7 @@ final class HUDController {
         isPointerOver = false
 
         orderOutTask?.cancel()
+
         orderOutTask = Task { [weak self, orderOutPause] in
             guard await Task.slept(for: orderOutPause), let self, content == nil else { return }
 
@@ -187,6 +189,7 @@ final class HUDController {
 
     private func expireMessage(after duration: Duration) {
         messageTask?.cancel()
+
         messageTask = Task { [weak self] in
             guard await Task.slept(for: duration) else { return }
 

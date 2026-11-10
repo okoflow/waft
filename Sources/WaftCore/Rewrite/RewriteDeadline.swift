@@ -5,6 +5,7 @@ enum RewriteDeadline {
     ) async throws(RewriteError) -> String {
         let first = await withTaskGroup(of: Result<String, RewriteError>.self) { group in
             group.addTask { await Self.result(of: operation) }
+
             group.addTask {
                 await Task.slept(for: deadline)
 

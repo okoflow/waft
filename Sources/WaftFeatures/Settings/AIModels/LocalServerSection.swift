@@ -46,6 +46,7 @@ struct LocalServerSection: View {
             .settingsRowPadding()
 
             RowDivider()
+
             SettingsRow("Model", description: status, labelsAccessory: !localModels.serverModels.isEmpty) {
                 if localModels.serverModels.isEmpty {
                     Button("Check", action: localModels.refresh)

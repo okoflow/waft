@@ -18,6 +18,7 @@ struct AIModelSetupTests {
         hasKey: Bool,
     ) {
         settings.settings.modelProvider = .cloud(provider)
+
         let apiKeys = PerProvider { cloudProvider in
             APIKeyModel(store: FakeValueStore(cloudProvider == provider ? keyIfSaved(hasKey) : nil))
         }

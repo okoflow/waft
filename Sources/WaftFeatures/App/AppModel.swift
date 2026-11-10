@@ -178,10 +178,12 @@ package final class AppModel {
 
     private func connectWindows() {
         windows.onOnboardingClose = { [weak onboarding] in onboarding?.reset() }
+
         windows.onSettingsClose = { [weak keyRecorder, weak shortcutRecorder] in
             keyRecorder?.stop()
             shortcutRecorder?.stop()
         }
+
         windows.onTranscriptionClose = { [weak transcription] in transcription?.cancel() }
         windows.onTranslatorClose = { [weak translator] in translator?.stop() }
         windows.isShowingUpdate = { [weak updates] in updates?.isShowingUpdate == true }

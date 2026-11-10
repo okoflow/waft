@@ -29,6 +29,7 @@ final class KeyRecorder {
         self.takenKey = takenKey
         self.record = record
         rejection = nil
+
         monitor = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .keyDown]) { [weak self] event in
             self?.handle(event)
 

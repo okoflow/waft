@@ -37,6 +37,7 @@ private struct APIKeyRows: View {
                 Button("Remove Key…", role: .destructive, action: confirmRemoval)
             }
             .rowTransition()
+
             RowDivider()
                 .rowTransition()
         }

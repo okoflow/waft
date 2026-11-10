@@ -30,6 +30,7 @@ final class LocalModelsModel {
 
         beginCheck()
         checkedAddress = server.baseURL
+
         check = Task { [weak self] in
             await self?.checkServer(at: server)
         }
@@ -37,6 +38,7 @@ final class LocalModelsModel {
 
     func detect() {
         beginCheck()
+
         check = Task { [weak self] in
             await self?.detectServer()
         }

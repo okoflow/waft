@@ -17,6 +17,7 @@ final class CopyFeedback<Item: Equatable> {
         self.item = item
 
         reset?.cancel()
+
         reset = Task { [weak self, pause] in
             guard await Task.slept(for: pause) else { return }
 

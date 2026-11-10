@@ -117,6 +117,7 @@ final class RecordingController {
         watchdog.reset()
 
         var made = ActiveRecording(id: lastRecordingID, purpose: trigger.purpose, key: trigger.key)
+
         made.watchdogTimer = .scheduledInCommonModes(every: watchdogInterval, repeats: true) { [weak self] in
             self?.pollKey()
         }

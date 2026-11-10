@@ -146,6 +146,7 @@ private struct AppModeMenu: View {
         Menu("Mode in \(app.name): \(ownModeTitle)") {
             Picker("Mode in \(app.name)", selection: mode) {
                 Text("Default (\(settings.settings.title(of: settings.settings.mode)))").tag(Mode?.none)
+
                 ForEach(settings.settings.modes, id: \.self) { mode in
                     pro.optionTitle(of: mode, in: settings.settings).tag(Mode?.some(mode))
                 }
@@ -168,6 +169,7 @@ private struct LanguageMenu: View {
         Menu("Language: \(settings.pinnedLanguageTitle)") {
             Picker("Language", selection: settings.pinnedLanguage) {
                 Text("Automatic (\(languageNames))").tag(Language?.none)
+
                 ForEach(settings.settings.languages.languages, id: \.self) { language in
                     Text(language.displayName).tag(Language?.some(language))
                 }

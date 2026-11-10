@@ -49,6 +49,7 @@ final class ShortcutRecorder {
         self.action = action
         rejection = nil
         shortcuts.suspend()
+
         monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             self?.handle(event)
 
