@@ -1,19 +1,16 @@
 # Security policy
 
-This page covers how to report a vulnerability in Waft, how the maintainers handle reports, and what is in scope. [Privacy](docs/privacy.md) lists what Waft keeps and sends, and [CONTRIBUTING.md](CONTRIBUTING.md) covers every other contribution.
+This page covers how to report a vulnerability in Waft, how the maintainers handle it, and what is in scope. [Privacy](docs/privacy.md) lists what Waft keeps and sends.
 
 ## Supported versions
 
-| Version | Supported |
-| --- | --- |
-| The latest release and `main` | Yes |
-| Older releases | No, update to the latest release |
+Only the latest release and `main` are supported. If you run an older release, update to the latest one.
 
 ## Reporting a vulnerability
 
-Report vulnerabilities through [GitHub private vulnerability reporting](https://github.com/okoflow/waft/security/advisories/new). If you can't use GitHub, email [contact@svidware.com](mailto:contact@svidware.com) instead. Don't open a public issue, pull request, or discussion for a security problem.
+Report a vulnerability through [GitHub private vulnerability reporting](https://github.com/okoflow/waft/security/advisories/new), or by email to [contact@svidware.com](mailto:contact@svidware.com) if you can't use GitHub. Don't open a public issue, pull request, or discussion for it.
 
-Include what helps reproduce and assess the issue:
+Include:
 
 - The Waft version or commit, and the macOS version.
 - Steps to reproduce, or a proof of concept.

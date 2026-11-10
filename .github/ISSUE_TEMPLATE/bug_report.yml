@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for the report. Fill in what you can; the Waft and macOS versions, the mode, and the log lines around the problem make most bugs reproducible on the first try. Report a vulnerability privately, as [SECURITY.md](https://github.com/okoflow/waft/blob/main/SECURITY.md) describes, not here.
+        Thanks for the report. The Waft and macOS versions, the mode, and the log lines around the problem make most bugs reproducible on the first try. Report a vulnerability privately, as [SECURITY.md](https://github.com/okoflow/waft/blob/main/SECURITY.md) describes, not here.
 
   - type: textarea
     id: what-happened

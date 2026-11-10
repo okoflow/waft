@@ -1,9 +1,5 @@
 <p align="center">
-  <img
-    src="Packaging/Waft.png"
-    width="128"
-    alt=""
-  >
+  <img src="Packaging/Waft.png" width="128" alt="">
 </p>
 
 <h1 align="center">Waft</h1>
@@ -11,28 +7,10 @@
 <p align="center">On-device dictation with AI cleanup.</p>
 
 <p align="center">
-  <a
-    href="https://github.com/okoflow/waft/actions/workflows/ci.yml"
-  ><img
-    src="https://github.com/okoflow/waft/actions/workflows/ci.yml/badge.svg"
-    alt="CI"
-  ></a>
-  <a
-    href="LICENSE"
-  ><img
-    src="https://img.shields.io/badge/license-GPL--3.0--only-blue"
-    alt="License: GPL-3.0-only"
-  ></a>
-  <img
-    src="https://img.shields.io/badge/macOS-14%2B-informational"
-    alt="macOS 14 or later"
-  >
-  <a
-    href="https://github.com/sponsors/imsvidskiy"
-  ><img
-    src="https://img.shields.io/github/sponsors/imsvidskiy?label=Sponsor&logo=GitHub&color=ea4aaa"
-    alt="Sponsor"
-  ></a>
+  <a href="https://github.com/okoflow/waft/actions/workflows/ci.yml"><img src="https://github.com/okoflow/waft/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--only-blue" alt="License: GPL-3.0-only"></a>
+  <img src="https://img.shields.io/badge/macOS-14%2B-informational" alt="macOS 14 or later">
+  <a href="https://github.com/sponsors/imsvidskiy"><img src="https://img.shields.io/github/sponsors/imsvidskiy?label=Sponsor&logo=GitHub&color=ea4aaa" alt="Sponsor"></a>
 </p>
 
 <p align="center">
@@ -50,31 +28,16 @@ https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
 <table>
   <thead>
     <tr>
-      <td
-        width="33%"
-        valign="top"
-      ><b>Private</b><br>Whisper runs on your Mac. Audio is never saved or
-        sent.</td>
-      <td
-        width="33%"
-        valign="top"
-      ><b>45 languages</b><br>Waft detects which of your languages you
-        speak, and translates.</td>
-      <td
-        width="33%"
-        valign="top"
-      ><b>AI cleanup</b><br>Clean, Formal, Translate, or your modes, with
-        Claude, OpenAI, or a local model.</td>
+      <td width="33%" valign="top"><b>Private</b><br>Whisper runs on your Mac. Audio is never saved or sent.</td>
+      <td width="33%" valign="top"><b>45 languages</b><br>Waft detects which of your languages you speak, and translates.</td>
+      <td width="33%" valign="top"><b>AI cleanup</b><br>Clean, Formal, Translate, or your modes, with Claude, OpenAI, or a local model.</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td valign="top"><b>Edit and translate</b><br>Say "make it shorter" over
-        a selection, or translate it with a shortcut.</td>
-      <td valign="top"><b>Transcribe files</b><br>Recordings and videos to
-        text or SRT.</td>
-      <td valign="top"><b>Your words</b><br>A dictionary, snippets, and history
-        on your Mac.</td>
+      <td valign="top"><b>Edit and translate</b><br>Say "make it shorter" over a selection, or translate it with a shortcut.</td>
+      <td valign="top"><b>Transcribe files</b><br>Recordings and videos to text or SRT.</td>
+      <td valign="top"><b>Your words</b><br>A dictionary, snippets, and history on your Mac.</td>
     </tr>
   </tbody>
 </table>
@@ -83,11 +46,13 @@ https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
 
 ## Install
 
+Waft runs on a Mac with Apple silicon and macOS 14 or later.
+
 ```sh
 brew install --cask okoflow/tap/waft
 ```
 
-Or download the disk image from the [latest release](https://github.com/okoflow/waft/releases/latest). [Install](docs/getting-started.md#1-install) lists the requirements and how to open a copy from the disk image the first time.
+Or download the disk image from the [latest release](https://github.com/okoflow/waft/releases/latest). macOS blocks that copy the first time it opens, and [Install](docs/getting-started.md#1-install) shows how to allow it.
 
 ## Documentation
 
@@ -102,11 +67,11 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 
 ## Waft+
 
-Dictation is free. [Waft+](docs/usage.md#waft) adds the AI features for a single payment and is free while Waft is in beta.
+Dictation is free. [Waft+](docs/usage.md#waft) lists what a single payment adds, and all of it is free while Waft is in beta.
 
 ## Contributing
 
-Pull requests are welcome; [CONTRIBUTING.md](CONTRIBUTING.md) covers the setup, checks, and conventions. Report vulnerabilities privately as [SECURITY.md](SECURITY.md) describes.
+Pull requests are welcome: [CONTRIBUTING.md](CONTRIBUTING.md) has the setup, the checks, and the rules. Report a vulnerability privately, as [SECURITY.md](SECURITY.md) describes.
 
 ## License
 
