@@ -4,7 +4,6 @@ import WaftCore
 extension KeyEvent {
     static let rightOptionFlag: UInt64 = 0x40
     static let f5KeyCode: Int64 = 96
-    static let escapeKeyCode: Int64 = 53
     static let monitorDisabled = KeyEvent(kind: .monitorDisabled, keyCode: 0, flags: 0, isRepeat: false, timestamp: 0)
 
     static func modifiersChanged(_ keyCode: Int64, flags: UInt64 = 0) -> KeyEvent {

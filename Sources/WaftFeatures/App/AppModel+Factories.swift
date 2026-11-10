@@ -1,4 +1,3 @@
-import Foundation
 import WaftCore
 
 extension AppModel {

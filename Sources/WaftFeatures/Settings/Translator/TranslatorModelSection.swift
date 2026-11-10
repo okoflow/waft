@@ -9,11 +9,6 @@ struct TranslatorModelSection: View {
 
     var body: some View {
         switch settings.settings.modelProvider {
-        case let .cloud(provider):
-            section(subtitle: "AI modes keep the model chosen in AI Models.") {
-                CloudModelRow(model: $settings.settings.translator.cloudModel, provider: provider)
-            }
-
         case .localServer:
             section {
                 SettingsRow("Model", description: "The local server's model, chosen in AI Models.") {
@@ -23,6 +18,11 @@ struct TranslatorModelSection: View {
                             .foregroundStyle(Palette.secondaryText)
                     }
                 }
+            }
+
+        case let .cloud(provider):
+            section(subtitle: "AI modes keep the model chosen in AI Models.") {
+                CloudModelRow(model: $settings.settings.translator.cloudModel, provider: provider)
             }
         }
     }

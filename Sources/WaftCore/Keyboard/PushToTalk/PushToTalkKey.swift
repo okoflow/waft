@@ -97,14 +97,14 @@ package struct PushToTalkKey: Hashable, Codable, RawRepresentable, Sendable {
         guard !keyEvent.isRepeat else { return nil }
 
         return switch keyEvent.kind {
-        case .monitorDisabled:
-            .monitorDisabled
         case .modifiersChanged:
             modifierEvent(for: keyEvent)
         case .keyDown:
             keyDownEvent(for: keyEvent)
         case .keyUp:
             isOwnFunctionKey(keyEvent) ? .keyUp : nil
+        case .monitorDisabled:
+            .monitorDisabled
         }
     }
 

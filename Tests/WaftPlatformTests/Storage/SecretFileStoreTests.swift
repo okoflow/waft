@@ -43,7 +43,7 @@ struct SecretFileStoreTests {
     }
 
     @Test
-    func `returns the keychain value and keeps the item when the file can't be written`() throws {
+    func `returns the keychain value and keeps the item when the file cannot be written`() throws {
         let file = FakeValueStore<String>(nil, failsSaving: true)
         let keychain = FakeValueStore<String>(Self.secret)
         let store = store(file: file, keychain: keychain)
