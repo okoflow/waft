@@ -5,11 +5,13 @@ set -euo pipefail
 readonly PRODUCT='Waft'
 readonly APP="build/${PRODUCT}.app"
 readonly CONTENTS="${APP}/Contents"
+readonly EXECUTABLE="${CONTENTS}/MacOS/${PRODUCT}"
 readonly RESOURCES="${CONTENTS}/Resources"
 readonly FRAMEWORK="${CONTENTS}/Frameworks/Sparkle.framework"
+readonly INFO_PLIST="Packaging/${PRODUCT}-Info.plist"
 readonly ENTITLEMENTS="Packaging/${PRODUCT}.entitlements"
 readonly IDENTITY="${SIGNING_IDENTITY:-Waft Dev}"
-readonly RULE='================================================================================'
+readonly DIVIDER='================================================================================'
 readonly USAGE='usage: scripts/bundle.sh [debug|release]'
 
 usage() {
@@ -36,6 +38,18 @@ has_identity() {
   identities=$(security find-identity -v -p codesigning)
 
   [[ ${identities} == *"\"${IDENTITY}\""* ]]
+}
+
+build_product() {
+  local configuration=$1
+
+  local minimum_system sdk
+  minimum_system=$(plutil -extract LSMinimumSystemVersion raw "${INFO_PLIST}")
+  sdk=$(xcrun --show-sdk-version)
+
+  local -a sdk_stamp=(-Xlinker -platform_version -Xlinker macos -Xlinker "${minimum_system}" -Xlinker "${sdk}")
+
+  swift build --configuration "${configuration}" --product "${PRODUCT}" "${sdk_stamp[@]}"
 }
 
 print_licenses() {
@@ -66,19 +80,22 @@ print_acknowledgments() {
   local name version url path
 
   while IFS=$'\t' read -r name version url path; do
-    printf '\n%s\n%s %s\n%s\n%s\n' "${RULE}" "${name}" "${version}" "${url}" "${RULE}"
+    printf '\n%s\n%s %s\n%s\n%s\n' "${DIVIDER}" "${name}" "${version}" "${url}" "${DIVIDER}"
     print_licenses "${path}"
   done <<<"${packages}"
 }
 
 assemble_app() {
-  local configuration=$1 binary_dir=$2
+  local configuration=$1
+
+  local binary_dir
+  binary_dir=$(swift build --configuration "${configuration}" --show-bin-path)
 
   rm -rf -- "${APP:?}"
   mkdir -p "${CONTENTS}/MacOS" "${CONTENTS}/Frameworks" "${RESOURCES}"
 
-  cp "${binary_dir}/${PRODUCT}" "${CONTENTS}/MacOS/${PRODUCT}"
-  cp "Packaging/${PRODUCT}-Info.plist" "${CONTENTS}/Info.plist"
+  cp "${binary_dir}/${PRODUCT}" "${EXECUTABLE}"
+  cp "${INFO_PLIST}" "${CONTENTS}/Info.plist"
   cp "Packaging/${PRODUCT}.icns" "${RESOURCES}/${PRODUCT}.icns"
   cp -R Packaging/Localizations/*.lproj "${RESOURCES}/"
   cp Packaging/Sounds/*.aiff "${RESOURCES}/"
@@ -87,7 +104,7 @@ assemble_app() {
 
   ditto "${binary_dir}/Sparkle.framework" "${FRAMEWORK}"
   rm -rf -- "${FRAMEWORK}/Versions/B/XPCServices" "${FRAMEWORK}/XPCServices"
-  install_name_tool -add_rpath @executable_path/../Frameworks "${CONTENTS}/MacOS/${PRODUCT}"
+  install_name_tool -add_rpath @executable_path/../Frameworks "${EXECUTABLE}"
 
   if [[ ${configuration} == debug ]]; then
     plutil -remove SUFeedURL "${CONTENTS}/Info.plist"
@@ -138,17 +155,8 @@ main() {
     die "\"${IDENTITY}\" isn't in the keychain"
   fi
 
-  local minimum_system sdk
-  minimum_system=$(plutil -extract LSMinimumSystemVersion raw "Packaging/${PRODUCT}-Info.plist")
-  sdk=$(xcrun --show-sdk-version)
-
-  swift build --configuration "${configuration}" --product "${PRODUCT}" \
-    -Xlinker -platform_version -Xlinker macos -Xlinker "${minimum_system}" -Xlinker "${sdk}"
-
-  local binary_dir
-  binary_dir=$(swift build --configuration "${configuration}" --show-bin-path)
-
-  assemble_app "${configuration}" "${binary_dir}"
+  build_product "${configuration}"
+  assemble_app "${configuration}"
   sign_app
 }
 

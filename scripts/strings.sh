@@ -33,7 +33,7 @@ cleanup() {
   fi
 }
 
-code_keys() {
+collect_code_keys() {
   local output=$1
 
   [[ -d ${STRINGS_DIR} ]] || die "no strings in ${STRINGS_DIR}: run make build"
@@ -61,7 +61,7 @@ code_keys() {
   LC_ALL=C sort --unique "${output}.unsorted" >"${output}"
 }
 
-table_keys() {
+collect_table_keys() {
   local table=$1 output=$2
 
   plutil -convert json -o "${output}.json" "${table}"
@@ -75,7 +75,7 @@ check_keys() {
   local actual="${WORK_DIR}/actual"
 
   plutil -lint -s "${table}" || die "${table} isn't a valid strings file"
-  table_keys "${table}" "${actual}"
+  collect_table_keys "${table}" "${actual}"
 
   local missing extra
   missing=$(LC_ALL=C comm -23 "${expected}" "${actual}")
@@ -93,7 +93,11 @@ check_specifiers() {
   plutil -convert json -o "${json}" "${table}"
 
   local mismatched
-  mismatched=$(jq --raw-output "${SPECIFIERS} to_entries[] | select((.key | specifiers) != (.value | specifiers)) | .key" "${json}")
+  mismatched=$(
+    jq --raw-output \
+      "${SPECIFIERS} to_entries[] | select((.key | specifiers) != (.value | specifiers)) | .key" \
+      "${json}"
+  )
 
   [[ -z ${mismatched} ]] || die "${table} changes the placeholders of:" "${mismatched}"
 }
@@ -106,11 +110,11 @@ check_plist_strings() {
   plutil -extract "${PLIST_KEY}" raw -o /dev/null "${table}" || die "${table} has no ${PLIST_KEY}"
 }
 
-check() {
+check_tables() {
   local expected="${WORK_DIR}/expected"
   local languages=0
 
-  code_keys "${expected}"
+  collect_code_keys "${expected}"
   check_keys "${SOURCE_TABLE}" "${expected}" ' (run make strings-update)'
 
   local directory
@@ -133,10 +137,10 @@ check() {
   echo "strings: ${count// /} keys in ${languages} languages"
 }
 
-update() {
+update_source_table() {
   local keys="${WORK_DIR}/keys"
 
-  code_keys "${keys}"
+  collect_code_keys "${keys}"
 
   local key
 
@@ -157,8 +161,8 @@ main() {
   trap cleanup EXIT
 
   case ${1:-check} in
-    check) check ;;
-    update) update ;;
+    check) check_tables ;;
+    update) update_source_table ;;
     *) usage ;;
   esac
 }
