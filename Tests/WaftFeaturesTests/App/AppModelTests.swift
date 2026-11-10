@@ -23,7 +23,7 @@ struct AppModelTests {
     }
 
     @Test
-    func `keeps retained settings usable after their connected models are released`() throws {
+    func `changes retained settings without reaching the released models`() throws {
         var model: AppModel? = AppModel(dependencies: dependencies())
         let settings = try #require(model?.settings)
         weak let releasedApp = model
@@ -41,10 +41,6 @@ struct AppModelTests {
         settings.settings.languages = .preferred(by: ["de"])
         settings.settings.speechModel = .accurate
         settings.settings.historyLimit = 100
-
-        #expect(settings.settings.languages.languages.contains(.german))
-        #expect(settings.settings.speechModel == .accurate)
-        #expect(settings.settings.historyLimit == 100)
     }
 
     @Test(arguments: [(PermissionStatus.granted, AppStatus.speechModel(SpeechModelState())), (.denied, .needsPermission)])

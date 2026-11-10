@@ -5,6 +5,7 @@ import Testing
 struct UsageReportTests {
     private static let host = UsageHost(appVersion: "1.2.3", systemVersion: "15.1", language: "pt-BR")
     private static let installation = "3f2504e0-4f89-41d3-9a0c-0305e82c3301"
+    private static let license = License(email: "buyer@example.com", name: nil)
 
     @Test
     func `encodes the fields the usage service accepts and nothing else`() throws {
@@ -22,7 +23,7 @@ struct UsageReportTests {
             counts: counts,
             host: Self.host,
             settings: settings,
-            access: ProAccess(license: nil, trialStarted: Date(), now: Date()),
+            access: ProAccess(license: Self.license, trialStarted: .fixed, now: .fixed),
         )
 
         let encoded = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(report)) as? [String: Any])
@@ -37,7 +38,7 @@ struct UsageReportTests {
             "language": "pt-BR",
             "speechModel": "accurate",
             "provider": "openai",
-            "license": "beta",
+            "license": "licensed",
         ])
         #expect(sentCounts.filter { $0.value > 0 } == ["formalDictations": 1])
         #expect(sentCounts.keys.sorted() == [
@@ -55,21 +56,40 @@ struct UsageReportTests {
     }
 
     @Test
-    func `names a local server and a license`() {
+    func `names a local server`() {
         var settings = Settings(languages: .preferred(by: []))
         settings.modelProvider = .localServer
 
-        let license = License(email: "buyer@example.com", name: nil)
-        let report = UsageReport(
+        let access = ProAccess(license: Self.license, trialStarted: .fixed, now: .fixed)
+
+        #expect(report(access: access, settings: settings).provider == "local")
+    }
+
+    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
+    func `names the beta without a license`() {
+        let access = ProAccess(license: nil, trialStarted: .fixed, now: .fixed)
+
+        #expect(report(access: access).license == "beta")
+    }
+
+    @Test(
+        .enabled(if: !ProAccess.isFreeDuringBeta),
+        arguments: [(3600, "trial"), (4 * 86400, "expired")] as [(TimeInterval, String)],
+    )
+    func `names the trial and its end without a license once the beta ends`(elapsed: TimeInterval, license: String) {
+        let access = ProAccess(license: nil, trialStarted: .fixed, now: Date.fixed.addingTimeInterval(elapsed))
+
+        #expect(report(access: access).license == license)
+    }
+
+    private func report(access: ProAccess, settings: Settings = Settings(languages: .preferred(by: []))) -> UsageReport {
+        UsageReport(
             installation: UUID(),
             day: "2026-10-12",
             counts: UsageCounts(),
             host: Self.host,
             settings: settings,
-            access: ProAccess(license: license, trialStarted: Date(), now: Date()),
+            access: access,
         )
-
-        #expect(report.provider == "local")
-        #expect(report.license == "licensed")
     }
 }
