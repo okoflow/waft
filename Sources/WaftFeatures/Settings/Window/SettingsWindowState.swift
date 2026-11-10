@@ -31,7 +31,7 @@ final class SettingsWindowState {
     }
 
     func move(by offset: Int) {
-        let panes = SettingsPane.allCases
+        let panes = SidebarGroup.panes
         guard let index = panes.firstIndex(of: selection) else { return }
 
         selection = panes[min(max(index + offset, 0), panes.count - 1)]

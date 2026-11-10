@@ -9,6 +9,8 @@ struct SidebarGroup {
 
     static let bottom = SidebarGroup(title: "App", panes: [.general, .pro, .about])
 
+    static let panes = (top + [bottom]).flatMap(\.panes)
+
     let title: LocalizedStringKey?
     let panes: [SettingsPane]
 }
