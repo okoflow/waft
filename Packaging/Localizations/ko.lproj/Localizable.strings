@@ -279,6 +279,7 @@
 "Reset to Default" = "기본값으로 재설정";
 "Reset to Default…" = "기본값으로 재설정…";
 "Reset your dictation statistics?" = "받아쓰기 통계를 재설정하겠습니까?";
+"Retry Last Dictation" = "마지막 받아쓰기 재시도";
 "Retry Speech Model" = "음성 인식 모델 재시도";
 "Retry" = "재시도";
 "Right Command" = "오른쪽 Command";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft가 이 파일을 읽을 수 없습니다.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft가 마이크를 사용할 수 없습니다. 설정 › 일반에서 허용하세요.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft가 저장된 기록을 읽지 못해 사본을 보관했습니다. ‘기록 지우기’를 누르면 둘 다 삭제됩니다.";
+"Waft couldn't save the license key." = "Waft가 라이선스 키를 저장하지 못했습니다.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft가 이 Mac에서 키를 삭제합니다. 키를 추가할 때까지 AI 모드는 ‘가벼운 정리’ 모드로 처리됩니다.";
 "Waft is listening" = "Waft가 듣는 중";
 "Waft keeps no dictations while Keep history is off." = "‘기록 보관’이 꺼져 있는 동안에는 Waft가 받아쓰기를 보관하지 않습니다.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft는 메뉴 막대에 있습니다.";
 "Waft needs both to type for you." = "Waft가 대신 입력하려면 두 권한이 모두 필요합니다.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft가 키를 감지하고 텍스트를 붙여넣으려면 이 권한이 필요합니다. 열리는 목록에서 Waft를 켜세요.";
+"Waft records up to %lld minutes at a time." = "Waft는 한 번에 최대 %lld분까지 녹음합니다.";
 "Waft starts listening." = "Waft가 듣기 시작합니다.";
 "Waft writes" = "Waft가 쓴 내용";
 "Waft" = "Waft";

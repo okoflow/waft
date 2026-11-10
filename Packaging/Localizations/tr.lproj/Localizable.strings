@@ -279,6 +279,7 @@
 "Reset to Default" = "Saptanmışa Dön";
 "Reset to Default…" = "Saptanmışa Dön…";
 "Reset your dictation statistics?" = "Dikte istatistikleriniz sıfırlansın mı?";
+"Retry Last Dictation" = "Son Dikteyi Yeniden Dene";
 "Retry Speech Model" = "Konuşma Modelini Yeniden Dene";
 "Retry" = "Yeniden Dene";
 "Right Command" = "Sağ Komut";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft bu dosyayı okuyamıyor.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft mikrofonu kullanamıyor. Ayarlar › Genel bölümünde izin verin.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kayıtlı geçmişi okuyamadı ve bir kopyasını sakladı. “Geçmişi Sil” ikisini de siler.";
+"Waft couldn't save the license key." = "Waft lisans anahtarını kaydedemedi.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft onu bu Mac’ten siler. Siz bir anahtar ekleyene kadar YZ modları “Hafif” modunu kullanır.";
 "Waft is listening" = "Waft dinliyor";
 "Waft keeps no dictations while Keep history is off." = "“Geçmişi sakla” kapalıyken Waft dikte saklamaz.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft menü çubuğunda bulunur.";
 "Waft needs both to type for you." = "Waft’ın sizin yerinize yazabilmesi için ikisi de gerekir.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft’ın tuşu algılaması ve metninizi yapıştırması için bu izin gerekir. Açılan listede Waft’ı açın.";
+"Waft records up to %lld minutes at a time." = "Waft bir seferde en fazla %lld dakika kayıt yapar.";
 "Waft starts listening." = "Waft dinlemeye başlar.";
 "Waft writes" = "Waft’ın yazdığı";
 "Waft" = "Waft";

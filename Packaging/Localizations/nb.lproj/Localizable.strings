@@ -279,6 +279,7 @@
 "Reset to Default" = "Nullstill til standard";
 "Reset to Default…" = "Nullstill til standard…";
 "Reset your dictation statistics?" = "Vil du nullstille dikteringsstatistikken?";
+"Retry Last Dictation" = "Prøv siste diktering på nytt";
 "Retry Speech Model" = "Last inn talemodellen på nytt";
 "Retry" = "Prøv igjen";
 "Right Command" = "Høyre Kommando-tast";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft kan ikke lese denne filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan ikke bruke mikrofonen. Gi tilgang i Innstillinger › Generelt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunne ikke lese den lagrede loggen og har tatt vare på en kopi av den. Tøm logg sletter begge.";
+"Waft couldn't save the license key." = "Waft kunne ikke lagre lisensnøkkelen.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft sletter den fra denne Macen. KI-modusene bruker «Lett» til du legger til en nøkkel.";
 "Waft is listening" = "Waft lytter";
 "Waft keeps no dictations while Keep history is off." = "Waft lagrer ingen dikteringer så lenge «Lagre logg» er slått av.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft finner du i menylinjen.";
 "Waft needs both to type for you." = "Waft trenger begge for å kunne skrive for deg.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft trenger dette for å registrere tasten og lime inn teksten. Slå på Waft i listen som åpnes.";
+"Waft records up to %lld minutes at a time." = "Waft tar opp inntil %lld minutter om gangen.";
 "Waft starts listening." = "Waft begynner å lytte.";
 "Waft writes" = "Waft skriver";
 "Waft" = "Waft";

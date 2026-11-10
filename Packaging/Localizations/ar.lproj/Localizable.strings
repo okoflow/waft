@@ -279,6 +279,7 @@
 "Reset to Default" = "إعادة التعيين إلى الافتراضي";
 "Reset to Default…" = "إعادة التعيين إلى الافتراضي…";
 "Reset your dictation statistics?" = "هل تريد إعادة تعيين إحصائيات الإملاء؟";
+"Retry Last Dictation" = "إعادة محاولة آخر عملية إملاء";
 "Retry Speech Model" = "إعادة تحميل نموذج الكلام";
 "Retry" = "إعادة المحاولة";
 "Right Command" = "مفتاح Command الأيمن";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "يتعذر على Waft قراءة هذا الملف.";
 "Waft can't use the microphone. Allow it in Settings › General." = "يتعذر على Waft استخدام الميكروفون. اسمح بالوصول إليه في الإعدادات › عام.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "تعذّرت على Waft قراءة السجل المحفوظ، فاحتفظ بنسخة منه. يحذف \"مسح سجل التاريخ\" الاثنين معًا.";
+"Waft couldn't save the license key." = "تعذّر على Waft حفظ مفتاح الترخيص.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "سيحذفه Waft من هذا الـ Mac. ستستخدم أنماط الذكاء الاصطناعي النمط \"خفيف\" إلى أن تضيف مفتاحًا.";
 "Waft is listening" = "يستمع Waft";
 "Waft keeps no dictations while Keep history is off." = "لا يحتفظ Waft بأي عمليات إملاء ما دام \"الاحتفاظ بسجل التاريخ\" متوقفًا.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "يوجد Waft في شريط القوائم.";
 "Waft needs both to type for you." = "يحتاج Waft إلى كليهما ليكتب نيابةً عنك.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "يحتاج Waft إلى هذا الإذن لرصد المفتاح ولصق النص. شغّل Waft في القائمة التي ستُفتح.";
+"Waft records up to %lld minutes at a time." = "يسجّل Waft حتى %lld دقائق في المرة الواحدة.";
 "Waft starts listening." = "يبدأ Waft في الاستماع.";
 "Waft writes" = "ما يكتبه Waft";
 "Waft" = "Waft";

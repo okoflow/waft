@@ -279,6 +279,7 @@
 "Reset to Default" = "שחזור ברירת המחדל";
 "Reset to Default…" = "שחזור ברירת המחדל…";
 "Reset your dictation statistics?" = "לאפס את סטטיסטיקת ההכתבה?";
+"Retry Last Dictation" = "ניסיון חוזר להכתבה האחרונה";
 "Retry Speech Model" = "טעינה מחדש של מודל זיהוי הדיבור";
 "Retry" = "ניסיון חוזר";
 "Right Command" = "מקש Command הימני";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "ל-Waft אין אפשרות לקרוא קובץ זה.";
 "Waft can't use the microphone. Allow it in Settings › General." = "ל-Waft אין גישה למיקרופון. יש לאשר את הגישה ב״הגדרות״ › ״כללי״.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "ל-Waft לא הייתה אפשרות לקרוא את ההיסטוריה השמורה, והוא שמר ממנה עותק. ״ניקוי ההיסטוריה״ מוחק את שניהם.";
+"Waft couldn't save the license key." = "לא ניתן היה לשמור את מפתח הרישיון.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "היישום Waft ימחק אותו מ-Mac זה. עד שיתווסף מפתח, מצבי הבינה המלאכותית ישתמשו במצב ״בסיסי״.";
 "Waft is listening" = "היישום Waft מאזין";
 "Waft keeps no dictations while Keep history is off." = "היישום Waft לא שומר הכתבות כל עוד ״שמירת היסטוריה״ כבויה.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "ניתן למצוא את Waft בשורת התפריטים.";
 "Waft needs both to type for you." = "שתי ההרשאות נחוצות ל-Waft כדי להקליד בשבילך.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "ההרשאה נחוצה ל-Waft כדי לזהות את המקש ולהדביק את המלל. יש להפעיל את Waft ברשימה שתיפתח.";
+"Waft records up to %lld minutes at a time." = "היישום Waft מקליט עד %lld דקות בכל פעם.";
 "Waft starts listening." = "ההאזנה מתחילה.";
 "Waft writes" = "מה ש-Waft כותב";
 "Waft" = "Waft";

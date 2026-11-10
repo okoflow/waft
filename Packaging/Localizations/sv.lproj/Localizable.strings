@@ -279,6 +279,7 @@
 "Reset to Default" = "Återställ till förval";
 "Reset to Default…" = "Återställ till förval…";
 "Reset your dictation statistics?" = "Vill du nollställa dikteringsstatistiken?";
+"Retry Last Dictation" = "Försök med senaste dikteringen igen";
 "Retry Speech Model" = "Läs in talmodellen igen";
 "Retry" = "Försök igen";
 "Right Command" = "Höger kommandotangent";
@@ -426,6 +427,7 @@
 "Waft can't read this file." = "Waft kan inte läsa den här filen.";
 "Waft can't use the microphone. Allow it in Settings › General." = "Waft kan inte använda mikrofonen. Tillåt åtkomst i Inställningar › Allmänt.";
 "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both." = "Waft kunde inte läsa den sparade historiken och har behållit en kopia av den. Rensa historik raderar båda.";
+"Waft couldn't save the license key." = "Waft kunde inte spara licensnyckeln.";
 "Waft deletes it from this Mac. The AI modes use Light until you add a key." = "Waft raderar den från den här datorn. AI-lägena använder ”Lätt” tills du lägger till en nyckel.";
 "Waft is listening" = "Waft lyssnar";
 "Waft keeps no dictations while Keep history is off." = "Waft sparar inga dikteringar medan ”Spara historik” är avstängt.";
@@ -435,6 +437,7 @@
 "Waft lives in the menu bar." = "Waft finns i menyraden.";
 "Waft needs both to type for you." = "Waft behöver båda för att kunna skriva åt dig.";
 "Waft needs it to notice the key and paste your text. Turn on Waft in the list that opens." = "Waft behöver den för att känna av tangenten och klistra in din text. Slå på Waft i listan som öppnas.";
+"Waft records up to %lld minutes at a time." = "Waft spelar in upp till %lld minuter åt gången.";
 "Waft starts listening." = "Waft börjar lyssna.";
 "Waft writes" = "Waft skriver";
 "Waft" = "Waft";
