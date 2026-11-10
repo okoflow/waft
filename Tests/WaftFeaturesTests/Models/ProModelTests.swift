@@ -89,6 +89,30 @@ struct ProModelTests {
         #expect(keyStore.value == nil)
     }
 
+    @Test
+    func `activates a key for the session when the key cannot be saved`() {
+        let keyStore = FakeValueStore<String>(failsSaving: true)
+        let pro = model(keyStore: keyStore)
+
+        pro.draft = Self.key
+        pro.activateDraft()
+
+        #expect(pro.license?.holder == "Ann Lee")
+        #expect(pro.activationProblem == nil)
+        #expect(keyStore.value == nil)
+    }
+
+    @Test
+    func `deactivates for the session when the key cannot be removed`() {
+        let keyStore = FakeValueStore(Self.key, failsDeleting: true)
+        let pro = model(keyStore: keyStore)
+
+        pro.deactivate()
+
+        #expect(pro.license == nil)
+        #expect(keyStore.value == Self.key)
+    }
+
     @Test(.enabled(if: ProAccess.isFreeDuringBeta))
     func `starts no trial and hides the license section during the beta`() {
         let trialStore = FakeValueStore<Date>()

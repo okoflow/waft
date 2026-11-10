@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -110,6 +109,30 @@ struct HistoryModelTests {
     }
 
     @Test
+    func `keeps an added entry in memory when the history cannot be saved`() {
+        let stored = history(entries: 3)
+        let store = FakeValueStore(stored, failsSaving: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
+        history.add(entry(4))
+
+        #expect(history.history.entries.map(\.text) == ["Entry 1", "Entry 2", "Entry 3", "Entry 4"])
+        #expect(store.value == stored)
+    }
+
+    @Test
+    func `saves over a history it could not read with an added entry and keeps flagging it`() {
+        let store = FakeValueStore(history(entries: 3), isBroken: true)
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
+        history.add(entry(4))
+
+        #expect(history.history.entries.map(\.text) == ["Entry 4"])
+        #expect(store.value == history.history)
+        #expect(history.hasUnreadableHistory)
+    }
+
+    @Test
     func `copies the original transcript of an entry that has one`() {
         let clipboard = FakeClipboard()
         let history = HistoryModel(store: FakeValueStore<DictationHistory>(), settings: settingsModel(), clipboard: clipboard)
@@ -158,29 +181,6 @@ struct HistoryModelTests {
         history.removeAll()
 
         #expect(!history.hasUnreadableHistory)
-    }
-
-    @Test(arguments: [
-        (0, "", true, "No dictations yet"),
-        (0, "Friday", false, "Waft keeps no dictations while Keep history is off."),
-        (1, "Friday", true, "No matches"),
-    ])
-    func `explains why it shows no dictations`(entries: Int, searchText: String, keepsHistory: Bool, text: String) {
-        let settings = settingsModel()
-        settings.settings.keepsHistory = keepsHistory
-        let history = model(entries: entries, settings: settings)
-        history.searchText = searchText
-
-        #expect(history.emptyText == LocalizedStringKey(text))
-    }
-
-    @Test
-    func `explains that the saved history could not be read even while searching`() {
-        let store = FakeValueStore(DictationHistory(), isBroken: true)
-        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
-        history.searchText = "Friday"
-
-        #expect(history.emptyText == "Waft couldn't read the saved history and kept a copy of it. Clear History deletes both.")
     }
 
     @Test

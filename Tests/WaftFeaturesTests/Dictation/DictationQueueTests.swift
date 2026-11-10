@@ -62,6 +62,7 @@ struct DictationQueueTests {
 
         #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.copied(Self.hello)) })
         #expect(clipboard.copied == ["Hello world"])
+        #expect(queue.latestTranscript == "Hello world")
         #expect(history.history.entries.map(\.text) == ["Hello world"])
     }
 
@@ -137,6 +138,19 @@ struct DictationQueueTests {
         #expect(inserter.insertions.map(\.text) == ["Meeting at three"])
         #expect(history.history.entries.isEmpty)
         #expect(statistics.statistics.allTime.dictations == 0)
+    }
+
+    @Test(arguments: [InsertionSkipReason.secureField, .noAccessibility, .focusChanged, .keyHeld, .notRead])
+    func `copies an edit it could not paste and keeps it as the latest transcript`(reason: InsertionSkipReason) async {
+        let inserter = FakeTextInserter(.skipped(reason))
+        let rewriter = FakeTextRewriter(.success("Meeting at three"))
+        let queue = queue(FakeTranscriber(.success(.spoken("Make it three"))), inserter: inserter, rewriter: rewriter)
+
+        queue.submit(.recorded(selection: "Meeting at noon"))
+
+        #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Meeting at three"] })
+        #expect(queue.latestTranscript == "Meeting at three")
+        #expect(history.history.entries.isEmpty)
     }
 
     @Test

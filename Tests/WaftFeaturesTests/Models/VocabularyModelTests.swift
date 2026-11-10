@@ -98,6 +98,47 @@ struct VocabularyModelTests {
         #expect(vocabulary.terms.map(\.term) == ["Okoflow"])
     }
 
+    @Test
+    func `starts with an empty dictionary when the file is unreadable and saves over it with the first edit`() {
+        let store = FakeValueStore(Self.stored, isBroken: true)
+        let vocabulary = model(store)
+
+        #expect(vocabulary.terms.isEmpty)
+        #expect(vocabulary.snippets.isEmpty)
+        #expect(vocabulary.reloadFromDisk() == .empty)
+        #expect(store.value == Self.stored)
+
+        vocabulary.addTerm()
+        vocabulary.terms[0].term = "Waft"
+
+        #expect(store.value == Self.edited)
+    }
+
+    @Test
+    func `opens an unreadable dictionary file in the editor without writing over it`() {
+        let store = FakeValueStore(Self.stored, isBroken: true)
+        let urlOpener = FakeURLOpener()
+        let vocabulary = VocabularyModel(store: store, fileURL: Self.fileURL, urlOpener: urlOpener)
+
+        vocabulary.openInEditor()
+
+        #expect(store.value == Self.stored)
+        #expect(urlOpener.opened == [Self.fileURL])
+    }
+
+    @Test
+    func `drops an edit that could not be saved when it reloads the dictionary from disk`() {
+        let store = FakeValueStore(Self.stored, failsSaving: true)
+        let vocabulary = model(store)
+
+        vocabulary.removeSnippet(vocabulary.snippets[0].id)
+
+        #expect(vocabulary.snippets.isEmpty)
+        #expect(store.value == Self.stored)
+        #expect(vocabulary.reloadFromDisk() == Self.stored)
+        #expect(vocabulary.snippets.map(\.trigger) == ["my email"])
+    }
+
     @Test(arguments: [(nil, stored), (edited, edited)] as [(Vocabulary?, Vocabulary)])
     func `writes the dictionary file before opening it in the editor only when it is missing`(
         onDisk: Vocabulary?,
