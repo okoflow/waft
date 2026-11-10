@@ -22,18 +22,7 @@ struct MenuPicker<Value: Hashable, Options: View>: View {
             .pickerStyle(.inline)
             .labelsHidden()
         } label: {
-            HStack(spacing: Metrics.inlineSpacing) {
-                Text(current)
-                    .font(.control)
-                    .foregroundStyle(.primary)
-
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.menuChevron)
-                    .foregroundStyle(Palette.secondaryText)
-                    .frame(width: 18, height: 18)
-                    .background(Palette.control, in: Circle())
-            }
-            .widenedHitTarget()
+            PickerLabel(title: current, font: .control)
         }
         .menuStyle(.button)
         .buttonStyle(.plain)
