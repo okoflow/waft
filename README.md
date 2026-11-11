@@ -63,6 +63,7 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 | [Privacy](docs/privacy.md) | What Waft keeps and sends |
 | [Troubleshooting](docs/troubleshooting.md) | When something doesn't work |
 | [Architecture](docs/architecture.md) | The code, for contributors |
+| [Releasing](docs/releasing.md) | Cutting a release, for maintainers |
 
 ## Waft+
 
