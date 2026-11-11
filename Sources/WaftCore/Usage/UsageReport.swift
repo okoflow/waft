@@ -26,7 +26,6 @@ package struct UsageReport: Encodable, Equatable, Sendable {
     private static func name(of status: ProAccess.Status) -> String {
         switch status {
         case .licensed: "licensed"
-        case .beta: "beta"
         case .trial: "trial"
         case .expired: "expired"
         }

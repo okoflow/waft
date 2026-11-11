@@ -25,8 +25,6 @@ final class ProModel {
         didSet { activationProblem = nil }
     }
 
-    private var hasTriedActivation = false
-
     private let keyStore: any ValueStore<String>
     private let checker: any LicenseSignatureChecking
     private let urlOpener: any URLOpener
@@ -42,12 +40,6 @@ final class ProModel {
 
     var isUnlocked: Bool {
         access.isUnlocked
-    }
-
-    var showsLicenseSection: Bool {
-        guard license == nil, !hasTriedActivation else { return true }
-
-        return !ProAccess.isFreeDuringBeta
     }
 
     var canActivateDraft: Bool {
@@ -74,9 +66,7 @@ final class ProModel {
 
         let now = Date()
 
-        if !ProAccess.isFreeDuringBeta {
-            store.write(now)
-        }
+        store.write(now)
 
         return now
     }
@@ -93,8 +83,6 @@ final class ProModel {
     }
 
     func activateDraft() {
-        hasTriedActivation = true
-
         guard let key = LicenseKey(draft) else {
             activationProblem = .unreadable
 

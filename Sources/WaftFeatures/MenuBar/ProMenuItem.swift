@@ -7,7 +7,7 @@ struct ProMenuItem: View {
 
     var body: some View {
         switch pro.access.status {
-        case .licensed, .beta:
+        case .licensed:
             EmptyView()
 
         case .trial, .expired:

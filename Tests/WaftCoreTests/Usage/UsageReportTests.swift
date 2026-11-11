@@ -65,18 +65,8 @@ struct UsageReportTests {
         #expect(report(access: access, settings: settings).provider == "local")
     }
 
-    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
-    func `names the beta without a license`() {
-        let access = ProAccess(license: nil, trialStarted: .fixed, now: .fixed)
-
-        #expect(report(access: access).license == "beta")
-    }
-
-    @Test(
-        .enabled(if: !ProAccess.isFreeDuringBeta),
-        arguments: [(3600, "trial"), (4 * 86400, "expired")] as [(TimeInterval, String)],
-    )
-    func `names the trial and its end without a license once the beta ends`(elapsed: TimeInterval, license: String) {
+    @Test(arguments: [(3600, "trial"), (4 * 86400, "expired")] as [(TimeInterval, String)])
+    func `names the trial and its end without a license`(elapsed: TimeInterval, license: String) {
         let access = ProAccess(license: nil, trialStarted: .fixed, now: Date.fixed.addingTimeInterval(elapsed))
 
         #expect(report(access: access).license == license)

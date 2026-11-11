@@ -45,7 +45,6 @@ struct ProModelTests {
         #expect(pro.activationProblem == problem)
         #expect(pro.license == nil)
         #expect(keyStore.value == nil)
-        #expect(pro.showsLicenseSection)
 
         pro.draft += " "
 
@@ -132,17 +131,8 @@ struct ProModelTests {
         #expect(pro.license == nil)
     }
 
-    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
-    func `starts no trial and hides the license section during the beta`() {
-        let trialStore = FakeValueStore<Date>()
-        let pro = model(trialStore: trialStore)
-
-        #expect(trialStore.value == nil)
-        #expect(!pro.showsLicenseSection)
-    }
-
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `saves the trial start on first launch once the beta ends`() {
+    @Test
+    func `saves the trial start on first launch`() {
         let trialStore = FakeValueStore<Date>()
         _ = model(trialStore: trialStore)
 
@@ -158,16 +148,16 @@ struct ProModelTests {
         #expect(pro.trialEnds == end)
     }
 
-    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
-    func `locks no mode and no speech model during the beta`() {
-        let pro = model(trialStore: FakeValueStore(Date.distantPast))
+    @Test
+    func `locks no mode and no speech model during the trial`() {
+        let pro = model()
 
         #expect(!(Mode.builtIn + [.custom(UUID())]).contains { pro.locks($0) })
         #expect(!SpeechModel.allCases.contains { pro.locks($0) })
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
-    func `locks the AI modes and the accurate model without a license once the beta ends`() {
+    @Test
+    func `locks the AI modes and the accurate model once the trial ends`() {
         let pro = model(trialStore: FakeValueStore(Date.distantPast))
         let custom = Mode.custom(UUID())
 

@@ -59,7 +59,7 @@ struct TryoutModelTests {
         #expect(rewriter.requests.isEmpty)
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `falls back to Light without Waft+`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let tryout = model(rewriter, pro: .unlicensed(trialStarted: .distantPast))
@@ -101,7 +101,7 @@ struct TryoutModelTests {
         })
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `does not rework the sample without Waft+`() {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let tryout = model(rewriter, pro: .unlicensed(trialStarted: .distantPast))

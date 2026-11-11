@@ -66,7 +66,7 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 
 ## Waft+
 
-Dictation is free. [Waft+](docs/usage.md#waft) lists what a single payment adds, and all of it is free while Waft is in beta.
+Dictation is free. [Waft+](docs/usage.md#waft) lists what a single payment adds and how the free trial works.
 
 ## Contributing
 

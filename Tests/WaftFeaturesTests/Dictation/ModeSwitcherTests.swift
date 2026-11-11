@@ -40,7 +40,7 @@ struct ModeSwitcherTests {
         #expect(settings.settings.mode == .raw)
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `skips the AI modes without Waft+`() {
         let switcher = ModeSwitcher(
             shortcuts: shortcuts,

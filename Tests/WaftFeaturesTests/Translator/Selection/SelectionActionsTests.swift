@@ -161,7 +161,7 @@ struct SelectionActionsTests {
         #expect(inserter.insertions.isEmpty)
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `needs Waft+`() {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let actions = actions(rewriter, selecting: "Привет", pro: .unlicensed(trialStarted: .distantPast))

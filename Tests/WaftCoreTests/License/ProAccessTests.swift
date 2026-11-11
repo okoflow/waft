@@ -13,19 +13,8 @@ struct ProAccessTests {
         #expect(access.isUnlocked)
     }
 
-    @Test(.enabled(if: ProAccess.isFreeDuringBeta))
-    func `unlocks everything during the beta`() {
-        let access = ProAccess(license: nil, trialStarted: .distantPast, now: .now)
-
-        #expect(access.status == .beta)
-        #expect(access.isUnlocked)
-    }
-
-    @Test(
-        .enabled(if: !ProAccess.isFreeDuringBeta),
-        arguments: [(3600.0, ProAccess.Status.trial, true), (4 * 86400, .expired, false)],
-    )
-    func `runs a trial without a license once the beta ends`(elapsed: TimeInterval, status: ProAccess.Status, isUnlocked: Bool) {
+    @Test(arguments: [(3600.0, ProAccess.Status.trial, true), (4 * 86400, .expired, false)])
+    func `runs a trial without a license`(elapsed: TimeInterval, status: ProAccess.Status, isUnlocked: Bool) {
         let access = ProAccess(license: nil, trialStarted: .fixed, now: Date.fixed.addingTimeInterval(elapsed))
 
         #expect(access.status == status)
