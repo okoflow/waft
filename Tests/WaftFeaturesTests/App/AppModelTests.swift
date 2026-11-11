@@ -50,7 +50,23 @@ struct AppModelTests {
         #expect(model.status == status)
     }
 
-    private func dependencies(permissions: [Permission: PermissionStatus] = [:]) -> AppDependencies {
+    @Test
+    func `deletes the usage log as soon as sharing is turned off`() {
+        var settings = Settings(languages: .preferred(by: []))
+        settings.usageSharing = .allowed
+        let usageStore = FakeValueStore(UsageLog(installation: UUID()))
+        let model = AppModel(dependencies: dependencies(settings: settings, usageStore: usageStore))
+
+        model.settings.sharesUsage = false
+
+        #expect(usageStore.value == nil)
+    }
+
+    private func dependencies(
+        permissions: [Permission: PermissionStatus] = [:],
+        settings: Settings = Settings(languages: .preferred(by: [])),
+        usageStore: FakeValueStore<UsageLog> = FakeValueStore<UsageLog>(),
+    ) -> AppDependencies {
         AppDependencies(
             recorder: FakeAudioRecorder(),
             audioInputs: FakeAudioInputProvider(),
@@ -73,12 +89,12 @@ struct AppModelTests {
             outputVolume: FakeOutputVolume(),
             updater: FakeAppUpdater(),
             lifecycle: FakeAppLifecycle(),
-            settingsStore: FakeValueStore(Settings(languages: .preferred(by: []))),
+            settingsStore: FakeValueStore(settings),
             vocabularyStore: FakeValueStore<Vocabulary>(),
             vocabularyFile: URL(filePath: "/tmp/Vocabulary.json"),
             historyStore: FakeValueStore<DictationHistory>(),
             statisticsStore: FakeValueStore<DictationStatistics>(),
-            usageStore: FakeValueStore<UsageLog>(),
+            usageStore: usageStore,
             usageSender: FakeUsageReportSender(),
             apiKeyStores: PerProvider(claude: FakeValueStore<String>(), openAI: FakeValueStore<String>()),
             licenseStore: FakeValueStore<String>(),

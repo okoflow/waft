@@ -109,6 +109,30 @@ struct UsageReporterTests {
         #expect(store.value?.installation != first)
     }
 
+    @Test
+    func `writes nothing back when a report arrives after sharing is turned off`() async {
+        let settings = SettingsModel.inMemory(usageSharing: .allowed)
+        let sender = FakeUsageReportSender(holdsReports: true)
+        var finishedRounds = 0
+
+        let reporter = reporter(settings: settings, sender: sender) { _ in
+            finishedRounds += 1
+
+            return false
+        }
+
+        reporter.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { sender.reports.count == 1 })
+
+        settings.sharesUsage = false
+        reporter.start()
+        sender.release()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { finishedRounds == 1 })
+        #expect(store.value == nil)
+    }
+
     private func reporter(settings: SettingsModel, host: UsageHost? = host) -> UsageReporter {
         reporter(settings: settings, sender: sender, host: host)
     }

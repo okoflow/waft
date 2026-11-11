@@ -16,10 +16,13 @@ struct TranscriptProcessorTests {
     }
 
     @Test
-    func `applies the offline rules and voice commands in light mode`() async {
-        let processed = await process("um, hello, new line, world", mode: .light)
+    func `applies the offline rules and voice commands in light mode without a rewrite`() async {
+        let log = RewriteLog()
+
+        let processed = await process("um, hello, new line, world", mode: .light, log: log)
 
         #expect(processed == ProcessedText(text: "Hello\nWorld.", mode: .light))
+        #expect(await log.requests.isEmpty)
     }
 
     @Test(arguments: [Mode.raw, .light, .clean, .translate])
