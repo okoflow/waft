@@ -4,9 +4,9 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
     package struct Day: Codable, Equatable, Sendable {
         private static let typingWordsPerMinute = 40.0
 
-        package var words = 0
-        package var dictations = 0
-        package var seconds = 0.0
+        package internal(set) var words = 0
+        package internal(set) var dictations = 0
+        package internal(set) var seconds = 0.0
 
         package var savedOverTyping: Duration {
             .seconds(max(0, Double(words) / Self.typingWordsPerMinute * 60 - seconds))

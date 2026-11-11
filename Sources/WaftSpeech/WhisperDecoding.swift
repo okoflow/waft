@@ -97,7 +97,7 @@ enum WhisperDecoding {
         }
     }
 
-    static func isConfident(_ segment: TranscriptionSegment) -> Bool {
+    private static func isConfident(_ segment: TranscriptionSegment) -> Bool {
         HallucinationFilter.keepsSegment(
             averageLogProbability: Double(segment.avgLogprob),
             compressionRatio: Double(segment.compressionRatio),

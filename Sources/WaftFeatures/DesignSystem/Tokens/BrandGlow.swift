@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum BrandGlow {
+private enum BrandGlow {
     static let base = LinearGradient(colors: [Color(hex: 0x34343A), Color(hex: 0x16161A)], startPoint: .top, endPoint: .bottom)
 
     static let blue = glow(0x3B82F6, at: UnitPoint(x: 0.9, y: 0), reach: 0.8, opacities: [(0.45, 0), (0.14, 0.5), (0, 1)])
