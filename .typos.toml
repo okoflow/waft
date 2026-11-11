@@ -1,17 +1,18 @@
+#:schema https://raw.githubusercontent.com/crate-ci/typos/v1.52.1/config.schema.json
 [files]
 extend-exclude = [
   ".git",
   "Packaging/Localizations",
-  "Sources/WaftCore/Speech/Recognition/WhisperPrompt.swift",
   "Sources/WaftCore/Speech/Recognition/StockPhrase.swift",
+  "Sources/WaftCore/Speech/Recognition/WhisperPrompt.swift",
 ]
 ignore-hidden = false
 
 [default]
 locale = "en-us"
 
-[default.extend-words]
-Sie = "Sie"
-
 [default.extend-identifiers]
 detectLangauge = "detectLangauge"
+
+[default.extend-words]
+Sie = "Sie"

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 name: CI
 
 on:
@@ -5,9 +6,6 @@ on:
   push:
     branches:
       - main
-
-permissions:
-  contents: read
 
 env:
   DEVELOPER_DIR: /Library/Developer/CommandLineTools
@@ -89,3 +87,6 @@ jobs:
         run: make test
 
     timeout-minutes: 30
+
+permissions:
+  contents: read
