@@ -19,7 +19,14 @@ package struct ProAccess: Equatable, Sendable {
         status = Self.status(license: license, trialStarted: trialStarted, now: now)
     }
 
-    package static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
+    package static func trialLastDay(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
+        let end = trialEnd(startedOn: start, now: now, calendar: calendar)
+        guard let lastDay = calendar.date(byAdding: .day, value: -1, to: end) else { return end }
+
+        return lastDay
+    }
+
+    static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar) -> Date {
         let firstDay = calendar.startOfDay(for: min(start, now))
         guard let end = calendar.date(byAdding: .day, value: trialLength, to: firstDay) else { return firstDay }
 

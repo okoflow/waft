@@ -140,7 +140,7 @@
 "Follows your instructions." = "Volgt je instructies.";
 "Forever" = "Altijd";
 "Formal" = "Formeel";
-"Free trial ends %@." = "Gratis proefperiode eindigt %@.";
+"Free trial through %@." = "Gratis proefperiode loopt tot en met %@.";
 "General" = "Algemeen";
 "Get Started" = "Aan de slag";
 "Get an API key" = "Vraag een API-sleutel aan";

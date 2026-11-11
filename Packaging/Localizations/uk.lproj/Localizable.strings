@@ -140,7 +140,7 @@
 "Follows your instructions." = "Виконує ваші інструкції.";
 "Forever" = "Завжди";
 "Formal" = "Діловий";
-"Free trial ends %@." = "Безкоштовний пробний період закінчиться %@.";
+"Free trial through %@." = "Безкоштовний пробний період діє до %@ включно.";
 "General" = "Загальні";
 "Get Started" = "Почати";
 "Get an API key" = "Отримати ключ API";

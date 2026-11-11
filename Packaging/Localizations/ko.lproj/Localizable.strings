@@ -140,7 +140,7 @@
 "Follows your instructions." = "지시문을 따릅니다.";
 "Forever" = "영구";
 "Formal" = "격식체";
-"Free trial ends %@." = "무료 체험이 %@ 종료됩니다.";
+"Free trial through %@." = "무료 체험은 %@까지입니다.";
 "General" = "일반";
 "Get Started" = "시작하기";
 "Get an API key" = "API 키 받기";

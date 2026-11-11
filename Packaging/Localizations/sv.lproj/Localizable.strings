@@ -140,7 +140,7 @@
 "Follows your instructions." = "Följer dina instruktioner.";
 "Forever" = "För alltid";
 "Formal" = "Formellt";
-"Free trial ends %@." = "Provperioden slutar %@.";
+"Free trial through %@." = "Provperioden gäller till och med %@.";
 "General" = "Allmänt";
 "Get Started" = "Kom igång";
 "Get an API key" = "Skaffa en API-nyckel";

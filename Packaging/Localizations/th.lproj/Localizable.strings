@@ -140,7 +140,7 @@
 "Follows your instructions." = "ทำตามคำสั่งของคุณ";
 "Forever" = "ตลอดไป";
 "Formal" = "ทางการ";
-"Free trial ends %@." = "ช่วงทดลองใช้ฟรีจะสิ้นสุด%@";
+"Free trial through %@." = "ช่วงทดลองใช้ฟรีใช้ได้ถึงวันที่ %@";
 "General" = "ทั่วไป";
 "Get Started" = "เริ่มต้นใช้งาน";
 "Get an API key" = "รับคีย์ API";

@@ -140,7 +140,7 @@
 "Follows your instructions." = "Sigue tus instrucciones.";
 "Forever" = "Siempre";
 "Formal" = "Formal";
-"Free trial ends %@." = "La prueba gratuita termina %@.";
+"Free trial through %@." = "La prueba gratuita dura hasta el %@ inclusive.";
 "General" = "General";
 "Get Started" = "Empezar";
 "Get an API key" = "Obtener una clave de API";

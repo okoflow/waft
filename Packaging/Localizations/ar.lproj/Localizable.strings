@@ -140,7 +140,7 @@
 "Follows your instructions." = "يتبع تعليماتك.";
 "Forever" = "للأبد";
 "Formal" = "رسمي";
-"Free trial ends %@." = "تنتهي التجربة المجانية %@.";
+"Free trial through %@." = "التجربة المجانية متاحة حتى نهاية يوم %@.";
 "General" = "عام";
 "Get Started" = "البدء";
 "Get an API key" = "الحصول على مفتاح API";

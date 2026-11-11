@@ -30,8 +30,8 @@ final class ProModel {
     private let urlOpener: any URLOpener
     private let trialStarted: Date
 
-    var trialEnds: Date {
-        ProAccess.trialEnd(startedOn: trialStarted, now: Date())
+    var trialLastDay: Date {
+        ProAccess.trialLastDay(startedOn: trialStarted, now: Date())
     }
 
     var access: ProAccess {

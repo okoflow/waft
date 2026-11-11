@@ -148,12 +148,12 @@ struct ProModelTests {
     }
 
     @Test
-    func `ends the trial three days after the stored start`() throws {
-        let started = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 10, hour: 15)))
-        let end = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 13)))
+    func `counts the last day of the trial from the stored start`() throws {
+        let started = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 30, hour: 23)))
+        let lastDay = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 11, day: 1)))
         let pro = model(trialStore: FakeValueStore(started))
 
-        #expect(pro.trialEnds == end)
+        #expect(pro.trialLastDay == lastDay)
     }
 
     @Test

@@ -140,7 +140,7 @@
 "Follows your instructions." = "依照你的指示處理。";
 "Forever" = "永久";
 "Formal" = "正式";
-"Free trial ends %@." = "免費試用將於%@結束。";
+"Free trial through %@." = "免費試用有效期至%@（含當天）。";
 "General" = "一般";
 "Get Started" = "開始使用";
 "Get an API key" = "取得API金鑰";

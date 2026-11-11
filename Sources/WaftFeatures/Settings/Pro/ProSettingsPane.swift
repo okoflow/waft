@@ -32,7 +32,7 @@ private struct ProHero: View {
         case let .licensed(license):
             String(localized: "Licensed to \(license.holder). Thank you!")
         case .trial:
-            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named))).")
+            String(localized: "Free trial through \(pro.trialLastDay.formatted(.dateTime.day().month(.wide))).")
         case .expired:
             String(localized: "Your free trial has ended.")
         }

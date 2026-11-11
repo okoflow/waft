@@ -29,6 +29,31 @@ struct ProAccessTests {
         #expect(ProAccess.trialEnd(startedOn: start, now: start, calendar: .gmt) == end)
     }
 
+    @Test(arguments: [(11, 11, 9, 11, 13), (11, 11, 23, 11, 13), (11, 29, 15, 12, 1), (2, 27, 22, 3, 1)])
+    func `counts the day the trial started and the two days after it`(
+        month: Int,
+        day: Int,
+        hour: Int,
+        lastMonth: Int,
+        lastDay: Int,
+    ) throws {
+        let started = DateComponents(year: 2026, month: month, day: day, hour: hour, minute: 59)
+        let start = try #require(Calendar.gmt.date(from: started))
+        let expected = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: lastMonth, day: lastDay)))
+
+        #expect(ProAccess.trialLastDay(startedOn: start, now: start, calendar: .gmt) == expected)
+    }
+
+    @Test(arguments: [(86399.0, ProAccess.Status.trial), (86400, .expired)])
+    func `runs the trial through its last day and no longer`(elapsed: TimeInterval, expected: ProAccess.Status) throws {
+        let start = try #require(Calendar.gmt.date(from: DateComponents(year: 2026, month: 11, day: 29, hour: 23)))
+        let lastDay = ProAccess.trialLastDay(startedOn: start, now: start, calendar: .gmt)
+
+        let now = lastDay.addingTimeInterval(elapsed)
+
+        #expect(ProAccess.trialStatus(startedOn: start, now: now, calendar: .gmt) == expected)
+    }
+
     @Test
     func `ends a trial that starts in the future three days after today`() throws {
         let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2027, month: 1, day: 18)))

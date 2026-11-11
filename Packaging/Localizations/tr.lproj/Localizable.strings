@@ -140,7 +140,7 @@
 "Follows your instructions." = "Talimatlarınıza uyar.";
 "Forever" = "Süresiz";
 "Formal" = "Resmî";
-"Free trial ends %@." = "Ücretsiz deneme %@ bitiyor.";
+"Free trial through %@." = "Ücretsiz denemenin son günü: %@.";
 "General" = "Genel";
 "Get Started" = "Başla";
 "Get an API key" = "API anahtarı al";
