@@ -3,9 +3,11 @@ import Testing
 import WaftCore
 @testable import WaftFeatures
 
-struct DictationRetryTests {
+struct DictationQueueRetryTests {
     private let clipboard = FakeClipboard()
     private let inserter = FakeTextInserter()
+    private let history = HistoryModel.inMemory()
+    private let statistics = StatisticsModel(store: FakeValueStore<DictationStatistics>())
     private let hud = HUDController.offscreen()
 
     @Test
@@ -33,6 +35,24 @@ struct DictationRetryTests {
         #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Hello world"] })
         #expect(transcriber.requests.count == 2)
         #expect(inserter.insertions.isEmpty)
+    }
+
+    @Test
+    func `records a dictation in history and statistics once a retry recognizes it`() async {
+        let transcriber = FakeTranscriber(.failure(CocoaError(.fileReadCorruptFile)), .success(.spoken("Hello world")))
+        let queue = queue(transcriber)
+
+        queue.submit(.recorded())
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+        #expect(history.history.entries.isEmpty)
+        #expect(statistics.statistics.allTime.dictations == 0)
+
+        queue.retryFailedDictation()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { !history.history.entries.isEmpty })
+        #expect(history.history.entries.map(\.text) == ["Hello world"])
+        #expect(statistics.statistics.allTime.dictations == 1)
     }
 
     @Test
@@ -110,6 +130,13 @@ struct DictationRetryTests {
     }
 
     private func queue(_ transcriber: FakeTranscriber) -> DictationQueue {
-        .transcribing(with: transcriber, hud: hud, inserter: inserter, clipboard: clipboard)
+        .transcribing(
+            with: transcriber,
+            hud: hud,
+            inserter: inserter,
+            clipboard: clipboard,
+            history: history,
+            statistics: statistics,
+        )
     }
 }

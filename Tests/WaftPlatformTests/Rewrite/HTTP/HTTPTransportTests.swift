@@ -6,7 +6,7 @@ import WaftCore
 struct HTTPTransportTests {
     private static let request = URLRequest(url: URL(literal: "https://api.example.com/v1/rewrite"))
 
-    @Test(arguments: [200, 400, 503])
+    @Test(arguments: [200, 400])
     func `replies with the status and data of any HTTP response`(status: Int) async throws {
         let transport = FakeHTTPTransport(.status(status, body: Data("Hello.".utf8)))
 

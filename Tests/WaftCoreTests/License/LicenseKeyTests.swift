@@ -41,7 +41,7 @@ struct LicenseKeyTests {
         "WFT1.@@@@.AAAA",
         "WFT1.e30.AAAA",
         "WFT1.bm90IGpzb24.AAAA",
-        "WFT1.eyJpZCI6IjEifQ.AAAA",
+        "WFT1.eyJlbWFpbCI6ImFubkBleGFtcGxlLmNvbSJ9.@@@@",
     ])
     func `rejects malformed keys`(text: String) {
         #expect(LicenseKey(text) == nil)

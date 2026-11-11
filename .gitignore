@@ -1,9 +1,12 @@
-.build/
-build/
+# Build
 
+/.build/
+/build/
+
+# IDE and OS
+
+.DS_Store
 .idea/
 .swiftpm/
 .vscode/
 .zed/
-
-.DS_Store

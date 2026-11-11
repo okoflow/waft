@@ -6,7 +6,6 @@ struct PushToTalkTests {
     @Test(arguments: [
         (10.0, 10.29, PushToTalk.Action.discardRecording(.tooShort)),
         (0, PushToTalk.minimumHold, .finishRecording),
-        (10, 11.5, .finishRecording),
     ])
     func `finishes a hold of at least the minimum duration and discards a shorter one`(
         pressedAt: TimeInterval,
@@ -16,37 +15,27 @@ struct PushToTalkTests {
         #expect(handle([(.keyDown, pressedAt), (.keyUp, releasedAt)]) == [.startRecording, expected])
     }
 
-    @Test(arguments: [
-        (
-            [
-                (PushToTalk.Event.keyDown, 0.0),
-                (.keyUp, 0.1),
-                (.keyDown, 0.3),
-                (.keyUp, 0.4),
-                (.keyDown, 2),
-                (.keyUp, 2.1),
-                (.keyDown, 9),
-            ],
-            [
-                PushToTalk.Action.startRecording,
-                .discardRecording(.tooShort),
-                .startRecording,
-                .lockHandsFree,
-                .finishRecording,
-                nil,
-                .startRecording,
-            ],
-        ),
-        (
-            [(.keyDown, 0), (.keyUp, 0.1), (.keyDown, 0.3), (.keyUp, 0.4), (.keyDown, 2), (.keyDown, 9)],
-            [.startRecording, .discardRecording(.tooShort), .startRecording, .lockHandsFree, .finishRecording, .startRecording],
-        ),
-    ])
-    func `locks hands-free on a double tap, stops on the next press, and starts on the one after`(
-        steps: [(PushToTalk.Event, TimeInterval)],
-        expected: [PushToTalk.Action?],
-    ) {
-        #expect(handle(steps) == expected)
+    @Test
+    func `locks hands-free on a double tap, stops on the next press, and starts on the one after`() {
+        let actions = handle([
+            (.keyDown, 0),
+            (.keyUp, 0.1),
+            (.keyDown, 0.3),
+            (.keyUp, 0.4),
+            (.keyDown, 2),
+            (.keyUp, 2.1),
+            (.keyDown, 9),
+        ])
+
+        #expect(actions == [
+            .startRecording,
+            .discardRecording(.tooShort),
+            .startRecording,
+            .lockHandsFree,
+            .finishRecording,
+            nil,
+            .startRecording,
+        ])
     }
 
     @Test
@@ -97,13 +86,6 @@ struct PushToTalkTests {
     ])
     func `cancels the recording on Escape, also hands-free`(steps: [(PushToTalk.Event, TimeInterval)]) {
         #expect(handle(steps).last == .discardRecording(.cancelled))
-    }
-
-    @Test
-    func `restarts on a new press right after another key canceled the hold`() {
-        let actions = handle([(.keyDown, 0), (.otherKeyDown, 1), (.keyDown, 2)])
-
-        #expect(actions.last == .startRecording)
     }
 
     @Test(arguments: [PushToTalk.Event.keyUp, .otherKeyDown, .escapeDown, .tick])

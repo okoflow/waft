@@ -42,7 +42,7 @@ SwiftFormat and SwiftLint settle formatting, the order of declarations, and the 
 
 ### Naming and files
 
-- Name things after what they are and do, in full words, following the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/): `statisticsFile`, not `statsFile`.
+- Name things after what they are and do, in full words, following the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/): `statisticsStore`, not `statsStore`.
 - No comments in code: names, types, and small functions carry the meaning.
 - One main type per file, named after it. An extension of another type goes into `<Type>+<Topic>.swift`, such as `String+Capitalization.swift`.
 - Keep the names of Swift files unique across `Sources`: `make strings` finds each file's strings by its name.
