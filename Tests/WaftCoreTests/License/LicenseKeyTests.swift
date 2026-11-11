@@ -15,6 +15,13 @@ struct LicenseKeyTests {
         #expect(key.signature == Self.signature)
     }
 
+    @Test(arguments: [#"{"email":"ann@example.com"}"#, #"{"email":"ann@example.com","name":null}"#])
+    func `reads a license without a name`(payload: String) throws {
+        let key = try #require(LicenseKey("WFT1.\(base64URL(Data(payload.utf8))).\(base64URL(Self.signature))"))
+
+        #expect(key.license == License(email: "ann@example.com", name: nil))
+    }
+
     @Test
     func `reads parts written in the URL-safe base64 alphabet`() throws {
         let key = try #require(LicenseKey("WFT1.\(base64URL(Self.payload)).-_-_"))

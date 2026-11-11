@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import Testing
+import WaftCore
 import WaftPlatform
 
 struct Ed25519SignatureCheckerTests {
@@ -13,6 +14,16 @@ struct Ed25519SignatureCheckerTests {
         let signature = try privateKey.signature(for: Self.payload)
 
         #expect(checker.isValid(signature, for: Self.payload))
+    }
+
+    @Test(arguments: [(payload, true), (Data(#"{"email":"bob@example.com"}"#.utf8), false)] as [(Data, Bool)])
+    func `verifies a license key only over the payload its signature was made for`(sent: Data, isVerified: Bool) throws {
+        let privateKey = Curve25519.Signing.PrivateKey()
+        let checker = Ed25519SignatureChecker(publicKey: privateKey.publicKey.rawRepresentation.base64EncodedString())
+        let signature = try privateKey.signature(for: Self.payload)
+        let key = try #require(LicenseKey("WFT1.\(sent.base64EncodedString()).\(signature.base64EncodedString())"))
+
+        #expect(key.isVerified(by: checker) == isVerified)
     }
 
     @Test

@@ -8,6 +8,7 @@ struct ProModelTests {
     private nonisolated static let signature = Data([1, 2, 3, 4])
     private nonisolated static let key = licenseKey(signature: signature)
     private nonisolated static let forgedKey = licenseKey(signature: Data([9, 9]))
+    private nonisolated static let firstLaunch = Date(timeIntervalSince1970: 1_800_000_000)
 
     private nonisolated static func licenseKey(signature: Data) -> String {
         "WFT1.\(base64URL(payload)).\(base64URL(signature))"
@@ -131,20 +132,12 @@ struct ProModelTests {
         #expect(pro.license == nil)
     }
 
-    @Test
-    func `saves the trial start on first launch`() {
-        let trialStore = FakeValueStore<Date>()
-        _ = model(trialStore: trialStore)
+    @Test(arguments: [(nil, firstLaunch), (Date.distantPast, .distantPast)] as [(Date?, Date)])
+    func `saves the trial start on first launch and keeps it on later launches`(saved: Date?, kept: Date) {
+        let trialStore = FakeValueStore(saved)
+        _ = model(trialStore: trialStore, now: Self.firstLaunch)
 
-        #expect(trialStore.value != nil)
-    }
-
-    @Test
-    func `keeps the saved trial start on later launches`() {
-        let trialStore = FakeValueStore(Date.distantPast)
-        _ = model(trialStore: trialStore)
-
-        #expect(trialStore.value == .distantPast)
+        #expect(trialStore.value == kept)
     }
 
     @Test
@@ -173,15 +166,46 @@ struct ProModelTests {
         #expect(SpeechModel.allCases.filter { pro.locks($0) } == [.accurate])
     }
 
+    @Test
+    func `unlocks everything with a key activated after the trial and locks it again without the key`() {
+        let pro = model(trialStore: FakeValueStore(Date.distantPast))
+
+        pro.draft = Self.key
+        pro.activateDraft()
+
+        #expect(pro.isUnlocked)
+        #expect(!Mode.builtIn.contains { pro.locks($0) })
+        #expect(!SpeechModel.allCases.contains { pro.locks($0) })
+
+        pro.deactivate()
+
+        #expect(!pro.isUnlocked)
+        #expect(pro.locks(.clean))
+        #expect(pro.locks(.accurate))
+    }
+
+    @Test
+    func `opens the purchase page`() {
+        let urlOpener = FakeURLOpener()
+        let pro = model(urlOpener: urlOpener)
+
+        pro.purchase()
+
+        #expect(urlOpener.opened == [URL(string: "https://waft.okoflow.com/pro")])
+    }
+
     private func model(
         keyStore: FakeValueStore<String> = FakeValueStore(),
         trialStore: FakeValueStore<Date> = FakeValueStore(),
+        urlOpener: FakeURLOpener = FakeURLOpener(),
+        now: Date = Date(),
     ) -> ProModel {
         ProModel(
             keyStore: keyStore,
             trialStore: trialStore,
             checker: FakeLicenseSignatureChecker(signature: Self.signature, payload: Self.payload),
-            urlOpener: FakeURLOpener(),
+            urlOpener: urlOpener,
+            now: { now },
         )
     }
 }
