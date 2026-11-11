@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@（Waft+）";
 "%@ dictations" = "%@件";
 "%@ didn't answer in time" = "%@が時間内に応答しませんでした";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "「%@」はWaft+の機能です。「%@」の準備ができるまで、Waftは引き続きこのモデルを使用します。";
 "%@ is rate-limiting requests" = "%@がリクエストを制限しています";
 "%@ isn't available" = "%@を利用できません";
 "%@ rejected the API key" = "%@がAPIキーを拒否しました";

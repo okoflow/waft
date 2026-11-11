@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "‏%@ (Waft+‎)";
 "%@ dictations" = "%@ عملية إملاء";
 "%@ didn't answer in time" = "لم يستجب %@ في الوقت المحدد";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "النموذج \"%@\" جزء من Waft+‎. سيواصل Waft استخدامه إلى أن يجهز النموذج \"%@\".";
 "%@ is rate-limiting requests" = "يقيّد %@ عدد الطلبات";
 "%@ isn't available" = "لا يتوفر %@";
 "%@ rejected the API key" = "رفض %@ مفتاح API";

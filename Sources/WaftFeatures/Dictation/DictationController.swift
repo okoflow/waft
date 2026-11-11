@@ -154,6 +154,8 @@ final class DictationController {
     }
 
     private func startRecording(for trigger: RecordingTrigger) {
+        speechModelController.followAccess()
+
         guard let problem = reasonNotToRecord(for: trigger.purpose) else {
             recordings.begin(trigger)
 

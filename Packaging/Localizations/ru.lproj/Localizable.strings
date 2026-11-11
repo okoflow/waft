@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ диктовок";
 "%@ didn't answer in time" = "%@ отвечает слишком долго";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "Модель «%@» входит в Waft+. Waft использует её, пока не будет готова модель «%@».";
 "%@ is rate-limiting requests" = "%@ ограничивает частоту запросов";
 "%@ isn't available" = "%@ недоступен";
 "%@ rejected the API key" = "%@ не принимает ключ API";

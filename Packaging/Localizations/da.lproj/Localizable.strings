@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dikteringer";
 "%@ didn't answer in time" = "%@ svarede ikke i tide";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "“%@” er en del af Waft+. Waft bruger den, indtil “%@” er klar.";
 "%@ is rate-limiting requests" = "%@ begrænser antallet af anmodninger";
 "%@ isn't available" = "%@ er ikke tilgængelig";
 "%@ rejected the API key" = "%@ afviste API-nøglen";

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dikte";
 "%@ didn't answer in time" = "%@ zamanında yanıt vermedi";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "“%@” modeli bir Waft+ özelliğidir. “%@” modeli hazır olana kadar Waft onu kullanmaya devam eder.";
 "%@ is rate-limiting requests" = "%@ istekleri sınırlıyor";
 "%@ isn't available" = "%@ kullanılamıyor";
 "%@ rejected the API key" = "%@ API anahtarını reddetti";

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dictées";
 "%@ didn't answer in time" = "délai de réponse dépassé (%@)";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "Le modèle %@ fait partie de Waft+. Waft continue de l’utiliser jusqu’à ce que le modèle %@ soit prêt.";
 "%@ is rate-limiting requests" = "limite de requêtes atteinte (%@)";
 "%@ isn't available" = "%@ n’est pas disponible";
 "%@ rejected the API key" = "clé API refusée (%@)";

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@(Waft+)";
 "%@ dictations" = "%@개";
 "%@ didn't answer in time" = "%@가 제때 응답하지 않음";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "‘%@’ 모델은 Waft+ 기능입니다. ‘%@’ 모델이 준비될 때까지 Waft가 계속 사용합니다.";
 "%@ is rate-limiting requests" = "%@가 요청 빈도를 제한하는 중";
 "%@ isn't available" = "%@를 사용할 수 없음";
 "%@ rejected the API key" = "%@가 API 키를 거부함";

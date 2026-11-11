@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "‏%@ (Waft+‎)";
 "%@ dictations" = "%@ הכתבות";
 "%@ didn't answer in time" = "לא התקבלה תשובה מ-%@ בזמן";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "המודל ״%@״ כלול ב-Waft+‎. היישום Waft ימשיך להשתמש בו עד שהמודל ״%@״ יהיה מוכן.";
 "%@ is rate-limiting requests" = "קצב הבקשות מוגבל על ידי %@";
 "%@ isn't available" = "השירות %@ אינו זמין";
 "%@ rejected the API key" = "מפתח ה-API נדחה על ידי %@";

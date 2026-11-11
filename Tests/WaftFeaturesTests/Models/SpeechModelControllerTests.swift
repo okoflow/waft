@@ -167,6 +167,66 @@ struct SpeechModelControllerTests {
     }
 
     @Test
+    func `keeps a locked model transcribing while the free one downloads`() async {
+        let transcriber = FakeTranscriber(installed: [.accurate], holdsDownloads: true)
+        let (controller, settings) = make(transcriber, pro: .unlicensed(trialStarted: .distantPast))
+        settings.settings.speechModel = .accurate
+
+        controller.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { transcriber.calls == [.load(.accurate), .download(.fast)] })
+        #expect(controller.state.canTranscribe)
+        #expect(controller.chosenModel == .fast)
+        #expect(controller.lockedModelInUse == .accurate)
+    }
+
+    @Test
+    func `deletes a locked model only after the free one is downloaded and loaded`() async {
+        let transcriber = FakeTranscriber(installed: [.accurate])
+        transcriber.failsDownloads = true
+        let (controller, settings) = make(transcriber, pro: .unlicensed(trialStarted: .distantPast))
+        settings.settings.speechModel = .accurate
+
+        controller.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { controller.state.canRetry })
+        #expect(transcriber.calls == [.load(.accurate), .download(.fast)])
+        #expect(controller.state.canTranscribe)
+
+        transcriber.failsDownloads = false
+        controller.retry()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
+        #expect(transcriber.calls == [.load(.accurate), .download(.fast), .download(.fast), .load(.fast), .delete(.accurate)])
+        #expect(controller.lockedModelInUse == nil)
+    }
+
+    @Test
+    func `keeps the accurate model chosen after the trial ends until it follows the access`() async {
+        var now = Date()
+        let transcriber = FakeTranscriber(installed: [.accurate])
+        let (controller, settings) = make(transcriber, pro: .unlicensed(now: { now }))
+        settings.settings.speechModel = .accurate
+
+        controller.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { controller.state.isReady })
+
+        now += 4 * 86400
+
+        #expect(controller.chosenModel == .accurate)
+        #expect(controller.lockedModelInUse == nil)
+
+        controller.followAccess()
+
+        #expect(controller.chosenModel == .fast)
+        #expect(await Poll.until(timeout: .seconds(5)) {
+            transcriber.calls == [.load(.accurate), .delete(.fast), .download(.fast), .load(.fast), .delete(.accurate)]
+        })
+        #expect(controller.state.isReady)
+    }
+
+    @Test
     func `reveals the folder of the model it uses`() {
         let transcriber = FakeTranscriber()
         let urlOpener = FakeURLOpener()

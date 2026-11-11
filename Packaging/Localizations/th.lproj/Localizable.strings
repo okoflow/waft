@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ รายการ";
 "%@ didn't answer in time" = "%@ ไม่ตอบกลับภายในเวลาที่กำหนด";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "โมเดล “%@” เป็นส่วนหนึ่งของ Waft+ โดย Waft จะใช้ต่อไปจนกว่าโมเดล “%@” จะพร้อม";
 "%@ is rate-limiting requests" = "%@ กำลังจำกัดจำนวนคำขอ";
 "%@ isn't available" = "%@ ไม่พร้อมใช้งาน";
 "%@ rejected the API key" = "%@ ปฏิเสธคีย์ API";

@@ -74,5 +74,6 @@ Waft puts a space before the text, except when:
 Core ML compiles the model for your chip the first time it loads, which takes about a minute, and keeps the compiled copy, about 130 MB.
 
 - Choosing the other model downloads and loads it while the current one keeps recognizing speech. Waft then deletes the files of the replaced model.
-- Without Waft+, Waft switches to Fast, downloads it if needed, and then deletes Accurate: right away when you remove your license, and on the next launch when the trial ends.
+- Without Waft+, Waft moves from Accurate to Fast the same way, so dictation never stops: Accurate keeps recognizing speech until Fast is downloaded and loaded, and only then does Waft delete it. The move starts when you remove your license and, after the trial ends, at your next dictation or the next launch, whichever comes first.
+- While Fast downloads, the line under **Speech model** in Settings › Dictation shows the download and says that Waft keeps using Accurate until Fast is ready. If the download fails, such as offline, Waft goes on with Accurate, and **Retry** there, **Retry Speech Model** in the menu, or the next launch tries again.
 - Changing the enabled languages reloads the model. A press while no model is loaded records nothing; the HUD says what the model is doing.

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@（Waft+）";
 "%@ dictations" = "%@条";
 "%@ didn't answer in time" = "%@未及时响应";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "“%@”模型是Waft+的功能。在“%@”模型就绪之前，Waft会继续使用它。";
 "%@ is rate-limiting requests" = "%@正在限制请求频率";
 "%@ isn't available" = "%@不可用";
 "%@ rejected the API key" = "%@拒绝了API密钥";

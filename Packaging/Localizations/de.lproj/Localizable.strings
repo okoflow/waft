@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ Diktate";
 "%@ didn't answer in time" = "%@ hat nicht rechtzeitig geantwortet";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "„%@“ ist Teil von Waft+. Waft nutzt es weiter, bis „%@“ bereit ist.";
 "%@ is rate-limiting requests" = "%@ drosselt die Anfragen";
 "%@ isn't available" = "%@ ist nicht verfügbar";
 "%@ rejected the API key" = "%@ hat den API-Schlüssel abgelehnt";

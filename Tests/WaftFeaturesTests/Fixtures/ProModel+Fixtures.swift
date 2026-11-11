@@ -15,12 +15,13 @@ extension ProModel {
         )
     }
 
-    static func unlicensed(trialStarted: Date = Date()) -> ProModel {
+    static func unlicensed(trialStarted: Date = Date(), now: @escaping () -> Date = Date.init) -> ProModel {
         ProModel(
             keyStore: FakeValueStore(),
             trialStore: FakeValueStore(trialStarted),
             checker: FakeLicenseSignatureChecker(signature: Data(), payload: Data()),
             urlOpener: FakeURLOpener(),
+            now: now,
         )
     }
 }
