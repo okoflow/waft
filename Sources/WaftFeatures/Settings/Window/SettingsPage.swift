@@ -9,7 +9,7 @@ struct SettingsPage<Content: View, Accessory: View>: View {
 
     init(
         _ title: LocalizedStringKey,
-        needsWaftPlus: Bool = false,
+        needsWaftPlus: Bool,
         back: @escaping () -> Void,
         @ViewBuilder accessory: () -> Accessory,
         @ViewBuilder content: () -> Content,

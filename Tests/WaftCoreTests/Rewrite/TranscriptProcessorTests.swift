@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import WaftCore
+import WaftCore
 
 struct TranscriptProcessorTests {
     private static let setup = RewriteSetup.fixture(provider: .cloud(.claude), instructions: "Clean.")
@@ -108,8 +108,8 @@ struct TranscriptProcessorTests {
 
     @Test(arguments: [
         (Mode.light, ProcessedText(text: "See you tomorrow.", mode: .light)),
-        (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
-        (.custom(UUID()), ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsPro)),
+        (.translate, ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsWaftPlus)),
+        (.custom(UUID()), ProcessedText(text: "See you tomorrow.", mode: .light, fallback: .needsWaftPlus)),
     ])
     func `asks for Waft+ only in the AI modes without AI access`(mode: Mode, expected: ProcessedText) async {
         let log = RewriteLog()

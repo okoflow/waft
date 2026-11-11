@@ -92,7 +92,7 @@ struct DictationSettingsPane: View {
 
             PickerRow(
                 "Spoken language",
-                selection: settings.pinnedLanguage,
+                selection: $settings.pinnedLanguage,
                 current: settings.pinnedLanguageTitle,
                 description: spokenLanguageNote,
             ) {

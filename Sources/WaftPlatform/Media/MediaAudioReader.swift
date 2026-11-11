@@ -43,13 +43,8 @@ package actor MediaAudioReader: MediaDecoder {
     }
 
     private static func failure(of reader: AVAssetReader) -> MediaAudioError {
-        if let error = reader.error as NSError? {
-            Logger.audio.error(
-                """
-                Couldn't read the file's audio: \(error.domain, privacy: .public) \(error.code, privacy: .public) \
-                \(error.localizedDescription, privacy: .private)
-                """,
-            )
+        if let error = reader.error {
+            Logger.audio.error("Couldn't read the file's audio: \(error.logDescription, privacy: .public)")
         }
 
         return .unreadable

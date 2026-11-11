@@ -16,7 +16,7 @@ private struct PushButton: View {
     let isProminent: Bool
 
     private var isLarge: Bool {
-        [.large, .extraLarge].contains(controlSize)
+        controlSize == .large
     }
 
     private var foreground: Color {

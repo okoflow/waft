@@ -57,7 +57,7 @@
 "Automatic" = "자동";
 "Back" = "뒤로";
 "Both lists are saved as a JSON file you can edit." = "두 목록 모두 편집할 수 있는 JSON 파일로 저장됩니다.";
-"Bought Waft+? Paste the key from your receipt email." = "Waft+를 구입하셨습니까? 영수증 이메일에 있는 키를 붙여넣으세요.";
+"Bought Waft+? Paste the key from your license email." = "Waft+를 구입하셨습니까? 라이선스 이메일에 있는 키를 붙여넣으세요.";
 "Buy for %@" = "%@에 구입";
 "Cancel" = "취소";
 "Change it anytime in Settings › General." = "설정 › 일반에서 언제든지 변경할 수 있습니다.";

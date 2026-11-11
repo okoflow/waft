@@ -32,6 +32,7 @@ final class TranslatorPanel: NSPanel {
 
     override func close() {
         stopWatching()
+
         guard isVisible else { return }
 
         super.close()

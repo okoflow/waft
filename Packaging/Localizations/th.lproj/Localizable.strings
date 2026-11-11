@@ -57,7 +57,7 @@
 "Automatic" = "อัตโนมัติ";
 "Back" = "ย้อนกลับ";
 "Both lists are saved as a JSON file you can edit." = "ทั้งสองรายการบันทึกไว้ในไฟล์ JSON ที่คุณแก้ไขได้";
-"Bought Waft+? Paste the key from your receipt email." = "หากซื้อ Waft+ แล้ว ให้วางคีย์จากอีเมลใบเสร็จของคุณ";
+"Bought Waft+? Paste the key from your license email." = "หากซื้อ Waft+ แล้ว ให้วางคีย์จากอีเมลใบอนุญาตของคุณ";
 "Buy for %@" = "ซื้อในราคา %@";
 "Cancel" = "ยกเลิก";
 "Change it anytime in Settings › General." = "เปลี่ยนได้ทุกเมื่อในการตั้งค่า › ทั่วไป";

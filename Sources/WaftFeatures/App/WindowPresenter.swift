@@ -6,10 +6,10 @@ final class WindowPresenter: NSObject, NSWindowDelegate {
     private static let transcriptionSize = CGSize(width: 600, height: 580)
     private static let translatorSize = CGSize(width: 900, height: 460)
 
-    var onOnboardingClose: () -> Void = {}
-    var onSettingsClose: () -> Void = {}
-    var onTranscriptionClose: () -> Void = {}
-    var onTranslatorClose: () -> Void = {}
+    var onOnboardingClose: (() -> Void)?
+    var onSettingsClose: (() -> Void)?
+    var onTranscriptionClose: (() -> Void)?
+    var onTranslatorClose: (() -> Void)?
     var isShowingUpdate: () -> Bool = { false }
     var dictationTakesEscape: (TimeInterval) -> Bool = { _ in false }
 
@@ -28,20 +28,20 @@ final class WindowPresenter: NSObject, NSWindowDelegate {
         guard let closing = notification.object as? NSWindow else { return }
 
         if closing == onboardingWindow {
-            onOnboardingClose()
+            onOnboardingClose?()
         }
 
         if closing == settingsWindow {
             settingsState.closeEditor()
-            onSettingsClose()
+            onSettingsClose?()
         }
 
         if closing == transcriptionWindow {
-            onTranscriptionClose()
+            onTranscriptionClose?()
         }
 
         if closing == translatorPanel {
-            onTranslatorClose()
+            onTranslatorClose?()
         }
 
         updateActivationPolicy(closing: closing)

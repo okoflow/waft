@@ -1,12 +1,10 @@
-import SwiftUI
+import Foundation
 import WaftCore
 
 extension SettingsModel {
-    var pinnedLanguage: Binding<Language?> {
-        Binding(
-            get: { self.settings.languages.pinned },
-            set: { self.settings.languages = self.settings.languages.pinning($0) },
-        )
+    var pinnedLanguage: Language? {
+        get { settings.languages.pinned }
+        set { settings.languages = settings.languages.pinning(newValue) }
     }
 
     var pinnedLanguageTitle: String {

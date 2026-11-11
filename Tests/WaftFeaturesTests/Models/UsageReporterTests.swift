@@ -46,6 +46,22 @@ struct UsageReporterTests {
     }
 
     @Test
+    func `sends the access of a license holder`() async throws {
+        let settings = SettingsModel.inMemory(usageSharing: .allowed)
+        let pro = ProModel.licensed()
+        let reporter = reporter(settings: settings, pro: pro)
+
+        reporter.start()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { store.value?.unsentDays.isEmpty == true })
+
+        let log = try #require(store.value)
+        let day = try #require(log.days.keys.first)
+
+        #expect(sender.reports == [report(of: log, day: day, counts: UsageCounts(), settings: settings, access: pro.access)])
+    }
+
+    @Test
     func `sends a day again with what was recorded after it was sent`() async throws {
         let settings = SettingsModel.inMemory(usageSharing: .allowed)
         let reporter = reporter(settings: settings)
@@ -133,13 +149,14 @@ struct UsageReporterTests {
         #expect(store.value == nil)
     }
 
-    private func reporter(settings: SettingsModel, host: UsageHost? = host) -> UsageReporter {
-        reporter(settings: settings, sender: sender, host: host)
+    private func reporter(settings: SettingsModel, pro: ProModel = .unlicensed(), host: UsageHost? = host) -> UsageReporter {
+        reporter(settings: settings, sender: sender, pro: pro, host: host)
     }
 
     private func reporter(
         settings: SettingsModel,
         sender: FakeUsageReportSender,
+        pro: ProModel = .unlicensed(),
         host: UsageHost? = host,
         waitForInterval: @escaping (Duration) async -> Bool = { _ in false },
     ) -> UsageReporter {
@@ -147,20 +164,26 @@ struct UsageReporterTests {
             store: store,
             sender: sender,
             settings: settings,
-            pro: .unlicensed(),
+            pro: pro,
             host: host,
             waitForInterval: waitForInterval,
         )
     }
 
-    private func report(of log: UsageLog, day: String, counts: UsageCounts, settings: SettingsModel) -> UsageReport {
+    private func report(
+        of log: UsageLog,
+        day: String,
+        counts: UsageCounts,
+        settings: SettingsModel,
+        access: ProAccess = ProModel.unlicensed().access,
+    ) -> UsageReport {
         UsageReport(
             installation: log.installation,
             day: day,
             counts: counts,
             host: Self.host,
             settings: settings.settings,
-            access: ProModel.unlicensed().access,
+            access: access,
         )
     }
 }

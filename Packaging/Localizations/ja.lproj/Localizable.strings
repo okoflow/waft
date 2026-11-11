@@ -57,7 +57,7 @@
 "Automatic" = "自動";
 "Back" = "戻る";
 "Both lists are saved as a JSON file you can edit." = "どちらのリストも、編集できるJSONファイルとして保存されます。";
-"Bought Waft+? Paste the key from your receipt email." = "Waft+を購入済みの場合は、領収書メールに記載されたキーをペーストしてください。";
+"Bought Waft+? Paste the key from your license email." = "Waft+を購入済みの場合は、ライセンスメールに記載されたキーをペーストしてください。";
 "Buy for %@" = "%@で購入";
 "Cancel" = "キャンセル";
 "Change it anytime in Settings › General." = "「設定」›「一般」でいつでも変更できます。";

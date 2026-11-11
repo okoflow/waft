@@ -6,7 +6,8 @@ import WaftCore
 enum WhisperPieces {
     struct Recognition<Value> {
         let results: [[Value]]
-        let failure: (any Error)?
+
+        private let failure: (any Error)?
 
         var isIncomplete: Bool {
             failure != nil

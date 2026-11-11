@@ -16,11 +16,8 @@ enum DefaultAudioDevice {
 
     private var selector: AudioObjectPropertySelector {
         switch self {
-        case .input:
-            kAudioHardwarePropertyDefaultInputDevice
-
-        case .output:
-            kAudioHardwarePropertyDefaultOutputDevice
+        case .input: kAudioHardwarePropertyDefaultInputDevice
+        case .output: kAudioHardwarePropertyDefaultOutputDevice
         }
     }
 }

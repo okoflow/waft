@@ -62,7 +62,9 @@ struct MenuContent: View {
         Button("Settings…") { model.showSettings() }
             .keyboardShortcut(",")
 
-        ProMenuItem(pro: model.pro) { model.showSettings(.pro) }
+        if model.pro.license == nil {
+            Button("Unlock Waft+…") { model.showSettings(.pro) }
+        }
 
         if model.updates.isAvailable {
             Button("Check for Updates…") { model.updates.check() }

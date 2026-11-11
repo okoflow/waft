@@ -54,6 +54,24 @@ struct ProAccessTests {
         #expect(ProAccess.trialStatus(startedOn: start, now: now, calendar: .gmt) == expected)
     }
 
+    @Test(arguments: [(2026, 10, 30, 11, 2), (2027, 3, 12, 3, 15)])
+    func `ends the trial at midnight when the clocks change during it`(
+        year: Int,
+        month: Int,
+        day: Int,
+        endMonth: Int,
+        endDay: Int,
+    ) throws {
+        var calendar = Calendar.gmt
+        calendar.timeZone = try #require(TimeZone(identifier: "America/New_York"))
+
+        let start = try #require(calendar.date(from: DateComponents(year: year, month: month, day: day, hour: 15)))
+        let end = try #require(calendar.date(from: DateComponents(year: year, month: endMonth, day: endDay)))
+
+        #expect(ProAccess.trialStatus(startedOn: start, now: end.addingTimeInterval(-1), calendar: calendar) == .trial)
+        #expect(ProAccess.trialStatus(startedOn: start, now: end, calendar: calendar) == .expired)
+    }
+
     @Test
     func `ends a trial that starts in the future three days after today`() throws {
         let end = try #require(Calendar.gmt.date(from: DateComponents(year: 2027, month: 1, day: 18)))

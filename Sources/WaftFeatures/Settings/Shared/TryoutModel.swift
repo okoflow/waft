@@ -40,7 +40,7 @@ final class TryoutModel {
     func run(_ mode: Mode) {
         guard !sample.isBlank, let language = spokenLanguage(of: sample) else { return }
 
-        let transcript = Transcript(text: sample, language: language, detectionDuration: .zero, decodingDuration: .zero)
+        let transcript = Transcript(text: sample, language: language, duration: .zero)
         let setup = settings.settings.rewriteSetup(for: mode)
         let allowsAI = pro.isUnlocked
         let processor = processor

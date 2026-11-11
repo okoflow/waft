@@ -4,6 +4,9 @@ import WaftCore
 @testable import WaftFeatures
 
 struct AppModelTests {
+    private nonisolated static let licensePayload = Data(#"{"email":"ann@example.com"}"#.utf8)
+    private nonisolated static let licenseSignature = Data([1, 2, 3])
+
     @Test
     func `releases the unstarted app and its connected models`() {
         var model: AppModel? = AppModel(dependencies: dependencies())
@@ -62,10 +65,25 @@ struct AppModelTests {
         #expect(usageStore.value == nil)
     }
 
+    @Test
+    func `returns to the accurate speech model when a license is activated after the trial`() {
+        var settings = Settings(languages: .preferred(by: []))
+        settings.speechModel = .accurate
+        let model = AppModel(dependencies: dependencies(settings: settings, trialStore: FakeValueStore(Date.distantPast)))
+
+        #expect(model.speechModelController.chosenModel == .fast)
+
+        model.pro.draft = "WFT1.\(Self.licensePayload.base64EncodedString()).\(Self.licenseSignature.base64EncodedString())"
+        model.pro.activateDraft()
+
+        #expect(model.speechModelController.chosenModel == .accurate)
+    }
+
     private func dependencies(
         permissions: [Permission: PermissionStatus] = [:],
         settings: Settings = Settings(languages: .preferred(by: [])),
         usageStore: FakeValueStore<UsageLog> = FakeValueStore<UsageLog>(),
+        trialStore: FakeValueStore<Date> = FakeValueStore<Date>(),
     ) -> AppDependencies {
         AppDependencies(
             recorder: FakeAudioRecorder(),
@@ -80,6 +98,7 @@ struct AppModelTests {
             shortcuts: .fake(),
             focusTracker: FakeFocusTracker(),
             frontmostAppMonitor: FakeFrontmostAppMonitor(),
+            dayChangeMonitor: FakeDayChangeMonitor(),
             urlOpener: FakeURLOpener(),
             inserter: FakeTextInserter(),
             clipboard: FakeClipboard(),
@@ -98,9 +117,9 @@ struct AppModelTests {
             usageSender: FakeUsageReportSender(),
             apiKeyStores: PerProvider(claude: FakeValueStore<String>(), openAI: FakeValueStore<String>()),
             licenseStore: FakeValueStore<String>(),
-            trialStore: FakeValueStore<Date>(),
+            trialStore: trialStore,
             interfaceLanguageStore: FakeValueStore<String>(),
-            licenseChecker: FakeLicenseSignatureChecker(signature: Data(), payload: Data()),
+            licenseChecker: FakeLicenseSignatureChecker(signature: Self.licenseSignature, payload: Self.licensePayload),
         )
     }
 }

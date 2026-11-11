@@ -4,6 +4,11 @@ import WaftCore
 @testable import WaftFeatures
 
 struct DictationQueuePasswordFieldTests {
+    private static let passwordField = FocusTarget.app(
+        "com.example.passwords",
+        element: FakeFocusedElement(selectedText: nil, secureFieldState: .secure),
+    )
+
     private let clipboard = FakeClipboard()
     private let history = HistoryModel.inMemory()
     private let statistics = StatisticsModel(store: FakeValueStore<DictationStatistics>())
@@ -15,7 +20,7 @@ struct DictationQueuePasswordFieldTests {
     ) async {
         let queue = queue(FakeTranscriber(.success(.spoken("Hello world"))), inserter: FakeTextInserter(insertion))
 
-        queue.submit(.recorded(target: .passwordField) { $0.pastesIntoFocusedField = pastes })
+        queue.submit(.recorded(target: Self.passwordField) { $0.pastesIntoFocusedField = pastes })
         await queue.waitUntilIdle()
 
         #expect(queue.latestTranscript == "Hello world")
@@ -28,7 +33,7 @@ struct DictationQueuePasswordFieldTests {
         let transcriber = FakeTranscriber(.failure(CocoaError(.fileReadCorruptFile)), .success(.spoken("Hello world")))
         let queue = queue(transcriber)
 
-        queue.submit(.recorded(target: .passwordField))
+        queue.submit(.recorded(target: Self.passwordField))
 
         #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
 

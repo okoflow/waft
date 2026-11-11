@@ -9,7 +9,7 @@ package enum RewriteFallback: String, Sendable {
     case rateLimited
     case serviceError
     case unusableAnswer
-    case needsPro
+    case needsWaftPlus
 
     package init(_ error: RewriteError) {
         switch error {
@@ -42,7 +42,7 @@ package enum RewriteFallback: String, Sendable {
         case (.rateLimited, _): String(localized: "\(name) is rate-limiting requests")
         case (.serviceError, _): String(localized: "\(name) returned an error")
         case (.unusableAnswer, _): String(localized: "\(name)'s answer couldn't be used")
-        case (.needsPro, _): String(localized: "AI modes need Waft+")
+        case (.needsWaftPlus, _): String(localized: "AI modes need Waft+")
         }
     }
 }

@@ -154,17 +154,7 @@ struct DictationQueueTests {
     }
 
     @Test
-    func `reports a failed edit with the rewrite error's reason in sentence case`() async {
-        let rewriter = FakeTextRewriter(.failure(.offline))
-        let queue = queue(FakeTranscriber(.success(.spoken("Make it three"))), rewriter: rewriter)
-
-        queue.submit(.recorded(selection: "Meeting at noon"))
-
-        #expect(await Poll.until(timeout: .seconds(5)) { hud.content == shown(.editFailed("You're offline")) })
-    }
-
-    @Test
-    func `pastes and copies nothing when an edit fails`() async {
+    func `reports a failed edit with the rewrite error's reason and pastes and copies nothing`() async {
         let inserter = FakeTextInserter()
         let rewriter = FakeTextRewriter(.failure(.offline))
         let queue = queue(FakeTranscriber(.success(.spoken("Make it three"))), inserter: inserter, rewriter: rewriter)

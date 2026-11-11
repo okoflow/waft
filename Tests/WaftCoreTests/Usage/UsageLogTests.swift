@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import WaftCore
+import WaftCore
 
 struct UsageLogTests {
     @Test

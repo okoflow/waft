@@ -1,8 +1,8 @@
 import Foundation
 
 package enum TextTask: Equatable, Sendable {
-    case fix
     case translate(from: Language?, into: Language)
+    case fix
 
     package enum Kind: String, CaseIterable, InstructionsSubject {
         case translate
@@ -29,8 +29,8 @@ package enum TextTask: Equatable, Sendable {
 
     package var kind: Kind {
         switch self {
-        case .fix: .fix
         case .translate: .translate
+        case .fix: .fix
         }
     }
 }

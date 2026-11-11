@@ -5,8 +5,7 @@ extension Transcript {
         Transcript(
             text: text,
             language: .english,
-            detectionDuration: .zero,
-            decodingDuration: .zero,
+            duration: .zero,
             isIncomplete: isIncomplete,
         )
     }

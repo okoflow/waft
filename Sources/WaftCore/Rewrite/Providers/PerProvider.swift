@@ -4,8 +4,8 @@ package struct PerProvider<Value> {
         case openAI
     }
 
-    package var claude: Value
-    package var openAI: Value
+    package private(set) var claude: Value
+    package private(set) var openAI: Value
 
     package init(claude: Value, openAI: Value) {
         self.claude = claude

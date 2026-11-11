@@ -11,7 +11,7 @@ struct LanguageMenu: View {
 
     var body: some View {
         Menu("Language: \(settings.pinnedLanguageTitle)") {
-            Picker("Language", selection: settings.pinnedLanguage) {
+            Picker("Language", selection: Bindable(settings).pinnedLanguage) {
                 Text("Automatic (\(languageNames))").tag(Language?.none)
 
                 ForEach(settings.settings.languages.languages, id: \.self) { language in

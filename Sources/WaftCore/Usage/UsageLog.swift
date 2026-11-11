@@ -3,7 +3,8 @@ package import Foundation
 package struct UsageLog: Codable, Equatable, Sendable {
     package struct Day: Codable, Equatable, Sendable {
         package fileprivate(set) var counts = UsageCounts()
-        package fileprivate(set) var isSent = false
+
+        fileprivate var isSent = false
 
         package init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)

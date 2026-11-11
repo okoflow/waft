@@ -57,7 +57,7 @@
 "Automatic" = "Автоматично";
 "Back" = "Назад";
 "Both lists are saved as a JSON file you can edit." = "Обидва списки зберігаються у файлі JSON, який можна редагувати.";
-"Bought Waft+? Paste the key from your receipt email." = "Уже придбали Waft+? Вставте ключ із листа з квитанцією.";
+"Bought Waft+? Paste the key from your license email." = "Уже придбали Waft+? Вставте ключ із листа з ліцензією.";
 "Buy for %@" = "Купити за %@";
 "Cancel" = "Скасувати";
 "Change it anytime in Settings › General." = "Це можна змінити будь-коли в Параметрах › Загальні.";

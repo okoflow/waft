@@ -14,6 +14,7 @@ package struct AppDependencies {
     let shortcuts: GlobalShortcuts
     let focusTracker: any FocusTracker
     let frontmostAppMonitor: any FrontmostAppMonitor
+    let dayChangeMonitor: any DayChangeMonitor
     let urlOpener: any URLOpener
     let inserter: any TextInserter
     let clipboard: any Clipboard
@@ -49,6 +50,7 @@ package struct AppDependencies {
         shortcuts: GlobalShortcuts,
         focusTracker: any FocusTracker,
         frontmostAppMonitor: any FrontmostAppMonitor,
+        dayChangeMonitor: any DayChangeMonitor,
         urlOpener: any URLOpener,
         inserter: any TextInserter,
         clipboard: any Clipboard,
@@ -83,6 +85,7 @@ package struct AppDependencies {
         self.shortcuts = shortcuts
         self.focusTracker = focusTracker
         self.frontmostAppMonitor = frontmostAppMonitor
+        self.dayChangeMonitor = dayChangeMonitor
         self.urlOpener = urlOpener
         self.inserter = inserter
         self.clipboard = clipboard

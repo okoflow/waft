@@ -69,7 +69,7 @@ struct TryoutModelTests {
         #expect(await Poll.until(timeout: .seconds(5)) {
             tryout.phase == .finished(
                 text: "See you tomorrow.",
-                note: RewriteFallback.needsPro.message(for: settings.settings.modelProvider),
+                note: RewriteFallback.needsWaftPlus.message(for: settings.settings.modelProvider),
             )
         })
         #expect(rewriter.requests.isEmpty)

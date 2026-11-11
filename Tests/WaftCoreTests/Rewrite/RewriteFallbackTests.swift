@@ -27,7 +27,7 @@ struct RewriteFallbackTests {
         (.rejectedKey, .cloud(.openAI), "OpenAI rejected the API key"),
         (.serviceError, .cloud(.openAI), "OpenAI returned an error"),
         (.unusableAnswer, .cloud(.openAI), "OpenAI's answer couldn't be used"),
-        (.needsPro, .cloud(.openAI), "AI modes need Waft+"),
+        (.needsWaftPlus, .cloud(.openAI), "AI modes need Waft+"),
     ])
     func `explains a fallback by provider`(fallback: RewriteFallback, provider: ModelProvider, reason: String) {
         #expect(fallback.reason(for: provider) == reason)

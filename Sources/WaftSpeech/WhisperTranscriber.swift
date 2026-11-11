@@ -84,12 +84,10 @@ package actor WhisperTranscriber: Transcriber {
         await waitForTurn()
         defer { finishTurn() }
 
-        let detectionStart = ContinuousClock.now
+        let start = ContinuousClock.now
         let spoken = try await resolvedLanguage(language, of: samples, with: loaded)
 
         let variant = variants.variant(for: spoken)
-
-        let decodingStart = ContinuousClock.now
         let prompt = WhisperPrompt.text(for: spoken, variant: variant, vocabulary: vocabulary)
         let promptTokens = WhisperDecoding.promptTokens(for: prompt, tokenizer: loaded.whisper.tokenizer)
         let options = WhisperDecoding.decodingOptions(for: spoken, promptTokens: promptTokens)
@@ -120,8 +118,7 @@ package actor WhisperTranscriber: Transcriber {
         return Transcript(
             text: text.written(in: variant, keeping: vocabulary),
             language: spoken,
-            detectionDuration: decodingStart - detectionStart,
-            decodingDuration: ContinuousClock.now - decodingStart,
+            duration: ContinuousClock.now - start,
             variant: variant,
             isIncomplete: recognition.isIncomplete,
         )

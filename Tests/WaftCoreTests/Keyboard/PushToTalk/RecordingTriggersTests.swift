@@ -65,7 +65,11 @@ struct RecordingTriggersTests {
         _ = triggers.handle(.modifiersChanged(61, flags: KeyEvent.rightOptionFlag), settings: settings)
         let fired = triggers.handle(.monitorDisabled, settings: settings)
 
+        let released = triggers.handle(.keyUp(KeyEvent.f5KeyCode), settings: settings)
+            + triggers.handle(.modifiersChanged(61), settings: settings)
+
         #expect(fired.isEmpty)
+        #expect(released.map(\.purpose) == [.edit, .dictation])
     }
 
     @Test

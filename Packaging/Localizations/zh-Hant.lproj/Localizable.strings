@@ -57,7 +57,7 @@
 "Automatic" = "自動";
 "Back" = "返回";
 "Both lists are saved as a JSON file you can edit." = "兩個列表都會儲存成可編輯的JSON檔案。";
-"Bought Waft+? Paste the key from your receipt email." = "已購買Waft+？請貼上收據電子郵件中的授權碼。";
+"Bought Waft+? Paste the key from your license email." = "已購買Waft+？請貼上授權電子郵件中的授權碼。";
 "Buy for %@" = "以%@購買";
 "Cancel" = "取消";
 "Change it anytime in Settings › General." = "可隨時在「設定」›「一般」中更改。";

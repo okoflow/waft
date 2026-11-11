@@ -36,7 +36,9 @@ final class ProModel {
     }
 
     var access: ProAccess {
-        ProAccess(license: license, trialStarted: trialStarted, now: now())
+        access(keyPath: \.access)
+
+        return ProAccess(license: license, trialStarted: trialStarted, now: now())
     }
 
     var isUnlocked: Bool {
@@ -52,6 +54,7 @@ final class ProModel {
         trialStore: any ValueStore<Date>,
         checker: any LicenseSignatureChecking,
         urlOpener: any URLOpener,
+        dayChangeMonitor: any DayChangeMonitor,
         now: @escaping () -> Date = Date.init,
     ) {
         self.keyStore = keyStore
@@ -60,6 +63,12 @@ final class ProModel {
         self.now = now
         trialStarted = Self.trialStart(in: trialStore, now: now())
         license = Self.storedLicense(in: keyStore, checker: checker)
+
+        Task { [weak self, dayChanges = dayChangeMonitor.dayChanges] in
+            for await _ in dayChanges {
+                self?.withMutation(keyPath: \.access) {}
+            }
+        }
     }
 
     private static func trialStart(in store: any ValueStore<Date>, now: Date) -> Date {
