@@ -27,7 +27,7 @@ struct LicenseSection: View {
                 }
             }
         } else {
-            SettingsSection("License", subtitle: "Bought Waft+? Paste the key from your receipt email.") {
+            SettingsSection("License", subtitle: "Bought Waft+? Paste the key from your license email.") {
                 SettingsRow("License key", description: activationProblem, labelsAccessory: true) {
                     InputField("License key", prompt: .verbatim("WFT1…"), text: $pro.draft)
                         .frame(width: 220)

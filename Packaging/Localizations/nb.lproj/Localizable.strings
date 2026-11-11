@@ -57,7 +57,7 @@
 "Automatic" = "Automatisk";
 "Back" = "Tilbake";
 "Both lists are saved as a JSON file you can edit." = "Begge listene lagres i en JSON-fil som du kan redigere.";
-"Bought Waft+? Paste the key from your receipt email." = "Har du kjøpt Waft+? Lim inn nøkkelen fra kvitteringen på e-post.";
+"Bought Waft+? Paste the key from your license email." = "Har du kjøpt Waft+? Lim inn nøkkelen fra e-posten med lisensen.";
 "Buy for %@" = "Kjøp for %@";
 "Cancel" = "Avbryt";
 "Change it anytime in Settings › General." = "Du kan endre dette når som helst i Innstillinger › Generelt.";
