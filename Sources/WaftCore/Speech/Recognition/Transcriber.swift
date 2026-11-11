@@ -16,6 +16,6 @@ package protocol Transcriber: Sendable {
         _ samples: [Float],
         in language: Language?,
         writing variants: WritingVariants,
-        progress: @escaping @Sendable (Double) -> Void,
+        progress: @Sendable (Double) -> Void,
     ) async throws -> TimedTranscript?
 }

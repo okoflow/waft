@@ -48,9 +48,7 @@ package struct SpeechModelState: Equatable, Sendable {
     }
 
     package var canTranscribe: Bool {
-        guard !isReady else { return true }
-
-        return servingModel != nil
+        servingModel != nil
     }
 
     package var canRetry: Bool {
