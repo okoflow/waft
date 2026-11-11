@@ -117,6 +117,55 @@ struct DictationQueueRetryTests {
     }
 
     @Test
+    func `retries only the latest dictation that failed or missed a part`() async {
+        let transcriber = FakeTranscriber(
+            .failure(CocoaError(.fileReadCorruptFile)),
+            .success(.spoken("Second", isIncomplete: true)),
+            .success(.spoken("Second whole")),
+        )
+        let queue = queue(transcriber)
+
+        queue.submit(.recorded { $0.languages = .preferred(by: ["de"]).pinning(.german) })
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+
+        queue.submit(.recorded())
+        await queue.waitUntilIdle()
+        queue.retryFailedDictation()
+        await queue.waitUntilIdle()
+
+        #expect(transcriber.requests.map(\.language) == [.german, .english, .english])
+        #expect(clipboard.copied == ["Second whole"])
+        #expect(!queue.canRetry)
+    }
+
+    @Test
+    func `keeps a failed dictation for a retry while later ones are recognized`() async {
+        let transcriber = FakeTranscriber(
+            .failure(CocoaError(.fileReadCorruptFile)),
+            .success(.spoken("Second")),
+            .success(.spoken("First")),
+        )
+        let queue = queue(transcriber)
+
+        queue.submit(.recorded { $0.languages = .preferred(by: ["de"]).pinning(.german) })
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+
+        queue.submit(.recorded())
+        await queue.waitUntilIdle()
+
+        #expect(queue.canRetry)
+
+        queue.retryFailedDictation()
+        await queue.waitUntilIdle()
+
+        #expect(transcriber.requests.map(\.language) == [.german, .english, .german])
+        #expect(clipboard.copied == ["First"])
+        #expect(!queue.canRetry)
+    }
+
+    @Test
     func `pastes the recognized part of a dictation, says that a part is missing, and copies all of it on a retry`() async {
         let transcriber = FakeTranscriber(.success(.spoken("Hello", isIncomplete: true)), .success(.spoken("Hello world")))
         let queue = queue(transcriber)
