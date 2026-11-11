@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@(Waft+)";
 "%@ dictations" = "%@개";
 "%@ didn't answer in time" = "%@가 제때 응답하지 않음";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "‘%@’ 모델은 Waft+ 기능입니다. ‘%@’ 모델이 준비될 때까지 Waft가 계속 사용합니다.";
 "%@ is rate-limiting requests" = "%@가 요청 빈도를 제한하는 중";
 "%@ isn't available" = "%@를 사용할 수 없음";
 "%@ rejected the API key" = "%@가 API 키를 거부함";
@@ -106,6 +107,7 @@
 "Detect" = "찾기";
 "Development build" = "개발 빌드";
 "Dictate in any app instead of typing." = "어떤 앱에서든 타이핑 대신 받아쓰기로 입력하세요.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "받아쓰기는 계속 무료입니다. AI 기능은 Waft+에 포함되며, %lld일 동안 무료이고 그 후에는 %@ 1회 결제입니다.";
 "Dictation key" = "받아쓰기 키";
 "Dictation" = "받아쓰기";
 "Dictations" = "받아쓰기";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "지시문을 따릅니다.";
 "Forever" = "영구";
 "Formal" = "격식체";
-"Free trial ends %@." = "무료 체험이 %@ 종료됩니다.";
-"Free while Waft is in beta." = "Waft 베타 기간에는 무료입니다.";
+"Free trial through %@." = "무료 체험은 %@까지입니다.";
 "General" = "일반";
 "Get Started" = "시작하기";
 "Get an API key" = "API 키 받기";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 누르고 말하세요";
 "Unavailable: another app uses this shortcut. Choose another one." = "사용할 수 없음: 다른 앱에서 이 단축키를 사용하고 있습니다. 다른 단축키를 선택하세요.";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "잠금을 해제할 때까지 ‘정리’, ‘격식체’, ‘번역’, 나만의 모드는 ‘가벼운 정리’ 모드처럼 작동합니다.";
 "Updates" = "업데이트";
 "Use the default mode in this app" = "이 앱에서 기본 모드 사용";
 "Use the default shortcut" = "기본 단축키 사용";

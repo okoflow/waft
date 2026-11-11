@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@（Waft+）";
 "%@ dictations" = "%@条";
 "%@ didn't answer in time" = "%@未及时响应";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "“%@”模型是Waft+的功能。在“%@”模型就绪之前，Waft会继续使用它。";
 "%@ is rate-limiting requests" = "%@正在限制请求频率";
 "%@ isn't available" = "%@不可用";
 "%@ rejected the API key" = "%@拒绝了API密钥";
@@ -106,6 +107,7 @@
 "Detect" = "检测";
 "Development build" = "开发版本";
 "Dictate in any app instead of typing." = "在任何App中用听写代替打字。";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "听写永久免费。AI功能属于Waft+：可免费使用%lld天，之后一次性支付%@。";
 "Dictation key" = "听写键";
 "Dictation" = "听写";
 "Dictations" = "听写记录";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "按你的指令处理。";
 "Forever" = "永久";
 "Formal" = "正式";
-"Free trial ends %@." = "免费试用将于%@结束。";
-"Free while Waft is in beta." = "Waft测试版期间免费。";
+"Free trial through %@." = "免费试用有效期至%@（含当天）。";
 "General" = "通用";
 "Get Started" = "开始使用";
 "Get an API key" = "获取API密钥";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "输入、粘贴，或按一下%@键说话";
 "Unavailable: another app uses this shortcut. Choose another one." = "不可用：其他App正在使用此快捷键。请选择其他快捷键。";
 "Unlock Waft+…" = "解锁Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "解锁之前，“整理”、“正式”、“翻译”和自定义模式的效果与“轻度”模式相同。";
 "Updates" = "更新";
 "Use the default mode in this app" = "在此App中使用默认模式";
 "Use the default shortcut" = "使用默认快捷键";

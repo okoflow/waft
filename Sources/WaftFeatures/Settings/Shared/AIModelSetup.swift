@@ -12,7 +12,9 @@ enum AIModelSetup {
         }
     }
 
-    func missingSetup(in settings: SettingsModel, apiKeys: PerProvider<APIKeyModel>) -> LocalizedStringKey? {
+    func missingSetup(in settings: SettingsModel, apiKeys: PerProvider<APIKeyModel>, pro: ProModel) -> LocalizedStringKey? {
+        guard pro.isUnlocked else { return nil }
+
         switch settings.settings.modelProvider {
         case .localServer:
             guard !settings.settings.localServer.isConfigured else { return nil }

@@ -2,11 +2,11 @@ import WaftCore
 @testable import WaftFeatures
 
 extension SpeechModelController {
-    static func make(isReady: Bool, settings: SettingsModel) async -> SpeechModelController {
+    static func make(isReady: Bool, settings: SettingsModel, pro: ProModel = .unlicensed()) async -> SpeechModelController {
         let speechModelController = SpeechModelController(
             transcriber: FakeTranscriber(),
             settings: settings,
-            pro: .unlicensed(),
+            pro: pro,
             urlOpener: FakeURLOpener(),
         )
 

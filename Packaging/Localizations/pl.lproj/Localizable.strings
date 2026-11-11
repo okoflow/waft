@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dyktowań";
 "%@ didn't answer in time" = "%@ odpowiada zbyt długo";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "Model „%@” jest częścią Waft+. Waft używa go, dopóki model „%@” nie będzie gotowy.";
 "%@ is rate-limiting requests" = "%@ ogranicza liczbę zapytań";
 "%@ isn't available" = "usługa %@ jest niedostępna";
 "%@ rejected the API key" = "%@ odrzuca klucz API";
@@ -106,6 +107,7 @@
 "Detect" = "Wykryj";
 "Development build" = "Wersja deweloperska";
 "Dictate in any app instead of typing." = "Dyktuj w dowolnej aplikacji zamiast pisać.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Dyktowanie jest zawsze bezpłatne. Funkcje AI są częścią Waft+: %lld dni bezpłatnie, potem jednorazowo %@.";
 "Dictation key" = "Klawisz dyktowania";
 "Dictation" = "Dyktowanie";
 "Dictations" = "Dyktowania";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Działa według Twoich instrukcji.";
 "Forever" = "Bez limitu";
 "Formal" = "Formalny";
-"Free trial ends %@." = "Bezpłatny okres próbny kończy się %@.";
-"Free while Waft is in beta." = "Bezpłatnie, dopóki Waft jest w wersji beta.";
+"Free trial through %@." = "Bezpłatny okres próbny trwa do %@ włącznie.";
 "General" = "Ogólne";
 "Get Started" = "Zaczynamy";
 "Get an API key" = "Uzyskaj klucz API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Wpisz, wklej albo naciśnij %@ i mów";
 "Unavailable: another app uses this shortcut. Choose another one." = "Niedostępny: inna aplikacja używa tego skrótu. Wybierz inny.";
 "Unlock Waft+…" = "Odblokuj Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Dopóki go nie odblokujesz, tryby „Staranny”, „Formalny”, „Tłumaczenie” i Twoje tryby działają jak tryb „Lekki”.";
 "Updates" = "Uaktualnienia";
 "Use the default mode in this app" = "Używaj domyślnego trybu w tej aplikacji";
 "Use the default shortcut" = "Użyj domyślnego skrótu";

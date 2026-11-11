@@ -26,6 +26,10 @@ struct TranslatorSettingsPane: View {
     }
 
     var body: some View {
+        if !pro.isUnlocked {
+            ProGateBanner.translator { state.selection = .pro }
+        }
+
         TranslationSection(
             title: "Languages",
             subtitle: languagesNote,
@@ -43,7 +47,7 @@ struct TranslatorSettingsPane: View {
         }
         .onDisappear(perform: shortcutRecorder.stop)
 
-        TranslatorModelSection(settings: settings, apiKeys: apiKeys, state: state)
+        TranslatorModelSection(settings: settings, apiKeys: apiKeys, pro: pro, state: state)
 
         TranslatorInstructionsSection(settings: settings, pro: pro, state: state)
     }

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dikteringer";
 "%@ didn't answer in time" = "%@ svarte ikke i tide";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "«%@» er en del av Waft+. Waft bruker den til «%@» er klar.";
 "%@ is rate-limiting requests" = "%@ begrenser antall forespørsler";
 "%@ isn't available" = "%@ er ikke tilgjengelig";
 "%@ rejected the API key" = "%@ avviste API-nøkkelen";
@@ -106,6 +107,7 @@
 "Detect" = "Finn";
 "Development build" = "Utviklerversjon";
 "Dictate in any app instead of typing." = "Dikter i alle apper i stedet for å skrive.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Diktering er alltid gratis. KI-funksjonene er en del av Waft+: gratis i %lld dager, deretter %@ én gang.";
 "Dictation key" = "Dikteringstast";
 "Dictation" = "Diktering";
 "Dictations" = "Dikteringer";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Følger instruksjonene dine.";
 "Forever" = "For evig";
 "Formal" = "Formell";
-"Free trial ends %@." = "Den gratis prøveperioden slutter %@.";
-"Free while Waft is in beta." = "Gratis mens Waft er i beta.";
+"Free trial through %@." = "Den gratis prøveperioden varer til og med %@.";
 "General" = "Generelt";
 "Get Started" = "Kom i gang";
 "Get an API key" = "Skaff en API-nøkkel";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Skriv, lim inn, eller trykk på %@ og snakk";
 "Unavailable: another app uses this shortcut. Choose another one." = "Utilgjengelig: en annen app bruker denne snarveien. Velg en annen.";
 "Unlock Waft+…" = "Lås opp Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Inntil du låser det opp, fungerer «Ryddig», «Formell», «Oversetting» og dine moduser som «Lett».";
 "Updates" = "Oppdateringer";
 "Use the default mode in this app" = "Bruk standardmodusen i denne appen";
 "Use the default shortcut" = "Bruk standardsnarveien";

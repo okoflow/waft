@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ ditados";
 "%@ didn't answer in time" = "%@ não respondeu a tempo";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "O modelo “%@” faz parte do Waft+. O Waft continua a usá-lo até o modelo “%@” estar pronto.";
 "%@ is rate-limiting requests" = "%@ está a limitar os pedidos";
 "%@ isn't available" = "%@ não está disponível";
 "%@ rejected the API key" = "%@ rejeitou a chave de API";
@@ -106,6 +107,7 @@
 "Detect" = "Detetar";
 "Development build" = "Compilação de desenvolvimento";
 "Dictate in any app instead of typing." = "Dite em qualquer aplicação em vez de escrever.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "O ditado é gratuito para sempre. As funcionalidades de IA fazem parte do Waft+: grátis durante %lld dias, depois %@ num pagamento único.";
 "Dictation key" = "Tecla de ditado";
 "Dictation" = "Ditado";
 "Dictations" = "Ditados";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Segue as suas instruções.";
 "Forever" = "Para sempre";
 "Formal" = "Formal";
-"Free trial ends %@." = "A avaliação gratuita termina %@.";
-"Free while Waft is in beta." = "Gratuito enquanto o Waft estiver em beta.";
+"Free trial through %@." = "A avaliação gratuita decorre até %@, inclusive.";
 "General" = "Geral";
 "Get Started" = "Começar";
 "Get an API key" = "Obter uma chave de API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Escreva, cole ou prima a tecla %@ e fale";
 "Unavailable: another app uses this shortcut. Choose another one." = "Indisponível: outra aplicação usa esse atalho. Escolha outro.";
 "Unlock Waft+…" = "Desbloquear Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Até o desbloquear, os modos “Limpo”, “Formal”, “Tradução” e os seus modos funcionam como o modo “Leve”.";
 "Updates" = "Atualizações";
 "Use the default mode in this app" = "Usar o modo predefinido nesta aplicação";
 "Use the default shortcut" = "Usar o atalho predefinido";

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dictées";
 "%@ didn't answer in time" = "délai de réponse dépassé (%@)";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "Le modèle %@ fait partie de Waft+. Waft continue de l’utiliser jusqu’à ce que le modèle %@ soit prêt.";
 "%@ is rate-limiting requests" = "limite de requêtes atteinte (%@)";
 "%@ isn't available" = "%@ n’est pas disponible";
 "%@ rejected the API key" = "clé API refusée (%@)";
@@ -106,6 +107,7 @@
 "Detect" = "Détecter";
 "Development build" = "Version de développement";
 "Dictate in any app instead of typing." = "Dictez dans n’importe quelle app au lieu de taper.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "La dictée est gratuite pour toujours. Les fonctions d’IA font partie de Waft+ : gratuites pendant %lld jours, puis %@ en une seule fois.";
 "Dictation key" = "Touche de dictée";
 "Dictation" = "Dictée";
 "Dictations" = "Dictées";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Suit vos instructions.";
 "Forever" = "Indéfiniment";
 "Formal" = "Formel";
-"Free trial ends %@." = "L’essai gratuit se termine %@.";
-"Free while Waft is in beta." = "Gratuit tant que Waft est en bêta.";
+"Free trial through %@." = "L’essai gratuit dure jusqu’au %@ inclus.";
 "General" = "Général";
 "Get Started" = "Commencer";
 "Get an API key" = "Obtenir une clé API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Tapez, collez ou appuyez sur %@ et parlez";
 "Unavailable: another app uses this shortcut. Choose another one." = "Indisponible : une autre app utilise ce raccourci. Choisissez-en un autre.";
 "Unlock Waft+…" = "Débloquer Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Tant que vous ne l’avez pas débloqué, les modes Soigné, Formel, Traduction et vos modes fonctionnent comme le mode Léger.";
 "Updates" = "Mises à jour";
 "Use the default mode in this app" = "Utiliser le mode par défaut dans cette app";
 "Use the default shortcut" = "Utiliser le raccourci par défaut";

@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dictaten";
 "%@ didn't answer in time" = "%@ heeft niet op tijd gereageerd";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "‘%@’ hoort bij Waft+. Waft blijft het gebruiken totdat ‘%@’ gereed is.";
 "%@ is rate-limiting requests" = "%@ beperkt het aantal verzoeken";
 "%@ isn't available" = "%@ is niet beschikbaar";
 "%@ rejected the API key" = "%@ heeft de API-sleutel geweigerd";
@@ -106,6 +107,7 @@
 "Detect" = "Detecteer";
 "Development build" = "Ontwikkelversie";
 "Dictate in any app instead of typing." = "Dicteer in elke app in plaats van te typen.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Dicteren blijft altijd gratis. De AI-functies horen bij Waft+: %lld dagen gratis, daarna eenmalig %@.";
 "Dictation key" = "Dicteertoets";
 "Dictation" = "Dicteren";
 "Dictations" = "Dictaten";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Volgt je instructies.";
 "Forever" = "Altijd";
 "Formal" = "Formeel";
-"Free trial ends %@." = "Gratis proefperiode eindigt %@.";
-"Free while Waft is in beta." = "Gratis zolang Waft in bèta is.";
+"Free trial through %@." = "Gratis proefperiode loopt tot en met %@.";
 "General" = "Algemeen";
 "Get Started" = "Aan de slag";
 "Get an API key" = "Vraag een API-sleutel aan";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Typ, plak of druk op %@ en spreek";
 "Unavailable: another app uses this shortcut. Choose another one." = "Niet beschikbaar: een andere app gebruikt deze toetscombinatie. Kies een andere.";
 "Unlock Waft+…" = "Ontgrendel Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Totdat je het ontgrendelt, werken ‘Netjes’, ‘Formeel’, ‘Vertalen’ en je eigen modi als ‘Licht’.";
 "Updates" = "Updates";
 "Use the default mode in this app" = "Gebruik de standaardmodus in deze app";
 "Use the default shortcut" = "Gebruik de standaardtoetscombinatie";

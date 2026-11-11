@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ Diktate";
 "%@ didn't answer in time" = "%@ hat nicht rechtzeitig geantwortet";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "„%@“ ist Teil von Waft+. Waft nutzt es weiter, bis „%@“ bereit ist.";
 "%@ is rate-limiting requests" = "%@ drosselt die Anfragen";
 "%@ isn't available" = "%@ ist nicht verfügbar";
 "%@ rejected the API key" = "%@ hat den API-Schlüssel abgelehnt";
@@ -106,6 +107,7 @@
 "Detect" = "Suchen";
 "Development build" = "Entwicklungsversion";
 "Dictate in any app instead of typing." = "Diktiere in jeder App, statt zu tippen.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Diktieren bleibt dauerhaft kostenlos. Die KI-Funktionen sind Teil von Waft+: %lld Tage kostenlos, danach einmalig %@.";
 "Dictation key" = "Diktiertaste";
 "Dictation" = "Diktieren";
 "Dictations" = "Diktate";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Folgt deinen Anweisungen.";
 "Forever" = "Unbegrenzt";
 "Formal" = "Formell";
-"Free trial ends %@." = "Die kostenlose Testphase endet %@.";
-"Free while Waft is in beta." = "Kostenlos, solange Waft in der Betaphase ist.";
+"Free trial through %@." = "Die kostenlose Testphase läuft bis einschließlich %@.";
 "General" = "Allgemein";
 "Get Started" = "Los geht’s";
 "Get an API key" = "API-Schlüssel erhalten";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Tippe, setze Text ein oder drücke %@ und sprich";
 "Unavailable: another app uses this shortcut. Choose another one." = "Nicht verfügbar: Eine andere App verwendet diesen Tastaturkurzbefehl. Wähle einen anderen.";
 "Unlock Waft+…" = "Waft+ freischalten …";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Bis du es freischaltest, arbeiten „Sauber“, „Formell“, „Übersetzung“ und deine Modi wie „Leicht“.";
 "Updates" = "Updates";
 "Use the default mode in this app" = "In dieser App den Standardmodus verwenden";
 "Use the default shortcut" = "Standard-Tastaturkurzbefehl verwenden";

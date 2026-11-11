@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ รายการ";
 "%@ didn't answer in time" = "%@ ไม่ตอบกลับภายในเวลาที่กำหนด";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "โมเดล “%@” เป็นส่วนหนึ่งของ Waft+ โดย Waft จะใช้ต่อไปจนกว่าโมเดล “%@” จะพร้อม";
 "%@ is rate-limiting requests" = "%@ กำลังจำกัดจำนวนคำขอ";
 "%@ isn't available" = "%@ ไม่พร้อมใช้งาน";
 "%@ rejected the API key" = "%@ ปฏิเสธคีย์ API";
@@ -106,6 +107,7 @@
 "Detect" = "ตรวจหา";
 "Development build" = "บิลด์สำหรับการพัฒนา";
 "Dictate in any app instead of typing." = "ป้อนตามคำบอกในแอปใดก็ได้แทนการพิมพ์";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "การป้อนตามคำบอกใช้ฟรีตลอดไป คุณสมบัติ AI เป็นส่วนหนึ่งของ Waft+ ใช้ฟรี %lld วัน จากนั้นจ่ายครั้งเดียว %@";
 "Dictation key" = "ปุ่มป้อนตามคำบอก";
 "Dictation" = "การป้อนตามคำบอก";
 "Dictations" = "การป้อนตามคำบอก";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "ทำตามคำสั่งของคุณ";
 "Forever" = "ตลอดไป";
 "Formal" = "ทางการ";
-"Free trial ends %@." = "ช่วงทดลองใช้ฟรีจะสิ้นสุด%@";
-"Free while Waft is in beta." = "ใช้ได้ฟรีระหว่างที่ Waft อยู่ในช่วงเบต้า";
+"Free trial through %@." = "ช่วงทดลองใช้ฟรีใช้ได้ถึงวันที่ %@";
 "General" = "ทั่วไป";
 "Get Started" = "เริ่มต้นใช้งาน";
 "Get an API key" = "รับคีย์ API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อก Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "จนกว่าคุณจะปลดล็อก “เรียบเรียง” “ทางการ” “แปลภาษา” และโหมดของคุณจะทำงานเหมือนโหมด “ปรับเล็กน้อย”";
 "Updates" = "รายการอัปเดต";
 "Use the default mode in this app" = "ใช้โหมดเริ่มต้นในแอปนี้";
 "Use the default shortcut" = "ใช้ปุ่มลัดเริ่มต้น";

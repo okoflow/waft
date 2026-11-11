@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "‏%@ (Waft+‎)";
 "%@ dictations" = "%@ عملية إملاء";
 "%@ didn't answer in time" = "لم يستجب %@ في الوقت المحدد";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "النموذج \"%@\" جزء من Waft+‎. سيواصل Waft استخدامه إلى أن يجهز النموذج \"%@\".";
 "%@ is rate-limiting requests" = "يقيّد %@ عدد الطلبات";
 "%@ isn't available" = "لا يتوفر %@";
 "%@ rejected the API key" = "رفض %@ مفتاح API";
@@ -106,6 +107,7 @@
 "Detect" = "اكتشاف";
 "Development build" = "إصدار تطويري";
 "Dictate in any app instead of typing." = "استخدم الإملاء في أي تطبيق بدلًا من الكتابة.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "الإملاء مجاني دائمًا. ميزات الذكاء الاصطناعي جزء من Waft+‎: مجانية لمدة %lld أيام، ثم %@ تُدفع مرة واحدة.";
 "Dictation key" = "مفتاح الإملاء";
 "Dictation" = "الإملاء";
 "Dictations" = "عمليات الإملاء";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "يتبع تعليماتك.";
 "Forever" = "للأبد";
 "Formal" = "رسمي";
-"Free trial ends %@." = "تنتهي التجربة المجانية %@.";
-"Free while Waft is in beta." = "مجاني ما دام Waft في المرحلة التجريبية.";
+"Free trial through %@." = "التجربة المجانية متاحة حتى نهاية يوم %@.";
 "General" = "عام";
 "Get Started" = "البدء";
 "Get an API key" = "الحصول على مفتاح API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "اكتب أو الصق أو اضغط على %@ وتحدّث";
 "Unavailable: another app uses this shortcut. Choose another one." = "غير متاح: هناك تطبيق آخر يستخدم هذا الاختصار. اختر اختصارًا آخر.";
 "Unlock Waft+…" = "فتح قفل Waft+‎…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "إلى أن تفتح قفله، تعمل الأنماط \"منقّح\" و\"رسمي\" و\"ترجمة\" وأنماطك مثل النمط \"خفيف\".";
 "Updates" = "التحديثات";
 "Use the default mode in this app" = "استخدام النمط الافتراضي في هذا التطبيق";
 "Use the default shortcut" = "استخدام الاختصار الافتراضي";

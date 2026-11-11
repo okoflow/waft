@@ -17,9 +17,7 @@ struct ProSettingsPane: View {
             }
         }
 
-        if pro.showsLicenseSection {
-            LicenseSection(pro: pro)
-        }
+        LicenseSection(pro: pro)
     }
 }
 
@@ -33,10 +31,8 @@ private struct ProHero: View {
         switch pro.access.status {
         case let .licensed(license):
             String(localized: "Licensed to \(license.holder). Thank you!")
-        case .beta:
-            String(localized: "Free while Waft is in beta.")
         case .trial:
-            String(localized: "Free trial ends \(pro.trialEnds.formatted(.relative(presentation: .named))).")
+            String(localized: "Free trial through \(pro.trialLastDay.formatted(.dateTime.day().month(.wide))).")
         case .expired:
             String(localized: "Your free trial has ended.")
         }
@@ -44,7 +40,7 @@ private struct ProHero: View {
 
     private var isForSale: Bool {
         switch pro.access.status {
-        case .licensed, .beta: false
+        case .licensed: false
         case .trial, .expired: true
         }
     }

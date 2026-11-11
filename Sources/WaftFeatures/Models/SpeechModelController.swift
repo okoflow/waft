@@ -6,6 +6,7 @@ import WaftCore
 @Observable
 final class SpeechModelController {
     private(set) var state = SpeechModelState()
+    private(set) var chosenModel: SpeechModel
 
     @ObservationIgnored var onReady: (() -> Void)?
 
@@ -17,7 +18,13 @@ final class SpeechModelController {
     private let pro: ProModel
     private let urlOpener: any URLOpener
 
-    var chosenModel: SpeechModel {
+    var lockedModelInUse: SpeechModel? {
+        guard let servingModel = state.servingModel, servingModel != chosenModel, pro.locks(servingModel) else { return nil }
+
+        return servingModel
+    }
+
+    private var usableModel: SpeechModel {
         settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
 
@@ -26,6 +33,7 @@ final class SpeechModelController {
         self.settings = settings
         self.pro = pro
         self.urlOpener = urlOpener
+        chosenModel = settings.settings.speechModel.usable(withProUnlocked: pro.isUnlocked)
     }
 
     func retry() {
@@ -39,13 +47,15 @@ final class SpeechModelController {
     func start() {
         Task {
             while true {
-                let model = chosenModel
+                let model = usableModel
 
-                let isInstalled = await transcriber.isModelInstalled(model)
+                chosenModel = model
 
-                guard chosenModel == model else { continue }
+                let events = await startEvents(for: model)
 
-                apply(.started(model, isInstalled: isInstalled))
+                guard usableModel == model else { continue }
+
+                events.forEach(apply)
 
                 return
             }
@@ -57,15 +67,34 @@ final class SpeechModelController {
     }
 
     func modelDidChange() {
-        Task {
-            let model = chosenModel
+        let model = usableModel
 
+        chosenModel = model
+
+        Task {
             let isInstalled = await transcriber.isModelInstalled(model)
 
-            guard chosenModel == model else { return }
+            guard usableModel == model else { return }
 
             apply(.chosen(model, isInstalled: isInstalled))
         }
+    }
+
+    func followAccess() {
+        guard usableModel != chosenModel else { return }
+
+        modelDidChange()
+    }
+
+    private func startEvents(for model: SpeechModel) async -> [SpeechModelState.Event] {
+        let preferredModel = settings.settings.speechModel
+        let isInstalled = await transcriber.isModelInstalled(model)
+
+        guard !isInstalled, preferredModel != model, await transcriber.isModelInstalled(preferredModel) else {
+            return [.started(model, isInstalled: isInstalled)]
+        }
+
+        return [.started(preferredModel, isInstalled: true), .chosen(model, isInstalled: false)]
     }
 
     private func apply(_ event: SpeechModelState.Event) {

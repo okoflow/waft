@@ -175,7 +175,7 @@ struct FileTranscriptionModelTests {
         #expect(await Poll.until(timeout: .seconds(5)) { transcription.acceptsFiles })
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `ignores files without Waft+`() async {
         let transcription = await model(
             FakeTranscriber(file: .success(Self.transcript)),

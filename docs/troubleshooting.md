@@ -52,6 +52,7 @@ The HUD shows "Without AI"; point at it to see "Used Light mode:" and a reason, 
 
 | The reason | Fix |
 | --- | --- |
+| AI modes need Waft+ | The trial has ended: click **Unlock Waft+…** in Settings › Writing, then buy a license or enter yours, as [Waft+](usage.md#waft) describes |
 | choose a local server and model in Settings › AI Models | If both are set, choose a model the server lists under **Model** |
 | the local server isn't running | Start it, then click **Check** in Settings › AI Models |
 | *provider* didn't answer in time | Choose a quicker model if it keeps happening; [Choosing the AI model](usage.md#choosing-the-ai-model) lists each time limit |

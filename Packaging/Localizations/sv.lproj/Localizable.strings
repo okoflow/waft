@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dikteringar";
 "%@ didn't answer in time" = "%@ svarade inte i tid";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "”%@” ingår i Waft+. Waft använder den tills ”%@” är redo.";
 "%@ is rate-limiting requests" = "%@ begränsar antalet förfrågningar";
 "%@ isn't available" = "%@ är inte tillgänglig";
 "%@ rejected the API key" = "%@ avvisade API-nyckeln";
@@ -106,6 +107,7 @@
 "Detect" = "Sök";
 "Development build" = "Utvecklingsversion";
 "Dictate in any app instead of typing." = "Diktera i valfri app i stället för att skriva.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Diktering är alltid gratis. AI-funktionerna ingår i Waft+: gratis i %lld dagar, därefter %@ som engångsbelopp.";
 "Dictation key" = "Dikteringstangent";
 "Dictation" = "Diktering";
 "Dictations" = "Dikteringar";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Följer dina instruktioner.";
 "Forever" = "För alltid";
 "Formal" = "Formellt";
-"Free trial ends %@." = "Provperioden slutar %@.";
-"Free while Waft is in beta." = "Gratis så länge Waft är i beta.";
+"Free trial through %@." = "Provperioden gäller till och med %@.";
 "General" = "Allmänt";
 "Get Started" = "Kom igång";
 "Get an API key" = "Skaffa en API-nyckel";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Skriv, klistra in eller tryck på %@ och tala";
 "Unavailable: another app uses this shortcut. Choose another one." = "Inte tillgängligt: en annan app använder det här kortkommandot. Välj ett annat.";
 "Unlock Waft+…" = "Lås upp Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Tills du låser upp det fungerar ”Renskrivet”, ”Formellt”, ”Översättning” och dina lägen som ”Lätt”.";
 "Updates" = "Uppdateringar";
 "Use the default mode in this app" = "Använd standardläget i den här appen";
 "Use the default shortcut" = "Använd standardkortkommandot";

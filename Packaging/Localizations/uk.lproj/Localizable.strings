@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ диктувань";
 "%@ didn't answer in time" = "%@ відповідає надто довго";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "Модель «%@» входить до Waft+. Waft використовує її, доки не буде готова модель «%@».";
 "%@ is rate-limiting requests" = "%@ обмежує частоту запитів";
 "%@ isn't available" = "%@ недоступний";
 "%@ rejected the API key" = "%@ не приймає ключ API";
@@ -106,6 +107,7 @@
 "Detect" = "Знайти";
 "Development build" = "Збірка для розробки";
 "Dictate in any app instead of typing." = "Диктуйте в будь-якій програмі замість набору тексту.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Диктування безкоштовне завжди. Функції ШІ входять до Waft+: %lld дні безкоштовно, потім %@ один раз.";
 "Dictation key" = "Клавіша диктування";
 "Dictation" = "Диктування";
 "Dictations" = "Диктування";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Виконує ваші інструкції.";
 "Forever" = "Завжди";
 "Formal" = "Діловий";
-"Free trial ends %@." = "Безкоштовний пробний період закінчиться %@.";
-"Free while Waft is in beta." = "Безкоштовно, поки Waft у бета-версії.";
+"Free trial through %@." = "Безкоштовний пробний період діє до %@ включно.";
 "General" = "Загальні";
 "Get Started" = "Почати";
 "Get an API key" = "Отримати ключ API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Введіть, вставте або натисніть %@ і говоріть";
 "Unavailable: another app uses this shortcut. Choose another one." = "Недоступно: цю комбінацію використовує інша програма. Виберіть іншу.";
 "Unlock Waft+…" = "Розблокувати Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "До розблокування режими «Чистовий», «Діловий», «Переклад» і ваші режими працюють як «Легкий».";
 "Updates" = "Оновлення";
 "Use the default mode in this app" = "Використовувати основний режим у цій програмі";
 "Use the default shortcut" = "Використовувати типову комбінацію";

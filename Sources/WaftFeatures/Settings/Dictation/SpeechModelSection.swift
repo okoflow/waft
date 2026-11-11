@@ -7,6 +7,12 @@ struct SpeechModelSection: View {
     let pro: ProModel
     let state: SettingsWindowState
 
+    private var lockedModelNote: LocalizedStringKey? {
+        guard let model = controller.lockedModelInUse else { return nil }
+
+        return "\(model.title) is part of Waft+. Waft keeps using it until \(controller.chosenModel.title) is ready."
+    }
+
     var body: some View {
         SettingsGroup("Speech model", subtitle: "Whisper runs on this Mac, so audio never leaves it.") {
             HStack(alignment: .top, spacing: Metrics.controlSpacing) {
@@ -26,7 +32,7 @@ struct SpeechModelSection: View {
             .fixedSize(horizontal: false, vertical: true)
 
             SettingsCard {
-                SettingsRow(.verbatim(controller.state.statusText)) {
+                SettingsRow(.verbatim(controller.state.statusText), description: lockedModelNote) {
                     if let progress = controller.state.progress {
                         ProgressView(value: progress)
                             .frame(width: 100)

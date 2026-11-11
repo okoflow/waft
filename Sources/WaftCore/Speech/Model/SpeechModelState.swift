@@ -36,9 +36,9 @@ package struct SpeechModelState: Equatable, Sendable {
     }
 
     package private(set) var phase = Phase.notInstalled
+    package private(set) var servingModel: SpeechModel?
 
     private var model = SpeechModel.fast
-    private var servingModel: SpeechModel?
     private var pendingChoice: Choice?
     private var hasRetriedLoad = false
     private var needsReload = false

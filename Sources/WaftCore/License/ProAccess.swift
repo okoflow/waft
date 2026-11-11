@@ -3,14 +3,11 @@ package import Foundation
 package struct ProAccess: Equatable, Sendable {
     package enum Status: Equatable, Sendable {
         case licensed(License)
-        case beta
         case trial
         case expired
     }
 
-    package static let isFreeDuringBeta = true
-
-    private static let trialLength = 3
+    package static let trialDays = 3
 
     package let status: Status
 
@@ -22,9 +19,16 @@ package struct ProAccess: Equatable, Sendable {
         status = Self.status(license: license, trialStarted: trialStarted, now: now)
     }
 
-    package static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
+    package static func trialLastDay(startedOn start: Date, now: Date, calendar: Calendar = .current) -> Date {
+        let end = trialEnd(startedOn: start, now: now, calendar: calendar)
+        guard let lastDay = calendar.date(byAdding: .day, value: -1, to: end) else { return end }
+
+        return lastDay
+    }
+
+    static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar) -> Date {
         let firstDay = calendar.startOfDay(for: min(start, now))
-        guard let end = calendar.date(byAdding: .day, value: trialLength, to: firstDay) else { return firstDay }
+        guard let end = calendar.date(byAdding: .day, value: trialDays, to: firstDay) else { return firstDay }
 
         return end
     }
@@ -37,8 +41,6 @@ package struct ProAccess: Equatable, Sendable {
         if let license {
             return .licensed(license)
         }
-
-        guard !isFreeDuringBeta else { return .beta }
 
         return trialStatus(startedOn: trialStarted, now: now, calendar: .current)
     }

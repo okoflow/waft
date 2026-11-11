@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@ (Waft+)";
 "%@ dictations" = "%@ dikte";
 "%@ didn't answer in time" = "%@ zamanında yanıt vermedi";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "“%@” modeli bir Waft+ özelliğidir. “%@” modeli hazır olana kadar Waft onu kullanmaya devam eder.";
 "%@ is rate-limiting requests" = "%@ istekleri sınırlıyor";
 "%@ isn't available" = "%@ kullanılamıyor";
 "%@ rejected the API key" = "%@ API anahtarını reddetti";
@@ -106,6 +107,7 @@
 "Detect" = "Algıla";
 "Development build" = "Geliştirme sürümü";
 "Dictate in any app instead of typing." = "Yazmak yerine istediğiniz uygulamada dikte edin.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Dikte her zaman ücretsizdir. YZ özellikleri Waft+’a dahildir: %lld gün ücretsiz, sonra tek seferlik %@.";
 "Dictation key" = "Dikte tuşu";
 "Dictation" = "Dikte";
 "Dictations" = "Dikteler";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "Talimatlarınıza uyar.";
 "Forever" = "Süresiz";
 "Formal" = "Resmî";
-"Free trial ends %@." = "Ücretsiz deneme %@ bitiyor.";
-"Free while Waft is in beta." = "Waft beta aşamasındayken ücretsiz.";
+"Free trial through %@." = "Ücretsiz denemenin son günü: %@.";
 "General" = "Genel";
 "Get Started" = "Başla";
 "Get an API key" = "API anahtarı al";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "Yazın, yapıştırın ya da %@ tuşuna basıp konuşun";
 "Unavailable: another app uses this shortcut. Choose another one." = "Kullanılamıyor: başka bir uygulama bu kestirmeyi kullanıyor. Başka bir kestirme seçin.";
 "Unlock Waft+…" = "Waft+’ın Kilidini Aç…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "Kilidi açana kadar “Temiz”, “Resmî”, “Çeviri” ve kendi modlarınız “Hafif” modu gibi çalışır.";
 "Updates" = "Güncellemeler";
 "Use the default mode in this app" = "Bu uygulamada saptanmış modu kullan";
 "Use the default shortcut" = "Saptanmış kestirmeyi kullan";

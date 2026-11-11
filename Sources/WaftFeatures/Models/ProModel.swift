@@ -25,29 +25,22 @@ final class ProModel {
         didSet { activationProblem = nil }
     }
 
-    private var hasTriedActivation = false
-
     private let keyStore: any ValueStore<String>
     private let checker: any LicenseSignatureChecking
     private let urlOpener: any URLOpener
     private let trialStarted: Date
+    private let now: () -> Date
 
-    var trialEnds: Date {
-        ProAccess.trialEnd(startedOn: trialStarted, now: Date())
+    var trialLastDay: Date {
+        ProAccess.trialLastDay(startedOn: trialStarted, now: now())
     }
 
     var access: ProAccess {
-        ProAccess(license: license, trialStarted: trialStarted, now: Date())
+        ProAccess(license: license, trialStarted: trialStarted, now: now())
     }
 
     var isUnlocked: Bool {
         access.isUnlocked
-    }
-
-    var showsLicenseSection: Bool {
-        guard license == nil, !hasTriedActivation else { return true }
-
-        return !ProAccess.isFreeDuringBeta
     }
 
     var canActivateDraft: Bool {
@@ -59,24 +52,22 @@ final class ProModel {
         trialStore: any ValueStore<Date>,
         checker: any LicenseSignatureChecking,
         urlOpener: any URLOpener,
+        now: @escaping () -> Date = Date.init,
     ) {
         self.keyStore = keyStore
         self.checker = checker
         self.urlOpener = urlOpener
-        trialStarted = Self.trialStart(in: trialStore)
+        self.now = now
+        trialStarted = Self.trialStart(in: trialStore, now: now())
         license = Self.storedLicense(in: keyStore, checker: checker)
     }
 
-    private static func trialStart(in store: any ValueStore<Date>) -> Date {
+    private static func trialStart(in store: any ValueStore<Date>, now: Date) -> Date {
         if let started = store.read() {
             return started
         }
 
-        let now = Date()
-
-        if !ProAccess.isFreeDuringBeta {
-            store.write(now)
-        }
+        store.write(now)
 
         return now
     }
@@ -93,8 +84,6 @@ final class ProModel {
     }
 
     func activateDraft() {
-        hasTriedActivation = true
-
         guard let key = LicenseKey(draft) else {
             activationProblem = .unreadable
 

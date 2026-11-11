@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "%@（Waft+）";
 "%@ dictations" = "%@件";
 "%@ didn't answer in time" = "%@が時間内に応答しませんでした";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "「%@」はWaft+の機能です。「%@」の準備ができるまで、Waftは引き続きこのモデルを使用します。";
 "%@ is rate-limiting requests" = "%@がリクエストを制限しています";
 "%@ isn't available" = "%@を利用できません";
 "%@ rejected the API key" = "%@がAPIキーを拒否しました";
@@ -106,6 +107,7 @@
 "Detect" = "検出";
 "Development build" = "開発ビルド";
 "Dictate in any app instead of typing." = "どのアプリでも、キーボードの代わりに音声で入力できます。";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "音声入力はずっと無料です。AI機能はWaft+に含まれ、%lld日間は無料、その後は%@の買い切りです。";
 "Dictation key" = "音声入力キー";
 "Dictation" = "音声入力";
 "Dictations" = "音声入力";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "自分の指示に従います。";
 "Forever" = "無期限";
 "Formal" = "フォーマル";
-"Free trial ends %@." = "無料トライアルは%@に終了します。";
-"Free while Waft is in beta." = "Waftのベータ期間中は無料です。";
+"Free trial through %@." = "無料トライアルは%@までです。";
 "General" = "一般";
 "Get Started" = "始める";
 "Get an API key" = "APIキーを取得";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "入力・ペーストするか、%@キーを押して話してください";
 "Unavailable: another app uses this shortcut. Choose another one." = "使用できません：ほかのアプリがこのショートカットを使用しています。別のショートカットを選択してください。";
 "Unlock Waft+…" = "Waft+のロックを解除…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "ロックを解除するまで、「清書」、「フォーマル」、「翻訳」、自分のモードは「簡易」モードと同じ動作になります。";
 "Updates" = "アップデート";
 "Use the default mode in this app" = "このアプリでデフォルトのモードを使用";
 "Use the default shortcut" = "デフォルトのショートカットを使用";

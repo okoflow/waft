@@ -13,13 +13,14 @@ struct ModelSetupSection<Content: View>: View {
         setup: AIModelSetup,
         settings: SettingsModel,
         apiKeys: PerProvider<APIKeyModel>,
+        pro: ProModel,
         state: SettingsWindowState,
         subtitle: LocalizedStringKey? = nil,
         @ViewBuilder content: () -> Content,
     ) {
         self.title = title
         self.subtitle = subtitle
-        setupNote = setup.missingSetup(in: settings, apiKeys: apiKeys)
+        setupNote = setup.missingSetup(in: settings, apiKeys: apiKeys, pro: pro)
         self.state = state
         self.content = content()
     }

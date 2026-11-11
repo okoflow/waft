@@ -2,6 +2,7 @@
 "%@ (Waft+)" = "‏%@ (Waft+‎)";
 "%@ dictations" = "%@ הכתבות";
 "%@ didn't answer in time" = "לא התקבלה תשובה מ-%@ בזמן";
+"%@ is part of Waft+. Waft keeps using it until %@ is ready." = "המודל ״%@״ כלול ב-Waft+‎. היישום Waft ימשיך להשתמש בו עד שהמודל ״%@״ יהיה מוכן.";
 "%@ is rate-limiting requests" = "קצב הבקשות מוגבל על ידי %@";
 "%@ isn't available" = "השירות %@ אינו זמין";
 "%@ rejected the API key" = "מפתח ה-API נדחה על ידי %@";
@@ -106,6 +107,7 @@
 "Detect" = "זיהוי";
 "Development build" = "גרסת פיתוח";
 "Dictate in any app instead of typing." = "ניתן להכתיב בכל יישום במקום להקליד.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "ההכתבה תמיד ללא תשלום. מאפייני הבינה המלאכותית כלולים ב-Waft+‎: ללא תשלום למשך %lld ימים, ולאחר מכן תשלום חד-פעמי של %@.";
 "Dictation key" = "מקש הכתבה";
 "Dictation" = "הכתבה";
 "Dictations" = "הכתבות";
@@ -140,8 +142,7 @@
 "Follows your instructions." = "פועל לפי ההוראות שלך.";
 "Forever" = "לצמיתות";
 "Formal" = "רשמי";
-"Free trial ends %@." = "תקופת הניסיון ללא תשלום תסתיים %@.";
-"Free while Waft is in beta." = "ללא תשלום כל עוד Waft בגרסת בטא.";
+"Free trial through %@." = "תקופת הניסיון ללא תשלום בתוקף עד %@ (כולל).";
 "General" = "כללי";
 "Get Started" = "התחלה";
 "Get an API key" = "קבלת מפתח API";
@@ -418,6 +419,7 @@
 "Type, paste, or tap %@ and speak" = "יש להקליד, להדביק או ללחוץ על %@ ולדבר";
 "Unavailable: another app uses this shortcut. Choose another one." = "לא זמין: יישום אחר משתמש בקיצור הזה. יש לבחור קיצור אחר.";
 "Unlock Waft+…" = "שדרוג ל-Waft+‎…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "עד לשדרוג, המצבים ״נקי״, ״רשמי״, ״תרגום״ והמצבים שלך פועלים כמו המצב ״בסיסי״.";
 "Updates" = "עדכונים";
 "Use the default mode in this app" = "שימוש במצב ברירת המחדל ביישום זה";
 "Use the default shortcut" = "שימוש בקיצור ברירת המחדל";

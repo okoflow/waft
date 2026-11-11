@@ -17,6 +17,7 @@ struct SpeechModelStateChoiceTests {
         #expect(state.phase == phase)
         #expect(!state.isReady)
         #expect(state.canTranscribe)
+        #expect(state.servingModel == .fast)
         #expect(state.notReadyMessage == nil)
     }
 
@@ -28,6 +29,7 @@ struct SpeechModelStateChoiceTests {
         #expect(state.handle(outcome) == [.download(.accurate)])
         #expect(state.phase == .downloading(progress: 0))
         #expect(state.canTranscribe == canTranscribe)
+        #expect((state.servingModel == .fast) == canTranscribe)
     }
 
     @Test

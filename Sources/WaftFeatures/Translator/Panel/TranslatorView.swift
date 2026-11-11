@@ -12,11 +12,7 @@ struct TranslatorView: View {
     var body: some View {
         VStack(spacing: Metrics.accessorySpacing) {
             if model.isLocked {
-                ProGateBanner(
-                    title: "The translator is part of Waft+",
-                    detail: "Translate and polish text in any of \(Language.allCases.count) languages with your AI model.",
-                    showPro: showPro,
-                )
+                ProGateBanner.translator(showPro: showPro)
             }
 
             HStack(spacing: 0) {

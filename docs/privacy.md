@@ -28,7 +28,7 @@ While sharing is on, Waft counts on your Mac how often you use each feature and 
 
 - A random ID that Waft makes when you agree. It tells one installation from another and comes from nothing on your Mac, your license, or your accounts.
 - The day, the Waft version, the macOS version, and the app language.
-- The speech model, the AI provider (Claude, OpenAI, or a local server, without its address), and whether Waft+ is licensed, free in the beta, on trial, or expired.
+- The speech model, the AI provider (Claude, OpenAI, or a local server, without its address), and whether Waft+ is licensed, on trial, or expired.
 - How many dictations each mode ran, with all your own modes counted together, and how many edits by voice, shortcuts on selected text, translations in the translator, and file transcriptions.
 
 A report never holds what you said or typed, audio, dictionary terms, the names of apps or files, an API key, the license key, or your email. The service stores a report without the address it came from; Cloudflare, which hosts the service, handles that address to deliver the request and to limit how many one address sends.
@@ -50,7 +50,7 @@ The counts wait in `usage.json` for a week at most. Turning sharing off deletes 
 
 Only you can open the `~/Library/Application Support/Waft` folder and read the files in it. If Waft can't read the dictionary, statistics, or history file, it keeps an `*.unreadable.json` copy beside it, which **Clear History…** in Settings › History also deletes for the history. [Troubleshooting](troubleshooting.md#the-dictionary-history-or-statistics-disappeared) says how to recover it.
 
-During the beta, Waft keeps the API keys and the license key in these owner-only files instead of the keychain. Waft isn't signed with an Apple Developer ID yet, so macOS ties a keychain item to the exact build that saved it and would ask for your password to read the keys after every update. The files are safe from other users of this Mac, but any app or process that runs under your user account can read them, where the keychain would ask you first. Once Waft has a Developer ID, the keys move back to the keychain.
+Waft keeps the API keys and the license key in these owner-only files instead of the keychain. Waft isn't signed with an Apple Developer ID yet, so macOS ties a keychain item to the exact build that saved it and would ask for your password to read the keys after every update. The files are safe from other users of this Mac, but any app or process that runs under your user account can read them, where the keychain would ask you first. Once Waft has a Developer ID, the keys move back to the keychain.
 
 An older version kept the keys in the login keychain under the service `com.okoflow.waft`. The first time Waft needs a key it finds there, it reads it once, which can make macOS ask for your password one last time, moves it into its file, and deletes it from the keychain; [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain) covers the prompt.
 

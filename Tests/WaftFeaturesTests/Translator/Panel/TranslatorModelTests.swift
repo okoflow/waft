@@ -185,7 +185,7 @@ struct TranslatorModelTests {
         #expect(rewriter.requests.count == 1)
     }
 
-    @Test(.enabled(if: !ProAccess.isFreeDuringBeta))
+    @Test
     func `translates nothing without Waft+`() async {
         let rewriter = FakeTextRewriter(.success("Hello."))
         let translator = model(rewriter, detects: .russian, pro: .unlicensed(trialStarted: .distantPast))
