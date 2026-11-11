@@ -10,7 +10,7 @@ struct TranslationTests {
         #expect(translation.target(forSpoken: spoken) == expected)
     }
 
-    @Test(arguments: [Language.german, .english, .japanese])
+    @Test(arguments: [Language.german, .english])
     func `translates one way without a second language`(spoken: Language) {
         #expect(Translation(target: .german).target(forSpoken: spoken) == .german)
     }

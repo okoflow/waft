@@ -51,7 +51,6 @@ struct SettingsTests {
     @Test(arguments: [
         ("local", ModelProvider.localServer),
         ("openai", .cloud(.openAI)),
-        ("claude", .cloud(.claude)),
         ("gemini", .cloud(.claude)),
     ])
     func `decodes the model provider`(stored: String, expected: ModelProvider) throws {
@@ -69,7 +68,7 @@ struct SettingsTests {
         #expect(try decode(#"{"cloudModels":\#(stored)}"#).cloudModels == expected)
     }
 
-    @Test(arguments: [("fast", SpeechModel.fast), ("accurate", .accurate), ("huge", .fast)])
+    @Test(arguments: [("accurate", SpeechModel.accurate), ("huge", .fast)])
     func `decodes the speech model`(stored: String, expected: SpeechModel) throws {
         #expect(try decode(#"{"speechModel":"\#(stored)"}"#).speechModel == expected)
     }

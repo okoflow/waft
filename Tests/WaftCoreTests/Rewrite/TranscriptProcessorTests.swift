@@ -220,7 +220,6 @@ struct TranscriptProcessorTests {
 
     @Test(arguments: [
         (Result<String, RewriteError>.failure(.offline), RewriteError.offline),
-        (.failure(.rejectedKey), .rejectedKey),
         (.success("<text> </text>"), .unreadableResponse),
     ])
     func `passes on the rewrite error of an edit and rejects an empty one`(

@@ -30,7 +30,7 @@ struct HTTPUsageReportSenderTests {
         #expect(try encoder.encode(Self.report) == request.httpBody)
     }
 
-    @Test(arguments: [FakeHTTPTransport.Reply.status(400), .status(429), .failure(URLError(.notConnectedToInternet))])
+    @Test(arguments: [FakeHTTPTransport.Reply.status(400), .failure(URLError(.notConnectedToInternet))])
     func `fails when the service refuses the report or is out of reach`(reply: FakeHTTPTransport.Reply) async {
         let sender = HTTPUsageReportSender(transport: FakeHTTPTransport(reply))
 

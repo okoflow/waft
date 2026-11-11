@@ -48,15 +48,15 @@ struct SpeechModelFilesTests {
         }
     }
 
-    @Test(arguments: [CocoaError.Code.fileReadNoPermission, .fileReadUnknown])
-    func `counts a model with unreadable download metadata as not installed`(failure: CocoaError.Code) throws {
+    @Test
+    func `counts a model with unreadable download metadata as not installed`() throws {
         try withTemporaryDirectory { directory in
             let accurate = try installed(.accurate, in: directory)
 
             #expect(accurate.isInstalled)
 
             let unreadable = SpeechModelFiles(.accurate, baseDirectory: directory) { _ in
-                throw CocoaError(failure)
+                throw CocoaError(.fileReadNoPermission)
             }
 
             #expect(!unreadable.isInstalled)

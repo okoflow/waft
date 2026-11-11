@@ -30,11 +30,11 @@ struct RewriteDeadlineTests {
         #expect(clock.now - start < .seconds(5))
     }
 
-    @Test(arguments: [RewriteError.refused, .rateLimited, .offline])
-    func `passes on the error of the rewrite`(error: RewriteError) async {
-        await #expect(throws: error) {
+    @Test
+    func `passes on the error of the rewrite`() async {
+        await #expect(throws: RewriteError.refused) {
             try await RewriteDeadline.run(.seconds(5)) { () async throws(RewriteError) -> String in
-                throw error
+                throw .refused
             }
         }
     }

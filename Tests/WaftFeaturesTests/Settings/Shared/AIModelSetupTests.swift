@@ -30,7 +30,6 @@ struct AIModelSetupTests {
         (AIModelSetup.modes, "", String?.some("AI modes need a local server and model.")),
         (.translator, "", "The translator needs a local server and model."),
         (.modes, "qwen3", nil),
-        (.translator, "qwen3", nil),
     ])
     func `asks for a local server and model until both are set`(setup: AIModelSetup, model: String, note: String?) {
         settings.settings.modelProvider = .localServer

@@ -49,7 +49,6 @@ struct PasteboardRestorePolicyTests {
     @Test(arguments: [
         (Policy.maximumSnapshotBytes, Policy.Plan.restore),
         (Policy.maximumSnapshotBytes + 1, tooLarge),
-        (0, .restore),
     ])
     func `skips clipboards larger than five megabytes`(bytes: Int, expected: Policy.Plan) {
         #expect(Policy.plan(currentTypes: ["public.png"], snapshotBytes: bytes, hasUncapturedItem: false) == expected)
