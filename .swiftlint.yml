@@ -98,7 +98,6 @@ function_body_length:
 
 line_length:
   warning: 130
-  ignores_urls: true
 
 type_body_length:
   warning: 200
