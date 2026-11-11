@@ -19,9 +19,9 @@ enum ResponseDecoder {
         guard let error = error as? DecodingError else { return String(describing: type(of: error)) }
 
         return switch error {
-        case let .keyNotFound(key, context): "missing \(path(context.codingPath + [key]))"
         case let .typeMismatch(_, context): "unexpected type at \(path(context.codingPath))"
         case let .valueNotFound(_, context): "missing value at \(path(context.codingPath))"
+        case let .keyNotFound(key, context): "missing \(path(context.codingPath + [key]))"
         case let .dataCorrupted(context): "unreadable data at \(path(context.codingPath))"
         @unknown default: "an unknown decoding failure"
         }
