@@ -12,15 +12,21 @@ extension ProModel {
             trialStore: FakeValueStore(Date.distantPast),
             checker: FakeLicenseSignatureChecker(signature: signature, payload: payload),
             urlOpener: FakeURLOpener(),
+            dayChangeMonitor: FakeDayChangeMonitor(),
         )
     }
 
-    static func unlicensed(trialStarted: Date = Date(), now: @escaping () -> Date = Date.init) -> ProModel {
+    static func unlicensed(
+        trialStarted: Date = Date(),
+        dayChangeMonitor: FakeDayChangeMonitor = FakeDayChangeMonitor(),
+        now: @escaping () -> Date = Date.init,
+    ) -> ProModel {
         ProModel(
             keyStore: FakeValueStore(),
             trialStore: FakeValueStore(trialStarted),
             checker: FakeLicenseSignatureChecker(signature: Data(), payload: Data()),
             urlOpener: FakeURLOpener(),
+            dayChangeMonitor: dayChangeMonitor,
             now: now,
         )
     }

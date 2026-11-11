@@ -15,6 +15,7 @@ extension AppModel {
             trialStore: dependencies.trialStore,
             checker: dependencies.licenseChecker,
             urlOpener: dependencies.urlOpener,
+            dayChangeMonitor: dependencies.dayChangeMonitor,
         )
     }
 

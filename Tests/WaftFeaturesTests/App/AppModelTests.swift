@@ -98,6 +98,7 @@ struct AppModelTests {
             shortcuts: .fake(),
             focusTracker: FakeFocusTracker(),
             frontmostAppMonitor: FakeFrontmostAppMonitor(),
+            dayChangeMonitor: FakeDayChangeMonitor(),
             urlOpener: FakeURLOpener(),
             inserter: FakeTextInserter(),
             clipboard: FakeClipboard(),

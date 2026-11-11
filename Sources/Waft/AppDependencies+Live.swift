@@ -25,6 +25,7 @@ extension AppDependencies {
             shortcuts: GlobalShortcuts(layout: CurrentKeyboardLayout()) { _ in CarbonHotKey() },
             focusTracker: focusTracker,
             frontmostAppMonitor: WorkspaceAppMonitor(),
+            dayChangeMonitor: CalendarDayChangeMonitor(),
             urlOpener: WorkspaceURLOpener(),
             inserter: PasteboardInserter(focusTracker: focusTracker, keyboardState: keyboardState),
             clipboard: SystemClipboard(),

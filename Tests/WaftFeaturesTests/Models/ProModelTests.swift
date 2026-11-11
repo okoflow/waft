@@ -185,6 +185,23 @@ struct ProModelTests {
     }
 
     @Test
+    func `tells an observer of the access when the last day of the trial ends`() async {
+        let lastDay = Calendar.current.startOfDay(for: Self.firstLaunch) + 12 * 3600
+        var now = lastDay
+        let dayChangeMonitor = FakeDayChangeMonitor()
+        let pro = ProModel.unlicensed(trialStarted: lastDay - 2 * 86400, dayChangeMonitor: dayChangeMonitor, now: { now })
+        let observer = AccessObserver(of: pro)
+
+        #expect(pro.access.status == .trial)
+
+        now += 86400
+        dayChangeMonitor.changeDay()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { observer.isNotified })
+        #expect(pro.access.status == .expired)
+    }
+
+    @Test
     func `opens the purchase page`() {
         let urlOpener = FakeURLOpener()
         let pro = model(urlOpener: urlOpener)
@@ -205,7 +222,18 @@ struct ProModelTests {
             trialStore: trialStore,
             checker: FakeLicenseSignatureChecker(signature: Self.signature, payload: Self.payload),
             urlOpener: urlOpener,
+            dayChangeMonitor: FakeDayChangeMonitor(),
             now: { now },
         )
+    }
+}
+
+private final class AccessObserver {
+    private(set) var isNotified = false
+
+    init(of pro: ProModel) {
+        withObservationTracking { _ = pro.access } onChange: { [self] in
+            MainActor.assumeIsolated { isNotified = true }
+        }
     }
 }
