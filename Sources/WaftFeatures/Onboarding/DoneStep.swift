@@ -11,30 +11,38 @@ struct DoneStep: View {
     }
 
     private var needsAIModel: Bool {
-        AIModelSetup.modes.missingSetup(in: model.settings, apiKeys: model.apiKeys) != nil
+        AIModelSetup.modes.missingSetup(in: model.settings, apiKeys: model.apiKeys, pro: model.pro) != nil
     }
 
     var body: some View {
         OnboardingStep(title: "You're all set", message: message) {
             IconTile(symbolName: "checkmark", tint: .green, size: Metrics.heroTileSize)
         } content: {
-            SettingsCard {
-                ToggleRow("Open at login", isOn: Bindable(model.settings).launchesAtLogin)
+            VStack(spacing: Metrics.groupSpacing) {
+                SettingsCard {
+                    ToggleRow("Open at login", isOn: Bindable(model.settings).launchesAtLogin)
 
-                if needsAIModel {
-                    RowDivider()
+                    if needsAIModel {
+                        RowDivider()
 
-                    SettingsRow(
-                        "AI modes",
-                        description: "Clean, Formal, and Translate need an AI model.",
-                    ) {
-                        Button("Set Up…") {
-                            model.onboarding.finish()
-                            model.showSettings(.aiModels)
+                        SettingsRow(
+                            "AI modes",
+                            description: "Clean, Formal, and Translate need an AI model.",
+                        ) {
+                            Button("Set Up…") { finish(showing: .aiModels) }
                         }
                     }
                 }
+
+                if !model.pro.isUnlocked {
+                    ProGateBanner.aiModes { finish(showing: .pro) }
+                }
             }
         }
+    }
+
+    private func finish(showing pane: SettingsPane) {
+        model.onboarding.finish()
+        model.showSettings(pane)
     }
 }

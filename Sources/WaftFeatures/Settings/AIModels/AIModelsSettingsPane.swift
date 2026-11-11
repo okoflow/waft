@@ -6,8 +6,14 @@ struct AIModelsSettingsPane: View {
 
     let apiKeys: PerProvider<APIKeyModel>
     let localModels: LocalModelsModel
+    let pro: ProModel
+    let state: SettingsWindowState
 
     var body: some View {
+        if !pro.isUnlocked {
+            ProGateBanner.aiModes { state.selection = .pro }
+        }
+
         SettingsSection(
             "AI model",
             subtitle: "AI modes, editing by voice, and the translator use this model.",
@@ -16,7 +22,7 @@ struct AIModelsSettingsPane: View {
                 "Provider",
                 selection: $settings.settings.modelProvider,
                 current: settings.settings.modelProvider.title,
-                description: AIModelSetup.modes.missingSetup(in: settings, apiKeys: apiKeys),
+                description: AIModelSetup.modes.missingSetup(in: settings, apiKeys: apiKeys, pro: pro),
             ) {
                 Text(ModelProvider.localServer.title).tag(ModelProvider.localServer)
                 Divider()

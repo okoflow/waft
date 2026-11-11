@@ -64,7 +64,13 @@ struct SettingsPaneView: View {
             }
 
         case .aiModels:
-            AIModelsSettingsPane(settings: model.settings, apiKeys: model.apiKeys, localModels: model.localModels)
+            AIModelsSettingsPane(
+                settings: model.settings,
+                apiKeys: model.apiKeys,
+                localModels: model.localModels,
+                pro: model.pro,
+                state: state,
+            )
 
         case .general:
             GeneralSettingsPane(

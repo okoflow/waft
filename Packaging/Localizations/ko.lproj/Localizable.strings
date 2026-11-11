@@ -417,6 +417,7 @@
 "Type, paste, or tap %@ and speak" = "입력하거나 붙여넣거나 %@ 키를 누르고 말하세요";
 "Unavailable: another app uses this shortcut. Choose another one." = "사용할 수 없음: 다른 앱에서 이 단축키를 사용하고 있습니다. 다른 단축키를 선택하세요.";
 "Unlock Waft+…" = "Waft+ 잠금 해제…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "잠금을 해제할 때까지 ‘정리’, ‘격식체’, ‘번역’, 나만의 모드는 ‘가벼운 정리’ 모드처럼 작동합니다.";
 "Updates" = "업데이트";
 "Use the default mode in this app" = "이 앱에서 기본 모드 사용";
 "Use the default shortcut" = "기본 단축키 사용";

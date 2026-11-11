@@ -417,6 +417,7 @@
 "Type, paste, or tap %@ and speak" = "พิมพ์ วาง หรือกด %@ แล้วพูด";
 "Unavailable: another app uses this shortcut. Choose another one." = "ใช้ไม่ได้: มีแอปอื่นใช้ปุ่มลัดนี้อยู่ เลือกปุ่มลัดอื่น";
 "Unlock Waft+…" = "ปลดล็อก Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "จนกว่าคุณจะปลดล็อก “เรียบเรียง” “ทางการ” “แปลภาษา” และโหมดของคุณจะทำงานเหมือนโหมด “ปรับเล็กน้อย”";
 "Updates" = "รายการอัปเดต";
 "Use the default mode in this app" = "ใช้โหมดเริ่มต้นในแอปนี้";
 "Use the default shortcut" = "ใช้ปุ่มลัดเริ่มต้น";

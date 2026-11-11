@@ -23,7 +23,7 @@ struct AIModelSetupTests {
             APIKeyModel(store: FakeValueStore(cloudProvider == provider ? keyIfSaved(hasKey) : nil))
         }
 
-        #expect((setup.missingSetup(in: settings, apiKeys: apiKeys) == nil) == hasKey)
+        #expect((setup.missingSetup(in: settings, apiKeys: apiKeys, pro: .unlicensed()) == nil) == hasKey)
     }
 
     @Test(arguments: [
@@ -37,7 +37,22 @@ struct AIModelSetupTests {
 
         let apiKeys = PerProvider { _ in APIKeyModel(store: FakeValueStore<String>()) }
 
-        #expect(setup.missingSetup(in: settings, apiKeys: apiKeys) == note.map { LocalizedStringKey($0) })
+        #expect(setup.missingSetup(in: settings, apiKeys: apiKeys, pro: .unlicensed()) == note.map { LocalizedStringKey($0) })
+    }
+
+    @Test(arguments: [
+        (AIModelSetup.modes, ModelProvider.cloud(.claude)),
+        (.translator, .cloud(.openAI)),
+        (.modes, .localServer),
+        (.translator, .localServer),
+    ])
+    func `asks for no setup while Waft+ is locked`(setup: AIModelSetup, provider: ModelProvider) {
+        settings.settings.modelProvider = provider
+
+        let apiKeys = PerProvider { _ in APIKeyModel(store: FakeValueStore<String>()) }
+        let pro = ProModel.unlicensed(trialStarted: .distantPast)
+
+        #expect(setup.missingSetup(in: settings, apiKeys: apiKeys, pro: pro) == nil)
     }
 
     private func keyIfSaved(_ hasKey: Bool) -> String? {

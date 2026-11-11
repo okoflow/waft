@@ -417,6 +417,7 @@
 "Type, paste, or tap %@ and speak" = "输入、粘贴，或按一下%@键说话";
 "Unavailable: another app uses this shortcut. Choose another one." = "不可用：其他App正在使用此快捷键。请选择其他快捷键。";
 "Unlock Waft+…" = "解锁Waft+…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "解锁之前，“整理”、“正式”、“翻译”和自定义模式的效果与“轻度”模式相同。";
 "Updates" = "更新";
 "Use the default mode in this app" = "在此App中使用默认模式";
 "Use the default shortcut" = "使用默认快捷键";

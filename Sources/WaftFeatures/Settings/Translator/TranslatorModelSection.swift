@@ -5,6 +5,7 @@ struct TranslatorModelSection: View {
     @Bindable var settings: SettingsModel
 
     let apiKeys: PerProvider<APIKeyModel>
+    let pro: ProModel
     let state: SettingsWindowState
 
     var body: some View {
@@ -33,6 +34,7 @@ struct TranslatorModelSection: View {
             setup: .translator,
             settings: settings,
             apiKeys: apiKeys,
+            pro: pro,
             state: state,
             subtitle: subtitle,
             content: content,

@@ -417,6 +417,7 @@
 "Type, paste, or tap %@ and speak" = "入力・ペーストするか、%@キーを押して話してください";
 "Unavailable: another app uses this shortcut. Choose another one." = "使用できません：ほかのアプリがこのショートカットを使用しています。別のショートカットを選択してください。";
 "Unlock Waft+…" = "Waft+のロックを解除…";
+"Until you unlock it, Clean, Formal, Translate, and your modes work like Light." = "ロックを解除するまで、「清書」、「フォーマル」、「翻訳」、自分のモードは「簡易」モードと同じ動作になります。";
 "Updates" = "アップデート";
 "Use the default mode in this app" = "このアプリでデフォルトのモードを使用";
 "Use the default shortcut" = "デフォルトのショートカットを使用";

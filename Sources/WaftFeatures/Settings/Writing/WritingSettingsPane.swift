@@ -28,7 +28,11 @@ struct WritingSettingsPane: View {
     }
 
     var body: some View {
-        ModelSetupSection("Modes", setup: .modes, settings: settings, apiKeys: apiKeys, state: state) {
+        if !pro.isUnlocked {
+            ProGateBanner.aiModes { state.selection = .pro }
+        }
+
+        ModelSetupSection("Modes", setup: .modes, settings: settings, apiKeys: apiKeys, pro: pro, state: state) {
             DividedForEach(Mode.builtIn, id: \.self) { mode in
                 ModeRow(mode: mode, settings: settings, isLocked: pro.locks(mode), state: state)
             }
