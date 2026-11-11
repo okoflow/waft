@@ -133,9 +133,11 @@ final class DictationQueue {
         }
 
         let outcome = await outcome(of: transcript, for: job)
+        let recordedJob = record(outcome, transcribed: transcript.text, for: job)
+
         guard transcript.isIncomplete else { return outcome }
 
-        keepForRetry(job)
+        keepForRetry(recordedJob)
 
         return reportingMissingPart(before: outcome)
     }
@@ -159,7 +161,7 @@ final class DictationQueue {
 
         log(transcript, processed, for: job)
 
-        return await deliver(processed, transcribed: transcript.text, for: job)
+        return await deliver(processed, for: job)
     }
 
     private func edit(_ selection: String, following transcript: Transcript, for job: DictationJob) async -> DictationOutcome {
@@ -168,26 +170,18 @@ final class DictationQueue {
         do throws(RewriteError) {
             let edited = try await processor.edit(selection, following: transcript, setup: job.setup)
 
-            return await deliver(ProcessedText(text: edited, mode: job.mode), transcribed: nil, for: job)
+            return await deliver(ProcessedText(text: edited, mode: job.mode), for: job)
         } catch {
             return .editFailed(error.explanation(for: job.setup.provider))
         }
     }
 
-    private func deliver(
-        _ processed: ProcessedText,
-        transcribed transcript: String?,
-        for job: DictationJob,
-    ) async -> DictationOutcome {
+    private func deliver(_ processed: ProcessedText, for job: DictationJob) async -> DictationOutcome {
         guard !processed.text.isEmpty else { return .noSpeech }
 
         rememberLatest(processed.text)
 
         let outcome = await pasteOrCopy(processed.text, for: job)
-
-        if outcome != .keptOutOfPasswordField {
-            record(processed, transcribed: transcript, for: job)
-        }
 
         return .delivered(outcome, processed)
     }
@@ -208,26 +202,6 @@ final class DictationQueue {
 
             self?.latestTranscript = nil
         }
-    }
-
-    private func record(_ processed: ProcessedText, transcribed transcript: String?, for job: DictationJob) {
-        guard job.selection == nil else {
-            onUsage?(.voiceEdit)
-
-            return
-        }
-
-        let entry = DictationHistory.Entry(
-            date: Date(),
-            text: processed.text,
-            mode: processed.mode,
-            app: job.target.bundleIdentifier,
-            transcript: transcript,
-        )
-
-        statistics.record(processed.text, seconds: SpeechAudio.duration(of: job.samples))
-        history.add(entry)
-        onUsage?(.dictation(processed.mode))
     }
 
     private func log(_ transcript: Transcript, _ processed: ProcessedText, for job: DictationJob) {
@@ -278,5 +252,38 @@ extension DictationQueue {
         failedJob = nil
 
         failedJobExpiry?.cancel()
+    }
+}
+
+extension DictationQueue {
+    private func record(_ outcome: DictationOutcome, transcribed transcript: String, for job: DictationJob) -> DictationJob {
+        guard case let .delivered(delivery, processed) = outcome else { return job }
+        guard delivery != .keptOutOfPasswordField, !job.isForPasswordField else { return job.forPasswordField() }
+        guard job.selection == nil else {
+            onUsage?(.voiceEdit)
+
+            return job
+        }
+
+        let counted = statistics.record(processed.text, seconds: SpeechAudio.duration(of: job.samples), replacing: job.record)
+
+        let entry = DictationHistory.Entry(
+            date: counted.date,
+            text: processed.text,
+            mode: processed.mode,
+            app: job.target.bundleIdentifier,
+            transcript: transcript,
+        )
+
+        guard job.record == nil else {
+            history.replace(entry)
+
+            return job.recorded(as: counted)
+        }
+
+        history.add(entry)
+        onUsage?(.dictation(processed.mode))
+
+        return job.recorded(as: counted)
     }
 }

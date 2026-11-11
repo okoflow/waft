@@ -48,6 +48,17 @@ package struct DictationHistory: Codable, Equatable, Sendable {
         entries.append(entry)
     }
 
+    package mutating func replace(_ entry: Entry) {
+        guard !entry.text.isEmpty else { return }
+        guard let index = entries.lastIndex(where: { $0.date == entry.date }) else {
+            add(entry)
+
+            return
+        }
+
+        entries[index] = entry
+    }
+
     package mutating func removeAll() {
         entries.removeAll()
     }

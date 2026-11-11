@@ -25,4 +25,14 @@ struct DictationJobTests {
         #expect(job.mode == mode)
         #expect(job.setup.instructions.contains(instructions))
     }
+
+    @Test(arguments: [(SecureFieldState.secure, true), (.notSecure, false)])
+    func `knows from its target whether a password field had focus when the recording began`(
+        state: SecureFieldState,
+        isForPasswordField: Bool,
+    ) {
+        let target = FocusTarget.app("com.example.notes", element: FakeFocusedElement(selectedText: nil, secureFieldState: state))
+
+        #expect(DictationJob.recorded(target: target).isForPasswordField == isForPasswordField)
+    }
 }

@@ -5,6 +5,7 @@ extension DictationJob {
     static func recorded(
         selection: String? = nil,
         vocabulary: Vocabulary = .empty,
+        target: FocusTarget = .notes,
         configure: (inout Settings) -> Void = { _ in },
     ) -> DictationJob {
         var settings = Settings(languages: .preferred(by: []))
@@ -17,7 +18,7 @@ extension DictationJob {
         return DictationJob(
             samples: [Float](repeating: 0, count: 16000),
             recording: recording,
-            target: .notes,
+            target: target,
             settings: settings,
             vocabulary: vocabulary,
             allowsAI: true,

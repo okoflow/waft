@@ -29,6 +29,24 @@ struct DictationQueueUsageTests {
     }
 
     @Test
+    func `reports a dictation once when a retry recognizes the part that was missing`() async {
+        let transcriber = FakeTranscriber(.success(.spoken("Hello", isIncomplete: true)), .success(.spoken("Hello world")))
+        let queue = queue(transcriber)
+        var usage: [UsageEvent] = []
+        queue.onUsage = { usage.append($0) }
+
+        queue.submit(.recorded())
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+
+        queue.retryFailedDictation()
+        await queue.waitUntilIdle()
+
+        #expect(transcriber.requests.count == 2)
+        #expect(usage == [.dictation(.raw)])
+    }
+
+    @Test
     func `reports nothing for a recording without speech`() async {
         let hud = HUDController.offscreen()
         let queue = queue(FakeTranscriber(.success(nil)), hud: hud)

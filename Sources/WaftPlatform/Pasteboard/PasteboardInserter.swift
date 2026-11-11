@@ -28,7 +28,7 @@ package final class PasteboardInserter: TextInserter {
         let current = focusTracker.currentFocus()
 
         let decision = InsertionDecision.decide(
-            isSecureField: current.isSecureField(secureInput: SecureInput.holder),
+            isSecureField: current.isSecureField,
             canPostKeys: AXIsProcessTrusted(),
             isFocusOnTarget: target.isSameFocus(as: current),
             isKeyHeld: !wasReleased,
@@ -56,7 +56,7 @@ package final class PasteboardInserter: TextInserter {
 
         let current = focusTracker.currentFocus()
         guard AXIsProcessTrusted(),
-              !current.isSecureField(secureInput: SecureInput.holder),
+              !current.isSecureField,
               target.isSameFocus(as: current)
         else { return nil }
 

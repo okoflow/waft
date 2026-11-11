@@ -10,6 +10,11 @@ package final class AccessibilityFocusTracker: FocusTracker {
         let app = NSApp.keyWindow == nil ? NSWorkspace.shared.frontmostApplication : NSRunningApplication.current
         let element = AXIsProcessTrusted() ? AccessibilityElement.focusedElement() : nil
 
-        return FocusTarget(processID: app?.processIdentifier, bundleIdentifier: app?.bundleIdentifier, element: element)
+        return FocusTarget(
+            processID: app?.processIdentifier,
+            bundleIdentifier: app?.bundleIdentifier,
+            element: element,
+            secureInput: SecureInput.holder,
+        )
     }
 }
