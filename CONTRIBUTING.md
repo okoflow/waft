@@ -109,18 +109,32 @@ Scripts follow the [Google Shell Style Guide](https://google.github.io/styleguid
 
 ## Documentation
 
-Change the docs in the same pull request as the behavior they describe. Every page follows one pattern:
+Change the docs in the same pull request as the behavior they describe. Each file has one job:
 
-- A title, then a sentence that starts with "This page" and says what the page covers. README.md and AGENTS.md open with what Waft is instead.
-- Each fact lives on one page, and the others link to it. Only README.md and AGENTS.md repeat what their readers need first: how to install Waft, and the commands and rules that are easy to miss.
+| File | What it holds |
+| --- | --- |
+| `README.md` | What Waft is, how to install it, and a map of the other pages |
+| `AGENTS.md` | What a coding agent needs first: what Waft is, how the code is laid out, the commands, and the rules that are easy to miss, each with a link to the section that states it. No rule lives only there |
+| `CONTRIBUTING.md` | How to change the repository: the setup, the checks, and every rule |
+| `SECURITY.md` | How to report a vulnerability, and what is in scope |
+| `docs/architecture.md` | The code map, the main flow, the invariants, and how to extend the code |
+| `docs/<topic>.md` | One topic per page |
+
+Every Markdown file is a page and follows one pattern, apart from the pull request template and `CODE_OF_CONDUCT.md`, which keeps the Contributor Covenant's text:
+
+- A title, then a sentence that starts with "This page" and says what the page covers. `README.md` and `AGENTS.md` open with what Waft is instead.
+- Each fact lives on one page, and the others link to it. Only `README.md` and `AGENTS.md` repeat what their readers need first: how to install Waft, and the commands and rules that are easy to miss.
 - Leave out what the reader can't act on: history, thresholds and other internals the reader can't change, a sentence that restates its heading, and what a tool's own documentation explains.
 - Headings in sentence case. Other pages, the app, the website, and release notes link to headings, so search for an anchor before you rename its heading.
 - Tables for reference, numbered lists for steps, and `-` bullets for everything else. Every list item starts with a capital letter or code and ends with a period, or with a colon before a code block.
 - Second person, active voice, American English, and the serial comma.
+- Plain words and plain punctuation: "such as" rather than "e.g.", and a colon, a semicolon, or a new sentence rather than a dash.
 - Controls in **bold**; text Waft shows, such as a HUD message or the first line of the menu, in quotes; keys in `<kbd>`; and code, commands, and file names in code font.
+- A word that stands for a name or a value is in italics, such as *provider*, or in angle brackets inside code, such as `<Type>Tests.swift`.
 - A setting is named by its control, then its place: **Editing key** in Settings › Dictation.
 - Code blocks name their language, such as `sh` or `swift`.
-- Inline links, relative between pages. A link to a page in `docs` or to a section uses its title as the text, and a link to any other file uses the file's name, such as [SECURITY.md](SECURITY.md).
+- Inline links, relative between pages. A link to a page in `docs` or to a section uses its title as the text, or the word for its subject where the link is part of a sentence, such as "the [translator](docs/usage.md#translator)". A link to any other file uses the file's name, such as [SECURITY.md](SECURITY.md), and a link to another site names what it leads to, such as [Homebrew](https://brew.sh).
+- A screenshot lives in `.github/screenshots` and has alt text that says what it shows.
 - No dates: describe the current version. Release history lives in [GitHub Releases](https://github.com/okoflow/waft/releases).
 - One line per paragraph and per list item, without hard wraps.
 
@@ -160,6 +174,7 @@ Commits follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/
 - One pull request is one standalone change. Split anything above roughly 400 changed lines unless the parts only make sense together.
 - GitHub merges a pull request with a merge commit whose subject is its title and whose body is its body. Write the title in commit form and the body as a commit body: what changed and why in a few sentences, and the risky spot. End it with `Verified:` and the checks you ran, then `Fixes #N` when it closes an issue. Replace the body of a Dependabot pull request the same way before you merge it.
 - Attach a screenshot or a recording of a visible change in a comment, so it stays out of the merge commit.
+- Put a name that starts with `@`, such as `@State`, in code font in a title, a body, a comment, and release notes: GitHub notifies the account that a bare one names.
 - CI has to pass. Reviews focus on correctness, layering, and whether the change is the smallest one that solves the problem.
 
 ## Licensing of contributions

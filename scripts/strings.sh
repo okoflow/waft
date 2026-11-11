@@ -103,7 +103,9 @@ check_specifiers() {
 }
 
 check_plist_strings() {
-  local table="$1/InfoPlist.strings"
+  local directory=$1
+
+  local table="${directory}/InfoPlist.strings"
 
   [[ -f ${table} ]] || die "${table} is missing"
   plutil -lint -s "${table}" || die "${table} isn't a valid strings file"

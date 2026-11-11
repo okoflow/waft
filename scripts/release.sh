@@ -65,7 +65,7 @@ check_build_number() {
   published=$(
     curl --fail --silent --show-error --location "${appcast}" \
       | sed -n 's|.*<sparkle:version>\([0-9]*\)</sparkle:version>.*|\1|p' \
-      | sort -n \
+      | sort --numeric-sort \
       | tail -n 1
   )
 

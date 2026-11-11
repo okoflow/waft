@@ -10,14 +10,14 @@ The Swift package has five modules: `WaftCore` (domain and every interface betwe
 - `make test` runs the tests. A plain `swift test` can miss the Swift Testing plugins.
 - `make format` fixes what `make format-check` reports.
 - `make strings-update` rewrites the English strings table from the code.
-- Run `make bundle` or `make run` only when asked. Both re-sign `build/Waft.app`, the copy the maintainer runs, and without the Waft Dev identity they sign it ad hoc, which resets its permissions.
+- Run `make bundle`, `make run`, `make release`, or `make signing` only when asked. The first three re-sign `build/Waft.app`, the copy the maintainer runs, and without the Waft Dev identity `bundle` and `run` sign it ad hoc, which resets its permissions. `make signing` adds an identity to the login keychain and asks for a password.
 
 ## Rules that are easy to miss
 
 - No comments in code ([Naming and files](CONTRIBUTING.md#naming-and-files)), and no `&&`, `||`, `??`, or `try?` that hides a failure ([Control flow](CONTRIBUTING.md#control-flow)).
 - Blank lines separate the steps of a function and every block or closure of several lines, which no formatter adds for you: [Layout](CONTRIBUTING.md#layout).
 - No `@State`, `@Entry`, `@Animatable`, or `#Preview`, and `package import` only where a signature needs it: [Platform](CONTRIBUTING.md#platform).
-- Every user-facing string goes into every table under `Packaging/Localizations`, and Swift file names stay unique across `Sources`, since `make strings` finds strings by file name: [Text and translations](CONTRIBUTING.md#text-and-translations).
+- Every user-facing string goes into every table under `Packaging/Localizations` ([Text and translations](CONTRIBUTING.md#text-and-translations)), and Swift file names stay unique across `Sources`, since `make strings` finds strings by file name ([Naming and files](CONTRIBUTING.md#naming-and-files)).
 - Never log dictated text, audio, or clipboard contents, and keep dependencies pointing toward `WaftCore`, with concrete adapters named only in `AppDependencies.live()`: [Invariants](docs/architecture.md#invariants).
 - A test file follows the pattern in [Tests](CONTRIBUTING.md#tests), and a script the layout in [Shell scripts](CONTRIBUTING.md#shell-scripts).
 - Docs follow [Documentation](CONTRIBUTING.md#documentation) and change in the same pull request as the behavior they describe.

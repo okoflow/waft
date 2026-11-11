@@ -50,7 +50,7 @@ When the AI model can't be used, Waft pastes the Light text and the HUD shows "W
 
 Choose the **Provider** in Settings › AI Models, Claude by default.
 
-- **Claude** and **OpenAI** need an API key: paste it under **API key** and click **Save**. Create the Claude key inside a workspace in the [Anthropic Console](https://console.anthropic.com/settings/keys) and the OpenAI key in the [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
+- **Claude** and **OpenAI** need an API key: paste it under **API key** and click **Save**. Create the Claude key inside a workspace in the [Claude Console](https://platform.claude.com/settings/keys) and the OpenAI key in the [OpenAI dashboard](https://platform.openai.com/settings/organization/api-keys).
 - **Local server** calls Ollama, LM Studio, llama.cpp, MLX, Jan, or any server with an OpenAI-compatible `/v1/chat/completions` endpoint. **Detect** finds a running one.
 
 **Model** offers a local server's models or, for Claude and OpenAI, three tiers. A model that misses its time limit makes a dictation fall back to Light and leaves an edit's selection alone. A local server gets 15 seconds for a dictation and 45 for an edit.

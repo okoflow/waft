@@ -25,7 +25,7 @@ Until the project has a Developer ID, releases are signed with Waft Release, a s
 ## Cutting a release
 
 1. Merge a pull request titled `chore(release): prepare X.Y.Z` from the branch `release/X.Y.Z`. Its one commit, `chore(release): bump version to X.Y.Z`, sets `CFBundleShortVersionString` to `X.Y.Z` and raises `CFBundleVersion` by one in `Packaging/Waft-Info.plist`. Sparkle compares `CFBundleVersion`, so it must always grow.
-2. Write the release notes outside the repository, since the script needs a clean working tree. Each section lists its changes; leave out an empty one. The contributors are the release's commit authors.
+2. Write the release notes outside the repository, since the script needs a clean working tree. Each section lists its changes; leave out an empty one. The contributors are the release's commit authors, and theirs are the only bare `@` names in the notes, as [Pull requests](../CONTRIBUTING.md#pull-requests) explains.
 
    ```md
    One summary sentence.
