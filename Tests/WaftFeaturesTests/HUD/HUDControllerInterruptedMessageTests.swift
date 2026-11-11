@@ -3,7 +3,7 @@ import Testing
 import WaftCore
 @testable import WaftFeatures
 
-struct HUDInterruptedMessageTests {
+struct HUDControllerInterruptedMessageTests {
     private static let warning = HUDMessage(kind: .warning, title: "Recording stopped early")
     private static let information = HUDMessage(kind: .information, title: "Didn't catch that")
 

@@ -3,7 +3,7 @@ import Testing
 import WaftCore
 @testable import WaftFeatures
 
-struct DictationRetryTests {
+struct DictationQueueRetryTests {
     private let clipboard = FakeClipboard()
     private let inserter = FakeTextInserter()
     private let hud = HUDController.offscreen()
