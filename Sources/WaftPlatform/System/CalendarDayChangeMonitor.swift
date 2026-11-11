@@ -1,5 +1,5 @@
-package import WaftCore
 import Foundation
+import WaftCore
 
 @MainActor
 package final class CalendarDayChangeMonitor: DayChangeMonitor {
