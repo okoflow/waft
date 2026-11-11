@@ -174,10 +174,15 @@ struct HistoryModelTests {
         var stored = DictationHistory()
         stored.add(DictationHistory.Entry(date: Date().addingTimeInterval(-3 * 86400), text: "Old", mode: .clean, app: nil))
         let store = FakeValueStore(stored)
-        let history = HistoryModel(store: store, settings: settings, clipboard: FakeClipboard())
+        let history = HistoryModel(
+            store: store,
+            settings: settings,
+            clipboard: FakeClipboard(),
+            expiryInterval: .milliseconds(10),
+        )
         settings.settings.historyRetention = .day
 
-        history.expireOldEntries(every: .milliseconds(10))
+        history.expireOldEntries()
 
         #expect(await Poll.until(timeout: .seconds(5)) { history.history.entries.isEmpty })
         #expect(store.value == history.history)

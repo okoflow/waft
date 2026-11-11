@@ -36,6 +36,7 @@ final class HistoryModel {
 
     private let store: any ValueStore<DictationHistory>
     private let clipboard: any Clipboard
+    private let expiryInterval: Duration
 
     var currentPage: Page {
         let matching = matchingEntries
@@ -72,10 +73,16 @@ final class HistoryModel {
         return history.newestFirst.filter { $0.text.localizedCaseInsensitiveContains(query) }
     }
 
-    init(store: any ValueStore<DictationHistory>, settings: SettingsModel, clipboard: any Clipboard) {
+    init(
+        store: any ValueStore<DictationHistory>,
+        settings: SettingsModel,
+        clipboard: any Clipboard,
+        expiryInterval: Duration = .seconds(3600),
+    ) {
         self.store = store
         self.settings = settings
         self.clipboard = clipboard
+        self.expiryInterval = expiryInterval
 
         if let savedHistory = store.read() {
             history = savedHistory
@@ -137,9 +144,9 @@ final class HistoryModel {
         store.write(history)
     }
 
-    func expireOldEntries(every interval: Duration = .seconds(3600)) {
-        Task { [weak self] in
-            while await Task.slept(for: interval) {
+    func expireOldEntries() {
+        Task { [weak self, expiryInterval] in
+            while await Task.slept(for: expiryInterval) {
                 guard let self else { return }
 
                 keepWithinLimits()
