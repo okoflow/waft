@@ -7,6 +7,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   DEVELOPER_DIR: /Library/Developer/CommandLineTools
 
@@ -87,6 +90,3 @@ jobs:
         run: make test
 
     timeout-minutes: 30
-
-permissions:
-  contents: read
