@@ -118,7 +118,7 @@ package struct TranscriptProcessor: Sendable {
         case .clean, .formal, .translate, .custom:
             let lightened = light(text, language: language)
             guard !lightened.isBlank else { return ProcessedText(text: lightened, mode: .light) }
-            guard let kind else { return ProcessedText(text: lightened, mode: .light, fallback: .needsPro) }
+            guard let kind else { return ProcessedText(text: lightened, mode: .light, fallback: .needsWaftPlus) }
 
             do throws(RewriteError) {
                 let rewritten = try await rewrite(text, as: kind, setup: setup, deadline: setup.deadline)
