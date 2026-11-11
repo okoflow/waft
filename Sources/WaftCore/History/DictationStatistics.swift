@@ -65,6 +65,26 @@ package struct DictationStatistics: Codable, Equatable, Sendable {
         days[key] = day
     }
 
+    package mutating func replace(
+        words previous: Int,
+        with words: Int,
+        seconds: Double,
+        on date: Date,
+        calendar: Calendar = .current,
+    ) {
+        let key = date.dayKey(in: calendar)
+
+        guard var day = days[key], day.dictations > 0 else {
+            record(words: words, seconds: seconds, on: date, calendar: calendar)
+
+            return
+        }
+
+        day.words = max(0, day.words - previous) + words
+
+        days[key] = day
+    }
+
     package func daily(last count: Int, endingOn date: Date, calendar: Calendar = .current) -> [(date: Date, day: Day)] {
         let end = calendar.startOfDay(for: date)
 

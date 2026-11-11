@@ -140,7 +140,7 @@ Four shortcuts work in any app. To change one, click it and press a key with Com
 
 ![The menu bar menu](../.github/screenshots/menu.jpg)
 
-Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, **Retry Last Dictation** appears for 10 minutes after a recognition that failed, in whole or in part, and copies its text, and **Recent Dictations** one of your last five.
+Waft lives in the menu bar and shows in the Dock only while Settings, the setup guide, the file transcription window, or an update prompt is open. **Copy Last Dictation** copies the latest text, pasted or not, within 10 minutes of the dictation, **Retry Last Dictation** appears for 10 minutes after a recognition that failed, in whole or in part, and copies its text, and **Recent Dictations** one of your last five. A retry of a dictation that missed a part puts the whole text in place of the part in the history, and the statistics count the dictation once.
 
 To hide the icon, turn off **Show in menu bar** in Settings › General. Dictation and the shortcuts keep working, and opening Waft again brings up Settings.
 

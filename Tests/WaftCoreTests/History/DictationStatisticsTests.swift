@@ -28,6 +28,45 @@ struct DictationStatisticsTests {
     }
 
     @Test
+    func `replaces the words of a dictation and counts it and its time once`() throws {
+        var statistics = DictationStatistics()
+        try statistics.record(words: 10, seconds: 4, on: date(2026, 10, 12, hour: 9), calendar: .gmt)
+        try statistics.record(words: 3, seconds: 6, on: date(2026, 10, 12, hour: 18), calendar: .gmt)
+
+        try statistics.replace(words: 3, with: 8, seconds: 6, on: date(2026, 10, 12, hour: 18), calendar: .gmt)
+
+        let day = try #require(statistics.days["2026-10-12"])
+
+        #expect(day.words == 18)
+        #expect(day.dictations == 2)
+        #expect(day.seconds == 10)
+    }
+
+    @Test
+    func `counts a replaced dictation anew on a day that holds no dictations`() throws {
+        var statistics = DictationStatistics()
+
+        try statistics.replace(words: 3, with: 8, seconds: 6, on: date(2026, 10, 12), calendar: .gmt)
+
+        let day = try #require(statistics.days["2026-10-12"])
+
+        #expect(day.words == 8)
+        #expect(day.dictations == 1)
+        #expect(day.seconds == 6)
+    }
+
+    @Test
+    func `counts no fewer words than a replacement holds`() throws {
+        var statistics = DictationStatistics()
+        try statistics.record(words: 1, seconds: 4, on: date(2026, 10, 12), calendar: .gmt)
+
+        try statistics.replace(words: 3, with: 8, seconds: 6, on: date(2026, 10, 12), calendar: .gmt)
+
+        #expect(statistics.allTime.words == 8)
+        #expect(statistics.allTime.dictations == 1)
+    }
+
+    @Test
     func `lists the last days in order with empty days included`() throws {
         var statistics = DictationStatistics()
         try statistics.record(words: 7, seconds: 3, on: date(2026, 10, 10, hour: 12), calendar: .gmt)

@@ -129,6 +129,14 @@ final class HistoryModel {
         store.write(history)
     }
 
+    func replace(_ entry: DictationHistory.Entry) {
+        guard settings.settings.keepsHistory else { return }
+
+        history.replace(entry)
+        prune(at: Date())
+        store.write(history)
+    }
+
     func expireOldEntries(every interval: Duration = .seconds(3600)) {
         Task { [weak self] in
             while await Task.slept(for: interval) {

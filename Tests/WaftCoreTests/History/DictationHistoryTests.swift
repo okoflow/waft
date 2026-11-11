@@ -21,6 +21,37 @@ struct DictationHistoryTests {
         #expect(history.newestFirst.map(\.text) == ["Second.", "First."])
     }
 
+    @Test
+    func `replaces the entry of the same date and keeps its place`() {
+        var history = DictationHistory()
+        history.add(entry("Hello", minutesAgo: 3))
+        history.add(entry("Second.", minutesAgo: 2))
+
+        history.replace(entry("Hello world.", minutesAgo: 3))
+
+        #expect(history.entries.map(\.text) == ["Hello world.", "Second."])
+    }
+
+    @Test
+    func `adds a replacement when no entry has its date`() {
+        var history = DictationHistory()
+        history.add(entry("Second.", minutesAgo: 2))
+
+        history.replace(entry("Hello world.", minutesAgo: 3))
+
+        #expect(history.entries.map(\.text) == ["Second.", "Hello world."])
+    }
+
+    @Test
+    func `keeps an entry whose replacement is empty`() {
+        var history = DictationHistory()
+        history.add(entry("Hello", minutesAgo: 3))
+
+        history.replace(entry("", minutesAgo: 3))
+
+        #expect(history.entries.map(\.text) == ["Hello"])
+    }
+
     @Test(arguments: [
         (HistoryRetention.day, ["Today."]),
         (.week, ["Three days ago.", "Today."]),

@@ -90,8 +90,20 @@ struct HistoryModelTests {
         settings.settings.keepsHistory = false
 
         history.add(entry(1))
+        history.replace(entry(2))
 
         #expect(history.history.entries.isEmpty)
+    }
+
+    @Test
+    func `saves an entry in place of the one from its date`() {
+        let store = FakeValueStore(history(entries: 3))
+        let history = HistoryModel(store: store, settings: settingsModel(), clipboard: FakeClipboard())
+
+        history.replace(DictationHistory.Entry(date: entry(2).date, text: "Whole", mode: .light, app: nil))
+
+        #expect(history.history.entries.map(\.text) == ["Entry 1", "Whole", "Entry 3"])
+        #expect(store.value == history.history)
     }
 
     @Test

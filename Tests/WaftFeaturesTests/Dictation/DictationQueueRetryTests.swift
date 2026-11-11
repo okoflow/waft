@@ -56,6 +56,51 @@ struct DictationQueueRetryTests {
     }
 
     @Test
+    func `records a dictation once when a retry recognizes the part that was missing`() async {
+        let transcriber = FakeTranscriber(.success(.spoken("Hello", isIncomplete: true)), .success(.spoken("Hello world")))
+        let queue = queue(transcriber)
+
+        queue.submit(.recorded())
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+
+        let dates = history.history.entries.map(\.date)
+
+        queue.retryFailedDictation()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Hello world"] })
+
+        await queue.waitUntilIdle()
+
+        #expect(history.history.entries.map(\.text) == ["Hello world"])
+        #expect(history.history.entries.map(\.date) == dates)
+        #expect(statistics.statistics.allTime.dictations == 1)
+        #expect(statistics.statistics.allTime.words == 2)
+        #expect(statistics.statistics.allTime.seconds == 1)
+    }
+
+    @Test
+    func `adds an entry on a retry when the entry of the recognized part is gone`() async {
+        let transcriber = FakeTranscriber(.success(.spoken("Hello", isIncomplete: true)), .success(.spoken("Hello world")))
+        let queue = queue(transcriber)
+
+        queue.submit(.recorded())
+
+        #expect(await Poll.until(timeout: .seconds(5)) { queue.canRetry })
+
+        history.removeAll()
+        queue.retryFailedDictation()
+
+        #expect(await Poll.until(timeout: .seconds(5)) { clipboard.copied == ["Hello world"] })
+
+        await queue.waitUntilIdle()
+
+        #expect(history.history.entries.map(\.text) == ["Hello world"])
+        #expect(statistics.statistics.allTime.dictations == 1)
+        #expect(statistics.statistics.allTime.words == 2)
+    }
+
+    @Test
     func `offers the retry again when the retry fails too`() async {
         let error = CocoaError(.fileReadCorruptFile)
         let transcriber = FakeTranscriber(.failure(error), .failure(error))

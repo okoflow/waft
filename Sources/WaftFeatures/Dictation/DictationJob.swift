@@ -11,6 +11,7 @@ struct DictationJob {
     let selection: String?
     let key: PushToTalkKey
     private(set) var pastes: Bool
+    private(set) var record: DictationRecord?
     let allowsAI: Bool
 
     init(
@@ -39,6 +40,13 @@ struct DictationJob {
     func copyingInsteadOfPasting() -> DictationJob {
         var job = self
         job.pastes = false
+
+        return job
+    }
+
+    func recorded(as record: DictationRecord) -> DictationJob {
+        var job = self
+        job.record = record
 
         return job
     }

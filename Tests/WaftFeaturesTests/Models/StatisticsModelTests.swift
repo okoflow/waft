@@ -53,6 +53,22 @@ struct StatisticsModelTests {
     }
 
     @Test
+    func `counts a dictation once when its text replaces what it recorded before and saves the statistics`() {
+        let store = FakeValueStore<DictationStatistics>()
+        let statistics = StatisticsModel(store: store)
+        let part = statistics.record("Hello", seconds: 2)
+
+        let whole = statistics.record("Hello world", seconds: 2, replacing: part)
+
+        #expect(whole.date == part.date)
+        #expect(whole.words == 2)
+        #expect(statistics.statistics.allTime.words == 2)
+        #expect(statistics.statistics.allTime.dictations == 1)
+        #expect(statistics.statistics.allTime.seconds == 2)
+        #expect(store.value == statistics.statistics)
+    }
+
+    @Test
     func `resets the statistics and removes the store`() {
         let store = FakeValueStore<DictationStatistics>()
         let statistics = StatisticsModel(store: store)
