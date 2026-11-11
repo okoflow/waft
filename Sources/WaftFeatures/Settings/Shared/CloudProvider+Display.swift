@@ -11,7 +11,7 @@ extension CloudProvider {
 
     var consoleURL: URL {
         switch self {
-        case .claude: URL(literal: "https://console.anthropic.com/settings/keys")
+        case .claude: URL(literal: "https://platform.claude.com/settings/keys")
         case .openAI: URL(literal: "https://platform.openai.com/settings/organization/api-keys")
         }
     }
