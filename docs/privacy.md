@@ -58,7 +58,7 @@ An older version kept the keys in the login keychain under the service `com.okof
 
 ## The clipboard
 
-Waft marks the text it puts on the clipboard as transient and concealed, so clipboard managers that follow the [nspasteboard.org](http://nspasteboard.org) conventions don't store it, and Universal Clipboard skips it.
+Waft marks the text it puts on the clipboard as transient and concealed, so clipboard managers that follow the [nspasteboard.org](https://nspasteboard.org) conventions don't store it, and Universal Clipboard skips it.
 
 When the [shortcuts on selected text](usage.md#selected-text) copy the selection with <kbd>⌘</kbd><kbd>C</kbd>, the app, not Waft, puts it on the clipboard, so a clipboard manager may store it.
 
