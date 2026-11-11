@@ -38,7 +38,7 @@ In `WaftFeatures`, a model or view that one screen uses lives with that screen. 
 3. `DictationQueue` runs finished recordings one at a time: the `Transcriber` recognizes them, `TranscriptProcessor` applies the dictionary, snippets, and the mode, and the `TextInserter` pastes the result.
 4. An AI mode runs the `TextRewriter` under the deadline of the chosen `CloudModel` or the local server, validates the answer with `RewriteValidator`, and on any `RewriteError` falls back to Light with a `RewriteFallback` that says why.
 5. An edit by voice goes through `TranscriptProcessor.edit` instead, which sends the selection read at the key press and the spoken instruction to the `TextRewriter`. A failure pastes nothing.
-6. The outcome becomes a `HUDMessage`. Recognized text is either pasted or copied, never dropped: a password field gets a copy instead of a paste. The text becomes a history entry unless it came from an edit or was kept out of a password field.
+6. The outcome becomes a `HUDMessage`. Recognized text is either pasted or copied, never dropped: a password field gets a copy instead of a paste. The text becomes a history entry unless it came from an edit, a password field had focus when the recording began, or the text was kept out of one; the `DictationJob` carries that fact to a retry.
 
 ## Invariants
 

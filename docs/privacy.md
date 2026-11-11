@@ -54,7 +54,7 @@ During the beta, Waft keeps the API keys and the license key in these owner-only
 
 An older version kept the keys in the login keychain under the service `com.okoflow.waft`. The first time Waft needs a key it finds there, it reads it once, which can make macOS ask for your password one last time, moves it into its file, and deletes it from the keychain; [Troubleshooting](troubleshooting.md#macos-asks-for-your-password-for-the-keychain) covers the prompt.
 
-**Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, file transcriptions, and text that Waft kept out of a password field stay out of the history and the statistics.
+**Copy Last Dictation** keeps your last text in memory only, never on disk. Edits by voice, what the translator translates or fixes, and file transcriptions stay out of the history and the statistics. So does a dictation when a password field has focus as you start it or as Waft is about to paste it, however its text reaches you: pasted, copied because **Paste into the focused field** is off, or copied by **Retry Last Dictation**. [Pasting](how-it-works.md#pasting) says what counts as a password field.
 
 ## The clipboard
 

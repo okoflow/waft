@@ -257,7 +257,8 @@ extension DictationQueue {
 
 extension DictationQueue {
     private func record(_ outcome: DictationOutcome, transcribed transcript: String, for job: DictationJob) -> DictationJob {
-        guard case let .delivered(delivery, processed) = outcome, delivery != .keptOutOfPasswordField else { return job }
+        guard case let .delivered(delivery, processed) = outcome else { return job }
+        guard delivery != .keptOutOfPasswordField, !job.isForPasswordField else { return job.forPasswordField() }
         guard job.selection == nil else {
             onUsage?(.voiceEdit)
 

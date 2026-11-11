@@ -8,26 +8,35 @@ struct FocusTargetTests {
         return FakeFocusedElement(differs: true)
     }
 
+    private static func target(
+        processID: Int32?,
+        bundleIdentifier: String? = nil,
+        element: FakeFocusedElement? = nil,
+        secureInput holder: SecureInputHolder = .nobody,
+    ) -> FocusTarget {
+        FocusTarget(processID: processID, bundleIdentifier: bundleIdentifier, element: element, secureInput: holder)
+    }
+
     @Test(arguments: [(Int32?.none, Int32?.some(1)), (1, 2), (nil, nil)])
     func `treats a different or unknown app as a focus change`(saved: Int32?, current: Int32?) {
-        let target = FocusTarget(processID: saved, bundleIdentifier: "com.apple.mail", element: nil)
-        let now = FocusTarget(processID: current, bundleIdentifier: "com.apple.mail", element: nil)
+        let target = Self.target(processID: saved)
+        let now = Self.target(processID: current)
 
         #expect(!target.isSameFocus(as: now))
     }
 
     @Test(arguments: [(true, false), (false, true), (false, false)])
     func `trusts the same app when an element is unknown`(hasSavedElement: Bool, hasCurrentElement: Bool) {
-        let target = FocusTarget(processID: 7, bundleIdentifier: nil, element: Self.differentElement(if: hasSavedElement))
-        let now = FocusTarget(processID: 7, bundleIdentifier: nil, element: Self.differentElement(if: hasCurrentElement))
+        let target = Self.target(processID: 7, element: Self.differentElement(if: hasSavedElement))
+        let now = Self.target(processID: 7, element: Self.differentElement(if: hasCurrentElement))
 
         #expect(target.isSameFocus(as: now))
     }
 
     @Test(arguments: [(false, true), (true, false)])
     func `compares the focused elements in the same app`(differs: Bool, isSame: Bool) {
-        let target = FocusTarget(processID: 7, bundleIdentifier: nil, element: FakeFocusedElement(differs: differs))
-        let now = FocusTarget(processID: 7, bundleIdentifier: nil, element: FakeFocusedElement(differs: false))
+        let target = Self.target(processID: 7, element: FakeFocusedElement(differs: differs))
+        let now = Self.target(processID: 7, element: FakeFocusedElement(differs: false))
 
         #expect(target.isSameFocus(as: now) == isSame)
     }
@@ -35,9 +44,9 @@ struct FocusTargetTests {
     @Test(arguments: [(true, SecureInputHolder.nobody), (false, .process(7)), (true, .process(8))])
     func `takes a readable field's own word on whether it is a password field`(isSecure: Bool, holder: SecureInputHolder) {
         let element = FakeFocusedElement(differs: false, secureFieldState: isSecure ? .secure : .notSecure)
-        let target = FocusTarget(processID: 7, bundleIdentifier: nil, element: element)
+        let target = Self.target(processID: 7, element: element, secureInput: holder)
 
-        #expect(target.isSecureField(secureInput: holder) == isSecure)
+        #expect(target.isSecureField == isSecure)
     }
 
     @Test(arguments: [
@@ -53,9 +62,9 @@ struct FocusTargetTests {
         isSecure: Bool,
     ) {
         let element = FakeFocusedElement(differs: false, secureFieldState: .unreadable)
-        let target = FocusTarget(processID: processID, bundleIdentifier: nil, element: element)
+        let target = Self.target(processID: processID, element: element, secureInput: holder)
 
-        #expect(target.isSecureField(secureInput: holder) == isSecure)
+        #expect(target.isSecureField == isSecure)
     }
 
     @Test(arguments: [
@@ -70,14 +79,14 @@ struct FocusTargetTests {
         holder: SecureInputHolder,
         isSecure: Bool,
     ) {
-        let target = FocusTarget(processID: processID, bundleIdentifier: nil, element: nil)
+        let target = Self.target(processID: processID, secureInput: holder)
 
-        #expect(target.isSecureField(secureInput: holder) == isSecure)
+        #expect(target.isSecureField == isSecure)
     }
 
     @Test(arguments: [("com.apple.mail", "com.apple.mail"), (nil, "an unknown app")])
     func `describes the app`(bundleIdentifier: String?, description: String) {
-        #expect(FocusTarget(processID: 1, bundleIdentifier: bundleIdentifier, element: nil).appDescription == description)
+        #expect(Self.target(processID: 1, bundleIdentifier: bundleIdentifier).appDescription == description)
     }
 }
 

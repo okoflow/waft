@@ -11,6 +11,7 @@ struct DictationJob {
     let selection: String?
     let key: PushToTalkKey
     private(set) var pastes: Bool
+    private(set) var isForPasswordField: Bool
     private(set) var record: DictationRecord?
     let allowsAI: Bool
 
@@ -34,12 +35,20 @@ struct DictationJob {
         selection = recording.selection
         key = recording.key
         pastes = settings.pastesIntoFocusedField
+        isForPasswordField = target.isSecureField
         self.allowsAI = allowsAI
     }
 
     func copyingInsteadOfPasting() -> DictationJob {
         var job = self
         job.pastes = false
+
+        return job
+    }
+
+    func forPasswordField() -> DictationJob {
+        var job = self
+        job.isForPasswordField = true
 
         return job
     }
