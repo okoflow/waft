@@ -140,6 +140,14 @@ struct ProModelTests {
     }
 
     @Test
+    func `keeps the saved trial start on later launches`() {
+        let trialStore = FakeValueStore(Date.distantPast)
+        _ = model(trialStore: trialStore)
+
+        #expect(trialStore.value == .distantPast)
+    }
+
+    @Test
     func `ends the trial three days after the stored start`() throws {
         let started = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 10, hour: 15)))
         let end = try #require(Calendar.current.date(from: DateComponents(year: 2025, month: 10, day: 13)))
