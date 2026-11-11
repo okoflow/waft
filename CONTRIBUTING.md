@@ -174,6 +174,7 @@ Commits follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/
 - One pull request is one standalone change. Split anything above roughly 400 changed lines unless the parts only make sense together.
 - GitHub merges a pull request with a merge commit whose subject is its title and whose body is its body. Write the title in commit form and the body as a commit body: what changed and why in a few sentences, and the risky spot. End it with `Verified:` and the checks you ran, then `Fixes #N` when it closes an issue. Replace the body of a Dependabot pull request the same way before you merge it.
 - Attach a screenshot or a recording of a visible change in a comment, so it stays out of the merge commit.
+- Put a name that starts with `@`, such as `@State`, in code font in a title, a body, a comment, and release notes: GitHub notifies the account that a bare one names.
 - CI has to pass. Reviews focus on correctness, layering, and whether the change is the smallest one that solves the problem.
 
 ## Licensing of contributions
