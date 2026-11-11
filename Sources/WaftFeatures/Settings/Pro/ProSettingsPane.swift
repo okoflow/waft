@@ -38,13 +38,6 @@ private struct ProHero: View {
         }
     }
 
-    private var isForSale: Bool {
-        switch pro.access.status {
-        case .licensed: false
-        case .trial, .expired: true
-        }
-    }
-
     var body: some View {
         let shape = RoundedRectangle.card
 
@@ -70,7 +63,7 @@ private struct ProHero: View {
 
             Spacer(minLength: 0)
 
-            if isForSale {
+            if pro.license == nil {
                 Button("Buy for \(ProModel.price)", action: pro.purchase)
                     .buttonStyle(ProButtonStyle())
             }
