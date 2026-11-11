@@ -106,6 +106,7 @@
 "Detect" = "検出";
 "Development build" = "開発ビルド";
 "Dictate in any app instead of typing." = "どのアプリでも、キーボードの代わりに音声で入力できます。";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "音声入力はずっと無料です。AI機能はWaft+に含まれ、%lld日間は無料、その後は%@の買い切りです。";
 "Dictation key" = "音声入力キー";
 "Dictation" = "音声入力";
 "Dictations" = "音声入力";

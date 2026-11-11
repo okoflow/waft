@@ -106,6 +106,7 @@
 "Detect" = "Algıla";
 "Development build" = "Geliştirme sürümü";
 "Dictate in any app instead of typing." = "Yazmak yerine istediğiniz uygulamada dikte edin.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Dikte her zaman ücretsizdir. YZ özellikleri Waft+’a dahildir: %lld gün ücretsiz, sonra tek seferlik %@.";
 "Dictation key" = "Dikte tuşu";
 "Dictation" = "Dikte";
 "Dictations" = "Dikteler";

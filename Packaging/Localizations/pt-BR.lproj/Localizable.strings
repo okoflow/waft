@@ -106,6 +106,7 @@
 "Detect" = "Detectar";
 "Development build" = "Compilação de desenvolvimento";
 "Dictate in any app instead of typing." = "Dite em qualquer app em vez de digitar.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "O ditado é gratuito para sempre. Os recursos de IA fazem parte do Waft+: grátis por %lld dias, depois %@ em pagamento único.";
 "Dictation key" = "Tecla de ditado";
 "Dictation" = "Ditado";
 "Dictations" = "Ditados";

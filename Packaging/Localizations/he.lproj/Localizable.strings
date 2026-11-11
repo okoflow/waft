@@ -106,6 +106,7 @@
 "Detect" = "זיהוי";
 "Development build" = "גרסת פיתוח";
 "Dictate in any app instead of typing." = "ניתן להכתיב בכל יישום במקום להקליד.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "ההכתבה תמיד ללא תשלום. מאפייני הבינה המלאכותית כלולים ב-Waft+‎: ללא תשלום למשך %lld ימים, ולאחר מכן תשלום חד-פעמי של %@.";
 "Dictation key" = "מקש הכתבה";
 "Dictation" = "הכתבה";
 "Dictations" = "הכתבות";

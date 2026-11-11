@@ -106,6 +106,7 @@
 "Detect" = "检测";
 "Development build" = "开发版本";
 "Dictate in any app instead of typing." = "在任何App中用听写代替打字。";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "听写永久免费。AI功能属于Waft+：可免费使用%lld天，之后一次性支付%@。";
 "Dictation key" = "听写键";
 "Dictation" = "听写";
 "Dictations" = "听写记录";

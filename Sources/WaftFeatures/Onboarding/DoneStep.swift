@@ -34,6 +34,14 @@ struct DoneStep: View {
                     }
                 }
 
+                if let trialOffer = model.pro.trialOffer {
+                    Text(trialOffer)
+                        .detailText()
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, Metrics.rowPadding)
+                }
+
                 if !model.pro.isUnlocked {
                     ProGateBanner.aiModes { finish(showing: .pro) }
                 }

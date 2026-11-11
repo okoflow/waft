@@ -106,6 +106,7 @@
 "Detect" = "ตรวจหา";
 "Development build" = "บิลด์สำหรับการพัฒนา";
 "Dictate in any app instead of typing." = "ป้อนตามคำบอกในแอปใดก็ได้แทนการพิมพ์";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "การป้อนตามคำบอกใช้ฟรีตลอดไป คุณสมบัติ AI เป็นส่วนหนึ่งของ Waft+ ใช้ฟรี %lld วัน จากนั้นจ่ายครั้งเดียว %@";
 "Dictation key" = "ปุ่มป้อนตามคำบอก";
 "Dictation" = "การป้อนตามคำบอก";
 "Dictations" = "การป้อนตามคำบอก";

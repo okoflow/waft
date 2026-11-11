@@ -106,6 +106,7 @@
 "Detect" = "Найти";
 "Development build" = "Сборка для разработки";
 "Dictate in any app instead of typing." = "Диктуйте в любом приложении вместо того, чтобы печатать.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Диктовка бесплатна всегда. ИИ-функции входят в Waft+: %lld дня бесплатно, затем %@ один раз.";
 "Dictation key" = "Клавиша диктовки";
 "Dictation" = "Диктовка";
 "Dictations" = "Диктовки";

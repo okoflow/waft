@@ -106,6 +106,7 @@
 "Detect" = "찾기";
 "Development build" = "개발 빌드";
 "Dictate in any app instead of typing." = "어떤 앱에서든 타이핑 대신 받아쓰기로 입력하세요.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "받아쓰기는 계속 무료입니다. AI 기능은 Waft+에 포함되며, %lld일 동안 무료이고 그 후에는 %@ 1회 결제입니다.";
 "Dictation key" = "받아쓰기 키";
 "Dictation" = "받아쓰기";
 "Dictations" = "받아쓰기";

@@ -29,6 +29,8 @@ On first launch, a short guide opens, and Waft downloads the speech model in the
 3. **Try it**: dictate into the box, as [First dictation](#3-first-dictation) describes.
 4. **Help improve Waft**: click **Share** to send anonymous usage data or **Don't Share** to send nothing. [Usage data](privacy.md#usage-data) lists what a report holds.
 
+The last screen offers to set up the AI modes and says that dictation stays free while they belong to [Waft+](usage.md#waft), which a trial unlocks first.
+
 If you close the guide early, **Finish Setup…** in the menu brings it back. If you set Waft up before it asked about usage data, the guide opens with that question alone each time Waft starts, until you answer.
 
 ## 3. First dictation

@@ -7,7 +7,7 @@ package struct ProAccess: Equatable, Sendable {
         case expired
     }
 
-    private static let trialLength = 3
+    package static let trialDays = 3
 
     package let status: Status
 
@@ -28,7 +28,7 @@ package struct ProAccess: Equatable, Sendable {
 
     static func trialEnd(startedOn start: Date, now: Date, calendar: Calendar) -> Date {
         let firstDay = calendar.startOfDay(for: min(start, now))
-        guard let end = calendar.date(byAdding: .day, value: trialLength, to: firstDay) else { return firstDay }
+        guard let end = calendar.date(byAdding: .day, value: trialDays, to: firstDay) else { return firstDay }
 
         return end
     }

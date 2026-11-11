@@ -106,6 +106,7 @@
 "Detect" = "Find";
 "Development build" = "Udviklingsversion";
 "Dictate in any app instead of typing." = "Dikter i enhver app i stedet for at skrive.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "Diktering er altid gratis. AI-funktionerne er en del af Waft+: gratis i %lld dage, derefter %@ én gang.";
 "Dictation key" = "Dikteringstast";
 "Dictation" = "Diktering";
 "Dictations" = "Dikteringer";

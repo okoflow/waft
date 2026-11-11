@@ -106,6 +106,7 @@
 "Detect" = "اكتشاف";
 "Development build" = "إصدار تطويري";
 "Dictate in any app instead of typing." = "استخدم الإملاء في أي تطبيق بدلًا من الكتابة.";
+"Dictation is free forever. The AI features are part of Waft+: free for %lld days, then %@ once." = "الإملاء مجاني دائمًا. ميزات الذكاء الاصطناعي جزء من Waft+‎: مجانية لمدة %lld أيام، ثم %@ تُدفع مرة واحدة.";
 "Dictation key" = "مفتاح الإملاء";
 "Dictation" = "الإملاء";
 "Dictations" = "عمليات الإملاء";
