@@ -10,7 +10,6 @@
   <a href="https://github.com/okoflow/waft/actions/workflows/ci.yml"><img src="https://github.com/okoflow/waft/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--only-blue" alt="License: GPL-3.0-only"></a>
   <img src="https://img.shields.io/badge/macOS-14%2B-informational" alt="macOS 14 or later">
-  <a href="https://github.com/sponsors/imsvidskiy"><img src="https://img.shields.io/github/sponsors/imsvidskiy?label=Sponsor&logo=GitHub&color=ea4aaa" alt="Sponsor"></a>
 </p>
 
 <p align="center">
