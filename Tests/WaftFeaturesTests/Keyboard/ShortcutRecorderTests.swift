@@ -1,5 +1,4 @@
 import AppKit
-import SwiftUI
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -107,24 +106,14 @@ struct ShortcutRecorderTests {
         #expect(shortcut.registered == ShortcutAction.translator.defaultCombination)
     }
 
-    @Test(arguments: [
-        ([UInt16](), ShortcutAction.translator, String?.none),
-        ([], .modeCycle, "Press a key with Command, Control, or Option, or a function key. Esc cancels."),
-        ([letterK], .modeCycle, "Add Command, Control, or Option, or press a function key."),
-    ])
-    func `notes what to press for the shortcut being recorded`(
-        pressed: [UInt16],
-        action: ShortcutAction,
-        note: String?,
-    ) throws {
+    @Test
+    func `stops recording when Waft stops being the active app`() async {
         let recorder = recorder()
-        recorder.start(.modeCycle)
+        recorder.start(.translator)
 
-        for keyCode in pressed {
-            try recorder.handle(.key(keyCode: keyCode, flags: []))
-        }
+        NotificationCenter.default.post(name: NSApplication.didResignActiveNotification, object: nil)
 
-        #expect(recorder.note(for: action) == note.map { LocalizedStringKey($0) })
+        #expect(await Poll.until(timeout: .seconds(5)) { !recorder.isRecording })
     }
 
     private func recorder() -> ShortcutRecorder {

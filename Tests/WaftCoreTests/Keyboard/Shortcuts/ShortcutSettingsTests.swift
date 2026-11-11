@@ -5,13 +5,9 @@ import Testing
 struct ShortcutSettingsTests {
     private static let controlOptionK = KeyCombination(keyCode: 40, modifiers: [.control, .option])
 
-    @Test
-    func `starts with the default combination of every action`() {
-        let shortcuts = ShortcutSettings()
-
-        for action in ShortcutAction.allCases {
-            #expect(shortcuts[action] == action.defaultCombination)
-        }
+    @Test(arguments: ShortcutAction.allCases)
+    func `starts with the default combination of every action`(action: ShortcutAction) {
+        #expect(ShortcutSettings()[action] == action.defaultCombination)
     }
 
     @Test

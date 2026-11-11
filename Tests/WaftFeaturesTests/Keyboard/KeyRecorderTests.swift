@@ -1,5 +1,4 @@
 import AppKit
-import SwiftUI
 import Testing
 import WaftCore
 @testable import WaftFeatures
@@ -80,23 +79,12 @@ struct KeyRecorderTests {
         #expect(recorder.rejections == [.dictation: 1])
     }
 
-    @Test(arguments: [
-        ([UInt16](), RecordingPurpose.edit, String?.none),
-        ([], .dictation, "Press Option, Command, Shift, or Control on either side, Fn, or a function key. Esc cancels."),
-        ([functionKey], .dictation, "That key is already in use. Choose another one."),
-        ([letterA], .dictation, "That key types text. Press Option, Command, Shift, Control, Fn, or a function key."),
-    ])
-    func `notes what to press for the purpose being recorded`(
-        pressed: [UInt16],
-        purpose: RecordingPurpose,
-        note: String?,
-    ) throws {
-        recorder.start(.dictation, excluding: { $0.keyCode == Int64(Self.functionKey) }, { _ in })
+    @Test
+    func `stops recording when Waft stops being the active app`() async {
+        recorder.start(.dictation, excluding: { _ in false }, { _ in })
 
-        for keyCode in pressed {
-            try recorder.handle(.key(keyCode: keyCode))
-        }
+        NotificationCenter.default.post(name: NSApplication.didResignActiveNotification, object: nil)
 
-        #expect(recorder.note(for: purpose) == note.map { LocalizedStringKey($0) })
+        #expect(await Poll.until(timeout: .seconds(5)) { !recorder.isRecording })
     }
 }

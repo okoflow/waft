@@ -74,7 +74,7 @@ struct FocusTargetTests {
         (7, .unknown, true),
         (nil, .process(7), false),
     ])
-    func `treats an unreadable field as a password field only while its own app may hold secure input`(
+    func `treats a focus without an element as a password field only while its own app may hold secure input`(
         processID: Int32?,
         holder: SecureInputHolder,
         isSecure: Bool,
