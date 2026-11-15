@@ -4,7 +4,7 @@
 
 <h1 align="center">Waft</h1>
 
-<p align="center">On-device dictation with AI cleanup.</p>
+<p align="center">On-device dictation for Mac with optional AI cleanup.</p>
 
 <p align="center">
   <a href="https://github.com/okoflow/waft/actions/workflows/ci.yml"><img src="https://github.com/okoflow/waft/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
