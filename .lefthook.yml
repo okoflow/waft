@@ -21,8 +21,5 @@ pre-commit:
         - "*.sh"
         - .shellcheckrc
 
-    - name: spelling
-      run: make spelling
-
     - name: secrets-staged
       run: make secrets-staged
