@@ -16,8 +16,7 @@
   <a href="https://waft.okoflow.com">Website</a> ·
   <a href="docs/getting-started.md#1-install">Install</a> ·
   <a href="docs/usage.md">Usage</a> ·
-  <a href="docs/privacy.md">Privacy</a> ·
-  <a href="https://github.com/sponsors/imsvidskiy">Sponsor</a>
+  <a href="docs/privacy.md">Privacy</a>
 </p>
 
 https://github.com/user-attachments/assets/359db10e-c56e-4ece-ab27-7a31721d0264
