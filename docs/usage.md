@@ -16,10 +16,10 @@ Hold the dictation key, speak, and let go. After pasting, the HUD at the top of 
 
 The dictation key is <kbd>right ⌥</kbd>. To change it, click **Dictation key** in Settings › Dictation and press Option, Command, Shift, or Control on either side, Fn (🌐), or a function key. Keys that type text and the editing key don't work. **How to start** in the same pane sets what the key does:
 
-| How to start | What the key does |
-| --- | --- |
-| Hold | Waft listens while you hold the key; a quick tap does nothing |
-| Tap | Tap to start and tap again to finish |
+| How to start                 | What the key does                                                           |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| Hold                         | Waft listens while you hold the key; a quick tap does nothing               |
+| Tap                          | Tap to start and tap again to finish                                        |
 | Hold or double-tap (default) | Hold the key, or tap it twice to dictate hands-free and once more to finish |
 
 ## Languages
@@ -55,11 +55,11 @@ Choose the **Provider** in Settings › AI Models, Claude by default.
 
 **Model** offers a local server's models or, for Claude and OpenAI, three tiers. A model that misses its time limit makes a dictation fall back to Light and leaves an edit's selection alone. A local server gets 15 seconds for a dictation and 45 for an edit.
 
-| Tier | Claude | OpenAI | Dictation limit | Edit limit |
-| --- | --- | --- | --- | --- |
-| Quickest and cheapest | Haiku 5.5 | GPT-6 Luna | 4 s | 20 s |
-| Fewer mistakes, still quick (default) | Sonnet 5.5 | GPT-6.1 Sol | 6 s | 30 s |
-| Fewest mistakes, slower and pricier | Opus 5.5 | GPT-6 Astra | 10 s | 45 s |
+| Tier                                  | Claude     | OpenAI      | Dictation limit | Edit limit |
+| ------------------------------------- | ---------- | ----------- | --------------- | ---------- |
+| Quickest and cheapest                 | Haiku 5.5  | GPT-6 Luna  | 4 s             | 20 s       |
+| Fewer mistakes, still quick (default) | Sonnet 5.5 | GPT-6.1 Sol | 6 s             | 30 s       |
+| Fewest mistakes, slower and pricier   | Opus 5.5   | GPT-6 Astra | 10 s            | 45 s       |
 
 ### Custom and per-app modes
 
@@ -129,12 +129,12 @@ Settings › Dictionary holds two lists:
 
 Four shortcuts work in any app. To change one, click it and press a key with Command, Control, or Option, or a function key, that no other Waft shortcut or key uses. The minus button next to it turns it off, and the arrow button brings the default back.
 
-| Shortcut | Default | Where |
-| --- | --- | --- |
-| **Switch to the next mode** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd> | Settings › Writing |
-| **Open the translator** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd> | Settings › Translator |
+| Shortcut                    | Default                                          | Where                 |
+| --------------------------- | ------------------------------------------------ | --------------------- |
+| **Switch to the next mode** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>M</kbd>             | Settings › Writing    |
+| **Open the translator**     | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>T</kbd>             | Settings › Translator |
 | **Translate selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⇧</kbd><kbd>T</kbd> | Settings › Translator |
-| **Fix selected text** | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd> | Settings › Translator |
+| **Fix selected text**       | <kbd>⌃</kbd><kbd>⌥</kbd><kbd>F</kbd>             | Settings › Translator |
 
 ## The menu
 

@@ -55,15 +55,15 @@ Or download the disk image from the [latest release](https://github.com/okoflow/
 
 ## Documentation
 
-| Guide | What it covers |
-| --- | --- |
-| [Getting started](docs/getting-started.md) | Install and first dictation |
-| [Usage](docs/usage.md) | Every feature and setting |
-| [How it works](docs/how-it-works.md) | From key press to pasted text |
-| [Privacy](docs/privacy.md) | What Waft keeps and sends |
-| [Troubleshooting](docs/troubleshooting.md) | When something doesn't work |
-| [Architecture](docs/architecture.md) | The code, for contributors |
-| [Releasing](docs/releasing.md) | Cutting a release, for maintainers |
+| Guide                                      | What it covers                     |
+| ------------------------------------------ | ---------------------------------- |
+| [Getting started](docs/getting-started.md) | Install and first dictation        |
+| [Usage](docs/usage.md)                     | Every feature and setting          |
+| [How it works](docs/how-it-works.md)       | From key press to pasted text      |
+| [Privacy](docs/privacy.md)                 | What Waft keeps and sends          |
+| [Troubleshooting](docs/troubleshooting.md) | When something doesn't work        |
+| [Architecture](docs/architecture.md)       | The code, for contributors         |
+| [Releasing](docs/releasing.md)             | Cutting a release, for maintainers |
 
 ## Waft+
 

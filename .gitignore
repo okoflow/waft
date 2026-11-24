@@ -3,10 +3,13 @@
 /.build/
 /build/
 
-# IDE and OS
+# Editors
 
-.DS_Store
 .idea/
 .swiftpm/
 .vscode/
 .zed/
+
+# System
+
+.DS_Store
