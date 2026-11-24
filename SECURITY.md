@@ -1,16 +1,25 @@
 # Security policy
 
-This page covers how to report a vulnerability in Waft, how the maintainers handle it, and what is in scope.
+This page covers which versions of Waft are supported, how to report a vulnerability, and what is in scope.
 
 ## Supported versions
 
-Only the latest release and `main` are supported.
+| Version | Supported |
+| --- | --- |
+| The latest release and `main` | Yes |
+| Older releases | No, update to the latest release |
 
 ## Reporting a vulnerability
 
-Report a vulnerability through [GitHub private vulnerability reporting](https://github.com/okoflow/waft/security/advisories/new), or by email to [contact@svidware.com](mailto:contact@svidware.com) if you can't use GitHub, not in a public issue, pull request, or discussion. Include the Waft version or commit, the macOS version, the steps to reproduce or a proof of concept, and the impact you expect.
+Report a vulnerability through [GitHub private vulnerability reporting](https://github.com/okoflow/waft/security/advisories/new), or by email to [contact@svidware.com](mailto:contact@svidware.com) if you can't use GitHub. Don't open a public issue, pull request, or discussion for a security problem.
 
-You receive an acknowledgment within three business days and a triage decision within seven. The fix ships with a security advisory that credits you unless you prefer otherwise. Keep the report private until the advisory is published, as the maintainers do.
+Include what helps reproduce and assess the issue:
+
+- The Waft version or commit, and the macOS version.
+- Steps to reproduce, or a proof of concept.
+- The impact you expect.
+
+You receive an acknowledgment within three business days and a triage decision within seven business days. A confirmed vulnerability is fixed in a new release and disclosed in a GitHub security advisory that credits you, unless you ask otherwise. Keep the report private until the advisory is published.
 
 ## Scope
 
