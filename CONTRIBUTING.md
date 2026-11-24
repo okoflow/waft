@@ -149,25 +149,25 @@ Commits follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/
 - One commit is one logical change that builds and passes on its own. Add a body only for what the diff can't show: the problem, the reason for the approach, a constraint.
 - The only footers, in this order, are `Verified:` in a merge commit, `BREAKING CHANGE:`, and `Fixes #N`. No other trailers, such as `Co-authored-by:` or `Signed-off-by:`.
 
-| Scope | Area |
-| --- | --- |
-| `dictation` | The dictation key, how to start, recording, hands-free dictation, and pasting |
-| `languages` | Recognition, the speech model, and the rules of each language |
-| `modes` | Raw, Light, Clean, Formal, Translate, your modes, and their instructions |
-| `models` | The AI models and their providers |
-| `edit` | Editing by voice |
-| `translator` | The translator panel and the shortcuts on selected text |
-| `files` | File transcription |
-| `dictionary` | The dictionary and snippets |
-| `history` | History and the statistics |
-| `hud` | The HUD |
-| `onboarding` | The setup guide |
-| `settings` | The menu and Settings |
-| `pro` | Waft+ and licenses |
-| `ui` | The look shared across the interface, such as spacing, type, and animation |
-| `l10n` | The translations of the interface |
-| `release` | The version bump that prepares a release |
-| `deps` | Dependency updates, which Dependabot opens |
+| Scope        | Area                                                                          |
+| ------------ | ----------------------------------------------------------------------------- |
+| `dictation`  | The dictation key, how to start, recording, hands-free dictation, and pasting |
+| `languages`  | Recognition, the speech model, and the rules of each language                 |
+| `modes`      | Raw, Light, Clean, Formal, Translate, your modes, and their instructions      |
+| `models`     | The AI models and their providers                                             |
+| `edit`       | Editing by voice                                                              |
+| `translator` | The translator panel and the shortcuts on selected text                       |
+| `files`      | File transcription                                                            |
+| `dictionary` | The dictionary and snippets                                                   |
+| `history`    | History and the statistics                                                    |
+| `hud`        | The HUD                                                                       |
+| `onboarding` | The setup guide                                                               |
+| `settings`   | The menu and Settings                                                         |
+| `pro`        | Waft+ and licenses                                                            |
+| `ui`         | The look shared across the interface, such as spacing, type, and animation    |
+| `l10n`       | The translations of the interface                                             |
+| `release`    | The version bump that prepares a release                                      |
+| `deps`       | Dependency updates, which Dependabot opens                                    |
 
 ## Pull requests
 
