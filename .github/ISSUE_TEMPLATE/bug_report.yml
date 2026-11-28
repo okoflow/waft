@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+
 name: Bug report
 description: Something in Waft doesn't behave as documented
 type: Bug
@@ -10,45 +11,44 @@ body:
         Thanks for the report. The Waft and macOS versions, the mode, and the log lines around the problem make most bugs reproducible on the first try. Report a vulnerability privately, as [SECURITY.md](https://github.com/okoflow/waft/blob/main/SECURITY.md) describes, not here.
 
   - type: textarea
-    id: what-happened
     attributes:
       label: What happened
       description: What you did, what you saw, and what you expected instead.
       placeholder: 'Dictated into a Safari text field in Light mode; the HUD showed the text with ⌘V instead of pasting.'
+    id: what-happened
     validations:
       required: true
 
   - type: textarea
-    id: steps
     attributes:
       label: Steps to reproduce
       placeholder: |
         1. Click into a text field in Safari
         2. Hold right ⌥ and say "hello"
         3. Let go
+    id: steps
     validations:
       required: true
 
   - type: input
-    id: version
     attributes:
       label: Version
       description: The version in Settings › About, or the commit you built from.
       placeholder: 1.0.0
+    id: version
     validations:
       required: true
 
   - type: input
-    id: macos
     attributes:
       label: macOS
       description: The macOS version and the Mac.
       placeholder: macOS 27.0 on a MacBook Pro with M4
+    id: macos
     validations:
       required: true
 
   - type: dropdown
-    id: mode
     attributes:
       label: Mode
       description: Only if the bug involves the text of a dictation.
@@ -59,10 +59,11 @@ body:
         - Formal
         - Translate
         - One of your modes
+    id: mode
 
   - type: textarea
-    id: logs
     attributes:
       label: Logs
       description: The log lines around the problem, from the commands in [Logs](https://github.com/okoflow/waft/blob/main/docs/troubleshooting.md#logs). Waft never logs what you said.
       render: text
+    id: logs

@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+
 name: Feature request
 description: Propose a capability or an improvement
 type: Feature
@@ -10,24 +11,24 @@ body:
         Describe the problem before the solution. Small, well-scoped proposals land faster.
 
   - type: textarea
-    id: problem
     attributes:
       label: Problem
       description: What are you trying to achieve, and what stops you today?
       placeholder: I dictate commit messages in Terminal, and code terms lose their exact spelling.
+    id: problem
     validations:
       required: true
 
   - type: textarea
-    id: proposal
     attributes:
       label: Proposal
       description: How Waft could solve it, such as a new mode, a setting, a language, or an integration.
+    id: proposal
     validations:
       required: true
 
   - type: textarea
-    id: alternatives
     attributes:
       label: Alternatives
       description: Workarounds you tried or other designs you considered.
+    id: alternatives
