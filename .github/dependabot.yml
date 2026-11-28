@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/dependabot-2.0.json
+
 version: 2
 
 updates:
@@ -6,19 +7,46 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 30
+      semver-minor-days: 7
+    groups:
+      swift-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+      swift-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
     commit-message:
       prefix: build
       include: scope
-    cooldown:
-      default-days: 7
-      semver-major-days: 30
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    commit-message:
-      prefix: ci
-      include: scope
     cooldown:
-      default-days: 7
+      default-days: 3
+      semver-major-days: 30
+      semver-minor-days: 7
+    groups:
+      actions-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+      actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    commit-message:
+      prefix: build
+      include: scope
