@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+
 name: CI
 
 on:
@@ -7,21 +8,17 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
+env:
+  DEVELOPER_DIR: /Library/Developer/CommandLineTools
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  DEVELOPER_DIR: /Library/Developer/CommandLineTools
-
 jobs:
   check:
     name: Check
     runs-on: xcode-27
-    timeout-minutes: 30
 
     steps:
       - name: Check out
@@ -51,11 +48,12 @@ jobs:
           path: Waft.zip
           retention-days: 1
 
+    timeout-minutes: 30
+
   launch:
     name: Launch on macOS 15
     needs: check
     runs-on: macos-15
-    timeout-minutes: 10
 
     steps:
       - name: Download the app
@@ -74,10 +72,11 @@ jobs:
           sleep 15
           kill "${app}"
 
+    timeout-minutes: 10
+
   compat:
     name: Command Line Tools 26
     runs-on: macos-26
-    timeout-minutes: 30
 
     steps:
       - name: Check out
@@ -87,3 +86,8 @@ jobs:
 
       - name: Test
         run: make test
+
+    timeout-minutes: 30
+
+permissions:
+  contents: read
